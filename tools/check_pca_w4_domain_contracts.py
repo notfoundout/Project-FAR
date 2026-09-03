@@ -45,6 +45,24 @@ DOMAINS = {
 }
 VARIANTS = {"lossy", "repaired"}
 
+# W4's twelve result records and domain-local research artifacts stay frozen.
+# These named repository-wide authority/status surfaces are intentionally mutable
+# under later governed POST-CLOSURE-001 workstreams. A downstream transition may
+# rebind only this closed allowlist; arbitrary supporting-artifact drift remains
+# a validation failure.
+W6_MUTABLE_SUPPORT_PATHS = {
+    "README.md",
+    "docs/CANONICAL_MAP.md",
+    "docs/ROADMAP.md",
+    "docs/governance/limitations-register.md",
+    "docs/governance/open-problems-register.md",
+    "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
+    "docs/project-status.md",
+    "docs/planning/next-actions.md",
+    "governance/repository-truth-authority-v1.json",
+    "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json",
+}
+
 
 def sha256_path(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -258,13 +276,79 @@ def manifest_record_set_errors(artifact_manifest: Mapping[str, Any]) -> list[dic
     }]
 
 
+def w6_is_complete(program: Mapping[str, Any]) -> bool:
+    workstreams = {str(item.get("id")): item for item in program.get("workstreams", [])}
+    return workstreams.get("PCA-W6-EMPIRICAL-AUDIT-UTILITY", {}).get("state") == "complete"
+
+
+def manifest_integrity_errors(
+    artifact_manifest: Mapping[str, Any],
+    root: Path,
+    *,
+    allow_w6_mutable_support_drift: bool,
+) -> list[dict[str, str]]:
+    """Verify immutable W4 records and governed supporting-artifact integrity."""
+    errors: list[dict[str, str]] = []
+    records = list(artifact_manifest.get("records", []))
+    supports = list(artifact_manifest.get("supporting_artifacts", []))
+    manifest_items = records + supports
+    manifest_paths = [str(item.get("path")) for item in manifest_items]
+    if len(manifest_paths) != len(set(manifest_paths)):
+        errors.append({"code": "W4_MANIFEST_DUPLICATE_PATH", "message": "artifact paths"})
+
+    # Frozen evidence records are never eligible for downstream rebinding.
+    for item in records:
+        rel = str(item["path"])
+        path = root / rel
+        if not path.is_file():
+            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+        elif sha256_path(path) != item["sha256"]:
+            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+
+    for item in supports:
+        rel = str(item["path"])
+        path = root / rel
+        if not path.is_file():
+            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+            continue
+        if sha256_path(path) == item["sha256"]:
+            continue
+        if allow_w6_mutable_support_drift and rel in W6_MUTABLE_SUPPORT_PATHS:
+            continue
+        errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+    return errors
+
+
+def validate_program_progression(program: Mapping[str, Any]) -> list[dict[str, str]]:
+    errors: list[dict[str, str]] = []
+    workstreams = {item["id"]: item for item in program["workstreams"]}
+    if workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"] != "complete":
+        return [{"code": "W4_PROGRAM_STATUS_DRIFT", "message": "W4 is not complete"}]
+
+    w5_complete = workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"] == "complete"
+    w6_complete = workstreams["PCA-W6-EMPIRICAL-AUDIT-UTILITY"]["state"] == "complete"
+    next_workstream = program.get("next_action", {}).get("workstream")
+
+    if w6_complete:
+        if not w5_complete:
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "W6 complete while W5 is incomplete"})
+        if next_workstream is not None:
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W6 does not terminate POST-CLOSURE-001"})
+        if program.get("status") != "complete_registered_workstreams":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W6 lacks terminal program status"})
+    elif w5_complete:
+        if next_workstream != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W5 does not advance to W6"})
+    elif next_workstream != "PCA-W5-APPROXIMATION-AND-COST":
+        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "incomplete W5 is not next"})
+    return errors
+
+
 def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
     errors: list[dict[str, str]] = []
     results = root / RESULTS.relative_to(ROOT)
     docs = root / DOCS.relative_to(ROOT)
-    expected_files = {
-        f"{slug}-{variant}.json" for slug in DOMAINS for variant in VARIANTS
-    }
+    expected_files = {f"{slug}-{variant}.json" for slug in DOMAINS for variant in VARIANTS}
     actual_files = {path.name for path in results.glob("*.json") if path.name != "manifest.json"}
     if actual_files != expected_files:
         errors.append({
@@ -285,20 +369,18 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
         if f"{{{key}," not in bibliography:
             errors.append({"code": "W4_BIBLIOGRAPHY_KEY_MISSING", "message": key})
 
+    program = load_json(
+        root / "theory" / "evaluation" / "post-closure-assurance-and-application-program-v1.0.json"
+    )
     artifact_manifest = load_json(results / "manifest.json")
     errors.extend(manifest_record_set_errors(artifact_manifest))
-    manifest_items = artifact_manifest.get("records", []) + artifact_manifest.get(
-        "supporting_artifacts", []
+    errors.extend(
+        manifest_integrity_errors(
+            artifact_manifest,
+            root,
+            allow_w6_mutable_support_drift=w6_is_complete(program),
+        )
     )
-    manifest_paths = [item["path"] for item in manifest_items]
-    if len(manifest_paths) != len(set(manifest_paths)):
-        errors.append({"code": "W4_MANIFEST_DUPLICATE_PATH", "message": "artifact paths"})
-    for item in manifest_items:
-        path = root / item["path"]
-        if not path.is_file():
-            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": item["path"]})
-        elif sha256_path(path) != item["sha256"]:
-            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": item["path"]})
 
     for slug, (domain, memo_name, required_keys) in DOMAINS.items():
         memo = docs / "native" / memo_name
@@ -307,7 +389,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
         if not required_keys.issubset(set(source_keys)):
             errors.append({"code": "W4_REQUIRED_SOURCE_MISSING", "message": slug})
 
-        pair = {}
+        pair: dict[str, Any] = {}
         for variant in VARIANTS:
             path = results / f"{slug}-{variant}.json"
             if not path.is_file():
@@ -343,20 +425,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
     if campaign.get("results", {}).get("checked_repaired_factorizations") != 6:
         errors.append({"code": "W4_CAMPAIGN_COUNT_MISMATCH", "message": "repaired factorizations"})
 
-    program = load_json(
-        root
-        / "theory"
-        / "evaluation"
-        / "post-closure-assurance-and-application-program-v1.0.json"
-    )
-    workstreams = {item["id"]: item for item in program["workstreams"]}
-    if workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"] != "complete":
-        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "W4 is not complete"})
-    if workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"] == "complete":
-        if program["next_action"]["workstream"] != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
-            errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "completed W5 does not advance to W6"})
-    elif program["next_action"]["workstream"] != "PCA-W5-APPROXIMATION-AND-COST":
-        errors.append({"code": "W4_PROGRAM_STATUS_DRIFT", "message": "incomplete W5 is not next"})
+    errors.extend(validate_program_progression(program))
 
     current_authority = {
         "docs/CANONICAL_MAP.md": ["Records 13 formalized claims"],
@@ -368,9 +437,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
             "13 claims are formalized",
             "PARTIAL/OBSTRUCTION in Lean",
         ],
-        "docs/governance/limitations-register.md": [
-            "has not been independently reviewed",
-        ],
+        "docs/governance/limitations-register.md": ["has not been independently reviewed"],
         "docs/governance/open-problems-register.md": [
             "| OP-23 | Independently review",
             "| OP-24 | Formalize the core",

@@ -14,9 +14,8 @@ SPEC.loader.exec_module(MODULE)
 
 
 class ProjectFARTheoryClosureTest(unittest.TestCase):
-    # Historical regression identities are intentionally retained.  They remain
-    # part of the validator-assurance contract even though v1.1 strengthens the
-    # assertions they protect.
+    # Historical regression identities are intentionally retained. They remain
+    # part of the validator-assurance contract while assertions track current authority.
     def test_repository_conforms_to_terminal_theory(self):
         self.assertEqual([], MODULE.validate())
 
@@ -24,12 +23,8 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         self.assertEqual([], MODULE.validate())
 
     def test_exact_claim_set_is_closed(self):
-        historical = MODULE._load(
-            ROOT / "theory/terminal/project-far-core-theory-v1.0.json"
-        )
-        current = MODULE._load(
-            ROOT / "theory/terminal/project-far-core-theory-v1.1.json"
-        )
+        historical = MODULE._load(ROOT / "theory/terminal/project-far-core-theory-v1.0.json")
+        current = MODULE._load(ROOT / "theory/terminal/project-far-core-theory-v1.1.json")
         expected = {f"FAR-CORE-{i:03d}" for i in range(1, 15)}
         self.assertEqual(expected, {row["id"] for row in historical["claims"]})
         self.assertEqual(expected, {row["id"] for row in current["claims"]})
@@ -39,123 +34,84 @@ class ProjectFARTheoryClosureTest(unittest.TestCase):
         self.assertEqual(MODULE.EXPECTED_V1_SHA256, hashlib.sha256(data).hexdigest())
 
     def test_exact_claim_set_is_preserved(self):
-        ledger = MODULE._load(
-            ROOT / "theory/terminal/project-far-core-theory-v1.1.json"
-        )
+        ledger = MODULE._load(ROOT / "theory/terminal/project-far-core-theory-v1.1.json")
         self.assertEqual("PROJECT-FAR-CORE-THEORY-1.1", ledger["theory_id"])
         self.assertEqual(
             {f"FAR-CORE-{i:03d}" for i in range(1, 15)},
             {row["id"] for row in ledger["claims"]},
         )
-        proved = {
-            row["id"] for row in ledger["claims"] if row["status"] == "proved"
-        }
+        proved = {row["id"] for row in ledger["claims"] if row["status"] == "proved"}
         self.assertEqual({f"FAR-CORE-{i:03d}" for i in range(1, 14)}, proved)
-        self.assertEqual(
-            "supported_derived", MODULE._claim(ledger, "FAR-CORE-014")["status"]
-        )
+        self.assertEqual("supported_derived", MODULE._claim(ledger, "FAR-CORE-014")["status"])
 
     def test_far_core_004_distinguishes_sufficiency_from_minimality(self):
-        ledger = MODULE._load(
-            ROOT / "theory/terminal/project-far-core-theory-v1.1.json"
-        )
+        ledger = MODULE._load(ROOT / "theory/terminal/project-far-core-theory-v1.1.json")
         claim = MODULE._claim(ledger, "FAR-CORE-004")["claim"]
         self.assertIn("least-informative sufficient", claim)
         self.assertIn("universal sufficiency alone is not denied", claim)
-        fixture = MODULE._load(
-            ROOT / "theory/evaluation/project-far-core-theory-v1.1-regressions.json"
-        )
-        case = next(
-            c
-            for c in fixture["cases"]
-            if c["id"] == "CE-CORE-004-IDENTITY-SUFFICES"
-        )
+        fixture = MODULE._load(ROOT / "theory/evaluation/project-far-core-theory-v1.1-regressions.json")
+        case = next(c for c in fixture["cases"] if c["id"] == "CE-CORE-004-IDENTITY-SUFFICES")
         self.assertTrue(case["expected"]["representation_sufficient_for_constant"])
         self.assertTrue(case["expected"]["representation_sufficient_for_injective"])
         self.assertFalse(case["expected"]["representation_minimal_for_constant"])
 
     def test_far_core_010_separates_exact_theory_from_frame_residue(self):
-        ledger = MODULE._load(
-            ROOT / "theory/terminal/project-far-core-theory-v1.1.json"
-        )
+        ledger = MODULE._load(ROOT / "theory/terminal/project-far-core-theory-v1.1.json")
         claim = MODULE._claim(ledger, "FAR-CORE-010")["claim"]
         self.assertIn("L,J,I", claim)
         self.assertIn("Γ", claim)
-        fixture = MODULE._load(
-            ROOT / "theory/evaluation/project-far-core-theory-v1.1-regressions.json"
-        )
-        case = next(
-            c
-            for c in fixture["cases"]
-            if c["id"] == "CE-CORE-010-FRAME-DOES-NOT-INDEX-T"
-        )
+        fixture = MODULE._load(ROOT / "theory/evaluation/project-far-core-theory-v1.1-regressions.json")
+        case = next(c for c in fixture["cases"] if c["id"] == "CE-CORE-010-FRAME-DOES-NOT-INDEX-T")
         self.assertTrue(case["expected"]["exact_theory_same_under_frames"])
-        self.assertNotEqual(
-            case["expected"]["residue_Gamma0"],
-            case["expected"]["residue_Gamma1"],
-        )
+        self.assertNotEqual(case["expected"]["residue_Gamma0"], case["expected"]["residue_Gamma1"])
 
     def test_w1_independent_review_remains_open(self):
-        """Historical regression identity: the old open gate may close only via the sealed promotion."""
-        promotion = MODULE._load(
-            ROOT / "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json"
-        )
+        """Historical regression identity: the old open gate closes only via sealed promotion."""
+        promotion = MODULE._load(ROOT / "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json")
         self.assertEqual("PCA-W1-INDEPENDENT-REVIEW", promotion["workstream_id"])
         self.assertEqual("ACCEPTED_COMPLETE", promotion["disposition"])
         self.assertTrue(promotion["effective_on_merge"])
-        self.assertEqual(
-            "14105775daf3c5713b134a728db2e1e53673af97",
-            promotion["review_target"]["commit"],
-        )
+        self.assertEqual("14105775daf3c5713b134a728db2e1e53673af97", promotion["review_target"]["commit"])
         self.assertFalse(promotion["findings"]["theorem_correction_required"])
 
     def test_w1_is_promoted_and_w2_is_active(self):
-        """Historical regression identity retained; assertions now preserve completed W1–W5 and advance to W6."""
-        program = MODULE._load(
-            ROOT
-            / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
-        )
+        """Historical regression identity retained; current assertions require terminal W1–W6."""
+        program = MODULE._load(ROOT / "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json")
         workstreams = {row["id"]: row for row in program["workstreams"]}
-        self.assertEqual("complete", workstreams["PCA-W1-INDEPENDENT-REVIEW"]["state"])
-        self.assertEqual(
-            "complete",
-            workstreams["PCA-W2-PROOF-ASSISTANT-FORMALIZATION"]["state"],
-        )
-        self.assertEqual(
-            "complete",
-            workstreams["PCA-W3-CONTRACT-SCHEMA"]["state"],
-        )
-        self.assertEqual(
-            "complete",
-            workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"],
-        )
-        self.assertEqual(
+        for workstream_id in (
+            "PCA-W1-INDEPENDENT-REVIEW",
+            "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+            "PCA-W3-CONTRACT-SCHEMA",
+            "PCA-W4-DOMAIN-CONTRACTS",
+            "PCA-W5-APPROXIMATION-AND-COST",
             "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
-            program["next_action"]["workstream"],
-        )
+        ):
+            self.assertEqual("complete", workstreams[workstream_id]["state"])
+        self.assertEqual("complete_registered_workstreams", program["status"])
+        self.assertIsNone(program["next_action"]["workstream"])
+        self.assertEqual("PROJECT-FAR-CORE-THEORY-1.1", program["next_action"]["theory_target"])
+        self.assertIn("OP-28", program["next_action"]["obligation"])
+
+    def test_repository_truth_records_terminal_w6_without_inventing_w7(self):
+        truth = MODULE._load(ROOT / "governance/repository-truth-authority-v1.json")
+        status = truth["project_status"]
+        self.assertEqual("PCA-W6-EMPIRICAL-AUDIT-UTILITY", status["completed_audit_utility_workstream"])
+        self.assertIsNone(status["active_workstream"])
         self.assertEqual(
-            "PROJECT-FAR-CORE-THEORY-1.1",
-            program["next_action"]["theory_target"],
+            "bounded_internal_registered_collision_detection_6_of_6_clean_acceptance_6_of_6_oracle_agreement_12_of_12_human_and_external_utility_not_established",
+            status["audit_utility_status"],
         )
+        self.assertIn("no registered W7", " ".join(truth["claim_boundaries"]))
 
     def test_historical_upp_is_not_current_authority(self):
-        old = MODULE._load(
-            ROOT
-            / "theory/evaluation/post-terminal-public-evaluation-program-v1.0.json"
-        )
+        old = MODULE._load(ROOT / "theory/evaluation/post-terminal-public-evaluation-program-v1.0.json")
         self.assertEqual("superseded", old["status"])
         self.assertEqual("POST-CLOSURE-001", old["superseded_by"])
 
     def test_historical_primitive_and_operator_results_are_reclassified(self):
-        primitive = (
-            ROOT / "frameworks/FARA/research/primitive-independence-w1-result.md"
-        ).read_text()
-        operator = (
-            ROOT / "theory/evaluation/generated-fara-operator-w2-summary.md"
-        ).read_text()
-        self.assertIn(
-            "global primitive-independence/minimality search is closed", primitive
-        )
+        primitive = (ROOT / "frameworks/FARA/research/primitive-independence-w1-result.md").read_text()
+        operator = (ROOT / "theory/evaluation/generated-fara-operator-w2-summary.md").read_text()
+        self.assertIn("global primitive-independence/minimality search is closed", primitive)
         self.assertIn("global finite-basis search is closed", operator)
         self.assertNotIn("remains only a candidate primitive", primitive)
         self.assertNotIn("**Global claim:** unresolved.", operator)
