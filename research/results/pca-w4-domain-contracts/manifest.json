@@ -94,7 +94,7 @@
   ],
   "supporting_artifacts": [
     {
-      "sha256": "a50021ba44f2e53e24bb9cf32a6685f894fb4c0f3162f2aaf2e7b466a01ce2d7",
+      "sha256": "7cb75db91e752904f3ee2ac1b702bbb2c2c4e2a0c33c75317e7f155355d1bf60",
       "path": "README.md"
     },
     {
@@ -102,7 +102,7 @@
       "path": "docs/CANONICAL_MAP.md"
     },
     {
-      "sha256": "277a0c575aad8665e531da2327b5dd262a96a09b52a73dcd5b11d012aac9ebde",
+      "sha256": "80070569dd7151f252b324c13aa002551fc94d9dc920fdd471b7c2a18a7b95a7",
       "path": "docs/ROADMAP.md"
     },
     {
@@ -122,7 +122,7 @@
       "path": "docs/governance/pca-w4-domain-contracts-status-v1.0.md"
     },
     {
-      "sha256": "33b08cfbd8efbf177b38fba86f6c6a0cbebc887f89d310ca1d27556bec76409e",
+      "sha256": "8d2d205c4a6debef471faa0e626f51284f1b0f9d82cb5dca5c1d4ac85e6cab6e",
       "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
     },
     {
@@ -130,11 +130,11 @@
       "path": "docs/governance/theorem-proof-status-register.md"
     },
     {
-      "sha256": "eea1c02df0cac6966a5c0ff02705d4e588c5fd4f1aaf8af575f35487cb6de922",
+      "sha256": "fc4a16d091c3852da86fbc83614a62af69b67b9d8b2baeb391a5c759d09923ab",
       "path": "docs/project-status.md"
     },
     {
-      "sha256": "02a0e339bf2eed22f1c3086ed193c1bea08c940774c58bbf95f39e76697ea234",
+      "sha256": "daae58acab7e6a50d658bd50a24642b080d64c2a87db368f17004fdbd5acd401",
       "path": "docs/planning/next-actions.md"
     },
     {
@@ -202,7 +202,7 @@
       "path": "docs/research/pca-w4-domain-contracts/tools/zotero-status.json"
     },
     {
-      "sha256": "4046038af3f2c3627888e659af7f5466b16491be0fe7bbd07867048d2374f6e8",
+      "sha256": "6b8e65d64867f5b9e090db85727cc8b0c08ed9456a613a338fa979d407b4b428",
       "path": "governance/repository-truth-authority-v1.json"
     },
     {
@@ -214,15 +214,15 @@
       "path": "tests/test_cre001_semantics.py"
     },
     {
-      "sha256": "a38013b1d92002fb86505550700d3ad3116f12c4593490c94482c7fdb5b4ce3f",
+      "sha256": "12ae5011194bfe18540773813f91df45b6156269407a731c9c25195c8432b5dd",
       "path": "tests/test_project_far_theory_closure.py"
     },
     {
-      "sha256": "48a55b397b504dec932340faecc9e94a51a3b2a20c35af133f2866fc8795a340",
+      "sha256": "27aed680bf7f512e5e858712416802f4ff695abe0cdbbcbba4f6cf21c59fb484",
       "path": "tests/test_repository_truth.py"
     },
     {
-      "sha256": "c533a8b9c89aa931a6c3aee133d2677684e74cf7b4f6bf159414ec371582427a",
+      "sha256": "7f15d00ca827c1472b924e1ab919325daa862ba951e5e0beeab6fae70c9a0380",
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {
@@ -230,23 +230,23 @@
       "path": "theory/evaluation/pca-w4-domain-contracts-v1.0.json"
     },
     {
-      "sha256": "e833e70ff7a143f6c46baefdcac3f2100015b2db3991e4f77a4f67b77c23fcb7",
+      "sha256": "82e27cf39737663daf45d927fab8ace926ad8160f14e525978a07aee4b9c4119",
       "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json"
     },
     {
-      "sha256": "486219e2a6ce3d53ce2bf8a9ce239b6b99f9fbf7d68fcdd3ae5fd4da3d5acce8",
+      "sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2",
       "path": "tools/check_pca_w4_domain_contracts.py"
     },
     {
-      "sha256": "3802064bb7004b4b4567638bed9a1d09f67f4e37554c7b549bcbc312ebf2a202",
+      "sha256": "fbe37ab65b27089da29527bf389d6d972bcd4b099c942eab64fd8b733a84e571",
       "path": "tools/check_project_far_theory_closure.py"
     },
     {
-      "sha256": "b15313c7b458fd70dbf1037dde06f218f0c22cea7d89d6ca5008d6837a245c2c",
+      "sha256": "a7177e3f24e46ade92239a00b638abea0e65f68b42327a412ba5bae29b5654a4",
       "path": "tools/check_repository_truth.py"
     },
     {
-      "sha256": "c421ead936de264b0a59c1231b39d40ab501bd413f3500b88c827c46674399e4",
+      "sha256": "24b1f4404071185df52b1ff288341f8b6fd64818459ff45db609cd2a2fbfbe2e",
       "path": "tools/generate_next_tasks.py"
     }
   ],

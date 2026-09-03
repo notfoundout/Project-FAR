@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "campaign": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+  "status": "COMPLETE_BOUNDED_INTERNAL_CONTROL",
+  "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
+  "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
+  "artifacts": [
+    {
+      "path": ".github/workflows/pca-w6.yml",
+      "sha256": "888f2279b1ef3c48efc0db66a13780792c58c8dd32af2690583b861dcdefc2ce"
+    },
+    {
+      "path": "docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md",
+      "sha256": "99a8a837b7069f808ac32030b3f151ab7bc891aef2132a30f1c370f72159b08e"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",
+      "sha256": "e592869832361e77e769169e6ad95a2f9bedc7fa7040d179ce84ad9fbdd7ecc4"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/01-literature-and-design.md",
+      "sha256": "adde4f0fc49e635d6f45d94cdf2b0a5f96065cf259d9ba956b175bf7495f2810"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
+      "sha256": "1ff0bd1f742ae075ef2399c3cb7b90d3cc3c40194484fe081cfad5831fce91cd"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/references.bib",
+      "sha256": "68cf93581434d47d7227d10162bd9002ac87a8ea164220845d889224cc2c7cb8"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/manifest.json",
+      "sha256": "d934e284e197f4e822cda694ad8f8807c60507b43936518c9ed19706175c7a00"
+    },
+    {
+      "path": "research/results/pca-w6-empirical-audit-utility/results.json",
+      "sha256": "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb"
+    },
+    {
+      "path": "tests/test_pca_w6_empirical_audit_utility.py",
+      "sha256": "846b673c2e172dc01d95b1292518e1ad7affb9a2210bd3f05a81de7373eabc45"
+    },
+    {
+      "path": "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
+      "sha256": "eb6172968945207bcc7f155ae509c635614cdfe311c6297635fc3fc6ef110bc1"
+    },
+    {
+      "path": "tools/check_pca_w6_empirical_audit_utility.py",
+      "sha256": "54b132bcff250810529bf9718494f97d9c9f4cc5ae7fa8abfc68e9f25c14075d"
+    }
+  ]
+}
