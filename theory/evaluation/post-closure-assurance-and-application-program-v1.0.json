@@ -2,7 +2,7 @@
   "schema_version": "1.0",
   "program_id": "POST-CLOSURE-001",
   "name": "Post-Closure Assurance and Application Program",
-  "status": "active",
+  "status": "complete_registered_workstreams",
   "governing_theory": "PROJECT-FAR-CORE-THEORY-1.1",
   "governing_theory_correction": "docs/governance/project-far-theory-closure-acceptance-v1.1.md",
   "preserved_historical_theory": "PROJECT-FAR-CORE-THEORY-1.0",
@@ -58,14 +58,19 @@
     },
     {
       "id": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
-      "state": "open",
-      "deliverable": "preregistered evidence on whether the audit discipline catches material representational loss"
+      "state": "complete",
+      "deliverable": "preregistered evidence on whether the audit discipline catches material representational loss",
+      "result": "REGISTERED_COLLISION_MUTANTS_6_OF_6_DETECTED_CLEAN_CONTROLS_6_OF_6_ACCEPTED_ORACLE_AGREEMENT_12_OF_12",
+      "status_record": "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
+      "result_record": "research/results/pca-w6-empirical-audit-utility/results.json",
+      "human_disagreement_reduction": "UNDERDETERMINED",
+      "external_real_world_utility": "OPEN"
     }
   ],
   "next_action": {
-    "workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+    "workstream": null,
     "theory_target": "PROJECT-FAR-CORE-THEORY-1.1",
-    "obligation": "preregister bounded empirical tests without promoting finite operational W5 controls to universal cost or utility claims"
+    "obligation": "No further POST-CLOSURE-001 workstream is registered. External or human-subject evaluation remains an open downstream obligation under OP-28 and requires separate governance before execution."
   },
   "prohibited_promotions": [
     "contract_free_universal_minimal_architecture",
@@ -74,7 +79,8 @@
     "native_common_structure_from_encoding_capacity",
     "open_domain_universality_from_finite_panels",
     "independent_validation_from_internal_review",
-    "software_conformance_as_mathematical_proof"
+    "software_conformance_as_mathematical_proof",
+    "human_or_external_utility_from_w6_machine_controls"
   ],
   "typed_outcomes": [
     "PROVED",
