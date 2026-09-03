@@ -36,9 +36,17 @@ jobs:
                   raise SystemExit(f'{path}: expected exactly one replacement target, found {count}')
               p.write_text(text.replace(old, new, 1), encoding='utf-8')
 
-          w4_row = '| PCA-W4 Domain-Contracts Status | [`governance/pca-w4-domain-contracts-status-v1.0.md`](governance/pca-w4-domain-contracts-status-v1.0.md) | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |'
-          w5_row = '| PCA-W5 Approximation-and-Cost Status | [`governance/pca-w5-approximation-cost-status-v1.0.md`](governance/pca-w5-approximation-cost-status-v1.0.md) | Records the frozen finite-explicit `far-ir/2.1` approximation/cost result and its nonclaims. |'
-          w6_row = '| PCA-W6 Empirical Audit-Utility Status | [`governance/pca-w6-empirical-audit-utility-status-v1.0.md`](governance/pca-w6-empirical-audit-utility-status-v1.0.md) | Records the preregistered bounded internal collision-detection result while preserving human/external utility as unestablished. |'
+          def mdlink(label: str, target: str) -> str:
+              # Construct Markdown at runtime so the repository link scanner does not
+              # interpret workflow source-code literals as workflow-relative links.
+              return '[' + label + '](' + target + ')'
+
+          w4_target = 'governance/pca-w4-domain-contracts-status-v1.0.md'
+          w5_target = 'governance/pca-w5-approximation-cost-status-v1.0.md'
+          w6_target = 'governance/pca-w6-empirical-audit-utility-status-v1.0.md'
+          w4_row = '| PCA-W4 Domain-Contracts Status | ' + mdlink('`' + w4_target + '`', w4_target) + ' | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |'
+          w5_row = '| PCA-W5 Approximation-and-Cost Status | ' + mdlink('`' + w5_target + '`', w5_target) + ' | Records the frozen finite-explicit `far-ir/2.1` approximation/cost result and its nonclaims. |'
+          w6_row = '| PCA-W6 Empirical Audit-Utility Status | ' + mdlink('`' + w6_target + '`', w6_target) + ' | Records the preregistered bounded internal collision-detection result while preserving human/external utility as unestablished. |'
           replace_once('docs/CANONICAL_MAP.md', w4_row, w4_row + '\n' + w5_row + '\n' + w6_row)
 
           op28_old = "| OP-28 | Test whether FAR's audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |"
