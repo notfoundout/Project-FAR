@@ -243,3 +243,9 @@ fara-expanded-check:
 pca-w5-check:
 	python tools/check_pca_w5_approximation_cost.py
 	python -m unittest tests.test_pca_w5_approximation_cost -v
+
+.PHONY: pca-w6-check
+pca-w6-check:
+	python tools/check_pca_w4_domain_contracts.py
+	python -m unittest tests.test_pca_w6_empirical_audit_utility -v
+	python tools/check_pca_w6_empirical_audit_utility.py
