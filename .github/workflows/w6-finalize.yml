@@ -60,9 +60,16 @@ jobs:
           manifest_path = root / 'research/results/pca-w4-domain-contracts/manifest.json'
           manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
           mutable = {
+              'README.md',
               'docs/CANONICAL_MAP.md',
+              'docs/ROADMAP.md',
               'docs/governance/limitations-register.md',
               'docs/governance/open-problems-register.md',
+              'docs/governance/post-closure-assurance-and-application-program-v1.0.md',
+              'docs/project-status.md',
+              'docs/planning/next-actions.md',
+              'governance/repository-truth-authority-v1.json',
+              'theory/evaluation/post-closure-assurance-and-application-program-v1.0.json',
           }
           seen = set()
           for item in manifest['supporting_artifacts']:
@@ -81,7 +88,7 @@ jobs:
       - name: Verify preregistered W6 execution and frozen W4 evidence
         run: |
           python tools/check_pca_w4_domain_contracts.py
-          python -m unittest tests.test_pca_w6_empirical_audit_utility -v
+          python -m unittest tests.test_pca_w4_domain_contracts tests.test_pca_w6_empirical_audit_utility -v
       - name: Build exact W6 artifact manifest
         run: |
           python - <<'PY'
