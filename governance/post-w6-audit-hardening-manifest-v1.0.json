@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "record_id": "POST-W6-AUDIT-HARDENING-001",
+  "status": "REPAIR_IN_PROGRESS",
+  "artifacts": [
+    {
+      "path": "docs/audits/post-w6-audit-hardening-v1.0.md",
+      "git_blob_sha1": "6f2f04799918a944ebbe2f593719bf1f27e6f9aa"
+    },
+    {
+      "path": "docs/planning/next-actions.md",
+      "git_blob_sha1": "0a5c8951954ef7a3a9135c15c1254663b57760df"
+    },
+    {
+      "path": "governance/post-w6-audit-hardening-v1.0.json",
+      "git_blob_sha1": "5aa1cdc9b260b2600a198c4b8869b43796420983"
+    },
+    {
+      "path": "governance/post-w6-execution-incidents-v1.0.json",
+      "git_blob_sha1": "51420e7ceba658deca031b85154dcc2bb582d300"
+    },
+    {
+      "path": "tests/test_post_w6_audit_hardening.py",
+      "git_blob_sha1": "afb998e983ca0f9016a056867e545a95ea5db8ff"
+    },
+    {
+      "path": "tools/check_post_w6_audit_hardening.py",
+      "git_blob_sha1": "193408c8601faca26f56f5a0e8924a31a792dd48"
+    }
+  ]
+}
