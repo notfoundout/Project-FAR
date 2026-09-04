@@ -1,4 +1,4 @@
-name: W6 Workspace Export
+name: W6 Git Bundle Export
 
 on:
   push:
@@ -15,12 +15,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Archive exact source tree
-        run: git archive --format=zip --output=project-far-source.zip HEAD
-      - name: Upload exact source tree
+      - name: Bundle exact branch history
+        run: git bundle create project-far.bundle HEAD
+      - name: Verify bundle
+        run: git bundle verify project-far.bundle
+      - name: Upload exact branch history
         uses: actions/upload-artifact@v4
         with:
-          name: w6-workspace-${{ github.sha }}
-          path: project-far-source.zip
+          name: w6-git-bundle-${{ github.sha }}
+          path: project-far.bundle
           if-no-files-found: error
           retention-days: 1
