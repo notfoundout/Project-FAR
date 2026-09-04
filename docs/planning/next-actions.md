@@ -20,7 +20,17 @@ The core theory is closed after the governed v1.1 correction. The sealed W1 inde
 
 There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 and requires separate governance before execution; it is not silently named W7.
 
+A post-W6 hostile audit found two maintenance defects that do not change the W6 scientific result or the core theory. Machine-readable separation of scientific deviations from execution incidents is repaired on `repair/post-w6-audit-hardening`. Server-side protection of canonical `main` remains an external control-plane blocker and must be completed before OP-28 execution.
+
 ## Ranked Next Actions
+
+### POST-W6-AUDIT-HARDENING-001: Close assurance defects before external evaluation
+
+- Kind: maintenance/audit repair; not a `POST-CLOSURE-001` workstream and not W7.
+- Repository-side status: machine-readable W6 execution-incident provenance implemented on the repair branch with fail-closed checks.
+- Open blocker: GitHub `main` must be server-side protected with pull-request-only admission, required status checks, up-to-date enforcement, force-push/deletion restrictions, and no silent administrator-equivalent bypass.
+- Completion evidence: a fresh GitHub control-plane read showing the required protected state. Repository-local files, CI, or after-the-fact push failures are not substitutes.
+- Authority: [`post-w6-audit-hardening-v1.0.md`](../audits/post-w6-audit-hardening-v1.0.md) and `governance/post-w6-audit-hardening-v1.0.json`.
 
 ### STRATEGIC-012: Develop domain comparison contracts
 
@@ -46,6 +56,7 @@ There is **no registered next `POST-CLOSURE-001` workstream**. External/human au
 - Registered post-closure workstream: none
 - Authority: OP-28 in the open-problems register
 - Priority: open / external-dependency
+- Precondition: `POST-W6-AUDIT-HARDENING-001` must close its GitHub control-plane protection blocker before execution begins.
 - Why it matters: W6 establishes only a project-authored machine controlled-artifact result. It does not show that human reviewers catch more consequential loss, disagree less, work faster, or make better real-world decisions.
 - Required before execution: a separately governed protocol defining participant population or external evaluator, comparator, blinded/randomized procedure where appropriate, outcome measures, analysis plan, independence disclosure, data governance/ethics requirements, falsifiers, and promotion boundaries.
 - Prohibited shortcut: do not relabel W6's schema baseline, machine oracle, or internal replication as human or external evidence.
@@ -61,6 +72,8 @@ There is **no registered next `POST-CLOSURE-001` workstream**. External/human au
 
 Validation commands:
 
+- `python tools/check_post_w6_audit_hardening.py`
+- `python -m unittest tests.test_post_w6_audit_hardening -v`
 - `python tools/check_project_far_theory_closure.py`
 - `make pca-w6-check`
 - `make semantic-check`
