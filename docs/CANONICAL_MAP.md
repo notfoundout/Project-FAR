@@ -28,6 +28,8 @@ Each concept should have one canonical source. Other documents should link to th
 | PCA-W2 Formalization Status | [`governance/pca-w2-formalization-status-v1.0.md`](governance/pca-w2-formalization-status-v1.0.md) | Records all 14 governed claims as formalized, including FAR-CORE-014's bounded unit-free MLL witness bridge and exact kernel assumptions. |
 | PCA-W3 Contract-Schema Status | [`governance/pca-w3-contract-schema-status-v1.0.md`](governance/pca-w3-contract-schema-status-v1.0.md) | Records the completed `far-ir/2.0` schema, semantic verifier, migration, and conformance boundary. |
 | PCA-W4 Domain-Contracts Status | [`governance/pca-w4-domain-contracts-status-v1.0.md`](governance/pca-w4-domain-contracts-status-v1.0.md) | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |
+| PCA-W5 Approximation-and-Cost Status | [`governance/pca-w5-approximation-cost-status-v1.0.md`](governance/pca-w5-approximation-cost-status-v1.0.md) | Records the checked finite-explicit `far-ir/2.1` approximation and product-cost-preorder result and its nonclaims. |
+| PCA-W6 Empirical Audit-Utility Status | [`governance/pca-w6-empirical-audit-utility-status-v1.0.md`](governance/pca-w6-empirical-audit-utility-status-v1.0.md) | Records the bounded internal controlled-artifact result while leaving human disagreement and external utility unestablished. |
 | Opportunity Registry | [`../research/registry/opportunities-v1.0.json`](../research/registry/opportunities-v1.0.json) | Canonical planning memory for opportunities and prohibited/superseded directions; not theory authority. |
 | Research-Question Registry | [`../research/registry/research-questions-v1.0.json`](../research/registry/research-questions-v1.0.json) | Connects unresolved questions to existing problem/question authorities without replacing them. |
 | Research Tool Authority | [`governance/research-tool-authority-v1.0.md`](governance/research-tool-authority-v1.0.md) | Governs tool authority, contamination, independence, and canonical-state boundaries. |
@@ -221,3 +223,12 @@ Each concept should have one canonical source. Other documents should link to th
 - Terminal governance: [`PCA-W5 status`](governance/pca-w5-approximation-cost-status-v1.0.md).
 - Machine result: [`pca-w5-approximation-cost-v1.0.json`](../theory/evaluation/pca-w5-approximation-cost-v1.0.json).
 - `far-ir/2.0` and `far-ir/1.0` remain unchanged. W5 authority is limited to frozen finite-explicit operational semantics.
+
+## W6 Empirical Audit-Utility Authority
+
+- Preregistered protocol: [`00-preregistration.md`](research/pca-w6-empirical-audit-utility/00-preregistration.md).
+- Execution and interpretation: [`02-execution-and-results.md`](research/pca-w6-empirical-audit-utility/02-execution-and-results.md).
+- Terminal governance: [`PCA-W6 status`](governance/pca-w6-empirical-audit-utility-status-v1.0.md).
+- Machine result: [`results.json`](../research/results/pca-w6-empirical-audit-utility/results.json).
+- Exact artifact manifest: [`manifest.json`](../research/results/pca-w6-empirical-audit-utility/manifest.json).
+- W6 proves only registered artifact-level collision detection on the frozen project-authored corpus. Human disagreement reduction remains `UNDERDETERMINED`, and external real-world utility remains `OPEN`.

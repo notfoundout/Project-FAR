@@ -9,7 +9,7 @@
   },
   "project_status": {
     "authority": "README.md:Central result and Post-closure phase",
-    "current_phase": "post-closure assurance and application",
+    "current_phase": "post-closure registered program complete; downstream external utility open",
     "governing_core": "PROJECT-FAR-CORE-THEORY-1.1",
     "governing_core_source": "theory/theorems/Project-FAR-Theory-Closure-v1.1.md",
     "historical_core": "PROJECT-FAR-CORE-THEORY-1.0",
@@ -18,20 +18,22 @@
     "completed_assurance_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
     "completed_contract_schema_workstream": "PCA-W3-CONTRACT-SCHEMA",
     "completed_domain_contracts_workstream": "PCA-W4-DOMAIN-CONTRACTS",
-    "active_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+    "completed_approximation_cost_workstream": "PCA-W5-APPROXIMATION-AND-COST",
+    "completed_audit_utility_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+    "active_workstream": null,
     "independent_review_status": "complete_confirmed_14_proved_exact_scopes_novelty_not_established",
     "formalization_status": "14_formalized_0_partial_obstruction_0_contradiction",
     "contract_schema_status": "far-ir_2.0_versioned_successor_complete_finite_explicit_semantic_checks_v1_unchanged",
     "domain_contracts_status": "six_finite_explicit_native_contracts_six_lossy_collisions_six_scoped_repairs_internal_mapping_only",
+    "approximation_cost_status": "far_ir_2_1_finite_explicit_operational_semantics_no_universal_scalarization",
+    "audit_utility_status": "bounded_internal_registered_collision_detection_6_of_6_clean_acceptance_6_of_6_oracle_agreement_12_of_12_human_and_external_utility_not_established",
     "historical_surfaces": [
       "theory/theorems/Project-FAR-Theory-Closure-v1.0.md",
       "theory/terminal/project-far-core-theory-v1.0.json",
       "README.md:generated bounded REP/ADJ/W3.5 dashboard",
       "docs/reports/project-status-generated.md",
       "historical UPP and independent-experiment artifacts"
-    ],
-    "completed_approximation_cost_workstream": "PCA-W5-APPROXIMATION-AND-COST",
-    "approximation_cost_status": "far_ir_2_1_finite_explicit_operational_semantics_no_universal_scalarization"
+    ]
   },
   "specification_export": {
     "authority": "tools/export_specification.py plus exports/far-spec-v1/manifest.json",
@@ -52,13 +54,15 @@
     "PROJECT-FAR-CORE-THEORY-1.0 remains immutable historical evidence at its recorded SHA-256.",
     "exports/far-spec-v1/ is a current deterministic generated specification surface and must mirror PROJECT-FAR-CORE-THEORY-1.1; its embedded v1.0 theorem entry is historical provenance, not current authority.",
     "FAR-CORE-004 denies one representation being simultaneously least-informative sufficient for every observation contract; it does not deny universal sufficiency of the identity representation.",
-    "FAR-CORE-010 exact common theory is indexed by L,J,I; the frame-subtracted residue is additionally indexed by \u0393.",
+    "FAR-CORE-010 exact common theory is indexed by L,J,I; the frame-subtracted residue is additionally indexed by Γ.",
     "Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.",
     "W1 independent review is complete under exact scopes; novelty and priority remain not established.",
     "W2 formalization is complete: FAR-CORE-001 through FAR-CORE-014 are kernel-checked under the governed v1.1 statements, with no contradiction/reopen outcome.",
     "W3 contract schema is complete as far-ir/2.0, a versioned successor rather than a silent reinterpretation of far-ir/1.0; far-ir/1.0 remains unchanged.",
     "W4 domain contracts are complete at six finite-explicit scopes with six lossy collisions and six scoped repairs; internal mapping and schema conformance are not evidence that an encoded contract faithfully represents an external domain.",
-    "W5 approximation and cost is the next active workstream; W4 exact repairs do not supply metrics, tolerances, losses, or cost preorders.",
+    "W5 approximation and cost is complete at the frozen finite-explicit operational scope; no universal metric, scalar cost, or unique optimum follows.",
+    "W6 bounded audit utility is complete only for the registered project-authored controlled-artifact corpus and collision defect class; it does not establish human disagreement reduction, external real-world utility, or population performance.",
+    "POST-CLOSURE-001 has no registered W7; downstream external/human effectiveness under OP-28 requires separate governance.",
     "No historical dashboard or research artifact may identify itself as the current repository phase or theorem authority.",
     "Package metadata versions must match executable version declarations.",
     "Repository release version and installable package version are distinct authorities and must not be inferred from one another."

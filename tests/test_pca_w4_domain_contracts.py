@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -10,8 +12,10 @@ from tools.check_pca_w4_domain_contracts import (
     RESULTS,
     audit_document,
     load_json,
+    manifest_integrity_errors,
     manifest_record_set_errors,
     validate_campaign,
+    validate_program_progression,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -91,6 +95,84 @@ class PCAW4DomainContractTests(unittest.TestCase):
         codes = {item["code"] for item in manifest_record_set_errors(broken)}
         self.assertIn("W4_MANIFEST_RECORD_SET_MISMATCH", codes)
 
+    def test_frozen_record_hash_drift_never_becomes_mutable(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "frozen.json"
+            path.write_text("mutated\n", encoding="utf-8")
+            manifest = {
+                "records": [{"path": "frozen.json", "sha256": "0" * 64}],
+                "supporting_artifacts": [],
+            }
+            codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest, root, allow_w6_mutable_support_drift=True
+                )
+            }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
+
+    def test_arbitrary_support_hash_drift_remains_rejected_after_w6(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "arbitrary.txt"
+            path.write_text("mutated\n", encoding="utf-8")
+            manifest = {
+                "records": [],
+                "supporting_artifacts": [
+                    {"path": "arbitrary.txt", "sha256": "0" * 64}
+                ],
+            }
+            codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest, root, allow_w6_mutable_support_drift=True
+                )
+            }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
+
+    def test_allowlisted_support_drift_requires_terminal_w6(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "README.md"
+            path.write_text("downstream governed state\n", encoding="utf-8")
+            manifest = {
+                "records": [],
+                "supporting_artifacts": [
+                    {"path": "README.md", "sha256": "0" * 64}
+                ],
+            }
+            before_codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest, root, allow_w6_mutable_support_drift=False
+                )
+            }
+            after_errors = manifest_integrity_errors(
+                manifest, root, allow_w6_mutable_support_drift=True
+            )
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", before_codes)
+            self.assertEqual(after_errors, [])
+
+    def test_matching_support_hash_is_always_accepted(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "support.txt"
+            path.write_text("frozen\n", encoding="utf-8")
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            manifest = {
+                "records": [],
+                "supporting_artifacts": [
+                    {"path": "support.txt", "sha256": digest}
+                ],
+            }
+            self.assertEqual(
+                manifest_integrity_errors(
+                    manifest, root, allow_w6_mutable_support_drift=False
+                ),
+                [],
+            )
+
     def test_records_remain_exact_and_do_not_claim_w5_semantics(self) -> None:
         for path in RESULTS.glob("*.json"):
             if path.name == "manifest.json":
@@ -100,7 +182,7 @@ class PCAW4DomainContractTests(unittest.TestCase):
             self.assertNotIn("approximation", document["contract"])
             self.assertNotIn("minimal", document["report"]["evidence"]["notes"].lower())
 
-    def test_w4_remains_complete_after_w5_progression(self) -> None:
+    def test_w4_remains_complete_after_terminal_w6(self) -> None:
         program = load_json(
             ROOT
             / "theory"
@@ -110,11 +192,18 @@ class PCAW4DomainContractTests(unittest.TestCase):
         workstreams = {item["id"]: item for item in program["workstreams"]}
         self.assertEqual(workstreams["PCA-W4-DOMAIN-CONTRACTS"]["state"], "complete")
         self.assertEqual(workstreams["PCA-W5-APPROXIMATION-AND-COST"]["state"], "complete")
-        self.assertEqual(program["next_action"]["workstream"], "PCA-W6-EMPIRICAL-AUDIT-UTILITY")
+        self.assertEqual(workstreams["PCA-W6-EMPIRICAL-AUDIT-UTILITY"]["state"], "complete")
+        self.assertEqual(program["status"], "complete_registered_workstreams")
+        self.assertIsNone(program["next_action"]["workstream"])
+        self.assertEqual(validate_program_progression(program), [])
+
+    def test_w4_remains_complete_after_w5_progression(self) -> None:
+        """Preserve the W5-era regression ID while checking the stronger W6 state."""
+        self.test_w4_remains_complete_after_terminal_w6()
 
     def test_w4_is_complete_and_w5_is_next_in_machine_authority(self) -> None:
-        """Stable regression ID retained while asserting the governed W5→W6 progression."""
-        self.test_w4_remains_complete_after_w5_progression()
+        """Stable regression ID retained while asserting the terminal W6 state."""
+        self.test_w4_remains_complete_after_terminal_w6()
 
 
 if __name__ == "__main__":

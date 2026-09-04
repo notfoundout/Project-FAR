@@ -16,6 +16,11 @@ HISTORICAL_CORE = "PROJECT-FAR-CORE-THEORY-1.0"
 HISTORICAL_CORE_PATH = "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
 EXPECTED_V1_SHA256 = "b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5"
 EXPECTED_EXPORT_VERSION = "1.2.0"
+EXPECTED_PHASE = "post-closure registered program complete; downstream external utility open"
+EXPECTED_W6_STATUS = (
+    "bounded_internal_registered_collision_detection_6_of_6_clean_acceptance_6_of_6_"
+    "oracle_agreement_12_of_12_human_and_external_utility_not_established"
+)
 
 
 def fail(message: str) -> None:
@@ -67,7 +72,7 @@ def main() -> int:
         fail("release authority latest_release is missing or malformed")
 
     status = authority.get("project_status", {})
-    if status.get("current_phase") != "post-closure assurance and application":
+    if status.get("current_phase") != EXPECTED_PHASE:
         fail("project-status phase authority drift")
     if status.get("governing_core") != EXPECTED_CORE:
         fail("governing core-theory authority drift")
@@ -87,8 +92,12 @@ def main() -> int:
         fail("completed W4 domain-contract authority drift")
     if status.get("completed_approximation_cost_workstream") != "PCA-W5-APPROXIMATION-AND-COST":
         fail("completed W5 approximation-cost authority drift")
-    if status.get("active_workstream") != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
-        fail("active workstream authority drift")
+    if status.get("completed_audit_utility_workstream") != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+        fail("completed W6 audit-utility authority drift")
+    if status.get("active_workstream") is not None:
+        fail("terminal POST-CLOSURE state must not name an active workstream")
+    if status.get("audit_utility_status") != EXPECTED_W6_STATUS:
+        fail("W6 audit-utility status authority drift")
     if status.get("independent_review_status") != "complete_confirmed_14_proved_exact_scopes_novelty_not_established":
         fail("independent-review authority drift")
     if status.get("formalization_status") != "14_formalized_0_partial_obstruction_0_contradiction":
@@ -119,11 +128,9 @@ def main() -> int:
     historical_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.0.md", {})
     if historical_entry.get("status") != "historical" or historical_entry.get("sha256") != EXPECTED_V1_SHA256:
         fail("specification export does not preserve v1.0 as historical")
-    current_entry = entries.get("theorems/Project-FAR-Theory-Closure-v1.1.md", {})
-    if current_entry.get("status") != "canonical":
+    if entries.get("theorems/Project-FAR-Theory-Closure-v1.1.md", {}).get("status") != "canonical":
         fail("specification export does not mark v1.1 theorem canonical")
-    ledger_entry = entries.get("theorems/project-far-core-theory-v1.1.json", {})
-    if ledger_entry.get("status") != "canonical":
+    if entries.get("theorems/project-far-core-theory-v1.1.json", {}).get("status") != "canonical":
         fail("specification export does not mark v1.1 ledger canonical")
 
     readme = read_text("README.md")
@@ -134,10 +141,14 @@ def main() -> int:
         f"`{EXPECTED_CORE}`",
         "Historical v1.0",
         "## Post-closure phase",
-        "The active program is `POST-CLOSURE-001`.",
+        "`POST-CLOSURE-001` is complete at all six registered workstream scopes.",
         "`PCA-W3-CONTRACT-SCHEMA`: complete.",
         "`PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.",
-        "`PCA-W5-APPROXIMATION-AND-COST`: **complete at its finite-explicit operational scope**.",
+        "`PCA-W5-APPROXIMATION-AND-COST`: complete at its finite-explicit operational scope.",
+        "`PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at its bounded internal controlled-artifact scope.",
+        "No W7 is registered by `POST-CLOSURE-001`.",
+        "human disagreement reduction remains `UNDERDETERMINED`",
+        "external real-world utility remains `OPEN`",
         "Core theory reopens only for a reproducible contradiction",
         "Historical bounded-program status",
     )
@@ -180,8 +191,11 @@ def main() -> int:
         "active_workstream": status["active_workstream"],
         "completed_contract_schema_workstream": status["completed_contract_schema_workstream"],
         "completed_domain_contracts_workstream": status["completed_domain_contracts_workstream"],
+        "completed_approximation_cost_workstream": status["completed_approximation_cost_workstream"],
+        "completed_audit_utility_workstream": status["completed_audit_utility_workstream"],
         "contract_schema_status": status["contract_schema_status"],
         "domain_contracts_status": status["domain_contracts_status"],
+        "audit_utility_status": status["audit_utility_status"],
         "independent_review_status": status["independent_review_status"],
         "formalization_status": status["formalization_status"],
         "current_phase": status["current_phase"],

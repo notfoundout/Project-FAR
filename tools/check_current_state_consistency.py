@@ -33,6 +33,12 @@ def newest_release_tag(root: Path = ROOT) -> str | None:
 
 
 def program_identity(program_text: str) -> tuple[str | None, str | None]:
+    """Return program id and registered next workstream, if one exists.
+
+    A completed POST-CLOSURE-001 program legitimately has no next workstream. The
+    absence is distinguished from parse failure by validate_repository(), which
+    independently requires the explicit terminal status and no-W7 declaration.
+    """
     program = re.search(r"^Program:\s*`([^`]+)`", program_text, re.M)
     next_workstream = re.search(
         r"^- `([^`]+)`:[^\n]*\bnext\b[^\n]*$",
@@ -49,7 +55,7 @@ def validate_texts(
     texts: dict[str, str],
     expected_release: str,
     program_id: str,
-    next_workstream: str,
+    next_workstream: str | None,
 ) -> list[str]:
     errors: list[str] = []
 
@@ -65,12 +71,6 @@ def validate_texts(
     require("status", f"Current published repository release: [`{expected_release}`]", "canonical status release drifted")
     require("status", f"Current governing theory: `{CURRENT_CORE}`", "canonical status governing core drifted")
     require("status", f"Current program: `{program_id}`", "canonical status program drifted")
-    status_workstream = re.search(
-        rf"\|\s*`{re.escape(next_workstream)}`\s*\|\s*\*\*Next / Active\*\*\s*\|",
-        texts.get("status", ""),
-    )
-    if not status_workstream:
-        errors.append("status: canonical status next-workstream drifted")
 
     release_doc = f"releases/project-far-{expected_release}.md"
     require("map", f"Current Project FAR release: [`{release_doc}`]({release_doc})", "canonical map current-release navigation drifted")
@@ -81,19 +81,44 @@ def validate_texts(
     require("roadmap", f"Current published repository release: [`{expected_release}`]", "roadmap release drifted")
     require("roadmap", f"Current governing core: [`{CURRENT_CORE}`]", "roadmap governing core drifted")
     require("roadmap", f"Current program: [`{program_id}`]", "roadmap program drifted")
-    require("roadmap", f"`{next_workstream}` — next", "roadmap next-workstream drifted")
 
     require("generated", "# Historical Bounded-Program Status (Generated)", "generated bounded report can masquerade as current status")
     require("generated", "not a current project-status authority", "generated bounded report lacks an authority boundary")
     if "## Current Research Mode" in texts.get("generated", ""):
         errors.append("generated: historical report still declares a Current Research Mode")
 
-    require("next_actions", f"Program: `{program_id}`.", "next-actions program drifted")
+    require("next_actions", f"Program: `{program_id}`", "next-actions program drifted")
     require("next_actions", f"Current governing theory: `{CURRENT_CORE}`.", "next-actions theory target drifted")
-    require("next_actions", f"Canonical next workstream: `{next_workstream}`.", "next-actions workstream drifted")
     require("next_actions", "Historical v1.0 Core", "next-actions historical core boundary drifted")
     if "PTE-W1-INDEPENDENT-REVIEW" in texts.get("next_actions", ""):
         errors.append("next_actions: superseded UPP evaluation planning survived into the current task queue")
+
+    if next_workstream is None:
+        require("readme", "`POST-CLOSURE-001` is complete at all six registered workstream scopes.", "README terminal program state drifted")
+        require("readme", "No W7 is registered by `POST-CLOSURE-001`.", "README invented or lost terminal no-W7 boundary")
+        require("status", "**complete at its six registered workstream scopes**", "canonical status terminal program state drifted")
+        require("status", "No `POST-CLOSURE-001` W7 is registered.", "canonical status lost no-W7 boundary")
+        require("roadmap", "complete at its six registered workstream scopes", "roadmap terminal program state drifted")
+        require("roadmap", "No W7 is currently registered.", "roadmap lost no-W7 boundary")
+        require("next_actions", "There is **no registered next `POST-CLOSURE-001` workstream**.", "next-actions invented a terminal successor")
+        require("next_actions", "OPEN-EXTERNAL-OP-28", "next-actions lost external/human effectiveness obligation")
+        for surface in ("readme", "status", "roadmap"):
+            require(surface, "PCA-W6-EMPIRICAL-AUDIT-UTILITY", "terminal W6 disposition missing")
+        if "**Next / Active**" in texts.get("status", ""):
+            errors.append("status: terminal program still marks a workstream Next / Active")
+        if re.search(r"`PCA-W\d[^`]*`\s*[—:-]+\s*next\b", texts.get("roadmap", ""), re.I):
+            errors.append("roadmap: terminal program still declares a PCA workstream next")
+        if "Canonical next workstream:" in texts.get("next_actions", ""):
+            errors.append("next_actions: terminal program still declares a canonical next workstream")
+    else:
+        status_workstream = re.search(
+            rf"\|\s*`{re.escape(next_workstream)}`\s*\|\s*\*\*Next / Active\*\*\s*\|",
+            texts.get("status", ""),
+        )
+        if not status_workstream:
+            errors.append("status: canonical status next-workstream drifted")
+        require("roadmap", f"`{next_workstream}` — next", "roadmap next-workstream drifted")
+        require("next_actions", f"Canonical next workstream: `{next_workstream}`.", "next-actions workstream drifted")
 
     require("agents", "If purported current-authority surfaces conflict", "agent routing does not fail closed on authority conflicts")
     require("agents", "project memory", "agent routing does not subordinate memory to repository authority")
@@ -110,9 +135,7 @@ def validate_texts(
             "## Current Research Reset",
             "W5 remains blocked",
         ],
-        "map": [
-            "Current Project FAR release: [`releases/project-far-v0.4.0.md`]",
-        ],
+        "map": ["Current Project FAR release: [`releases/project-far-v0.4.0.md`]"],
     }
     for surface, phrases in stale_current_phrases.items():
         text = texts.get(surface, "")
@@ -131,19 +154,22 @@ def validate_repository(root: Path = ROOT) -> list[str]:
     program_path = root / PROGRAM.relative_to(ROOT)
     if not program_path.exists():
         return [f"program: missing {program_path.relative_to(root)}"]
-    program_id, next_workstream = program_identity(program_path.read_text(encoding="utf-8"))
+    program_text = program_path.read_text(encoding="utf-8")
+    program_id, next_workstream = program_identity(program_text)
     if program_id is None:
         return ["program: could not parse current program identity"]
-    if next_workstream is None:
-        return ["program: could not parse registered next workstream"]
+
+    terminal = "Status: **Complete at the six registered workstream scopes" in program_text
+    no_w7 = "No W7 is registered by this program." in program_text
+    if next_workstream is None and not (terminal and no_w7):
+        return ["program: no next workstream found without explicit terminal/no-W7 authority"]
+    if next_workstream is not None and terminal:
+        return ["program: terminal program also declares a next workstream"]
 
     texts: dict[str, str] = {}
     for key, canonical_path in CURRENT_FILES.items():
         path = root / canonical_path.relative_to(ROOT)
-        if not path.exists():
-            texts[key] = ""
-        else:
-            texts[key] = path.read_text(encoding="utf-8", errors="replace")
+        texts[key] = path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
 
     return validate_texts(texts, expected_release, program_id, next_workstream)
 

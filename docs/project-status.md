@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently confirmed by sealed independent review under exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. Novelty/priority not established.**
 
-Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, and W4 domain-contract status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
+Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
 ## Historical boundaries
 
@@ -58,9 +58,23 @@ Each domain has a checked lossy collision and a checked repaired factorization. 
 
 W4 does not establish minimal or unique repairs, open-domain completeness, approximation/cost semantics, empirical utility, novelty/priority, or external-investigator independence.
 
+## W5 approximation-and-cost disposition
+
+`PCA-W5-APPROXIMATION-AND-COST` is complete at the frozen finite-explicit operational scope. W5 did not reinterpret W4's exact repairs as approximate or cost-optimal. Its additive `far-ir/2.1` controls separately freeze a metric, reference and aggregation rule, decision loss, tolerance, randomized decoder, and multidimensional cost preorder. Checked finite results distinguish Pareto minima from least elements and enforce the zero-loss recovery boundary.
+
+W5 does not establish a universal metric, reference, tolerance, scalar cost, unique optimum, external-domain correspondence, open-domain approximation result, empirical utility, or novelty.
+
+## W6 empirical audit-utility disposition
+
+`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at the preregistered bounded internal controlled-artifact scope. The protocol was frozen before execution at `3813b9e3eb49562bd8b9f4d3179c3d9536831de6` from canonical base `2cecf2e21cc27208f606dcd38337af4369e66af2`.
+
+The primary experiment used six unmodified W4 repaired controls and six deterministic representation-collision mutants. All twelve remained JSON-Schema-valid. The schema-only baseline detected `0/6` mutants and accepted `6/6` clean controls. The FAR finite-explicit semantic audit detected `6/6` mutants with `FACTORIZATION_FAILURE` and accepted `6/6` clean controls. A separate table-only collision oracle agreed with the FAR loss/no-loss classification on `12/12` primary records. All six frozen native W4 lossy controls were also reconfirmed.
+
+This proves only the registered bounded material-loss-detection result. The corpus, mutation, oracle, and adjudication were Project-FAR-authored; there were no human participants or external investigators. Human disagreement reduction is `UNDERDETERMINED` and external real-world utility remains `OPEN`. No population sensitivity/specificity, superiority over alternative audit methods, or theorem-status change is inferred.
+
 ## Current phase
 
-Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md).
+Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — **complete at its six registered workstream scopes**.
 
 | Workstream | Current state | Boundary |
 |---|---|---|
@@ -69,14 +83,10 @@ Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application 
 | `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Complete | 14 FORMALIZED; exact kernel assumptions audited; no contradiction/reopen condition. |
 | `PCA-W3-CONTRACT-SCHEMA` | Complete | `far-ir/2.0` successor, semantic verifier, loss-explicit migration, and conformance fixtures complete; v1 unchanged. |
 | `PCA-W4-DOMAIN-CONTRACTS` | Complete | Six frozen native contracts; six checked lossy collisions and six checked scoped repairs; internal mapping only. |
-| `PCA-W5-APPROXIMATION-AND-COST` | **Complete** | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
-| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | **Next / Active** | Empirical utility evidence does not alter deductive theorem status automatically. |
+| `PCA-W5-APPROXIMATION-AND-COST` | Complete | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
+| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | Bounded internal controlled-artifact loss detection proved for registered corpus; human disagreement and external utility not established. |
 
-## W5 approximation-and-cost disposition
-
-W5 did not reinterpret W4's exact repairs as approximate or cost-optimal. Its additive `far-ir/2.1` controls separately freeze a metric, reference and aggregation rule, decision loss, tolerance, randomized decoder, and multidimensional cost preorder. Checked finite results distinguish Pareto minima from least elements and enforce the zero-loss recovery boundary.
-
-The W4 finite-explicit certificates prove only the encoded table properties. They do not prove that the tables exhaust or faithfully represent their external domains.
+No `POST-CLOSURE-001` W7 is registered. OP-28 remains open for separately governed external/human effectiveness evidence.
 
 ## Framework status
 
@@ -92,7 +102,7 @@ The seven formerly named FARA primitive candidates are schema or contract roles,
 
 ## Reopening rule
 
-The core reopens only for a reproducible contradiction to a stated theorem, proof step, or formal premise. CI success, finite scripts, repository consistency, model agreement, and software conformance are not mathematical proof.
+The core reopens only for a reproducible contradiction to a stated theorem, proof step, or formal premise. CI success, finite scripts, repository consistency, model agreement, software conformance, and W6 controlled-artifact performance are not mathematical proof.
 
 ## Current authority navigation
 

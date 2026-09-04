@@ -11,7 +11,7 @@ import check_current_state_consistency as checker
 
 EXPECTED_RELEASE = "v1.0.0"
 PROGRAM_ID = "POST-CLOSURE-001"
-NEXT_WORKSTREAM = "PCA-W3-CONTRACT-SCHEMA"
+NEXT_WORKSTREAM = None
 
 VALID_TEXTS = {
     "readme": (
@@ -19,12 +19,16 @@ VALID_TEXTS = {
         "`PROJECT-FAR-CORE-THEORY-1.1`\n"
         "Historical v1.0\n"
         "## Post-closure phase\n"
+        "`POST-CLOSURE-001` is complete at all six registered workstream scopes.\n"
+        "`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete.\n"
+        "No W7 is registered by `POST-CLOSURE-001`.\n"
     ),
     "status": (
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
-        "Current program: `POST-CLOSURE-001`\n"
-        "| `PCA-W3-CONTRACT-SCHEMA` | **Next / Active** | boundary |\n"
+        "Current program: `POST-CLOSURE-001` — **complete at its six registered workstream scopes**.\n"
+        "| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | boundary |\n"
+        "No `POST-CLOSURE-001` W7 is registered.\n"
     ),
     "map": (
         "Project FAR Core Theory v1.1\n"
@@ -35,18 +39,20 @@ VALID_TEXTS = {
     "roadmap": (
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`]\n"
-        "Current program: [`POST-CLOSURE-001`]\n"
-        "`PCA-W3-CONTRACT-SCHEMA` — next\n"
+        "Current program: [`POST-CLOSURE-001`], complete at its six registered workstream scopes.\n"
+        "`PCA-W6-EMPIRICAL-AUDIT-UTILITY` — complete.\n"
+        "No W7 is currently registered.\n"
     ),
     "generated": (
         "# Historical Bounded-Program Status (Generated)\n"
         "not a current project-status authority\n"
     ),
     "next_actions": (
-        "Program: `POST-CLOSURE-001`.\n"
+        "Program: `POST-CLOSURE-001` — complete.\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Historical v1.0 Core\n"
-        "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.\n"
+        "There is **no registered next `POST-CLOSURE-001` workstream**.\n"
+        "OPEN-EXTERNAL-OP-28\n"
     ),
     "agents": (
         "If purported current-authority surfaces conflict, stop. "
@@ -58,13 +64,17 @@ VALID_TEXTS = {
 
 
 class CurrentStateConsistencyTests(unittest.TestCase):
-    def validate(self, texts):
+    def validate(self, texts, next_workstream=NEXT_WORKSTREAM):
         return checker.validate_texts(
-            texts, EXPECTED_RELEASE, PROGRAM_ID, NEXT_WORKSTREAM
+            texts, EXPECTED_RELEASE, PROGRAM_ID, next_workstream
         )
 
-    def test_consistent_state_passes(self):
+    def test_consistent_terminal_state_passes(self):
         self.assertEqual([], self.validate(copy.deepcopy(VALID_TEXTS)))
+
+    def test_consistent_state_passes(self):
+        """Preserve the pre-W6 regression ID against the terminal state."""
+        self.test_consistent_terminal_state_passes()
 
     def test_stale_current_release_is_rejected(self):
         texts = copy.deepcopy(VALID_TEXTS)
@@ -78,16 +88,27 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         errors = self.validate(texts)
         self.assertTrue(any("Current Research Mode" in error for error in errors))
 
-    def test_next_actions_must_follow_registered_next_workstream(self):
+    def test_terminal_next_actions_cannot_invent_workstream(self):
         texts = copy.deepcopy(VALID_TEXTS)
-        texts["next_actions"] = (
-            "Program: `POST-CLOSURE-001`.\n"
-            "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
-            "Historical v1.0 Core\n"
-            "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.\n"
-        )
+        texts["next_actions"] += "Canonical next workstream: `PCA-W7-FAKE`.\n"
         errors = self.validate(texts)
-        self.assertTrue(any("next-actions workstream drifted" in error for error in errors))
+        self.assertTrue(any("terminal program still declares a canonical next workstream" in error for error in errors))
+
+    def test_next_actions_must_follow_registered_next_workstream(self):
+        """Preserve the active-state regression ID at the no-W7 boundary."""
+        self.test_terminal_next_actions_cannot_invent_workstream()
+
+    def test_terminal_status_cannot_mark_next_active(self):
+        texts = copy.deepcopy(VALID_TEXTS)
+        texts["status"] += "| `PCA-W7-FAKE` | **Next / Active** | invalid |\n"
+        errors = self.validate(texts)
+        self.assertTrue(any("Next / Active" in error for error in errors))
+
+    def test_terminal_no_w7_boundary_is_required(self):
+        texts = copy.deepcopy(VALID_TEXTS)
+        texts["roadmap"] = texts["roadmap"].replace("No W7 is currently registered.\n", "")
+        errors = self.validate(texts)
+        self.assertTrue(any("no-W7 boundary" in error for error in errors))
 
     def test_superseded_upp_queue_cannot_return(self):
         texts = copy.deepcopy(VALID_TEXTS)
@@ -111,17 +132,29 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         errors = self.validate(texts)
         self.assertTrue(any("stale current-state assertion" in error for error in errors))
 
-    def test_program_identity_parses_registered_next_workstream(self):
+    def test_program_identity_parses_active_registered_next_workstream(self):
         program = (
             "Program: `POST-CLOSURE-001`\n\n"
             "- `PCA-W0-REPOSITORY-CONFORMITY`: complete.\n"
-            "- `PCA-W1-INDEPENDENT-REVIEW`: complete.\n"
-            "- `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete.\n"
-            "- `PCA-W3-CONTRACT-SCHEMA`: **open — next**.\n"
+            "- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: **open — next**.\n"
         )
         self.assertEqual(
-            (PROGRAM_ID, NEXT_WORKSTREAM), checker.program_identity(program)
+            (PROGRAM_ID, "PCA-W6-EMPIRICAL-AUDIT-UTILITY"),
+            checker.program_identity(program),
         )
+
+    def test_program_identity_parses_registered_next_workstream(self):
+        """Preserve the parser regression ID for an explicitly active workstream."""
+        self.test_program_identity_parses_active_registered_next_workstream()
+
+    def test_program_identity_allows_explicit_terminal_absence(self):
+        program = (
+            "Program: `POST-CLOSURE-001`\n\n"
+            "Status: **Complete at the six registered workstream scopes; downstream external utility remains open**\n\n"
+            "- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete.\n"
+            "No W7 is registered by this program.\n"
+        )
+        self.assertEqual((PROGRAM_ID, None), checker.program_identity(program))
 
 
 if __name__ == "__main__":

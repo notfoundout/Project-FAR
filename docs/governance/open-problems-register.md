@@ -7,7 +7,7 @@ The core theory is closed. Current open problems are downstream assurance, imple
 | ID | Current problem | Kind | Blocking evidence / completion condition |
 |---|---|---|---|
 | OP-27 | Develop approximate and cost-aware quotient methods. | theoretical/algorithmic | Metrics, losses, tolerances, and cost preorders are domain choices; exact quotient existence does not imply computability. |
-| OP-28 | Test whether FAR's audit discipline catches material loss or reduces disagreement. | empirical | No preregistered external effectiveness evidence. |
+| OP-28 | Test whether FAR's audit discipline improves human or external investigations and reduces consequential disagreement beyond the registered W6 artifact controls. | empirical | W6 proved detection only for one preregistered collision mutation over a finite Project-FAR-authored corpus. No human-participant, externally administered, field-effectiveness, or population-performance evidence exists. |
 | OP-29 | Evaluate the FARA kernel under external real-world cost and audit contracts. | engineering/empirical | Current selection remains finite, explicit, auditable, and project-internal. |
 
 ## Closure disposition of earlier problems

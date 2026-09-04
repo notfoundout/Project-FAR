@@ -1,0 +1,201 @@
+{
+  "schema_version": "1.0",
+  "campaign": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+  "status": "COMPLETE_BOUNDED_INTERNAL_CONTROL",
+  "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
+  "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
+  "artifacts": [
+    {
+      "path": ".github/workflows/pca-w6.yml",
+      "sha256": "c86671f18a35b6ae83ac2cf7414a666e8112e8224e374d8580c773c1cc688be5"
+    },
+    {
+      "path": "Makefile",
+      "sha256": "8c1513bef6d51a84a839f17178bab13e448609850c6956b6af72f20cc21da6d7"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7cb75db91e752904f3ee2ac1b702bbb2c2c4e2a0c33c75317e7f155355d1bf60"
+    },
+    {
+      "path": "docs/CANONICAL_MAP.md",
+      "sha256": "260f58f45632dbe39f65b6d37d59c1a44c5437f077eb3a23fb168e8dd4c90219"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "sha256": "80070569dd7151f252b324c13aa002551fc94d9dc920fdd471b7c2a18a7b95a7"
+    },
+    {
+      "path": "docs/governance/claim-status-matrix.md",
+      "sha256": "e146c0fcdfc35bba9d2d53ec4d729ecdd924172e23291b35588109e559e138ff"
+    },
+    {
+      "path": "docs/governance/limitations-register.md",
+      "sha256": "2c5ac43dbb9ae929208c803ff72ea778326eefa456f4bb5aace5ff338c9c6d19"
+    },
+    {
+      "path": "docs/governance/open-problems-register.md",
+      "sha256": "3f53e5cd5a09622088280f6fba2ff31dc0eb1b34a1027a71d1e2d6fb5f095643"
+    },
+    {
+      "path": "docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md",
+      "sha256": "3bb15b6ec83427e7f26dcc9ed96cc9eb84fcb6873665a86213ad8d1054b380a7"
+    },
+    {
+      "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
+      "sha256": "8d2d205c4a6debef471faa0e626f51284f1b0f9d82cb5dca5c1d4ac85e6cab6e"
+    },
+    {
+      "path": "docs/governance/theorem-proof-status-register.md",
+      "sha256": "a765414f3e7df6653ad813fb58d82ac74edf435ce34cc7867daa12564423eca7"
+    },
+    {
+      "path": "docs/planning/next-actions.md",
+      "sha256": "daae58acab7e6a50d658bd50a24642b080d64c2a87db368f17004fdbd5acd401"
+    },
+    {
+      "path": "docs/project-status.md",
+      "sha256": "fc4a16d091c3852da86fbc83614a62af69b67b9d8b2baeb391a5c759d09923ab"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",
+      "sha256": "e592869832361e77e769169e6ad95a2f9bedc7fa7040d179ce84ad9fbdd7ecc4"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/01-literature-and-design.md",
+      "sha256": "adde4f0fc49e635d6f45d94cdf2b0a5f96065cf259d9ba956b175bf7495f2810"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
+      "sha256": "6fc2266117f5aa9f14e8d7cfcce782892dfac3d0a7acc93f96e0da76fad21db8"
+    },
+    {
+      "path": "docs/research/pca-w6-empirical-audit-utility/references.bib",
+      "sha256": "68cf93581434d47d7227d10162bd9002ac87a8ea164220845d889224cc2c7cb8"
+    },
+    {
+      "path": "governance/repository-truth-authority-v1.json",
+      "sha256": "6b8e65d64867f5b9e090db85727cc8b0c08ed9456a613a338fa979d407b4b428"
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v2.py",
+      "sha256": "579f9b4d8d036ec395c13a5f774f6456df037ff65fad08e831becd7eeb84b3f4"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/argumentation-lossy.json",
+      "sha256": "4d2079d21a8ef9d94999ba4fda7100d10145c3512699e94fa6251bb07b543aec"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/argumentation-repaired.json",
+      "sha256": "1ac74ce88366e1e2f3e502831e98b2cd232116357e223f20e5f1d8f2297245b4"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/bayesian-causal-lossy.json",
+      "sha256": "9828c6a72b9f999186636d6e9569f89a186689e44e4b087f12adc77994247a42"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/bayesian-causal-repaired.json",
+      "sha256": "68fdd6d206ec9d0aca8d7d32afccf671026dcd5c0f1554154e9bd35c5b25b8c8"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/formal-logic-lossy.json",
+      "sha256": "8071cdef4f44d069168735239190eedb743062321f223f24ad106790a7b5d4ad"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/formal-logic-repaired.json",
+      "sha256": "bb4451477becb1b4b8479a411290cad2489424907ccd88e17218b140804dc80f"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/model-based-reasoning-lossy.json",
+      "sha256": "f8c919330a7620e6ac749a0b3437affcb11ad3a74d54e9de29bbba69552520da"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/model-based-reasoning-repaired.json",
+      "sha256": "e147f2b577a7340e8dd3bc582e250d9b4f5a1b1a16180ddb07858ada854b5c46"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/proof-theory-lossy.json",
+      "sha256": "9cb7114370fbf7b561b308c5fdf31bfcb4107461483d9f1dfdeb2174d921bfd3"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/proof-theory-repaired.json",
+      "sha256": "4122b0d63007f62f2b24e49312589836e4f17364c1904b6d3068c455cb4734da"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/type-theory-lossy.json",
+      "sha256": "4ca97cc26b14f2cae0c43486bfd4979ea4d024382db5e0418ef15f4ef17880fe"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/type-theory-repaired.json",
+      "sha256": "458eee9a3cbfac5688dd3c6d0105c3d2235f2c7feb5b65f65000e3e600caeab2"
+    },
+    {
+      "path": "research/results/pca-w4-domain-contracts/manifest.json",
+      "sha256": "e1f103275eb201577d36b6e5ce8409b1ecd34f7d87db7a59773529af31edd2df"
+    },
+    {
+      "path": "research/results/pca-w6-empirical-audit-utility/results.json",
+      "sha256": "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb"
+    },
+    {
+      "path": "schemas/far-contract-v2.schema.json",
+      "sha256": "45bf6ad58ccd31c19029c525aa8e4e77fe26f5d40d9e89c37be786dc8baedc23"
+    },
+    {
+      "path": "tests/test_cre001_semantics.py",
+      "sha256": "5c37efaa3c042b0502f081717db139017cbbf05a7a4376a33d168987f4616dc1"
+    },
+    {
+      "path": "tests/test_current_state_consistency.py",
+      "sha256": "5b1c1084a106db147a048f5bfbcaa8719cf42c4584da8d38e3e1341168cf7936"
+    },
+    {
+      "path": "tests/test_pca_w4_domain_contracts.py",
+      "sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe"
+    },
+    {
+      "path": "tests/test_pca_w6_empirical_audit_utility.py",
+      "sha256": "dda1e6377f1cfe9ea693da73cd2ca8e8d6751b865b0c82c3038d8e2135ee339d"
+    },
+    {
+      "path": "tests/test_project_far_theory_closure.py",
+      "sha256": "12ae5011194bfe18540773813f91df45b6156269407a731c9c25195c8432b5dd"
+    },
+    {
+      "path": "tests/test_repository_truth.py",
+      "sha256": "27aed680bf7f512e5e858712416802f4ff695abe0cdbbcbba4f6cf21c59fb484"
+    },
+    {
+      "path": "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
+      "sha256": "eb6172968945207bcc7f155ae509c635614cdfe311c6297635fc3fc6ef110bc1"
+    },
+    {
+      "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json",
+      "sha256": "82e27cf39737663daf45d927fab8ace926ad8160f14e525978a07aee4b9c4119"
+    },
+    {
+      "path": "tools/check_current_state_consistency.py",
+      "sha256": "041269115a3eabbfe683df3425e4dc5c7e8445ff496c4d63d120497e62d666f8"
+    },
+    {
+      "path": "tools/check_pca_w4_domain_contracts.py",
+      "sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2"
+    },
+    {
+      "path": "tools/check_pca_w6_empirical_audit_utility.py",
+      "sha256": "6437c291f402997ee17d6e912b0214a7810a63b925e068597a6e0d05271f5d93"
+    },
+    {
+      "path": "tools/check_project_far_theory_closure.py",
+      "sha256": "fbe37ab65b27089da29527bf389d6d972bcd4b099c942eab64fd8b733a84e571"
+    },
+    {
+      "path": "tools/check_repository_truth.py",
+      "sha256": "a7177e3f24e46ade92239a00b638abea0e65f68b42327a412ba5bae29b5654a4"
+    },
+    {
+      "path": "tools/generate_next_tasks.py",
+      "sha256": "24b1f4404071185df52b1ff288341f8b6fd64818459ff45db609cd2a2fbfbe2e"
+    }
+  ]
+}

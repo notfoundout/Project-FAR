@@ -24,11 +24,14 @@ The current rows below govern. Dated audit sections are preserved afterward as h
 | SSS / PR #453 | Truth `PROVED` by W1 under exact scope; governing provenance **SUPPORTED/DERIVED**; W2 `FORMALIZED` | The bounded unit-free MLL witness bridge, named sequents, decoder classification, and projected-decoder failure are kernel-checked. Exact/robust common theory, maximality, and novelty remain unresolved in that experiment. |
 | W4 six-domain lossy representations | **REFUTED under six frozen finite contracts** | One checked consequence-affecting collision per domain; no open-domain or contract-free inference. |
 | W4 six explicit repairs | **PROVED sufficient for the recorded finite cases** | One checked decoder/factorization per domain; no minimality, uniqueness, efficiency, approximation, or completeness claim. |
+| W5 approximation and product-cost controls | **PROVED at the frozen finite-explicit operational scope** | Exact-rational checks distinguish Pareto minima from least elements and enforce the registered zero-loss boundary; no universal metric, scalar cost, or unique optimum follows. |
+| W6 registered collision audit | **PROVED for the registered project-authored corpus and defect class** | FAR detected 6/6 mutants, accepted 6/6 clean controls, agreed with the table-only oracle on 12/12 primary items, and reconfirmed 6/6 native lossy controls. This is bounded internal artifact evidence. |
+| W6 human disagreement reduction / external utility | **UNDERDETERMINED / OPEN** | W6 had no human participants or external investigator and estimates no population performance. |
 | Novelty of the core mathematical pattern | No novelty claim | Blackwell comparison and other prior art already supply mature contract/decision-relative informativeness, quotient, factorization, and equivalence patterns. |
 
 ## 2026-08-27 corrected closure ledger
 
-The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.1.json`](../../theory/terminal/project-far-core-theory-v1.1.json). `FAR-CORE-001`–`013` remain PROVED at their corrected stated scopes; `FAR-CORE-014` remains SUPPORTED/DERIVED as a provenance/application label. The separate W1 truth ledger records all 14 as `PROVED`. The v1.0 monograph remains immutable historical evidence. `PCA-W1-INDEPENDENT-REVIEW`, `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`, `PCA-W3-CONTRACT-SCHEMA`, and bounded `PCA-W4-DOMAIN-CONTRACTS` are complete.
+The authoritative detailed ledger is [`theory/terminal/project-far-core-theory-v1.1.json`](../../theory/terminal/project-far-core-theory-v1.1.json). `FAR-CORE-001`–`013` remain PROVED at their corrected stated scopes; `FAR-CORE-014` remains SUPPORTED/DERIVED as a provenance/application label. The separate W1 truth ledger records all 14 as `PROVED`. The v1.0 monograph remains immutable historical evidence. `PCA-W1-INDEPENDENT-REVIEW` through bounded `PCA-W6-EMPIRICAL-AUDIT-UTILITY` are complete at their governed scopes; W5 and W6 do not alter the core theorem ledger.
 
 ## Historical audit record
 

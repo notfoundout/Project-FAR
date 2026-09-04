@@ -31,7 +31,9 @@ The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under 
 
 `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope. The additive `far-ir/2.1` verifier checks exact-rational metric/loss/reference/tolerance semantics, randomized decoders, multidimensional product cost orders, Pareto minima versus least elements, and zero-loss recovery. It does not select a universal scalar cost or unique optimum.
 
-These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence.
+`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at its preregistered bounded internal controlled-artifact scope. Across six W4 repaired controls and six deterministic representation-collision mutants, the schema-only baseline detected `0/6` mutants while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, and agreed with an independent table-only collision oracle on `12/12` primary records. The six frozen native W4 lossy controls were also reconfirmed. This is internal artifact-level evidence only: human disagreement reduction remains `UNDERDETERMINED` and external real-world utility remains `OPEN`.
+
+These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence; W6 machine controls do not establish human or external effectiveness.
 
 Canonical links:
 
@@ -44,6 +46,8 @@ Canonical links:
 - [W3 contract-schema status](docs/governance/pca-w3-contract-schema-status-v1.0.md)
 - [W4 domain-contract status](docs/governance/pca-w4-domain-contracts-status-v1.0.md)
 - [W5 approximation/cost status](docs/governance/pca-w5-approximation-cost-status-v1.0.md)
+- [W6 bounded audit-utility status](docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md)
+- [W6 execution and results](docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md)
 - [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)
 - [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
 - [`far-ir/2.0` contract specification](docs/specification/far-ir-2.0-contract.md)
@@ -53,29 +57,33 @@ Canonical links:
 
 ## Post-closure phase
 
-The active program is `POST-CLOSURE-001`.
+`POST-CLOSURE-001` is complete at all six registered workstream scopes.
 
 - `PCA-W0-REPOSITORY-CONFORMITY`: complete.
 - `PCA-W1-INDEPENDENT-REVIEW`: complete.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete, 14/14 formalized.
 - `PCA-W3-CONTRACT-SCHEMA`: complete.
 - `PCA-W4-DOMAIN-CONTRACTS`: complete at six finite-explicit domain scopes.
-- `PCA-W5-APPROXIMATION-AND-COST`: **complete at its finite-explicit operational scope**.
-- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open.
+- `PCA-W5-APPROXIMATION-AND-COST`: complete at its finite-explicit operational scope.
+- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at its bounded internal controlled-artifact scope.
+
+No W7 is registered by `POST-CLOSURE-001`. OP-28 retains the downstream external/human effectiveness question and requires separate governance before execution.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
-## W4 result and W5 completion boundary
+## W4–W6 result boundaries
 
 `far-ir/2.0` explicitly represents contract identity/version, source/case domain, required behavior, representation, decoder/factorization or collision evidence, observation contexts, typed outcomes including `Unknown`, observational equivalence/quotient evidence, admitted transformations/equivalences, interpretation profile, target/model class, frame, provenance/freeze metadata, failure reporting, and optional approximation/loss/cost declarations.
 
-For finite explicit records, checked factorization, collision, and exact beta-kernel quotient claims are recomputed by the semantic verifier. A migrated `far-ir/1.0` record preserves the legacy primitive payload but remains `Unknown` and unfrozen for comparison semantics that v1 never represented. Approximation fields are declarations only; W3 does not establish W5 metric/loss/cost semantics.
+For finite explicit records, checked factorization, collision, and exact beta-kernel quotient claims are recomputed by the semantic verifier. A migrated `far-ir/1.0` record preserves the legacy primitive payload but remains `Unknown` and unfrozen for comparison semantics that v1 never represented.
 
 W4 froze native contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory before mapping them into `far-ir/2.0`. Across the six domains, deliberately lossy representations expose six checked consequence-affecting collisions, while explicit scoped repairs supply six checked finite factorization witnesses. Domain-specific recomputation and mutation controls supplement the generic v2 verifier.
 
-These W4 results certify only the frozen cases and behavior queries. W5 separately established its finite-explicit controls under `far-ir/2.1`; W4 supplies none of those approximation or cost semantics.
+W5 separately established finite-explicit approximation and product-cost-preorder semantics under `far-ir/2.1`; W4 supplies none of those choices implicitly.
 
-The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated reasoning-document interchange scope. It is not redefined by v2.
+W6 then tested one preregistered defect class using the six W4 repaired records as negative controls, deterministic representation-collision mutants as positive cases, a schema-only syntactic baseline, and a separate table-only oracle. The result is exact for that project-authored finite corpus and does not estimate population performance or human reviewer benefit.
+
+The existing Phase 3 `far-ir/1.0` mechanization remains a historical/current MVP for its stated reasoning-document interchange scope. It is not redefined by v2 or v2.1.
 
 ## Framework roles
 
@@ -137,6 +145,18 @@ python tools/check_pca_w4_domain_contracts.py
 python -m unittest tests.test_pca_w4_domain_contracts
 ```
 
+W5 approximation/cost recomputation:
+
+```bash
+make pca-w5-check
+```
+
+W6 bounded audit-utility recomputation:
+
+```bash
+make pca-w6-check
+```
+
 Repository command center:
 
 ```bash
@@ -146,7 +166,7 @@ make health
 make docs-check
 ```
 
-CI/repository consistency is assurance evidence for the encoded artifacts; it is not a substitute for mathematical proof.
+CI/repository consistency is assurance evidence for the encoded artifacts; it is not a substitute for mathematical proof or external empirical validation.
 
 ## Navigation
 

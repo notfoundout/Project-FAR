@@ -12,47 +12,43 @@
 
 Generated from the registered post-closure program.
 
-Program: `POST-CLOSURE-001`.
+Program: `POST-CLOSURE-001` — complete at its six registered workstream scopes.
 
 Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
-The core theory is closed after the governed v1.1 correction. These tasks change assurance, implementation, applicability, or utility; they do not reopen the core without a genuine contradiction.
+The core theory is closed after the governed v1.1 correction. The sealed W1 independent review, W2 proof-assistant formalization, W3 contract schema, W4 domain contracts, W5 approximation/cost semantics, and W6 bounded internal audit-utility control are complete at their exact governed scopes.
 
-The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete: 14 PROVED under exact scopes, no correction required, novelty/priority not established. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED, including the bounded MLL bridge for FAR-CORE-014, with no contradiction/reopen outcome. `PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor, finite-explicit semantic checks are implemented, and `far-ir/1.0` remains unchanged. `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes: six checked lossy collisions and six checked repairs, with internally authored mappings and no external-domain validation claim. `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope under additive `far-ir/2.1`; no universal scalar cost or unique optimum is claimed.
-
-Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.
+There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 and requires separate governance before execution; it is not silently named W7.
 
 ## Ranked Next Actions
 
 ### STRATEGIC-012: Develop domain comparison contracts
 
 - Registered workstream: `PCA-W4-DOMAIN-CONTRACTS`
-- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
 - Priority: complete
-- Why it matters: The core theorem does not select tests, outcome types, semantics, transformations, profiles, frames, or normative objectives for a domain.
-- Expected outcome: Six source-motivated native contracts, twelve far-ir/2.0 records, six checked collisions, and six checked scoped repairs with explicit nonclaims.
-- Suggested branch name: `research/pca-w4-domain-contracts`
-- Suggested PR title: `Develop scoped domain contracts`
+- Outcome: Six source-motivated native contracts, twelve `far-ir/2.0` records, six checked collisions, and six checked scoped repairs with explicit nonclaims.
 
 ### STRATEGIC-013: Specify approximation and cost orders
 
 - Registered workstream: `PCA-W5-APPROXIMATION-AND-COST`
-- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
 - Priority: complete
-- Why it matters: Exact information minimality does not choose metrics, decision losses, tolerances, runtime, storage, or explanatory cost.
-- Expected outcome: Checked finite-explicit far-ir/2.1 approximation and product-cost semantics without a universal optimum claim.
-- Suggested branch name: `research/pca-w5-approximation-cost`
-- Suggested PR title: `Specify approximate and cost-relative adequacy`
+- Outcome: Checked finite-explicit `far-ir/2.1` approximation and product-cost semantics without a universal optimum claim.
 
 ### STRATEGIC-014: Test audit utility
 
 - Registered workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`
-- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
-- Priority: active / external-dependency
-- Why it matters: No preregistered external study shows that contract/factorization auditing catches material loss or reduces disagreement.
-- Expected outcome: Bounded empirical evidence with negative results, protocol deviations, and independence disclosed.
-- Suggested branch name: `research/pca-w6-audit-utility`
-- Suggested PR title: `Prepare PCA-W6 audit-utility study`
+- Priority: complete at bounded internal controlled-artifact scope
+- Outcome: Preregistered six-domain control found schema-only mutation detection `0/6`, FAR semantic mutation detection `6/6`, clean-control acceptance `6/6`, FAR/oracle agreement `12/12`, and native lossy-control confirmation `6/6`.
+- Boundary: human disagreement reduction remains `UNDERDETERMINED`; external real-world utility remains `OPEN`.
+
+### OPEN-EXTERNAL-OP-28: Independently test human/external audit effectiveness
+
+- Registered post-closure workstream: none
+- Authority: OP-28 in the open-problems register
+- Priority: open / external-dependency
+- Why it matters: W6 establishes only a project-authored machine controlled-artifact result. It does not show that human reviewers catch more consequential loss, disagree less, work faster, or make better real-world decisions.
+- Required before execution: a separately governed protocol defining participant population or external evaluator, comparator, blinded/randomized procedure where appropriate, outcome measures, analysis plan, independence disclosure, data governance/ethics requirements, falsifiers, and promotion boundaries.
+- Prohibited shortcut: do not relabel W6's schema baseline, machine oracle, or internal replication as human or external evidence.
 
 ## Maintainer Boundaries
 
@@ -61,11 +57,12 @@ Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.
 - Preserve the v1.1 FAR-CORE-004 minimality/sufficiency distinction and FAR-CORE-010 exact-theory/frame-residue distinction.
 - Reopen the core only for a reproducible contradiction to a premise, proof step, theorem, or derivation.
 - Keep determinate absence, failure, inapplicability, unresolvedness, and epistemic Unknown distinct when the contract does.
-- Do not infer mathematical proof from CI, schema conformance, finite panels, or successful encoding.
+- Do not infer mathematical proof from CI, schema conformance, finite panels, successful encoding, or W6 controlled-artifact performance.
 
 Validation commands:
 
 - `python tools/check_project_far_theory_closure.py`
+- `make pca-w6-check`
 - `make semantic-check`
 - `make docs-check`
 - `make health-fast`

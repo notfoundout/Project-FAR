@@ -4,7 +4,7 @@
 
 Program: `POST-CLOSURE-001`
 
-Status: **Active**
+Status: **Complete at the six registered workstream scopes; downstream external utility remains open**
 
 Governing theory: `PROJECT-FAR-CORE-THEORY-1.1`
 
@@ -32,8 +32,10 @@ that assurance change without rewriting the theory.
 - `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`: complete — FAR-CORE-001–014 are kernel-checked against the governed v1.1 statements; FAR-CORE-014 includes the bounded MLL syntax, resource split, atom-balance invariant, named witness sequents, and projected-decoder failure, with no contradiction found.
 - `PCA-W3-CONTRACT-SCHEMA`: complete — `far-ir/2.0` is a versioned comparison-contract successor with explicit contract/scope/provenance/failure fields, finite-explicit factorization/collision/quotient verification, loss-explicit v1 migration, and conformance fixtures. `far-ir/1.0` remains unchanged and is not silently reinterpreted.
 - `PCA-W4-DOMAIN-CONTRACTS`: complete at finite-explicit scopes — six native contracts were frozen before mapping; six deliberately lossy representations have checked collisions and six explicit scoped repairs have checked factorizations. The domain mappings remain internally authored.
-- `PCA-W5-APPROXIMATION-AND-COST`: complete at finite-explicit operational scope — `far-ir/2.1` establishes checked approximation and cost semantics without universal scalarization.
-- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: open — next — test whether the audit discipline detects material loss or reduces disagreement.
+- `PCA-W5-APPROXIMATION-AND-COST`: complete at finite-explicit operational scope — `far-ir/2.1` establishes checked approximation and multidimensional product-cost-preorder semantics without universal scalarization.
+- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at the preregistered bounded internal controlled-artifact scope — the semantic audit detected `6/6` registered material-collision mutants, accepted `6/6` clean repaired controls, agreed with a separate table-only oracle on `12/12` primary items, and independently reconfirmed `6/6` frozen native lossy controls. Human disagreement reduction remains `UNDERDETERMINED`; external real-world utility remains `OPEN`.
+
+No W7 is registered by this program. Completion of the six-workstream sequence does not close downstream external-effectiveness obligations.
 
 ## Assurance rules
 
@@ -44,6 +46,10 @@ Proof-assistant work may upgrade only the formalized results. Failure to formali
 W3 software checks may certify only properties recomputable from the encoded finite-explicit record. Abstract declarations, migration, schema validity, or CI success cannot be promoted to application correspondence or mathematical proof. A migrated `far-ir/1.0` record is `Unknown` for W3 semantics until the missing contract dimensions are supplied and frozen.
 
 W4 native memos and bibliographic identities supply bounded domain correspondence for the recorded questions; they do not establish domain completeness. The six collision and six repair certificates are internally mapped finite results, not external-investigator review, minimality, novelty, approximation, cost, or empirical-utility evidence.
+
+W5 operationalizes only the frozen finite-explicit metric/reference/aggregation/loss/tolerance/decoder/cost-preorder contracts encoded in `far-ir/2.1`. Multiple incomparable Pareto minima and absence of a least element are permitted; no universal scalar cost or unique optimum is inferred.
+
+W6 distinguishes artifact-level semantic loss detection from human or field utility. Its schema-only baseline is a syntactic machine baseline, not unaided human review. Its project-authored corpus, mutation, oracle, and adjudication cannot be promoted to external independent effectiveness evidence or population performance estimates.
 
 ## Contract and application rules
 
@@ -72,7 +78,8 @@ The program prohibits:
 - native common structure inferred from arbitrary encoding;
 - open-domain universality inferred from finite panels;
 - mathematical proof inferred from CI or schema conformance;
-- third-party review status inferred from internal execution.
+- third-party review status inferred from internal execution;
+- human-review or external-effectiveness claims inferred from W6 machine controls.
 
 ## Terminal outputs
 
@@ -81,6 +88,10 @@ Every workstream returns one or more of: `PROVED`, `REFUTED`, `OPEN`, `BLOCKED`,
 W3 specification: [`far-ir/2.0` comparison-contract specification](../specification/far-ir-2.0-contract.md).
 
 W4 status: [PCA-W4 domain-contract status](pca-w4-domain-contracts-status-v1.0.md).
+
+W5 status: [PCA-W5 approximation-and-cost status](pca-w5-approximation-cost-status-v1.0.md).
+
+W6 status: [PCA-W6 empirical audit-utility status](pca-w6-empirical-audit-utility-status-v1.0.md).
 
 Machine-readable authority: [post-closure-assurance-and-application-program-v1.0.json](../../theory/evaluation/post-closure-assurance-and-application-program-v1.0.json).
 
