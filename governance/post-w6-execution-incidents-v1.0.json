@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "record_id": "PCA-W6-EXECUTION-INCIDENTS-1.0",
+  "source_execution_record": "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
+  "source_execution_sha256": "6fc2266117f5aa9f14e8d7cfcce782892dfac3d0a7acc93f96e0da76fad21db8",
+  "frozen_result_path": "research/results/pca-w6-empirical-audit-utility/results.json",
+  "frozen_result_sha256": "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb",
+  "scientific_deviations": [],
+  "execution_incidents": [
+    {
+      "id": "W6-INC-001",
+      "class": "test_harness",
+      "observation": "Python boolean literals were initially written with JSON spelling.",
+      "resolution": "Corrected before result acceptance.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-002",
+      "class": "test_harness",
+      "observation": "An independence test inspected its own explanatory docstring.",
+      "resolution": "Corrected before result acceptance.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-003",
+      "class": "execution_harness",
+      "observation": "Standalone checker execution failed because repository-path setup did not expose the vendored jsonschema dependency.",
+      "resolution": "Repository root was added to sys.path before loading the validator.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-004",
+      "class": "assurance_manifest",
+      "observation": "The terminal CRE-001 regression had not been rebound in the W4 supporting-artifact manifest.",
+      "resolution": "Governed hashes were refreshed during finalization.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-005",
+      "class": "assurance_manifest",
+      "observation": "The expanded W6 exact-artifact set had not been regenerated into the W6 manifest.",
+      "resolution": "W6 manifest coverage was regenerated and expanded during finalization.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-006",
+      "class": "canonical_propagation",
+      "observation": "Final audit found incomplete propagation into the canonical map and current claim, proof-status, limitation, and open-problem registers.",
+      "resolution": "Canonical propagation surfaces were completed during finalization.",
+      "changed_scientific_condition": false
+    },
+    {
+      "id": "W6-INC-007",
+      "class": "governance_workflow",
+      "observation": "A temporary branch-mutating remediation workflow existed during finalization.",
+      "resolution": "The workflow was removed and a regression was added rejecting its return.",
+      "changed_scientific_condition": false
+    }
+  ],
+  "interpretation": {
+    "deviations_field_in_frozen_w6_result": "No preregistered scientific condition, endpoint, corpus, mutation, algorithm, analysis rule, or interpretation boundary changed.",
+    "purpose_of_this_ledger": "Preserve the separate execution and assurance incident history in machine-readable form without rewriting the frozen W6 scientific result."
+  }
+}
