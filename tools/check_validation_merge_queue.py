@@ -8,7 +8,10 @@ import os
 from pathlib import Path
 import urllib.error
 import urllib.request
+from urllib.parse import urlencode
 
+RULESET_NAME = "Project FAR Canonical Merge Queue"
+PAGE_SIZE = 100
 EXPECTED = {
     "check_response_timeout_minutes": 60,
     "grouping_strategy": "ALLGREEN",
@@ -39,17 +42,85 @@ def request(url: str, token: str):
     return json.loads(raw) if raw else {}
 
 
-def validate_merge_queue_rule(rules: list[dict]) -> list[str]:
+def list_repository_rulesets(api: str, token: str) -> list[dict]:
+    collected: list[dict] = []
+    page = 1
+    while True:
+        query = urlencode(
+            {
+                "includes_parents": "false",
+                "per_page": PAGE_SIZE,
+                "page": page,
+            }
+        )
+        payload = request(f"{api}/rulesets?{query}", token)
+        if not isinstance(payload, list):
+            raise SystemExit("GitHub rulesets list endpoint returned a non-list payload")
+        collected.extend(payload)
+        if len(payload) < PAGE_SIZE:
+            return collected
+        page += 1
+
+
+def validate_merge_queue_parameters(parameters: dict) -> list[str]:
     errors: list[str] = []
-    queue_rules = [rule for rule in rules if rule.get("type") == "merge_queue"]
-    if len(queue_rules) != 1:
-        return [f"expected exactly one active merge_queue rule, found {len(queue_rules)}"]
-    parameters = queue_rules[0].get("parameters") or {}
     for key, expected in EXPECTED.items():
         actual = parameters.get(key)
         if actual != expected:
             errors.append(f"merge_queue.{key}: expected {expected!r}, got {actual!r}")
     return errors
+
+
+def validate_canonical_ruleset(ruleset: dict) -> list[str]:
+    errors: list[str] = []
+    if ruleset.get("name") != RULESET_NAME:
+        errors.append(f"ruleset name mismatch: {ruleset.get('name')!r}")
+    if ruleset.get("target") != "branch":
+        errors.append(f"ruleset target must be 'branch', got {ruleset.get('target')!r}")
+    if ruleset.get("enforcement") != "active":
+        errors.append(f"ruleset enforcement must be 'active', got {ruleset.get('enforcement')!r}")
+    if ruleset.get("bypass_actors") not in ([], None):
+        errors.append(f"ruleset bypass_actors must be empty, got {ruleset.get('bypass_actors')!r}")
+    conditions = ruleset.get("conditions") or {}
+    ref_name = conditions.get("ref_name") or {}
+    if ref_name.get("include") != ["~DEFAULT_BRANCH"]:
+        errors.append(
+            "ruleset include scope must be exactly ['~DEFAULT_BRANCH'], "
+            f"got {ref_name.get('include')!r}"
+        )
+    if ref_name.get("exclude") != []:
+        errors.append(f"ruleset exclude scope must be empty, got {ref_name.get('exclude')!r}")
+
+    rules = ruleset.get("rules") or []
+    queue_rules = [rule for rule in rules if rule.get("type") == "merge_queue"]
+    if len(queue_rules) != 1:
+        errors.append(f"expected exactly one merge_queue rule in canonical ruleset, found {len(queue_rules)}")
+    if len(rules) != 1:
+        errors.append(f"canonical ruleset must contain exactly one rule, found {len(rules)}")
+    if len(queue_rules) == 1:
+        errors.extend(validate_merge_queue_parameters(queue_rules[0].get("parameters") or {}))
+    return errors
+
+
+def select_canonical_ruleset(rulesets: list[dict]) -> tuple[dict | None, list[str]]:
+    matches = [
+        item
+        for item in rulesets
+        if item.get("source_type") == "Repository"
+        and item.get("name") == RULESET_NAME
+    ]
+    if len(matches) != 1:
+        return None, [f"expected exactly one repository canonical ruleset, found {len(matches)}"]
+    if not matches[0].get("id"):
+        return None, ["canonical ruleset has no id"]
+    return matches[0], []
+
+
+def validate_active_branch_rules(rules: list[dict]) -> list[str]:
+    queue_rules = [rule for rule in rules if rule.get("type") == "merge_queue"]
+    if len(queue_rules) != 1:
+        return [f"expected exactly one active merge_queue rule on main, found {len(queue_rules)}"]
+    return validate_merge_queue_parameters(queue_rules[0].get("parameters") or {})
 
 
 def validate_workflow(path: Path) -> list[str]:
@@ -103,8 +174,17 @@ def main() -> int:
     if owner_type != "Organization":
         errors.append(f"repository owner type is {owner_type!r}, expected 'Organization'")
 
-    rules = request(f"{api}/rules/branches/{args.branch}", token)
-    errors.extend(validate_merge_queue_rule(rules if isinstance(rules, list) else []))
+    rulesets = list_repository_rulesets(api, token)
+    canonical_summary, selection_errors = select_canonical_ruleset(rulesets)
+    errors.extend(selection_errors)
+    ruleset_id = None
+    if canonical_summary is not None:
+        ruleset_id = canonical_summary["id"]
+        canonical = request(f"{api}/rulesets/{ruleset_id}", token)
+        errors.extend(validate_canonical_ruleset(canonical))
+
+    active_rules = request(f"{api}/rules/branches/{args.branch}", token)
+    errors.extend(validate_active_branch_rules(active_rules if isinstance(active_rules, list) else []))
 
     protection = request(f"{api}/branches/{args.branch}/protection", token)
     errors.extend(validate_branch_protection(protection))
@@ -114,6 +194,8 @@ def main() -> int:
         "repository": args.repository,
         "branch": args.branch,
         "owner_type": owner_type,
+        "ruleset_id": ruleset_id,
+        "ruleset_name": RULESET_NAME,
         "merge_queue_enforced": not errors,
         "required_check": "merge-authority",
         "errors": errors,
