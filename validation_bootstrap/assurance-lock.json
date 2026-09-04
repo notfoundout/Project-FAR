@@ -1,5 +1,6 @@
 {
   "files": {
+    ".github/workflows/canonical-branch-protection.yml": "ab481ba83f7126058ec3306b4448e16479df50b9d02031fcdde32c80c7be3a0a",
     ".github/workflows/configure-validation-protection.yml": "31b93c343445911d6674349df94f79a96ec57e0452d76d577098fd5c486c9fc2",
     ".github/workflows/lean.yml": "30108bcb63047e7a7f373c28e9d84d468901e18a77ea714e98eaf9bfa990ca11",
     ".github/workflows/repo-health.yml": "e8430fb10a98a4f0eff0e76bdf594a030952eb276e0a2b2a4a79267ece9c77d2",
