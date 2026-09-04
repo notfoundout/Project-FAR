@@ -14,9 +14,25 @@ The first CI execution exposed implementation defects in the W6 test harness bef
 
 The next controlled test execution passed all six W6 tests. It recomputed the recorded deterministic result exactly and confirmed the registered mutation remained JSON-Schema-valid while producing `FACTORIZATION_FAILURE` under the FAR semantic audit. A subsequent standalone-checker invocation exposed a repository-path import defect (`jsonschema` unavailable when the script was executed directly); the checker was corrected to place the repository root on `sys.path` before loading the vendored validator. This was an execution-harness repair only and did not alter the frozen experiment.
 
-These implementation corrections are recorded here as execution history. The machine result's `deviations` field remains empty because no preregistered scientific condition, endpoint, corpus, mutation, or analysis rule changed.
+These implementation corrections are recorded as execution incidents, not scientific deviations. A **scientific deviation** is a post-freeze change to the registered corpus, mutation, endpoint, baseline, oracle, success criterion, analysis rule, or interpretation boundary. An **execution incident** is an implementation, CI, governance, or evidence-packaging failure encountered while executing or finalizing that frozen protocol. The distinction prevents a true statement of zero scientific deviations from erasing the real operational history.
 
 The final repository-wide merge-gate audit found two additional assurance defects after the scientific result had stabilized: the terminal CRE-001 regression had not been rebound in the W4 supporting-artifact manifest, and the expanded W6 exact-artifact set had not been regenerated into the W6 manifest. The same audit found incomplete propagation into the canonical map and current claim, proof-status, limitation, and open-problem registers, plus a temporary branch-mutating remediation workflow. Finalization refreshed the governed hashes, expanded W6 coverage to every changed evidence/dependency/propagation surface, completed those indexes, removed the temporary workflow, and added a regression rejecting its return. None of these assurance repairs changed the frozen W4 records, W6 corpus, mutation, endpoints, algorithm, result record, or claim boundary.
+
+## Protocol accounting
+
+Scientific deviations: **0 (`NONE`)**. Execution incidents: **7, all resolved**. Scientific result changed by an incident: **false**.
+
+| Incident | Class | Resolution |
+|---|---|---|
+| `W6-INC-001` | test-harness defect | Corrected Boolean literals and scoped the independence inspection to the oracle implementation. |
+| `W6-INC-002` | standalone import defect | Made the repository-local validator importable in direct checker execution. |
+| `W6-INC-003` | governance and manifest drift | Rebound evidence, expanded the exact manifest, and completed canonical propagation. |
+| `W6-INC-004` | workflow-link false positive | Preserved the transient-workflow prohibition without rejecting a documentation reference. |
+| `W6-INC-005` | temporary finalization automation | Removed branch-mutating/remediation/export workflows after a failed remediation attempt and successful exact exports; locked their absence. |
+| `W6-INC-006` | CI timeout omission | Added the mandatory W6 job timeout before acceptance. |
+| `W6-INC-007` | regression-test identity drift | Restored four stable regression-test aliases rejected by the weakening gate. |
+
+The canonical machine-readable ledger is `research/results/pca-w6-empirical-audit-utility/execution-incidents.json`. The computed result binds that ledger by SHA-256 and the W6 checker rejects omitted, reordered, unresolved, protocol-changing, or scientifically impactful incident entries.
 
 ## Primary result
 

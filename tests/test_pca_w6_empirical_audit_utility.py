@@ -129,6 +129,34 @@ class PCAW6AuditUtilityTests(unittest.TestCase):
         self.assertEqual(result["terminal"]["external_real_world_utility"], "OPEN")
         self.assertEqual(result["terminal"]["core_theory_impact"], "NONE")
 
+    def test_zero_scientific_deviations_are_distinct_from_real_execution_incidents(self) -> None:
+        ledger = W6.load_incident_ledger()
+        accounting = W6.compute_results()["protocol_accounting"]
+        self.assertEqual(ledger["scientific_deviations"]["count"], 0)
+        self.assertEqual(ledger["scientific_deviations"]["status"], "NONE")
+        self.assertEqual(accounting["scientific_deviations"]["items"], [])
+        self.assertEqual(ledger["execution_incidents"]["count"], 7)
+        self.assertEqual(accounting["execution_incidents"]["count"], 7)
+        self.assertFalse(accounting["scientific_result_changed"])
+
+    def test_incident_ledger_is_hash_bound_and_fails_closed(self) -> None:
+        ledger = W6.load_incident_ledger()
+        accounting = W6.compute_results()["protocol_accounting"]
+        self.assertEqual(accounting["execution_incidents"]["sha256"], W6.sha256(W6.INCIDENTS_PATH))
+        self.assertEqual(W6.incident_ledger_errors(ledger), [])
+
+        missing = copy.deepcopy(ledger)
+        missing["execution_incidents"]["items"] = missing["execution_incidents"]["items"][:-1]
+        self.assertTrue(W6.incident_ledger_errors(missing))
+
+        changed_protocol = copy.deepcopy(ledger)
+        changed_protocol["execution_incidents"]["items"][0]["changed_frozen_scientific_protocol"] = True
+        self.assertTrue(W6.incident_ledger_errors(changed_protocol))
+
+        scientific_impact = copy.deepcopy(ledger)
+        scientific_impact["execution_incidents"]["items"][0]["scientific_impact"] = "POSSIBLE"
+        self.assertTrue(W6.incident_ledger_errors(scientific_impact))
+
 
 if __name__ == "__main__":
     unittest.main()

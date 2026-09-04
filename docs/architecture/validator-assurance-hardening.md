@@ -62,9 +62,11 @@ The Lean file proves the abstract assurance model. The Python model checker corr
 
 The `Validator Assurance` workflow runs on pull requests, pushes to `main`, workflow dispatch, and the GitHub `merge_group` event. The `merge-authority` job issues a signed certificate bound to the exact checked commit and Git tree and requires all five assurance evidence artifacts.
 
-`tools/configure_validation_protection.py` configures strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion.
+`tools/configure_validation_protection.py` applies strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion. `tools/check_validation_protection.py` independently reads the GitHub control plane and fails unless every required setting matches. The apply workflow remains assurance-locked; a successful read-back is the evidence of live enforcement.
 
-Native GitHub merge queues are unavailable while this public repository is owned by a personal account. The workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization; until then, strict required-check branch protection is the strongest enforceable GitHub control.
+Control-plane audit on 2026-09-04: this repository is **private** and owned by a personal account. GitHub reported that the repository must either upgrade to GitHub Pro or become public to enable this feature, and the installed integration lacks repository-administration access. Therefore branch protection is **not currently proven or represented as enforced**. The workflow and script encode and verify desired state; they are not evidence of live enforcement until an eligible plan or visibility and an administrator token permit a successful apply-and-read-back run.
+
+Native GitHub merge queues are unavailable while the repository is personal-account owned. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization. Once branch protection becomes eligible, strict required-check protection is the immediate canonical-branch control.
 
 ## Required secrets
 

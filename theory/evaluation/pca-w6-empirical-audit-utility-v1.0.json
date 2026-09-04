@@ -6,6 +6,13 @@
   "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
   "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
   "result_record": "research/results/pca-w6-empirical-audit-utility/results.json",
+  "protocol_accounting": {
+    "scientific_deviations": 0,
+    "execution_incidents": 7,
+    "all_execution_incidents_resolved": true,
+    "scientific_result_changed": false,
+    "incident_record": "research/results/pca-w6-empirical-audit-utility/execution-incidents.json"
+  },
   "corpus": {
     "domains": 6,
     "negative_controls": 6,

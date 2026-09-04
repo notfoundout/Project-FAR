@@ -22,6 +22,7 @@ PROTOCOL_FREEZE_COMMIT = "3813b9e3eb49562bd8b9f4d3179c3d9536831de6"
 PROTOCOL_BASE_COMMIT = "2cecf2e21cc27208f606dcd38337af4369e66af2"
 W4_MANIFEST = ROOT / "research/results/pca-w4-domain-contracts/manifest.json"
 RESULT_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/results.json"
+INCIDENTS_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/execution-incidents.json"
 MANIFEST_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/manifest.json"
 SCHEMA_PATH = ROOT / "schemas/far-contract-v2.schema.json"
 VERIFIER_PATH = ROOT / "mechanization/far_mechanization/contract_v2.py"
@@ -99,6 +100,7 @@ EXPECTED_ARTIFACTS = (
     "research/results/pca-w4-domain-contracts/type-theory-lossy.json",
     "research/results/pca-w4-domain-contracts/type-theory-repaired.json",
     "research/results/pca-w4-domain-contracts/manifest.json",
+    "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
     "research/results/pca-w6-empirical-audit-utility/results.json",
     "schemas/far-contract-v2.schema.json",
     "tests/test_cre001_semantics.py",
@@ -128,6 +130,75 @@ def canonical_json(value: object) -> str:
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+EXPECTED_INCIDENT_IDS = tuple(f"W6-INC-{index:03d}" for index in range(1, 8))
+
+
+def incident_ledger_errors(ledger: object) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(ledger, dict):
+        return ["W6 incident ledger must be an object"]
+    expected = {
+        "schema_version", "campaign", "protocol_freeze_commit", "protocol_base_commit",
+        "scientific_deviations", "execution_incidents", "scientific_result_changed",
+    }
+    if set(ledger) != expected:
+        errors.append("W6 incident ledger top-level fields mismatch")
+    if ledger.get("schema_version") != "1.0" or ledger.get("campaign") != "PCA-W6-EMPIRICAL-AUDIT-UTILITY":
+        errors.append("W6 incident ledger identity mismatch")
+    if ledger.get("protocol_freeze_commit") != PROTOCOL_FREEZE_COMMIT:
+        errors.append("W6 incident ledger protocol freeze mismatch")
+    if ledger.get("protocol_base_commit") != PROTOCOL_BASE_COMMIT:
+        errors.append("W6 incident ledger protocol base mismatch")
+    deviations = ledger.get("scientific_deviations")
+    if not isinstance(deviations, dict) or set(deviations) != {"count", "status", "definition", "items"}:
+        errors.append("W6 scientific-deviation record is malformed")
+    elif deviations["count"] != 0 or deviations["status"] != "NONE" or deviations["items"] != []:
+        errors.append("W6 scientific deviations must be explicitly zero/NONE with an empty item list")
+    incidents = ledger.get("execution_incidents")
+    if not isinstance(incidents, dict) or set(incidents) != {"count", "definition", "items"}:
+        errors.append("W6 execution-incident record is malformed")
+    else:
+        items = incidents.get("items")
+        if not isinstance(items, list):
+            errors.append("W6 execution incidents must be a list")
+        else:
+            ids = tuple(item.get("id") for item in items if isinstance(item, dict))
+            if incidents.get("count") != len(items) or ids != EXPECTED_INCIDENT_IDS:
+                errors.append("W6 execution-incident count or exact ordered IDs mismatch")
+            item_fields = {
+                "id", "class", "observation", "resolution", "evidence_commits", "resolved",
+                "changed_frozen_scientific_protocol", "scientific_impact",
+            }
+            for index, item in enumerate(items):
+                if not isinstance(item, dict) or set(item) != item_fields:
+                    errors.append(f"W6 execution incident {index} is malformed")
+                    continue
+                if not all(isinstance(item[field], str) and item[field] for field in ("id", "class", "observation", "resolution")):
+                    errors.append(f"W6 execution incident {index} lacks required text")
+                commits = item["evidence_commits"]
+                if not isinstance(commits, list) or not commits or not all(
+                    isinstance(commit, str) and re.fullmatch(r"[0-9a-f]{8,40}", commit) for commit in commits
+                ):
+                    errors.append(f"W6 execution incident {index} has invalid evidence commits")
+                if item["resolved"] is not True:
+                    errors.append(f"W6 execution incident {index} is not resolved")
+                if item["changed_frozen_scientific_protocol"] is not False:
+                    errors.append(f"W6 execution incident {index} changed the frozen scientific protocol")
+                if item["scientific_impact"] != "NONE":
+                    errors.append(f"W6 execution incident {index} has non-NONE scientific impact")
+    if ledger.get("scientific_result_changed") is not False:
+        errors.append("W6 ledger must record no scientific result change")
+    return errors
+
+
+def load_incident_ledger() -> dict[str, Any]:
+    ledger = json.loads(INCIDENTS_PATH.read_text(encoding="utf-8"))
+    errors = incident_ledger_errors(ledger)
+    if errors:
+        raise ValueError("; ".join(errors))
+    return ledger
 
 
 def git_blob_sha1(path: Path) -> str:
@@ -254,6 +325,7 @@ def compute_results() -> dict[str, Any]:
     dependency_errors = verify_protocol_base_dependencies()
     if dependency_errors:
         raise ValueError("; ".join(dependency_errors))
+    incident_ledger = load_incident_ledger()
     groups = _record_groups()
     primary_items: list[dict[str, Any]] = []
     secondary_items: list[dict[str, Any]] = []
@@ -385,7 +457,19 @@ def compute_results() -> dict[str, Any]:
             "human_disagreement_tested": False,
             "machine_oracle_independent_of_far_verifier": True,
         },
-        "deviations": [],
+        "protocol_accounting": {
+            "scientific_deviations": {
+                "count": incident_ledger["scientific_deviations"]["count"],
+                "status": incident_ledger["scientific_deviations"]["status"],
+                "items": incident_ledger["scientific_deviations"]["items"],
+            },
+            "execution_incidents": {
+                "count": incident_ledger["execution_incidents"]["count"],
+                "record": str(INCIDENTS_PATH.relative_to(ROOT)),
+                "sha256": sha256(INCIDENTS_PATH),
+            },
+            "scientific_result_changed": incident_ledger["scientific_result_changed"],
+        },
         "terminal": {
             "bounded_material_loss_detection": "PROVED" if primary_pass and secondary_pass else "REFUTED",
             "human_disagreement_reduction": "UNDERDETERMINED",
@@ -477,6 +561,13 @@ def verify_no_transient_artifacts() -> list[str]:
 def main() -> int:
     errors: list[str] = []
     errors.extend(verify_protocol_base_dependencies())
+    if not INCIDENTS_PATH.is_file():
+        errors.append(f"missing W6 incident ledger: {INCIDENTS_PATH.relative_to(ROOT)}")
+    else:
+        try:
+            errors.extend(incident_ledger_errors(json.loads(INCIDENTS_PATH.read_text(encoding="utf-8"))))
+        except (OSError, json.JSONDecodeError) as exc:
+            errors.append(f"unreadable W6 incident ledger: {exc}")
     if not RESULT_PATH.is_file():
         errors.append(f"missing W6 result: {RESULT_PATH.relative_to(ROOT)}")
     else:
