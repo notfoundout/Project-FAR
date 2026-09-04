@@ -20,6 +20,8 @@ Bounded material-loss-detection verdict: **PROVED for the registered corpus and 
 
 The exact W6 manifest binds the preregistration, result, independent-oracle implementation, frozen W4 corpus and protocol-base dependencies, dedicated workflow, tests, and every canonical propagation surface changed by W6. The final tree contains no branch-mutating finalizer; the W6 checker and regression suite fail if the temporary remediation workflow returns.
 
+The provenance ledger separately records **zero scientific deviations** and **seven resolved execution incidents**. The result record is hash-bound to that ledger and states that none of the incidents changed the frozen scientific protocol or result. This preserves the real execution history without misclassifying harness, CI, governance, or packaging failures as scientific deviations.
+
 ## What W6 does not establish
 
 The experiment used Project-FAR-authored records, Project-FAR-authored mutations, and Project-FAR-authored implementations. It had no human participants and no external investigator. Therefore:

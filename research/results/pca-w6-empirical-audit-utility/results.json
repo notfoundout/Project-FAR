@@ -188,7 +188,19 @@
     "human_disagreement_tested": false,
     "machine_oracle_independent_of_far_verifier": true
   },
-  "deviations": [],
+  "protocol_accounting": {
+    "scientific_deviations": {
+      "count": 0,
+      "status": "NONE",
+      "items": []
+    },
+    "execution_incidents": {
+      "count": 7,
+      "record": "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
+      "sha256": "ff4bcf4e8dc6993db04691ea91937e390fcbaa9d1c3a9f7349826018469dd885"
+    },
+    "scientific_result_changed": false
+  },
   "terminal": {
     "bounded_material_loss_detection": "PROVED",
     "human_disagreement_reduction": "UNDERDETERMINED",

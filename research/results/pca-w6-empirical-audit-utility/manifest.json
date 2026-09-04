@@ -39,7 +39,7 @@
     },
     {
       "path": "docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md",
-      "sha256": "3bb15b6ec83427e7f26dcc9ed96cc9eb84fcb6873665a86213ad8d1054b380a7"
+      "sha256": "75e1c71d0af39aeaa740af4d4bf1881c35f0c6193ae2e7772c63668bc827a051"
     },
     {
       "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
@@ -67,7 +67,7 @@
     },
     {
       "path": "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
-      "sha256": "6fc2266117f5aa9f14e8d7cfcce782892dfac3d0a7acc93f96e0da76fad21db8"
+      "sha256": "beec81427d14d2bd49250e15278d375d1bbca23a543fbac067c2d21ef46a101e"
     },
     {
       "path": "docs/research/pca-w6-empirical-audit-utility/references.bib",
@@ -134,8 +134,12 @@
       "sha256": "e1f103275eb201577d36b6e5ce8409b1ecd34f7d87db7a59773529af31edd2df"
     },
     {
+      "path": "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
+      "sha256": "ff4bcf4e8dc6993db04691ea91937e390fcbaa9d1c3a9f7349826018469dd885"
+    },
+    {
       "path": "research/results/pca-w6-empirical-audit-utility/results.json",
-      "sha256": "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb"
+      "sha256": "c6556fd16a9a626cf9dc0f273d41301b60d161e656c792610456d25f502e2b1b"
     },
     {
       "path": "schemas/far-contract-v2.schema.json",
@@ -155,7 +159,7 @@
     },
     {
       "path": "tests/test_pca_w6_empirical_audit_utility.py",
-      "sha256": "dda1e6377f1cfe9ea693da73cd2ca8e8d6751b865b0c82c3038d8e2135ee339d"
+      "sha256": "52a42da350bd08c065034d8564bb16b41f0bbcfcba67e03e8c3064bb3b13a7c7"
     },
     {
       "path": "tests/test_project_far_theory_closure.py",
@@ -167,7 +171,7 @@
     },
     {
       "path": "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
-      "sha256": "eb6172968945207bcc7f155ae509c635614cdfe311c6297635fc3fc6ef110bc1"
+      "sha256": "67d2bd29d05cb7b2342fdc266543799a59f3247987ce5c93131b9c87166ed92b"
     },
     {
       "path": "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json",
@@ -183,7 +187,7 @@
     },
     {
       "path": "tools/check_pca_w6_empirical_audit_utility.py",
-      "sha256": "6437c291f402997ee17d6e912b0214a7810a63b925e068597a6e0d05271f5d93"
+      "sha256": "046754794fb21ef2d8a27c40f933a022370d78356562a9a9a340c07255a62a40"
     },
     {
       "path": "tools/check_project_far_theory_closure.py",

@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "campaign": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
+  "protocol_freeze_commit": "3813b9e3eb49562bd8b9f4d3179c3d9536831de6",
+  "protocol_base_commit": "2cecf2e21cc27208f606dcd38337af4369e66af2",
+  "scientific_deviations": {
+    "count": 0,
+    "status": "NONE",
+    "definition": "A post-freeze change to the registered corpus, mutation, endpoint, baseline, oracle, success criterion, analysis rule, or interpretation boundary.",
+    "items": []
+  },
+  "execution_incidents": {
+    "count": 7,
+    "definition": "An implementation, CI, governance, or evidence-packaging failure encountered while executing or finalizing the frozen protocol, whether or not it could change a scientific result.",
+    "items": [
+      {
+        "id": "W6-INC-001",
+        "class": "test-harness-defect",
+        "observation": "Initial CI found JSON-spelled Boolean literals in Python and an independence test that inspected its own explanatory docstring.",
+        "resolution": "Corrected the Python literals and restricted the independence assertion to the oracle implementation.",
+        "evidence_commits": ["d810a93c"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-002",
+        "class": "standalone-import-defect",
+        "observation": "The standalone checker could not import the repository-local validation dependency when invoked outside the package context.",
+        "resolution": "Placed the repository root on sys.path before loading the validator.",
+        "evidence_commits": ["ed5750d2"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-003",
+        "class": "governance-and-manifest-drift",
+        "observation": "Final audit found stale W4 supporting hashes, an incomplete W6 manifest, and incomplete propagation across canonical governance surfaces.",
+        "resolution": "Rebound the governed evidence, expanded the exact artifact set, and completed canonical propagation.",
+        "evidence_commits": ["d3779117", "17a7d064", "3f490849", "67ac0756", "e1d2e241"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-004",
+        "class": "workflow-link-false-positive",
+        "observation": "Repository checks treated a Markdown reference to a workflow path as a prohibited executable workflow occurrence.",
+        "resolution": "Reworded the reference so the check continued to reject real transient workflows without rejecting documentation.",
+        "evidence_commits": ["bb9c9e1d"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-005",
+        "class": "temporary-finalization-automation",
+        "observation": "Finalization used temporary branch-mutating repair and export workflows; the deterministic ocean-remediation attempt failed with a Python SyntaxError before exact workspace and history exports were used.",
+        "resolution": "Removed every temporary workflow from the final tree and added a regression that rejects their return.",
+        "evidence_commits": ["5bc4f41c", "89c83168", "ab6f09ba", "10c5b4e4", "6a806f20", "7e279b9c", "d15f7cd6"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-006",
+        "class": "ci-timeout-omission",
+        "observation": "The W6 workflow initially omitted the repository-mandated job timeout.",
+        "resolution": "Added the mandatory timeout before acceptance.",
+        "evidence_commits": ["b9d5ae35"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      },
+      {
+        "id": "W6-INC-007",
+        "class": "regression-test-identity-drift",
+        "observation": "The test-weakening gate detected four renamed regression test identifiers across current-state and W4 coverage.",
+        "resolution": "Restored stable test aliases so historical regression identities remained continuously enforced.",
+        "evidence_commits": ["b9d5ae35"],
+        "resolved": true,
+        "changed_frozen_scientific_protocol": false,
+        "scientific_impact": "NONE"
+      }
+    ]
+  },
+  "scientific_result_changed": false
+}
