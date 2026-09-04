@@ -1,0 +1,33 @@
+name: Canonical Merge Queue
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Require admin token
+        env:
+          FAR_GITHUB_ADMIN_TOKEN: ${{ secrets.FAR_GITHUB_ADMIN_TOKEN }}
+        run: |
+          if [ -z "${FAR_GITHUB_ADMIN_TOKEN}" ]; then
+            echo "::error::FAR_GITHUB_ADMIN_TOKEN is not configured"
+            exit 1
+          fi
+      - name: Configure native merge queue
+        env:
+          FAR_GITHUB_ADMIN_TOKEN: ${{ secrets.FAR_GITHUB_ADMIN_TOKEN }}
+        run: python tools/configure_validation_merge_queue.py --repository "${{ github.repository }}"
+      - name: Read back merge queue and canonical protection
+        env:
+          FAR_GITHUB_ADMIN_TOKEN: ${{ secrets.FAR_GITHUB_ADMIN_TOKEN }}
+        run: python tools/check_validation_merge_queue.py --repository "${{ github.repository }}" --branch main
