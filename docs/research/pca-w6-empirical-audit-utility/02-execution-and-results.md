@@ -16,6 +16,8 @@ The next controlled test execution passed all six W6 tests. It recomputed the re
 
 These implementation corrections are recorded here as execution history. The machine result's `deviations` field remains empty because no preregistered scientific condition, endpoint, corpus, mutation, or analysis rule changed.
 
+The final repository-wide merge-gate audit found two additional assurance defects after the scientific result had stabilized: the terminal CRE-001 regression had not been rebound in the W4 supporting-artifact manifest, and the expanded W6 exact-artifact set had not been regenerated into the W6 manifest. The same audit found incomplete propagation into the canonical map and current claim, proof-status, limitation, and open-problem registers, plus a temporary branch-mutating remediation workflow. Finalization refreshed the governed hashes, expanded W6 coverage to every changed evidence/dependency/propagation surface, completed those indexes, removed the temporary workflow, and added a regression rejecting its return. None of these assurance repairs changed the frozen W4 records, W6 corpus, mutation, endpoints, algorithm, result record, or claim boundary.
+
 ## Primary result
 
 Primary corpus: six clean repaired negative controls plus six injected material-collision mutants.

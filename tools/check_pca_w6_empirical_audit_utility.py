@@ -68,11 +68,23 @@ EXPECTED_PROTOCOL_BASE_BLOBS = {
 
 EXPECTED_ARTIFACTS = (
     ".github/workflows/pca-w6.yml",
+    "Makefile",
+    "README.md",
+    "docs/CANONICAL_MAP.md",
+    "docs/ROADMAP.md",
+    "docs/governance/claim-status-matrix.md",
+    "docs/governance/limitations-register.md",
+    "docs/governance/open-problems-register.md",
     "docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md",
+    "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
+    "docs/governance/theorem-proof-status-register.md",
+    "docs/planning/next-actions.md",
+    "docs/project-status.md",
     "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",
     "docs/research/pca-w6-empirical-audit-utility/01-literature-and-design.md",
     "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
     "docs/research/pca-w6-empirical-audit-utility/references.bib",
+    "governance/repository-truth-authority-v1.json",
     "mechanization/far_mechanization/contract_v2.py",
     "research/results/pca-w4-domain-contracts/argumentation-lossy.json",
     "research/results/pca-w4-domain-contracts/argumentation-repaired.json",
@@ -90,11 +102,23 @@ EXPECTED_ARTIFACTS = (
     "research/results/pca-w6-empirical-audit-utility/results.json",
     "schemas/far-contract-v2.schema.json",
     "tests/test_cre001_semantics.py",
+    "tests/test_current_state_consistency.py",
+    "tests/test_pca_w4_domain_contracts.py",
     "tests/test_pca_w6_empirical_audit_utility.py",
+    "tests/test_project_far_theory_closure.py",
+    "tests/test_repository_truth.py",
     "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
+    "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json",
+    "tools/check_current_state_consistency.py",
     "tools/check_pca_w4_domain_contracts.py",
     "tools/check_pca_w6_empirical_audit_utility.py",
+    "tools/check_project_far_theory_closure.py",
+    "tools/check_repository_truth.py",
     "tools/generate_next_tasks.py",
+)
+
+PROHIBITED_TRANSIENT_ARTIFACTS = (
+    ".github/workflows/w6-ocean-remediation.yml",
 )
 
 
@@ -442,6 +466,14 @@ def verify_manifest() -> list[str]:
     return manifest_errors(manifest)
 
 
+def verify_no_transient_artifacts() -> list[str]:
+    return [
+        f"transient W6 finalizer must not remain in the governed tree: {rel}"
+        for rel in PROHIBITED_TRANSIENT_ARTIFACTS
+        if (ROOT / rel).exists()
+    ]
+
+
 def main() -> int:
     errors: list[str] = []
     errors.extend(verify_protocol_base_dependencies())
@@ -460,6 +492,7 @@ def main() -> int:
                     + json.dumps({"recorded": recorded, "computed": computed}, indent=2, sort_keys=True)
                 )
     errors.extend(verify_manifest())
+    errors.extend(verify_no_transient_artifacts())
     if errors:
         print("\n".join(errors))
         return 1

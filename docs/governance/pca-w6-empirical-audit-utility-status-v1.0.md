@@ -16,6 +16,10 @@ The registered mutation remained schema-valid in every domain. The schema-only b
 
 Bounded material-loss-detection verdict: **PROVED for the registered corpus and defect class.**
 
+## Evidence integrity
+
+The exact W6 manifest binds the preregistration, result, independent-oracle implementation, frozen W4 corpus and protocol-base dependencies, dedicated workflow, tests, and every canonical propagation surface changed by W6. The final tree contains no branch-mutating finalizer; the W6 checker and regression suite fail if the temporary remediation workflow returns.
+
 ## What W6 does not establish
 
 The experiment used Project-FAR-authored records, Project-FAR-authored mutations, and Project-FAR-authored implementations. It had no human participants and no external investigator. Therefore:

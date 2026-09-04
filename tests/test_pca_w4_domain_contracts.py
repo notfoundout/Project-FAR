@@ -197,6 +197,10 @@ class PCAW4DomainContractTests(unittest.TestCase):
         self.assertIsNone(program["next_action"]["workstream"])
         self.assertEqual(validate_program_progression(program), [])
 
+    def test_w4_remains_complete_after_w5_progression(self) -> None:
+        """Preserve the W5-era regression ID while checking the stronger W6 state."""
+        self.test_w4_remains_complete_after_terminal_w6()
+
     def test_w4_is_complete_and_w5_is_next_in_machine_authority(self) -> None:
         """Stable regression ID retained while asserting the terminal W6 state."""
         self.test_w4_remains_complete_after_terminal_w6()

@@ -98,7 +98,7 @@
       "path": "README.md"
     },
     {
-      "sha256": "da4334c2a31cf84f071d225c5a53373c24377fc7ba5de4854c29d6371df0a800",
+      "sha256": "260f58f45632dbe39f65b6d37d59c1a44c5437f077eb3a23fb168e8dd4c90219",
       "path": "docs/CANONICAL_MAP.md"
     },
     {
@@ -106,15 +106,15 @@
       "path": "docs/ROADMAP.md"
     },
     {
-      "sha256": "3313c31037199c870d92fc32d52725d30d13a4705306aa75e4ee37734b54cc3f",
+      "sha256": "e146c0fcdfc35bba9d2d53ec4d729ecdd924172e23291b35588109e559e138ff",
       "path": "docs/governance/claim-status-matrix.md"
     },
     {
-      "sha256": "5db48e4ecb8d39b694b45febb03b6ae3c0279a7e48806b9d6d867e1cae28e1ca",
+      "sha256": "2c5ac43dbb9ae929208c803ff72ea778326eefa456f4bb5aace5ff338c9c6d19",
       "path": "docs/governance/limitations-register.md"
     },
     {
-      "sha256": "0e65819ea31e2920ec2f916c45bc0fe9230d5bec052a58e24a4d98f95d0bb7a7",
+      "sha256": "3f53e5cd5a09622088280f6fba2ff31dc0eb1b34a1027a71d1e2d6fb5f095643",
       "path": "docs/governance/open-problems-register.md"
     },
     {
@@ -126,7 +126,7 @@
       "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
     },
     {
-      "sha256": "702d857a748b24931b2ad607895c60da0d48f1145f6954889c01661ee1c45c05",
+      "sha256": "a765414f3e7df6653ad813fb58d82ac74edf435ce34cc7867daa12564423eca7",
       "path": "docs/governance/theorem-proof-status-register.md"
     },
     {
@@ -210,7 +210,7 @@
       "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
     },
     {
-      "sha256": "670b25ce8f2a4888b90396c008be4613603a9cce5670ccfed324f7a8b7540674",
+      "sha256": "5c37efaa3c042b0502f081717db139017cbbf05a7a4376a33d168987f4616dc1",
       "path": "tests/test_cre001_semantics.py"
     },
     {
@@ -222,7 +222,7 @@
       "path": "tests/test_repository_truth.py"
     },
     {
-      "sha256": "7f15d00ca827c1472b924e1ab919325daa862ba951e5e0beeab6fae70c9a0380",
+      "sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
       "path": "tests/test_pca_w4_domain_contracts.py"
     },
     {

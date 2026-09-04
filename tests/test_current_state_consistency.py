@@ -72,6 +72,10 @@ class CurrentStateConsistencyTests(unittest.TestCase):
     def test_consistent_terminal_state_passes(self):
         self.assertEqual([], self.validate(copy.deepcopy(VALID_TEXTS)))
 
+    def test_consistent_state_passes(self):
+        """Preserve the pre-W6 regression ID against the terminal state."""
+        self.test_consistent_terminal_state_passes()
+
     def test_stale_current_release_is_rejected(self):
         texts = copy.deepcopy(VALID_TEXTS)
         texts["roadmap"] += "v0.4.0 is the current release baseline\n"
@@ -89,6 +93,10 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         texts["next_actions"] += "Canonical next workstream: `PCA-W7-FAKE`.\n"
         errors = self.validate(texts)
         self.assertTrue(any("terminal program still declares a canonical next workstream" in error for error in errors))
+
+    def test_next_actions_must_follow_registered_next_workstream(self):
+        """Preserve the active-state regression ID at the no-W7 boundary."""
+        self.test_terminal_next_actions_cannot_invent_workstream()
 
     def test_terminal_status_cannot_mark_next_active(self):
         texts = copy.deepcopy(VALID_TEXTS)
@@ -134,6 +142,10 @@ class CurrentStateConsistencyTests(unittest.TestCase):
             (PROGRAM_ID, "PCA-W6-EMPIRICAL-AUDIT-UTILITY"),
             checker.program_identity(program),
         )
+
+    def test_program_identity_parses_registered_next_workstream(self):
+        """Preserve the parser regression ID for an explicitly active workstream."""
+        self.test_program_identity_parses_active_registered_next_workstream()
 
     def test_program_identity_allows_explicit_terminal_absence(self):
         program = (

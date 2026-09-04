@@ -113,6 +113,11 @@ class PCAW6AuditUtilityTests(unittest.TestCase):
         errors = W6.manifest_errors(malformed)
         self.assertTrue(any("must contain only path and sha256" in error for error in errors))
 
+    def test_transient_branch_mutating_finalizer_is_absent(self) -> None:
+        self.assertEqual(W6.verify_no_transient_artifacts(), [])
+        for relative in W6.PROHIBITED_TRANSIENT_ARTIFACTS:
+            self.assertNotIn(relative, W6.EXPECTED_ARTIFACTS)
+
     def test_scope_boundaries_are_machine_recorded(self) -> None:
         result = W6.compute_results()
         self.assertFalse(result["analysis_policy"]["population_inference"])

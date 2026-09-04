@@ -2,31 +2,13 @@ name: PCA-W6 Empirical Audit Utility
 
 on:
   pull_request:
-    paths:
-      - '.github/workflows/pca-w6.yml'
-      - 'docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md'
-      - 'docs/research/pca-w6-empirical-audit-utility/**'
-      - 'mechanization/far_mechanization/contract_v2.py'
-      - 'research/results/pca-w4-domain-contracts/**'
-      - 'research/results/pca-w6-empirical-audit-utility/**'
-      - 'schemas/far-contract-v2.schema.json'
-      - 'tests/test_pca_w6_empirical_audit_utility.py'
-      - 'theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json'
-      - 'tools/check_pca_w6_empirical_audit_utility.py'
+    branches: [main]
+  merge_group:
+    types: [checks_requested]
   push:
     branches:
       - main
-    paths:
-      - '.github/workflows/pca-w6.yml'
-      - 'docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md'
-      - 'docs/research/pca-w6-empirical-audit-utility/**'
-      - 'mechanization/far_mechanization/contract_v2.py'
-      - 'research/results/pca-w4-domain-contracts/**'
-      - 'research/results/pca-w6-empirical-audit-utility/**'
-      - 'schemas/far-contract-v2.schema.json'
-      - 'tests/test_pca_w6_empirical_audit_utility.py'
-      - 'theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json'
-      - 'tools/check_pca_w6_empirical_audit_utility.py'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -34,6 +16,7 @@ permissions:
 jobs:
   pca-w6:
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
