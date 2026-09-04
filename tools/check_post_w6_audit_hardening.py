@@ -15,6 +15,7 @@ W6_EXECUTION = ROOT / "docs/research/pca-w6-empirical-audit-utility/02-execution
 HARDENING_RECORD = ROOT / "governance/post-w6-audit-hardening-v1.0.json"
 INCIDENT_LEDGER = ROOT / "governance/post-w6-execution-incidents-v1.0.json"
 AUDIT_DOC = ROOT / "docs/audits/post-w6-audit-hardening-v1.0.md"
+MANIFEST = ROOT / "governance/post-w6-audit-hardening-manifest-v1.0.json"
 
 EXPECTED_W6_RESULTS_SHA256 = "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb"
 EXPECTED_W6_EXECUTION_SHA256 = "6fc2266117f5aa9f14e8d7cfcce782892dfac3d0a7acc93f96e0da76fad21db8"
@@ -23,20 +24,71 @@ EXPECTED_FINDINGS = {
     "PW6-AUDIT-001": ("MODERATE", "REPAIR_WITH_SIDECAR_LEDGER"),
     "PW6-AUDIT-002": ("HIGH", "BLOCKED_EXTERNAL_CONFIGURATION"),
 }
+EXPECTED_HARDENING_ARTIFACTS = (
+    "docs/audits/post-w6-audit-hardening-v1.0.md",
+    "docs/planning/next-actions.md",
+    "governance/post-w6-audit-hardening-v1.0.json",
+    "governance/post-w6-execution-incidents-v1.0.json",
+    "tests/test_post_w6_audit_hardening.py",
+    "tools/check_post_w6_audit_hardening.py",
+)
 
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def git_blob_sha1(path: Path) -> str:
+    data = path.read_bytes()
+    return hashlib.sha1(f"blob {len(data)}\0".encode("ascii") + data).hexdigest()
+
+
 def load_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def check_manifest() -> list[str]:
+    errors: list[str] = []
+    if not MANIFEST.is_file():
+        return ["missing hardening manifest"]
+    manifest = load_json(MANIFEST)
+    if manifest.get("schema_version") != "1.0":
+        errors.append("hardening manifest schema_version mismatch")
+    if manifest.get("record_id") != "POST-W6-AUDIT-HARDENING-001":
+        errors.append("hardening manifest record id mismatch")
+    if manifest.get("status") != "REPAIR_IN_PROGRESS":
+        errors.append("hardening manifest must remain REPAIR_IN_PROGRESS while control-plane protection is open")
+    artifacts = manifest.get("artifacts")
+    if not isinstance(artifacts, list):
+        return errors + ["hardening manifest artifacts must be a list"]
+    observed_paths: list[str] = []
+    for item in artifacts:
+        if not isinstance(item, dict) or set(item) != {"path", "git_blob_sha1"}:
+            errors.append("hardening manifest artifact entries must contain only path and git_blob_sha1")
+            continue
+        rel = str(item["path"])
+        observed_paths.append(rel)
+        path = ROOT / rel
+        if not path.is_file():
+            errors.append(f"hardening manifest artifact missing: {rel}")
+            continue
+        actual = git_blob_sha1(path)
+        if item["git_blob_sha1"] != actual:
+            errors.append(
+                f"hardening manifest blob mismatch: {rel}: expected={item['git_blob_sha1']} actual={actual}"
+            )
+    if tuple(observed_paths) != EXPECTED_HARDENING_ARTIFACTS:
+        errors.append(
+            "hardening manifest artifact set/order mismatch: "
+            f"expected={EXPECTED_HARDENING_ARTIFACTS!r} actual={tuple(observed_paths)!r}"
+        )
+    return errors
 
 
 def check() -> list[str]:
     errors: list[str] = []
 
-    for path in (W6_RESULTS, W6_EXECUTION, HARDENING_RECORD, INCIDENT_LEDGER, AUDIT_DOC):
+    for path in (W6_RESULTS, W6_EXECUTION, HARDENING_RECORD, INCIDENT_LEDGER, AUDIT_DOC, MANIFEST):
         if not path.is_file():
             errors.append(f"missing required hardening artifact: {path.relative_to(ROOT)}")
     if errors:
@@ -145,6 +197,7 @@ def check() -> list[str]:
         if phrase not in audit_text:
             errors.append(f"audit document missing required boundary: {phrase}")
 
+    errors.extend(check_manifest())
     return errors
 
 
