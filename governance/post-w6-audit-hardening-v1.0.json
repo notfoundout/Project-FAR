@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "record_id": "POST-W6-AUDIT-HARDENING-001",
+  "status": "REPAIR_IN_PROGRESS",
+  "authority": "maintenance/audit-repair; no theory impact",
+  "audit_target": {
+    "repository": "notfoundout/Project-FAR",
+    "main_commit": "03cda5007ff4ac8ca3ce90585b8c872f091965cf",
+    "main_tree": "90d299b6c4df4824fe512e63f1cead49c90f9b41",
+    "w6_results_path": "research/results/pca-w6-empirical-audit-utility/results.json",
+    "w6_results_sha256": "6b4784bb012445149f684651e195112c922cdd107a3d891b51ae203a7ce3b3bb",
+    "w6_execution_path": "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
+    "w6_execution_sha256": "6fc2266117f5aa9f14e8d7cfcce782892dfac3d0a7acc93f96e0da76fad21db8"
+  },
+  "findings": [
+    {
+      "id": "PW6-AUDIT-001",
+      "severity": "MODERATE",
+      "finding": "The frozen W6 machine result records deviations as an empty list, while the execution record documents several execution and assurance incidents. The prose correctly states that none changed the preregistered scientific corpus, mutation, endpoint, algorithm, analysis rule, or interpretation boundary, but the distinction is not machine-readable.",
+      "disposition": "REPAIR_WITH_SIDECAR_LEDGER",
+      "theory_impact": "NONE",
+      "w6_scientific_result_impact": "NONE"
+    },
+    {
+      "id": "PW6-AUDIT-002",
+      "severity": "HIGH",
+      "finding": "GitHub branch metadata for main reported protected=false with required-status enforcement disabled at the audited main commit. Repository-local validators therefore do not constitute server-side prevention of direct canonical pushes.",
+      "disposition": "BLOCKED_EXTERNAL_CONFIGURATION",
+      "theory_impact": "NONE",
+      "w6_scientific_result_impact": "NONE"
+    }
+  ],
+  "repairs": {
+    "machine_readable_execution_incidents": {
+      "status": "IMPLEMENTED_ON_REPAIR_BRANCH",
+      "path": "governance/post-w6-execution-incidents-v1.0.json",
+      "rule": "The frozen W6 results.json remains byte-identical. scientific_deviations is represented here as empty while execution and assurance incidents are separately enumerated."
+    },
+    "control_plane_branch_protection": {
+      "status": "BLOCKED_EXTERNAL_CONFIGURATION",
+      "required_state": {
+        "branch": "main",
+        "protected": true,
+        "require_pull_request_before_merge": true,
+        "require_status_checks": true,
+        "require_branches_up_to_date": true,
+        "restrict_force_pushes": true,
+        "restrict_deletions": true,
+        "include_administrators_or_equivalent_bypass_restriction": true
+      },
+      "completion_condition": "A fresh GitHub control-plane read must show main protected and the required merge/status constraints enforced. Repository files or CI that only fail after a direct push do not satisfy this condition."
+    }
+  },
+  "nonclaims": [
+    "This repair does not alter PROJECT-FAR-CORE-THEORY-1.1.",
+    "This repair does not alter FAR-CORE-001 through FAR-CORE-014.",
+    "This repair does not change the W6 registered scientific endpoint or result.",
+    "This repair does not convert W6 into human or external effectiveness evidence.",
+    "Repository-local checks are not represented as a substitute for server-side branch protection."
+  ]
+}
