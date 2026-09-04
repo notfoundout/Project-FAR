@@ -62,16 +62,18 @@ The Lean file proves the abstract assurance model. The Python model checker corr
 
 The `Validator Assurance` workflow runs on pull requests, pushes to `main`, workflow dispatch, and the GitHub `merge_group` event. The `merge-authority` job issues a signed certificate bound to the exact checked commit and Git tree and requires all five assurance evidence artifacts.
 
-`tools/configure_validation_protection.py` applies strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion. `tools/check_validation_protection.py` independently reads the GitHub control plane and fails unless every required setting matches. The apply workflow remains assurance-locked; a successful read-back is the evidence of live enforcement.
+`tools/configure_validation_protection.py` applies strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion. `tools/check_validation_protection.py` independently reads the GitHub control plane and fails unless every required setting matches. A successful read-back is the evidence of live enforcement.
 
-Control-plane audit on 2026-09-04: this repository is **private** and owned by a personal account. GitHub reported that the repository must either upgrade to GitHub Pro or become public to enable this feature, and the installed integration lacks repository-administration access. Therefore branch protection is **not currently proven or represented as enforced**. The workflow and script encode and verify desired state; they are not evidence of live enforcement until an eligible plan or visibility and an administrator token permit a successful apply-and-read-back run.
+Control-plane closure on 2026-09-04: the repository is public and personal-account owned. After PR #467 merged, a one-shot bootstrap workflow used the repository-scoped `FAR_GITHUB_ADMIN_TOKEN` Actions secret to run the governed configurator and then the independent fail-closed read-back. Both steps succeeded. GitHub branch metadata reports `main` as protected with `merge-authority` required at enforcement level `everyone`, and the read-back returned `control_plane_enforced: true` with no errors. The exact Accepted closure record is `docs/governance/canonical-branch-protection-closure-2026-09-04.md`.
 
-Native GitHub merge queues are unavailable while the repository is personal-account owned. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization. Once branch protection becomes eligible, strict required-check protection is the immediate canonical-branch control.
+PR #468 promotes `.github/workflows/canonical-branch-protection.yml` as the permanent reapplication path. It is manual-dispatch only, applies the governed policy, immediately performs the independent read-back, and is content-pinned in `validation_bootstrap/assurance-lock.json`. The older `.github/workflows/configure-validation-protection.yml` is retained as an assurance-locked apply-only historical surface; because it does not perform read-back, it is not the canonical evidence-producing reapplication path.
+
+Native GitHub merge queues remain unavailable while the repository is personal-account owned. This is not a branch-protection failure. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization.
 
 ## Required secrets
 
 - `FAR_VALIDATION_CACHE_SIGNING_KEY`: persistent HMAC secret for cross-runner cache and certificate trust.
-- `FAR_GITHUB_ADMIN_TOKEN`: fine-grained administrator token used only by the manual branch-protection configuration workflow.
+- `FAR_GITHUB_ADMIN_TOKEN`: repository-scoped fine-grained administrator token used by the canonical apply-and-read-back workflow. Rotate or replace it before expiration if future protection reapplication is required.
 
 Neither secret is written to artifacts or logs.
 

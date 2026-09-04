@@ -1,18 +1,13 @@
-name: Bootstrap Canonical Branch Protection
+name: Canonical Branch Protection
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/bootstrap-canonical-protection.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  bootstrap:
+  enforce:
     if: github.repository == 'notfoundout/Project-FAR'
     runs-on: ubuntu-latest
     timeout-minutes: 10
