@@ -26,12 +26,12 @@
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
     "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
-    "tools/check_validation_merge_queue.py": "05304b18ff3eb7a085a8697b8ffd013c68f6d4b5e6ff873083bd30ae8097996a",
+    "tools/check_validation_merge_queue.py": "15c76bb38e6926e2aebb798305220a34e4ce9088496f512614dfbfe88a0fec1e",
     "tools/configure_validation_merge_queue.py": "82afb7a11667265d3088f0c9f83dc9b9808635be001fbb2990802b9df4096596",
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
     "validation/runtime-dependencies.json": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
     "validation/runtime-policy.json": "18a5a933bdbd9af725cb2ddfd37f891cdd82197be8fc4fc84547e03caa2fecd0",
-    "validation/test-weakening-waivers.json": "311e12701b273cb91110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
+    "validation/test-weakening-waivers.json": "311e12701b27391110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
     "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
   },
   "required_evidence": [
