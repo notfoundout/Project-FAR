@@ -54,26 +54,21 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         text = path.read_text(encoding="utf-8")
         self.assertEqual(text, before)
         ranked = text.split("## Maintainer Boundaries", 1)[0]
+
         ids = re.findall(r"^### ([A-Z]+-\d{3}):", ranked, re.M)
         self.assertEqual(len(ids), len(set(ids)))
         self.assertEqual(ids, [f"STRATEGIC-{number:03d}" for number in range(12, 15)])
         self.assertEqual(len(ids), 3)
-        self.assertEqual(
-            ranked.count(
-                "- Source: [docs/governance/post-closure-assurance-and-application-program-v1.0.md]"
-            ),
-            3,
-        )
-        self.assertEqual(ranked.count("- Expected outcome:"), 3)
-        self.assertIn("Program: `POST-CLOSURE-001`.", ranked)
+
+        self.assertIn("Program: `POST-CLOSURE-001` — complete at its six registered workstream scopes.", ranked)
         self.assertIn(
             "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
         )
         self.assertIn(
-            "Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.", ranked
+            "There is **no registered next `POST-CLOSURE-001` workstream**.", ranked
         )
-        self.assertNotIn("### STRATEGIC-010:", ranked)
-        self.assertNotIn("### STRATEGIC-011:", ranked)
+        self.assertNotIn("Canonical next workstream:", ranked)
+
         self.assertIn(
             "### STRATEGIC-012: Develop domain comparison contracts", ranked
         )
@@ -84,27 +79,36 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
         self.assertIn(
             "- Registered workstream: `PCA-W4-DOMAIN-CONTRACTS`", ranked
         )
-        self.assertIn("- Priority: active", ranked)
+        self.assertIn(
+            "- Registered workstream: `PCA-W5-APPROXIMATION-AND-COST`", ranked
+        )
+        self.assertIn(
+            "- Registered workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`", ranked
+        )
+        self.assertEqual(ranked.count("- Priority: complete"), 3)
+        self.assertEqual(ranked.count("- Outcome:"), 3)
+
+        self.assertIn(
+            "### OPEN-EXTERNAL-OP-28: Independently test human/external audit effectiveness",
+            ranked,
+        )
+        self.assertIn("- Registered post-closure workstream: none", ranked)
+        self.assertIn("- Authority: OP-28 in the open-problems register", ranked)
+        self.assertIn("- Priority: open / external-dependency", ranked)
+        self.assertIn("it is not silently named W7", ranked)
+        self.assertIn("human disagreement reduction remains `UNDERDETERMINED`", ranked)
+        self.assertIn("external real-world utility remains `OPEN`", ranked)
+
         self.assertIn("The core theory is closed after the governed v1.1 correction.", ranked)
-        self.assertIn(
-            "The sealed `PCA-W1-INDEPENDENT-REVIEW` is complete", ranked
-        )
-        self.assertIn(
-            "`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: 14/14 governed claims are FORMALIZED",
-            ranked,
-        )
-        self.assertIn(
-            "`PCA-W3-CONTRACT-SCHEMA` is complete: `far-ir/2.0` is the governed versioned successor",
-            ranked,
-        )
-        self.assertIn(
-            "`PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit scopes",
-            ranked,
-        )
-        self.assertIn("do not reopen the core without a genuine contradiction", ranked)
-        self.assertNotIn(
-            "Current review target: `PROJECT-FAR-CORE-THEORY-1.1`.", ranked
-        )
+        self.assertIn("The sealed W1 independent review", ranked)
+        self.assertIn("W2 proof-assistant formalization", ranked)
+        self.assertIn("W3 contract schema", ranked)
+        self.assertIn("W4 domain contracts", ranked)
+        self.assertIn("W5 approximation/cost semantics", ranked)
+        self.assertIn("W6 bounded internal audit-utility control", ranked)
+
+        self.assertNotIn("### STRATEGIC-010:", ranked)
+        self.assertNotIn("### STRATEGIC-011:", ranked)
         for stale in (
             "POST-TERM-EVAL-001",
             "PTE-W1-INDEPENDENT-REVIEW",
@@ -123,6 +127,8 @@ class CRE001SemanticRegressionTests(unittest.TestCase):
             "Canonical next workstream: `PCA-W2-PROOF-ASSISTANT-FORMALIZATION`.",
             "Canonical next workstream: `PCA-W3-CONTRACT-SCHEMA`.",
             "Canonical next workstream: `PCA-W4-DOMAIN-CONTRACTS`.",
+            "Canonical next workstream: `PCA-W5-APPROXIMATION-AND-COST`.",
+            "Canonical next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`.",
         ):
             self.assertNotIn(stale, ranked)
 
