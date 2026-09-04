@@ -7,8 +7,10 @@ import json
 import os
 import urllib.error
 import urllib.request
+from urllib.parse import urlencode
 
 RULESET_NAME = "Project FAR Canonical Merge Queue"
+PAGE_SIZE = 100
 
 
 def request(method: str, url: str, token: str, payload: dict | None = None):
@@ -31,6 +33,27 @@ def request(method: str, url: str, token: str, payload: dict | None = None):
         detail = exc.read().decode("utf-8", errors="replace")
         raise SystemExit(f"GitHub API {exc.code}: {detail}") from exc
     return json.loads(raw) if raw else {}
+
+
+def list_repository_rulesets(api: str, token: str) -> list[dict]:
+    """Traverse every repository-ruleset page before deciding create vs update."""
+    collected: list[dict] = []
+    page = 1
+    while True:
+        query = urlencode(
+            {
+                "includes_parents": "false",
+                "per_page": PAGE_SIZE,
+                "page": page,
+            }
+        )
+        payload = request("GET", f"{api}/rulesets?{query}", token)
+        if not isinstance(payload, list):
+            raise SystemExit("GitHub rulesets list endpoint returned a non-list payload")
+        collected.extend(payload)
+        if len(payload) < PAGE_SIZE:
+            return collected
+        page += 1
 
 
 def desired_ruleset() -> dict:
@@ -73,6 +96,19 @@ def require_organization(repository: dict) -> None:
         )
 
 
+def select_existing_canonical_ruleset(rulesets: list[dict]) -> dict | None:
+    matches = [
+        item
+        for item in rulesets
+        if item.get("source_type") == "Repository"
+        and item.get("name") == RULESET_NAME
+    ]
+    if len(matches) > 1:
+        ids = [item.get("id") for item in matches]
+        raise SystemExit(f"duplicate canonical merge-queue rulesets already exist: {ids}")
+    return matches[0] if matches else None
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Configure Project FAR canonical merge queue")
     parser.add_argument(
@@ -90,15 +126,8 @@ def main() -> int:
     repository = request("GET", api, token)
     require_organization(repository)
 
-    rulesets = request("GET", f"{api}/rulesets?includes_parents=false", token)
-    existing = next(
-        (
-            item for item in rulesets
-            if item.get("source_type") == "Repository"
-            and item.get("name") == RULESET_NAME
-        ),
-        None,
-    )
+    rulesets = list_repository_rulesets(api, token)
+    existing = select_existing_canonical_ruleset(rulesets)
     payload = desired_ruleset()
     if existing is None:
         result = request("POST", f"{api}/rulesets", token, payload)
