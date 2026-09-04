@@ -1,7 +1,6 @@
 {
   "files": {
     ".github/workflows/canonical-branch-protection.yml": "ab481ba83f7126058ec3306b4448e16479df50b9d02031fcdde32c80c7be3a0a",
-    ".github/workflows/canonical-merge-queue.yml": "bd06ac94e0bf33b6d5fc3c5852aa099f1c370dd8078bf22dce70f02e21188afa",
     ".github/workflows/configure-validation-protection.yml": "31b93c343445911d6674349df94f79a96ec57e0452d76d577098fd5c486c9fc2",
     ".github/workflows/lean.yml": "30108bcb63047e7a7f373c28e9d84d468901e18a77ea714e98eaf9bfa990ca11",
     ".github/workflows/repo-health.yml": "e8430fb10a98a4f0eff0e76bdf594a030952eb276e0a2b2a4a79267ece9c77d2",
@@ -27,8 +26,8 @@
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
     "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
-    "tools/check_validation_merge_queue.py": "ac1e18fa396f2060ee7b5729debad21c8e8f68c07023b7faedbb0e24c5349fa8",
-    "tools/configure_validation_merge_queue.py": "2bb183bdd2ae02df1e5d54bb69e56521e4c30d9f296bb22cea1d1f2592c43695",
+    "tools/check_validation_merge_queue.py": "05304b18ff3eb7a085a8697b8ffd013c68f6d4b5e6ff873083bd30ae8097996a",
+    "tools/configure_validation_merge_queue.py": "82afb7a11667265d3088f0c9f83dc9b9808635be001fbb2990802b9df4096596",
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
     "validation/runtime-dependencies.json": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
     "validation/runtime-policy.json": "18a5a933bdbd9af725cb2ddfd37f891cdd82197be8fc4fc84547e03caa2fecd0",
