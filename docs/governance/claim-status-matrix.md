@@ -2,11 +2,11 @@
 
 Status: **Accepted current classification index**
 
-The current rows below govern. Dated audit sections are preserved afterward as historical evaluations at their evidence cutoffs and cannot override the corrected terminal closure.
+The current rows below govern. For the exact cross-workstream interpretation of W1–W6, the [canonical W1–W6 claim/evidence matrix](w1-w6-claim-evidence-matrix-v1.0.md) governs. Dated audit sections are preserved afterward as historical evaluations at their evidence cutoffs and cannot override current authority.
 
 | Claim or concept | Current classification | Boundary |
 |---|---|---|
-| `PROJECT-FAR-CORE-THEORY-1.1` | Accepted corrected internal deductive theory; independently confirmed under exact scopes | W1: 14 PROVED, no correction, novelty/priority not established. W2: 14 FORMALIZED, zero partial obstructions. Historical v1.0 remains immutable. |
+| `PROJECT-FAR-CORE-THEORY-1.1` | Accepted corrected internal deductive theory; reviewed under sealed I1 claimed isolation at exact scopes | W1: 14 PROVED, no correction, but not I2/I3 external validation; novelty/priority not established. W2: 14 FORMALIZED, zero partial obstructions. Historical v1.0 remains immutable. |
 | Exact representation sufficiency | **PROVED contract-relative** (`FAR-CORE-001`) | Behavior must factor through the representation for the fixed contract. |
 | Canonical observational quotient | **PROVED contract-relative** (`FAR-CORE-002`) | Unique least-informative exact representation up to isomorphism; not cost/computability optimality. |
 | Contract-free nontrivial minimal architecture | **REFUTED** (`FAR-CORE-004`, clarified v1.1) | No single representation is simultaneously least-informative sufficient for every observation contract on a nontrivial domain. Identity may be sufficient for all fixed-domain contracts; the impossibility is simultaneous minimality. |
@@ -25,7 +25,7 @@ The current rows below govern. Dated audit sections are preserved afterward as h
 | W4 six-domain lossy representations | **REFUTED under six frozen finite contracts** | One checked consequence-affecting collision per domain; no open-domain or contract-free inference. |
 | W4 six explicit repairs | **PROVED sufficient for the recorded finite cases** | One checked decoder/factorization per domain; no minimality, uniqueness, efficiency, approximation, or completeness claim. |
 | W5 approximation and product-cost controls | **PROVED at the frozen finite-explicit operational scope** | Exact-rational checks distinguish Pareto minima from least elements and enforce the registered zero-loss boundary; no universal metric, scalar cost, or unique optimum follows. |
-| W6 registered collision audit | **PROVED for the registered project-authored corpus and defect class** | FAR detected 6/6 mutants, accepted 6/6 clean controls, agreed with the table-only oracle on 12/12 primary items, and reconfirmed 6/6 native lossy controls. This is bounded internal artifact evidence. |
+| W6 registered collision audit | **PROVED for the registered project-authored finite corpus and defect class** | FAR detected 6/6 mutants, accepted 6/6 clean controls, agreed with the separately implemented Project-FAR-authored table-only oracle on 12/12 primary items, and separately recomputed 6/6 native lossy controls. This is an all-items finite-corpus result, not a population estimate. |
 | W6 human disagreement reduction / external utility | **UNDERDETERMINED / OPEN** | W6 had no human participants or external investigator and estimates no population performance. |
 | Novelty of the core mathematical pattern | No novelty claim | Blackwell comparison and other prior art already supply mature contract/decision-relative informativeness, quotient, factorization, and equivalence patterns. |
 

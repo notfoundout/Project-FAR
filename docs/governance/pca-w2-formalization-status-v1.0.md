@@ -26,7 +26,7 @@ This closes the prior encoding/infrastructure obstruction. It does not change FA
 
 ## Disposition
 
-`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete. No reproducible contradiction to the governing v1.1 theory was found, so the core remains closed. The next registered workstream is `PCA-W3-CONTRACT-SCHEMA`.
+`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete. No reproducible contradiction to the governing v1.1 theory was found, so the core remains closed. At W2 completion, the next registered workstream was `PCA-W3-CONTRACT-SCHEMA`. That transition is historical: W3–W6 and `POST-CLOSURE-001` are complete, and the separate current successor is preregistered `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`, not W7.
 
 W2 completion establishes machine-checked derivability relative to the encoded premises. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness.
 

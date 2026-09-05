@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "control_id": "FAR-GITHUB-ADMIN-TOKEN-RETIREMENT-2026-09-05",
+  "status": "SCHEDULED_ON_FIRST_MAIN_MERGE",
+  "defect": "Reusable administrator PAT was exposed to manual workflows that execute mutable repository code.",
+  "baseline": {
+    "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+    "tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b"
+  },
+  "target_repository": "notfoundout/Project-FAR",
+  "target_branch": "main",
+  "protected_workflow_paths": [
+    ".github/workflows/canonical-branch-protection.yml",
+    ".github/workflows/configure-validation-protection.yml"
+  ],
+  "remediation": {
+    "workflow": ".github/workflows/retire-far-github-admin-token.yml",
+    "trigger": "first push of this exact file to main",
+    "workflow_dispatch": false,
+    "checkout": false,
+    "actions": [
+      "verify full branch-protection policy",
+      "disable both exact privileged workflows",
+      "delete FAR_GITHUB_ADMIN_TOKEN",
+      "verify disabled workflow states",
+      "verify secret absence",
+      "verify full branch-protection policy unchanged"
+    ]
+  },
+  "accepted_receipt": null,
+  "claims": {
+    "branch_protection_weakened": false,
+    "credential_retired": false,
+    "privileged_workflows_disabled": false
+  }
+}

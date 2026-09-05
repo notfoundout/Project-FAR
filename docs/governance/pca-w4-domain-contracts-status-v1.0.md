@@ -47,7 +47,7 @@ The source dimensions are independently motivated; the witness selection, mappin
 
 ## Next gate
 
-`PCA-W5-APPROXIMATION-AND-COST` is next. It must add explicit metrics or divergences, tolerances, decision losses, and cost preorders under new freezes. Exact W4 success cannot supply those semantics implicitly.
+At W4 completion, `PCA-W5-APPROXIMATION-AND-COST` was next. That transition is historical: W5, W6, and `POST-CLOSURE-001` are complete. Exact W4 success still supplies no approximation or cost semantics implicitly; the current successor is preregistered `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`.
 
 Canonical results: [PCA-W4 results](../research/pca-w4-domain-contracts/02-results.md).
 

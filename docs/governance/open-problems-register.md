@@ -7,14 +7,14 @@ The core theory is closed. Current open problems are downstream assurance, imple
 | ID | Current problem | Kind | Blocking evidence / completion condition |
 |---|---|---|---|
 | OP-27 | Develop approximate and cost-aware quotient methods. | theoretical/algorithmic | Metrics, losses, tolerances, and cost preorders are domain choices; exact quotient existence does not imply computability. |
-| OP-28 | Test whether FAR's audit discipline improves human or external investigations and reduces consequential disagreement beyond the registered W6 artifact controls. | empirical | W6 proved detection only for one preregistered collision mutation over a finite Project-FAR-authored corpus. No human-participant, externally administered, field-effectiveness, or population-performance evidence exists. |
+| OP-28 | Test whether FAR's audit discipline improves human or external investigations and reduces consequential disagreement beyond the registered W6 artifact controls. | empirical | Still open. W6 proved only one preregistered collision mutation over a finite Project-FAR-authored corpus. `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` now preregisters the external, held-out, adversarial, human, field, burden, and prior-art tests, but all are `PREREGISTERED_NOT_EXECUTED`; registration supplies no outcome. |
 | OP-29 | Evaluate the FARA kernel under external real-world cost and audit contracts. | engineering/empirical | Current selection remains finite, explicit, auditable, and project-internal. |
 
 ## Closure disposition of earlier problems
 
 | Earlier ID(s) | Terminal disposition |
 |---|---|
-| OP-23 | Closed at exact W1 scope: sealed independent review returned 14 PROVED, no correction; novelty/priority not established. |
+| OP-23 | Closed at exact W1 review scope: sealed I1 claimed-isolation review returned 14 PROVED, no correction. I2/I3 external validation, novelty, and priority were not established. |
 | OP-24 | Closed for the governed v1.1 claims: W2 formalized all 14 under pinned Lean 4.19.0 with exact kernel assumptions audited. |
 | OP-25 | Closed by W3: `far-ir/2.0`, semantic verification, loss-explicit v1 migration, and conformance fixtures are complete; v1 remains unchanged. |
 | OP-26 | Closed at six bounded finite scopes by W4: six source-motivated native contracts, six checked collisions, and six checked repairs. External framing/evaluation and domain completeness remain limitations, not a claim of completion beyond these scopes. |

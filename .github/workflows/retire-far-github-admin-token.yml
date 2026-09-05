@@ -1,0 +1,167 @@
+name: Retire FAR GitHub Admin Token
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/retire-far-github-admin-token.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  retire:
+    if: github.repository == 'notfoundout/Project-FAR' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FAR_GITHUB_ADMIN_TOKEN: ${{ secrets.FAR_GITHUB_ADMIN_TOKEN }}
+    steps:
+      - name: Retire reusable administrator credential
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${FAR_GITHUB_ADMIN_TOKEN}" ]; then
+            echo "::error::FAR_GITHUB_ADMIN_TOKEN is absent before a retirement receipt can be produced"
+            exit 1
+          fi
+          python - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          repository = os.environ.get("GITHUB_REPOSITORY")
+          ref = os.environ.get("GITHUB_REF")
+          token = os.environ.get("FAR_GITHUB_ADMIN_TOKEN")
+          expected_repository = "notfoundout/Project-FAR"
+          expected_ref = "refs/heads/main"
+          required_check = "merge-authority"
+          workflows = [
+              "canonical-branch-protection.yml",
+              "configure-validation-protection.yml",
+          ]
+          secret_name = "FAR_GITHUB_ADMIN_TOKEN"
+
+          if repository != expected_repository or ref != expected_ref or not token:
+              raise SystemExit("fail-closed repository/ref/token precondition")
+
+          api = f"https://api.github.com/repos/{repository}"
+
+          def request(method, path):
+              req = urllib.request.Request(
+                  api + path,
+                  method=method,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {token}",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                  },
+              )
+              try:
+                  with urllib.request.urlopen(req) as response:
+                      raw = response.read()
+              except urllib.error.HTTPError as exc:
+                  detail = exc.read().decode("utf-8", errors="replace")
+                  raise SystemExit(f"GitHub API {method} {path} returned {exc.code}: {detail}") from exc
+              return json.loads(raw) if raw else {}
+
+          def protection_errors(actual):
+              errors = []
+              if not isinstance(actual, dict):
+                  return ["protection response is not an object"]
+              checks = actual.get("required_status_checks")
+              contexts = checks.get("contexts", []) if isinstance(checks, dict) else []
+              if not isinstance(checks, dict) or checks.get("strict") is not True:
+                  errors.append("strict required status checks disabled")
+              if set(contexts) != {required_check}:
+                  errors.append("required status contexts changed")
+              admins = actual.get("enforce_admins")
+              if not isinstance(admins, dict) or admins.get("enabled") is not True:
+                  errors.append("administrator enforcement disabled")
+              reviews = actual.get("required_pull_request_reviews")
+              expected_reviews = {
+                  "dismiss_stale_reviews": True,
+                  "require_code_owner_reviews": False,
+                  "required_approving_review_count": 0,
+                  "require_last_push_approval": False,
+              }
+              if not isinstance(reviews, dict):
+                  errors.append("pull requests not required")
+              else:
+                  for field, expected in expected_reviews.items():
+                      if reviews.get(field) != expected:
+                          errors.append(f"pull request control {field} changed")
+              expected_flags = {
+                  "required_conversation_resolution": True,
+                  "required_linear_history": False,
+                  "allow_force_pushes": False,
+                  "allow_deletions": False,
+                  "block_creations": False,
+                  "required_signatures": False,
+                  "lock_branch": False,
+                  "allow_fork_syncing": False,
+              }
+              for field, expected in expected_flags.items():
+                  value = actual.get(field)
+                  enabled = value.get("enabled") if isinstance(value, dict) else None
+                  if enabled is not expected:
+                      errors.append(f"branch protection control {field} changed")
+              return errors
+
+          branch = urllib.parse.quote("main", safe="")
+          before = request("GET", f"/branches/{branch}/protection")
+          before_errors = protection_errors(before)
+          if before_errors:
+              raise SystemExit("pre-retirement protection mismatch: " + "; ".join(before_errors))
+
+          for workflow in workflows:
+              encoded = urllib.parse.quote(workflow, safe="")
+              request("PUT", f"/actions/workflows/{encoded}/disable")
+
+          encoded_secret = urllib.parse.quote(secret_name, safe="")
+          request("DELETE", f"/actions/secrets/{encoded_secret}")
+
+          states = {}
+          for workflow in workflows:
+              encoded = urllib.parse.quote(workflow, safe="")
+              state = request("GET", f"/actions/workflows/{encoded}").get("state")
+              states[workflow] = state
+              if state != "disabled_manually":
+                  raise SystemExit(f"workflow {workflow} state is {state!r}, expected disabled_manually")
+
+          secret_req = urllib.request.Request(
+              api + f"/actions/secrets/{encoded_secret}",
+              method="GET",
+              headers={
+                  "Accept": "application/vnd.github+json",
+                  "Authorization": f"Bearer {token}",
+                  "X-GitHub-Api-Version": "2022-11-28",
+              },
+          )
+          try:
+              with urllib.request.urlopen(secret_req):
+                  raise SystemExit("administrator secret still present after deletion")
+          except urllib.error.HTTPError as exc:
+              if exc.code != 404:
+                  detail = exc.read().decode("utf-8", errors="replace")
+                  raise SystemExit(f"secret absence read-back returned {exc.code}: {detail}") from exc
+
+          after = request("GET", f"/branches/{branch}/protection")
+          after_errors = protection_errors(after)
+          if after_errors:
+              raise SystemExit("post-retirement protection mismatch: " + "; ".join(after_errors))
+
+          print(json.dumps({
+              "branch": "main",
+              "branch_protection_unchanged_and_enforced": True,
+              "privileged_workflow_states": states,
+              "repository": repository,
+              "secret_absent": True,
+              "secret_name": secret_name,
+          }, indent=2, sort_keys=True))
+          PY
+          unset FAR_GITHUB_ADMIN_TOKEN
+          echo "Privileged token retirement completed; token value was never printed."

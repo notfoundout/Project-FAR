@@ -59,9 +59,9 @@ The governed configurator/read-back contract additionally requires pull requests
 
 The temporary `.github/workflows/bootstrap-canonical-protection.yml` workflow existed only to cross the initial unprotected-to-protected boundary and is removed by PR #468.
 
-Its safe functionality is retained permanently in `.github/workflows/canonical-branch-protection.yml`. That workflow is manual-dispatch only, requires `FAR_GITHUB_ADMIN_TOKEN`, applies the governed protection policy, and immediately performs the independent fail-closed read-back. PR #468 also content-pins this permanent workflow in `validation_bootstrap/assurance-lock.json`, so future changes to its privileged execution path cannot silently bypass the protected-artifact repin controls.
+PR #468 retained the functionality in `.github/workflows/canonical-branch-protection.yml`, but the later security review found that a content pin does not make it safe to expose a reusable administrator PAT to checked-out mutable repository code. The 2026-09-04 application and read-back remain valid historical protection evidence. The reapplication design is superseded by the separately governed 2026-09-05 privileged-token retirement; see `privileged-token-retirement-2026-09-05.md`.
 
-The older `.github/workflows/configure-validation-protection.yml` remains an assurance-locked apply-only historical surface. It is not the canonical evidence-producing reapplication path because it does not perform read-back. The canonical reapplication path is `.github/workflows/canonical-branch-protection.yml`.
+The older `.github/workflows/configure-validation-protection.yml` and the PR #468 workflow remain assurance-locked repository artifacts. The retirement control must disable both live workflows and remove their credential without weakening protection. Neither is a current authorized reapplication path after retirement acceptance.
 
 ## Merge queue boundary
 
@@ -69,7 +69,7 @@ Native GitHub merge-queue activation remains unavailable while the repository is
 
 ## Security notes
 
-`FAR_GITHUB_ADMIN_TOKEN` is a GitHub Actions secret and is not stored in repository content or artifacts. It should remain repository-scoped, administration-only, and rotated or replaced before expiration if future protection reapplication is required.
+`FAR_GITHUB_ADMIN_TOKEN` was not stored in repository content or artifacts, but retaining it as a reusable Actions secret is no longer authorized. Its deletion and the disabling of both consumer workflows are governed by `privileged-token-retirement-2026-09-05.md`; until that live receipt exists, retirement is not claimed.
 
 ## Final disposition
 

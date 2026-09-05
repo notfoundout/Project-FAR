@@ -10,7 +10,7 @@ Workstream: `PCA-W5-APPROXIMATION-AND-COST`
 
 W5 adds `far-ir/2.1` without changing `far-ir/2.0`. Checked records operationalize a total finite metric, reference probability, expected or maximum aggregation, total decision loss, tolerance, randomized decoders, multidimensional product cost preorder, feasibility, Pareto minimality, least elements, and exact/zero-loss recovery.
 
-The registered control proves that two incomparable Pareto-minimal candidates can coexist with no least element. It therefore supplies a mandatory counterexample to universal scalar-cost and unique-optimum assumptions. A zero-tolerance positive-mass control verifies the full-domain exact-recovery boundary under the frozen separating loss. More generally, expected-aggregation exact recovery is relative to positive reference support, while maximum aggregation evaluates every listed case.
+The registered control proves that, under its frozen product preorder, two incomparable Pareto-minimal candidates coexist with no least element. No scalarization is part of that contract. This result prevents a least element or unique optimum from being inferred from the declared product order; it does not prove that every possible scalarization is impossible. A zero-tolerance positive-mass control verifies the full-domain exact-recovery boundary under the frozen separating loss. More generally, expected-aggregation exact recovery is relative to positive reference support, while maximum aggregation evaluates every listed case.
 
 ## Assurance
 
@@ -22,4 +22,4 @@ Conformance, adversarial mutation, provenance hash, documentation, repository he
 
 Terminal verdict: **PROVED at the frozen finite-explicit operational scope; W5 COMPLETE.** No W4 record is reinterpreted, and no universal metric, reference, tolerance, cost, scalarization, unique optimum, external-domain correspondence, open-domain conclusion, novelty, empirical utility, or W6 result is claimed.
 
-Next workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY` remains open.
+At W5 completion, `PCA-W6-EMPIRICAL-AUDIT-UTILITY` was the next open workstream. That transition is historical: W6 and `POST-CLOSURE-001` are complete. The current successor is preregistered `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`, not W7.

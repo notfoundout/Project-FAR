@@ -1,0 +1,99 @@
+{
+  "schema_version": "1.0",
+  "freeze_id": "EFR-001-INPUT-FREEZE-V1.0",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "freeze_status": "FROZEN_BEFORE_EXECUTION",
+  "frozen_date": "2026-09-05",
+  "evidence_baseline": {
+    "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+    "tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b"
+  },
+  "evidence_rule": "Only W1-W6 evidence reachable from the exact baseline tree may be used as inherited evidence. Later interpretation is governed by the frozen matrix object below.",
+  "artifact_objects": [
+    {
+      "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+      "git_blob_sha": "81a97d54f064ac2986c401ed50d269b33b621ed4"
+    },
+    {
+      "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
+      "git_blob_sha": "87ecde8148015cee0a933a63335df3ac5fb862b0"
+    },
+    {
+      "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+      "git_blob_sha": "a43df3e77ac6496b8c2e0ecee50625578815930b"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/00-preregistration.md",
+      "git_blob_sha": "0b9adde316c4d39aef4c6366a5b2f49ff3c107e8"
+    }
+  ],
+  "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
+  "selection_and_analysis_rules_frozen": true,
+  "case_manifest_requirements": {
+    "custodian_independent": true,
+    "complete_before_unblinding": true,
+    "required_fields": [
+      "path",
+      "byte_count",
+      "sha256",
+      "provenance",
+      "inclusion_decision",
+      "exclusion_decision"
+    ],
+    "signed_and_timestamped": true,
+    "read_only_deposit": true,
+    "case_replacement_after_unblinding": false,
+    "corruption_rule": "Invalidate the complete predeclared stratum; a corrected run requires a new version and complete new freeze."
+  },
+  "external_input_slots": [
+    {
+      "test_id": "EFR-R1",
+      "input": "two I3 team identity/exposure manifests and sealed derivation ledgers",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-R2",
+      "input": "two clean-room implementation manifests, sources, lockfiles, and sealed outputs",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-H1",
+      "input": "120-case blinded external case/label manifest",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-A1",
+      "input": "60-case blinded adversarial case/label manifest",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-HD1",
+      "input": "ethics determination, 24-reviewer roster, allocation, and interface/training lock",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-U1",
+      "input": "ethics determination, three-site screening logs, 120-investigation allocation, and adjudication lock",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-C1",
+      "input": "time, training, 2026-USD cost, raw six-dimension NASA-TLX, and burden-event ledger",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    },
+    {
+      "test_id": "EFR-N1",
+      "input": "independent searcher roster, database/query lock, claim chart, and sealed search record",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+    }
+  ],
+  "execution_gate": "No EFR test may begin until its complete slot is content-addressed and sealed before unblinding. Empty slots are not results and do not authorize external-evidence claims.",
+  "post_hoc_escape_clauses_allowed": false,
+  "current_results": {
+    "tests_executed": 0,
+    "external_cases": 0,
+    "human_participants": 0,
+    "field_sites": 0,
+    "novelty_status": "NO_CLAIM"
+  }
+}
