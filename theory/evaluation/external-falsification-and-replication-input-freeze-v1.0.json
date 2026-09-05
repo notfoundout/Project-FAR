@@ -20,11 +20,15 @@
     },
     {
       "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
-      "git_blob_sha": "a43df3e77ac6496b8c2e0ecee50625578815930b"
+      "git_blob_sha": "8a1f9f5fb89036896abf0d45e1ac84409f53bd66"
     },
     {
       "path": "docs/research/external-falsification-and-replication/00-preregistration.md",
       "git_blob_sha": "0b9adde316c4d39aef4c6366a5b2f49ff3c107e8"
+    },
+    {
+      "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
+      "git_blob_sha": "183b28323d8cc6241ad200e6e0e6a7f6795d4a0b"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",

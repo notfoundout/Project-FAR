@@ -74,7 +74,7 @@ This proves only the registered bounded material-loss-detection result. The corp
 
 ## Current phase
 
-Completed predecessor: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — complete at its six registered workstream scopes.
+Completed predecessor: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — **complete at its six registered workstream scopes**.
 
 Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — [External Falsification and Replication Program v1.0](governance/external-falsification-and-replication-program-v1.0.md) — **preregistered; not executed; not W7**. Its [canonical W1–W6 claim/evidence matrix](governance/w1-w6-claim-evidence-matrix-v1.0.md) fixes the inherited claims and nonclaims.
 

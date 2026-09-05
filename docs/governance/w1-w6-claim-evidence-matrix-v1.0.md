@@ -17,6 +17,6 @@ This is the canonical cross-workstream claim/evidence matrix for `PCA-W1` throug
 
 ## Cross-workstream disposition
 
-`POST-CLOSURE-001` is complete at its six registered scopes. It registered no W7. The current successor is [External Falsification and Replication](external-falsification-and-replication-program-v1.0.md), a separate preregistered program whose tests are not yet executed.
+The [2026-09-05 status reconciliation](w1-w6-status-reconciliation-2026-09-05.md) records the governed status-manifest rebinding without changing scientific evidence. `POST-CLOSURE-001` is complete at its six registered scopes. It registered no W7. The current successor is [External Falsification and Replication](external-falsification-and-replication-program-v1.0.md), a separate preregistered program whose tests are not yet executed.
 
 No W1–W6 result establishes novelty, priority, universality, external validity, human utility, general cost-effectiveness, or FARO product/readiness status. Those outcomes may change only through new evidence under their own frozen tests; repository consistency or repeated internal computation cannot supply them.

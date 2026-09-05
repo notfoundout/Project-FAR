@@ -23,7 +23,7 @@ The core theory remains closed after the v1.1 correction. The historical UPP que
 5. **`PCA-W5-APPROXIMATION-AND-COST` — complete at finite-explicit operational scope.** `far-ir/2.1` checks metrics, reference/aggregation semantics, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery without a universal scalar objective.
 6. **`PCA-W6-EMPIRICAL-AUDIT-UTILITY` — complete at the preregistered bounded internal controlled-artifact scope.** The schema-only baseline detected `0/6` registered collision mutants, while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, agreed with a separately implemented Project-FAR-authored table-only oracle on `12/12` primary records, and separately recomputed `6/6` native lossy controls. This is an all-items result for the registered finite corpus and defect class only. Human disagreement reduction remains `UNDERDETERMINED`; external real-world utility remains `OPEN`.
 
-No W7 is registered. EFR-001 is the separate governed campaign for external and human-subject evidence. It freezes tests now but establishes no result until execution.
+No W7 is currently registered. EFR-001 is the separate governed campaign for external and human-subject evidence. It freezes tests now but establishes no result until execution.
 
 ## W4-to-W6 boundaries
 

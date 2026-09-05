@@ -94,43 +94,43 @@
   ],
   "supporting_artifacts": [
     {
-      "sha256": "7cb75db91e752904f3ee2ac1b702bbb2c2c4e2a0c33c75317e7f155355d1bf60",
+      "sha256": "dd01bf5b7529e78f6d7f519d2ac37b717c42e376715cbfadee51f2860dddd848",
       "path": "README.md"
     },
     {
-      "sha256": "260f58f45632dbe39f65b6d37d59c1a44c5437f077eb3a23fb168e8dd4c90219",
+      "sha256": "23e51b0bbebf54c7712151f15b990535c0989f9a6a9c80e4c4bd9cfa33c62d44",
       "path": "docs/CANONICAL_MAP.md"
     },
     {
-      "sha256": "80070569dd7151f252b324c13aa002551fc94d9dc920fdd471b7c2a18a7b95a7",
+      "sha256": "6e47889b5652ae78c32cddca61ba9f7bc2df87ea24cb8fe247d53026449d680e",
       "path": "docs/ROADMAP.md"
     },
     {
-      "sha256": "e146c0fcdfc35bba9d2d53ec4d729ecdd924172e23291b35588109e559e138ff",
+      "sha256": "8215a1254351a111ba7a8ddafdc378bf730f99f9b09f4a1a85ad73f275a79237",
       "path": "docs/governance/claim-status-matrix.md"
     },
     {
-      "sha256": "2c5ac43dbb9ae929208c803ff72ea778326eefa456f4bb5aace5ff338c9c6d19",
+      "sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
       "path": "docs/governance/limitations-register.md"
     },
     {
-      "sha256": "3f53e5cd5a09622088280f6fba2ff31dc0eb1b34a1027a71d1e2d6fb5f095643",
+      "sha256": "5c6f33bc69cb0848c929a88c250159355e69e501690e609edf3abf2157de960d",
       "path": "docs/governance/open-problems-register.md"
     },
     {
-      "sha256": "e1bab9bd50df14ad22d00a10f3c6514acbb566869eb00dd16eeac153a12a1f3d",
+      "sha256": "4e5eedc84c3bf14fabe19a322b350f555060f77795e87138f4e47796312ba2ad",
       "path": "docs/governance/pca-w4-domain-contracts-status-v1.0.md"
     },
     {
-      "sha256": "8d2d205c4a6debef471faa0e626f51284f1b0f9d82cb5dca5c1d4ac85e6cab6e",
+      "sha256": "232800065f9cdb0ebd954eff9787f1cadc42c6f72642e26aa57c816d205a9262",
       "path": "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
     },
     {
-      "sha256": "a765414f3e7df6653ad813fb58d82ac74edf435ce34cc7867daa12564423eca7",
+      "sha256": "684029245f0b53a3603e58bae8460fb26eb516a958db545d520196cc532de2fb",
       "path": "docs/governance/theorem-proof-status-register.md"
     },
     {
-      "sha256": "fc4a16d091c3852da86fbc83614a62af69b67b9d8b2baeb391a5c759d09923ab",
+      "sha256": "1541dd88af8b58dba64240097a1b7587323d41dded4b982e49c5a6282aae5379",
       "path": "docs/project-status.md"
     },
     {

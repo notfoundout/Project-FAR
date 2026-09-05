@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import unittest
@@ -44,6 +45,10 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
         self.assertTrue(rules["post_unblinding_case_replacement_prohibited"])
         self.assertTrue(rules["original_protocol_and_result_retained"])
         self.assertTrue(rules["favorable_post_hoc_reclassification_prohibited"])
+        for artifact in freeze["artifact_objects"]:
+            payload = (ROOT / artifact["path"]).read_bytes()
+            header = b"blob " + str(len(payload)).encode("ascii") + b"\0"
+            self.assertEqual(hashlib.sha1(header + payload).hexdigest(), artifact["git_blob_sha"])
 
     def test_every_family_has_explicit_acceptance_and_failure(self) -> None:
         data = self.load(PROGRAM_PATH)
