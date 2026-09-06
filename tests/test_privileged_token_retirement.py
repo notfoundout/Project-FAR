@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import contextlib
 import copy
+import hashlib
 import io
 import json
 import os
@@ -14,6 +15,7 @@ from pathlib import Path
 import unittest
 from unittest.mock import patch
 import urllib.error
+import urllib.parse
 
 import yaml
 
@@ -52,14 +54,34 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
             return False
         receipt = json.loads(RECEIPT.read_text())
         self.assertEqual(receipt["status"], "ACCEPTED_RETIRED")
-        self.assertTrue(receipt["accepted_receipt"]["secret_absent"])
+        if receipt["accepted_receipt"]["secret_absent"]:
+            self.assertTrue(receipt["accepted_receipt"]["secret_absent"])
+        else:
+            self.assertEqual(receipt["accepted_receipt"]["mode"], "issuer_revocation")
+            self.assertIs(receipt["accepted_receipt"]["credential_usable"], False)
+            self.assertEqual(receipt["accepted_receipt"]["revocation_http_status"], 202)
+            self.assertEqual(receipt["accepted_receipt"]["credential_authentication_http_status"], 401)
+            self.assertEqual(receipt["accepted_receipt"]["repository_secret_delete_http_status"], 403)
+            self.assertEqual(receipt["accepted_receipt"]["workflow_token_secret_delete_http_status"], 403)
+            self.assertTrue(receipt["accepted_receipt"]["post_revocation_protection_summary_enforced"])
+        actual = receipt["accepted_receipt"]["branch_protection"]
+        self.assertEqual(receipt["accepted_receipt"]["branch_protection_sha256"], hashlib.sha256(
+            json.dumps(actual, sort_keys=True, separators=(',', ':')).encode()).hexdigest())
+        for key, expected in policy().items():
+            if isinstance(expected, dict):
+                for field, value in expected.items():
+                    self.assertEqual(actual[key][field], value)
+            else:
+                self.assertEqual(actual[key], expected)
         self.assertTrue(receipt["accepted_receipt"]["branch_protection_unchanged_and_enforced"])
         self.assertEqual(receipt["accepted_receipt"]["privileged_workflow_states"],
                          {name: "disabled_manually" for name in LEGACY})
         return True
 
     def execute(self, *, token="fake-admin", before=None, after=None,
-                state="disabled_manually", fail_request=None, repository=None):
+                state="disabled_manually", fail_request=None, repository=None,
+                failure_status=500, issuer_auth_status=401, revocation_status=202,
+                delete_statuses=None):
         workflow = yaml.safe_load(WORKFLOW.read_text())
         shell = workflow["jobs"]["retire"]["steps"][0]["run"]
         code = shell.split("python - <<'PY'\n", 1)[1].rsplit("\nPY", 1)[0]
@@ -67,13 +89,34 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
         after = copy.deepcopy(before) if after is None else after
         calls = []
         protection_reads = 0
+        delete_statuses = list(delete_statuses or [])
+
+        class Response(io.BytesIO):
+            def __init__(self, data, status=200):
+                super().__init__(json.dumps(data).encode())
+                self.status = status
 
         def urlopen(req):
             nonlocal protection_reads
-            path = req.full_url.split("/repos/notfoundout/Project-FAR", 1)[1]
-            calls.append((req.method, path, req.headers.get("Authorization")))
-            if fail_request == (req.method, path):
-                raise urllib.error.HTTPError(req.full_url, 403, "Forbidden", {}, io.BytesIO(b"denied"))
+            path = urllib.parse.urlparse(req.full_url).path.removeprefix('/repos/notfoundout/Project-FAR')
+            calls.append((req.get_method(), path, req.headers.get("Authorization")))
+            if path == '/credentials/revoke':
+                self.assertEqual(req.get_method(), 'POST')
+                self.assertNotIn('Authorization', req.headers)
+                self.assertEqual(json.loads(req.data), {'credentials': [token]})
+                return Response({}, revocation_status)
+            if path == '/user':
+                self.assertEqual(req.headers.get('Authorization'), f'Bearer {token}')
+                if issuer_auth_status != 200:
+                    raise urllib.error.HTTPError(req.full_url, issuer_auth_status, 'issuer', {}, io.BytesIO())
+                return Response({}, 200)
+            if req.get_method() == 'DELETE' and delete_statuses:
+                status = delete_statuses.pop(0)
+                if status != 204:
+                    raise urllib.error.HTTPError(req.full_url, status, 'delete', {}, io.BytesIO())
+                return Response({}, 204)
+            if fail_request == (req.get_method(), path):
+                raise urllib.error.HTTPError(req.full_url, failure_status, "Forbidden", {}, io.BytesIO(b"denied"))
             if path.endswith("/protection"):
                 protection_reads += 1
                 data = before if protection_reads == 1 else after
@@ -82,27 +125,75 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
                     "required_status_checks": {"enforcement_level": "everyone",
                     "contexts": ["merge-authority"],
                     "checks": [{"context": "merge-authority", "app_id": 15368}]}}}
-            elif req.method == "GET" and "/actions/workflows/" in path:
+            elif req.get_method() == "GET" and "/actions/workflows/" in path:
                 data = {"state": state}
-            elif req.method in ("PUT", "DELETE"):
+            elif req.get_method() in ("PUT", "DELETE"):
                 data = {}
             else:
-                raise AssertionError((req.method, path))
-            return io.BytesIO(json.dumps(data).encode())
+                raise AssertionError((req.get_method(), path))
+            return Response(data)
 
         env = {"GITHUB_REPOSITORY": repository or "notfoundout/Project-FAR",
                "GITHUB_REF": "refs/heads/main", "FAR_GITHUB_ADMIN_TOKEN": token,
                "GITHUB_WORKFLOW_TOKEN": "fake-workflow"}
         output = io.StringIO()
         exit_code = 0
-        with patch.dict(os.environ, env, clear=True), patch("urllib.request.urlopen", urlopen), contextlib.redirect_stdout(output):
+        with patch.dict(os.environ, env, clear=True), patch("urllib.request.urlopen", urlopen), patch('time.sleep'), contextlib.redirect_stdout(output):
             try:
                 exec(compile(code, str(WORKFLOW), "exec"), {})
             except SystemExit as exc:
                 exit_code = exc.code
         self.assertNotIn("fake-admin", output.getvalue())
         self.assertNotIn("fake-workflow", output.getvalue())
+        if token:
+            self.assertNotIn(token, output.getvalue())
         return exit_code, output.getvalue(), calls
+
+    def test_delete_forbidden_revokes_only_exact_pat_and_requires_issuer_rejection(self):
+        if self.retired():
+            return
+        code, output, calls = self.execute(token='ghp_synthetic_obsolete', delete_statuses=[403, 403])
+        self.assertEqual(code, 0)
+        self.assertIn('"mode": "revocation_pending"', output)
+        self.assertIn('"mode": "issuer_revocation"', output)
+        self.assertIn('"secret_absent": false', output)
+        self.assertIn('"credential_authentication_http_status": 401', output)
+        self.assertIn(hashlib.sha256(b'ghp_synthetic_obsolete').hexdigest(), output)
+        self.assertIn('"mode": "revocation_requested"', output)
+        self.assertEqual(sum(path == '/credentials/revoke' for _, path, _ in calls), 1)
+        self.assertEqual(calls[-1][:2], ('GET', '/branches/main'))
+
+    def test_short_lived_deletion_is_attempted_before_revocation(self):
+        if self.retired():
+            return
+        code, output, calls = self.execute(delete_statuses=[403, 204])
+        self.assertEqual(code, 0)
+        self.assertTrue(json.loads(output)['secret_absent'])
+        self.assertEqual(calls[-1][2], 'Bearer fake-workflow')
+        self.assertNotIn('/credentials/revoke', [path for _, path, _ in calls])
+
+    def test_revocation_queue_or_unexpected_response_cannot_be_accepted(self):
+        if self.retired():
+            return
+        for status in (200, 403):
+            code, output, _ = self.execute(token='ghp_synthetic_obsolete', delete_statuses=[403, 403], issuer_auth_status=status)
+            self.assertNotEqual(code, 0)
+            self.assertNotIn('"mode": "issuer_revocation"', output)
+        code, output, _ = self.execute(token='ghp_synthetic_obsolete', delete_statuses=[403, 403], revocation_status=422)
+        self.assertNotEqual(code, 0)
+        self.assertNotIn('"mode": "issuer_revocation"', output)
+
+    def test_invalidated_credential_recovery_is_read_only_and_cannot_use_valid_pat(self):
+        if self.retired():
+            return
+        code, output, calls = self.execute(fail_request=('GET', '/branches/main/protection'), failure_status=401)
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(output)['mode'], 'invalidated_credential_recovery')
+        self.assertEqual(json.loads(output)['credential_sha256'], hashlib.sha256(b'fake-admin').hexdigest())
+        self.assertTrue(all(method == 'GET' for method, _, _ in calls))
+        code, output, _ = self.execute(fail_request=('GET', '/branches/main/protection'), failure_status=401, issuer_auth_status=200)
+        self.assertNotEqual(code, 0)
+        self.assertEqual(output, '')
 
     def test_success_checks_policy_disables_then_deletes_last(self):
         if self.retired():

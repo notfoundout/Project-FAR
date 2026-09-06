@@ -108,12 +108,20 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
             self.assertIn("github.ref == 'refs/heads/main'", workflow)
             self.assertIn("credentialless_recovery", workflow)
             self.assertIn("GITHUB_WORKFLOW_TOKEN", workflow)
-            self.assertEqual(security["status"], "SCHEDULED_ON_FIRST_MAIN_MERGE")
+            self.assertIn("https://api.github.com/credentials/revoke", workflow)
+            self.assertIn("credential_authentication_http_status=401", workflow)
+            self.assertEqual(security["status"], "NEUTRALIZATION_PENDING_AFTER_DELETE_FORBIDDEN")
             self.assertIs(security["accepted_receipt"], None)
         else:
             self.assertEqual(refs, legacy)
             self.assertEqual(security["status"], "ACCEPTED_RETIRED")
-            self.assertTrue(security["accepted_receipt"]["secret_absent"])
+            if security["accepted_receipt"]["secret_absent"]:
+                self.assertTrue(security["accepted_receipt"]["secret_absent"])
+            else:
+                self.assertEqual(security["accepted_receipt"]["mode"], "issuer_revocation")
+                self.assertIs(security["accepted_receipt"]["credential_usable"], False)
+                self.assertEqual(security["accepted_receipt"]["credential_authentication_http_status"], 401)
+                self.assertEqual(security["accepted_receipt"]["revocation_http_status"], 202)
             self.assertTrue(security["accepted_receipt"]["branch_protection_unchanged_and_enforced"])
             self.assertEqual(
                 set(security["accepted_receipt"]["privileged_workflow_states"].values()),

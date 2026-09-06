@@ -69,7 +69,7 @@ Native GitHub merge-queue activation remains unavailable while the repository is
 
 ## Security notes
 
-`FAR_GITHUB_ADMIN_TOKEN` was not stored in repository content or artifacts, but retaining it as a reusable Actions secret is no longer authorized. Its deletion and the disabling of both consumer workflows are governed by `privileged-token-retirement-2026-09-05.md`; until that live receipt exists, retirement is not claimed.
+`FAR_GITHUB_ADMIN_TOKEN` was not stored in repository content or artifacts, but retaining it as a reusable Actions secret is no longer authorized. Its deletion or verified irreversible issuer revocation, and the disabling of both consumer workflows, are governed by `privileged-token-retirement-2026-09-05.md`; until that live receipt exists, retirement is not claimed.
 
 ## Final disposition
 
