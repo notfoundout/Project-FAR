@@ -70,6 +70,8 @@ Security correction scheduled 2026-09-05: the PR #468 reapplication design expos
 
 Native GitHub merge queues remain unavailable while the repository is personal-account owned. This is not a branch-protection failure. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization.
 
+The nested full-health runner gives the complete canonical test suite the same 900-second budget recorded for `tests.canonical` in the validation manifest. Individual health checks retain their shorter default; explicit `--timeout` and `PROJECT_FAR_HEALTH_TIMEOUT` overrides still apply to every subprocess. This corrects the 120-second nested-suite timeout observed in exact-head run [34010171919](https://github.com/notfoundout/Project-FAR/actions/runs/34010171919) while preserving required checks and timeout failures.
+
 ## Required secrets
 
 - `FAR_VALIDATION_CACHE_SIGNING_KEY`: persistent HMAC secret for cross-runner cache and certificate trust.
