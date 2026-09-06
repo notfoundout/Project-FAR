@@ -28,7 +28,7 @@
     },
     {
       "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
-      "git_blob_sha": "e4f0757dd3cdae725fc911275184b0ec4c1466da"
+      "git_blob_sha": "157a8d688e59aaf3b97e4c0de20054ca543b51c3"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",

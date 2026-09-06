@@ -134,7 +134,7 @@
       "path": "docs/project-status.md"
     },
     {
-      "sha256": "722b820a1e44620571b08ff328c1cccfb7230fe45b1969efe703d7865621badb",
+      "sha256": "07d2cdb3d5c3c21f0a0fc6b84cf292f0cec84e44e4f28ce0c4a2c58077945d92",
       "path": "docs/planning/next-actions.md"
     },
     {
@@ -210,7 +210,7 @@
       "path": "research/campaigns/pca-w4-domain-contracts-v1.0.json"
     },
     {
-      "sha256": "5c37efaa3c042b0502f081717db139017cbbf05a7a4376a33d168987f4616dc1",
+      "sha256": "cb7b9b3ae59388848483179debd7dc5e0200c831a98a3cf7266d6d3b8d72cb6b",
       "path": "tests/test_cre001_semantics.py"
     },
     {
@@ -246,7 +246,7 @@
       "path": "tools/check_repository_truth.py"
     },
     {
-      "sha256": "314825fd61c20b57a5e8cd33f18555742da329783f4f45d95ffcde70847e812d",
+      "sha256": "6e1d886a35fe3705a73f049f13b7744d4492c4bec6ffee8db05ecdfe2b46be84",
       "path": "tools/generate_next_tasks.py"
     }
   ],

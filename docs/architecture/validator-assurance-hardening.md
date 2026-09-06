@@ -91,3 +91,7 @@ make validate-assurance
 ## Claim boundary
 
 This package substantially closes the registered assurance gaps. It does not establish literal impossibility of validator defects, immunity to compromised runners or secrets, independent scientific validation of Project FAR's research claims, or a full refinement proof of the Python engine.
+
+## Exact PR head assurance
+
+The protected `merge-authority` job validates GitHub's proposed merge commit. The additive `.github/workflows/exact-head-assurance.yml` also runs the same complete traced profile, independent oracle, weakening audit, Lean proof, exhaustive model, registered mutations, and signed certificate checks with checkout explicitly bound to the PR head SHA. It uses only a read-only short-lived Actions token and verifies the actual commit/tree. Both runs are required by the EFR promotion record; live main protection continues to require the existing `merge-authority` context. The exact-head job also runs on canonical main pushes. It does not configure repository protection or handle administrator credentials.
