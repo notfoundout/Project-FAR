@@ -98,7 +98,8 @@
         "per_domain_per_class_min": "8/10"
       },
       "failure": "Any overall or per-domain threshold is missed.",
-      "invalid": "Provenance failure, label leakage, or post-unblinding selection/replacement."
+      "invalid": "Provenance failure, label leakage, or post-unblinding selection/replacement.",
+      "source_frame": "Frozen six-query arXiv v1 discovery procedure in the content-addressed protocol: complete date-bounded metadata, first 1000 per domain, deterministic cross-domain deduplication, at most first eligible worked finite example per paper, no replacement or source expansion. Supply sufficiency unestablished; incomplete strata invalidate intake."
     },
     {
       "id": "EFR-A1",
@@ -178,7 +179,8 @@
       "failure": "Any benefit, site, or harm gate is missed.",
       "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent.",
       "eligibility": "Three independent routine documentary audit sites; next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions.",
-      "zero_standard_defect_rate": "BENEFIT_GATE_FAILS"
+      "zero_standard_defect_rate": "BENEFIT_GATE_FAILS",
+      "intervention_format": "Exact W3 far-ir/2.0 fields and baseline report only; W5 far-ir/2.1 declarations excluded."
     },
     {
       "id": "EFR-C1",
@@ -203,7 +205,8 @@
         "gates_applied_separately": [
           "HD1",
           "each U1 site"
-        ]
+        ],
+        "attribution": "Enrolled-person costs over their allocated tasks; U1 site-specific costs over its 40 investigations; only unassignable central U1 overhead in equal thirds across sites; HD1 common costs over 1440 ratings. Each entry once; no pooled redistribution of attributable U1 costs."
       },
       "median_algorithm": "Sort all allocated arm observations numerically; odd n uses x[n//2], even n uses (x[n//2-1]+x[n//2])/2. Missing measurements fail. Exact rational arithmetic throughout, integer milliseconds floored once at capture; no threshold rounding."
     },
