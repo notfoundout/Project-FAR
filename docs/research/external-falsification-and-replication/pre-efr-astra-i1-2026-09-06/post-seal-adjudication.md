@@ -34,7 +34,7 @@ The clean-room evaluator therefore correctly identified a packet defect rather t
 
 **Post-seal disposition: SURVIVES-ADJUDICATION.**
 
-The packet omitted the exact bounded SSS representation/decoder definitions needed for an independent reproduction. Canonical PR #453 materials define:
+The packet omitted the exact bounded SSS representation/decoder definitions needed for an independent reproduction. The bounded noncanonical PR #453 research record supplies the historical source definitions for:
 
 - individual-sequent state with the rule-induced projected relation;
 - the four uniform monotone successor-set decoders;
@@ -42,7 +42,7 @@ The packet omitted the exact bounded SSS representation/decoder definitions need
 - resource-labelled hyperedges preserving the joint premise family;
 - frontier-multiset state with a binary expansion relation sufficient for finitary rule systems.
 
-These are exactly the bounded representation/decoder classes needed to instantiate the factorization/sufficiency framework. The same source explicitly denies a universal operator-architecture interpretation. Existing W2 formalization separately records the bounded SSS/MLL witness bridge as machine-checked.
+PR #453 is not canonical authority. The governing v1.1 claim ledger retains FAR-CORE-014 only at the PR #453 stated representation/decoder scope, and the accepted W2 formalization independently records the bounded SSS/MLL witness bridge as machine-checked without upgrading its `SUPPORTED/DERIVED` provenance label. Those governing surfaces anchor the post-seal disposition; PR #453 supplies only the bounded source definitions.
 
 The clean-room evaluator's `INDETERMINATE` verdict therefore reflects missing packet inputs, not a surviving contradiction.
 
