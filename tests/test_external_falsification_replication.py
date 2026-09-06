@@ -110,11 +110,22 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
             self.assertIn("GITHUB_WORKFLOW_TOKEN", workflow)
             self.assertIn("https://api.github.com/credentials/revoke", workflow)
             self.assertIn("credential_authentication_http_status=401", workflow)
+            pin = re.search(r'expected_credential_sha256 = "([a-f0-9]*)"', workflow).group(1)
+            self.assertEqual(pin, security["authorized_credential_sha256"] or "")
+            if pin:
+                self.assertEqual(len(pin), 64)
+                self.assertEqual(pin, security["identity_capture"]["receipt"]["credential_sha256"])
+                self.assertEqual(security["identity_capture"]["receipt"]["mode"], "credential_identity_capture")
+                self.assertIs(security["identity_capture"]["receipt"]["retirement_accepted"], False)
+            else:
+                self.assertIs(security["identity_capture"], None)
             self.assertEqual(security["status"], "NEUTRALIZATION_PENDING_AFTER_DELETE_FORBIDDEN")
             self.assertIs(security["accepted_receipt"], None)
         else:
             self.assertEqual(refs, legacy)
             self.assertEqual(security["status"], "ACCEPTED_RETIRED")
+            self.assertEqual(security["accepted_receipt"]["credential_sha256"], security["authorized_credential_sha256"])
+            self.assertEqual(security["authorized_credential_sha256"], security["identity_capture"]["receipt"]["credential_sha256"])
             if security["accepted_receipt"]["secret_absent"]:
                 self.assertTrue(security["accepted_receipt"]["secret_absent"])
             else:
