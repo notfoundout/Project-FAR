@@ -152,7 +152,8 @@
         "Gwet AC1",
         "Cohen kappa descriptive only"
       ],
-      "missingness": "Missing FAR pair = disagreement, missing standard pair = agreement; false-accept imputation FAR wrong / standard correct."
+      "missingness": "Missing FAR pair = disagreement, missing standard pair = agreement; false-accept imputation FAR wrong / standard correct.",
+      "eligibility": "Consenting external non-author adults aged at least 18; English materials without translation; conforming existing environment; applicable ethics determination; fixed four-hour course and all 12 W4 classifications/witnesses correct across all six domains. No credential/experience/discipline discretion; first 24 by the frozen qualification order."
     },
     {
       "id": "EFR-U1",
@@ -203,7 +204,8 @@
           "HD1",
           "each U1 site"
         ]
-      }
+      },
+      "median_algorithm": "Sort all allocated arm observations numerically; odd n uses x[n//2], even n uses (x[n//2-1]+x[n//2])/2. Missing measurements fail. Exact rational arithmetic throughout, integer milliseconds floored once at capture; no threshold rounding."
     },
     {
       "id": "EFR-N1",

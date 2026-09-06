@@ -6,6 +6,8 @@ This is the deterministic content/control specification, with the rendering equi
 
 ## Exact participant instructions
 
+HD1 recruitment applies the protocol's complete eligibility rule: consenting adults aged at least 18, outside Project FAR control and artifact authorship, able to use these English-language materials without translation, with a conforming existing environment and an applicable ethics determination. The only domain-training qualification is this four-hour course followed by correct classification and witness on every one of the twelve W4 records, including both records in all six domains. No degree, discipline, job title, prior experience, or discretionary expertise screen is required or can replace that test. Record prior education/experience descriptively only. Enroll the first 24 who satisfy these rules in qualification-completion timestamp order, breaking exact ties by their preassigned blinded reviewer ID; retain every screening attempt. IDs are assigned sequentially in consent timestamp order, with exact consent ties broken by the custodian's pre-consent sequential screening-log entry. No domain quota or later reranking is permitted.
+
 Display the following text verbatim before training and at the top of every task:
 
 > Decide whether the supplied representation preserves every required behavior in this finite record. Use only the evidence displayed here. Select PRESERVATION if every pair of source cases with the same representation value has the same required-behavior value. Select MATERIAL LOSS if at least one pair has the same representation value and different required-behavior values. These decisions concern only the displayed cases and contract. They do not assess all cases in the source domain.
