@@ -81,7 +81,7 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
     def execute(self, *, token="fake-admin", before=None, after=None,
                 state="disabled_manually", fail_request=None, repository=None,
                 failure_status=500, issuer_auth_status=401, revocation_status=202,
-                delete_statuses=None, identity_pin="synthetic"):
+                delete_statuses=None, identity_pin="synthetic", initial_state=None):
         workflow = yaml.safe_load(WORKFLOW.read_text())
         shell = workflow["jobs"]["retire"]["steps"][0]["run"]
         code = shell.split("python - <<'PY'\n", 1)[1].rsplit("\nPY", 1)[0]
@@ -94,6 +94,7 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
         after = copy.deepcopy(before) if after is None else after
         calls = []
         protection_reads = 0
+        workflow_reads = {}
         delete_statuses = list(delete_statuses or [])
 
         class Response(io.BytesIO):
@@ -131,7 +132,8 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
                     "contexts": ["merge-authority"],
                     "checks": [{"context": "merge-authority", "app_id": 15368}]}}}
             elif req.get_method() == "GET" and "/actions/workflows/" in path:
-                data = {"state": state}
+                workflow_reads[path] = workflow_reads.get(path, 0) + 1
+                data = {"state": initial_state if initial_state is not None and workflow_reads[path] == 1 else state}
             elif req.get_method() in ("PUT", "DELETE"):
                 data = {}
             else:
@@ -226,6 +228,22 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
         for method, path, credential in calls:
             self.assertEqual(credential, "Bearer fake-workflow" if "/workflows/" in path else "Bearer fake-admin")
             self.assertFalse(method in ("PUT", "DELETE") and "/protection" in path)
+        code, _, calls = self.execute(initial_state="active")
+        self.assertEqual(code, 0)
+        self.assertEqual(sum(method == "PUT" for method, _, _ in calls), 2)
+
+    def test_already_disabled_consumers_require_no_redundant_disable_permission(self):
+        if self.retired():
+            return
+        operation = ("PUT", "/actions/workflows/canonical-branch-protection.yml/disable")
+        code, output, calls = self.execute(fail_request=operation, failure_status=403)
+        self.assertEqual(code, 0)
+        self.assertTrue(json.loads(output)["secret_absent"])
+        self.assertFalse(any(method == "PUT" for method, _, _ in calls))
+        code, output, calls = self.execute(fail_request=operation, failure_status=403, initial_state="active")
+        self.assertNotEqual(code, 0)
+        self.assertEqual(output, "")
+        self.assertFalse(any(method == "DELETE" for method, _, _ in calls))
 
     def test_recovery_after_lost_deletion_receipt_needs_no_admin(self):
         if self.retired():
@@ -278,7 +296,8 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
                           ("GET", "/actions/workflows/configure-validation-protection.yml"),
                           ("DELETE", "/actions/secrets/FAR_GITHUB_ADMIN_TOKEN")):
             with self.subTest(operation=operation):
-                code, output, calls = self.execute(fail_request=operation)
+                code, output, calls = self.execute(fail_request=operation,
+                    initial_state="active" if operation[0] == "PUT" else None)
                 self.assertNotEqual(code, 0)
                 self.assertEqual(output, "")
                 self.assertEqual(calls[-1][:2], operation)

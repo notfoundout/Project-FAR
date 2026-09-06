@@ -14,12 +14,14 @@ PR #471 merged through the protected path at `24584754b9f628a5eff978d72a2efd716f
 
 Protected promotion of this activation revision authorizes retirement of only that captured value. The inline pin and governed receipt must match; any different value fails before API calls. This is evidence about the current repository credential, not an invented assertion about an earlier unobserved token. Retirement remains pending until the activated main run supplies the required deletion or issuer-revocation evidence.
 
+PR #472 activated the pinned control at `86889da3066c4fb911220eac0f3baffc74d96df0`. [Run 34012873101](https://github.com/notfoundout/Project-FAR/actions/runs/34012873101/job/101431576186) matched the fingerprint and passed the initial full-policy check, then failed with 403 while redundantly disabling an already disabled consumer. It attempted no deletion or revocation. The control now reads each consumer first and requests disabling only when needed; an active consumer that cannot be disabled still fails before retirement. Both states are independently read again before proceeding. This preserves the failed attempt and makes repeat execution idempotent.
+
 ## Governed completion procedure
 
 The checkout-free, main-only one-shot remains the execution boundary. It has no manual-dispatch trigger and no repository checkout. Its reviewed inline program must:
 
 0. Capture the current repository credential fingerprint and full unchanged protection using GET requests only. PR #471 had an empty activation fingerprint and therefore could not delete or revoke. Its protected read-only execution captured the current credential; this activation revision pins that observed fingerprint and exact capture run. A replacement value must fail before any API call. The capture identifies the currently available obsolete repository credential; it does not invent identity evidence for an unobserved historical value.
-1. Verify the complete governed main policy, disable both exact consumers, verify their states, and require the full policy unchanged.
+1. Verify the complete governed main policy, read both exact consumers and disable only those not already disabled, verify their states, and require the full policy unchanged.
 2. Attempt deletion of the exact repository secret with the PAT. If forbidden, attempt the same operation with the already available short-lived Actions token. A successful deletion is the final API operation on that path.
 3. If both identities receive 403, print and flush a token-free checkpoint containing the full verified policy, its hash, disabled workflow states, and the two deletion denials.
 4. Submit **only this obsolete PAT** to GitHub's unauthenticated `POST /credentials/revoke` endpoint. It accepts classic and fine-grained PATs; the request has no Authorization header and never includes the workflow token. The credential body is never logged.
