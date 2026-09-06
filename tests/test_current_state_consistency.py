@@ -118,6 +118,11 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         errors = self.validate(texts)
         self.assertTrue(any("Next / Active" in error for error in errors))
 
+    def test_map_cannot_redeclare_completed_predecessor_current(self):
+        texts = copy.deepcopy(VALID_TEXTS)
+        texts["map"] += "Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.\n"
+        self.assertTrue(any("completed predecessor is still declared current" in e for e in self.validate(texts)))
+
     def test_terminal_no_w7_boundary_is_required(self):
         texts = copy.deepcopy(VALID_TEXTS)
         texts["roadmap"] = texts["roadmap"].replace("No W7 is currently registered.\n", "")

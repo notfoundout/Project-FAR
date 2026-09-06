@@ -36,13 +36,17 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
         self.assertEqual(freeze["freeze_status"], "FROZEN_BEFORE_EXECUTION")
         self.assertIn(data["authority"]["human_study_materials"], {item["path"] for item in freeze["artifact_objects"]})
         materials = (ROOT / data["authority"]["human_study_materials"]).read_text()
-        for section in ("Exact participant instructions", "Deterministic task form", "Exact four-hour training sequence", "Fixed scoring and adjudication rubric"):
+        for section in ("Exact participant instructions", "Deterministic task form", "Exact four-hour training sequence", "Fixed scoring and adjudication rubric", "Frozen HD1 session schedule"):
             self.assertIn(section, materials)
         self.assertTrue(freeze["selection_and_analysis_rules_frozen"])
         self.assertEqual(
             {slot["state"] for slot in freeze["external_input_slots"]},
             {"EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"},
         )
+        protocol = (ROOT / data["authority"]["protocol"]).read_text()
+        self.assertIn("Exact bootstrap and field-allocation call schedules", protocol)
+        self.assertIn("range(10000)", protocol)
+        self.assertIn("fractions.Fraction", protocol)
         rules = data["freeze_and_deviation_rules"]
         self.assertTrue(rules["selection_rules_frozen"])
         self.assertTrue(rules["inputs_must_be_custodian_hashed_before_unblinding"])

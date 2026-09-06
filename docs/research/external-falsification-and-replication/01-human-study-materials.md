@@ -37,10 +37,12 @@ Use only the twelve public W4 records and six native memos in baseline commit `1
 | Minutes | Fixed material and task |
 |---|---|
 | 0–20 | Read the exact participant instructions and form specification above. |
-| 20–60 | Read all six baseline native memos, in sorted order. |
+| 20–50 | Read all six baseline native memos, five minutes each in sorted order. |
+| 50–60 | Fixed ten-minute break, with no study material displayed. |
 | 60–120 | Inspect each of P01–P12 for five minutes with the standard form; enter one classification and witness. No correctness feedback yet. |
-| 120–140 | Read the automated-report lesson below. |
-| 140–180 | Inspect the baseline verifier diagnostic report and frozen W4 witness for each practice record for 200 seconds, in P01–P12 order. |
+| 120–130 | Read the automated-report lesson below. |
+| 130–170 | Inspect the baseline verifier diagnostic report and frozen W4 witness for each practice record for 200 seconds, in P01–P12 order. |
+| 170–180 | Fixed ten-minute break, with no study material displayed. |
 | 180–240 | Qualification: P12–P01, five minutes each, standard form only, no report or feedback. |
 
 Exact automated-report lesson:
@@ -59,6 +61,14 @@ The qualification pass rule is 12/12 correct classifications and 12/12 checkable
 - For U1, an escaped defect is present when the source record has a behavior-changing representation error and the final audit lacks a correct loss witness. A correctly reported unrelated defect does not cure an escaped required-behavior defect. The three external blinded adjudicators apply the protocol's majority/witness and unresolved-validity rules; retain all votes and reasons.
 - Operators may say only: `Please use the instructions displayed on the form.` They may repeat those exact instructions or report a technical failure. They may not explain an individual case, suggest a decision, select a response, extend the timer, or replace a case.
 - Reviewers and operators receive no study correctness feedback until all primary outputs for both arms are sealed. Analysts receive deidentified labels only at the protocol's unblinding stage. A material rendering/scoring mismatch is a protocol breach, not an adjustable nuisance variable.
+
+## Frozen HD1 session schedule
+
+Training is day 0, 09:00–13:00 in the participant's recorded local time zone, including the two specified breaks. Ratings take place in ten sessions, always starting at 09:00 local time: days 2, 3, 4, 5, and 6 use the first allocated arm; days 8, 9, 10, 11, and 12 use the second. These are calendar-day offsets, including weekends. Day 7 is a fixed no-rating interval. Participants consent to this availability before qualification. The enrollment ledger fixes the time zone and day-0 date before study outputs; neither can be changed to fit observed performance.
+
+Each session takes the next six tasks in that arm's frozen sequence. It consists of three pairs of tasks with ten-minute breaks between pairs. Each task occupies a fixed 22-minute slot: up to 20 minutes for the decision and up to two minutes for the six workload ratings. Early submission opens the workload form immediately; after submitting workload, the participant rests until the next fixed slot. Breaks show no study content. Thus task start offsets are exactly 0, 22, 54, 76, 108, and 130 minutes from session start; the session ends at minute 152. Participants use the same workstation and input devices for both arms. Operators may not compress slots, concatenate sessions, add coaching, alter arm order, or move tasks between sessions.
+
+A session can start within 15 minutes after its scheduled start, retaining every fixed offset. Later arrival or absence makes all six scheduled classifications and workload forms missing; there is no makeup session or case replacement. Missing workload after its two-minute limit stays missing. A safety stop always overrides administration, is recorded under the protocol's safety rule, and does not authorize rescheduling. The frozen missingness/failure criteria apply. Attendance, actual starts, breaks, deviations, and total elapsed burden remain in the ledger; task-decision time is separately measured as defined by C1. No unrecorded practice or study feedback is provided between sessions.
 
 ## Current disposition
 

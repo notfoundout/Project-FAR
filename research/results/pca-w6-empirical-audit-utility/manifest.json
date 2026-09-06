@@ -19,7 +19,7 @@
     },
     {
       "path": "docs/CANONICAL_MAP.md",
-      "sha256": "23e51b0bbebf54c7712151f15b990535c0989f9a6a9c80e4c4bd9cfa33c62d44"
+      "sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3"
     },
     {
       "path": "docs/ROADMAP.md",
@@ -131,7 +131,7 @@
     },
     {
       "path": "research/results/pca-w4-domain-contracts/manifest.json",
-      "sha256": "86ec6ab742d379cfe859286a3e4749460fc998464872092dcc9cd953fdca8f20"
+      "sha256": "586b7235745a5b19d767ebaaf71ab36298d39c3f94919a4724a99379ef718a89"
     },
     {
       "path": "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
@@ -151,7 +151,7 @@
     },
     {
       "path": "tests/test_current_state_consistency.py",
-      "sha256": "12e3ce664ea9e1d6367236ad369a55b1f7b2d16ebc934122629766a446c59268"
+      "sha256": "a87e2fb0a23e64c8b53eb0053d6c5c1df6a7f5ad6a8a48e09c0c3d944bab9ef4"
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",
@@ -179,7 +179,7 @@
     },
     {
       "path": "tools/check_current_state_consistency.py",
-      "sha256": "af90110d90fbcdb7d0f449877686cc12089890689871a2e7bb06aa6c0db05af0"
+      "sha256": "7b5b3a5e70e353b3912c58f2474f131637c04c486ffe73e8dfb7484bd96550e0"
     },
     {
       "path": "tools/check_pca_w4_domain_contracts.py",

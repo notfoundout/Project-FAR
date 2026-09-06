@@ -94,6 +94,8 @@ def validate_texts(
     if "## Current Research Mode" in texts.get("generated", ""):
         errors.append("generated: historical report still declares a Current Research Mode")
 
+    if "Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`" in texts["map"]:
+        errors.append("map: completed predecessor is still declared current")
     require("next_actions", f"Program: `{PREDECESSOR_PROGRAM_ID}`", "next-actions predecessor program drifted")
     require("next_actions", f"Current governing theory: `{CURRENT_CORE}`.", "next-actions theory target drifted")
     require("next_actions", "Historical v1.0 Core", "next-actions historical core boundary drifted")

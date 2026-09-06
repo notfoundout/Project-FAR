@@ -211,7 +211,8 @@ Each concept should have one canonical source. Other documents should link to th
 - Acceptance/promotion: `docs/governance/project-far-theory-closure-acceptance-v1.1.md`.
 - Internal replication: `docs/research/project-far-core-v1.1-correction-replication-v1.0.md`.
 - Historical v1.0 theory/ledger/acceptance remain immutable provenance and do not override v1.1.
-- Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.
+- Completed predecessor: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`, complete at W1–W6's exact scopes.
+- Current program: [External Falsification and Replication](governance/external-falsification-and-replication-program-v1.0.md), preregistered and not executed; not W7.
 - Historical UPP disclosure, audit, cross-audit, and post-terminal program remain preserved but do not override the core theory.
 
 ## Comparative Representation Evaluation Authority

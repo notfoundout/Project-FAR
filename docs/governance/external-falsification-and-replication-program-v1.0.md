@@ -96,9 +96,11 @@ For A1, independent red teams may inspect public specifications and seek counter
 
 Eligible reviewers must have domain-relevant training, provide consent under an applicable ethics/IRB determination, and have no role in Project FAR artifact authorship. Assignment uses a seed derived mechanically from the sealed complete HD1 input-manifest SHA-256, binding case metadata and reviewer roster. Each reviewer receives disjoint cases across arms, preventing recognition of a repeated case. The exact instructions, deterministic form, four-hour training sequence, time limits, eligibility scoring, and adjudication rubric are committed now in the [human-study materials](../research/external-falsification-and-replication/01-human-study-materials.md) and content-addressed in the input freeze. Intake may attest rendering conformance and supply participant identities; it may not choose or change these materials.
 
-Enroll the first 24 consenting, non-author reviewers who pass all 12 public W4 practice records after the fixed training: two hours on reading the supplied native tables and two hours on reading FAR outputs. Practice results and failed screening attempts are retained. Each task has the same native evidence, a binary preservation/loss response and a required witness; the FAR arm additionally sees the frozen verifier's diagnostic report. Both arms have a 20-minute limit. No conversational assistance or task-specific coaching is allowed. The interface is a plain record-and-response form; its sealed rendering may change presentation only, not instructions or available evidence.
+Enroll the first 24 consenting, non-author reviewers who pass all 12 public W4 practice records after the fixed training: a two-hour native-table module followed by a two-hour FAR-report and qualification module, including the fixed breaks. Practice results and failed screening attempts are retained. Each task has the same native evidence, a binary preservation/loss response and a required witness; the FAR arm additionally sees the frozen verifier's diagnostic report. Both arms have a 20-minute limit. No conversational assistance or task-specific coaching is allowed. The interface is a plain record-and-response form; its sealed rendering may change presentation only, not instructions or available evidence.
 
 Sort the six domain names and the two classes, shuffle the ten case IDs inside each stratum, and concatenate the strata. Shuffle the 24 reviewer IDs with the same seeded Python 3.12 `random.Random` stream. For case index c (0–119), FAR reviewers occupy positions (c+j) mod 24 for j=0–5; standard reviewers occupy (c+12+j) mod 24. Each reviewer therefore makes 30 decisions per arm on 60 distinct cases. Even reviewer positions take FAR first, odd positions standard first; generate each reviewer/arm task sequence with an independent seed: SHA-256 of ASCII `manifest_sha256 + "\nEFR-HD1\n" + reviewer_id + "\n" + arm + "\n"`, first 16 hex digits as an unsigned integer. Start from lexically sorted assigned case IDs and call `random.Random(seed).shuffle` once. Arm IDs are exactly `far` and `standard`. The frozen [allocation script](../../tools/efr_hd1_allocation.py) fixes every stratum/roster iteration and RNG call; it is normative and receives only the sealed input format documented in the materials. Publish the entire allocation before collecting ratings.
+
+The materials fix ten six-task sessions, first-arm days 2–6 and second-arm days 8–12 after day-0 training, 09:00 local starts, fixed task/workload slots, ten-minute pair breaks, a no-rating day 7, and missing-session handling. Session timing, delays, and break rules are not left to operator choice.
 
 “Material disagreement” means differing binary preservation/loss decisions where at least one decision conflicts with the sealed custodian label. Report raw arm counts, pairwise agreement, category-specific agreement, and Gwet's AC1 as a secondary descriptive statistic. Cohen's kappa may be reported but cannot determine acceptance because prevalence can distort it. The primary interval uses 10,000 case-level bootstrap resamples with the manifest-derived seed.
 
@@ -146,6 +148,50 @@ Failure to locate an anticipating source is not proof of novelty. Patent-law nov
 All allocated items are analyzed. Unreturned machine output is a failure for that item. For human data, more than 5% missing ratings overall, more than a 2-point arm imbalance in missingness, loss of a site, broken blinding, label leakage, or a non-reconstructable allocation makes the affected test `INVALID/INCONCLUSIVE`; it cannot pass. Lesser missingness is reported and analyzed by intention to treat with the rules above.
 
 All seeds use the unsigned integer represented by the first 16 hexadecimal characters of the applicable sealed input-manifest SHA-256; use separate Python 3.12 `random.Random(seed)` streams for allocation and analysis, with sorted IDs as input order. HD1 uses its complete input-manifest digest, including the roster and case metadata; the custodian script verifies the exact source bytes against the externally sealed digest before allocation. Bootstrap intervals are percentile intervals using sorted resample estimates at zero-based indices 249 and 9749. No rounding is applied at thresholds, no covariate adjustment is primary, and no optional subgroup can replace a registered endpoint. The fixed sample sizes and decision thresholds are prospective program choices, not asserted power guarantees.
+
+### Exact bootstrap and field-allocation call schedules
+
+All rates, differences, percentile sorting, and primary threshold comparisons use exact rational arithmetic from integer counts (Python `fractions.Fraction`), not rounded floating-point values. Convert to decimal only for display after the verdict. There are no random calls other than those specified here and in the frozen HD1 allocator.
+
+HD1 analysis starts a fresh `random.Random(hd1_seed)` once. Precompute each case's integer disagreeing-pair count for each arm (out of 15), and false-accept count for each arm on loss cases (out of six), applying the frozen missingness rules first. Build strata in exactly the allocation script's `DOMAINS` order and `CLASSES` order, with each stratum's ten case IDs sorted lexically. The loop order is normative:
+
+```python
+rng = random.Random(hd1_seed)
+for resample in range(10000):              # outermost loop
+    sampled_cases = []
+    for domain in DOMAINS:                # six fixed domain IDs
+        for label in CLASSES:            # material_loss, then preservation
+            stratum = sorted_ids[domain, label]
+            for draw in range(10):
+                sampled_cases.append(stratum[rng.randrange(10)])
+    # The same 120 draws supply BOTH endpoints; no further random calls.
+    reduction = Fraction(sum_std_pairs - sum_far_pairs, 120 * 15)
+    false_accept_difference = Fraction(sum_far_false_accepts - sum_std_false_accepts, 60 * 6)
+    # Store both fractions for this resample, then begin the next resample.
+```
+
+The four sums are over the sampled cases with multiplicity; false-accept sums use only the 60 sampled loss cases. Observed endpoints use the original 120 cases once each. Sort the 10,000 fractions independently for each endpoint and select indices 249 and 9749. Acceptance requires observed reduction ≥`Fraction(1,10)`, its lower percentile >0, and the false-accept difference's upper percentile ≤`Fraction(1,50)`, in addition to validity gates. No separate RNG stream or extra draw is used for the safety endpoint.
+
+U1 site IDs are S01–S03 in eligible consent-timestamp order, breaking exact ties by legal organization name. Investigation IDs are the site ID plus the three-digit consecutive enrollment index. The complete site-roster manifest binds identities, SOP hashes, and allocation inputs; its independently sealed SHA-256 supplies `u1_seed`. Allocation starts a fresh `random.Random(u1_seed)`, iterates sites S01, S02, S03, and for each starts `slots = ["far"] * 20 + ["standard"] * 20`, calls `rng.shuffle(slots)` exactly once, and seals that site's slots. There are no intervening random calls; reveal slots only after prospective case enrollment.
+
+U1 analysis uses a separate fresh stream with that same seed. For each site and arm, sort the 20 allocated investigation IDs lexically, including missing outputs as escaped defects. Loop exactly as follows:
+
+```python
+rng = random.Random(u1_seed)
+for resample in range(10000):              # outermost loop
+    counts = {}
+    for site in ("S01", "S02", "S03"):
+        for arm in ("far", "standard"):
+            counts[site, arm] = 0
+            for draw in range(20):
+                case_id = sorted_ids[site, arm][rng.randrange(20)]
+                counts[site, arm] += escaped_defect[case_id]  # integer 0 or 1
+    reduction = Fraction(sum(counts[s, "standard"] - counts[s, "far"]
+                             for s in ("S01", "S02", "S03")), 60)
+    # Store the fraction, then begin the next resample; no extra random calls.
+```
+
+Use indices 249 and 9749 of sorted resample reductions. Observed reduction uses each original investigation once. Its absolute gate is ≥`Fraction(1,20)`; relative reduction is that observed difference divided by the observed standard-arm defect rate and must be ≥`Fraction(1,5)` (zero denominator fails). The lower percentile must exceed zero, each observed site reduction must be ≥`-Fraction(1,20)`, and the separately observed harm gate must pass. These loops fix computation; they do not authorize early stopping, refreezing labels, or changing the recorded sites/cases.
 
 Before any execution name three independent adjudicators, none on an execution team or under Project FAR control. They see item-level witnesses and permitted scope only, with team/arm identity and aggregate outcomes withheld. A valid adverse finding requires a reproducible witness satisfying the declared premises, documented by at least two adjudicators. Unresolved validity disputes make the affected test inconclusive and block acceptance; disagreement is not permission to discard a negative observation. Output disagreements caused by a confirmed implementation error remain failures. Only a proved intake/protocol defect can yield invalidity, with the original output retained. Each test's acceptance is conjunctive; an unmet acceptance condition without a proved invalidity is failure (R1 non-replication is not automatically theorem refutation).
 
