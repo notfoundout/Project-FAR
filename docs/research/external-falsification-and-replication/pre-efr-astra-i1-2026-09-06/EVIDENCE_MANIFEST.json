@@ -27,12 +27,16 @@
   "sealed_report_sha256": "9c354031c7b944e89fdb17db50d03b7cc79f659df21cf50fe16df8f75cc10a1d",
   "uploaded_verdict_ledger_sha256": "54b34cc1c3098cbc79ffd223d99335725f8d908d70d62fa1f9edc963098b7fee",
   "uploaded_audit_bundle_sha256": "eff1a5a815a10ba73aa41b130a300702ac37dfce48fbcf9da7a019bcffacc2c9",
-  "post_seal_adjudication_md_sha256": "4c74a1222143052edfb4d717daabbb46d1ffe90157bd470402640af6cffaa36c",
-  "post_seal_adjudication_json_sha256": "8b10d67df26a4af10189f735a9f504367ca8f29790df2e1313bc48cd399b278c",
+  "post_seal_adjudication_md_sha256": "798641c51cbaa4a048b4982d9013dcb83c407ae4d845e738d04d90774e701344",
+  "post_seal_adjudication_json_sha256": "bd537d9f39e5022d6b4b21d46045dc4becf8887055169f204228ab08f6d58d67",
   "source_main": {
     "commit": "ca0cd5a370ff7c865c3654dc4225f7388430d39e",
     "tree": "362ecfb3c7f2ed5fa293d17e837fc8d08c4c1117"
   },
+  "review_corrections": [
+    "Digest fields bind the exact committed post-seal adjudication bytes.",
+    "PR #453 is described only as bounded noncanonical Research source material; FAR-CORE-014 adjudication authority is anchored in governing v1.1 and accepted W2 surfaces."
+  ],
   "preservation": {
     "sealed_result_rewritten": false,
     "post_seal_adjudication_separate": true,
