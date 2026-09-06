@@ -95,8 +95,12 @@
     {
       "claim_id": "FAR-CORE-014",
       "sealed_cleanroom_verdict": "INDETERMINATE",
-      "post_seal_adjudication": "SURVIVES_ADJUDICATION_MISSING_BOUNDARY_DEFINITIONS_SUPPLIED_POST_SEAL_FROM_CANONICAL_PR453_SOURCES",
+      "post_seal_adjudication": "SURVIVES_ADJUDICATION_MISSING_BOUNDARY_DEFINITIONS_FROM_NONCANONICAL_PR453_WITH_DISPOSITION_ANCHORED_IN_GOVERNING_V1_1_AND_W2",
       "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
     }
-  ]
+  ],
+  "adjudication_authority": {
+    "FAR-CORE-010": "governing v1.1 correction/acceptance surfaces",
+    "FAR-CORE-014": "governing v1.1 claim scope and accepted W2 formalization; PR #453 is bounded noncanonical Research source material only"
+  }
 }
