@@ -72,7 +72,7 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
                 for field, value in expected.items():
                     self.assertEqual(actual[key][field], value)
             else:
-                self.assertEqual(actual[key], expected)
+                self.assertEqual(actual.get(key), expected)
         self.assertTrue(receipt["accepted_receipt"]["branch_protection_unchanged_and_enforced"])
         self.assertEqual(receipt["accepted_receipt"]["privileged_workflow_states"],
                          {name: "disabled_manually" for name in LEGACY})
