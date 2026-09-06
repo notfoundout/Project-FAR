@@ -1,6 +1,8 @@
 """Synthetic scheduling fixtures, not EFR study participants or observations."""
 import collections
 import copy
+import hashlib
+import json
 import unittest
 
 from tools.efr_hd1_allocation import allocate, DOMAINS, CLASSES
@@ -13,9 +15,13 @@ class EfrHD1AllocationTests(unittest.TestCase):
                  for d in DOMAINS for c in CLASSES for i in range(10)]
         return reviewers, cases
 
+    def seal(self, reviewers, cases):
+        raw = json.dumps({"reviewers": reviewers, "cases": cases}, sort_keys=True).encode()
+        return raw, hashlib.sha256(raw).hexdigest()
+
     def test_every_case_has_six_ratings_per_arm_without_reviewer_repeats(self):
         reviewers, cases = self.inputs()
-        result = allocate("a" * 64, reviewers, cases)
+        result = allocate(*self.seal(reviewers, cases))
         counts = {arm: collections.Counter() for arm in ("far", "standard")}
         first = collections.Counter()
         for row in result["allocation"]:
@@ -33,21 +39,32 @@ class EfrHD1AllocationTests(unittest.TestCase):
 
     def test_input_order_cannot_change_roster_or_task_sequence(self):
         reviewers, cases = self.inputs()
-        self.assertEqual(allocate("b" * 64, reviewers, cases),
-                         allocate("b" * 64, list(reversed(reviewers)), list(reversed(cases))))
-        self.assertNotEqual(allocate("b" * 64, reviewers, cases),
-                            allocate("c" * 64, reviewers, cases))
+        raw, digest = self.seal(reviewers, cases)
+        self.assertEqual(allocate(raw, digest), allocate(raw, digest))
+        reordered, _ = self.seal(list(reversed(reviewers)), list(reversed(cases)))
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            allocate(reordered, digest)
+
+    def test_equal_count_metadata_swap_cannot_reuse_sealed_identity(self):
+        reviewers, cases = self.inputs()
+        raw, digest = self.seal(reviewers, cases)
+        changed = copy.deepcopy(cases)
+        changed[0]["class"], changed[10]["class"] = changed[10]["class"], changed[0]["class"]
+        tampered, _ = self.seal(reviewers, changed)
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            allocate(tampered, digest)
+        self.assertEqual(allocate(raw, digest)["input_manifest_sha256"], digest)
 
     def test_bad_seal_duplicates_and_stratum_changes_fail_closed(self):
         reviewers, cases = self.inputs()
         variants = [
-            ("bad", reviewers, cases),
-            ("d" * 64, reviewers[:-1] + [reviewers[0]], cases),
-            ("d" * 64, reviewers, cases[:-1] + [cases[0]]),
+            (self.seal(reviewers, cases)[0], "bad"),
+            self.seal(reviewers[:-1] + [reviewers[0]], cases),
+            self.seal(reviewers, cases[:-1] + [cases[0]]),
         ]
         changed = copy.deepcopy(cases)
         changed[0]["class"] = "preservation"
-        variants.append(("d" * 64, reviewers, changed))
+        variants.append(self.seal(reviewers, changed))
         for variant in variants:
             with self.assertRaises(ValueError):
                 allocate(*variant)

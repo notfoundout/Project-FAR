@@ -12,7 +12,7 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "c643427c1ec4289e21db7c77b6a08dbff28d511e"
+      "git_blob_sha": "4a1aae59c9c40a83ef096bbd5ac5be126bea0f78"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
@@ -32,11 +32,11 @@
     },
     {
       "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
-      "git_blob_sha": "bbbcca7a96ebeae44903afa2154885c8ab20604b"
+      "git_blob_sha": "71af8781c1e620dd4560ef99fddc27abdcb1b8bc"
     },
     {
       "path": "tools/efr_hd1_allocation.py",
-      "git_blob_sha": "99ff5e4f78c13694938e51e66c669794af3b2084"
+      "git_blob_sha": "a40fa46e342a46b9f75dbf583f68ad38b2dbbf0a"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",

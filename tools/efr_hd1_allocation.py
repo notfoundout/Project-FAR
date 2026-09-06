@@ -16,9 +16,14 @@ CLASSES = ("material_loss", "preservation")
 ARMS = ("far", "standard")
 
 
-def allocate(manifest_sha256: str, reviewers: list[str], cases: list[dict]) -> dict:
+def allocate(manifest_bytes: bytes, manifest_sha256: str) -> dict:
     if not re.fullmatch(r"[0-9a-f]{64}", manifest_sha256):
         raise ValueError("manifest SHA-256 must be 64 lowercase hexadecimal digits")
+    if hashlib.sha256(manifest_bytes).hexdigest() != manifest_sha256:
+        raise ValueError("sealed input manifest digest mismatch")
+    data = json.loads(manifest_bytes)
+    reviewers = data["reviewers"]
+    cases = data["cases"]
     ids = [case["id"] for case in cases]
     if len(reviewers) != 24 or len(set(reviewers)) != 24:
         raise ValueError("exactly 24 distinct reviewers required")
@@ -63,10 +68,10 @@ def allocate(manifest_sha256: str, reviewers: list[str], cases: list[dict]) -> d
 def main() -> int:
     if sys.version_info[:2] != (3, 12):
         raise SystemExit("EFR-HD1 allocation requires the frozen Python 3.12 runtime")
-    if len(sys.argv) != 2:
-        raise SystemExit("usage: python tools/efr_hd1_allocation.py sealed-input.json")
-    data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-    result = allocate(data["manifest_sha256"], data["reviewers"], data["cases"])
+    if len(sys.argv) != 3:
+        raise SystemExit("usage: python tools/efr_hd1_allocation.py sealed-input.json EXPECTED_SHA256")
+    manifest_bytes = Path(sys.argv[1]).read_bytes()
+    result = allocate(manifest_bytes, sys.argv[2])
     print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))
     return 0
 
