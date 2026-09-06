@@ -21,7 +21,7 @@ Project FAR therefore closes as a **contract-relative audit discipline**, not as
 
 ## Assurance state
 
-The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED` under its exact scopes; no theorem correction was required. Its evidence is I1 claimed isolation: repository access was prohibited by instruction but not technically prevented. It is not I3 external independent validation or replication, and novelty and priority were not established.
+The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED` under its exact scopes; no theorem correction was required. Its evidence is I1 claimed isolation: repository access was prohibited by instruction but not technically prevented. External independent validation requires I3 evidence, which W1 does not supply. Novelty and priority were not established.
 
 `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
 

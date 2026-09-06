@@ -58,7 +58,7 @@
         ]
       },
       "acceptance": "Both I3 teams submit valid derivations for all 14 exact-scope claims and no material objection survives blinded adjudication.",
-      "failure": "A reproducible in-scope contradiction, countermodel, or invalid proof step survives adjudication.",
+      "failure": "A reproducible in-scope contradiction, countermodel, or invalid proof step survives adjudication. Missing or inadequate derivations after 60 calendar days are NOT_REPLICATED without theorem refutation.",
       "invalid": "Exposure, collusion, missing disclosure, or use of withheld material."
     },
     {
@@ -75,7 +75,7 @@
         ]
       },
       "acceptance": "Both clean-room implementations agree with each other and the frozen expected result on every required item.",
-      "failure": "Any valid item mismatch survives adjudication.",
+      "failure": "Any valid item mismatch survives adjudication. Missing outputs or the 60-day deadline missed also fail.",
       "invalid": "Use of Project FAR implementation, checker, tests, oracle source, expected outputs, or another team's code."
     },
     {
@@ -123,14 +123,15 @@
         "ratings": 1440,
         "ratings_per_case_per_arm": 6
       },
-      "allocation": "Randomized, domain/class-blocked, counterbalanced, disjoint cases across arms; seed derived from sealed case-manifest SHA-256.",
+      "allocation": "Frozen 24-reviewer cyclic allocation over 12 shuffled strata; 30 disjoint cases per arm per reviewer; Python 3.12 manifest-derived seed.",
       "primary": "Pairwise material-disagreement rate relative to sealed custodian labels.",
       "acceptance": {
         "absolute_reduction_percentage_points_min": 10,
         "bootstrap_resamples": 10000,
         "two_sided_confidence": 0.95,
         "confidence_interval_excludes_zero": true,
-        "serious_false_accept_noninferiority_margin_percentage_points": 2
+        "serious_false_accept_noninferiority_margin_percentage_points": 2,
+        "serious_false_accept_interval_upper_max": 0.02
       },
       "failure": "Effect, confidence, or safety margin is missed.",
       "invalid": {
@@ -148,7 +149,8 @@
         "category-specific agreement",
         "Gwet AC1",
         "Cohen kappa descriptive only"
-      ]
+      ],
+      "missingness": "Missing FAR pair = disagreement, missing standard pair = agreement; false-accept imputation FAR wrong / standard correct."
     },
     {
       "id": "EFR-U1",
@@ -171,7 +173,9 @@
         "far_attributable_serious_harms_max": 0
       },
       "failure": "Any benefit, site, or harm gate is missed.",
-      "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent."
+      "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent.",
+      "eligibility": "Three independent routine documentary audit sites; next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions.",
+      "zero_standard_defect_rate": "BENEFIT_GATE_FAILS"
     },
     {
       "id": "EFR-C1",
@@ -186,7 +190,18 @@
         "severe_burden_events_max": 0
       },
       "acceptance": "Every coordinate passes and remains separately reported.",
-      "failure": "Any coordinate fails, is unavailable, or is replaced by a scalar aggregate."
+      "failure": "Any coordinate fails, is unavailable, or is replaced by a scalar aggregate.",
+      "invalid": "Broken measurement-ledger seal or provenance failure.",
+      "accounting": {
+        "labor_usd_per_hour": 50,
+        "nonlabor_currency": "USD only",
+        "deflator": "1.03 ** (invoice_year - 2026)",
+        "cost_summary": "mean FAR minus mean standard per allocated case",
+        "gates_applied_separately": [
+          "HD1",
+          "each U1 site"
+        ]
+      }
     },
     {
       "id": "EFR-N1",
@@ -211,7 +226,9 @@
       "acceptance_label": "NOT_FALSIFIED_BY_REGISTERED_SEARCH",
       "failure_label": "FALSIFIED",
       "falsifier": "One qualifying public pre-cutoff source teaches all four elements in combination and in the claimed arrangement.",
-      "no_positive_novelty_inference": true
+      "no_positive_novelty_inference": true,
+      "invalid": "Non-independent search, cutoff breach, missing query log, or incomplete required source class.",
+      "search_method": "Exact six queries, five required indexes, result limits, one-generation citation expansion, cutoff and 60-day stopping rules fixed in the content-addressed protocol."
     }
   ],
   "aggregate_rule": {
@@ -238,5 +255,25 @@
     "scientific_changes_after_freeze": "INVALIDATES_CONFIRMATORY_STATUS_AND_REQUIRES_NEW_VERSION",
     "original_protocol_and_result_retained": true,
     "favorable_post_hoc_reclassification_prohibited": true
+  },
+  "registration_promotion": "Final reviewed bytes of PR #470, before execution; pre-merge corrections are retained in PR history.",
+  "operational_rules": {
+    "authority": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+    "later_choices_permitted": [
+      "identities",
+      "dates",
+      "independently sourced eligible inputs",
+      "observations"
+    ],
+    "later_method_choices_permitted": false,
+    "seed": "int(input_manifest_sha256[:16], 16); Python 3.12 random.Random; separate allocation/analysis streams",
+    "bootstrap": {
+      "resamples": 10000,
+      "percentile_zero_based_indices": [
+        249,
+        9749
+      ]
+    },
+    "adjudication": "Three independent blinded adjudicators; at least two reproduce a valid witness; unresolved validity blocks acceptance; implementation defects remain failures."
   }
 }

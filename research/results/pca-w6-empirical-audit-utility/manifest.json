@@ -15,7 +15,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "dd01bf5b7529e78f6d7f519d2ac37b717c42e376715cbfadee51f2860dddd848"
+      "sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c"
     },
     {
       "path": "docs/CANONICAL_MAP.md",
@@ -51,11 +51,11 @@
     },
     {
       "path": "docs/planning/next-actions.md",
-      "sha256": "daae58acab7e6a50d658bd50a24642b080d64c2a87db368f17004fdbd5acd401"
+      "sha256": "07d2cdb3d5c3c21f0a0fc6b84cf292f0cec84e44e4f28ce0c4a2c58077945d92"
     },
     {
       "path": "docs/project-status.md",
-      "sha256": "1541dd88af8b58dba64240097a1b7587323d41dded4b982e49c5a6282aae5379"
+      "sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666"
     },
     {
       "path": "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",
@@ -131,7 +131,7 @@
     },
     {
       "path": "research/results/pca-w4-domain-contracts/manifest.json",
-      "sha256": "ee1c4df5610843d09ea011150b14412a60795d075b37a2728f363edc1e024cc4"
+      "sha256": "bdbb0f34ec6c5a127cc5327c948255247291e379dab3b8fb553d9e3218f71d28"
     },
     {
       "path": "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
@@ -147,11 +147,11 @@
     },
     {
       "path": "tests/test_cre001_semantics.py",
-      "sha256": "5c37efaa3c042b0502f081717db139017cbbf05a7a4376a33d168987f4616dc1"
+      "sha256": "cb7b9b3ae59388848483179debd7dc5e0200c831a98a3cf7266d6d3b8d72cb6b"
     },
     {
       "path": "tests/test_current_state_consistency.py",
-      "sha256": "b435cad7a98c11ffd38b6c3fa731e884a6c7394152e59f534e126808689632ad"
+      "sha256": "12e3ce664ea9e1d6367236ad369a55b1f7b2d16ebc934122629766a446c59268"
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",
@@ -179,7 +179,7 @@
     },
     {
       "path": "tools/check_current_state_consistency.py",
-      "sha256": "659abfe8f56f29244078ec5feef566f3e26c4f78ae60b46273459aca7973d612"
+      "sha256": "af90110d90fbcdb7d0f449877686cc12089890689871a2e7bb06aa6c0db05af0"
     },
     {
       "path": "tools/check_pca_w4_domain_contracts.py",
@@ -199,7 +199,7 @@
     },
     {
       "path": "tools/generate_next_tasks.py",
-      "sha256": "24b1f4404071185df52b1ff288341f8b6fd64818459ff45db609cd2a2fbfbe2e"
+      "sha256": "6e1d886a35fe3705a73f049f13b7744d4492c4bec6ffee8db05ecdfe2b46be84"
     }
   ]
 }

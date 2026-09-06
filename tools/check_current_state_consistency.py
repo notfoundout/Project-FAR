@@ -114,6 +114,7 @@ def validate_texts(
         require("efr_protocol", "not `PCA-W7` or “W7.”", "EFR was relabeled W7")
         require("next_actions", "There is **no registered next `POST-CLOSURE-001` workstream**.", "next-actions invented a terminal successor")
         require("next_actions", "OPEN-EXTERNAL-OP-28", "next-actions lost external/human effectiveness obligation")
+        require("next_actions", f"Current program: `{CURRENT_PROGRAM_ID}`", "next-actions successor drifted")
         for surface in ("readme", "status", "roadmap"):
             require(surface, "PCA-W6-EMPIRICAL-AUDIT-UTILITY", "terminal W6 disposition missing")
         if "**Next / Active**" in texts.get("status", ""):

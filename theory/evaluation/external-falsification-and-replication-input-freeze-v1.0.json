@@ -12,15 +12,15 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "81a97d54f064ac2986c401ed50d269b33b621ed4"
+      "git_blob_sha": "f62595bd5962e7f704ed5f3fef3ec9e298f88c97"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
-      "git_blob_sha": "87ecde8148015cee0a933a63335df3ac5fb862b0"
+      "git_blob_sha": "bf036869896f8a6b02366de798d0221b7ad3b7a3"
     },
     {
       "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
-      "git_blob_sha": "8a1f9f5fb89036896abf0d45e1ac84409f53bd66"
+      "git_blob_sha": "6811aa31e9d49992b8fa5216b2d5f6b5c6cd7b70"
     },
     {
       "path": "docs/research/external-falsification-and-replication/00-preregistration.md",
@@ -28,7 +28,7 @@
     },
     {
       "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
-      "git_blob_sha": "183b28323d8cc6241ad200e6e0e6a7f6795d4a0b"
+      "git_blob_sha": "e4f0757dd3cdae725fc911275184b0ec4c1466da"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
@@ -52,46 +52,54 @@
   "external_input_slots": [
     {
       "test_id": "EFR-R1",
-      "input": "two I3 team identity/exposure manifests and sealed derivation ledgers",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "two I3 team identity/exposure manifests, statement-only packet, adjudicator roster and 60-day deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "sealed derivations and verdict ledgers"
     },
     {
       "test_id": "EFR-R2",
-      "input": "two clean-room implementation manifests, sources, lockfiles, and sealed outputs",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "two clean-room team manifests, permitted specs, complete baseline fixture extraction map, comparison fields and deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "sealed implementations, lockfiles, complete outputs and logs"
     },
     {
       "test_id": "EFR-H1",
-      "input": "120-case blinded external case/label manifest",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "120-case external case/label manifest sealed before any FAR execution",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete test outputs and unblinded comparison"
     },
     {
       "test_id": "EFR-A1",
-      "input": "60-case blinded adversarial case/label manifest",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "60-case adversarial case/label manifest sealed before any FAR execution",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete challenge outputs and unblinded comparison"
     },
     {
       "test_id": "EFR-HD1",
-      "input": "ethics determination, 24-reviewer roster, allocation, and interface/training lock",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "ethics determination, 24-reviewer roster, complete allocation, fixed interface/training rendering",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "1440 allocated ratings, missingness and analysis"
     },
     {
       "test_id": "EFR-U1",
-      "input": "ethics determination, three-site screening logs, 120-investigation allocation, and adjudication lock",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "ethics determination, three-site standard procedures, prospective eligibility/screening log schema, sealed 40-slot allocations per site",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "append-only enrollment input seals, 120 outcomes, 30-day harm follow-up and analysis"
     },
     {
       "test_id": "EFR-C1",
-      "input": "time, training, 2026-USD cost, raw six-dimension NASA-TLX, and burden-event ledger",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "fixed time/training/USD/raw-TLX/burden measurement-ledger schema",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete measurements and componentwise outcomes"
     },
     {
       "test_id": "EFR-N1",
-      "input": "independent searcher roster, database/query lock, claim chart, and sealed search record",
-      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL"
+      "input": "independent searcher roster, exact frozen queries/indexes/cutoff and deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "query logs, full claim charts, citations and search disposition"
     }
   ],
-  "execution_gate": "No EFR test may begin until its complete slot is content-addressed and sealed before unblinding. Empty slots are not results and do not authorize external-evidence claims.",
+  "execution_gate": "Seal the listed pre-execution inputs before each test begins. Prospective U1 cases are append-only sealed at enrollment before allocation reveal. Prospective outputs are sealed after execution and before comparison/unblinding; they are never pre-execution prerequisites. No scientific design choices may be filled in at intake.",
   "post_hoc_escape_clauses_allowed": false,
   "current_results": {
     "tests_executed": 0,

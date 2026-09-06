@@ -56,8 +56,10 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
             with self.subTest(test=test["id"]):
                 self.assertIn("acceptance", test)
                 self.assertIn("failure", test)
+                self.assertIn("invalid", test)
                 self.assertTrue(test["acceptance"])
                 self.assertTrue(test["failure"])
+                self.assertTrue(test["invalid"])
         cost = next(item for item in data["tests"] if item["id"] == "EFR-C1")
         self.assertIs(cost["no_scalarization"], True)
         novelty = next(item for item in data["tests"] if item["id"] == "EFR-N1")
@@ -93,6 +95,8 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
             self.assertNotIn("workflow_dispatch", workflow)
             self.assertNotIn("actions/checkout", workflow)
             self.assertIn("github.ref == 'refs/heads/main'", workflow)
+            self.assertIn("credentialless_recovery", workflow)
+            self.assertIn("GITHUB_WORKFLOW_TOKEN", workflow)
             self.assertEqual(security["status"], "SCHEDULED_ON_FIRST_MAIN_MERGE")
             self.assertIs(security["accepted_receipt"], None)
         else:

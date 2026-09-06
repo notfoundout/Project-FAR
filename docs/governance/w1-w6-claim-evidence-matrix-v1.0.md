@@ -1,6 +1,6 @@
 # W1–W6 Claim/Evidence Matrix v1.0
 
-Status: **Accepted canonical interpretation matrix**
+Status: **Canonical upon protected-main promotion of PR #470**
 
 Evidence cutoff: canonical `main` commit `195fc079d0a8993e4db3e063e09cf45d0bcd78c2`, tree `a01517ed65f45e62b3d47ffba9dc955fff2bae9b`.
 

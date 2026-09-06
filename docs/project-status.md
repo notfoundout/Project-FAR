@@ -18,7 +18,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 `FAR-CORE-010` is corrected in v1.1: exact common theory `T_{L,J,I}` is indexed by language, interpretation profiles/models, and target class. The frame `Γ` additionally indexes the frame-subtracted residue `T_{L,J,I} \ Cn_L(Γ)`; changing `Γ` alone while holding the interpreted models fixed does not change exact `T`.
 
-Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently reviewed under sealed I1 claimed isolation at exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. I2 verified isolation, I3 external independent validation/replication, novelty, and priority are not established.**
+Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently reviewed under sealed I1 claimed isolation at exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. I2 verified isolation, I3 external replication, novelty, and priority are not established.**
 
 Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 

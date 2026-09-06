@@ -21,11 +21,16 @@
     "actions": [
       "verify full branch-protection policy",
       "disable both exact privileged workflows",
-      "delete FAR_GITHUB_ADMIN_TOKEN",
       "verify disabled workflow states",
-      "verify secret absence",
-      "verify full branch-protection policy unchanged"
-    ]
+      "verify full branch-protection policy unchanged",
+      "delete FAR_GITHUB_ADMIN_TOKEN as the final API operation",
+      "emit deletion receipt or use credentialless recovery on rerun"
+    ],
+    "recovery": "If the secret is absent, read-only operations using GITHUB_TOKEN must observe both workflows disabled and public main metadata protected with merge-authority enforced for everyone.",
+    "workflow_token_permissions": {
+      "actions": "write",
+      "contents": "read"
+    }
   },
   "accepted_receipt": null,
   "claims": {

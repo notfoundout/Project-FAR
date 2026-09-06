@@ -53,6 +53,7 @@ VALID_TEXTS = {
     ),
     "next_actions": (
         "Program: `POST-CLOSURE-001` — complete.\n"
+        "Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — preregistered.\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Historical v1.0 Core\n"
         "There is **no registered next `POST-CLOSURE-001` workstream**.\n"

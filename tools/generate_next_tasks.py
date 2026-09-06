@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the terminal advisory queue for completed POST-CLOSURE-001."""
+"""Generate the EFR intake queue and completed POST-CLOSURE-001 history."""
 from __future__ import annotations
 
 import json
@@ -15,6 +15,8 @@ THEORY = "theory/theorems/Project-FAR-Theory-Closure-v1.1.md"
 HISTORICAL_THEORY = "theory/theorems/Project-FAR-Theory-Closure-v1.0.md"
 CORE_ID = "PROJECT-FAR-CORE-THEORY-1.1"
 PROGRAM_ID = "POST-CLOSURE-001"
+EFR_MD = "docs/governance/external-falsification-and-replication-program-v1.0.md"
+EFR_JSON = ROOT / "theory/evaluation/external-falsification-and-replication-program-v1.0.json"
 
 COMPLETED_TASKS = [
     {
@@ -53,7 +55,9 @@ def nav_links() -> list[str]:
         f"- Current Project Status: {repository_link('docs/project-status.md')}",
         f"- Core Theory: {repository_link(THEORY)}",
         f"- Historical v1.0 Core: {repository_link(HISTORICAL_THEORY)}",
-        f"- Post-Closure Program: {repository_link(PROGRAM_MD)}",
+        f"- Completed Post-Closure Program: {repository_link(PROGRAM_MD)}",
+        f"- External Falsification and Replication: {repository_link(EFR_MD)}",
+        f"- W1–W6 claim/evidence matrix: {repository_link('docs/governance/w1-w6-claim-evidence-matrix-v1.0.md')}",
         f"- Historical Bounded Status: {repository_link('docs/reports/project-status-generated.md')}",
         f"- Next Actions: {repository_link(OUT_REPO_PATH)}",
     ]
@@ -77,6 +81,9 @@ def validate_terminal_program() -> None:
 
 def main() -> int:
     validate_terminal_program()
+    successor = json.loads(EFR_JSON.read_text(encoding="utf-8"))
+    if successor.get("status") != "PREREGISTERED_NOT_EXECUTED" or successor.get("is_w7") is not False:
+        raise SystemExit("EFR intake state drifted")
     lines = [
         "# Next Actions",
         "",
@@ -84,17 +91,19 @@ def main() -> int:
         "",
         *nav_links(),
         "",
-        "Generated from the registered post-closure program.",
+        "Generated from the completed predecessor and preregistered EFR successor; historical completed tasks below are not an active queue.",
         "",
         "Program: `POST-CLOSURE-001` — complete at its six registered workstream scopes.",
         "",
+        "Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — preregistered, not executed.",
+        "",
         f"Current governing theory: `{CORE_ID}`.",
         "",
-        "The core theory is closed after the governed v1.1 correction. The sealed W1 independent review, W2 proof-assistant formalization, W3 contract schema, W4 domain contracts, W5 approximation/cost semantics, and W6 bounded internal audit-utility control are complete at their exact governed scopes.",
+        "The core theory is closed after the governed v1.1 correction. The sealed W1 I1 claimed-isolation review, W2 proof-assistant formalization, W3 contract schema, W4 domain contracts, W5 approximation/cost semantics, and W6 bounded internal audit-utility control are complete at their exact governed scopes.",
         "",
-        "There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 and requires separate governance before execution; it is not silently named W7.",
+        "There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 governed prospectively by EFR-001; execution awaits its external input seals and eligibility gates. It is not W7.",
         "",
-        "## Ranked Next Actions",
+        "## Historical Completed Actions",
         "",
     ]
     for task in COMPLETED_TASKS:
@@ -115,10 +124,10 @@ def main() -> int:
             "### OPEN-EXTERNAL-OP-28: Independently test human/external audit effectiveness",
             "",
             "- Registered post-closure workstream: none",
-            "- Authority: OP-28 in the open-problems register",
-            "- Priority: open / external-dependency",
+            f"- Authority: OP-28 in the open-problems register, with {repository_link(EFR_MD)}",
+            "- Priority: preregistered intake; no test executed",
             "- Why it matters: W6 establishes only a project-authored machine controlled-artifact result. It does not show that human reviewers catch more consequential loss, disagree less, work faster, or make better real-world decisions.",
-            "- Required before execution: a separately governed protocol defining participant population or external evaluator, comparator, blinded/randomized procedure where appropriate, outcome measures, analysis plan, independence disclosure, data governance/ethics requirements, falsifiers, and promotion boundaries.",
+            "- Required before execution: satisfy the frozen EFR protocol, independent team/custodian eligibility, applicable ethics determination, and signed input manifests. Methods and thresholds cannot be chosen at intake.",
             "- Prohibited shortcut: do not relabel W6's schema baseline, machine oracle, or internal replication as human or external evidence.",
             "",
             "## Maintainer Boundaries",

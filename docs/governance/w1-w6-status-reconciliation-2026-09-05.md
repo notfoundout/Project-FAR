@@ -4,6 +4,15 @@ Status: **Governed reconciliation effective only from protected-main promotion o
 
 Baseline: commit `195fc079d0a8993e4db3e063e09cf45d0bcd78c2`, tree `a01517ed65f45e62b3d47ffba9dc955fff2bae9b`.
 
+## Lifecycle provenance
+
+- **Question:** reconcile W1–W6 statements against their exact committed evidence, correct stale lifecycle text, and identify the next evidential tests without changing results.
+- **Execution:** compare the sealed W1 exposure/review package, W2 ledger, W3 contract boundary, W4 records, W5 controls, W6 protocol/results/incidents, and every current propagation surface named by their manifests.
+- **Observation:** the exact discrepancies and corrected interpretations are recorded in the canonical matrix; no scientific input or output changed.
+- **Replication gate:** the dedicated W4, W5, and W6 recomputations, current-state regression tests, complete canonical validation profile, and PR review must all pass at the exact PR head.
+- **Acceptance:** prohibited unless the replication gate passes and all substantive PR #470 review findings are fixed.
+- **Promotion:** merge of PR #470 through protected `main` is the sole promotion event. Before that merge these files are candidates, not canonical authority.
+
 ## Purpose
 
 W4–W6 intentionally hash-bound both scientific artifacts and then-current propagation/status surfaces. That protection correctly detected this reconciliation as drift. The scientific inputs, protocols, records, executable semantics, outputs, and incident ledger remain unchanged. This record governs the narrow rebinding needed to correct current interpretation and lifecycle status without rewriting the frozen experiments.

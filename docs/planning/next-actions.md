@@ -6,21 +6,25 @@
 - Current Project Status: [docs/project-status.md](../project-status.md)
 - Core Theory: [theory/theorems/Project-FAR-Theory-Closure-v1.1.md](../../theory/theorems/Project-FAR-Theory-Closure-v1.1.md)
 - Historical v1.0 Core: [theory/theorems/Project-FAR-Theory-Closure-v1.0.md](../../theory/theorems/Project-FAR-Theory-Closure-v1.0.md)
-- Post-Closure Program: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
+- Completed Post-Closure Program: [docs/governance/post-closure-assurance-and-application-program-v1.0.md](../governance/post-closure-assurance-and-application-program-v1.0.md)
+- External Falsification and Replication: [docs/governance/external-falsification-and-replication-program-v1.0.md](../governance/external-falsification-and-replication-program-v1.0.md)
+- W1–W6 claim/evidence matrix: [docs/governance/w1-w6-claim-evidence-matrix-v1.0.md](../governance/w1-w6-claim-evidence-matrix-v1.0.md)
 - Historical Bounded Status: [docs/reports/project-status-generated.md](../reports/project-status-generated.md)
 - Next Actions: [docs/planning/next-actions.md](next-actions.md)
 
-Generated from the registered post-closure program.
+Generated from the completed predecessor and preregistered EFR successor; historical completed tasks below are not an active queue.
 
 Program: `POST-CLOSURE-001` — complete at its six registered workstream scopes.
 
+Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — preregistered, not executed.
+
 Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.
 
-The core theory is closed after the governed v1.1 correction. The sealed W1 independent review, W2 proof-assistant formalization, W3 contract schema, W4 domain contracts, W5 approximation/cost semantics, and W6 bounded internal audit-utility control are complete at their exact governed scopes.
+The core theory is closed after the governed v1.1 correction. The sealed W1 I1 claimed-isolation review, W2 proof-assistant formalization, W3 contract schema, W4 domain contracts, W5 approximation/cost semantics, and W6 bounded internal audit-utility control are complete at their exact governed scopes.
 
-There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 and requires separate governance before execution; it is not silently named W7.
+There is **no registered next `POST-CLOSURE-001` workstream**. External/human audit-effectiveness evidence remains an open downstream obligation under OP-28 governed prospectively by EFR-001; execution awaits its external input seals and eligibility gates. It is not W7.
 
-## Ranked Next Actions
+## Historical Completed Actions
 
 ### STRATEGIC-012: Develop domain comparison contracts
 
@@ -44,10 +48,10 @@ There is **no registered next `POST-CLOSURE-001` workstream**. External/human au
 ### OPEN-EXTERNAL-OP-28: Independently test human/external audit effectiveness
 
 - Registered post-closure workstream: none
-- Authority: OP-28 in the open-problems register
-- Priority: open / external-dependency
+- Authority: OP-28 in the open-problems register, with [docs/governance/external-falsification-and-replication-program-v1.0.md](../governance/external-falsification-and-replication-program-v1.0.md)
+- Priority: preregistered intake; no test executed
 - Why it matters: W6 establishes only a project-authored machine controlled-artifact result. It does not show that human reviewers catch more consequential loss, disagree less, work faster, or make better real-world decisions.
-- Required before execution: a separately governed protocol defining participant population or external evaluator, comparator, blinded/randomized procedure where appropriate, outcome measures, analysis plan, independence disclosure, data governance/ethics requirements, falsifiers, and promotion boundaries.
+- Required before execution: satisfy the frozen EFR protocol, independent team/custodian eligibility, applicable ethics determination, and signed input manifests. Methods and thresholds cannot be chosen at intake.
 - Prohibited shortcut: do not relabel W6's schema baseline, machine oracle, or internal replication as human or external evidence.
 
 ## Maintainer Boundaries
