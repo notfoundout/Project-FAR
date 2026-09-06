@@ -1,0 +1,106 @@
+{
+  "cleanroom_isolation": "I1",
+  "cleanroom_report_sha256": "9c354031c7b944e89fdb17db50d03b7cc79f659df21cf50fe16df8f75cc10a1d",
+  "cleanroom_original_counts": {
+    "SURVIVES-ATTACK": 12,
+    "INDETERMINATE": 2
+  },
+  "combined_theorem_defect_summary": {
+    "claims_with_surviving_contradiction": 0,
+    "claims_falsified": 0,
+    "claims_cleanroom_reproduced": 12,
+    "claims_post_seal_adjudicated": 2,
+    "rerun_required_for_internal_assurance": false,
+    "rerun_required_for_single_run_14_of_14_cleanroom_replication_claim": true
+  },
+  "claims": [
+    {
+      "claim_id": "FAR-CORE-001",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-002",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-003",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-004",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-005",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-006",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-007",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-008",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-009",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-010",
+      "sealed_cleanroom_verdict": "INDETERMINATE",
+      "post_seal_adjudication": "SURVIVES_ADJUDICATION_PACKET_SCOPE_CONFLICT_RESOLVED_BY_CANONICAL_V1_1_AUTHORITY",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-011",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-012",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-013",
+      "sealed_cleanroom_verdict": "SURVIVES-ATTACK",
+      "post_seal_adjudication": "NOT_REQUIRED",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    },
+    {
+      "claim_id": "FAR-CORE-014",
+      "sealed_cleanroom_verdict": "INDETERMINATE",
+      "post_seal_adjudication": "SURVIVES_ADJUDICATION_MISSING_BOUNDARY_DEFINITIONS_FROM_NONCANONICAL_PR453_WITH_DISPOSITION_ANCHORED_IN_GOVERNING_V1_1_AND_W2",
+      "combined_theorem_defect_disposition": "NO_SURVIVING_CONTRADICTION"
+    }
+  ],
+  "adjudication_authority": {
+    "FAR-CORE-010": "governing v1.1 correction/acceptance surfaces",
+    "FAR-CORE-014": "governing v1.1 claim scope and accepted W2 formalization; PR #453 is bounded noncanonical Research source material only"
+  }
+}
