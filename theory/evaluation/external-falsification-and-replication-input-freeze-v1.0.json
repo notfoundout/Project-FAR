@@ -12,11 +12,11 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "b861e2a0dda0f769a1c2cfa25ad8427944181df9"
+      "git_blob_sha": "fb4d51ce8bd5aa72064f5080c7d2ba64a2ff06ac"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
-      "git_blob_sha": "7bafddc15278aa3b621bcec0998ad96534a1da4d"
+      "git_blob_sha": "523920e037e6a9ed467b834623bf26a0d7f11216"
     },
     {
       "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
@@ -32,7 +32,7 @@
     },
     {
       "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
-      "git_blob_sha": "00e156fd19a07bbcde0f42bdd54b75d8813400f4"
+      "git_blob_sha": "dfe69f684651dc558931d4823c5532f198cc573f"
     },
     {
       "path": "tools/efr_hd1_allocation.py",

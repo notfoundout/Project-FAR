@@ -178,9 +178,9 @@
       },
       "failure": "Any benefit, site, or harm gate is missed.",
       "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent.",
-      "eligibility": "Three independent routine documentary audit sites; next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions.",
+      "eligibility": "Three independent routine documentary audit sites with existing single-auditor SOPs executable in the fixed English documentary interface within 60 minutes; reject mandatory team/peer/dual-control roles before enrollment. Next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions.",
       "zero_standard_defect_rate": "BENEFIT_GATE_FAILS",
-      "intervention_format": "Exact W3 far-ir/2.0 fields and baseline report only; W5 far-ir/2.1 declarations excluded.",
+      "intervention_format": "Both arms share native evidence/SOP and common outcome capture; only FAR adds exact W3 far-ir/2.0 fields and baseline report. U1 standard omits material sections 4 and 5. W5 far-ir/2.1 declarations excluded.",
       "worker_assignment": "Existing consenting adult site auditors; frozen HD1 qualification/environment rules; first at most 40 qualifying within 30 days. Seal roster and cyclic worker (i-1) mod N for all 40 investigation indices before deriving arm allocation; no substitution or task swaps. Missing assigned-worker output remains an intention-to-treat defect."
     },
     {
