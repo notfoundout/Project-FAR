@@ -21,7 +21,7 @@
     "actions": [
       "read-only capture of the current credential fingerprint and unchanged policy; no deletion or revocation until a subsequent protected PR pins that exact receipt",
       "verify full branch-protection policy",
-      "disable both exact privileged workflows",
+      "read both exact privileged workflow states; disable only a consumer that is not already disabled_manually",
       "verify disabled workflow states and unchanged full protection",
       "attempt exact secret deletion with PAT, then existing short-lived workflow token if PAT is forbidden",
       "if both deletions are forbidden, persist full-policy checkpoint and submit only this obsolete PAT to the unauthenticated GitHub issuer revocation endpoint",
@@ -137,5 +137,19 @@
     "merge_authority_run_id": 34012152184
   },
   "authorized_credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
-  "identity_rule": "Protected promotion of this activation revision authorizes only the exact current repository credential observed in the retained read-only identity capture. A replacement fails before any API call. No claim that an unobserved historical credential has this identity is made."
+  "identity_rule": "Protected promotion of this activation revision authorizes only the exact current repository credential observed in the retained read-only identity capture. A replacement fails before any API call. No claim that an unobserved historical credential has this identity is made.",
+  "activation_attempts": [
+    {
+      "pr": 472,
+      "merge_commit": "86889da3066c4fb911220eac0f3baffc74d96df0",
+      "tree": "1f85900c7871deb74990104aea8430384367fc16",
+      "run_id": 34012873101,
+      "job_id": 101431576186,
+      "conclusion": "failure",
+      "operation": "PUT /actions/workflows/canonical-branch-protection.yml/disable",
+      "http_status": 403,
+      "retirement_accepted": false,
+      "observation": "Fingerprint matched and full governed policy read passed. The redundant disable request was forbidden although the workflow was already disabled. No deletion or revocation was attempted."
+    }
+  ]
 }

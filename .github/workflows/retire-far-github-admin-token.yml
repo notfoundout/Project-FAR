@@ -252,7 +252,9 @@ jobs:
 
           for workflow in workflows:
               encoded = urllib.parse.quote(workflow, safe="")
-              request("PUT", f"/actions/workflows/{encoded}/disable", workflow_token)
+              state = request("GET", f"/actions/workflows/{encoded}", workflow_token).get("state")
+              if state != "disabled_manually":
+                  request("PUT", f"/actions/workflows/{encoded}/disable", workflow_token)
 
           states = {}
           for workflow in workflows:
