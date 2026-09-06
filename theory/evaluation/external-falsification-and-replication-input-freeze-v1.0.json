@@ -12,7 +12,7 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "583074d8a7dfb042ae1dc4d6180d05a51cca33f9"
+      "git_blob_sha": "d22fa5cf1f581510df64db36debbfa7c24c1d139"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
