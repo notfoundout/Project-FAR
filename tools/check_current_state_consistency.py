@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 CURRENT_CORE = "PROJECT-FAR-CORE-THEORY-1.1"
 HISTORICAL_CORE = "PROJECT-FAR-CORE-THEORY-1.0"
+CURRENT_PROGRAM_ID = "EXTERNAL-FALSIFICATION-AND-REPLICATION-001"
+PREDECESSOR_PROGRAM_ID = "POST-CLOSURE-001"
 
 CURRENT_FILES = {
     "agents": ROOT / "AGENTS.md",
@@ -16,8 +19,11 @@ CURRENT_FILES = {
     "roadmap": ROOT / "docs/ROADMAP.md",
     "generated": ROOT / "docs/reports/project-status-generated.md",
     "next_actions": ROOT / "docs/planning/next-actions.md",
+    "matrix": ROOT / "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+    "efr_protocol": ROOT / "docs/governance/external-falsification-and-replication-program-v1.0.md",
 }
-PROGRAM = ROOT / "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
+PREDECESSOR_PROGRAM = ROOT / "docs/governance/post-closure-assurance-and-application-program-v1.0.md"
+EFR_MACHINE = ROOT / "theory/evaluation/external-falsification-and-replication-program-v1.0.json"
 
 
 def newest_release_tag(root: Path = ROOT) -> str | None:
@@ -76,7 +82,8 @@ def validate_texts(
     require("map", f"Current Project FAR release: [`{release_doc}`]({release_doc})", "canonical map current-release navigation drifted")
     require("map", "Project FAR Core Theory v1.1", "canonical map current core authority drifted")
     require("map", "Historical Project FAR Core Theory v1.0", "canonical map historical core boundary drifted")
-    require("map", "Post-Closure Assurance and Application Program", "canonical map lacks current assurance authority")
+    require("map", "Post-Closure Assurance and Application Program", "canonical map lacks predecessor assurance authority")
+    require("map", "External Falsification and Replication Program", "canonical map lacks current EFR authority")
 
     require("roadmap", f"Current published repository release: [`{expected_release}`]", "roadmap release drifted")
     require("roadmap", f"Current governing core: [`{CURRENT_CORE}`]", "roadmap governing core drifted")
@@ -87,7 +94,9 @@ def validate_texts(
     if "## Current Research Mode" in texts.get("generated", ""):
         errors.append("generated: historical report still declares a Current Research Mode")
 
-    require("next_actions", f"Program: `{program_id}`", "next-actions program drifted")
+    if "Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`" in texts["map"]:
+        errors.append("map: completed predecessor is still declared current")
+    require("next_actions", f"Program: `{PREDECESSOR_PROGRAM_ID}`", "next-actions predecessor program drifted")
     require("next_actions", f"Current governing theory: `{CURRENT_CORE}`.", "next-actions theory target drifted")
     require("next_actions", "Historical v1.0 Core", "next-actions historical core boundary drifted")
     if "PTE-W1-INDEPENDENT-REVIEW" in texts.get("next_actions", ""):
@@ -100,8 +109,14 @@ def validate_texts(
         require("status", "No `POST-CLOSURE-001` W7 is registered.", "canonical status lost no-W7 boundary")
         require("roadmap", "complete at its six registered workstream scopes", "roadmap terminal program state drifted")
         require("roadmap", "No W7 is currently registered.", "roadmap lost no-W7 boundary")
+        require("matrix", "I1 — Claimed Isolation", "W1 isolation boundary missing")
+        require("matrix", "does **not** prove that every scalarization is impossible", "W5 scalarization boundary missing")
+        require("matrix", "finite-corpus result, not a population estimate", "W6 corpus boundary missing")
+        require("efr_protocol", "Status: **PREREGISTERED — NOT EXECUTED**", "EFR execution status drifted")
+        require("efr_protocol", "not `PCA-W7` or “W7.”", "EFR was relabeled W7")
         require("next_actions", "There is **no registered next `POST-CLOSURE-001` workstream**.", "next-actions invented a terminal successor")
         require("next_actions", "OPEN-EXTERNAL-OP-28", "next-actions lost external/human effectiveness obligation")
+        require("next_actions", f"Current program: `{CURRENT_PROGRAM_ID}`", "next-actions successor drifted")
         for surface in ("readme", "status", "roadmap"):
             require(surface, "PCA-W6-EMPIRICAL-AUDIT-UTILITY", "terminal W6 disposition missing")
         if "**Next / Active**" in texts.get("status", ""):
@@ -151,27 +166,42 @@ def validate_repository(root: Path = ROOT) -> list[str]:
     if expected_release is None:
         return ["release: no docs/releases/project-far-vX.Y.Z.md authority found"]
 
-    program_path = root / PROGRAM.relative_to(ROOT)
-    if not program_path.exists():
-        return [f"program: missing {program_path.relative_to(root)}"]
-    program_text = program_path.read_text(encoding="utf-8")
-    program_id, next_workstream = program_identity(program_text)
-    if program_id is None:
-        return ["program: could not parse current program identity"]
+    predecessor_path = root / PREDECESSOR_PROGRAM.relative_to(ROOT)
+    if not predecessor_path.exists():
+        return [f"program: missing {predecessor_path.relative_to(root)}"]
+    predecessor_text = predecessor_path.read_text(encoding="utf-8")
+    predecessor_id, next_workstream = program_identity(predecessor_text)
+    if predecessor_id != PREDECESSOR_PROGRAM_ID:
+        return ["program: could not parse completed predecessor identity"]
 
-    terminal = "Status: **Complete at the six registered workstream scopes" in program_text
-    no_w7 = "No W7 is registered by this program." in program_text
+    terminal = "Status: **Complete at the six registered workstream scopes" in predecessor_text
+    no_w7 = "No W7 is registered by this program." in predecessor_text
     if next_workstream is None and not (terminal and no_w7):
-        return ["program: no next workstream found without explicit terminal/no-W7 authority"]
-    if next_workstream is not None and terminal:
-        return ["program: terminal program also declares a next workstream"]
+        return ["program: completed predecessor lacks explicit terminal/no-W7 authority"]
+    if next_workstream is not None:
+        return ["program: completed predecessor still declares a next workstream"]
+
+    efr_path = root / EFR_MACHINE.relative_to(ROOT)
+    try:
+        efr = json.loads(efr_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        return [f"program: unreadable EFR machine authority: {error}"]
+    if efr.get("program_id") != CURRENT_PROGRAM_ID:
+        return ["program: EFR machine identity drifted"]
+    if efr.get("status") != "PREREGISTERED_NOT_EXECUTED" or efr.get("is_w7") is not False:
+        return ["program: EFR must remain preregistered, unexecuted, and not W7"]
+    predecessor = efr.get("predecessor")
+    if not isinstance(predecessor, dict) or predecessor.get("program_id") != PREDECESSOR_PROGRAM_ID:
+        return ["program: EFR predecessor identity drifted"]
+    if predecessor.get("status") != "COMPLETE_AT_SIX_REGISTERED_SCOPES":
+        return ["program: EFR predecessor completion drifted"]
 
     texts: dict[str, str] = {}
     for key, canonical_path in CURRENT_FILES.items():
         path = root / canonical_path.relative_to(ROOT)
         texts[key] = path.read_text(encoding="utf-8", errors="replace") if path.exists() else ""
 
-    return validate_texts(texts, expected_release, program_id, next_workstream)
+    return validate_texts(texts, expected_release, CURRENT_PROGRAM_ID, next_workstream)
 
 
 def main() -> int:

@@ -30,6 +30,9 @@ Each concept should have one canonical source. Other documents should link to th
 | PCA-W4 Domain-Contracts Status | [`governance/pca-w4-domain-contracts-status-v1.0.md`](governance/pca-w4-domain-contracts-status-v1.0.md) | Records six bounded native contracts, six lossy collisions, six scoped repairs, and the internal-mapping boundary. |
 | PCA-W5 Approximation-and-Cost Status | [`governance/pca-w5-approximation-cost-status-v1.0.md`](governance/pca-w5-approximation-cost-status-v1.0.md) | Records the checked finite-explicit `far-ir/2.1` approximation and product-cost-preorder result and its nonclaims. |
 | PCA-W6 Empirical Audit-Utility Status | [`governance/pca-w6-empirical-audit-utility-status-v1.0.md`](governance/pca-w6-empirical-audit-utility-status-v1.0.md) | Records the bounded internal controlled-artifact result while leaving human disagreement and external utility unestablished. |
+| Canonical W1–W6 Claim/Evidence Matrix | [`governance/w1-w6-claim-evidence-matrix-v1.0.md`](governance/w1-w6-claim-evidence-matrix-v1.0.md) | Governs the exact cross-workstream claims, evidence, scope boundaries, and prohibited promotions. |
+| External Falsification and Replication Program | [`governance/external-falsification-and-replication-program-v1.0.md`](governance/external-falsification-and-replication-program-v1.0.md) | Preregisters the separate non-W7 successor, frozen tests, decision rules, and staged external-input lock. |
+| EFR Input Freeze | [`../theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json`](../theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json) | Content-addresses the evidence baseline and preregistration artifacts and gates unblinded external intake. |
 | Opportunity Registry | [`../research/registry/opportunities-v1.0.json`](../research/registry/opportunities-v1.0.json) | Canonical planning memory for opportunities and prohibited/superseded directions; not theory authority. |
 | Research-Question Registry | [`../research/registry/research-questions-v1.0.json`](../research/registry/research-questions-v1.0.json) | Connects unresolved questions to existing problem/question authorities without replacing them. |
 | Research Tool Authority | [`governance/research-tool-authority-v1.0.md`](governance/research-tool-authority-v1.0.md) | Governs tool authority, contamination, independence, and canonical-state boundaries. |
@@ -208,7 +211,8 @@ Each concept should have one canonical source. Other documents should link to th
 - Acceptance/promotion: `docs/governance/project-far-theory-closure-acceptance-v1.1.md`.
 - Internal replication: `docs/research/project-far-core-v1.1-correction-replication-v1.0.md`.
 - Historical v1.0 theory/ledger/acceptance remain immutable provenance and do not override v1.1.
-- Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.
+- Completed predecessor: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`, complete at W1–W6's exact scopes.
+- Current program: [External Falsification and Replication](governance/external-falsification-and-replication-program-v1.0.md), preregistered and not executed; not W7.
 - Historical UPP disclosure, audit, cross-audit, and post-terminal program remain preserved but do not override the core theory.
 
 ## Comparative Representation Evaluation Authority

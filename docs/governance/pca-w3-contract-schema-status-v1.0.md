@@ -1,6 +1,6 @@
 # PCA-W3 contract-schema status v1.0
 
-Status: **Complete subject to merge**
+Status: **Complete**
 
 Program: `POST-CLOSURE-001`
 
@@ -10,7 +10,7 @@ Governing theory: `PROJECT-FAR-CORE-THEORY-1.1`
 
 ## Terminal disposition
 
-W3 is complete when this change is merged and its exact-head validation is green.
+W3 completed after its exact-head validation passed and its change merged through the governed path.
 
 Result: `FAR_IR_2_0_VERSIONED_CONTRACT_SCHEMA_WITH_FINITE_EXPLICIT_SEMANTIC_CHECKER_MIGRATION_AND_CONFORMANCE`
 
@@ -37,8 +37,8 @@ The successor explicitly represents contract identity/version, source/case domai
 
 A v2 `CHECKED_FINITE_EXPLICIT` result is recomputed from the explicit finite tables. It is evidence for the encoded finite contract only. It does not establish that the chosen domain, interpretation profile, target class, frame, or observations correctly model an external discipline.
 
-Approximation fields are forward-compatible declarations only. W3 fixes `w5_semantics_established` to `false` and rejects checked approximate evidence. W5 remains open.
+Approximation fields are forward-compatible declarations only. W3 fixes `w5_semantics_established` to `false` and rejects checked approximate evidence. At W3 completion, W5 remained open; W5 has since completed under its separate `far-ir/2.1` freeze.
 
 ## Next workstream
 
-`PCA-W4-DOMAIN-CONTRACTS` is next. W4 must independently motivate and instantiate v2 contracts for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory, then run collision/sufficiency audits without reading schema reuse as universal primitive evidence.
+At W3 completion, `PCA-W4-DOMAIN-CONTRACTS` was next. That transition is historical: W4–W6 and `POST-CLOSURE-001` are complete. The current successor is preregistered `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`, not W7; schema reuse still supplies no universal primitive evidence.

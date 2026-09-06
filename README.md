@@ -21,7 +21,7 @@ Project FAR therefore closes as a **contract-relative audit discipline**, not as
 
 ## Assurance state
 
-The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under its exact scopes: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, 0 `UNDERDETERMINED`; no theorem correction was required. Novelty and priority were not established.
+The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED` under its exact scopes; no theorem correction was required. Its evidence is I1 claimed isolation: repository access was prohibited by instruction but not technically prevented. External independent validation requires I3 evidence, which W1 does not supply. Novelty and priority were not established.
 
 `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
 
@@ -31,7 +31,7 @@ The corrected v1.1 theory survived the sealed `PCA-W1-INDEPENDENT-REVIEW` under 
 
 `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope. The additive `far-ir/2.1` verifier checks exact-rational metric/loss/reference/tolerance semantics, randomized decoders, multidimensional product cost orders, Pareto minima versus least elements, and zero-loss recovery. It does not select a universal scalar cost or unique optimum.
 
-`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at its preregistered bounded internal controlled-artifact scope. Across six W4 repaired controls and six deterministic representation-collision mutants, the schema-only baseline detected `0/6` mutants while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, and agreed with an independent table-only collision oracle on `12/12` primary records. The six frozen native W4 lossy controls were also reconfirmed. This is internal artifact-level evidence only: human disagreement reduction remains `UNDERDETERMINED` and external real-world utility remains `OPEN`.
+`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at its preregistered bounded internal controlled-artifact scope. Across six W4 repaired controls and six deterministic representation-collision mutants, the schema-only baseline detected `0/6` mutants while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, and agreed with a separately implemented Project-FAR-authored table-only collision oracle on `12/12` primary records. The six frozen native W4 lossy controls were separately recomputed. This is an exact all-items result for that finite corpus and defect class only: human disagreement reduction remains `UNDERDETERMINED` and external real-world utility remains `OPEN`.
 
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence; W6 machine controls do not establish human or external effectiveness.
 
@@ -47,6 +47,8 @@ Canonical links:
 - [W4 domain-contract status](docs/governance/pca-w4-domain-contracts-status-v1.0.md)
 - [W5 approximation/cost status](docs/governance/pca-w5-approximation-cost-status-v1.0.md)
 - [W6 bounded audit-utility status](docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md)
+- [Canonical W1–W6 claim/evidence matrix](docs/governance/w1-w6-claim-evidence-matrix-v1.0.md)
+- [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md)
 - [W6 execution and results](docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md)
 - [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)
 - [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
@@ -67,7 +69,7 @@ Canonical links:
 - `PCA-W5-APPROXIMATION-AND-COST`: complete at its finite-explicit operational scope.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at its bounded internal controlled-artifact scope.
 
-No W7 is registered by `POST-CLOSURE-001`. OP-28 retains the downstream external/human effectiveness question and requires separate governance before execution.
+No W7 is registered by `POST-CLOSURE-001`. The separate successor `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` is now preregistered, with every test `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open until its external/human evidence is actually collected and passes the frozen criteria.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
@@ -91,7 +93,7 @@ The authoritative dependency order is **foundations → shared theory → FARA �
 
 - FARA: formal/schema representation layer. `FARA-FORMAL-KERNEL-001` remains the accepted bounded formal-kernel promotion at its stated scope; the former seven candidate primitives are schema/contract roles, not globally necessary primitives.
 - FAR: contract-relative methodology and audit protocol.
-- FARO: downstream execution, comparison, materialized views, audit, and reporting.
+- FARO: downstream execution, comparison, materialized views, audit, and reporting. This role definition is not implementation, product, external-validation, or deployment readiness.
 - FARE: requirement-driven mathematical support.
 - FARM: governance/change coordination.
 

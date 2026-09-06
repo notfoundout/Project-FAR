@@ -1,0 +1,84 @@
+name: Exact Head Assurance
+'on':
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+permissions:
+  contents: read
+concurrency:
+  group: exact-head-assurance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  exact-head-assurance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ github.token }}
+      FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        show-progress: false
+        ref: ${{ github.event.pull_request.head.sha || github.sha }}
+        persist-credentials: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install dependencies and trace backend
+      run: 'python -m pip install -r requirements.txt
+
+        sudo apt-get update -qq
+
+        sudo apt-get install -y -qq strace
+
+        '
+    - name: Resolve comparison base
+      id: base
+      shell: bash
+      run: "set -euo pipefail\ncase \"$FAR_ASSURANCE_EVENT\" in\n  pull_request) base=\"$FAR_ASSURANCE_PR_BASE\" ;;\n  push) base=\"$FAR_ASSURANCE_PUSH_BASE\" ;;\n  *) echo \"unsupported assurance event\" >&2; exit 1 ;;\nesac\n[[ \"$base\" =~ ^[0-9a-f]{40}$ && \"$base\" != 0000000000000000000000000000000000000000 ]]\ngit cat-file -e \"${base}^{commit}\"\ngit merge-base --is-ancestor \"$base\" HEAD\necho \"sha=$base\" >> \"$GITHUB_OUTPUT\"\n"
+      env:
+        FAR_ASSURANCE_EVENT: ${{ github.event_name }}
+        FAR_ASSURANCE_PR_BASE: ${{ github.event.pull_request.base.sha }}
+        FAR_ASSURANCE_PUSH_BASE: ${{ github.event.before }}
+    - name: Verify independent bootstrap
+      run: python validation_bootstrap/verify.py
+    - name: Run validator assurance tests
+      run: python -m unittest discover -s tests -p "test_validation_assurance.py" -v
+    - name: Prepare assurance artifact directory
+      run: mkdir -p artifacts/validation/runtime
+    - name: Run complete traced validation profile
+      run: python -m far_validation validate --profile pr-full --no-cache --trace-dependencies --require-trace --require-signed-cache
+    - name: Run independent legacy-checker oracle
+      run: python -m far_validation oracle --json > artifacts/validation/runtime/independent-oracle.json
+    - name: Detect test and validator weakening
+      run: python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json > artifacts/validation/runtime/test-weakening.json
+    - name: Install pinned Lean toolchain
+      shell: bash
+      run: "set -euo pipefail\ncurl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \\\n  sh -s -- -y --default-toolchain \"$(cat lean-toolchain)\"\necho \"$HOME/.elan/bin\" >> \"$GITHUB_PATH\"\n"
+    - name: Machine-check validation-engine assurance theorems
+      shell: bash
+      run: "set -euo pipefail\n\"$HOME/.elan/bin/lean\" mechanization/lean/ValidationEngine.lean\npython - <<'PY2'\nimport json\nfrom pathlib import Path\nPath('artifacts/validation/runtime/lean-proof.json').write_text(\n    json.dumps({'successful': True, 'artifact': 'mechanization/lean/ValidationEngine.lean'}, indent=2),\n    encoding='utf-8',\n)\nPY2\n"
+    - name: Exhaustively model-check engine state space
+      run: python -m far_validation formal --max-checks 4 --json > artifacts/validation/runtime/formal-model.json
+    - name: Run complete registered mutation campaign
+      run: python -m far_validation mutations --json --report artifacts/validation/runtime/mutation-campaign.json > artifacts/validation/runtime/mutation-campaign.stdout.json
+    - name: Assemble signed merge-authority certificate
+      run: "python tools/assemble_validation_certificate.py \\\n  --evidence independent-oracle=artifacts/validation/runtime/independent-oracle.json \\\n  --evidence test-weakening=artifacts/validation/runtime/test-weakening.json \\\n  --evidence formal-model=artifacts/validation/runtime/formal-model.json \\\n  --evidence lean-proof=artifacts/validation/runtime/lean-proof.json \\\n  --evidence mutation-campaign=artifacts/validation/runtime/mutation-campaign.json\n"
+    - name: Verify exact commit and tree certificate
+      run: "python -m far_validation certificate verify --require-signed \\\n  --expected-commit \"$(git rev-parse HEAD)\" \\\n  --expected-tree \"$(git rev-parse HEAD^{tree})\" \\\n  --required-check bootstrap.manifest \\\n  --required-check selection.completeness \\\n  --required-check governance.research-gates \\\n  --required-check governance.claim-boundaries \\\n  --required-check governance.w5-authorization \\\n  --required-evidence independent-oracle \\\n  --required-evidence test-weakening \\\n  --required-evidence formal-model \\\n  --required-evidence lean-proof \\\n  --required-evidence mutation-campaign\n"
+    - name: Stage complete assurance bundle
+      if: always()
+      shell: bash
+      run: "mkdir -p artifacts/validation/runtime\nif [[ -d .far ]]; then\n  rm -rf artifacts/validation/runtime/far-state\n  cp -R .far artifacts/validation/runtime/far-state\nfi\n"
+    - name: Upload assurance evidence
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: exact-head-assurance-${{ github.event.pull_request.head.sha || github.sha }}
+        path: artifacts/validation
+        if-no-files-found: error
+        retention-days: 30

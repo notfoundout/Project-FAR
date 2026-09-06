@@ -1,0 +1,128 @@
+{
+  "schema_version": "1.0",
+  "freeze_id": "EFR-001-INPUT-FREEZE-V1.0",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "freeze_status": "FROZEN_BEFORE_EXECUTION",
+  "frozen_date": "2026-09-06",
+  "evidence_baseline": {
+    "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+    "tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b"
+  },
+  "evidence_rule": "Only W1-W6 evidence reachable from the exact baseline tree may be used as inherited evidence. Later interpretation is governed by the frozen matrix object below.",
+  "artifact_objects": [
+    {
+      "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+      "git_blob_sha": "ffb341e684607ba6106fc58ac88d1e87be3ae47e"
+    },
+    {
+      "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
+      "git_blob_sha": "cb061f5471d972947b1b1f6255238e155f2f9759"
+    },
+    {
+      "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+      "git_blob_sha": "6811aa31e9d49992b8fa5216b2d5f6b5c6cd7b70"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/00-preregistration.md",
+      "git_blob_sha": "402dbed218f75214f4762c0178f419cf4329b766"
+    },
+    {
+      "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
+      "git_blob_sha": "650d1d20bfa2d99063ec803d845d06f56280cbb1"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
+      "git_blob_sha": "d261653e9d12db74157955511bebf35ef6819009"
+    },
+    {
+      "path": "tools/efr_hd1_allocation.py",
+      "git_blob_sha": "a40fa46e342a46b9f75dbf583f68ad38b2dbbf0a"
+    },
+    {
+      "path": "tools/efr_hd1_analysis.py",
+      "git_blob_sha": "bffade750d53e12e5422ea836a20c8efaeb1724e"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/02-u1-projection.md",
+      "git_blob_sha": "837af3a06b32f8c5e0a03a61e6d62b52e15adb70"
+    }
+  ],
+  "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
+  "selection_and_analysis_rules_frozen": true,
+  "case_manifest_requirements": {
+    "custodian_independent": true,
+    "complete_before_unblinding": true,
+    "required_fields": [
+      "path",
+      "byte_count",
+      "sha256",
+      "provenance",
+      "inclusion_decision",
+      "exclusion_decision"
+    ],
+    "signed_and_timestamped": true,
+    "read_only_deposit": true,
+    "case_replacement_after_unblinding": false,
+    "corruption_rule": "Invalidate the complete predeclared stratum; a corrected run requires a new version and complete new freeze."
+  },
+  "external_input_slots": [
+    {
+      "test_id": "EFR-R1",
+      "input": "two I3 team identity/exposure manifests, statement-only packet, adjudicator roster and 60-day deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "sealed derivations and verdict ledgers"
+    },
+    {
+      "test_id": "EFR-R2",
+      "input": "two clean-room team manifests, permitted specs, complete baseline fixture extraction map, comparison fields and deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "sealed implementations, lockfiles, complete outputs and logs"
+    },
+    {
+      "test_id": "EFR-H1",
+      "input": "120-case external case/label manifest sealed before any FAR execution",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete test outputs and unblinded comparison"
+    },
+    {
+      "test_id": "EFR-A1",
+      "input": "60-case adversarial case/label manifest sealed before any FAR execution",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete challenge outputs and unblinded comparison"
+    },
+    {
+      "test_id": "EFR-HD1",
+      "input": "ethics determination, 24-reviewer roster, complete allocation, and conformance attestation to the already frozen human-study materials; no material choices",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "1440 allocated ratings, missingness and analysis"
+    },
+    {
+      "test_id": "EFR-U1",
+      "input": "ethics determination, three-site standard procedures, qualified worker rosters and predetermined cyclic assignments sealed before arm allocation, prospective eligibility/screening log schema, sealed 40-slot arm allocations per site; pre-enrollment SOP field maps and per-investigation native evidence/label, complete transcription, contract projection and baseline report sealed before arm reveal",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "append-only enrollment input seals, 120 outcomes, 30-day harm follow-up and analysis"
+    },
+    {
+      "test_id": "EFR-C1",
+      "input": "fixed time/training/USD/raw-TLX/burden measurement-ledger schema",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "complete measurements and componentwise outcomes"
+    },
+    {
+      "test_id": "EFR-N1",
+      "input": "independent searcher roster, exact frozen queries/indexes/cutoff and deadline",
+      "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "prospective_output": "query logs, full claim charts, citations and search disposition"
+    }
+  ],
+  "execution_gate": "Seal the listed pre-execution inputs before each test begins. Prospective U1 cases are append-only sealed at enrollment before allocation reveal. Prospective outputs are sealed after execution and before comparison/unblinding; they are never pre-execution prerequisites. No scientific design choices may be filled in at intake.",
+  "post_hoc_escape_clauses_allowed": false,
+  "current_results": {
+    "tests_executed": 0,
+    "external_cases": 0,
+    "human_participants": 0,
+    "field_sites": 0,
+    "novelty_status": "NO_CLAIM"
+  },
+  "authoritative_freeze_timestamp": "GitHub protected-main merge event for PR #470; dates before promotion describe candidate registration bytes, not acceptance."
+}

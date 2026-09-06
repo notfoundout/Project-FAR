@@ -38,6 +38,8 @@ The Foundational Analysis of Reasoning Operations executes investigations and ma
 
 ## Current Status
 
-The theory is `TERMINAL—THEORY CLOSED`. Its exact `FAR-CORE-001`–`014` bundle passed the staged `PCA-W1-INDEPENDENT-REVIEW` at the governed scopes without theorem correction; that review did not establish novelty or priority. `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is active with `001`–`013` formalized and `014` held at a reproducible MLL infrastructure obstruction under [`POST-CLOSURE-001`](governance/post-closure-assurance-and-application-program-v1.0.md).
+The theory is `TERMINAL—THEORY CLOSED`. `POST-CLOSURE-001` is complete at W1–W6's exact governed scopes. W1 returned 14 `PROVED` verdicts under I1 claimed isolation, not I3 external validation; W2 formalized all 14 claims; W3–W5 completed their bounded schema, domain-contract, and approximation/product-cost work; W6 proved only its registered finite-corpus collision-audit proposition. The exact boundaries are in the [canonical W1–W6 matrix](governance/w1-w6-claim-evidence-matrix-v1.0.md).
+
+The current successor is [External Falsification and Replication](governance/external-falsification-and-replication-program-v1.0.md), preregistered and not executed. It is not W7 and establishes no external validity, human utility, novelty, or FARO readiness.
 
 See [project status](project-status.md), [canonical map](CANONICAL_MAP.md), and [claim status](governance/claim-status-matrix.md).

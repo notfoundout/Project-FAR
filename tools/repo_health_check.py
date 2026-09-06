@@ -1,8 +1,19 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import argparse, subprocess, sys
+import argparse, os, subprocess, sys
 from pathlib import Path
 from common_health import DEFAULT_HEALTH_TIMEOUT_SECONDS, ROOT, run, rel
+
+# Match the canonical suite budget in validation/manifest.json. Individual
+# health checks retain their shorter budget; every timeout remains a failure.
+DEFAULT_CANONICAL_TEST_TIMEOUT_SECONDS = 900
+
+def check_timeout(name: str, override: int | None) -> int:
+    if override is not None:
+        return override
+    if 'PROJECT_FAR_HEALTH_TIMEOUT' in os.environ:
+        return int(os.environ['PROJECT_FAR_HEALTH_TIMEOUT'])
+    return DEFAULT_CANONICAL_TEST_TIMEOUT_SECONDS if name == 'canonical tests' else DEFAULT_HEALTH_TIMEOUT_SECONDS
 
 def git_snapshot()->set[str]:
     cp=subprocess.run(['git','status','--porcelain'],cwd=ROOT,text=True,capture_output=True)
@@ -10,7 +21,7 @@ def git_snapshot()->set[str]:
 
 def main()->int:
     parser=argparse.ArgumentParser(); g=parser.add_mutually_exclusive_group(); g.add_argument('--fast',action='store_true'); g.add_argument('--full',action='store_true')
-    parser.add_argument('--timeout',type=int,default=DEFAULT_HEALTH_TIMEOUT_SECONDS,help='per-subprocess timeout in seconds')
+    parser.add_argument('--timeout',type=int,default=None,help='override every subprocess timeout; defaults: canonical tests 900s, individual checks 120s (or PROJECT_FAR_HEALTH_TIMEOUT)')
     args=parser.parse_args(); full=args.full; before=git_snapshot(); checks=[]
     def add(name,cmd,required=True): checks.append((name,cmd,required))
     add('canonical tests',[sys.executable,'tools/run_tests.py','--fast' if args.fast else ''])
@@ -52,7 +63,7 @@ def main()->int:
     for p in sorted((ROOT/'theory/proof-objects').glob('T-*.proof.yaml')) if (ROOT/'theory/proof-objects').exists() else []: add(f'proof object {rel(p)}',[sys.executable,'tools/check_proof_object.py',rel(p)])
     failures=[]; warnings=[]
     for name,cmd,required in checks:
-        cmd=[c for c in cmd if c]; print(f"\n==> {name}: {' '.join(cmd)}"); cp=run(cmd,timeout=args.timeout)
+        cmd=[c for c in cmd if c]; print(f"\n==> {name}: {' '.join(cmd)}"); cp=run(cmd,timeout=check_timeout(name,args.timeout))
         if cp.stdout: print(cp.stdout.rstrip())
         timed_out=cp.returncode==124 and str(cp.stdout).startswith('TIMEOUT')
         if cp.returncode==0: print(f'PASS {name}')

@@ -10,7 +10,8 @@ import check_current_state_consistency as checker
 
 
 EXPECTED_RELEASE = "v1.0.0"
-PROGRAM_ID = "POST-CLOSURE-001"
+PROGRAM_ID = "EXTERNAL-FALSIFICATION-AND-REPLICATION-001"
+PREDECESSOR_ID = "POST-CLOSURE-001"
 NEXT_WORKSTREAM = None
 
 VALID_TEXTS = {
@@ -26,7 +27,8 @@ VALID_TEXTS = {
     "status": (
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
-        "Current program: `POST-CLOSURE-001` — **complete at its six registered workstream scopes**.\n"
+        "Completed predecessor: `POST-CLOSURE-001` — **complete at its six registered workstream scopes**.\n"
+        "Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`.\n"
         "| `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | boundary |\n"
         "No `POST-CLOSURE-001` W7 is registered.\n"
     ),
@@ -34,12 +36,14 @@ VALID_TEXTS = {
         "Project FAR Core Theory v1.1\n"
         "Historical Project FAR Core Theory v1.0\n"
         "Post-Closure Assurance and Application Program\n"
+        "External Falsification and Replication Program\n"
         "Current Project FAR release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md)\n"
     ),
     "roadmap": (
         "Current published repository release: [`v1.0.0`]\n"
         "Current governing core: [`PROJECT-FAR-CORE-THEORY-1.1`]\n"
-        "Current program: [`POST-CLOSURE-001`], complete at its six registered workstream scopes.\n"
+        "Completed predecessor: [`POST-CLOSURE-001`], complete at its six registered workstream scopes.\n"
+        "Current program: [`EXTERNAL-FALSIFICATION-AND-REPLICATION-001`].\n"
         "`PCA-W6-EMPIRICAL-AUDIT-UTILITY` — complete.\n"
         "No W7 is currently registered.\n"
     ),
@@ -49,10 +53,20 @@ VALID_TEXTS = {
     ),
     "next_actions": (
         "Program: `POST-CLOSURE-001` — complete.\n"
+        "Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — preregistered.\n"
         "Current governing theory: `PROJECT-FAR-CORE-THEORY-1.1`.\n"
         "Historical v1.0 Core\n"
         "There is **no registered next `POST-CLOSURE-001` workstream**.\n"
         "OPEN-EXTERNAL-OP-28\n"
+    ),
+    "matrix": (
+        "I1 — Claimed Isolation\n"
+        "does **not** prove that every scalarization is impossible\n"
+        "finite-corpus result, not a population estimate\n"
+    ),
+    "efr_protocol": (
+        "Status: **PREREGISTERED — NOT EXECUTED**\n"
+        "not `PCA-W7` or “W7.”\n"
     ),
     "agents": (
         "If purported current-authority surfaces conflict, stop. "
@@ -104,6 +118,11 @@ class CurrentStateConsistencyTests(unittest.TestCase):
         errors = self.validate(texts)
         self.assertTrue(any("Next / Active" in error for error in errors))
 
+    def test_map_cannot_redeclare_completed_predecessor_current(self):
+        texts = copy.deepcopy(VALID_TEXTS)
+        texts["map"] += "Current program: `docs/governance/post-closure-assurance-and-application-program-v1.0.md`.\n"
+        self.assertTrue(any("completed predecessor is still declared current" in e for e in self.validate(texts)))
+
     def test_terminal_no_w7_boundary_is_required(self):
         texts = copy.deepcopy(VALID_TEXTS)
         texts["roadmap"] = texts["roadmap"].replace("No W7 is currently registered.\n", "")
@@ -139,7 +158,7 @@ class CurrentStateConsistencyTests(unittest.TestCase):
             "- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: **open — next**.\n"
         )
         self.assertEqual(
-            (PROGRAM_ID, "PCA-W6-EMPIRICAL-AUDIT-UTILITY"),
+            (PREDECESSOR_ID, "PCA-W6-EMPIRICAL-AUDIT-UTILITY"),
             checker.program_identity(program),
         )
 
@@ -154,7 +173,7 @@ class CurrentStateConsistencyTests(unittest.TestCase):
             "- `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete.\n"
             "No W7 is registered by this program.\n"
         )
-        self.assertEqual((PROGRAM_ID, None), checker.program_identity(program))
+        self.assertEqual((PREDECESSOR_ID, None), checker.program_identity(program))
 
 
 if __name__ == "__main__":

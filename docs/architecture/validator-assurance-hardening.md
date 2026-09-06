@@ -66,14 +66,16 @@ The `Validator Assurance` workflow runs on pull requests, pushes to `main`, work
 
 Control-plane closure on 2026-09-04: the repository is public and personal-account owned. After PR #467 merged, a one-shot bootstrap workflow used the repository-scoped `FAR_GITHUB_ADMIN_TOKEN` Actions secret to run the governed configurator and then the independent fail-closed read-back. Both steps succeeded. GitHub branch metadata reports `main` as protected with `merge-authority` required at enforcement level `everyone`, and the read-back returned `control_plane_enforced: true` with no errors. The exact Accepted closure record is `docs/governance/canonical-branch-protection-closure-2026-09-04.md`.
 
-PR #468 promotes `.github/workflows/canonical-branch-protection.yml` as the permanent reapplication path. It is manual-dispatch only, applies the governed policy, immediately performs the independent read-back, and is content-pinned in `validation_bootstrap/assurance-lock.json`. The older `.github/workflows/configure-validation-protection.yml` is retained as an assurance-locked apply-only historical surface; because it does not perform read-back, it is not the canonical evidence-producing reapplication path.
+Security correction scheduled 2026-09-05: the PR #468 reapplication design exposes a reusable administrator PAT to workflows that check out mutable repository code. The assurance lock detects content drift but does not make that credential handoff safe. A one-shot, checkout-free, main-only retirement workflow will fail-closed read back protection, disable both privileged workflows with the short-lived Actions token, verify both states and the unchanged full protection policy, then delete `FAR_GITHUB_ADMIN_TOKEN` as its final API operation. A credentialless rerun can recover a lost deletion receipt. Acceptance requires its live receipt and a cleanup PR; see `docs/governance/privileged-token-retirement-2026-09-05.md`.
 
 Native GitHub merge queues remain unavailable while the repository is personal-account owned. This is not a branch-protection failure. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization.
+
+The nested full-health runner gives the complete canonical test suite the same 900-second budget recorded for `tests.canonical` in the validation manifest. Individual health checks retain their shorter default; explicit `--timeout` and `PROJECT_FAR_HEALTH_TIMEOUT` overrides still apply to every subprocess. This corrects the 120-second nested-suite timeout observed in exact-head run [34010171919](https://github.com/notfoundout/Project-FAR/actions/runs/34010171919) while preserving required checks and timeout failures.
 
 ## Required secrets
 
 - `FAR_VALIDATION_CACHE_SIGNING_KEY`: persistent HMAC secret for cross-runner cache and certificate trust.
-- `FAR_GITHUB_ADMIN_TOKEN`: repository-scoped fine-grained administrator token used by the canonical apply-and-read-back workflow. Rotate or replace it before expiration if future protection reapplication is required.
+- `FAR_GITHUB_ADMIN_TOKEN`: obsolete administrator token scheduled for one-shot retirement and deletion. It must not be recreated as a long-lived Actions secret. Future protection changes require an ephemeral, externally controlled administrator credential and a separately reviewed fail-closed procedure that does not execute mutable repository code.
 
 Neither secret is written to artifacts or logs.
 
@@ -91,3 +93,7 @@ make validate-assurance
 ## Claim boundary
 
 This package substantially closes the registered assurance gaps. It does not establish literal impossibility of validator defects, immunity to compromised runners or secrets, independent scientific validation of Project FAR's research claims, or a full refinement proof of the Python engine.
+
+## Exact PR head assurance
+
+The protected `merge-authority` job validates GitHub's proposed merge commit. The additive `.github/workflows/exact-head-assurance.yml` also runs the same complete traced profile, independent oracle, weakening audit, Lean proof, exhaustive model, registered mutations, and signed certificate checks with checkout explicitly bound to the PR head SHA. It uses only a read-only short-lived Actions token and verifies the actual commit/tree. Both runs are required by the EFR promotion record; live main protection continues to require the existing `merge-authority` context. The exact-head job also runs on canonical main pushes. It does not configure repository protection or handle administrator credentials.

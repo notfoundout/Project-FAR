@@ -18,7 +18,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 `FAR-CORE-010` is corrected in v1.1: exact common theory `T_{L,J,I}` is indexed by language, interpretation profiles/models, and target class. The frame `Γ` additionally indexes the frame-subtracted residue `T_{L,J,I} \ Cn_L(Γ)`; changing `Γ` alone while holding the interpreted models fixed does not change exact `T`.
 
-Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently confirmed by sealed independent review under exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. Novelty/priority not established.**
+Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently reviewed under sealed I1 claimed isolation at exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. I2 verified isolation, I3 external replication, novelty, and priority are not established.**
 
 Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
@@ -32,7 +32,7 @@ PR #453 remains noncanonical Research. Its E0 blocked, E1 fragmented, SSS, profi
 
 ## W1 assurance disposition
 
-The sealed staged review completed `PCA-W1-INDEPENDENT-REVIEW`: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`; no theorem correction was required; novelty and priority were not established. `FAR-CORE-014` retains its governing `SUPPORTED/DERIVED` provenance label while its independent-review truth verdict is `PROVED` under the exact application scope. Truth and provenance are separate dimensions.
+The sealed staged review completed the workstream named `PCA-W1-INDEPENDENT-REVIEW`: 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED`; no theorem correction was required. The exposure record supports I1 claimed isolation because repository access was prohibited by instruction but not technically prevented. It does not support I2 or I3 external independence/replication, novelty, or priority. `FAR-CORE-014` retains its governing `SUPPORTED/DERIVED` provenance label while the W1 exact-scope truth verdict is `PROVED`. Truth, provenance, and isolation class are separate dimensions.
 
 ## W2 formalization disposition
 
@@ -68,25 +68,27 @@ W5 does not establish a universal metric, reference, tolerance, scalar cost, uni
 
 `PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at the preregistered bounded internal controlled-artifact scope. The protocol was frozen before execution at `3813b9e3eb49562bd8b9f4d3179c3d9536831de6` from canonical base `2cecf2e21cc27208f606dcd38337af4369e66af2`.
 
-The primary experiment used six unmodified W4 repaired controls and six deterministic representation-collision mutants. All twelve remained JSON-Schema-valid. The schema-only baseline detected `0/6` mutants and accepted `6/6` clean controls. The FAR finite-explicit semantic audit detected `6/6` mutants with `FACTORIZATION_FAILURE` and accepted `6/6` clean controls. A separate table-only collision oracle agreed with the FAR loss/no-loss classification on `12/12` primary records. All six frozen native W4 lossy controls were also reconfirmed.
+The primary experiment used six unmodified W4 repaired controls and six deterministic representation-collision mutants. All twelve remained JSON-Schema-valid. The schema-only baseline detected `0/6` mutants and accepted `6/6` clean controls. The FAR finite-explicit semantic audit detected `6/6` mutants with `FACTORIZATION_FAILURE` and accepted `6/6` clean controls. A separate table-only collision oracle agreed with the FAR loss/no-loss classification on `12/12` primary records. All six frozen native W4 lossy controls were also separately recomputed.
 
 This proves only the registered bounded material-loss-detection result. The corpus, mutation, oracle, and adjudication were Project-FAR-authored; there were no human participants or external investigators. Human disagreement reduction is `UNDERDETERMINED` and external real-world utility remains `OPEN`. No population sensitivity/specificity, superiority over alternative audit methods, or theorem-status change is inferred.
 
 ## Current phase
 
-Current program: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — **complete at its six registered workstream scopes**.
+Completed predecessor: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — **complete at its six registered workstream scopes**.
+
+Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — [External Falsification and Replication Program v1.0](governance/external-falsification-and-replication-program-v1.0.md) — **preregistered; not executed; not W7**. Its [canonical W1–W6 claim/evidence matrix](governance/w1-w6-claim-evidence-matrix-v1.0.md) fixes the inherited claims and nonclaims.
 
 | Workstream | Current state | Boundary |
 |---|---|---|
 | `PCA-W0-REPOSITORY-CONFORMITY` | Complete | Original closure integration completed; v1.1 correction is governed successor maintenance. |
-| `PCA-W1-INDEPENDENT-REVIEW` | Complete | Sealed exact-scope review promoted; 14 PROVED, no correction; novelty/priority not established. |
+| `PCA-W1-INDEPENDENT-REVIEW` | Complete | Sealed I1 claimed-isolation exact-scope review; 14 PROVED, no correction; not I3 external validation; novelty/priority not established. |
 | `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` | Complete | 14 FORMALIZED; exact kernel assumptions audited; no contradiction/reopen condition. |
 | `PCA-W3-CONTRACT-SCHEMA` | Complete | `far-ir/2.0` successor, semantic verifier, loss-explicit migration, and conformance fixtures complete; v1 unchanged. |
 | `PCA-W4-DOMAIN-CONTRACTS` | Complete | Six frozen native contracts; six checked lossy collisions and six checked scoped repairs; internal mapping only. |
 | `PCA-W5-APPROXIMATION-AND-COST` | Complete | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
 | `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | Bounded internal controlled-artifact loss detection proved for registered corpus; human disagreement and external utility not established. |
 
-No `POST-CLOSURE-001` W7 is registered. OP-28 remains open for separately governed external/human effectiveness evidence.
+No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed successor and all eight tests remain `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open.
 
 ## Framework status
 
@@ -94,7 +96,7 @@ No `POST-CLOSURE-001` W7 is registered. OP-28 remains open for separately govern
 |---|---|---|
 | FARA | Selected representation target | Stable; `FARA-FORMAL-KERNEL-001` retained only for finite, explicit, auditable Project FAR v1 records. |
 | FAR | Contract-relative methodology | Stable with contract freeze, factorization/collision, minimization, and typed-loss conformance. |
-| FARO | Downstream operations | Stable for execution, materialized views, comparison, audit, and reporting. |
+| FARO | Downstream operations | Role defined; implementation, product, external-validation, and deployment readiness not established. |
 | FARE | Mathematical support | Requirement-driven; does not replace the canonical core theory. |
 | FARM | Change coordination | Stable; does not reverse the canonical dependency direction. |
 
@@ -106,4 +108,4 @@ The core reopens only for a reproducible contradiction to a stated theorem, proo
 
 ## Current authority navigation
 
-For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Historical or generated surfaces do not override that order.
+For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Historical or generated surfaces do not override that order.

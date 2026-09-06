@@ -1,0 +1,309 @@
+{
+  "schema_version": "1.0",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "short_id": "EFR-001",
+  "title": "External Falsification and Replication",
+  "status": "PREREGISTERED_NOT_EXECUTED",
+  "registered_date": "2026-09-06",
+  "is_w7": false,
+  "predecessor": {
+    "program_id": "POST-CLOSURE-001",
+    "status": "COMPLETE_AT_SIX_REGISTERED_SCOPES"
+  },
+  "evidence_baseline": {
+    "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+    "tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b"
+  },
+  "authority": {
+    "protocol": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+    "matrix": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+    "input_freeze": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json",
+    "human_study_materials": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
+    "hd1_allocation": "tools/efr_hd1_allocation.py",
+    "hd1_analysis": "tools/efr_hd1_analysis.py",
+    "u1_projection": "docs/research/external-falsification-and-replication/02-u1-projection.md"
+  },
+  "current_nonclaims": [
+    "novelty",
+    "priority",
+    "universality",
+    "population external validity",
+    "human utility",
+    "real-world benefit",
+    "general cost-effectiveness",
+    "FARO readiness"
+  ],
+  "independence": {
+    "required_class": "I3_EXTERNAL_INDEPENDENT_VALIDATION",
+    "minimum_replication_teams": 2,
+    "distinct_organizations": true,
+    "project_far_control_prohibited": true,
+    "internal_model_or_reprompt_sufficient": false,
+    "required_disclosures": [
+      "prior_exposure",
+      "conflicts",
+      "funding",
+      "tools",
+      "deviations"
+    ]
+  },
+  "tests": [
+    {
+      "id": "EFR-R1",
+      "family": "independent_deductive_replication",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "teams": 2,
+        "claims": 14,
+        "withheld": [
+          "W1 verdicts",
+          "W1 reasoning",
+          "W2 proof sources"
+        ]
+      },
+      "acceptance": "Both I3 teams submit valid derivations for all 14 exact-scope claims and no material objection survives blinded adjudication.",
+      "failure": "A reproducible in-scope contradiction, countermodel, or invalid proof step survives adjudication. Missing or inadequate derivations after 60 calendar days are NOT_REPLICATED without theorem refutation.",
+      "invalid": "Exposure, collusion, missing disclosure, or use of withheld material."
+    },
+    {
+      "id": "EFR-R2",
+      "family": "clean_room_technical_replication",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "teams": 2,
+        "packages": [
+          "W3 conformance",
+          "W4 12-record",
+          "W5 registered controls",
+          "W6 primary and secondary"
+        ]
+      },
+      "acceptance": "Both clean-room implementations agree with each other and the frozen expected result on every required item.",
+      "failure": "Any valid item mismatch survives adjudication. Missing outputs or the 60-day deadline missed also fail.",
+      "invalid": "Use of Project FAR implementation, checker, tests, oracle source, expected outputs, or another team's code."
+    },
+    {
+      "id": "EFR-H1",
+      "family": "held_out_external_cases",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "total": 120,
+        "domains": 6,
+        "per_domain": {
+          "preservation": 10,
+          "material_loss": 10
+        }
+      },
+      "acceptance": {
+        "overall_material_loss_flagged_min": "54/60",
+        "overall_preservation_accepted_min": "54/60",
+        "per_domain_per_class_min": "8/10"
+      },
+      "failure": "Any overall or per-domain threshold is missed.",
+      "invalid": "Provenance failure, label leakage, or post-unblinding selection/replacement.",
+      "source_frame": "Frozen six-query arXiv v1 discovery procedure in the content-addressed protocol: complete date-bounded metadata, first 1000 per domain, deterministic cross-domain deduplication, at most first eligible worked finite example per paper, no replacement or source expansion. Supply sufficiency unestablished; incomplete strata invalidate intake."
+    },
+    {
+      "id": "EFR-A1",
+      "family": "adversarial_counterexamples",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "total": 60,
+        "domains": 6,
+        "per_domain": 10,
+        "minimum_material_loss_per_domain": 5,
+        "schema_valid_required": true
+      },
+      "acceptance": "Every valid in-scope material-loss case is flagged and every output is reported.",
+      "failure": "One valid in-scope ground-truth material-loss case is accepted as preserving or silently omitted.",
+      "invalid": "Missing custodian ground truth, broken seal, or out-of-scope case counted as a success."
+    },
+    {
+      "id": "EFR-HD1",
+      "family": "human_disagreement",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "reviewers": 24,
+        "cases": 120,
+        "ratings": 1440,
+        "ratings_per_case_per_arm": 6
+      },
+      "allocation": "Frozen 24-reviewer cyclic allocation over 12 shuffled strata; 30 disjoint cases per arm per reviewer; Python 3.12 manifest-derived seed.",
+      "primary": "Pairwise material-disagreement rate relative to sealed custodian labels.",
+      "acceptance": {
+        "absolute_reduction_percentage_points_min": 10,
+        "bootstrap_resamples": 10000,
+        "serious_false_accept_noninferiority_margin_percentage_points": 2,
+        "serious_false_accept_interval_upper_max": 0.02,
+        "nominal_percentile_interval": 0.95,
+        "interval_excludes_zero": true
+      },
+      "failure": "Effect, interval, or safety margin is missed.",
+      "invalid": {
+        "missing_ratings_over_percent": 5,
+        "arm_missingness_imbalance_over_percentage_points": 2,
+        "other": [
+          "broken blinding",
+          "label leakage",
+          "non-reconstructable allocation"
+        ]
+      },
+      "secondary": [
+        "raw counts",
+        "pairwise agreement",
+        "category-specific agreement",
+        "Gwet AC1",
+        "Cohen kappa descriptive only"
+      ],
+      "missingness": "Missing FAR pair = disagreement, missing standard pair = agreement; false-accept imputation FAR wrong / standard correct.",
+      "eligibility": "Consenting external non-author adults aged at least 18; English materials without translation; conforming existing environment; applicable ethics determination; fixed four-hour course and all 12 W4 classifications/witnesses correct across all six domains. No credential/experience/discipline discretion; first 24 by the frozen qualification order.",
+      "analysis": "Frozen tools/efr_hd1_analysis.py verifies both sealed inputs and allocation, then jointly resamples cases and whole reviewers with shared reviewer pair weights. Nominal crossed perturbation interval; no exact coverage or population-representativeness claim. Numerical gates cannot replace independent protocol-validity gates."
+    },
+    {
+      "id": "EFR-U1",
+      "family": "prospective_real_world_utility",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "sample": {
+        "sites": 3,
+        "eligible_investigations_per_site": 40,
+        "standard_per_site": 20,
+        "far_assisted_per_site": 20,
+        "total": 120
+      },
+      "primary": "Blinded-adjudicated escaped material-defect rate under intention to treat.",
+      "acceptance": {
+        "absolute_reduction_percentage_points_min": 5,
+        "relative_reduction_percent_min": 20,
+        "max_site_worsening_percentage_points": 5,
+        "far_attributable_serious_harms_max": 0,
+        "interval_excludes_zero": true,
+        "nominal_percentile_interval": 0.95
+      },
+      "failure": "Any benefit, site, or harm gate is missed.",
+      "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent.",
+      "eligibility": "Three independent routine documentary audit sites with existing single-auditor SOPs executable in the fixed English documentary interface within 60 minutes; reject mandatory team/peer/dual-control roles before enrollment. Next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions. SOP must uniquely specify literal JSON native source/behavior/representation fields under the frozen projection rule.",
+      "zero_standard_defect_rate": "BENEFIT_GATE_FAILS",
+      "intervention_format": "Both arms share native evidence/SOP and common outcome capture; only FAR adds exact W3 far-ir/2.0 fields and baseline report. U1 standard omits material sections 4 and 5. W5 far-ir/2.1 declarations excluded.",
+      "worker_assignment": "Existing consenting adult site auditors; frozen HD1 qualification/environment rules; first at most 40 qualifying within 30 days. Seal roster and cyclic worker (i-1) mod N for all 40 investigation indices before deriving arm allocation; no substitution or task swaps. Missing assigned-worker output remains an intention-to-treat defect.",
+      "projection": "Frozen 02-u1-projection.md: pre-enrollment native SOP field map, independent complete transcription and native labels, fixed exact contract template/candidate decoder, baseline verifier report, all generated and sealed before arm reveal for every investigation; no adverse-output exclusion or repair.",
+      "analysis": "Frozen crossed worker/investigation loop, shared whole-worker weights across each site and both arms, equal site weights, exact fractions, zero-denominator invalidity. Nominal perturbation interval only; no exact coverage or population site/worker confidence claim."
+    },
+    {
+      "id": "EFR-C1",
+      "family": "cost_and_burden_vector",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "no_scalarization": true,
+      "coordinates": {
+        "median_task_time_ratio_max": 1.5,
+        "training_hours_per_person_max": 8,
+        "incremental_direct_cost_2026_usd_per_case_max": 100,
+        "median_increase_each_raw_nasa_tlx_dimension_max": 10,
+        "severe_burden_events_max": 0
+      },
+      "acceptance": "Every coordinate passes and remains separately reported.",
+      "failure": "Any coordinate fails, is unavailable, or is replaced by a scalar aggregate.",
+      "invalid": "Broken measurement-ledger seal or provenance failure.",
+      "accounting": {
+        "labor_usd_per_hour": 50,
+        "nonlabor_currency": "USD only",
+        "deflator": "1.03 ** (invoice_year - 2026)",
+        "cost_summary": "mean FAR minus mean standard per allocated case",
+        "gates_applied_separately": [
+          "HD1",
+          "each U1 site"
+        ],
+        "attribution": "Enrolled-person costs over their allocated tasks; U1 site-specific costs over its 40 investigations; only unassignable central U1 overhead in equal thirds across sites; HD1 common costs over 1440 ratings. Each entry once; no pooled redistribution of attributable U1 costs.",
+        "far_preparation": "U1 projection/report/field-map preparation, including hidden standard-case preparation, is charged within site to its 20 FAR investigations only; HD1 report production per case to its six FAR ratings. Tagged before arm reveal, never cancelled as common overhead; total research burden retained."
+      },
+      "median_algorithm": "Sort all allocated arm observations numerically; odd n uses x[n//2], even n uses (x[n//2-1]+x[n//2])/2. Missing measurements fail. Exact rational arithmetic throughout, integer milliseconds floored once at capture; no threshold rounding."
+    },
+    {
+      "id": "EFR-N1",
+      "family": "novelty_prior_art",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "search_cutoff": "2026-09-05",
+      "sources": [
+        "scholarly literature",
+        "patents",
+        "standards",
+        "backward citation chains",
+        "forward citation chains"
+      ],
+      "essential_elements": [
+        "declared comparison contract determines a behavior map",
+        "exact sufficiency iff behavior factors through the representation",
+        "behavior-kernel quotient is unique least-informative exact representation up to isomorphism",
+        "no simultaneous least-informative representation for all unrestricted observation contracts on a nontrivial domain"
+      ],
+      "acceptance": "No qualifying pre-cutoff source teaches every essential element in combination; record only NOT_FALSIFIED_BY_REGISTERED_SEARCH.",
+      "failure": "One qualifying public pre-cutoff source teaches all four elements in combination and in the claimed arrangement; record FALSIFIED.",
+      "acceptance_label": "NOT_FALSIFIED_BY_REGISTERED_SEARCH",
+      "failure_label": "FALSIFIED",
+      "falsifier": "One qualifying public pre-cutoff source teaches all four elements in combination and in the claimed arrangement.",
+      "no_positive_novelty_inference": true,
+      "invalid": "Non-independent search, cutoff breach, missing query log, or incomplete required source class.",
+      "search_method": "Exact six queries, five required indexes, result limits, one-generation citation expansion, cutoff and 60-day stopping rules fixed in the content-addressed protocol."
+    }
+  ],
+  "aggregate_rule": {
+    "support_label": "REGISTERED_EXTERNAL_EFFECTIVENESS_SUPPORTED",
+    "required_passes": [
+      "EFR-R1",
+      "EFR-R2",
+      "EFR-H1",
+      "EFR-A1",
+      "EFR-HD1",
+      "EFR-U1",
+      "EFR-C1"
+    ],
+    "novelty_test_orthogonal": "EFR-N1",
+    "averaging_prohibited": true,
+    "invalid_or_failed_blocks_support": true
+  },
+  "freeze_and_deviation_rules": {
+    "selection_rules_frozen": true,
+    "inputs_must_be_custodian_hashed_before_unblinding": true,
+    "post_unblinding_case_replacement_prohibited": true,
+    "all_allocated_items_analyzed": true,
+    "missing_machine_output": "FAILURE_FOR_ITEM",
+    "scientific_changes_after_freeze": "INVALIDATES_CONFIRMATORY_STATUS_AND_REQUIRES_NEW_VERSION",
+    "original_protocol_and_result_retained": true,
+    "favorable_post_hoc_reclassification_prohibited": true
+  },
+  "registration_promotion": "Final reviewed bytes of PR #470, before execution; pre-merge corrections are retained in PR history.",
+  "operational_rules": {
+    "authority": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+    "later_choices_permitted": [
+      "identities",
+      "dates",
+      "independently sourced eligible inputs",
+      "observations"
+    ],
+    "later_method_choices_permitted": false,
+    "seed": "int(input_manifest_sha256[:16], 16); Python 3.12 random.Random; separate allocation/analysis streams",
+    "bootstrap": {
+      "resamples": 10000,
+      "percentile_zero_based_indices": [
+        249,
+        9749
+      ],
+      "hd1": "Crossed case/reviewer weighted pairs and loss ratings; exact call schedule and zero-denominator invalidity in the frozen analysis script.",
+      "u1": "Crossed whole workers within site and investigations within site/arm; exact loop and no-redraw invalidity in the protocol."
+    },
+    "adjudication": "Three independent blinded adjudicators; at least two reproduce a valid witness; unresolved validity blocks acceptance; implementation defects remain failures."
+  },
+  "proposed_date": "2026-09-05",
+  "binary_loss_endpoint_scope": {
+    "tests": [
+      "EFR-H1",
+      "EFR-A1",
+      "EFR-HD1",
+      "EFR-U1"
+    ],
+    "format_version": "far-ir/2.0",
+    "mode": "exact",
+    "equality": "literal canonical JSON",
+    "approximate_or_tolerance_cases_excluded": true,
+    "machine_lane": "H1/A1 uniformly replace supplied reports with the frozen candidate preservation/first-source-case decoder before running baseline contract_v2: JSON success true accepts preservation, false flags loss, missing/malformed output fails. Labels never construct predictions. Prepared H1 records/reports also supply HD1."
+  }
+}

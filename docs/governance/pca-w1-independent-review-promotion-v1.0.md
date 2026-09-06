@@ -40,14 +40,14 @@ The terminal claim matrix is:
 | `UNDERDETERMINED` | 0 |
 | `NOT APPLICABLE` | 0 |
 
-The review passes its disclosed independence and integrity tests. It requires no theorem
+The review passes its disclosed campaign independence and integrity tests. Under the accepted isolation doctrine, its exposure record supports **I1 — Claimed Isolation**: repository access was prohibited by instruction but not technically prevented. The historical workstream name and sealed artifact wording remain unchanged, but current canonical interpretation does not promote this result to I2 verified isolation or I3 external independent validation/replication. It requires no theorem
 correction and no software change. It does not establish novelty, priority, a universal
 primitive vocabulary, a universal operator basis, or a universal architecture. Every scope
 guard and nonclaim remains binding.
 
 The review is therefore accepted as completion of `PCA-W1-INDEPENDENT-REVIEW`. Acceptance
 updates an assurance dimension only; it does not rewrite the governing mathematical theory.
-`PCA-W2-PROOF-ASSISTANT-FORMALIZATION` becomes the active theoretical workstream.
+At W1 completion, `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` became the active theoretical workstream. That transition is historical: W2–W6 and `POST-CLOSURE-001` are now complete, and the separately preregistered successor is `EXTERNAL-FALSIFICATION-AND-REPLICATION-001`.
 
 ## FAR-CORE-014 status separation
 
