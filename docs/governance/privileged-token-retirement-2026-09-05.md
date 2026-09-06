@@ -1,30 +1,33 @@
 # Privileged GitHub Token Retirement — 2026-09-05
 
-## Artifact status
+Status: **Neutralization pending after observed secret-deletion permission denial; not yet Accepted**
 
-**Scheduled governance control; not yet accepted.**
+## Defect and first execution
 
-This record becomes Accepted only after the retirement workflow has run from canonical `main`, the exact live controls and workflow states have been read back, the `FAR_GITHUB_ADMIN_TOKEN` Actions secret has been deleted, and a cleanup PR has removed the one-shot workflow.
+PR #468 left a reusable administrator PAT available to manual workflows that check out and execute mutable repository code. Content pinning does not make that credential handoff safe. The consumers are `.github/workflows/canonical-branch-protection.yml` and `.github/workflows/configure-validation-protection.yml`. Their protected hashes prevent an ordinary rewrite/deletion under the current anti-weakening rules. Weakening main protection or bypassing its PR path is prohibited.
 
-## Defect
+PR #470 merged through protected main at `84ec353e7225eeafb9f11aa5dc6663366fcf9a69`, tree `390cb63256eb3537713a7ce08397754f7e567062`, after full exact-head and proposed-merge assurance and review. The [first retirement run](https://github.com/notfoundout/Project-FAR/actions/runs/34011013760/job/101426734335) verified the complete live protection policy, disabled both consumers, and verified the unchanged full policy before attempting deletion. Deleting `FAR_GITHUB_ADMIN_TOKEN` returned **403: Resource not accessible by personal access token**. The run failed and is retained as failed; it is not a successful retirement receipt. Independent public API reads confirmed both workflow states as `disabled_manually` and main still protected with `merge-authority` enforced for everyone and bound to app 15368.
 
-PR #468 left a long-lived administrator PAT available to manual workflows that check out and execute mutable repository code. Content pinning detects repository drift but does not make handing a reusable administrator credential to repository-controlled code safe. The two affected workflows are:
+## Governed completion procedure
 
-- `.github/workflows/canonical-branch-protection.yml`;
-- `.github/workflows/configure-validation-protection.yml`.
+The checkout-free, main-only one-shot remains the execution boundary. It has no manual-dispatch trigger and no repository checkout. Its reviewed inline program must:
 
-Their protected hashes prevent a safe ordinary rewrite or deletion under the current anti-weakening rules. Weakening `main` protection or bypassing the protected PR path is prohibited.
+0. Capture the current repository credential fingerprint and full unchanged protection using GET requests only. This revision has an empty activation fingerprint and cannot delete or revoke a credential. A subsequent protected PR must pin the observed fingerprint and its exact capture run before activation. A replacement value must fail before any API call. The capture identifies the currently available obsolete repository credential; it does not invent identity evidence for an unobserved historical value.
+1. Verify the complete governed main policy, disable both exact consumers, verify their states, and require the full policy unchanged.
+2. Attempt deletion of the exact repository secret with the PAT. If forbidden, attempt the same operation with the already available short-lived Actions token. A successful deletion is the final API operation on that path.
+3. If both identities receive 403, print and flush a token-free checkpoint containing the full verified policy, its hash, disabled workflow states, and the two deletion denials.
+4. Submit **only this obsolete PAT** to GitHub's unauthenticated `POST /credentials/revoke` endpoint. It accepts classic and fine-grained PATs; the request has no Authorization header and never includes the workflow token. The credential body is never logged.
+5. Require a 202 revocation response **and** subsequent authenticated `GET /user` rejection with 401. A valid credential, queue response alone, unexpected response, or expired verification deadline cannot be accepted. Verification is bounded to 61 attempts with five-second intervals; a pending attempt may be recovered by rerunning the same governed control.
+6. Read back both disabled workflow states and the enforced public main-protection summary after issuer rejection. Remove the one-shot in a protected cleanup PR, preserving exact execution and read-back receipts.
 
-## Permanent remediation
+GitHub documents issuer revocation as irreversible: a revoked credential cannot be reactivated. This endpoint is intended for exposed credentials; here the owner has authorized retirement of the exact obsolete PAT exposed to repository-controlled workflows. No other credential is submitted. See the [GitHub revocation API](https://docs.github.com/en/rest/credentials/revoke?apiVersion=2022-11-28).
 
-The one-shot `.github/workflows/retire-far-github-admin-token.yml` runs only when its exact file first reaches `main`. It has no `workflow_dispatch`, does not check out repository content, and executes only its inline reviewed retirement program. It must, in order:
+The full policy is verified before credential invalidation; the subsequent public summary is identified as a summary, not misrepresented as another full Administration read. The control never writes branch protection. A credentialless rerun verifies absent trusted-main secret injection and the disabled/enforced controls. A rerun with the invalidated secret value additionally requires issuer 401 and uses read-only operations; it cannot accept a still-valid PAT. The separately pinned one-way SHA-256 credential fingerprint authorizes the exact value before mutation and binds checkpoints and recovery to the same high-entropy value without disclosing it. The workflow flushes both the full-policy checkpoint and the 202 response checkpoint before polling, preserving that evidence if the final receipt is interrupted. Recovery acceptance must match the credential fingerprint across these receipts.
 
-1. use the existing credential for a fail-closed read-back of all governed `main` protection fields;
-2. disable the two exact privileged workflows using the short-lived Actions token with only Actions write and Contents read permissions;
-3. read back both disabled workflow states and unchanged branch protection;
-4. delete the exact repository Actions secret `FAR_GITHUB_ADMIN_TOKEN` as the final API operation; and
-5. emit a token-free JSON receipt from the successful deletion response.
+## Acceptance and retained metadata
 
-The workflow does not configure or weaken protection. Any unexpected repository, branch, protection value, workflow state, or API response fails closed. All required privileged read-backs occur before deletion, so there is no credential-dependent post-deletion phase. If a runner loses the successful deletion receipt, a credentialless recovery run must observe both workflows disabled, the trusted-main secret injection absent, and public branch metadata still protected with `merge-authority` enforced for everyone. After successful execution, a protected cleanup PR removes the one-shot and promotes this record with its run, final commit/tree, and independent live read-back.
+Acceptance requires either confirmed repository-secret deletion or confirmed issuer revocation plus authentication rejection, unchanged/enforced protection evidence, disabled consumers, complete validation/review, independent live read-back, and protected removal of the one-shot. This recovery follows the authorized permanent-neutralization criterion; it does not relabel the failed deletion attempt as success.
 
-Until those steps complete, this artifact makes no retirement claim. The 2026-09-04 protection-application receipt remains historical evidence for the applied policy, not evidence that the privileged credential is safe to retain.
+If repository tooling cannot delete the secret entry, its encrypted invalid value may remain as explicitly recorded metadata. `secret_absent` must then remain **false**; issuer rejection and irreversible revocation supply the security result. Such a value is not a usable privileged credential and cannot be revived. It must never be replaced with a new long-lived administrator credential. The current repository connector does not expose Secrets administration, and the actual PAT deletion denial is retained above; the workflow tests the remaining available short-lived identity before using revocation.
+
+The present artifact makes no completed-retirement claim. The 2026-09-04 application receipt remains historical protection evidence, and the first retirement run supplies the observed deletion denial and disabled-workflow transition.

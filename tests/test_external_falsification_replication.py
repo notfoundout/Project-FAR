@@ -108,12 +108,31 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
             self.assertIn("github.ref == 'refs/heads/main'", workflow)
             self.assertIn("credentialless_recovery", workflow)
             self.assertIn("GITHUB_WORKFLOW_TOKEN", workflow)
-            self.assertEqual(security["status"], "SCHEDULED_ON_FIRST_MAIN_MERGE")
+            self.assertIn("https://api.github.com/credentials/revoke", workflow)
+            self.assertIn("credential_authentication_http_status=401", workflow)
+            pin = re.search(r'expected_credential_sha256 = "([a-f0-9]*)"', workflow).group(1)
+            self.assertEqual(pin, security["authorized_credential_sha256"] or "")
+            if pin:
+                self.assertEqual(len(pin), 64)
+                self.assertEqual(pin, security["identity_capture"]["receipt"]["credential_sha256"])
+                self.assertEqual(security["identity_capture"]["receipt"]["mode"], "credential_identity_capture")
+                self.assertIs(security["identity_capture"]["receipt"]["retirement_accepted"], False)
+            else:
+                self.assertIs(security["identity_capture"], None)
+            self.assertEqual(security["status"], "NEUTRALIZATION_PENDING_AFTER_DELETE_FORBIDDEN")
             self.assertIs(security["accepted_receipt"], None)
         else:
             self.assertEqual(refs, legacy)
             self.assertEqual(security["status"], "ACCEPTED_RETIRED")
-            self.assertTrue(security["accepted_receipt"]["secret_absent"])
+            self.assertEqual(security["accepted_receipt"]["credential_sha256"], security["authorized_credential_sha256"])
+            self.assertEqual(security["authorized_credential_sha256"], security["identity_capture"]["receipt"]["credential_sha256"])
+            if security["accepted_receipt"]["secret_absent"]:
+                self.assertTrue(security["accepted_receipt"]["secret_absent"])
+            else:
+                self.assertEqual(security["accepted_receipt"]["mode"], "issuer_revocation")
+                self.assertIs(security["accepted_receipt"]["credential_usable"], False)
+                self.assertEqual(security["accepted_receipt"]["credential_authentication_http_status"], 401)
+                self.assertEqual(security["accepted_receipt"]["revocation_http_status"], 202)
             self.assertTrue(security["accepted_receipt"]["branch_protection_unchanged_and_enforced"])
             self.assertEqual(
                 set(security["accepted_receipt"]["privileged_workflow_states"].values()),

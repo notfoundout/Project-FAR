@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "control_id": "FAR-GITHUB-ADMIN-TOKEN-RETIREMENT-2026-09-05",
-  "status": "SCHEDULED_ON_FIRST_MAIN_MERGE",
+  "status": "NEUTRALIZATION_PENDING_AFTER_DELETE_FORBIDDEN",
   "defect": "Reusable administrator PAT was exposed to manual workflows that execute mutable repository code.",
   "baseline": {
     "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
@@ -19,14 +19,16 @@
     "workflow_dispatch": false,
     "checkout": false,
     "actions": [
+      "read-only capture of the current credential fingerprint and unchanged policy; no deletion or revocation until a subsequent protected PR pins that exact receipt",
       "verify full branch-protection policy",
       "disable both exact privileged workflows",
-      "verify disabled workflow states",
-      "verify full branch-protection policy unchanged",
-      "delete FAR_GITHUB_ADMIN_TOKEN as the final API operation",
-      "emit deletion receipt or use credentialless recovery on rerun"
+      "verify disabled workflow states and unchanged full protection",
+      "attempt exact secret deletion with PAT, then existing short-lived workflow token if PAT is forbidden",
+      "if both deletions are forbidden, persist full-policy checkpoint and submit only this obsolete PAT to the unauthenticated GitHub issuer revocation endpoint",
+      "require issuer authentication rejection (HTTP 401), then read back workflow states and enforced protection summary",
+      "remove the one-shot through a protected cleanup PR and retain exact receipts"
     ],
-    "recovery": "If the secret is absent, read-only operations using GITHUB_TOKEN must observe both workflows disabled and public main metadata protected with merge-authority enforced for everyone.",
+    "recovery": "Absent secret: original credentialless read-only recovery. Invalidated PAT: require GitHub /user HTTP 401 and read-only disabled-workflow/protection-summary checks. Revocation queue acceptance alone never suffices; preserve the pre-revocation full-policy checkpoint.",
     "workflow_token_permissions": {
       "actions": "write",
       "contents": "read"
@@ -36,6 +38,25 @@
   "claims": {
     "branch_protection_weakened": false,
     "credential_retired": false,
-    "privileged_workflows_disabled": false
-  }
+    "privileged_workflows_disabled": true
+  },
+  "first_attempt": {
+    "merge_commit": "84ec353e7225eeafb9f11aa5dc6663366fcf9a69",
+    "tree": "390cb63256eb3537713a7ce08397754f7e567062",
+    "run_id": 34011013760,
+    "job_id": 101426734335,
+    "conclusion": "failure",
+    "repository_secret_delete_http_status": 403,
+    "failure_message": "Resource not accessible by personal access token",
+    "full_policy_checked_unchanged_before_delete": true,
+    "privileged_workflow_states": {
+      "canonical-branch-protection.yml": "disabled_manually",
+      "configure-validation-protection.yml": "disabled_manually"
+    },
+    "retirement_accepted": false
+  },
+  "acceptance_rule": "Secret deletion confirmed, or issuer revocation accepted (202) and exact credential authentication rejected (401), with any undeletable encrypted metadata explicitly recorded; unchanged full policy checkpoint, independent live readbacks, complete validation/review, and protected one-shot cleanup are required.",
+  "identity_capture": null,
+  "authorized_credential_sha256": null,
+  "identity_rule": "The empty workflow fingerprint permits only read-only capture. A separate protected activation PR must bind its fingerprint to the captured current repository credential; any replacement fails before any API call. No claim that an unobserved historical credential has this identity is made."
 }
