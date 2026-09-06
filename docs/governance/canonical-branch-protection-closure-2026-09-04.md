@@ -61,7 +61,7 @@ The temporary `.github/workflows/bootstrap-canonical-protection.yml` workflow ex
 
 PR #468 retained the functionality in `.github/workflows/canonical-branch-protection.yml`, but the later security review found that a content pin does not make it safe to expose a reusable administrator PAT to checked-out mutable repository code. The 2026-09-04 application and read-back remain valid historical protection evidence. The reapplication design is superseded by the separately governed 2026-09-05 privileged-token retirement; see `privileged-token-retirement-2026-09-05.md`.
 
-The older `.github/workflows/configure-validation-protection.yml` and the PR #468 workflow remain assurance-locked repository artifacts. The retirement control must disable both live workflows and remove their credential without weakening protection. Neither is a current authorized reapplication path after retirement acceptance.
+The older `.github/workflows/configure-validation-protection.yml` and the PR #468 workflow remain assurance-locked repository artifacts. Both live workflows are now disabled and their exact credential is irreversibly revoked, with no protection weakening. Neither is a current authorized reapplication path.
 
 ## Merge queue boundary
 
@@ -69,7 +69,7 @@ Native GitHub merge-queue activation remains unavailable while the repository is
 
 ## Security notes
 
-`FAR_GITHUB_ADMIN_TOKEN` was not stored in repository content or artifacts, but retaining it as a reusable Actions secret is no longer authorized. Its deletion or verified irreversible issuer revocation, and the disabling of both consumer workflows, are governed by `privileged-token-retirement-2026-09-05.md`; until that live receipt exists, retirement is not claimed.
+`FAR_GITHUB_ADMIN_TOKEN` was not stored in repository content or artifacts, but retaining it as a reusable Actions secret is no longer authorized. Its verified irreversible issuer revocation and both disabled consumers are recorded in `privileged-token-retirement-2026-09-05.md`. Both available secret-deletion identities returned403, so the encrypted invalid entry remains explicitly recorded; no usable credential or authorized reapplication path remains.
 
 ## Final disposition
 

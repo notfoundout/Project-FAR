@@ -66,7 +66,7 @@ The `Validator Assurance` workflow runs on pull requests, pushes to `main`, work
 
 Control-plane closure on 2026-09-04: the repository is public and personal-account owned. After PR #467 merged, a one-shot bootstrap workflow used the repository-scoped `FAR_GITHUB_ADMIN_TOKEN` Actions secret to run the governed configurator and then the independent fail-closed read-back. Both steps succeeded. GitHub branch metadata reports `main` as protected with `merge-authority` required at enforcement level `everyone`, and the read-back returned `control_plane_enforced: true` with no errors. The exact Accepted closure record is `docs/governance/canonical-branch-protection-closure-2026-09-04.md`.
 
-Security retirement is in progress on 2026-09-06. PR #470 disabled both privileged workflows after checking the complete live policy unchanged, but Actions secret deletion returned 403 because the PAT lacks Secrets write permission. The reviewed main-only, checkout-free recovery first attempts deletion with the available short-lived workflow token; if both identities are forbidden, it submits only the obsolete PAT to GitHub for irreversible issuer revocation and requires authentication rejection (401). Queue acceptance alone is insufficient. Exact live receipts and protected removal of the one-shot remain required; see `docs/governance/privileged-token-retirement-2026-09-05.md`.
+Security retirement completed on 2026-09-06 by irreversible GitHub issuer revocation. Both repository-secret deletion identities returned 403, so the encrypted entry remains explicitly recorded as invalid metadata. The separately pinned credential received revocation202 and authentication401; an independent read-only rerun confirmed the same fingerprint still receives401. Both privileged consumers remain disabled, the complete pre-revocation policy matched the earlier capture, and subsequent independent branch reads retain enforced protection. The one-shot is removed by protected cleanup. Exact receipts, failed attempts, review scope, and promotion evidence are in `docs/governance/privileged-token-retirement-2026-09-05.md`.
 
 Native GitHub merge queues remain unavailable while the repository is personal-account owned. This is not a branch-protection failure. The validator workflow is merge-group compatible and becomes queue-ready after transfer to an eligible organization.
 
@@ -75,7 +75,7 @@ The nested full-health runner gives the complete canonical test suite the same 9
 ## Required secrets
 
 - `FAR_VALIDATION_CACHE_SIGNING_KEY`: persistent HMAC secret for cross-runner cache and certificate trust.
-- `FAR_GITHUB_ADMIN_TOKEN`: obsolete administrator token pending deletion or verified issuer revocation after the observed Secrets-permission denial. It must not be recreated as a long-lived Actions secret. Future protection changes require an ephemeral, externally controlled administrator credential and a separately reviewed fail-closed procedure that does not execute mutable repository code.
+- `FAR_GITHUB_ADMIN_TOKEN`: revoked obsolete administrator token; its undeletable encrypted entry is invalid metadata, not a usable credential. It must not be recreated as a long-lived Actions secret. Future protection changes require an ephemeral, externally controlled administrator credential and a separately reviewed fail-closed procedure that does not execute mutable repository code.
 
 Neither secret is written to artifacts or logs.
 

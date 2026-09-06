@@ -54,6 +54,9 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
             return False
         receipt = json.loads(RECEIPT.read_text())
         self.assertEqual(receipt["status"], "ACCEPTED_RETIRED")
+        self.assertEqual(receipt["accepted_receipt"]["credential_sha256"], receipt["authorized_credential_sha256"])
+        self.assertEqual(receipt["accepted_receipt"]["branch_protection_sha256"],
+                         receipt["identity_capture"]["receipt"]["branch_protection_sha256"])
         if receipt["accepted_receipt"]["secret_absent"]:
             self.assertTrue(receipt["accepted_receipt"]["secret_absent"])
         else:
@@ -64,6 +67,13 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
             self.assertEqual(receipt["accepted_receipt"]["repository_secret_delete_http_status"], 403)
             self.assertEqual(receipt["accepted_receipt"]["workflow_token_secret_delete_http_status"], 403)
             self.assertTrue(receipt["accepted_receipt"]["post_revocation_protection_summary_enforced"])
+            recovery = receipt["recovery_execution"]["receipt"]
+            self.assertEqual(recovery["mode"], "invalidated_credential_recovery")
+            self.assertEqual(recovery["credential_sha256"], receipt["authorized_credential_sha256"])
+            self.assertEqual(recovery["credential_authentication_http_status"], 401)
+            self.assertIs(recovery["credential_usable"], False)
+            self.assertIs(receipt["residual_metadata"]["repository_secret_entry_absent"], False)
+            self.assertIs(receipt["residual_metadata"]["value_is_usable_credential"], False)
         actual = receipt["accepted_receipt"]["branch_protection"]
         self.assertEqual(receipt["accepted_receipt"]["branch_protection_sha256"], hashlib.sha256(
             json.dumps(actual, sort_keys=True, separators=(',', ':')).encode()).hexdigest())
