@@ -39,7 +39,11 @@ jobs:
     - name: Resolve comparison base
       id: base
       shell: bash
-      run: "set -euo pipefail\nif [[ \"${{ github.event_name }}\" == \"pull_request\" ]]; then\n  base=\"${{ github.event.pull_request.base.sha }}\"\nelif [[ \"${{ github.event_name }}\" == \"merge_group\" ]]; then\n  base=\"$(git merge-base HEAD origin/main)\"\nelif git rev-parse HEAD^ >/dev/null 2>&1; then\n  base=\"$(git rev-parse HEAD^)\"\nelse\n  base=\"$(git rev-parse HEAD)\"\nfi\necho \"sha=$base\" >> \"$GITHUB_OUTPUT\"\n"
+      run: "set -euo pipefail\ncase \"$FAR_ASSURANCE_EVENT\" in\n  pull_request) base=\"$FAR_ASSURANCE_PR_BASE\" ;;\n  push) base=\"$FAR_ASSURANCE_PUSH_BASE\" ;;\n  *) echo \"unsupported assurance event\" >&2; exit 1 ;;\nesac\n[[ \"$base\" =~ ^[0-9a-f]{40}$ && \"$base\" != 0000000000000000000000000000000000000000 ]]\ngit cat-file -e \"${base}^{commit}\"\ngit merge-base --is-ancestor \"$base\" HEAD\necho \"sha=$base\" >> \"$GITHUB_OUTPUT\"\n"
+      env:
+        FAR_ASSURANCE_EVENT: ${{ github.event_name }}
+        FAR_ASSURANCE_PR_BASE: ${{ github.event.pull_request.base.sha }}
+        FAR_ASSURANCE_PUSH_BASE: ${{ github.event.before }}
     - name: Verify independent bootstrap
       run: python validation_bootstrap/verify.py
     - name: Run validator assurance tests

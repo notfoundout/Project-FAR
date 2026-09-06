@@ -12,11 +12,11 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "fb4d51ce8bd5aa72064f5080c7d2ba64a2ff06ac"
+      "git_blob_sha": "ffb341e684607ba6106fc58ac88d1e87be3ae47e"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
-      "git_blob_sha": "523920e037e6a9ed467b834623bf26a0d7f11216"
+      "git_blob_sha": "cb061f5471d972947b1b1f6255238e155f2f9759"
     },
     {
       "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
@@ -32,11 +32,19 @@
     },
     {
       "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
-      "git_blob_sha": "dfe69f684651dc558931d4823c5532f198cc573f"
+      "git_blob_sha": "d261653e9d12db74157955511bebf35ef6819009"
     },
     {
       "path": "tools/efr_hd1_allocation.py",
       "git_blob_sha": "a40fa46e342a46b9f75dbf583f68ad38b2dbbf0a"
+    },
+    {
+      "path": "tools/efr_hd1_analysis.py",
+      "git_blob_sha": "bffade750d53e12e5422ea836a20c8efaeb1724e"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/02-u1-projection.md",
+      "git_blob_sha": "837af3a06b32f8c5e0a03a61e6d62b52e15adb70"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
@@ -90,7 +98,7 @@
     },
     {
       "test_id": "EFR-U1",
-      "input": "ethics determination, three-site standard procedures, qualified worker rosters and predetermined cyclic assignments sealed before arm allocation, prospective eligibility/screening log schema, sealed 40-slot arm allocations per site",
+      "input": "ethics determination, three-site standard procedures, qualified worker rosters and predetermined cyclic assignments sealed before arm allocation, prospective eligibility/screening log schema, sealed 40-slot arm allocations per site; pre-enrollment SOP field maps and per-investigation native evidence/label, complete transcription, contract projection and baseline report sealed before arm reveal",
       "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
       "prospective_output": "append-only enrollment input seals, 120 outcomes, 30-day harm follow-up and analysis"
     },

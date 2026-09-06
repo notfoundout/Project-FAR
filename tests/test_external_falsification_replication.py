@@ -35,6 +35,9 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
         self.assertEqual(data["evidence_baseline"], freeze["evidence_baseline"])
         self.assertEqual(freeze["freeze_status"], "FROZEN_BEFORE_EXECUTION")
         self.assertIn(data["authority"]["human_study_materials"], {item["path"] for item in freeze["artifact_objects"]})
+        for name, path in data["authority"].items():
+            if name != "input_freeze":  # The promotion tree binds this non-self-hashing index.
+                self.assertIn(path, {item["path"] for item in freeze["artifact_objects"]})
         materials = (ROOT / data["authority"]["human_study_materials"]).read_text()
         for section in ("Exact participant instructions", "Deterministic task form", "Exact four-hour training sequence", "Fixed scoring and adjudication rubric", "Frozen HD1 session schedule"):
             self.assertIn(section, materials)

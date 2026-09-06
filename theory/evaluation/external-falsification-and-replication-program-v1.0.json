@@ -19,7 +19,9 @@
     "matrix": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
     "input_freeze": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json",
     "human_study_materials": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
-    "hd1_allocation": "tools/efr_hd1_allocation.py"
+    "hd1_allocation": "tools/efr_hd1_allocation.py",
+    "hd1_analysis": "tools/efr_hd1_analysis.py",
+    "u1_projection": "docs/research/external-falsification-and-replication/02-u1-projection.md"
   },
   "current_nonclaims": [
     "novelty",
@@ -131,12 +133,12 @@
       "acceptance": {
         "absolute_reduction_percentage_points_min": 10,
         "bootstrap_resamples": 10000,
-        "two_sided_confidence": 0.95,
-        "confidence_interval_excludes_zero": true,
         "serious_false_accept_noninferiority_margin_percentage_points": 2,
-        "serious_false_accept_interval_upper_max": 0.02
+        "serious_false_accept_interval_upper_max": 0.02,
+        "nominal_percentile_interval": 0.95,
+        "interval_excludes_zero": true
       },
-      "failure": "Effect, confidence, or safety margin is missed.",
+      "failure": "Effect, interval, or safety margin is missed.",
       "invalid": {
         "missing_ratings_over_percent": 5,
         "arm_missingness_imbalance_over_percentage_points": 2,
@@ -154,7 +156,8 @@
         "Cohen kappa descriptive only"
       ],
       "missingness": "Missing FAR pair = disagreement, missing standard pair = agreement; false-accept imputation FAR wrong / standard correct.",
-      "eligibility": "Consenting external non-author adults aged at least 18; English materials without translation; conforming existing environment; applicable ethics determination; fixed four-hour course and all 12 W4 classifications/witnesses correct across all six domains. No credential/experience/discipline discretion; first 24 by the frozen qualification order."
+      "eligibility": "Consenting external non-author adults aged at least 18; English materials without translation; conforming existing environment; applicable ethics determination; fixed four-hour course and all 12 W4 classifications/witnesses correct across all six domains. No credential/experience/discipline discretion; first 24 by the frozen qualification order.",
+      "analysis": "Frozen tools/efr_hd1_analysis.py verifies both sealed inputs and allocation, then jointly resamples cases and whole reviewers with shared reviewer pair weights. Nominal crossed perturbation interval; no exact coverage or population-representativeness claim. Numerical gates cannot replace independent protocol-validity gates."
     },
     {
       "id": "EFR-U1",
@@ -171,17 +174,19 @@
       "acceptance": {
         "absolute_reduction_percentage_points_min": 5,
         "relative_reduction_percent_min": 20,
-        "two_sided_confidence": 0.95,
-        "confidence_interval_excludes_zero": true,
         "max_site_worsening_percentage_points": 5,
-        "far_attributable_serious_harms_max": 0
+        "far_attributable_serious_harms_max": 0,
+        "interval_excludes_zero": true,
+        "nominal_percentile_interval": 0.95
       },
       "failure": "Any benefit, site, or harm gate is missed.",
       "invalid": "A site is lost, blinding is broken, allocation is non-reconstructable, or required screening log is absent.",
-      "eligibility": "Three independent routine documentary audit sites with existing single-auditor SOPs executable in the fixed English documentary interface within 60 minutes; reject mandatory team/peer/dual-control roles before enrollment. Next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions.",
+      "eligibility": "Three independent routine documentary audit sites with existing single-auditor SOPs executable in the fixed English documentary interface within 60 minutes; reject mandatory team/peer/dual-control roles before enrollment. Next 40 eligible finite-record investigations per site within 180 days; exclude consequential live interventions. SOP must uniquely specify literal JSON native source/behavior/representation fields under the frozen projection rule.",
       "zero_standard_defect_rate": "BENEFIT_GATE_FAILS",
       "intervention_format": "Both arms share native evidence/SOP and common outcome capture; only FAR adds exact W3 far-ir/2.0 fields and baseline report. U1 standard omits material sections 4 and 5. W5 far-ir/2.1 declarations excluded.",
-      "worker_assignment": "Existing consenting adult site auditors; frozen HD1 qualification/environment rules; first at most 40 qualifying within 30 days. Seal roster and cyclic worker (i-1) mod N for all 40 investigation indices before deriving arm allocation; no substitution or task swaps. Missing assigned-worker output remains an intention-to-treat defect."
+      "worker_assignment": "Existing consenting adult site auditors; frozen HD1 qualification/environment rules; first at most 40 qualifying within 30 days. Seal roster and cyclic worker (i-1) mod N for all 40 investigation indices before deriving arm allocation; no substitution or task swaps. Missing assigned-worker output remains an intention-to-treat defect.",
+      "projection": "Frozen 02-u1-projection.md: pre-enrollment native SOP field map, independent complete transcription and native labels, fixed exact contract template/candidate decoder, baseline verifier report, all generated and sealed before arm reveal for every investigation; no adverse-output exclusion or repair.",
+      "analysis": "Frozen crossed worker/investigation loop, shared whole-worker weights across each site and both arms, equal site weights, exact fractions, zero-denominator invalidity. Nominal perturbation interval only; no exact coverage or population site/worker confidence claim."
     },
     {
       "id": "EFR-C1",
@@ -207,7 +212,8 @@
           "HD1",
           "each U1 site"
         ],
-        "attribution": "Enrolled-person costs over their allocated tasks; U1 site-specific costs over its 40 investigations; only unassignable central U1 overhead in equal thirds across sites; HD1 common costs over 1440 ratings. Each entry once; no pooled redistribution of attributable U1 costs."
+        "attribution": "Enrolled-person costs over their allocated tasks; U1 site-specific costs over its 40 investigations; only unassignable central U1 overhead in equal thirds across sites; HD1 common costs over 1440 ratings. Each entry once; no pooled redistribution of attributable U1 costs.",
+        "far_preparation": "U1 projection/report/field-map preparation, including hidden standard-case preparation, is charged within site to its 20 FAR investigations only; HD1 report production per case to its six FAR ratings. Tagged before arm reveal, never cancelled as common overhead; total research burden retained."
       },
       "median_algorithm": "Sort all allocated arm observations numerically; odd n uses x[n//2], even n uses (x[n//2-1]+x[n//2])/2. Missing measurements fail. Exact rational arithmetic throughout, integer milliseconds floored once at capture; no threshold rounding."
     },
@@ -280,7 +286,9 @@
       "percentile_zero_based_indices": [
         249,
         9749
-      ]
+      ],
+      "hd1": "Crossed case/reviewer weighted pairs and loss ratings; exact call schedule and zero-denominator invalidity in the frozen analysis script.",
+      "u1": "Crossed whole workers within site and investigations within site/arm; exact loop and no-redraw invalidity in the protocol."
     },
     "adjudication": "Three independent blinded adjudicators; at least two reproduce a valid witness; unresolved validity blocks acceptance; implementation defects remain failures."
   },
@@ -295,6 +303,7 @@
     "format_version": "far-ir/2.0",
     "mode": "exact",
     "equality": "literal canonical JSON",
-    "approximate_or_tolerance_cases_excluded": true
+    "approximate_or_tolerance_cases_excluded": true,
+    "machine_lane": "H1/A1 uniformly replace supplied reports with the frozen candidate preservation/first-source-case decoder before running baseline contract_v2: JSON success true accepts preservation, false flags loss, missing/malformed output fails. Labels never construct predictions. Prepared H1 records/reports also supply HD1."
   }
 }
