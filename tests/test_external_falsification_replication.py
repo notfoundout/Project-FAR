@@ -34,6 +34,10 @@ class ExternalFalsificationReplicationTest(unittest.TestCase):
         freeze = self.load(FREEZE_PATH)
         self.assertEqual(data["evidence_baseline"], freeze["evidence_baseline"])
         self.assertEqual(freeze["freeze_status"], "FROZEN_BEFORE_EXECUTION")
+        self.assertIn(data["authority"]["human_study_materials"], {item["path"] for item in freeze["artifact_objects"]})
+        materials = (ROOT / data["authority"]["human_study_materials"]).read_text()
+        for section in ("Exact participant instructions", "Deterministic task form", "Exact four-hour training sequence", "Fixed scoring and adjudication rubric"):
+            self.assertIn(section, materials)
         self.assertTrue(freeze["selection_and_analysis_rules_frozen"])
         self.assertEqual(
             {slot["state"] for slot in freeze["external_input_slots"]},

@@ -12,11 +12,11 @@
   "artifact_objects": [
     {
       "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
-      "git_blob_sha": "f62595bd5962e7f704ed5f3fef3ec9e298f88c97"
+      "git_blob_sha": "78d6131190ac61e88c9fe13e02e4eabd832cc840"
     },
     {
       "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
-      "git_blob_sha": "bf036869896f8a6b02366de798d0221b7ad3b7a3"
+      "git_blob_sha": "689e44f93b2bea5b01c8a32f32d087a6e1e0771b"
     },
     {
       "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
@@ -28,7 +28,11 @@
     },
     {
       "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
-      "git_blob_sha": "157a8d688e59aaf3b97e4c0de20054ca543b51c3"
+      "git_blob_sha": "650d1d20bfa2d99063ec803d845d06f56280cbb1"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
+      "git_blob_sha": "8ea5768d8becc9a059ed2b81cc9c8d2d4597405b"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
@@ -76,7 +80,7 @@
     },
     {
       "test_id": "EFR-HD1",
-      "input": "ethics determination, 24-reviewer roster, complete allocation, fixed interface/training rendering",
+      "input": "ethics determination, 24-reviewer roster, complete allocation, and conformance attestation to the already frozen human-study materials; no material choices",
       "state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
       "prospective_output": "1440 allocated ratings, missingness and analysis"
     },

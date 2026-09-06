@@ -9,6 +9,7 @@ Baseline: commit `195fc079d0a8993e4db3e063e09cf45d0bcd78c2`, tree `a01517ed65f45
 - **Question:** reconcile W1–W6 statements against their exact committed evidence, correct stale lifecycle text, and identify the next evidential tests without changing results.
 - **Execution:** compare the sealed W1 exposure/review package, W2 ledger, W3 contract boundary, W4 records, W5 controls, W6 protocol/results/incidents, and every current propagation surface named by their manifests.
 - **Observation:** the exact discrepancies and corrected interpretations are recorded in the canonical matrix; no scientific input or output changed.
+- **Discovery:** current status language exceeded or lagged its cited evidence at the W1 isolation, W5 product-order, W6 finite-corpus, and completed-program boundaries. The justified result is a narrower interpretation and corrected navigation, not a new theorem or external-effectiveness finding.
 - **Replication gate:** the dedicated W4, W5, and W6 recomputations, current-state regression tests, complete canonical validation/assurance profile on both the exact PR head and proposed merge tree, and PR review must all pass at the exact PR head.
 - **Acceptance:** prohibited unless the replication gate passes and all substantive PR #470 review findings are fixed.
 - **Promotion:** merge of PR #470 through protected `main` is the sole promotion event. Before that merge these files are candidates, not canonical authority.

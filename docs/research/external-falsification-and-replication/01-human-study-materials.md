@@ -1,0 +1,65 @@
+# EFR-001 human-study materials v1.0
+
+Status: **Provisional preregistration material; frozen by protected promotion of PR #470 before execution**
+
+This is the deterministic materials specification for EFR-HD1 and the common training used by EFR-U1. It is bound by the [program input freeze](../../../theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json). It supplies exact participant text, field order, allowed evidence, timing, training, eligibility scoring, and operator/adjudicator rules. Enrollment may fill identifiers and observations only. Translation, coaching, alternative interfaces, changed text, changed examples, and changed scoring require a new protocol version and cannot be introduced at intake.
+
+## Exact participant instructions
+
+Display the following text verbatim before training and at the top of every task:
+
+> Decide whether the supplied representation preserves every required behavior in this finite record. Use only the evidence displayed here. Select PRESERVATION if every pair of source cases with the same representation value has the same required-behavior value. Select MATERIAL LOSS if at least one pair has the same representation value and different required-behavior values. These decisions concern only the displayed cases and contract. They do not assess all cases in the source domain.
+>
+> Give a checkable witness. For MATERIAL LOSS, identify the two source-case IDs, their common representation value, and their different required-behavior values. For PRESERVATION, give a decoder table assigning one required-behavior value to each distinct representation value. You may revise your response until submitting it or until the displayed time limit expires. Do not consult another person, external website, or assistant. If an automated report is displayed, you may inspect it; you remain responsible for your decision.
+
+## Deterministic task form
+
+Use one single-column page, black text on white, 16-pixel system sans-serif text, with JSON rendered in 14-pixel monospace. Field order is exactly:
+
+1. Participant ID, blinded task ID, domain, and a visible countdown starting at 20:00 (HD1) or 60:00 (U1).
+2. The exact instructions above.
+3. The native domain memo, when supplied in the sealed input, as plain text without embedded links or executable content.
+4. The contract fields `source_domain`, `required_behavior`, `representation`, `observation_contexts`, `admitted_transformations`, `interpretation_profile`, `target_model_class`, and `frame`, in that order. Render each JSON value with UTF-8, sorted object keys, two-space indentation, and retained array order. Do not display `report`, `provenance`, `extensions`, source filenames, source record IDs, or custodian labels. Replace presentation-only record identifiers with the sealed blinded IDs; retain source-case IDs required for witnesses.
+5. In the FAR arm only, a box titled “Automated report” containing the complete baseline verifier's diagnostic output as plain text, without summarization, color-coded recommendations, or interactive assistance. This is the only arm-dependent addition to the HD1 form. It may reveal the verifier's classification; it must not reveal the custodian's independent label.
+6. Two initially unselected radio buttons, in fixed order: `PRESERVATION`, `MATERIAL LOSS`.
+7. A plain text box labelled `Witness`, with a 10,000-character limit and no suggested answer.
+8. A `Submit` button. Submission freezes both fields and records elapsed wall time. At timeout, freeze the current fields; an unselected classification is a missing rating. A blank or incorrect witness is retained and does not exclude a selected classification from the primary HD1 analysis.
+9. After submission, six initially blank integer fields accepting 0–100, in this order: `Mental demand (0 none, 100 extreme)`, `Physical demand (0 none, 100 extreme)`, `Temporal demand (0 none, 100 extreme)`, `Unsuccessful performance (0 fully successful, 100 complete failure)`, `Effort (0 none, 100 extreme)`, `Frustration (0 none, 100 extreme)`. Display `Rate your experience of this task on every dimension.` No composite score, default value, or result feedback is shown.
+
+Only ordinary page scrolling, text selection, and keyboard entry are available. There are no search, chat, sorting, highlighting, tooltip, or external-link controls. Operators record browser viewport and accessibility accommodations in the ledger; any accommodation changing available evidence or instructions invalidates confirmatory status. A later implementation must reproduce this specification before recruitment; sealing its bytes attests conformance and does not authorize choices among alternative materials.
+
+U1 retains each site's prospectively sealed existing standard procedure in both arms, as required by the protocol. The common response fields, FAR report addition, training, timing, workload fields, and adjudication rules remain fixed here. Site-specific standard procedures are external study inputs, not permission to modify the FAR intervention after seeing results.
+
+## Exact four-hour training sequence
+
+Use only the twelve public W4 records and six native memos in baseline commit `195fc079d0a8993e4db3e063e09cf45d0bcd78c2`. The W4 manifest supplies the exact record set and hashes. Sort record paths lexicographically and assign practice IDs P01–P12 in that order; suppress lossy/repaired words in presentation IDs. Sort memo paths lexicographically. Training uses no H1/A1 or field cases and supplies no outcome from another EFR test.
+
+| Minutes | Fixed material and task |
+|---|---|
+| 0–20 | Read the exact participant instructions and form specification above. |
+| 20–60 | Read all six baseline native memos, in sorted order. |
+| 60–120 | Inspect each of P01–P12 for five minutes with the standard form; enter one classification and witness. No correctness feedback yet. |
+| 120–140 | Read the automated-report lesson below. |
+| 140–180 | Inspect the baseline verifier diagnostic report and frozen W4 witness for each practice record for 200 seconds, in P01–P12 order. |
+| 180–240 | Qualification: P12–P01, five minutes each, standard form only, no report or feedback. |
+
+Exact automated-report lesson:
+
+> The automated report checks the supplied finite representation against the supplied required behavior. A checked collision identifies cases with equal representation and different required behavior. A checked factorization supplies a decoder from representation values to required-behavior values. A syntactically valid file alone does not show preservation. The report does not establish that the contract captures every relevant feature of a real domain. Treat the report as evidence to inspect, not as an instruction that you must agree with it. The independent custodian's label is never displayed during the study.
+
+The qualification pass rule is 12/12 correct classifications and 12/12 checkable witnesses under the rubric below. This checks understanding of the supplied practice material only, not general expertise. Record every attempted qualification, all responses, attendance, time, and failures. There is one attempt per person and no discretionary retest. Enrollment takes the first 24 eligible passing volunteers by qualification completion timestamp, with participant-ID lexical order breaking ties. Training, screening, and recruitment costs remain in the burden ledger, including unsuccessful candidates; do not hide recruitment burden by counting only enrolled reviewers. For C1, allocate these shared costs equally over the 1,440 allocated HD1 ratings or the 120 U1 investigations, respectively.
+
+## Fixed scoring and adjudication rubric
+
+- Ground truth is the sealed custodian label for study cases. For qualification only, it is the frozen W4 result (`PROVED` = PRESERVATION, `REFUTED` = MATERIAL LOSS), independently checked against the tables before training.
+- A loss witness is correct exactly when its named source-case pair exists, its representation values are literally equal as canonical JSON, and its required-behavior values differ under the declared contract.
+- A preservation witness is correct exactly when its decoder is single-valued, covers every distinct listed representation value, and reproduces every listed required-behavior value. Differences of JSON object-key order are ignored; array order is preserved.
+- A witness that cannot be reconstructed from the response and displayed record is incorrect. No stylistic, verbosity, or persuasiveness score is used. A claimed ambiguity is retained in the incident ledger and receives no special favorable score.
+- HD1's primary classification is the selected radio value, regardless of witness quality. The protocol's frozen missingness, pairwise disagreement, false-accept, and bootstrap rules apply without adjudicator discretion. Witness scores are descriptive only for HD1 after eligibility.
+- For U1, an escaped defect is present when the source record has a behavior-changing representation error and the final audit lacks a correct loss witness. A correctly reported unrelated defect does not cure an escaped required-behavior defect. The three external blinded adjudicators apply the protocol's majority/witness and unresolved-validity rules; retain all votes and reasons.
+- Operators may say only: `Please use the instructions displayed on the form.` They may repeat those exact instructions or report a technical failure. They may not explain an individual case, suggest a decision, select a response, extend the timer, or replace a case.
+- Reviewers and operators receive no study correctness feedback until all primary outputs for both arms are sealed. Analysts receive deidentified labels only at the protocol's unblinding stage. A material rendering/scoring mismatch is a protocol breach, not an adjustable nuisance variable.
+
+## Current disposition
+
+These are frozen planned materials, not a deployed study system or evidence of human utility. No participant has been recruited and no response has been collected. The empty intake slots record future identities, conformance attestations, and observations; the materials themselves are fixed here.

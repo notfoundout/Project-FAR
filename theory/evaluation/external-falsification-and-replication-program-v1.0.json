@@ -17,7 +17,8 @@
   "authority": {
     "protocol": "docs/governance/external-falsification-and-replication-program-v1.0.md",
     "matrix": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
-    "input_freeze": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json"
+    "input_freeze": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json",
+    "human_study_materials": "docs/research/external-falsification-and-replication/01-human-study-materials.md"
   },
   "current_nonclaims": [
     "novelty",
