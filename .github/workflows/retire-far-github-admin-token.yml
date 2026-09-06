@@ -45,8 +45,8 @@ jobs:
               "configure-validation-protection.yml",
           ]
           secret_name = "FAR_GITHUB_ADMIN_TOKEN"
-          # Activation requires a later protected PR pinning the read-only capture receipt.
-          expected_credential_sha256 = ""
+          # Bound to PR #471 read-only capture run 34012449165, job 101430472911.
+          expected_credential_sha256 = "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa"
 
           if repository != expected_repository or ref != expected_ref or not workflow_token:
               raise SystemExit("fail-closed repository/ref/read-token precondition")

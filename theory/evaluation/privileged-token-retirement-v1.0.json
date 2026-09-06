@@ -56,7 +56,86 @@
     "retirement_accepted": false
   },
   "acceptance_rule": "Secret deletion confirmed, or issuer revocation accepted (202) and exact credential authentication rejected (401), with any undeletable encrypted metadata explicitly recorded; unchanged full policy checkpoint, independent live readbacks, complete validation/review, and protected one-shot cleanup are required.",
-  "identity_capture": null,
-  "authorized_credential_sha256": null,
-  "identity_rule": "The empty workflow fingerprint permits only read-only capture. A separate protected activation PR must bind its fingerprint to the captured current repository credential; any replacement fails before any API call. No claim that an unobserved historical credential has this identity is made."
+  "identity_capture": {
+    "pr": 471,
+    "reviewed_head": "bbb9074dada55f12bb9b7df5b4bc3efacab48e85",
+    "merge_commit": "24584754b9f628a5eff978d72a2efd716ff62792",
+    "tree": "5b763bb7b28015277c033e47151c2c1fb08efcf9",
+    "run_id": 34012449165,
+    "job_id": 101430472911,
+    "conclusion": "success",
+    "receipt": {
+      "branch": "main",
+      "branch_protection": {
+        "allow_deletions": {
+          "enabled": false
+        },
+        "allow_force_pushes": {
+          "enabled": false
+        },
+        "allow_fork_syncing": {
+          "enabled": false
+        },
+        "block_creations": {
+          "enabled": false
+        },
+        "enforce_admins": {
+          "enabled": true,
+          "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/enforce_admins"
+        },
+        "lock_branch": {
+          "enabled": false
+        },
+        "required_conversation_resolution": {
+          "enabled": true
+        },
+        "required_linear_history": {
+          "enabled": false
+        },
+        "required_pull_request_reviews": {
+          "dismiss_stale_reviews": true,
+          "require_code_owner_reviews": false,
+          "require_last_push_approval": false,
+          "required_approving_review_count": 0,
+          "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_pull_request_reviews"
+        },
+        "required_signatures": {
+          "enabled": false,
+          "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_signatures"
+        },
+        "required_status_checks": {
+          "checks": [
+            {
+              "app_id": 15368,
+              "context": "merge-authority"
+            }
+          ],
+          "contexts": [
+            "merge-authority"
+          ],
+          "contexts_url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_status_checks/contexts",
+          "strict": true,
+          "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_status_checks"
+        },
+        "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection"
+      },
+      "branch_protection_sha256": "cb411e177001a318e1fda2ab47b6625718b11af1892e575e5dce32c45b050ae0",
+      "branch_protection_unchanged_and_enforced": true,
+      "credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
+      "mode": "credential_identity_capture",
+      "privileged_workflow_states": {
+        "canonical-branch-protection.yml": "disabled_manually",
+        "configure-validation-protection.yml": "disabled_manually"
+      },
+      "repository": "notfoundout/Project-FAR",
+      "retirement_accepted": false,
+      "secret_absent": false,
+      "secret_name": "FAR_GITHUB_ADMIN_TOKEN"
+    },
+    "review_comment_id": 5556974723,
+    "exact_head_assurance_run_id": 34012152038,
+    "merge_authority_run_id": 34012152184
+  },
+  "authorized_credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
+  "identity_rule": "Protected promotion of this activation revision authorizes only the exact current repository credential observed in the retained read-only identity capture. A replacement fails before any API call. No claim that an unobserved historical credential has this identity is made."
 }
