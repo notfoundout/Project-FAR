@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "record_id": "PRE-EFR-ASTRA-I1-CLEANROOM-2026-09-06",
+  "status": "Research / pre-EFR assurance evidence",
+  "efr_execution": false,
+  "isolation_class": "I1",
+  "i2": false,
+  "i3": false,
+  "cleanroom_result": {
+    "SURVIVES-ATTACK": 12,
+    "FALSIFIED": 0,
+    "INDETERMINATE": 2
+  },
+  "packet_defects": [
+    "PD-010-SCOPE",
+    "PD-014-MISSING-SCOPE"
+  ],
+  "post_seal_adjudication": {
+    "FAR-CORE-010": "SURVIVES-ADJUDICATION",
+    "FAR-CORE-014": "SURVIVES-ADJUDICATION",
+    "surviving_core_contradictions": 0,
+    "cleanroom_reproduced_claims": 12,
+    "post_seal_adjudicated_claims": 2,
+    "not_a_14_of_14_cleanroom_replication": true
+  },
+  "source_packet_sha256": "3b99dfc4f7ef220e518d6984c13d00eb10380024f135e53e1360d504e73821e5",
+  "sealed_report_sha256": "9c354031c7b944e89fdb17db50d03b7cc79f659df21cf50fe16df8f75cc10a1d",
+  "uploaded_verdict_ledger_sha256": "54b34cc1c3098cbc79ffd223d99335725f8d908d70d62fa1f9edc963098b7fee",
+  "uploaded_audit_bundle_sha256": "eff1a5a815a10ba73aa41b130a300702ac37dfce48fbcf9da7a019bcffacc2c9",
+  "post_seal_adjudication_md_sha256": "4c74a1222143052edfb4d717daabbb46d1ffe90157bd470402640af6cffaa36c",
+  "post_seal_adjudication_json_sha256": "8b10d67df26a4af10189f735a9f504367ca8f29790df2e1313bc48cd399b278c",
+  "source_main": {
+    "commit": "ca0cd5a370ff7c865c3654dc4225f7388430d39e",
+    "tree": "362ecfb3c7f2ed5fa293d17e837fc8d08c4c1117"
+  },
+  "preservation": {
+    "sealed_result_rewritten": false,
+    "post_seal_adjudication_separate": true,
+    "source_packet_promoted_to_efr_input": false,
+    "audit_bundle_promoted_to_efr_evidence": false,
+    "binary_bundle_embedded_in_repository": false,
+    "note": "The exact external bundle and packet are content-addressed here but are not registered EFR inputs or outputs. Repository inclusion preserves the research disposition without modifying the frozen EFR v1.0 protocol."
+  }
+}
