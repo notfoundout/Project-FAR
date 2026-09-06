@@ -4,7 +4,9 @@ Program ID: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` (`EFR-001`)
 
 Status: **PREREGISTERED — NOT EXECUTED**
 
-Registered: 2026-09-05
+Proposed: 2026-09-05
+
+Registration text finalized: 2026-09-06; the protected promotion event supplies the authoritative freeze timestamp.
 
 Registration is proposed by PR #470; the protected-main promotion freezes its final reviewed bytes before any execution. Pre-merge review corrections are retained in that PR, not represented as amendments to an executed study.
 
@@ -82,7 +84,7 @@ The custodian extracts every input named by the baseline W3 conformance index, W
 
 ### EFR-H1 and EFR-A1 — external and adversarial cases
 
-Each domain stratum is fixed before access: formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory. Custodians must establish the required behavior and preservation/loss label without using the Project FAR implementation under test. Cases must be representable under the preregistered finite-explicit contract; excluded open-oracle, continuous, embodied, or changing-ontology cases remain reported as out of scope and are never counted as successes.
+Each domain stratum is fixed before access: formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory. Custodians must establish the required behavior and preservation/loss label without using the Project FAR implementation under test. H1, A1, HD1, and U1 test exact `far-ir/2.0` finite-explicit contracts with literal canonical-JSON equality; approximate/tolerance decisions belong to R2 and are outside these human/external binary-loss endpoints. Cases must be representable under that frozen exact contract; excluded open-oracle, continuous, embodied, or changing-ontology cases remain reported as out of scope and are never counted as successes.
 
 EFR-A1 is a direct falsification test. One accepted, valid, in-scope material-loss counterexample fails the zero-miss criterion even if every other item passes.
 
@@ -96,7 +98,7 @@ Eligible reviewers must have domain-relevant training, provide consent under an 
 
 Enroll the first 24 consenting, non-author reviewers who pass all 12 public W4 practice records after the fixed training: two hours on reading the supplied native tables and two hours on reading FAR outputs. Practice results and failed screening attempts are retained. Each task has the same native evidence, a binary preservation/loss response and a required witness; the FAR arm additionally sees the frozen verifier's diagnostic report. Both arms have a 20-minute limit. No conversational assistance or task-specific coaching is allowed. The interface is a plain record-and-response form; its sealed rendering may change presentation only, not instructions or available evidence.
 
-Sort the six domain names and the two classes, shuffle the ten case IDs inside each stratum, and concatenate the strata. Shuffle the 24 reviewer IDs with the same seeded Python 3.12 `random.Random` stream. For case index c (0–119), FAR reviewers occupy positions (c+j) mod 24 for j=0–5; standard reviewers occupy (c+12+j) mod 24. Each reviewer therefore makes 30 decisions per arm on 60 distinct cases. Even reviewer positions take FAR first, odd positions standard first; shuffle task order within each arm. Publish the entire allocation before collecting ratings.
+Sort the six domain names and the two classes, shuffle the ten case IDs inside each stratum, and concatenate the strata. Shuffle the 24 reviewer IDs with the same seeded Python 3.12 `random.Random` stream. For case index c (0–119), FAR reviewers occupy positions (c+j) mod 24 for j=0–5; standard reviewers occupy (c+12+j) mod 24. Each reviewer therefore makes 30 decisions per arm on 60 distinct cases. Even reviewer positions take FAR first, odd positions standard first; generate each reviewer/arm task sequence with an independent seed: SHA-256 of ASCII `manifest_sha256 + "\nEFR-HD1\n" + reviewer_id + "\n" + arm + "\n"`, first 16 hex digits as an unsigned integer. Start from lexically sorted assigned case IDs and call `random.Random(seed).shuffle` once. Arm IDs are exactly `far` and `standard`. The frozen [allocation script](../../tools/efr_hd1_allocation.py) fixes every stratum/roster iteration and RNG call; it is normative and receives only the sealed input format documented in the materials. Publish the entire allocation before collecting ratings.
 
 “Material disagreement” means differing binary preservation/loss decisions where at least one decision conflicts with the sealed custodian label. Report raw arm counts, pairwise agreement, category-specific agreement, and Gwet's AC1 as a secondary descriptive statistic. Cohen's kappa may be reported but cannot determine acceptance because prevalence can distort it. The primary interval uses 10,000 case-level bootstrap resamples with the manifest-derived seed.
 

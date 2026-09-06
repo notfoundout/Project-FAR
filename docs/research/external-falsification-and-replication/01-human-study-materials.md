@@ -63,3 +63,7 @@ The qualification pass rule is 12/12 correct classifications and 12/12 checkable
 ## Current disposition
 
 These are frozen planned materials, not a deployed study system or evidence of human utility. No participant has been recruited and no response has been collected. The empty intake slots record future identities, conformance attestations, and observations; the materials themselves are fixed here.
+
+## Frozen allocation input and generator
+
+Run the content-addressed [allocation script](../../../tools/efr_hd1_allocation.py) under Python 3.12. Its input object has exactly `manifest_sha256` (the sealed case-manifest hash), `reviewers` (24 distinct ASCII IDs), and `cases` (120 objects with `id`, `domain`, `class`). The manifest hash is an external reference, not a self-hash of this input object. Domain IDs in fixed iteration order are `argumentation`, `bayesian_causal`, `formal_logic`, `model_based_reasoning`, `proof_theory`, `type_theory`; class IDs in order are `material_loss`, `preservation`, ten cases per pair. IDs use ASCII letters, digits, dot, underscore, or dash. Input array order has no effect. The source fixes twelve stratum shuffles, one roster shuffle, cyclic case assignment, independent per-reviewer/per-arm seeds, and output order. Commit the complete generated allocation before ratings. Synthetic unit fixtures verify scheduling only and do not count as study execution.

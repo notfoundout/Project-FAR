@@ -4,7 +4,7 @@
   "short_id": "EFR-001",
   "title": "External Falsification and Replication",
   "status": "PREREGISTERED_NOT_EXECUTED",
-  "registered_date": "2026-09-05",
+  "registered_date": "2026-09-06",
   "is_w7": false,
   "predecessor": {
     "program_id": "POST-CLOSURE-001",
@@ -18,7 +18,8 @@
     "protocol": "docs/governance/external-falsification-and-replication-program-v1.0.md",
     "matrix": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
     "input_freeze": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json",
-    "human_study_materials": "docs/research/external-falsification-and-replication/01-human-study-materials.md"
+    "human_study_materials": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
+    "hd1_allocation": "tools/efr_hd1_allocation.py"
   },
   "current_nonclaims": [
     "novelty",
@@ -276,5 +277,18 @@
       ]
     },
     "adjudication": "Three independent blinded adjudicators; at least two reproduce a valid witness; unresolved validity blocks acceptance; implementation defects remain failures."
+  },
+  "proposed_date": "2026-09-05",
+  "binary_loss_endpoint_scope": {
+    "tests": [
+      "EFR-H1",
+      "EFR-A1",
+      "EFR-HD1",
+      "EFR-U1"
+    ],
+    "format_version": "far-ir/2.0",
+    "mode": "exact",
+    "equality": "literal canonical JSON",
+    "approximate_or_tolerance_cases_excluded": true
   }
 }

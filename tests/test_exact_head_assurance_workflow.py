@@ -12,6 +12,8 @@ class ExactHeadAssuranceWorkflowTests(unittest.TestCase):
         exact = yaml.safe_load((ROOT / '.github/workflows/exact-head-assurance.yml').read_text())
         source = canonical['jobs']['merge-authority']['steps']
         target = exact['jobs']['exact-head-assurance']['steps']
+        self.assertEqual(target[-1]["with"]["name"], "exact-head-assurance-${{ github.event.pull_request.head.sha || github.sha }}")
+        target[-1]["with"]["name"] = source[-1]["with"]["name"]
         self.assertEqual(source[1:], target[1:])
         self.assertEqual(source[0]['uses'], target[0]['uses'])
         self.assertEqual(target[0]['with']['ref'], '${{ github.event.pull_request.head.sha || github.sha }}')

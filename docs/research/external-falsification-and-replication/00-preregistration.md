@@ -4,7 +4,7 @@ Status: **PREREGISTERED — NOT EXECUTED**
 
 Program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` (`EFR-001`)
 
-Registered: 2026-09-05
+Proposed: 2026-09-05. Registration text finalized: 2026-09-06; protected-main promotion of PR #470 supplies the authoritative freeze timestamp.
 
 The single governing protocol is the [External Falsification and Replication Program v1.0](../../governance/external-falsification-and-replication-program-v1.0.md). Its [machine contract](../../../theory/evaluation/external-falsification-and-replication-program-v1.0.json) and [input freeze](../../../theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json) are normative and must agree with it.
 
