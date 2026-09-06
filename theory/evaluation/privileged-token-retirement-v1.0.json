@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "control_id": "FAR-GITHUB-ADMIN-TOKEN-RETIREMENT-2026-09-05",
-  "status": "NEUTRALIZATION_PENDING_AFTER_DELETE_FORBIDDEN",
+  "status": "ACCEPTED_RETIRED",
   "defect": "Reusable administrator PAT was exposed to manual workflows that execute mutable repository code.",
   "baseline": {
     "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
@@ -15,7 +15,7 @@
   ],
   "remediation": {
     "workflow": ".github/workflows/retire-far-github-admin-token.yml",
-    "trigger": "first push of this exact file to main",
+    "trigger": "historical main-only push; one-shot removed by protected cleanup",
     "workflow_dispatch": false,
     "checkout": false,
     "actions": [
@@ -32,12 +32,86 @@
     "workflow_token_permissions": {
       "actions": "write",
       "contents": "read"
-    }
+    },
+    "workflow_removed": true
   },
-  "accepted_receipt": null,
+  "accepted_receipt": {
+    "branch": "main",
+    "branch_protection": {
+      "allow_deletions": {
+        "enabled": false
+      },
+      "allow_force_pushes": {
+        "enabled": false
+      },
+      "allow_fork_syncing": {
+        "enabled": false
+      },
+      "block_creations": {
+        "enabled": false
+      },
+      "enforce_admins": {
+        "enabled": true,
+        "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/enforce_admins"
+      },
+      "lock_branch": {
+        "enabled": false
+      },
+      "required_conversation_resolution": {
+        "enabled": true
+      },
+      "required_linear_history": {
+        "enabled": false
+      },
+      "required_pull_request_reviews": {
+        "dismiss_stale_reviews": true,
+        "require_code_owner_reviews": false,
+        "require_last_push_approval": false,
+        "required_approving_review_count": 0,
+        "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_pull_request_reviews"
+      },
+      "required_signatures": {
+        "enabled": false,
+        "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_signatures"
+      },
+      "required_status_checks": {
+        "checks": [
+          {
+            "app_id": 15368,
+            "context": "merge-authority"
+          }
+        ],
+        "contexts": [
+          "merge-authority"
+        ],
+        "contexts_url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_status_checks/contexts",
+        "strict": true,
+        "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection/required_status_checks"
+      },
+      "url": "https://api.github.com/repos/notfoundout/Project-FAR/branches/main/protection"
+    },
+    "branch_protection_sha256": "cb411e177001a318e1fda2ab47b6625718b11af1892e575e5dce32c45b050ae0",
+    "branch_protection_unchanged_and_enforced": true,
+    "credential_authentication_http_status": 401,
+    "credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
+    "credential_usable": false,
+    "full_policy_verified_before_credential_invalidation": true,
+    "mode": "issuer_revocation",
+    "post_revocation_protection_summary_enforced": true,
+    "privileged_workflow_states": {
+      "canonical-branch-protection.yml": "disabled_manually",
+      "configure-validation-protection.yml": "disabled_manually"
+    },
+    "repository": "notfoundout/Project-FAR",
+    "repository_secret_delete_http_status": 403,
+    "revocation_http_status": 202,
+    "secret_absent": false,
+    "secret_name": "FAR_GITHUB_ADMIN_TOKEN",
+    "workflow_token_secret_delete_http_status": 403
+  },
   "claims": {
     "branch_protection_weakened": false,
-    "credential_retired": false,
+    "credential_retired": true,
     "privileged_workflows_disabled": true
   },
   "first_attempt": {
@@ -137,7 +211,7 @@
     "merge_authority_run_id": 34012152184
   },
   "authorized_credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
-  "identity_rule": "Protected promotion of this activation revision authorizes only the exact current repository credential observed in the retained read-only identity capture. A replacement fails before any API call. No claim that an unobserved historical credential has this identity is made.",
+  "identity_rule": "Protected PR472 authorized only the exact current repository credential observed in the retained PR471 read-only capture. PR473 preserved that pin and revoked the matching value. Capture, revocation and independent recovery fingerprints are identical; no identity is inferred for an unobserved historical value.",
   "activation_attempts": [
     {
       "pr": 472,
@@ -151,5 +225,95 @@
       "retirement_accepted": false,
       "observation": "Fingerprint matched and full governed policy read passed. The redundant disable request was forbidden although the workflow was already disabled. No deletion or revocation was attempted."
     }
-  ]
+  ],
+  "artifact_status": "Accepted",
+  "execution": {
+    "pr": 473,
+    "reviewed_head": "64bf529188a7f107309562edc6c993148df973da",
+    "merge_commit": "7369b9fdb662f4b9bb000b6a76ca85502001ad23",
+    "tree": "6cdb6a417ed0c3eaa6c233825625806830141e50",
+    "run_id": 34013331226,
+    "run_attempt": 1,
+    "job_id": 101432788941,
+    "conclusion": "success",
+    "exact_head_assurance_run_id": 34012985278,
+    "merge_authority_run_id": 34012985318,
+    "review_id": 5124232721,
+    "review_scope": "I0 author-side review of the idempotence follow-up; unchanged retirement logic previously reviewed by Codex at PR472 head 685e146461d0baf308b412fbfded3ffd38a8c1cc. Codex requests for PR473 returned usage-limit notices, not a passing review."
+  },
+  "recovery_execution": {
+    "run_id": 34013331226,
+    "run_attempt": 2,
+    "job_id": 101432892529,
+    "conclusion": "success",
+    "operations": "GET only; exact pinned invalid credential independently rejected with401; disabled consumers and protection summary rechecked",
+    "receipt": {
+      "branch": "main",
+      "branch_protection_summary_enforced": true,
+      "credential_authentication_http_status": 401,
+      "credential_sha256": "1f2ca3a191e6df475cdad46a7567f35bda8ae2622f9392ba5a11ada8c3a45afa",
+      "credential_usable": false,
+      "mode": "invalidated_credential_recovery",
+      "privileged_workflow_states": {
+        "canonical-branch-protection.yml": "disabled_manually",
+        "configure-validation-protection.yml": "disabled_manually"
+      },
+      "repository": "notfoundout/Project-FAR",
+      "secret_absent": false,
+      "secret_name": "FAR_GITHUB_ADMIN_TOKEN"
+    }
+  },
+  "independent_readback": {
+    "workflows": {
+      "observed_at": "2026-09-06T05:11:47.328817+00:00",
+      "source": "unauthenticated GitHub REST API reads, independent of the retirement job",
+      "workflows": {
+        "canonical-branch-protection.yml": {
+          "id": 350364777,
+          "path": ".github/workflows/canonical-branch-protection.yml",
+          "state": "disabled_manually"
+        },
+        "configure-validation-protection.yml": {
+          "id": 317182174,
+          "path": ".github/workflows/configure-validation-protection.yml",
+          "state": "disabled_manually"
+        }
+      }
+    },
+    "main": {
+      "head": "7369b9fdb662f4b9bb000b6a76ca85502001ad23",
+      "tree": "6cdb6a417ed0c3eaa6c233825625806830141e50",
+      "protected": true,
+      "protection": {
+        "enabled": true,
+        "required_status_checks": {
+          "checks": [
+            {
+              "app_id": 15368,
+              "context": "merge-authority"
+            }
+          ],
+          "contexts": [
+            "merge-authority"
+          ],
+          "enforcement_level": "everyone"
+        }
+      },
+      "source": "GitHub connector branch API read independently after retirement"
+    },
+    "scope": "Public workflow states and enforced branch summary independently fetched outside the retirement job; full Administration policy was checked before invalidation and has the same digest as the earlier capture."
+  },
+  "residual_metadata": {
+    "repository_secret_entry_absent": false,
+    "value_is_usable_credential": false,
+    "reason": "Both available repository deletion identities returned403. GitHub issuer revocation202 and exact-value authentication401 permanently neutralized the credential. The current repository connector exposes no Secrets administration.",
+    "recreation_prohibited": true,
+    "security_retirement_complete": true
+  },
+  "cleanup": {
+    "pull_request": 474,
+    "removed_path": ".github/workflows/retire-far-github-admin-token.yml",
+    "acceptance_event": "Protected normal merge of the cleanup PR after exact-head and proposed-merge complete canonical assurance and recorded review; its GitHub merge event identifies the final head/tree without a circular self-hash.",
+    "review_scope": "Author-side review, explicitly not independent review; Codex review quota exhausted during PR473. No required reviewer or live approval threshold is changed."
+  }
 }
