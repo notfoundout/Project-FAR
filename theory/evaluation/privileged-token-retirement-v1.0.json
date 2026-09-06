@@ -19,6 +19,7 @@
     "workflow_dispatch": false,
     "checkout": false,
     "actions": [
+      "read-only capture of the current credential fingerprint and unchanged policy; no deletion or revocation until a subsequent protected PR pins that exact receipt",
       "verify full branch-protection policy",
       "disable both exact privileged workflows",
       "verify disabled workflow states and unchanged full protection",
@@ -54,5 +55,8 @@
     },
     "retirement_accepted": false
   },
-  "acceptance_rule": "Secret deletion confirmed, or issuer revocation accepted (202) and exact credential authentication rejected (401), with any undeletable encrypted metadata explicitly recorded; unchanged full policy checkpoint, independent live readbacks, complete validation/review, and protected one-shot cleanup are required."
+  "acceptance_rule": "Secret deletion confirmed, or issuer revocation accepted (202) and exact credential authentication rejected (401), with any undeletable encrypted metadata explicitly recorded; unchanged full policy checkpoint, independent live readbacks, complete validation/review, and protected one-shot cleanup are required.",
+  "identity_capture": null,
+  "authorized_credential_sha256": null,
+  "identity_rule": "The empty workflow fingerprint permits only read-only capture. A separate protected activation PR must bind its fingerprint to the captured current repository credential; any replacement fails before any API call. No claim that an unobserved historical credential has this identity is made."
 }

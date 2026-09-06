@@ -45,9 +45,14 @@ jobs:
               "configure-validation-protection.yml",
           ]
           secret_name = "FAR_GITHUB_ADMIN_TOKEN"
+          # Activation requires a later protected PR pinning the read-only capture receipt.
+          expected_credential_sha256 = ""
 
           if repository != expected_repository or ref != expected_ref or not workflow_token:
               raise SystemExit("fail-closed repository/ref/read-token precondition")
+          credential_sha256 = hashlib.sha256(token.encode()).hexdigest() if token else None
+          if token and expected_credential_sha256 and credential_sha256 != expected_credential_sha256:
+              raise SystemExit("credential identity differs from the separately authorized fingerprint")
 
           api = f"https://api.github.com/repos/{repository}"
 
@@ -146,7 +151,9 @@ jobs:
               return status
 
           def revoke_exact_token():
-              if not token.startswith(("ghp_", "github_pat_")):
+              if (not expected_credential_sha256
+                  or credential_sha256 != expected_credential_sha256
+                  or not token.startswith(("ghp_", "github_pat_"))):
                   raise SystemExit("only the exact obsolete personal access token may be revoked")
               req = urllib.request.Request(
                   "https://api.github.com/credentials/revoke",
@@ -220,6 +227,28 @@ jobs:
           before_errors = protection_errors(before)
           if before_errors:
               raise SystemExit("pre-retirement protection mismatch: " + "; ".join(before_errors))
+
+          if not expected_credential_sha256:
+              states = control_summary()
+              after = request("GET", f"/branches/{branch}/protection", token)
+              if protection_errors(after) or before != after:
+                  raise SystemExit("identity capture requires unchanged full protection")
+              print(json.dumps({
+                  "mode": "credential_identity_capture",
+                  "credential_sha256": credential_sha256,
+                  "repository": repository,
+                  "branch": "main",
+                  "secret_name": secret_name,
+                  "secret_absent": False,
+                  "retirement_accepted": False,
+                  "branch_protection": after,
+                  "branch_protection_sha256": hashlib.sha256(
+                      json.dumps(after, sort_keys=True, separators=(",", ":")).encode()
+                  ).hexdigest(),
+                  "branch_protection_unchanged_and_enforced": True,
+                  "privileged_workflow_states": states,
+              }, indent=2, sort_keys=True), flush=True)
+              raise SystemExit(0)
 
           for workflow in workflows:
               encoded = urllib.parse.quote(workflow, safe="")

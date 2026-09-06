@@ -81,10 +81,15 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
     def execute(self, *, token="fake-admin", before=None, after=None,
                 state="disabled_manually", fail_request=None, repository=None,
                 failure_status=500, issuer_auth_status=401, revocation_status=202,
-                delete_statuses=None):
+                delete_statuses=None, identity_pin="synthetic"):
         workflow = yaml.safe_load(WORKFLOW.read_text())
         shell = workflow["jobs"]["retire"]["steps"][0]["run"]
         code = shell.split("python - <<'PY'\n", 1)[1].rsplit("\nPY", 1)[0]
+        # Exercise activation against a synthetic identity, never a real credential.
+        import re
+        pin = hashlib.sha256(token.encode()).hexdigest() if identity_pin == "synthetic" else identity_pin
+        code = re.sub(r'expected_credential_sha256 = "[a-f0-9]*"',
+                      f'expected_credential_sha256 = "{pin}"', code)
         before = policy() if before is None else before
         after = copy.deepcopy(before) if after is None else after
         calls = []
@@ -148,6 +153,20 @@ class PrivilegedTokenRetirementTests(unittest.TestCase):
         if token:
             self.assertNotIn(token, output.getvalue())
         return exit_code, output.getvalue(), calls
+
+    def test_unpinned_identity_is_read_only_and_replacement_fails_before_api(self):
+        if self.retired():
+            return
+        code, output, calls = self.execute(identity_pin="")
+        self.assertEqual(code, 0)
+        self.assertEqual(json.loads(output)["mode"], "credential_identity_capture")
+        self.assertIs(json.loads(output)["retirement_accepted"], False)
+        self.assertEqual(json.loads(output)["credential_sha256"], hashlib.sha256(b'fake-admin').hexdigest())
+        self.assertTrue(all(method == "GET" for method, _, _ in calls))
+        code, output, calls = self.execute(identity_pin="0" * 64)
+        self.assertNotEqual(code, 0)
+        self.assertEqual(output, "")
+        self.assertEqual(calls, [])
 
     def test_delete_forbidden_revokes_only_exact_pat_and_requires_issuer_rejection(self):
         if self.retired():
