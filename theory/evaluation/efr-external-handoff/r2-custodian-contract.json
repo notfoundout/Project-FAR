@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "EFR-R2-EXTERNAL-CUSTODIAN-CONTRACT-1.0",
+  "status": "HANDOFF_READY_NOT_EXECUTED",
+  "scientific_baseline_commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+  "public_implementation_inputs": [
+    {"path": "schemas/far-contract-v2.schema.json", "role": "W3 machine-readable contract schema"},
+    {"path": "docs/specification/far-ir-2.0-contract.md", "role": "W3 public contract specification"},
+    {"path": "docs/specification/far-ir-2.1-approximation-cost.md", "role": "W5 public approximation/cost annex"}
+  ],
+  "separation_protocol": [
+    "External implementer receives only the public W3/W5 specification surface.",
+    "Implementer freezes a content-addressed implementation before any held-out case is revealed.",
+    "An independent external custodian, not Project FAR authors, creates/selects and holds the W4-like cases and oracle/adjudication material.",
+    "Custodian records case hashes before reveal and releases the execution package only after implementation freeze.",
+    "Run FAR semantics and the preregistered simpler baseline blind; adjudicate against the withheld oracle after outputs are sealed.",
+    "Classify contradictions, implementation mismatches, and underdetermination separately."
+  ],
+  "project_far_must_not": [
+    "author or select the held-out cases",
+    "see held-out case contents or oracle before implementation freeze",
+    "supply a reference implementation to the independent implementer",
+    "treat a Project-FAR-controlled model or person as the external custodian",
+    "count this handoff artifact as R2 execution"
+  ],
+  "custodian_release_manifest_required_fields": [
+    "custodian_id_or_pseudonym",
+    "independence_attestation",
+    "case_source_provenance",
+    "case_file_sha256",
+    "oracle_file_sha256",
+    "implementation_freeze_sha",
+    "release_timestamp"
+  ]
+}
