@@ -109,6 +109,52 @@ class CampaignManifestProvenanceTests(unittest.TestCase):
                 declared = {entry["path"] for entry in load(supplement_path)["entries"]}
                 self.assertEqual(declared & set(protected), set())
 
+    def test_every_protected_path_is_a_real_manifest_artifact(self) -> None:
+        """A misspelled protected path silently protects nothing.
+
+        `test_protected_artifacts_are_never_declared` passes vacuously for a path that is in
+        neither the manifest nor the supplement, so a typo removes an artifact from protection
+        without failing any other check. This is the control for that.
+        """
+        import tools.check_pca_w5_approximation_cost as W5
+        import tools.check_pca_w6_empirical_audit_utility as W6
+
+        for label, protected, manifest_path in (
+            ("W5", W5.PROTECTED_ARTIFACTS, CAMPAIGNS[0][1]),
+            ("W6", W6.PROTECTED_ARTIFACTS, CAMPAIGNS[1][1]),
+        ):
+            with self.subTest(campaign=label):
+                declared = {a["path"] for a in load(manifest_path)["artifacts"]}
+                orphaned = sorted(set(protected) - declared)
+                self.assertEqual(
+                    orphaned,
+                    [],
+                    f"{label}: PROTECTED_ARTIFACTS names path(s) absent from the campaign "
+                    f"manifest, so nothing is protected by them: {orphaned}",
+                )
+                for path in protected:
+                    self.assertTrue(
+                        (ROOT / path).is_file(), f"{label}: protected path does not exist: {path}"
+                    )
+
+    def test_recorded_result_ledgers_are_protected(self) -> None:
+        """The artifacts a campaign's verdict is read from may never be supplemented."""
+        import tools.check_pca_w5_approximation_cost as W5
+        import tools.check_pca_w6_empirical_audit_utility as W6
+
+        self.assertIn(
+            "theory/evaluation/pca-w5-approximation-cost-v1.0.json", W5.PROTECTED_ARTIFACTS
+        )
+        self.assertIn(
+            "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json", W6.PROTECTED_ARTIFACTS
+        )
+        self.assertIn(
+            "research/results/pca-w5-approximation-and-cost/frontier.json", W5.PROTECTED_ARTIFACTS
+        )
+        self.assertIn(
+            "research/results/pca-w6-empirical-audit-utility/results.json", W6.PROTECTED_ARTIFACTS
+        )
+
     def test_w6_protocol_base_is_protected(self) -> None:
         import tools.check_pca_w6_empirical_audit_utility as W6
 

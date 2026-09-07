@@ -62,7 +62,7 @@ PROTECTED_ARTIFACTS = frozenset({
     "mechanization/lean/W5ApproximationCost.lean",
     "research/results/pca-w5-approximation-and-cost/frontier.json",
     "schemas/far-contract-v2.1.schema.json",
-    "theory/evaluation/pca-w5-approximation-and-cost-v1.0.json",
+    "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
 })
 
 

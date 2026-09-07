@@ -23,9 +23,9 @@
     {
       "path": "tools/check_pca_w5_approximation_cost.py",
       "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
-      "current_sha256": "0a3a9765f8df8fa5130627429cb6289b6036d31a0974376c6c2b0827fbf4c095",
+      "current_sha256": "b3f38150160e66ef76ec7a66b7b135d50c79ac330d5348d18b9903d30fd6a8dc",
       "class": "verification_tooling",
-      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
     }
   ]
 }
