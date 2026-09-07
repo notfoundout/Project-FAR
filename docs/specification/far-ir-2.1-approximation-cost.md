@@ -124,8 +124,28 @@ Two codes are constructed at runtime as `DUPLICATE_{label}` and appear nowhere a
 | `EXACT_RECOVERY_SET_MISMATCH` | `exact_recovery_claims` differs from the recomputed exact-recovery set. |
 | `ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE` | Tolerance is zero and the feasible set differs from the exact-recovery set. |
 
-### Evaluation order
+### Diagnostics are an ordered sequence
 
-Schema errors are terminal. Otherwise the verifier fails closed in stages: intake/freeze/domain conditions are collected first and, if any fired, the record is rejected before any approximation semantics run; metric, loss, and cost-dimension conditions are collected next and, if any fired, no candidate frontier is computed; a candidate that produced any diagnostic is excluded from the frontier calculation entirely. Independent implementations must reproduce this staging, because it determines which codes a record yields.
+A validation result is a **sequence**, not a set. The same code occurs once per offending item, and order is normative. An independent implementation must reproduce code, multiplicity, and order.
+
+### Evaluation order and suppression
+
+Schema errors are terminal. Otherwise the verifier accumulates into one shared diagnostic sequence and fails closed at three gates. Each gate tests whether that shared sequence is non-empty **for any reason**, so the stages cannot be read independently.
+
+**Stage 1 — intake, mode, freeze, domain and tables.** Appended in this order if they apply: `W5_MODE_EVIDENCE_REQUIRED`, `CHECKED_EVIDENCE_OUTCOME_MISMATCH`, `CHECK_REQUIRES_FROZEN_CONTRACT` (or, when the contract is frozen, `FREEZE_HASH_MISMATCH`), `CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN`, `CHECK_REQUIRES_EXPLICIT_BEHAVIOR`, `CHECK_REQUIRES_EXPLICIT_REPRESENTATION`, `DUPLICATE_DOMAIN_CASE`, `DUPLICATE_CASE_VALUE` (behavior table then representation table, in row order), `CASE_TABLE_COVERAGE_MISMATCH`.
+
+**Gate 1.** If `approximation` is absent, or the sequence is non-empty for any reason, the record is returned now. No reference, metric, loss, cost or frontier code can accompany a Stage 1 diagnostic.
+
+**Stage 2 — reference, metric, loss, cost dimensions.** Appended in this order: `DUPLICATE_REFERENCE_CASE`, `REFERENCE_COVERAGE_MISMATCH`, `REFERENCE_NOT_PROBABILITY`, `DUPLICATE_METRIC_VALUE`, `DUPLICATE_METRIC_ENTRY`, then either `METRIC_NOT_TOTAL` — which suppresses all four metric-axiom checks — or `METRIC_IDENTITY_FAILURE`, `METRIC_SYMMETRY_FAILURE`, `METRIC_SEPARATION_FAILURE` and `METRIC_TRIANGLE_FAILURE` per offending value, pair or triple; then `DUPLICATE_LOSS_ACTION`, `DUPLICATE_LOSS_ENTRY`, `LOSS_NOT_TOTAL`, `METRIC_LOSS_DOMAIN_MISMATCH` or `LOSS_METRIC_MISMATCH` per offending pair, and `DUPLICATE_COST_DIMENSION`.
+
+**Gate 2.** If the sequence is non-empty for any reason, the record is returned now and no candidate is examined.
+
+**Stage 3 — candidates.** Candidates are processed in declared order, appending `DUPLICATE_CANDIDATE`, `DUPLICATE_CANDIDATE_COST`, `COST_COVERAGE_MISMATCH`, `DUPLICATE_DECODER_ENTRY`, `DUPLICATE_DECODER_ACTION`, `DECODER_UNKNOWN_ACTION`, `DECODER_NOT_PROBABILITY` and `DECODER_COVERAGE_MISMATCH` as they apply.
+
+**Gate 3 is per-candidate and order-dependent.** After a candidate's own checks, that candidate is excluded from the frontier computation if the shared sequence is non-empty. Because the sequence is shared and never cleared, the **first** candidate to produce any diagnostic and **every candidate after it** are excluded, even if those later candidates are themselves well-formed. Candidate order therefore changes which candidates reach the frontier.
+
+**Gate 4.** If the sequence is non-empty after the candidate loop, the record is returned and no frontier claim is compared, so `FEASIBLE_SET_MISMATCH`, `PARETO_SET_MISMATCH`, `LEAST_SET_MISMATCH`, `EXACT_RECOVERY_SET_MISMATCH` and `ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE` are emitted only for records with no other diagnostic at all.
+
+`tests/test_far_contract_diagnostic_codes.py` pins the shared-sequence gating against the frozen verifiers by asserting exact diagnostic sequences.
 
 Publishing this vocabulary is a specification-completeness obligation, not a claim that the code set is minimal, complete for future versions, or externally validated.

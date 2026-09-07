@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "supplement_id": "PCA-W5-CURRENT-STATE-SUPPLEMENT-1.0",
+  "campaign": "PCA-W5-APPROXIMATION-AND-COST",
+  "supplements_manifest": "research/results/pca-w5-approximation-and-cost/manifest.json",
+  "manifest_status": "HISTORICAL_EXECUTED_BYTES_NOT_REWRITTEN",
+  "provenance_semantics": "manifest.json records the bytes of every campaign artifact as of execution and is never rewritten. This supplement records the artifacts whose current bytes differ, with the reason for each. An artifact absent from this list must still match the executed manifest exactly. Protected artifacts - experimental inputs, outputs, recorded results, and any pinned protocol base - may never appear here; tools/campaign_current_state.py rejects such an entry.",
+  "recorded_result_unchanged": true,
+  "nonclaims": [
+    "does not re-date the campaign",
+    "does not change any recorded result or boundary",
+    "does not upgrade any assurance dimension",
+    "declared drift is documentation/tooling only, never experimental evidence"
+  ],
+  "entries": [
+    {
+      "path": "docs/specification/far-ir-2.1-approximation-cost.md",
+      "executed_sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48",
+      "current_sha256": "9046960ab7b69d8cb26379e1b9bb1d06edfb34b52baa12fdfe3503950c680cf5",
+      "class": "specification_surface",
+      "reason": "Published the far-ir/2.1 diagnostic vocabulary, ordered-sequence semantics, and the exact gate/suppression rules, so EFR-R2's error-category criterion is satisfiable. Corrects a documentation gap; adds no semantics and changes no W5 computation or result. Bound for R2 by EFR-001-R2-INPUT-AMENDMENT-1.1."
+    },
+    {
+      "path": "tools/check_pca_w5_approximation_cost.py",
+      "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
+      "current_sha256": "6764057d61b4c55a0e359e1dad4fb351580bd2c0b2328e31ac0135a7bb8ef422",
+      "class": "verification_tooling",
+      "reason": "Artifact hash verification delegated to tools/campaign_current_state.py so the executed manifest is preserved rather than rewritten. Adds the protected-artifact rule. Changes no W5 input, computation, or recorded result."
+    }
+  ]
+}

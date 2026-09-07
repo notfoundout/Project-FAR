@@ -15,11 +15,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "dbf4827adb689b2863b6d33a1f864bb84de022c055170e22055e6a62d1049695"
+      "sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c"
     },
     {
       "path": "docs/CANONICAL_MAP.md",
-      "sha256": "b21029064679dbe33bf9ddd0358578b9100ea145bb93a65c499735a5597ceafa"
+      "sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3"
     },
     {
       "path": "docs/ROADMAP.md",
@@ -31,7 +31,7 @@
     },
     {
       "path": "docs/governance/limitations-register.md",
-      "sha256": "72f10702a9a3b3bcebacca58beec16de284d6b60e0b88180455ed37f25a1c468"
+      "sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6"
     },
     {
       "path": "docs/governance/open-problems-register.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/project-status.md",
-      "sha256": "f636f10b62d2d6da6b9d6c901976cd283ab042e1ee65e3255b610e00fb64ba73"
+      "sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666"
     },
     {
       "path": "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",

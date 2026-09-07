@@ -156,8 +156,51 @@ The declaration authority is `FAR_IR_2_0_DIAGNOSTIC_CODES` in [`mechanization/fa
 | `DUPLICATE_TRANSFORMATION` | `admitted_transformations` contains a repeated identifier. |
 | `FREEZE_HASH_MISMATCH` | Freeze status is `FROZEN` and `contract_sha256` does not equal SHA-256 of the canonical `contract` object (see §5). |
 
-### 9.7 Evaluation order
+### 9.7 Diagnostics are an ordered sequence
 
-Schema errors are terminal: when any `SCHEMA_CONSTRAINT_VIOLATION` is present, no semantic check runs. Otherwise cross-field conditions are evaluated, then the single check selected by `report.evidence.kind`. Within the finite-explicit checks, a precondition failure in §9.2 suppresses the corresponding §9.3–§9.5 check for that record. Independent implementations must reproduce this suppression behavior, because it determines which codes a record yields.
+A validation result is a **sequence** of diagnostics, not a set. The same code occurs once per offending item, and the order below is normative. An independent implementation must reproduce code, multiplicity, and order.
+
+For example, a factorization record whose decoder is wrong for two cases yields `FACTORIZATION_FAILURE` **twice**, once per case, in `source_domain.cases` order.
+
+### 9.8 Evaluation order and suppression
+
+The verifier runs three stages over one shared diagnostic sequence. Suppression is governed by whether that shared sequence is already non-empty, which is why the stages cannot be read independently.
+
+**Stage 1 — schema.** If any `SCHEMA_CONSTRAINT_VIOLATION` is present, the record is returned immediately and no later stage runs. Schema diagnostics are ordered by JSON path, then message.
+
+**Stage 2 — cross-field (§9.6).** Evaluated in this fixed order, each appended if it applies:
+
+1. `UNKNOWN_EVIDENCE_REQUIRES_UNKNOWN_OUTCOME`
+2. `UNKNOWN_OUTCOME_REQUIRES_UNKNOWN_EVIDENCE`
+3. `UNKNOWN_CONTRACT_MODE_REQUIRES_UNKNOWN_OUTCOME`
+4. `W5_SEMANTICS_NOT_ESTABLISHED`
+5. `CHECKED_EVIDENCE_OUTCOME_MISMATCH`
+6. `DUPLICATE_OBSERVATION_CONTEXT`
+7. `DUPLICATE_TRANSFORMATION`
+8. `FREEZE_HASH_MISMATCH`
+
+**Stage 3 — at most one claim-specific check.** Selected by `report.evidence.kind`: `factorization` → §9.3, `collision` → §9.4, `quotient` → §9.5. Any other kind runs no claim-specific check. The selected check returns immediately, adding nothing, unless `report.evidence.status` is `CHECKED_FINITE_EXPLICIT`.
+
+All three checks first resolve the explicit tables, which appends §9.2 diagnostics in this order:
+
+1. `CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN` — appended and **table resolution stops immediately**, so no other §9.2 code can accompany it;
+2. `DUPLICATE_DOMAIN_CASE`;
+3. `DUPLICATE_CASE_VALUE`, for `required_behavior` then `representation`, in row order;
+4. `CASE_TABLE_COVERAGE_MISMATCH`, for `required_behavior` then `representation`;
+5. `CHECK_REQUIRES_EXPLICIT_TABLES`.
+
+**The cross-stage gate.** Table resolution then abandons the record if the shared diagnostic sequence is non-empty **for any reason** — including a Stage 2 cross-field diagnostic that has nothing to do with the tables. Consequently:
+
+> A §9.3, §9.4, or §9.5 code is emitted **only** for a record that has zero Stage 2 diagnostics and zero §9.2 diagnostics.
+
+This is the single most important rule for reproducing the verifier, and the easiest to get wrong. A record with both a `FREEZE_HASH_MISMATCH` and a genuine decoder error yields exactly `[FREEZE_HASH_MISMATCH]` — **not** `[FREEZE_HASH_MISMATCH, FACTORIZATION_FAILURE]`. The factorization failure is not reported at all, because the freeze defect stopped the record before the decoder was examined. An implementation that reports both is non-conforming.
+
+**Within §9.3 factorization**, once the gate is passed: `NONFUNCTIONAL_DECODER` per offending decoder row in `decoder_table` order, then, per case in `source_domain.cases` order, `DECODER_UNDEFINED` if no decoder row matches that case's representation value, otherwise `FACTORIZATION_FAILURE` if the decoded value differs from the required behavior.
+
+**Within §9.4 collision**: `COLLISION_CASE_UNKNOWN` is appended and the check stops immediately. Otherwise `COLLISION_REQUIRES_DISTINCT_CASES`, `COLLISION_REPRESENTATION_DIFFERS`, and `COLLISION_BEHAVIOR_AGREES` are each appended if they apply, in that order.
+
+**Within §9.5 quotient**: `QUOTIENT_OVERLAP` per repeated case in declared class order; then `QUOTIENT_NOT_PARTITION`, which stops the check immediately; otherwise, over ordered pairs of cases in `source_domain.cases` order, `QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT` and then `QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL` per offending pair.
+
+`tests/test_far_contract_diagnostic_codes.py` pins these rules against the frozen verifier by asserting exact diagnostic sequences, including the cross-stage gate and code multiplicity.
 
 Publishing this vocabulary is a specification-completeness obligation, not a claim that the code set is minimal, complete for future versions, or externally validated.

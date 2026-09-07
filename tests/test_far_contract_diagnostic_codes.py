@@ -194,3 +194,152 @@ class DiagnosticVocabularyTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DiagnosticSequenceTests(unittest.TestCase):
+    """Pin the published evaluation order against the frozen verifiers.
+
+    These assert exact diagnostic sequences rather than scanning source literals, because the
+    thing `EFR-R2` compares is what a record actually yields. The cross-stage gate below is the
+    rule a clean-room implementation is most likely to get wrong: a shared diagnostic sequence
+    means an unrelated cross-field defect suppresses the claim-specific check entirely.
+
+    Records are built in memory from the registered conformance fixtures. No frozen verifier,
+    fixture, or manifest is modified.
+    """
+
+    V2_FIXTURES = ROOT / "conformance" / "far-ir-2.0"
+    V21_FIXTURES = ROOT / "conformance" / "far-ir-2.1"
+
+    def load_v2(self, name: str) -> dict:
+        import json
+
+        return json.loads((self.V2_FIXTURES / name).read_text(encoding="utf-8"))
+
+    def load_v21(self, name: str) -> dict:
+        import json
+
+        return json.loads((self.V21_FIXTURES / name).read_text(encoding="utf-8"))
+
+    @staticmethod
+    def v2_codes(document: dict) -> list[str]:
+        return [d.code for d in contract_v2.validate_contract(document).diagnostics]
+
+    @staticmethod
+    def v21_codes(document: dict) -> list[str]:
+        return [d.code for d in contract_v21.validate_contract(document).diagnostics]
+
+    @staticmethod
+    def reseal(document: dict) -> dict:
+        document["freeze"]["contract_sha256"] = contract_v2.contract_sha256(document["contract"])
+        return document
+
+    # -- far-ir/2.0 -------------------------------------------------------------------
+
+    def test_claim_specific_code_is_emitted_when_no_earlier_stage_fired(self) -> None:
+        """Baseline: the registered adversarial fixture yields exactly one code."""
+        self.assertEqual(
+            self.v2_codes(self.load_v2("invalid-factorization.json")),
+            ["FACTORIZATION_FAILURE"],
+        )
+
+    def test_cross_field_defect_suppresses_claim_specific_check(self) -> None:
+        """§9.8 cross-stage gate: the defect that makes R2 reproducible or not.
+
+        A record with an unrelated freeze defect AND a genuine decoder error reports only the
+        freeze defect. An implementation that reports both is non-conforming.
+        """
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        self.assertEqual(document["freeze"]["status"], "FROZEN")
+        document["freeze"]["contract_sha256"] = "0" * 64
+        self.assertEqual(self.v2_codes(document), ["FREEZE_HASH_MISMATCH"])
+
+    def test_cross_field_gate_applies_to_a_defect_unrelated_to_the_tables(self) -> None:
+        """A duplicate observation context also suppresses the factorization check."""
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        contexts = document["contract"]["observation_contexts"]
+        document["contract"]["observation_contexts"] = contexts + [copy.deepcopy(contexts[0])]
+        self.reseal(document)
+        self.assertEqual(self.v2_codes(document), ["DUPLICATE_OBSERVATION_CONTEXT"])
+
+    def test_cross_field_codes_keep_their_published_order(self) -> None:
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        contexts = document["contract"]["observation_contexts"]
+        document["contract"]["observation_contexts"] = contexts + [copy.deepcopy(contexts[0])]
+        transformations = document["contract"]["admitted_transformations"]
+        document["contract"]["admitted_transformations"] = transformations + [
+            copy.deepcopy(transformations[0])
+        ]
+        document["freeze"]["contract_sha256"] = "0" * 64
+        self.assertEqual(
+            self.v2_codes(document),
+            [
+                "DUPLICATE_OBSERVATION_CONTEXT",
+                "DUPLICATE_TRANSFORMATION",
+                "FREEZE_HASH_MISMATCH",
+            ],
+        )
+
+    def test_diagnostics_are_a_sequence_with_multiplicity(self) -> None:
+        """One FACTORIZATION_FAILURE per offending case, after any NONFUNCTIONAL_DECODER."""
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        cases = [case["id"] for case in document["contract"]["source_domain"]["cases"]]
+        self.assertEqual(len(cases), 2)
+        decoder = document["report"]["evidence"]["decoder_table"]
+        conflicting = copy.deepcopy(decoder[0])
+        conflicting["behavior_value"] = "DELIBERATELY-CONFLICTING-VALUE"
+        document["report"]["evidence"]["decoder_table"] = decoder + [conflicting]
+        self.reseal(document)
+        self.assertEqual(
+            self.v2_codes(document),
+            ["NONFUNCTIONAL_DECODER", "FACTORIZATION_FAILURE", "FACTORIZATION_FAILURE"],
+        )
+
+    def test_domain_kind_precondition_stops_table_resolution(self) -> None:
+        """§9.8 item 1: no other precondition code can accompany it."""
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        document["contract"]["source_domain"]["kind"] = "described"
+        document["contract"]["required_behavior"]["status"] = "DECLARED"
+        self.reseal(document)
+        self.assertEqual(self.v2_codes(document), ["CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN"])
+
+    def test_unchecked_evidence_runs_no_claim_specific_check(self) -> None:
+        import copy
+
+        document = copy.deepcopy(self.load_v2("invalid-factorization.json"))
+        document["report"]["evidence"]["status"] = "DECLARED_UNCHECKED"
+        self.reseal(document)
+        self.assertEqual(self.v2_codes(document), [])
+
+    # -- far-ir/2.1 -------------------------------------------------------------------
+
+    def test_v21_baseline_frontier_record_is_clean(self) -> None:
+        self.assertEqual(self.v21_codes(self.load_v21("valid-frontier.json")), [])
+
+    def test_v21_stage_one_defect_suppresses_frontier_claims(self) -> None:
+        """Gate 1: a freeze defect hides an otherwise-detectable frontier mismatch."""
+        import copy
+
+        document = copy.deepcopy(self.load_v21("valid-frontier.json"))
+        document["freeze"]["contract_sha256"] = "0" * 64
+        document["report"]["evidence"]["claimed_feasible"] = ["NO-SUCH-CANDIDATE"]
+        self.assertEqual(self.v21_codes(document), ["FREEZE_HASH_MISMATCH"])
+
+    def test_v21_first_bad_candidate_suppresses_the_frontier_comparison(self) -> None:
+        """Gate 3/4: candidate order changes which candidates reach the frontier."""
+        import copy
+
+        document = copy.deepcopy(self.load_v21("valid-frontier.json"))
+        document["report"]["evidence"]["candidates"][0]["costs"] = []
+        self.reseal(document)
+        self.assertEqual(self.v21_codes(document), ["COST_COVERAGE_MISMATCH"])

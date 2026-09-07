@@ -106,7 +106,7 @@ class PCAW6AuditUtilityTests(unittest.TestCase):
         wrong_hash = copy.deepcopy(manifest)
         wrong_hash["artifacts"][0]["sha256"] = "0" * 64
         errors = W6.manifest_errors(wrong_hash)
-        self.assertTrue(any("hash mismatch" in error for error in errors))
+        self.assertTrue(any("W6_ARTIFACT_HASH_MISMATCH" in error for error in errors))
 
         malformed = copy.deepcopy(manifest)
         malformed["artifacts"][0]["unexpected"] = True
