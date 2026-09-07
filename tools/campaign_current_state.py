@@ -16,7 +16,9 @@ This module keeps both facts explicit:
 * a **current-state supplement** records, for each artifact whose bytes have legitimately moved
   since execution, the executed digest, the current digest, and the reason;
 * an artifact in the campaign's **protected set** may never appear in the supplement, so an
-  experimental input, output, or recorded result cannot be re-pointed at post-execution bytes.
+  experimental input, output, or recorded result cannot be re-pointed at post-execution bytes;
+* every protected path must name a real artifact in the executed manifest, so a misspelling cannot
+  silently disable protection.
 
 Undeclared drift still fails closed: an artifact that differs from the manifest with no
 supplement entry is an error, exactly as before.
@@ -76,12 +78,21 @@ def artifact_hash_errors(
 
     ``manifest_hashes`` maps repository-relative path to the digest recorded at execution.
     ``protected_paths`` are artifacts that may never drift: experimental inputs, outputs, and
-    recorded results.
+    recorded results. Every protected path must be present in ``manifest_hashes``; otherwise the
+    protection configuration itself is invalid and the checker fails closed.
     """
     entries, errors = load_supplement(supplement_path, prefix)
     protected = set(protected_paths)
+    manifest_paths = set(manifest_hashes)
 
-    unknown = sorted(set(entries) - set(manifest_hashes))
+    orphaned_protected = sorted(protected - manifest_paths)
+    if orphaned_protected:
+        errors.append(
+            f"{prefix}_PROTECTED_ARTIFACT_NOT_IN_MANIFEST {orphaned_protected}: "
+            "protected paths must name artifacts in the executed manifest"
+        )
+
+    unknown = sorted(set(entries) - manifest_paths)
     if unknown:
         errors.append(f"{prefix}_SUPPLEMENT_UNKNOWN_ARTIFACT {unknown}")
 
