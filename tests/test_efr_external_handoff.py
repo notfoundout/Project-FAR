@@ -14,6 +14,11 @@ def rehash(pkg, rel='packet.json'):
     (pkg/'MANIFEST.json').write_text(json.dumps(m,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
 
 class EFRExternalHandoffTests(unittest.TestCase):
+    def test_repository_gate_passes(self):
+        p=subprocess.run([sys.executable,str(ROOT/'tools/check_efr_external_handoff.py')],cwd=ROOT,text=True,capture_output=True)
+        self.assertEqual(p.returncode,0,p.stdout+p.stderr)
+        self.assertIn('EFR external handoff check: PASS',p.stdout)
+
     def test_frozen_package_verifies(self):
         p=run_verify(PKG); self.assertEqual(p.returncode,0,p.stdout+p.stderr); self.assertIn('VALID PACKET',p.stdout)
 
