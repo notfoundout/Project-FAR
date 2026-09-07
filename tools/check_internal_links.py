@@ -9,6 +9,12 @@ HTML_ANCHOR_RE = re.compile(r'<a\s+(?:[^>]*\s+)?(?:id|name)=["\']?([^"\'\s>]+)',
 ADVISORY_LINE_ANCHOR_SOURCES = {
     (ROOT / 'docs/reports/research-gap-report.md').resolve(),
 }
+# Authenticated historical bytes are evidence snapshots, not live documentation. Their
+# relative links intentionally refer to the historical tree and must not be repaired or
+# followed against the current tree; byte identity is enforced by the audit source locks.
+FROZEN_EVIDENCE_ROOTS = {
+    (ROOT / 'research/theory-dependency-audit/frozen-source-v1.0').resolve(),
+}
 
 def slugify(text: str) -> str:
     text = re.sub(r'[`*_~\[\]()]+', '', text.strip().lower())
@@ -29,9 +35,15 @@ def anchors_for(path: Path):
 def anchor_part(target: str) -> str:
     return unquote(target.split('#',1)[1].split('?',1)[0]) if '#' in target else ''
 
+def is_frozen_evidence(path: Path) -> bool:
+    resolved = path.resolve()
+    return any(resolved == root or root in resolved.parents for root in FROZEN_EVIDENCE_ROOTS)
+
 errors=[]
 warnings=[]
 for path in iter_files({'.md','.yaml','.yml'}):
+    if is_frozen_evidence(path):
+        continue
     text = path.read_text(encoding='utf-8', errors='replace')
     for line, target, is_img, _alt in markdown_links(text):
         if is_ignored_link(target):

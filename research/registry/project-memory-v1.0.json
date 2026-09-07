@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "memory_id": "FAR-PROJECT-MEMORY-1.0",
+  "status": "governed_planning_memory_projection",
+  "authority": "navigation_and_planning_only_not_theory_or_evidence_authority",
+  "as_of_default_branch_commit_at_capture": "df0e072ea9845a8f3723adc2fe3647aa18c5eb95",
+  "capture_date": "2026-09-06",
+  "canonical_resolution_rule": "On any conflict, current default-branch governance, theory, evidence ledgers, and exact program artifacts override this projection.",
+  "epistemic_calibration": {
+    "core_theory": "PROJECT-FAR-CORE-THEORY-1.1 remains closed at its governed scopes; no contradiction is introduced by this calibration.",
+    "mathematical_correctness": "strong_at_governed_scopes",
+    "mechanization": "real_kernel_checked_14_of_14_but_heterogeneous_in_depth",
+    "foundational_mathematical_novelty": "not_established_and_component_prior_art_is_strong",
+    "integrated_methodology_novelty": "unresolved",
+    "w1_independence": "I1_claimed_isolation_only_not_I2_or_I3",
+    "w6_evidence_class": "bounded_internal_controlled_artifact_semantic_detection_conformance",
+    "external_real_world_utility": "unestablished",
+    "commercial_value": "unestablished"
+  },
+  "claim_language_guardrails": [
+    "Do not describe Project FAR as newly discovered foundational mathematics of reasoning unless future evidence independently establishes that claim.",
+    "Do not infer novelty, priority, external effectiveness, product readiness, or commercial value from theorem correctness, Lean formalization, internal review, schema conformance, or W6 controlled-artifact results.",
+    "Describe FAR's current defensible contribution as an integrated contract-relative audit and representation methodology whose component mathematics includes substantial standard prior art.",
+    "Treat FORMALIZED as a mechanization-assurance label, not a theorem-difficulty or novelty score.",
+    "Treat the historical PCA-W6-EMPIRICAL-AUDIT-UTILITY identifier as provenance; summarize its result as bounded internal semantic-detection/conformance evidence."
+  ],
+  "product_thesis": {
+    "current_best_supported_direction": "executable_scope_explicit_audit_discipline",
+    "value_surface": [
+      "declared comparison contracts",
+      "factorization and collision witnesses",
+      "explicit provenance and assumptions",
+      "typed Unknown and failure reporting",
+      "assurance and dependency traces",
+      "cross-artifact preservation audits"
+    ],
+    "required_falsification": "External evidence must show that the integrated workflow catches material defects, reduces meaningful disagreement, or improves audit quality enough to justify its time, cost, and complexity.",
+    "market_status": "hypothesis_only"
+  },
+  "external_program": {
+    "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+    "status": "PREREGISTERED_NOT_EXECUTED",
+    "not_w7": true,
+    "registration_must_not_be_rewritten_by_this_memory": true,
+    "resource_priority_without_changing_registered_decision_rule": [
+      "EFR-R1",
+      "EFR-R2",
+      "EFR-A1",
+      "EFR-N1",
+      "EFR-HD1",
+      "EFR-U1",
+      "EFR-C1"
+    ],
+    "priority_rationale": "Spend external resources first on the cheapest high-information independent replication and falsification components; novelty and correctness/utility remain orthogonal.",
+    "all_registered_components_still_required_for_aggregate_external_effectiveness_label": true
+  },
+  "prior_art_normalization": {
+    "purpose": "Prevent component prior art from being mistaken for Project FAR novelty while preserving independent EFR-N1 adjudication.",
+    "strong_antecedent_families": [
+      "Blackwell comparison of experiments",
+      "minimal sufficient statistics",
+      "Myhill-Nerode and automata minimization",
+      "behavioral equivalence and coalgebraic minimization",
+      "abstract interpretation",
+      "standard quotient, kernel, transport-of-structure, reification, tagged-sum, and finite-extension constructions"
+    ],
+    "does_not_execute_or_prejudge_efr_n1": true
+  },
+  "reproducibility_repair": {
+    "defect": "The historical theory-dependency audit depended on Git history or origin to recover its frozen base blobs and therefore failed in a git-less source archive.",
+    "repair": "Vendor the exact nine preregistered historical Git blobs, verify each against its recorded Git blob SHA, prefer historical Git when available, and fall back only to the authenticated vendored bytes.",
+    "required_regressions": [
+      "vendored_blob_locks_match",
+      "gitless_archive_replays_committed_result",
+      "tampered_vendored_blob_fails_closed"
+    ]
+  },
+  "supporting_artifacts": [
+    "docs/audits/far-core-epistemic-calibration-v1.0.md",
+    "docs/governance/pca-w2-formalization-status-v1.0.md",
+    "docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md",
+    "docs/governance/external-falsification-and-replication-program-v1.0.md",
+    "research/registry/opportunities-v1.0.json"
+  ],
+  "nonclaims": [
+    "theory authority",
+    "new discovery",
+    "novelty or priority adjudication",
+    "I3 external replication",
+    "external utility",
+    "product-market fit",
+    "commercial value",
+    "authorization to change EFR preregistration"
+  ]
+}

@@ -18,6 +18,12 @@ REQUIRED_AUTHORITIES = (
     "docs/governance/unresolved-questions-register.md", "docs/ROADMAP.md",
 )
 FROZEN_PREFIXES = (f"{CASE_REL}/primary-freeze/", f"{CASE_REL}/post-freeze-reveal/")
+# Exact historical source blobs are authenticated evidence snapshots, not live docs.
+# Their relative links intentionally target the historical tree and their bytes may not be
+# rewritten merely to satisfy current-tree navigation checks.
+FROZEN_LINK_EVIDENCE_ROOTS = (
+    (ROOT / "research/theory-dependency-audit/frozen-source-v1.0").resolve(),
+)
 
 
 def fail(message: str) -> None:
@@ -59,10 +65,15 @@ def check_authorities_and_architecture() -> None:
             fail(f"canonical map must declare exactly one {label} authority")
 
 
+def _is_frozen_link_evidence(path: Path) -> bool:
+    resolved = path.resolve()
+    return any(resolved == root or root in resolved.parents for root in FROZEN_LINK_EVIDENCE_ROOTS)
+
+
 def check_markdown_links() -> None:
     pattern = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
     for path in sorted(ROOT.rglob("*.md")):
-        if ".git" in path.parts:
+        if ".git" in path.parts or _is_frozen_link_evidence(path):
             continue
         for raw in pattern.findall(path.read_text(encoding="utf-8")):
             target = raw.split(maxsplit=1)[0].strip("<>")
