@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.example/schemas/efr-a1-independent-pair-intake-v1.0.json",
+  "title": "EFR A1 independent paired-representation intake",
+  "description": "Public intake shape only. Presence of a conforming record does not constitute EFR execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["submission_id", "submitter_id_or_pseudonym", "independence_attestation", "source_domain", "observation_contract", "representation_a", "representation_b", "human_judgment", "provenance"],
+  "properties": {
+    "submission_id": {"type": "string", "minLength": 1},
+    "submitter_id_or_pseudonym": {"type": "string", "minLength": 1},
+    "independence_attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["not_project_far_author", "pair_not_authored_by_project_far", "judgment_made_without_far_output"],
+      "properties": {
+        "not_project_far_author": {"const": true},
+        "pair_not_authored_by_project_far": {"const": true},
+        "judgment_made_without_far_output": {"const": true}
+      }
+    },
+    "source_domain": {"type": "string", "minLength": 1},
+    "observation_contract": {"type": "object"},
+    "representation_a": {},
+    "representation_b": {},
+    "human_judgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preferred", "rationale"],
+      "properties": {
+        "preferred": {"enum": ["A", "B", "EQUIVALENT", "INDETERMINATE"]},
+        "rationale": {"type": "string", "minLength": 1}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["source_description"],
+      "properties": {"source_description": {"type": "string", "minLength": 1}}
+    }
+  }
+}
