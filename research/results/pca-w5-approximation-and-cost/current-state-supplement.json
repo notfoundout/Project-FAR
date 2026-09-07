@@ -16,16 +16,16 @@
     {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
       "executed_sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48",
-      "current_sha256": "9046960ab7b69d8cb26379e1b9bb1d06edfb34b52baa12fdfe3503950c680cf5",
+      "current_sha256": "3c8cd0ece67f0908ff2bbc3015ca5d2ccc91222c72276efb26d91701d929b141",
       "class": "specification_surface",
-      "reason": "Published the far-ir/2.1 diagnostic vocabulary, ordered-sequence semantics, and the exact gate/suppression rules, so EFR-R2's error-category criterion is satisfiable. Corrects a documentation gap; adds no semantics and changes no W5 computation or result. Bound for R2 by EFR-001-R2-INPUT-AMENDMENT-1.1."
+      "reason": "Published the far-ir/2.1 diagnostic vocabulary, ordered-sequence semantics, and the exact gate/suppression rules, including exact sequence/multiplicity wording required by EFR-R2. Corrects a documentation gap; adds no semantics and changes no W5 computation or result. Bound for R2 by EFR-001-R2-INPUT-AMENDMENT-1.1."
     },
     {
       "path": "tools/check_pca_w5_approximation_cost.py",
       "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
-      "current_sha256": "6764057d61b4c55a0e359e1dad4fb351580bd2c0b2328e31ac0135a7bb8ef422",
+      "current_sha256": "0a3a9765f8df8fa5130627429cb6289b6036d31a0974376c6c2b0827fbf4c095",
       "class": "verification_tooling",
-      "reason": "Artifact hash verification delegated to tools/campaign_current_state.py so the executed manifest is preserved rather than rewritten. Adds the protected-artifact rule. Changes no W5 input, computation, or recorded result."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
     }
   ]
 }

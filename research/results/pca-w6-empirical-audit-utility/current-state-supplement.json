@@ -51,9 +51,9 @@
     {
       "path": "tools/check_pca_w6_empirical_audit_utility.py",
       "executed_sha256": "046754794fb21ef2d8a27c40f933a022370d78356562a9a9a340c07255a62a40",
-      "current_sha256": "2781edf08412ddb8222f608a2777870b84b059ffcab7e87d365bf6f41106a224",
+      "current_sha256": "4157a000501f2db82b1c96f825170a516e9b641e984e7021242c66282d0536cd",
       "class": "verification_tooling",
-      "reason": "Artifact hash verification delegated to tools/campaign_current_state.py so the executed manifest is preserved rather than rewritten. Declares PROTECTED_ARTIFACTS. The preregistered protocol-base blob pin is unchanged and still enforced; no W6 input, computation, or recorded result changed."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the W6 checker explicitly preflights every historical manifest path for missing/non-file substitutions and preserves PROTECTED_ARTIFACTS. The preregistered protocol-base blob pin is unchanged; no W6 input, computation, or recorded result changed."
     }
   ]
 }
