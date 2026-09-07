@@ -35,7 +35,7 @@
     },
     {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
-      "sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48"
+      "sha256": "fe210844d49a6905074c39737e6126673dc2ce7c65205096cf7b5e4f7515fe99"
     },
     {
       "path": "mechanization/far_mechanization/contract_v21.py",

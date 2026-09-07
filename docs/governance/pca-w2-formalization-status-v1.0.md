@@ -38,6 +38,21 @@ This classification does not downgrade any theorem or kernel check. It prevents 
 
 See [`far-core-epistemic-calibration-v1.0.md`](../audits/far-core-epistemic-calibration-v1.0.md) for the non-authoritative cross-claim calibration and prior-art normalization.
 
+## Minimality bridge (2026-09-07)
+
+`FAR-CORE-002` and `FAR-CORE-004` are governed as statements about *least-informative sufficient* representations, but the Lean corpus previously expressed minimality only as kernel equality, and this ledger recorded `least informative means ker rho equals ker beta` as a **premise**. The kernel-equality theorems therefore did not by themselves carry the minimality claims they were cited for.
+
+The substrate now defines `LeastInformativeSufficient` — exact sufficiency plus being coarsest among exactly sufficient representations into `Type u` — and derives the identification instead of assuming it:
+
+- `leastInformativeSufficient_iff_kernelEqual`: least-informative sufficiency is equivalent to kernel equality with the declared behavior;
+- `quotient_is_least_informative_sufficient`: the minimum is attained, so the definition is not vacuous;
+- `no_simultaneous_least_informative_sufficient`: `FAR-CORE-004` stated directly about minimality rather than about kernels;
+- `FARCoreV11Mutations.finer_sufficient_is_not_least_informative`: a sufficient but strictly finer representation is excluded.
+
+The comparison class is representations into `Type u`, the universe of the case type and of the observational quotient, so it always contains the canonical minimal representative. Representations in larger universes are outside the formalized statement.
+
+`FAR-CORE-004`'s recorded kernel assumptions change from `none` to `Classical.choice, Quot.sound`, because the general minimality form routes through the factorization criterion and the canonical quotient. No governed statement, claim status, formalization status, or assurance dimension changes: this closes a prose-to-Lean adequacy gap and does not upgrade depth, novelty, independence, or utility.
+
 ## FAR-CORE-014 closure
 
 The bounded SSS module now encodes the governed unit-free MLL witness surface end to end: formula/sequent syntax, resource-splitting derivability, atom balance, the named `S_or` and `S_and` witness profiles, the exhaustive four monotone successor-set decoders, and the bounded projected-decoder failure. The witness proofs compose with the decoder theorem without changing the governed decoder classes or adding a narrative premise.

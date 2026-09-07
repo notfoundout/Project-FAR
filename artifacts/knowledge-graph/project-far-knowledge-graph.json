@@ -824,7 +824,7 @@
       "id": "EDGE-00118",
       "provenance": "formalization ledger premise",
       "source": "theorem:FARCoreV11.quotient_is_sufficient",
-      "target": "premise:915c877b7ee41824",
+      "target": "premise:9675bb91f2cbb7bc",
       "type": "ASSUMES"
     },
     {
@@ -1733,915 +1733,957 @@
     {
       "id": "EDGE-00248",
       "provenance": "formalization mapping",
+      "source": "definition:leastInformativeSufficient_iff_kernelEqual",
+      "target": "theorem:FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+      "type": "DERIVES"
+    },
+    {
+      "id": "EDGE-00249",
+      "provenance": "formalization mapping",
       "source": "definition:no_contract_free_simultaneous_minimum",
       "target": "theorem:FARCoreV11.no_contract_free_simultaneous_minimum",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00249",
+      "id": "EDGE-00250",
+      "provenance": "formalization mapping",
+      "source": "definition:no_simultaneous_least_informative_sufficient",
+      "target": "theorem:FARCoreV11.no_simultaneous_least_informative_sufficient",
+      "type": "DERIVES"
+    },
+    {
+      "id": "EDGE-00251",
       "provenance": "formalization mapping",
       "source": "definition:observational_quotient_universal",
       "target": "theorem:FARCoreV11.observational_quotient_universal",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00250",
+      "id": "EDGE-00252",
       "provenance": "formalization mapping",
       "source": "definition:omega_elimination",
       "target": "theorem:FARCoreV11.Omega.omega_elimination",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00251",
+      "id": "EDGE-00253",
       "provenance": "formalization mapping",
       "source": "definition:omitted_parameter_refutes_sufficiency",
       "target": "theorem:FARCoreV11.omitted_parameter_refutes_sufficiency",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00252",
+      "id": "EDGE-00254",
       "provenance": "formalization mapping",
       "source": "definition:primitive_vocabulary_count_noninvariant",
       "target": "theorem:FARCoreV11.primitive_vocabulary_count_noninvariant",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00253",
+      "id": "EDGE-00255",
       "provenance": "formalization mapping",
       "source": "definition:projected_successor_decoder_failure",
       "target": "theorem:FARCoreV11.SSS.projected_successor_decoder_failure",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00254",
+      "id": "EDGE-00256",
+      "provenance": "formalization mapping",
+      "source": "definition:quotient_is_least_informative_sufficient",
+      "target": "theorem:FARCoreV11.quotient_is_least_informative_sufficient",
+      "type": "DERIVES"
+    },
+    {
+      "id": "EDGE-00257",
       "provenance": "formalization mapping",
       "source": "definition:quotient_is_sufficient",
       "target": "theorem:FARCoreV11.quotient_is_sufficient",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00255",
+      "id": "EDGE-00258",
       "provenance": "formalization mapping",
       "source": "definition:reification_recovers_relation",
       "target": "theorem:FARCoreV11.reification_recovers_relation",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00256",
+      "id": "EDGE-00259",
       "provenance": "formalization mapping",
       "source": "definition:residue_can_change_with_frame",
       "target": "theorem:FARCoreV11.residue_can_change_with_frame",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00257",
+      "id": "EDGE-00260",
       "provenance": "formalization mapping",
       "source": "definition:resolve_is_composition",
       "target": "theorem:FARCoreV11.Omega.resolve_is_composition",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00258",
+      "id": "EDGE-00261",
       "provenance": "formalization mapping",
       "source": "definition:sAnd_witness_certified",
       "target": "theorem:FARCoreV11.SSS.MLL.sAnd_witness_certified",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00259",
+      "id": "EDGE-00262",
       "provenance": "formalization mapping",
       "source": "definition:sOr_witness_certified",
       "target": "theorem:FARCoreV11.SSS.MLL.sOr_witness_certified",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00260",
+      "id": "EDGE-00263",
       "provenance": "formalization mapping",
       "source": "definition:split_combine_operator",
       "target": "theorem:FARCoreV11.split_combine_operator",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00261",
+      "id": "EDGE-00264",
       "provenance": "formalization mapping",
       "source": "definition:transport_operation_commutes",
       "target": "theorem:FARCoreV11.transport_operation_commutes",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00262",
+      "id": "EDGE-00265",
       "provenance": "formalization mapping",
       "source": "definition:transport_relation_commutes",
       "target": "theorem:FARCoreV11.transport_relation_commutes",
       "type": "DERIVES"
     },
     {
-      "id": "EDGE-00263",
+      "id": "EDGE-00266",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.Omega.omega_elimination",
       "target": "claim:FAR-CORE-013",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00264",
+      "id": "EDGE-00267",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.Omega.resolve_is_composition",
       "target": "claim:FAR-CORE-013",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00265",
+      "id": "EDGE-00268",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.MLL.bounded_projected_decoder_failure",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00266",
+      "id": "EDGE-00269",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.MLL.derivable_atom_balance",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00267",
+      "id": "EDGE-00270",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.MLL.sAnd_witness_certified",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00268",
+      "id": "EDGE-00271",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.MLL.sOr_witness_certified",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00269",
+      "id": "EDGE-00272",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.four_monotone_decoders",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00270",
+      "id": "EDGE-00273",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.frontier_factorization",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00271",
+      "id": "EDGE-00274",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.hyperedge_factorization",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00272",
+      "id": "EDGE-00275",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.SSS.projected_successor_decoder_failure",
       "target": "claim:FAR-CORE-014",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00273",
+      "id": "EDGE-00276",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.absent_unknown_must_separate",
       "target": "claim:FAR-CORE-012",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00274",
+      "id": "EDGE-00277",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.action_preserves_observational_equivalence",
       "target": "claim:FAR-CORE-003",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00275",
+      "id": "EDGE-00278",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.collision_refutes_sufficiency",
       "target": "claim:FAR-CORE-001",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00276",
+      "id": "EDGE-00279",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.combine_split_operator_family",
       "target": "claim:FAR-CORE-008",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00277",
+      "id": "EDGE-00280",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.commonTheory_frame_independent",
       "target": "claim:FAR-CORE-010",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00278",
+      "id": "EDGE-00281",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.commonTheory_invariant_under_truth_equivalence",
       "target": "claim:FAR-CORE-010",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00279",
+      "id": "EDGE-00282",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.descendAction",
       "target": "claim:FAR-CORE-003",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00280",
+      "id": "EDGE-00283",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.embeddingRangeEquiv",
       "target": "claim:FAR-CORE-006",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00281",
+      "id": "EDGE-00284",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.exact_factorization_criterion",
       "target": "claim:FAR-CORE-001",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00282",
+      "id": "EDGE-00285",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.factorToQuotient_surjective",
       "target": "claim:FAR-CORE-002",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00283",
+      "id": "EDGE-00286",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.finite_operator_count_noninvariant",
       "target": "claim:FAR-CORE-008",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00284",
+      "id": "EDGE-00287",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.finite_panel_two_completions",
       "target": "claim:FAR-CORE-009",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00285",
+      "id": "EDGE-00288",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.identity_is_universally_sufficient",
       "target": "claim:FAR-CORE-004",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00286",
+      "id": "EDGE-00289",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.invariants_antitone",
       "target": "claim:FAR-CORE-005",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00287",
+      "id": "EDGE-00290",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.leastInformativeImageEquiv",
       "target": "claim:FAR-CORE-002",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00288",
+      "id": "EDGE-00291",
+      "provenance": "assurance Lean mapping",
+      "source": "theorem:FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+      "target": "claim:FAR-CORE-002",
+      "type": "FORMALIZES"
+    },
+    {
+      "id": "EDGE-00292",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.no_contract_free_simultaneous_minimum",
       "target": "claim:FAR-CORE-004",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00289",
+      "id": "EDGE-00293",
+      "provenance": "assurance Lean mapping",
+      "source": "theorem:FARCoreV11.no_simultaneous_least_informative_sufficient",
+      "target": "claim:FAR-CORE-004",
+      "type": "FORMALIZES"
+    },
+    {
+      "id": "EDGE-00294",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.observational_quotient_universal",
       "target": "claim:FAR-CORE-002",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00290",
+      "id": "EDGE-00295",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.omitted_parameter_refutes_sufficiency",
       "target": "claim:FAR-CORE-011",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00291",
+      "id": "EDGE-00296",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.primitive_vocabulary_count_noninvariant",
       "target": "claim:FAR-CORE-007",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00292",
+      "id": "EDGE-00297",
+      "provenance": "assurance Lean mapping",
+      "source": "theorem:FARCoreV11.quotient_is_least_informative_sufficient",
+      "target": "claim:FAR-CORE-002",
+      "type": "FORMALIZES"
+    },
+    {
+      "id": "EDGE-00298",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.quotient_is_sufficient",
       "target": "claim:FAR-CORE-002",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00293",
+      "id": "EDGE-00299",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.reification_recovers_relation",
       "target": "claim:FAR-CORE-007",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00294",
+      "id": "EDGE-00300",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.residue_can_change_with_frame",
       "target": "claim:FAR-CORE-010",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00295",
+      "id": "EDGE-00301",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.split_combine_operator",
       "target": "claim:FAR-CORE-008",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00296",
+      "id": "EDGE-00302",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.transport_operation_commutes",
       "target": "claim:FAR-CORE-006",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00297",
+      "id": "EDGE-00303",
       "provenance": "assurance Lean mapping",
       "source": "theorem:FARCoreV11.transport_relation_commutes",
       "target": "claim:FAR-CORE-006",
       "type": "FORMALIZES"
     },
     {
-      "id": "EDGE-00298",
+      "id": "EDGE-00304",
       "provenance": "experimental finite demonstrator",
       "source": "representation:finite-playground",
       "target": "contract:local-exact-comparison",
       "type": "IMPLEMENTS"
     },
     {
-      "id": "EDGE-00299",
+      "id": "EDGE-00305",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:008f11826accd5b3",
       "target": "claim:FAR-CORE-011",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00300",
+      "id": "EDGE-00306",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:01fd8978ea456d93",
       "target": "claim:FAR-CORE-009",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00301",
+      "id": "EDGE-00307",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:063d909caedfac9e",
       "target": "claim:FAR-CORE-012",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00302",
+      "id": "EDGE-00308",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:192a8045e7e9944b",
       "target": "claim:FAR-CORE-002",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00303",
+      "id": "EDGE-00309",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:3660e740622744a9",
       "target": "claim:FAR-CORE-011",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00304",
+      "id": "EDGE-00310",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:66cfd2f5a024dc6b",
       "target": "claim:FAR-CORE-011",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00305",
+      "id": "EDGE-00311",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:68d385a60c8dd82c",
       "target": "claim:FAR-CORE-007",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00306",
+      "id": "EDGE-00312",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:7ffbf2305ba8ad08",
       "target": "claim:FAR-CORE-008",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00307",
+      "id": "EDGE-00313",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:879cc2aafe31922d",
       "target": "claim:FAR-CORE-003",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00308",
+      "id": "EDGE-00314",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:9a25252f4a71bcda",
       "target": "claim:FAR-CORE-010",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00309",
+      "id": "EDGE-00315",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:a245e3237d58aa3c",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00310",
+      "id": "EDGE-00316",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:a4337d63abc03b9f",
       "target": "claim:FAR-CORE-005",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00311",
+      "id": "EDGE-00317",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:a6d9dbfcc21e76ad",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00312",
+      "id": "EDGE-00318",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:a889b15b2bf6d01a",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00313",
+      "id": "EDGE-00319",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:ab7cfaea3e895059",
       "target": "claim:FAR-CORE-013",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00314",
+      "id": "EDGE-00320",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:b1ceb1d6971aa660",
       "target": "claim:FAR-CORE-006",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00315",
+      "id": "EDGE-00321",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:f162c77092371788",
       "target": "claim:FAR-CORE-004",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00316",
+      "id": "EDGE-00322",
       "provenance": "counterexample to stronger variant",
       "source": "counterexample:fe42dddcb9b1fcf5",
       "target": "claim:FAR-CORE-001",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00317",
+      "id": "EDGE-00323",
       "provenance": "assurance limitation",
       "source": "limitation:0257adaf7b9e8a5a",
       "target": "claim:FAR-CORE-007",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00318",
+      "id": "EDGE-00324",
       "provenance": "assurance limitation",
       "source": "limitation:0d8ecd89b2143e12",
       "target": "claim:FAR-CORE-003",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00319",
+      "id": "EDGE-00325",
       "provenance": "assurance limitation",
       "source": "limitation:16c77e4bdb2184ec",
       "target": "claim:FAR-CORE-012",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00320",
+      "id": "EDGE-00326",
       "provenance": "assurance limitation",
       "source": "limitation:2198f460603ae2a2",
       "target": "claim:FAR-CORE-004",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00321",
+      "id": "EDGE-00327",
       "provenance": "assurance limitation",
       "source": "limitation:34522eee3deea642",
       "target": "claim:FAR-CORE-006",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00322",
+      "id": "EDGE-00328",
       "provenance": "assurance limitation",
       "source": "limitation:53535017c69f7ca8",
       "target": "claim:FAR-CORE-010",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00323",
+      "id": "EDGE-00329",
       "provenance": "assurance limitation",
       "source": "limitation:5c7473a515e22f4b",
       "target": "claim:FAR-CORE-010",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00324",
+      "id": "EDGE-00330",
       "provenance": "assurance limitation",
       "source": "limitation:5d0c95cae86d632e",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00325",
+      "id": "EDGE-00331",
       "provenance": "assurance limitation",
       "source": "limitation:71b8c522e9d3ac88",
       "target": "claim:FAR-CORE-009",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00326",
+      "id": "EDGE-00332",
       "provenance": "assurance limitation",
       "source": "limitation:8305f23b56beccc0",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00327",
+      "id": "EDGE-00333",
       "provenance": "assurance limitation",
       "source": "limitation:8411fc34c6e71f31",
       "target": "claim:FAR-CORE-007",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00328",
+      "id": "EDGE-00334",
       "provenance": "assurance limitation",
       "source": "limitation:841defe79afb7467",
       "target": "claim:FAR-CORE-002",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00329",
+      "id": "EDGE-00335",
       "provenance": "assurance limitation",
       "source": "limitation:88d744b119322f82",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00330",
+      "id": "EDGE-00336",
       "provenance": "assurance limitation",
       "source": "limitation:8f09e92c7aec3be6",
       "target": "claim:FAR-CORE-008",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00331",
+      "id": "EDGE-00337",
       "provenance": "assurance limitation",
       "source": "limitation:93377fb7469985f4",
       "target": "claim:FAR-CORE-003",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00332",
+      "id": "EDGE-00338",
       "provenance": "assurance limitation",
       "source": "limitation:a158c9954382b2e1",
       "target": "claim:FAR-CORE-014",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00333",
+      "id": "EDGE-00339",
       "provenance": "assurance limitation",
       "source": "limitation:a79eb77e267eba27",
       "target": "claim:FAR-CORE-002",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00334",
+      "id": "EDGE-00340",
       "provenance": "assurance limitation",
       "source": "limitation:afc8cf5e500a63ed",
       "target": "claim:FAR-CORE-004",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00335",
+      "id": "EDGE-00341",
       "provenance": "assurance limitation",
       "source": "limitation:c4ec3e16ca27130c",
       "target": "claim:FAR-CORE-001",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00336",
+      "id": "EDGE-00342",
       "provenance": "assurance limitation",
       "source": "limitation:dd1d1570cfc9d310",
       "target": "claim:FAR-CORE-013",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00337",
+      "id": "EDGE-00343",
       "provenance": "assurance limitation",
       "source": "limitation:e4d38b388e698276",
       "target": "claim:FAR-CORE-011",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00338",
+      "id": "EDGE-00344",
       "provenance": "assurance limitation",
       "source": "limitation:e8a2a8ea89253e5e",
       "target": "claim:FAR-CORE-012",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00339",
+      "id": "EDGE-00345",
       "provenance": "assurance limitation",
       "source": "limitation:f071c3def9a9924e",
       "target": "claim:FAR-CORE-005",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00340",
+      "id": "EDGE-00346",
       "provenance": "assurance limitation",
       "source": "limitation:f0bd8ea0617c2971",
       "target": "claim:FAR-CORE-001",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00341",
+      "id": "EDGE-00347",
       "provenance": "assurance limitation",
       "source": "limitation:ff4fb91a98ce6919",
       "target": "claim:FAR-CORE-013",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00342",
+      "id": "EDGE-00348",
       "provenance": "CITE-REL-002",
       "source": "source:Blackwell1953EquivalentComparisons",
       "target": "claim:FAR-CORE-004",
       "type": "LIMITS"
     },
     {
-      "id": "EDGE-00343",
+      "id": "EDGE-00349",
       "provenance": "assurance internal proof",
       "source": "proof:0bd953991c3c3f3c",
       "target": "claim:FAR-CORE-014",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00344",
+      "id": "EDGE-00350",
       "provenance": "assurance internal proof",
       "source": "proof:11dbf751e6747fe3",
       "target": "claim:FAR-CORE-006",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00345",
+      "id": "EDGE-00351",
       "provenance": "assurance internal proof",
       "source": "proof:30a0f0e256249047",
       "target": "claim:FAR-CORE-011",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00346",
+      "id": "EDGE-00352",
       "provenance": "assurance internal proof",
       "source": "proof:388ae432a1ab1875",
       "target": "claim:FAR-CORE-001",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00347",
+      "id": "EDGE-00353",
       "provenance": "assurance internal proof",
       "source": "proof:41600bec6a42aa49",
       "target": "claim:FAR-CORE-014",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00348",
+      "id": "EDGE-00354",
       "provenance": "assurance internal proof",
       "source": "proof:5dd63fba64a995ca",
       "target": "claim:FAR-CORE-009",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00349",
+      "id": "EDGE-00355",
       "provenance": "assurance internal proof",
       "source": "proof:5ef341c185249428",
       "target": "claim:FAR-CORE-010",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00350",
+      "id": "EDGE-00356",
       "provenance": "assurance internal proof",
       "source": "proof:64f502128fb351e1",
       "target": "claim:FAR-CORE-003",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00351",
+      "id": "EDGE-00357",
       "provenance": "assurance internal proof",
       "source": "proof:7e781719c04e7fd9",
       "target": "claim:FAR-CORE-007",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00352",
+      "id": "EDGE-00358",
       "provenance": "assurance internal proof",
       "source": "proof:893e44cb364507e3",
       "target": "claim:FAR-CORE-005",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00353",
+      "id": "EDGE-00359",
       "provenance": "assurance internal proof",
       "source": "proof:91e51892a8134b9e",
       "target": "claim:FAR-CORE-013",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00354",
+      "id": "EDGE-00360",
       "provenance": "assurance internal proof",
       "source": "proof:96ad3bce0761c0df",
       "target": "claim:FAR-CORE-002",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00355",
+      "id": "EDGE-00361",
       "provenance": "assurance internal proof",
       "source": "proof:98bf9e28bc8c08df",
       "target": "claim:FAR-CORE-012",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00356",
+      "id": "EDGE-00362",
       "provenance": "assurance internal proof",
       "source": "proof:d744bc6abf5953ab",
       "target": "claim:FAR-CORE-008",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00357",
+      "id": "EDGE-00363",
       "provenance": "assurance internal proof",
       "source": "proof:eecc266d3b59bd72",
       "target": "claim:FAR-CORE-004",
       "type": "PROVES"
     },
     {
-      "id": "EDGE-00358",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-001",
-      "type": "SUPPORTS"
-    },
-    {
-      "id": "EDGE-00359",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-002",
-      "type": "SUPPORTS"
-    },
-    {
-      "id": "EDGE-00360",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-003",
-      "type": "SUPPORTS"
-    },
-    {
-      "id": "EDGE-00361",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-004",
-      "type": "SUPPORTS"
-    },
-    {
-      "id": "EDGE-00362",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-005",
-      "type": "SUPPORTS"
-    },
-    {
-      "id": "EDGE-00363",
-      "provenance": "independent review",
-      "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-006",
-      "type": "SUPPORTS"
-    },
-    {
       "id": "EDGE-00364",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-007",
+      "target": "claim:FAR-CORE-001",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00365",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-008",
+      "target": "claim:FAR-CORE-002",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00366",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-009",
+      "target": "claim:FAR-CORE-003",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00367",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-010",
+      "target": "claim:FAR-CORE-004",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00368",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-011",
+      "target": "claim:FAR-CORE-005",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00369",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-012",
+      "target": "claim:FAR-CORE-006",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00370",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-013",
+      "target": "claim:FAR-CORE-007",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00371",
       "provenance": "independent review",
       "source": "evidence:93709b933ad8d9b2",
-      "target": "claim:FAR-CORE-014",
+      "target": "claim:FAR-CORE-008",
       "type": "SUPPORTS"
     },
     {
       "id": "EDGE-00372",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-009",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00373",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-010",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00374",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-011",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00375",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-012",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00376",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-013",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00377",
+      "provenance": "independent review",
+      "source": "evidence:93709b933ad8d9b2",
+      "target": "claim:FAR-CORE-014",
+      "type": "SUPPORTS"
+    },
+    {
+      "id": "EDGE-00378",
       "provenance": "independent review",
       "source": "evidence:ecdf16faab3c8dfa",
       "target": "claim:FAR-CORE-013",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00373",
+      "id": "EDGE-00379",
       "provenance": "independent review",
       "source": "evidence:ecdf16faab3c8dfa",
       "target": "claim:FAR-CORE-014",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00374",
+      "id": "EDGE-00380",
       "provenance": "W1 promotion record",
       "source": "pr-commit:W1-review",
       "target": "version:PROJECT-FAR-CORE-THEORY-1.1",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00375",
+      "id": "EDGE-00381",
       "provenance": "CITE-REL-001",
       "source": "source:Blackwell1953EquivalentComparisons",
       "target": "claim:FAR-CORE-001",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00376",
+      "id": "EDGE-00382",
       "provenance": "CITE-REL-008",
       "source": "source:GalmichePerrier1994ProofSearchLinearLogic",
       "target": "claim:FAR-CORE-014",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00377",
+      "id": "EDGE-00383",
       "provenance": "CITE-REL-005",
       "source": "source:vanGlabbeek1990LinearBranchingSpectrum",
       "target": "claim:FAR-CORE-003",
       "type": "SUPPORTS"
     },
     {
-      "id": "EDGE-00378",
+      "id": "EDGE-00384",
       "provenance": "W1 promotion record",
       "source": "pr-commit:W1-review",
       "target": "pr-commit:W1-target",
@@ -2656,8 +2698,8 @@
     "research/registry/opportunities-v1.0.json": "65dc1c36f47e5dbe6420b54d0f3e01ff59daff05f1ba6d1958a6390992bc77a2",
     "research/registry/research-questions-v1.0.json": "0343925af6f4cb67a2075f6f8e1f23348d022cb0d080a8794fa3f3afcf790ced",
     "research/registry/research-tools-v1.0.json": "6fea638875a6efa1f9b18e52260f468ef81e8f62cab15f66f19d38998cc298da",
-    "theory/evaluation/far-core-assurance-v1.0.json": "34aef6d2f628b719dd5f09cd09fef3b67feba5aff1f3fa309adfbb355f793191",
-    "theory/evaluation/far-core-formalization-ledger-v1.0.json": "79b9d4df29f7d6be5a2d08d70c99730831ea49bba8d404a3cbc5dd640ec24c7c",
+    "theory/evaluation/far-core-assurance-v1.0.json": "740a4e17398f0cf3b320c81547efbde6ad29eba50da1afe44cfe96879dddb355",
+    "theory/evaluation/far-core-formalization-ledger-v1.0.json": "798a1c4e2955dae6f2b230ebaf31b61bfe5aa1ca8b6862b67d4124dc0b4d1f77",
     "theory/evaluation/pca-w1-independent-review-promotion-v1.0.json": "ef33cf903ad4b3e59bee4fccf98fbdc2ef82a42c49cb3e8ddf26c9fc29a47138",
     "theory/terminal/project-far-core-theory-v1.1.json": "e1e0ca8d563ad515a084f33f27a3f6c94feecd042d9081ee60ac97d27350bb78"
   },
@@ -3203,8 +3245,22 @@
       "type": "definition"
     },
     {
+      "id": "definition:leastInformativeSufficient_iff_kernelEqual",
+      "label": "encoded definition for FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+      "source": "mechanization/lean/FARCoreV11Substrate.lean",
+      "status": "formalization-mapped",
+      "type": "definition"
+    },
+    {
       "id": "definition:no_contract_free_simultaneous_minimum",
       "label": "encoded definition for FARCoreV11.no_contract_free_simultaneous_minimum",
+      "source": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "status": "formalization-mapped",
+      "type": "definition"
+    },
+    {
+      "id": "definition:no_simultaneous_least_informative_sufficient",
+      "label": "encoded definition for FARCoreV11.no_simultaneous_least_informative_sufficient",
       "source": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "status": "formalization-mapped",
       "type": "definition"
@@ -3241,6 +3297,13 @@
       "id": "definition:projected_successor_decoder_failure",
       "label": "encoded definition for FARCoreV11.SSS.projected_successor_decoder_failure",
       "source": "mechanization/lean/FARCoreV11SSS.lean",
+      "status": "formalization-mapped",
+      "type": "definition"
+    },
+    {
+      "id": "definition:quotient_is_least_informative_sufficient",
+      "label": "encoded definition for FARCoreV11.quotient_is_least_informative_sufficient",
+      "source": "mechanization/lean/FARCoreV11Substrate.lean",
       "status": "formalization-mapped",
       "type": "definition"
     },
@@ -3945,8 +4008,8 @@
       "type": "premise"
     },
     {
-      "id": "premise:915c877b7ee41824",
-      "label": "least informative means ker rho equals ker beta",
+      "id": "premise:9675bb91f2cbb7bc",
+      "label": "least informative is defined by the informativeness preorder on sufficient representations into Type u, and kernel equality with beta is derived from it rather than assumed",
       "source": "theory/evaluation/far-core-formalization-ledger-v1.0.json",
       "status": "encoded",
       "type": "premise"
@@ -4519,8 +4582,22 @@
       "type": "theorem"
     },
     {
+      "id": "theorem:FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+      "label": "FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+      "source": "mechanization/lean/FARCoreV11Substrate.lean",
+      "status": "FORMALIZED",
+      "type": "theorem"
+    },
+    {
       "id": "theorem:FARCoreV11.no_contract_free_simultaneous_minimum",
       "label": "FARCoreV11.no_contract_free_simultaneous_minimum",
+      "source": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "status": "FORMALIZED",
+      "type": "theorem"
+    },
+    {
+      "id": "theorem:FARCoreV11.no_simultaneous_least_informative_sufficient",
+      "label": "FARCoreV11.no_simultaneous_least_informative_sufficient",
       "source": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "status": "FORMALIZED",
       "type": "theorem"
@@ -4543,6 +4620,13 @@
       "id": "theorem:FARCoreV11.primitive_vocabulary_count_noninvariant",
       "label": "FARCoreV11.primitive_vocabulary_count_noninvariant",
       "source": "mechanization/lean/FARCoreV11Claims001To012.lean",
+      "status": "FORMALIZED",
+      "type": "theorem"
+    },
+    {
+      "id": "theorem:FARCoreV11.quotient_is_least_informative_sufficient",
+      "label": "FARCoreV11.quotient_is_least_informative_sufficient",
+      "source": "mechanization/lean/FARCoreV11Substrate.lean",
       "status": "FORMALIZED",
       "type": "theorem"
     },

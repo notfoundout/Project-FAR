@@ -35,6 +35,8 @@ The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0
 
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence; W6 machine controls do not establish human or external effectiveness.
 
+For what these labels do and do not mean across claims, read the [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md). It is a non-authoritative Research calibration that changes no claim status, and it records that much of the core mathematics instantiates standard patterns (Blackwell comparison, minimal sufficient statistics, Myhill-Nerode, coalgebraic minimization, abstract interpretation), that `14/14 FORMALIZED` is a mechanization-status label rather than fourteen deep or novel results, and that foundational mathematical novelty, external independence, empirical utility, and commercial value are all unestablished.
+
 Canonical links:
 
 - [Corrected core theory v1.1](theory/theorems/Project-FAR-Theory-Closure-v1.1.md)
@@ -48,6 +50,7 @@ Canonical links:
 - [W5 approximation/cost status](docs/governance/pca-w5-approximation-cost-status-v1.0.md)
 - [W6 bounded audit-utility status](docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md)
 - [Canonical W1–W6 claim/evidence matrix](docs/governance/w1-w6-claim-evidence-matrix-v1.0.md)
+- [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md) (non-authoritative Research calibration)
 - [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md)
 - [W6 execution and results](docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md)
 - [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)

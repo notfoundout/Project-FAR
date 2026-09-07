@@ -76,7 +76,9 @@
         "FARCoreV11.quotient_is_sufficient",
         "FARCoreV11.observational_quotient_universal",
         "FARCoreV11.factorToQuotient_surjective",
-        "FARCoreV11.leastInformativeImageEquiv"
+        "FARCoreV11.leastInformativeImageEquiv",
+        "FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+        "FARCoreV11.quotient_is_least_informative_sufficient"
       ],
       "known_counterexamples_to_stronger_variants": [
         "information minimality does not imply shortest code, fastest implementation, computability, or best explanation"
@@ -155,7 +157,8 @@
       ],
       "lean_declarations": [
         "FARCoreV11.no_contract_free_simultaneous_minimum",
-        "FARCoreV11.identity_is_universally_sufficient"
+        "FARCoreV11.identity_is_universally_sufficient",
+        "FARCoreV11.no_simultaneous_least_informative_sufficient"
       ],
       "known_counterexamples_to_stronger_variants": [
         "identity representation refutes the false stronger claim that universal sufficiency is impossible"
