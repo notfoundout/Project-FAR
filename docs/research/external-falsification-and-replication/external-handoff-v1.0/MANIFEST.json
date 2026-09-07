@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0",
+  "package_id": "EFR-EXTERNAL-HANDOFF-V1.0",
+  "scientific_baseline_commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+  "scientific_baseline_tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b",
+  "files": {
+    "README.md": "a17dccd8349c1858c6092cecd137ffc9e89645965db15706aa46b5799aa60ec5",
+    "RUN_INSTRUCTIONS.md": "3c0e6b0f6205f6f11bc54995f44a7f6d566e6a1f0b0f5f11e8766320d60b1e4a",
+    "packet.json": "2b6b550b0275e967be0d996d3fe92c9efc44d5c104d845426737ec6920c38cbd",
+    "verify_packet.py": "78a3adc902ad17901989590c1f678320f7d3a75853fbef2a5ffca9e07033b20c"
+  },
+  "manifest_scope": "Hash map covers every distributable file except MANIFEST.json itself; packet verifier also checks semantic invariants independently of these hashes."
+}
