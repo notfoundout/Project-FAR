@@ -8,6 +8,8 @@ Program: `POST-CLOSURE-001`
 
 Workstream: `PCA-W6-EMPIRICAL-AUDIT-UTILITY`
 
+Protocol freeze: `3813b9e3eb49562bd8b9f4d3179c3d9536831de6`
+
 The historical workstream identifier is retained for provenance. The evidence-class label above is the preferred summary description because this experiment is not evidence of external real-world utility or human-review benefit.
 
 ## Disposition
