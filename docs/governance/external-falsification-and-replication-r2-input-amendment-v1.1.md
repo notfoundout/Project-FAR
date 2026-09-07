@@ -47,9 +47,9 @@ Therefore:
 
 The amendment must be promoted to protected `main` before any R2 team is enrolled or any R2 input is sealed; the promotion event supplies its authoritative freeze timestamp, exactly as for v1.0.
 
-## 4. No R2 observation preceded this correction
+## 4. Canonical R2 state before this correction
 
-The correction is prospective. At the time of amendment every one of these holds, and each is machine-checked:
+The correction is prospective with respect to the **canonical EFR authorities**. At the time of amendment those authorities machine-record all of the following:
 
 | Evidence | Recorded value |
 |---|---|
@@ -58,10 +58,10 @@ The correction is prospective. At the time of amendment every one of these holds
 | `EFR-R2` input slot in the v1.0 input freeze | `EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL` |
 | `current_results.tests_executed` | `0` |
 | `current_results.external_cases` | `0` |
-| Clean-room team manifests | none exist |
-| R2 implementations, outputs, or logs | none exist |
 
-No R2 team was enrolled, no R2 input was sealed, and no R2 output was observed, compared, or unblinded before the specification was corrected. The corrected specification therefore cannot have been shaped by any R2 result. `tests/test_efr_r2_input_amendment.py` fails closed if any of these become non-empty while this amendment still records them as empty.
+`tests/test_efr_r2_input_amendment.py` checks those five facts directly against the frozen program and input-freeze records and fails closed if they cease to match while this amendment still describes the pre-execution state.
+
+These checks prove what the repository can prove: **the canonical EFR state contained no sealed R2 input, executed R2 test, or recorded external case before the specification correction.** They do not prove the global nonexistence of unregistered external files, communications, private experiments, or other activity outside the canonical EFR intake. This amendment therefore makes no such claim. Any such undisclosed activity, if it existed, would be evaluated under the v1.0 exposure/protocol-breach rules rather than silently treated as absent.
 
 ## 5. Bound corrected input specification
 
@@ -73,11 +73,10 @@ The permitted `EFR-R2` specification package is exactly these bytes, bound by gi
 | `docs/specification/far-ir-2.1-approximation-cost.md` | W5 approximation/cost specification, including its diagnostic vocabulary and gate semantics |
 | `schemas/far-contract-v2.schema.json` | `far-ir/2.0` schema, unchanged from the v1.0 baseline |
 | `schemas/far-contract-v2.1.schema.json` | `far-ir/2.1` schema, unchanged from the v1.0 baseline |
-| `mechanization/far_mechanization/diagnostic_vocabulary.py` | published code declarations referenced by both specifications |
 
-Exact blob identities are recorded in the machine authority. Both schema blobs are **identical to the v1.0 baseline**; only the two specification documents and the new declaration module differ.
+Exact blob identities are recorded in the machine authority. Both schema blobs are **identical to the v1.0 baseline**; only the two specification documents differ.
 
-The permitted package remains specification-only. The v1.0 prohibition is unchanged and still binding: clean-room teams may not use Project FAR verifier, checker, test, or oracle source, generated expected outputs, or another team's code. `diagnostic_vocabulary.py` is admitted because it is a declaration of published identifiers containing no verification logic; it is not verifier source.
+The permitted package is specification-and-schema only. The v1.0 prohibition is unchanged and still binding: clean-room teams may not use Project FAR verifier, checker, test, oracle, or other implementation source, generated expected outputs, or another team's code. `mechanization/far_mechanization/diagnostic_vocabulary.py` remains an internal repository consistency declaration referenced by the specifications, but it is **not** part of the R2 clean-room input package because the specifications already publish the complete diagnostic tables.
 
 ## 6. What this amendment does not establish
 

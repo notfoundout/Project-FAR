@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any, Mapping
@@ -61,7 +62,7 @@ PROTECTED_ARTIFACTS = frozenset({
     "mechanization/lean/W5ApproximationCost.lean",
     "research/results/pca-w5-approximation-and-cost/frontier.json",
     "schemas/far-contract-v2.1.schema.json",
-    "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
+    "theory/evaluation/pca-w5-approximation-and-cost-v1.0.json",
 })
 
 
@@ -120,10 +121,18 @@ def audit_manifest(root: Path, manifest: object) -> list[str]:
         if actual_artifacts != EXPECTED_ARTIFACTS:
             errors.append(_set_mismatch("W5_ARTIFACT_SET_MISMATCH", actual_artifacts, EXPECTED_ARTIFACTS))
 
-    # Recompute the required artifact set independently of what the manifest enumerates.
+    # Recompute the required artifact set independently of what the manifest enumerates, and
+    # reject malformed/missing digest declarations locally before delegating current-state drift.
     for rel in sorted(EXPECTED_ARTIFACTS):
-        if not (root / rel).is_file():
+        path = root / rel
+        if not path.is_file():
             errors.append(f"W5_ARTIFACT_MISSING {rel}")
+        declared = artifact_hashes.get(rel)
+        if declared is None:
+            errors.append(f"W5_ARTIFACT_HASH_DECLARATION_MISSING {rel}")
+            continue
+        if not re.fullmatch(r"[0-9a-f]{64}", declared):
+            errors.append(f"W5_ARTIFACT_HASH_DECLARATION_INVALID {rel}: {declared!r}")
     # The manifest records the bytes as of execution and is never rewritten. Documentation
     # surfaces that legitimately changed since then are declared in the current-state
     # supplement; PROTECTED_ARTIFACTS may never be declared there.

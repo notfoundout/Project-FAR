@@ -563,11 +563,23 @@ def manifest_errors(manifest: object) -> list[str]:
         return errors
     # The manifest is historical evidence of the executed bytes and is never rewritten.
     # Living documentation surfaces that have legitimately changed since execution are declared
-    # in the current-state supplement; PROTECTED_ARTIFACTS may never be declared there.
+    # in the current-state supplement; PROTECTED_ARTIFACTS may never be declared there. Preflight
+    # every manifest path here so missing paths and non-file substitutions are distinguished before
+    # delegated digest comparison.
     hashes, hash_errors = manifest_hash_map(artifacts, "W6")
     errors.extend(hash_errors)
+    present_hashes: dict[str, str] = {}
+    for rel, digest in hashes.items():
+        path = ROOT / rel
+        if not path.exists():
+            errors.append(f"W6 manifest missing artifact: {rel}")
+            continue
+        if not path.is_file():
+            errors.append(f"W6 manifest artifact is not a regular file: {rel}")
+            continue
+        present_hashes[rel] = digest
     errors.extend(
-        artifact_hash_errors(ROOT, hashes, SUPPLEMENT_PATH, PROTECTED_ARTIFACTS, "W6")
+        artifact_hash_errors(ROOT, present_hashes, SUPPLEMENT_PATH, PROTECTED_ARTIFACTS, "W6")
     )
     return errors
 

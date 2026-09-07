@@ -8,12 +8,12 @@ amendment rather than an edit to the frozen program.
 These tests enforce the three properties that make the amendment legitimate:
 
 1. every content-addressed v1.0 artifact is byte-identical to its registered blob;
-2. the amendment binds the corrected specification bytes actually present in the tree;
-3. no `EFR-R2` observation exists, so the correction cannot have been shaped by a result.
+2. the amendment binds the corrected specification-and-schema bytes actually present in the tree;
+3. the canonical EFR authorities still record R2 as pre-execution with an empty input slot and
+   zero executed tests/external cases.
 
-Property 3 is the one that decays: if R2 is ever executed while the amendment still records
-zero observations, these tests fail closed rather than letting a retrospective specification
-pass unnoticed.
+Property 3 is deliberately scoped to canonical repository authority. These tests do not claim to
+prove the global nonexistence of unregistered external files, communications, or private activity.
 """
 from __future__ import annotations
 
@@ -27,6 +27,13 @@ FREEZE = ROOT / "theory/evaluation/external-falsification-and-replication-input-
 PROGRAM = ROOT / "theory/evaluation/external-falsification-and-replication-program-v1.0.json"
 AMENDMENT = ROOT / "theory/evaluation/external-falsification-and-replication-r2-input-amendment-v1.1.json"
 AMENDMENT_DOC = ROOT / "docs/governance/external-falsification-and-replication-r2-input-amendment-v1.1.md"
+
+EXPECTED_R2_PACKAGE = {
+    "docs/specification/far-ir-2.0-contract.md",
+    "docs/specification/far-ir-2.1-approximation-cost.md",
+    "schemas/far-contract-v2.schema.json",
+    "schemas/far-contract-v2.1.schema.json",
+}
 
 
 def load(path: Path) -> dict:
@@ -77,7 +84,7 @@ class EFRR2InputAmendmentTests(unittest.TestCase):
                 )
 
     def test_schemas_are_unchanged_from_the_v1_0_baseline(self) -> None:
-        """Only the two specification documents and the declaration module may differ."""
+        """Only the two specification documents may differ from the v1.0 package surfaces."""
         by_path = {e["path"]: e for e in self.amendment["bound_specification_package"]}
         for path in ("schemas/far-contract-v2.schema.json", "schemas/far-contract-v2.1.schema.json"):
             self.assertEqual(by_path[path]["provenance"], "unchanged_from_v1.0_baseline")
@@ -94,15 +101,27 @@ class EFRR2InputAmendmentTests(unittest.TestCase):
             text,
         )
 
-    def test_no_r2_observation_preceded_the_correction(self) -> None:
-        """Fails closed if R2 is executed while the amendment still records zero observations."""
-        evidence = self.amendment["no_prior_observation"]["machine_checked_evidence"]
+    def test_canonical_pre_execution_state_matches_frozen_authorities(self) -> None:
+        """Fail closed if canonical EFR authority no longer records the pre-execution state."""
+        state = self.amendment["canonical_pre_execution_state"]
+        evidence = state["machine_checked_evidence"]
+        self.assertEqual(
+            set(evidence),
+            {
+                "efr_r2_status",
+                "all_test_statuses",
+                "efr_r2_input_slot_state",
+                "current_results_tests_executed",
+                "current_results_external_cases",
+            },
+        )
 
         r2 = next(test for test in self.program["tests"] if test["id"] == "EFR-R2")
         self.assertEqual(r2["status"], evidence["efr_r2_status"])
         self.assertEqual(r2["status"], "PREREGISTERED_NOT_EXECUTED")
 
         statuses = {test["status"] for test in self.program["tests"]}
+        self.assertEqual(statuses, {evidence["all_test_statuses"]})
         self.assertEqual(statuses, {"PREREGISTERED_NOT_EXECUTED"})
 
         slot = next(s for s in self.freeze["external_input_slots"] if s["test_id"] == "EFR-R2")
@@ -115,23 +134,34 @@ class EFRR2InputAmendmentTests(unittest.TestCase):
         self.assertEqual(results["external_cases"], evidence["current_results_external_cases"])
         self.assertEqual(results["external_cases"], 0)
 
+    def test_prospectivity_claim_is_scoped_to_canonical_authority(self) -> None:
+        state = self.amendment["canonical_pre_execution_state"]
+        self.assertIn("canonical EFR authorities", state["claim"])
+        self.assertIn("do not establish the global nonexistence", state["scope_boundary"])
+        text = AMENDMENT_DOC.read_text(encoding="utf-8")
+        self.assertIn("These checks prove what the repository can prove", text)
+        self.assertIn("do not prove the global nonexistence", text)
+
     def test_amendment_claims_no_assurance_upgrade(self) -> None:
         nonclaims = " ".join(self.amendment["nonclaims"])
         self.assertIn("does not execute EFR-R2", nonclaims)
+        self.assertIn("does not establish global nonexistence", nonclaims)
         self.assertIn("does not close OP-28", nonclaims)
         self.assertEqual(self.amendment["status"], "PREREGISTERED_AMENDMENT_NOT_EXECUTED")
 
-    def test_permitted_package_stays_specification_only(self) -> None:
-        self.assertTrue(self.amendment["permitted_package_is_specification_only"])
+    def test_permitted_package_contains_only_specs_and_schemas(self) -> None:
+        self.assertTrue(self.amendment["permitted_package_is_specification_and_schema_only"])
         prohibited = self.amendment["prohibited_inputs_unchanged"]
         self.assertIn("generated expected outputs", prohibited)
         self.assertIn("another team's code", prohibited)
         bound = {e["path"] for e in self.amendment["bound_specification_package"]}
-        for verifier in (
-            "mechanization/far_mechanization/contract_v2.py",
-            "mechanization/far_mechanization/contract_v21.py",
-        ):
-            self.assertNotIn(verifier, bound, "verifier source must not enter the R2 package")
+        self.assertEqual(bound, EXPECTED_R2_PACKAGE)
+        self.assertFalse(any(path.startswith("mechanization/") for path in bound))
+        self.assertNotIn("mechanization/far_mechanization/diagnostic_vocabulary.py", bound)
+        self.assertIn(
+            "not supplied to clean-room teams",
+            self.amendment["internal_declaration_not_in_r2_package"],
+        )
 
 
 if __name__ == "__main__":

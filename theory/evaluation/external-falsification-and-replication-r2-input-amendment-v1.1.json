@@ -40,29 +40,27 @@
       "sealing any R2 input"
     ]
   },
-  "no_prior_observation": {
-    "claim": "No EFR-R2 team was enrolled, no R2 input was sealed, and no R2 output was observed, compared or unblinded before this correction.",
+  "canonical_pre_execution_state": {
+    "claim": "Before this correction, the canonical EFR authorities recorded no sealed R2 input, executed R2 test, or external case.",
     "machine_checked_evidence": {
       "efr_r2_status": "PREREGISTERED_NOT_EXECUTED",
       "all_test_statuses": "PREREGISTERED_NOT_EXECUTED",
       "efr_r2_input_slot_state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
       "current_results_tests_executed": 0,
-      "current_results_external_cases": 0,
-      "clean_room_team_manifests": 0,
-      "r2_outputs_or_logs": 0
+      "current_results_external_cases": 0
     },
-    "enforced_by": "tests/test_efr_r2_input_amendment.py"
+    "scope_boundary": "These repository checks do not establish the global nonexistence of unregistered external files, communications, private experiments, or other activity outside the canonical EFR intake. Any such undisclosed activity, if it existed, is governed by the v1.0 exposure/protocol-breach rules."
   },
   "bound_specification_package": [
     {
       "path": "docs/specification/far-ir-2.0-contract.md",
-      "git_blob_sha": "aed8cf14070df85cc8310faa91eebef651c1a449",
+      "git_blob_sha": "4dbc3d8e5fa42d0397c58b6719b764f1ce003d7e",
       "role": "W3 comparison-contract specification including diagnostic vocabulary and sequence/suppression semantics",
       "provenance": "changed_by_amendment"
     },
     {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
-      "git_blob_sha": "b6832c300700181a57d6181a9c3928f9e0ed524f",
+      "git_blob_sha": "cec3368e426c4220010fe25f7058710dc9bb5017",
       "role": "W5 approximation/cost specification including diagnostic vocabulary and gate semantics",
       "provenance": "changed_by_amendment"
     },
@@ -77,27 +75,22 @@
       "git_blob_sha": "268adfca38bdddb4dddf137676f57e86e43994b5",
       "role": "far-ir/2.1 schema",
       "provenance": "unchanged_from_v1.0_baseline"
-    },
-    {
-      "path": "mechanization/far_mechanization/diagnostic_vocabulary.py",
-      "git_blob_sha": "0c717bb681b58fc12eca32a09e915ff4845c0d6f",
-      "role": "published diagnostic code declarations; declaration only, no verification logic",
-      "provenance": "added_by_amendment"
     }
   ],
   "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
-  "permitted_package_is_specification_only": true,
+  "permitted_package_is_specification_and_schema_only": true,
   "prohibited_inputs_unchanged": [
-    "Project FAR verifier, checker, test or oracle source",
+    "Project FAR verifier, checker, test, oracle or other implementation source",
     "generated expected outputs",
     "another team's code"
   ],
-  "declaration_module_rationale": "diagnostic_vocabulary.py declares published identifiers and contains no verification logic, so admitting it does not relax the v1.0 prohibition on verifier source.",
+  "internal_declaration_not_in_r2_package": "mechanization/far_mechanization/diagnostic_vocabulary.py remains an internal consistency declaration but is not supplied to clean-room teams because the specifications publish the complete diagnostic tables.",
   "nonclaims": [
     "does not execute EFR-R2",
     "does not make EFR-R2 acceptance more likely",
     "does not establish external independence, replication, novelty, or empirical utility",
     "does not establish that the corrected specification is sufficient for independent convergence, which is what EFR-R2 tests",
+    "does not establish global nonexistence of activity outside canonical EFR intake",
     "does not change any assurance dimension",
     "does not close OP-28"
   ]

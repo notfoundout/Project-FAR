@@ -42,7 +42,7 @@ The verifier does not establish external-domain correspondence, a universally pr
 
 ## Normative diagnostic vocabulary
 
-A rejected record carries one or more diagnostics. Each has a `code`, a human-readable `message`, and an optional JSON `path`. **The code is normative and the message is not.** An independent implementation must emit the same code set for the same record; wording, ordering within a code, and path formatting are implementation detail.
+A rejected record carries one or more diagnostics. Each has a `code`, a human-readable `message`, and an optional JSON `path`. **The code is normative and the message is not.** An independent implementation must emit the same diagnostic code sequence, including multiplicity and order, for the same record; message wording and path formatting are implementation detail.
 
 The declaration authority is `FAR_IR_2_1_DIAGNOSTIC_CODES` in [`mechanization/far_mechanization/diagnostic_vocabulary.py`](../../mechanization/far_mechanization/diagnostic_vocabulary.py). It is declared there rather than in the verifier because [`contract_v21.py`](../../mechanization/far_mechanization/contract_v21.py) is SHA-256 pinned by the completed `PCA-W5` campaign manifest. This table, that declaration, and the verifier's actual emission sites are held equal by `tests/test_far_contract_diagnostic_codes.py`.
 
