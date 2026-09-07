@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 from pathlib import Path
 from typing import Any, Mapping
@@ -11,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from mechanization.far_mechanization.contract_v21 import validate_contract
+from tools.campaign_current_state import artifact_hash_errors
 
 EXPECTED_SCHEMA_VERSION = "1.0"
 EXPECTED_CAMPAIGN = "PCA-W5-APPROXIMATION-AND-COST"
@@ -45,6 +47,23 @@ EXPECTED_ARTIFACTS = frozenset(
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+SUPPLEMENT_RELATIVE_PATH = "research/results/pca-w5-approximation-and-cost/current-state-supplement.json"
+
+# Experimental inputs, outputs, and recorded results for the completed W5 campaign. These may
+# never be re-pointed at post-execution bytes through the supplement.
+PROTECTED_ARTIFACTS = frozenset({
+    "conformance/far-ir-2.1/valid-frontier.json",
+    "conformance/far-ir-2.1/valid-zero-boundary.json",
+    "docs/research/pca-w5-approximation-and-cost/00-protocol.md",
+    "docs/research/pca-w5-approximation-and-cost/01-execution-and-results.md",
+    "mechanization/far_mechanization/contract_v21.py",
+    "mechanization/lean/W5ApproximationCost.lean",
+    "research/results/pca-w5-approximation-and-cost/frontier.json",
+    "schemas/far-contract-v2.1.schema.json",
+    "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
+})
 
 
 def _set_mismatch(label: str, actual: set[str], expected: frozenset[str]) -> str:
@@ -102,18 +121,30 @@ def audit_manifest(root: Path, manifest: object) -> list[str]:
         if actual_artifacts != EXPECTED_ARTIFACTS:
             errors.append(_set_mismatch("W5_ARTIFACT_SET_MISMATCH", actual_artifacts, EXPECTED_ARTIFACTS))
 
-    # Recompute the required artifact set independently of what the manifest enumerates.
+    # Recompute the required artifact set independently of what the manifest enumerates, and
+    # reject malformed/missing digest declarations locally before delegating current-state drift.
     for rel in sorted(EXPECTED_ARTIFACTS):
         path = root / rel
         if not path.is_file():
             errors.append(f"W5_ARTIFACT_MISSING {rel}")
-            continue
         declared = artifact_hashes.get(rel)
         if declared is None:
+            errors.append(f"W5_ARTIFACT_HASH_DECLARATION_MISSING {rel}")
             continue
-        actual = sha256(path)
-        if declared != actual:
-            errors.append(f"W5_ARTIFACT_HASH_MISMATCH {rel}: {declared} != {actual}")
+        if not re.fullmatch(r"[0-9a-f]{64}", declared):
+            errors.append(f"W5_ARTIFACT_HASH_DECLARATION_INVALID {rel}: {declared!r}")
+    # The manifest records the bytes as of execution and is never rewritten. Documentation
+    # surfaces that legitimately changed since then are declared in the current-state
+    # supplement; PROTECTED_ARTIFACTS may never be declared there.
+    errors.extend(
+        artifact_hash_errors(
+            root,
+            {rel: digest for rel, digest in artifact_hashes.items() if (root / rel).is_file()},
+            root / SUPPLEMENT_RELATIVE_PATH,
+            PROTECTED_ARTIFACTS,
+            "W5",
+        )
+    )
 
     # Recompute every governed checked record even if the manifest tries to omit it.
     for rel in sorted(EXPECTED_CHECKED_RECORDS):

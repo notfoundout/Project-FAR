@@ -193,6 +193,59 @@ noncomputable def leastInformativeImageEquiv
     (factorToQuotient_injective_of_kernel_equal rho beta hkernels)
     (factorToQuotient_surjective beta rho hsufficient)
 
+/-- `rho` is a least-informative exact-sufficient representation for `beta`: it is exactly
+sufficient, and every exactly sufficient representation is at least as informative, i.e. every
+collision of that representation is already a collision of `rho`.
+
+The comparison class is representations into `Type u`, the universe of the case type `X`.  That
+is the universe of the observational quotient, so the class always contains the canonical
+minimal representative; it is not a claim about representations in larger universes. -/
+def LeastInformativeSufficient {X : Type u} {B : Type v} {R : Type w}
+    (beta : X -> B) (rho : X -> R) : Prop :=
+  ExactlySufficient beta rho ∧
+    ∀ (S : Type u) (sigma : X -> S), ExactlySufficient beta sigma -> KernelRefines sigma rho
+
+/-- Least-informative sufficiency is exactly kernel equality with the declared behavior.
+
+This is the bridge the governing prose assumes.  `FAR-CORE-002` and `FAR-CORE-004` are stated
+about least-informative sufficient representations, while the substrate theorems are stated
+about kernel equality; the governing ledger records `least informative means ker rho equals
+ker beta` as a premise.  This theorem derives that identification instead of assuming it, so
+the kernel-equality results carry the minimality claims they are cited for. -/
+theorem leastInformativeSufficient_iff_kernelEqual
+    {X : Type u} {B : Type v} {R : Type w} (beta : X -> B) (rho : X -> R) :
+    LeastInformativeSufficient beta rho ↔ KernelEqual rho beta := by
+  constructor
+  · rintro ⟨hsufficient, hminimal⟩ x y
+    have hrefines : KernelRefines rho beta :=
+      (exact_factorization_criterion beta rho).mp hsufficient
+    constructor
+    · intro representationCollision
+      exact hrefines representationCollision
+    · intro behaviorAgreement
+      exact hminimal (ObservationalQuotient beta) (quotientRep beta)
+        (quotient_is_sufficient beta) (Quotient.sound behaviorAgreement)
+  · intro hkernels
+    have hrefines : KernelRefines rho beta := fun {_ _} h => (hkernels _ _).mp h
+    refine ⟨(exact_factorization_criterion beta rho).mpr hrefines, ?_⟩
+    intro S sigma hsigma
+    exact fun {x y} representationCollision =>
+      (hkernels x y).mpr
+        ((exact_factorization_criterion beta sigma).mp hsigma representationCollision)
+
+/-- The minimum is attained, so `LeastInformativeSufficient` is not vacuous. -/
+theorem quotient_is_least_informative_sufficient {X : Type u} {B : Type v} (beta : X -> B) :
+    LeastInformativeSufficient beta (quotientRep beta) := by
+  refine (leastInformativeSufficient_iff_kernelEqual beta (quotientRep beta)).mpr ?_
+  intro x y
+  constructor
+  · intro representationCollision
+    -- `quotientBehavior` computes on `quotientRep`, so this avoids `Quotient.exact` and keeps
+    -- the kernel dependency set equal to that of `leastInformativeImageEquiv`.
+    exact congrArg (quotientBehavior beta) representationCollision
+  · intro behaviorAgreement
+    exact Quotient.sound behaviorAgreement
+
 /-! ## FAR-CORE-003: declared context closure -/
 
 /-- Indistinguishability by every declared test/context. -/

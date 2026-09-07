@@ -27,10 +27,13 @@ import FARCoreV11SSS
 #print axioms FARCoreV11.identity_is_universally_sufficient
 #print axioms FARCoreV11.invariants_antitone
 #print axioms FARCoreV11.leastInformativeImageEquiv
+#print axioms FARCoreV11.leastInformativeSufficient_iff_kernelEqual
 #print axioms FARCoreV11.no_contract_free_simultaneous_minimum
+#print axioms FARCoreV11.no_simultaneous_least_informative_sufficient
 #print axioms FARCoreV11.observational_quotient_universal
 #print axioms FARCoreV11.omitted_parameter_refutes_sufficiency
 #print axioms FARCoreV11.primitive_vocabulary_count_noninvariant
+#print axioms FARCoreV11.quotient_is_least_informative_sufficient
 #print axioms FARCoreV11.quotient_is_sufficient
 #print axioms FARCoreV11.reification_recovers_relation
 #print axioms FARCoreV11.residue_can_change_with_frame

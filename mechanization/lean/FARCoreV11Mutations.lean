@@ -43,6 +43,18 @@ theorem singleton_does_not_witness_no_minimum :
       KernelEqual (id : Unit -> Unit) (id : Unit -> Unit) := by
   constructor <;> intro x y <;> cases x <;> cases y <;> simp [KernelEqual]
 
+/-- A sufficient but strictly finer representation is not least-informative sufficient, so the
+minimality definition genuinely excludes non-minimal sufficient representations. -/
+theorem finer_sufficient_is_not_least_informative :
+    ExactlySufficient (fun pair : Bool × Bool => pair.1) (id : Bool × Bool -> Bool × Bool) ∧
+      ¬ LeastInformativeSufficient (fun pair : Bool × Bool => pair.1)
+        (id : Bool × Bool -> Bool × Bool) := by
+  constructor
+  · exact identity_is_universally_sufficient (fun pair : Bool × Bool => pair.1)
+  · intro hleast
+    exact strictly_more_informative_is_not_least
+      ((leastInformativeSufficient_iff_kernelEqual _ _).mp hleast)
+
 /-! ## FAR-CORE-003 and FAR-CORE-005 -/
 
 def coarseObservation (_test : Unit) (state : Bool × Bool) : Bool := state.1

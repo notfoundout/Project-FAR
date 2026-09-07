@@ -19,9 +19,9 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 | Claim | W2 outcome | Kernel | Kernel assumptions | Declarations | Obstruction |
 |---|---|---|---|---|---|
 | `FAR-CORE-001` | `FORMALIZED` | `PASS` | `Classical.choice` | `FARCoreV11.exact_factorization_criterion`<br>`FARCoreV11.collision_refutes_sufficiency` | — |
-| `FAR-CORE-002` | `FORMALIZED` | `PASS` | `Classical.choice`<br>`Quot.sound` | `FARCoreV11.quotient_is_sufficient`<br>`FARCoreV11.observational_quotient_universal`<br>`FARCoreV11.factorToQuotient_surjective`<br>`FARCoreV11.leastInformativeImageEquiv` | — |
+| `FAR-CORE-002` | `FORMALIZED` | `PASS` | `Classical.choice`<br>`Quot.sound` | `FARCoreV11.quotient_is_sufficient`<br>`FARCoreV11.observational_quotient_universal`<br>`FARCoreV11.factorToQuotient_surjective`<br>`FARCoreV11.leastInformativeImageEquiv`<br>`FARCoreV11.leastInformativeSufficient_iff_kernelEqual`<br>`FARCoreV11.quotient_is_least_informative_sufficient` | — |
 | `FAR-CORE-003` | `FORMALIZED` | `PASS` | `Quot.sound` | `FARCoreV11.action_preserves_observational_equivalence`<br>`FARCoreV11.descendAction` | — |
-| `FAR-CORE-004` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.no_contract_free_simultaneous_minimum`<br>`FARCoreV11.identity_is_universally_sufficient` | — |
+| `FAR-CORE-004` | `FORMALIZED` | `PASS` | `Classical.choice`<br>`Quot.sound` | `FARCoreV11.no_contract_free_simultaneous_minimum`<br>`FARCoreV11.identity_is_universally_sufficient`<br>`FARCoreV11.no_simultaneous_least_informative_sufficient` | — |
 | `FAR-CORE-005` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.invariants_antitone` | — |
 | `FAR-CORE-006` | `FORMALIZED` | `PASS` | `Classical.choice`<br>`Quot.sound`<br>`propext` | `FARCoreV11.embeddingRangeEquiv`<br>`FARCoreV11.transport_operation_commutes`<br>`FARCoreV11.transport_relation_commutes` | — |
 | `FAR-CORE-007` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.reification_recovers_relation`<br>`FARCoreV11.primitive_vocabulary_count_noninvariant` | — |
@@ -45,12 +45,12 @@ formalization does not enlarge FAR-CORE-014 into a universal architecture claim.
 
 | File | SHA-256 | Lines | Imports |
 |---|---|---:|---|
-| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `f6d697817af156216bb65731219323d80bde3b3a07ef0c9c95d37b87e247bca8` | 39 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
-| `mechanization/lean/FARCoreV11Claims001To012.lean` | `e4fc930ff50c23075d55d534dc82c4e541eee40de3d1674df866d791e383f266` | 348 | `FARCoreV11Substrate` |
-| `mechanization/lean/FARCoreV11Mutations.lean` | `ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069` | 170 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
+| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `8146230723b289081cd914fc250fc9606f57bdb3bec1b24ad68cd1eb5265340e` | 42 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
+| `mechanization/lean/FARCoreV11Claims001To012.lean` | `2d50a81a7a6e3c60bc795d29a326b2fdc613ba30fe602585930354c627db1c43` | 364 | `FARCoreV11Substrate` |
+| `mechanization/lean/FARCoreV11Mutations.lean` | `e129549526c8f13078c3ae5d8897926700c5cef340f5b56387dd2212c603bdf7` | 182 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Omega.lean` | `52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c` | 51 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11SSS.lean` | `15fdf821d878cedcf205891fc2d29822a0cc49c3dcedc8610eb4609169060465` | 375 | `FARCoreV11Substrate` |
-| `mechanization/lean/FARCoreV11Substrate.lean` | `c10ed7cd9f2bb35018d7312e2f3fa755cb292663a73ed24fb17eeac193c01410` | 240 | `Std` |
+| `mechanization/lean/FARCoreV11Substrate.lean` | `65cda881f620c02611e86e00e9f7bd8d6a9e7ed89740de81b7f95c2ab4b35504` | 293 | `Std` |
 
 The inventory also records every pre-existing Lean file as `LEGACY_OR_OTHER_SCOPE`. Those files
 were searched and retained; they do not silently count as coverage of FAR-CORE-001--014.

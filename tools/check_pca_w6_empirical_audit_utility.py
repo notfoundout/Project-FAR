@@ -13,6 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from jsonschema import Draft202012Validator  # noqa: E402
+from tools.campaign_current_state import (  # noqa: E402
+    artifact_hash_errors,
+    manifest_hash_map,
+)
 from mechanization.far_mechanization.contract_v2 import (  # noqa: E402
     contract_sha256,
     validate_contract,
@@ -24,6 +28,35 @@ W4_MANIFEST = ROOT / "research/results/pca-w4-domain-contracts/manifest.json"
 RESULT_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/results.json"
 INCIDENTS_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/execution-incidents.json"
 MANIFEST_PATH = ROOT / "research/results/pca-w6-empirical-audit-utility/manifest.json"
+SUPPLEMENT_PATH = (
+    ROOT / "research/results/pca-w6-empirical-audit-utility/current-state-supplement.json"
+)
+
+# Experimental inputs, outputs, and recorded results. These reflect what was actually frozen and
+# executed, so they may never be re-pointed at post-execution bytes through the supplement.
+PROTECTED_ARTIFACTS = frozenset({
+    "mechanization/far_mechanization/contract_v2.py",
+    "schemas/far-contract-v2.schema.json",
+    "research/results/pca-w4-domain-contracts/manifest.json",
+    "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
+    "research/results/pca-w6-empirical-audit-utility/results.json",
+    "theory/evaluation/pca-w6-empirical-audit-utility-v1.0.json",
+    "docs/research/pca-w6-empirical-audit-utility/00-preregistration.md",
+    "docs/research/pca-w6-empirical-audit-utility/01-literature-and-design.md",
+    "docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md",
+    *(
+        f"research/results/pca-w4-domain-contracts/{domain}-{variant}.json"
+        for domain in (
+            "argumentation",
+            "bayesian-causal",
+            "formal-logic",
+            "model-based-reasoning",
+            "proof-theory",
+            "type-theory",
+        )
+        for variant in ("lossy", "repaired")
+    ),
+})
 SCHEMA_PATH = ROOT / "schemas/far-contract-v2.schema.json"
 VERIFIER_PATH = ROOT / "mechanization/far_mechanization/contract_v2.py"
 
@@ -528,15 +561,26 @@ def manifest_errors(manifest: object) -> list[str]:
             f"W6 manifest artifact set/order mismatch expected={list(EXPECTED_ARTIFACTS)} actual={paths}"
         )
         return errors
-    for item in artifacts:
-        rel = item["path"]
+    # The manifest is historical evidence of the executed bytes and is never rewritten.
+    # Living documentation surfaces that have legitimately changed since execution are declared
+    # in the current-state supplement; PROTECTED_ARTIFACTS may never be declared there. Preflight
+    # every manifest path here so missing paths and non-file substitutions are distinguished before
+    # delegated digest comparison.
+    hashes, hash_errors = manifest_hash_map(artifacts, "W6")
+    errors.extend(hash_errors)
+    present_hashes: dict[str, str] = {}
+    for rel, digest in hashes.items():
         path = ROOT / rel
-        if not path.is_file():
+        if not path.exists():
             errors.append(f"W6 manifest missing artifact: {rel}")
             continue
-        actual = sha256(path)
-        if actual != item["sha256"]:
-            errors.append(f"W6 manifest hash mismatch: {rel}: expected={item['sha256']} actual={actual}")
+        if not path.is_file():
+            errors.append(f"W6 manifest artifact is not a regular file: {rel}")
+            continue
+        present_hashes[rel] = digest
+    errors.extend(
+        artifact_hash_errors(ROOT, present_hashes, SUPPLEMENT_PATH, PROTECTED_ARTIFACTS, "W6")
+    )
     return errors
 
 

@@ -31,6 +31,22 @@ theorem identity_is_universally_sufficient {X : Type u} {B : Type v}
   intro x
   rfl
 
+/-- FAR-CORE-004 in its governing prose form: no representation is simultaneously a
+least-informative *sufficient* representation for two observation contracts, hence not for
+every observation contract on a nontrivial domain.
+
+`no_contract_free_simultaneous_minimum` states the kernel incompatibility.  This states the
+minimality claim itself, through `leastInformativeSufficient_iff_kernelEqual`, so the governed
+statement no longer depends on reading kernel equality as a definition of minimality. -/
+theorem no_simultaneous_least_informative_sufficient {X : Type u} {R : Type v}
+    (x₀ x₁ : X) (hdistinct : x₀ ≠ x₁) (rho : X -> R) :
+    ¬ (LeastInformativeSufficient (fun _ : X => true) rho ∧
+        LeastInformativeSufficient (id : X -> X) rho) := by
+  rintro ⟨hconstant, hidentity⟩
+  exact no_contract_free_simultaneous_minimum x₀ x₁ hdistinct rho
+    ⟨(leastInformativeSufficient_iff_kernelEqual (fun _ : X => true) rho).mp hconstant,
+      (leastInformativeSufficient_iff_kernelEqual (id : X -> X) rho).mp hidentity⟩
+
 /-! ## FAR-CORE-005 -/
 
 /-- Invariance under a declared class of typed self-transformations. -/

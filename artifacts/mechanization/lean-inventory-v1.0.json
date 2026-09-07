@@ -194,10 +194,10 @@
         "FARCoreV11Omega",
         "FARCoreV11SSS"
       ],
-      "line_count": 39,
+      "line_count": 42,
       "path": "mechanization/lean/FARCoreV11AxiomAudit.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "f6d697817af156216bb65731219323d80bde3b3a07ef0c9c95d37b87e247bca8"
+      "sha256": "8146230723b289081cd914fc250fc9606f57bdb3bec1b24ad68cd1eb5265340e"
     },
     {
       "declarations": [
@@ -225,6 +225,7 @@
         "identity_is_universally_sufficient",
         "invariants_antitone",
         "no_contract_free_simultaneous_minimum",
+        "no_simultaneous_least_informative_sufficient",
         "omitted_parameter_refutes_sufficiency",
         "primitive_vocabulary_count_noninvariant",
         "reification_recovers_relation",
@@ -242,10 +243,10 @@
       "imports": [
         "FARCoreV11Substrate"
       ],
-      "line_count": 348,
+      "line_count": 364,
       "path": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "e4fc930ff50c23075d55d534dc82c4e541eee40de3d1674df866d791e383f266"
+      "sha256": "2d50a81a7a6e3c60bc795d29a326b2fdc613ba30fe602585930354c627db1c43"
     },
     {
       "declarations": [
@@ -257,6 +258,7 @@
         "coverage_premise_is_not_optional",
         "dropping_operator_tag_causes_collision",
         "encoding_without_injectivity_loses_recovery",
+        "finer_sufficient_is_not_least_informative",
         "flipBool",
         "frame_changes_residue_not_exact_theory",
         "insufficient_map_has_no_factor",
@@ -274,10 +276,10 @@
         "FARCoreV11Omega",
         "FARCoreV11SSS"
       ],
-      "line_count": 170,
+      "line_count": 182,
       "path": "mechanization/lean/FARCoreV11Mutations.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "ec389d2081c635f336aa2f3cd087f997aeb7ed800e4fa081b76f43130aa23069"
+      "sha256": "e129549526c8f13078c3ae5d8897926700c5cef340f5b56387dd2212c603bdf7"
     },
     {
       "declarations": [
@@ -364,6 +366,7 @@
         "Isomorphism",
         "KernelEqual",
         "KernelRefines",
+        "LeastInformativeSufficient",
         "ObservationalQuotient",
         "ObservationallyEquivalent",
         "RepImage",
@@ -379,19 +382,21 @@
         "imageValue",
         "isomorphismOfBijective",
         "leastInformativeImageEquiv",
+        "leastInformativeSufficient_iff_kernelEqual",
         "observationSetoid",
         "observational_quotient_universal",
         "quotientBehavior",
         "quotientRep",
+        "quotient_is_least_informative_sufficient",
         "quotient_is_sufficient"
       ],
       "imports": [
         "Std"
       ],
-      "line_count": 240,
+      "line_count": 293,
       "path": "mechanization/lean/FARCoreV11Substrate.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "c10ed7cd9f2bb35018d7312e2f3fa755cb292663a73ed24fb17eeac193c01410"
+      "sha256": "65cda881f620c02611e86e00e9f7bd8d6a9e7ed89740de81b7f95c2ab4b35504"
     },
     {
       "declarations": [

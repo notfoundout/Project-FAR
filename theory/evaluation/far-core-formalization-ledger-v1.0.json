@@ -77,7 +77,7 @@
       ],
       "premises": [
         "rho is exactly sufficient",
-        "least informative means ker rho equals ker beta",
+        "least informative is defined by the informativeness preorder on sufficient representations into Type u, and kernel equality with beta is derived from it rather than assumed",
         "finite cardinal result is represented by the general surjection from the represented image onto Q_beta"
       ],
       "conclusion": "The quotient is sufficient; every sufficient rho has a unique image-to-quotient factor; kernel equality makes that factor an equivalence, and sufficiency always makes it surjective.",
@@ -101,7 +101,9 @@
         "FARCoreV11.quotient_is_sufficient",
         "FARCoreV11.observational_quotient_universal",
         "FARCoreV11.factorToQuotient_surjective",
-        "FARCoreV11.leastInformativeImageEquiv"
+        "FARCoreV11.leastInformativeImageEquiv",
+        "FARCoreV11.leastInformativeSufficient_iff_kernelEqual",
+        "FARCoreV11.quotient_is_least_informative_sufficient"
       ],
       "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",
@@ -113,7 +115,8 @@
       },
       "mutation_negative_controls": [
         "FARCoreV11Mutations.strictly_more_informative_is_not_least",
-        "FARCoreV11Mutations.insufficient_map_has_no_factor"
+        "FARCoreV11Mutations.insufficient_map_has_no_factor",
+        "FARCoreV11Mutations.finer_sufficient_is_not_least_informative"
       ],
       "source_locations": [
         {
@@ -192,24 +195,27 @@
         "nontrivial domain witnessed by two distinct cases",
         "contract may vary"
       ],
-      "conclusion": "rho cannot have the exact kernel of both constant and identity behavior; identity is nevertheless sufficient for every fixed behavior map.",
+      "conclusion": "rho cannot have the exact kernel of both constant and identity behavior, and therefore cannot be least-informative sufficient for both contracts; identity is nevertheless sufficient for every fixed behavior map.",
       "dependencies": [
         "FAR-CORE-001",
         "FAR-CORE-002"
       ],
       "classical_assumptions": [
-        "none"
+        "Classical.choice, inherited from the factorization criterion used by the minimality bridge"
       ],
       "choice_extensionality_assumptions": [
-        "none"
+        "choice",
+        "quotient soundness/exactness for the canonical minimal representative"
       ],
       "kernel_axioms": [
-        "none"
+        "Classical.choice",
+        "Quot.sound"
       ],
       "intended_lean_module": "mechanization/lean/FARCoreV11Claims001To012.lean",
       "lean_declarations": [
         "FARCoreV11.no_contract_free_simultaneous_minimum",
-        "FARCoreV11.identity_is_universally_sufficient"
+        "FARCoreV11.identity_is_universally_sufficient",
+        "FARCoreV11.no_simultaneous_least_informative_sufficient"
       ],
       "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",

@@ -1,0 +1,97 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "EFR-001-R2-INPUT-AMENDMENT-1.1",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "amends_test": "EFR-R2",
+  "amends_scope": "input_specification_only",
+  "status": "PREREGISTERED_AMENDMENT_NOT_EXECUTED",
+  "amended_date": "2026-09-07",
+  "authoritative_freeze_timestamp": "GitHub protected-main merge event for this amendment; dates before promotion describe candidate bytes, not acceptance.",
+  "frozen_v1_0_preserved": true,
+  "frozen_v1_0_artifacts_modified": [],
+  "supersedes": "The EFR-R2 permitted specification package only. No endpoint, threshold, sample or stratum count, inclusion/exclusion rule, allocation, missing-data rule, analysis, or other registered test is amended.",
+  "unamended_tests": [
+    "EFR-R1",
+    "EFR-H1",
+    "EFR-A1",
+    "EFR-HD1",
+    "EFR-U1",
+    "EFR-C1",
+    "EFR-N1"
+  ],
+  "defect": {
+    "summary": "The registered EFR-R2 acceptance criterion compares error category for every item, but the published specifications did not determine error category.",
+    "findings": [
+      "far-ir/2.0 emits 26 diagnostic codes and far-ir/2.1 emits 41; the specifications named only W5_SEMANTICS_NOT_ESTABLISHED.",
+      "Two far-ir/2.1 codes are composed at runtime as DUPLICATE_{label} and appear as no source literal.",
+      "Diagnostics are an ordered sequence with per-item multiplicity, which was unstated.",
+      "Both verifiers share one diagnostic sequence and abandon later checks when it is non-empty for any reason, so an unrelated cross-field defect suppresses the claim-specific check entirely. This was unstated."
+    ],
+    "worked_example": "A far-ir/2.0 record carrying both FREEZE_HASH_MISMATCH and a genuine decoder error yields exactly [FREEZE_HASH_MISMATCH]; an implementer following the prior prose would emit FACTORIZATION_FAILURE as well.",
+    "consequence": "EFR-R2 was unsatisfiable for specification reasons unrelated to far-ir semantics. Two correct clean-room implementations could not have converged."
+  },
+  "mandatory_consequence": {
+    "rule": "EFR-R2 MUST NOT execute against the corrected specifications under the unamended v1.0 freeze.",
+    "basis": "EFR-001 v1.0 permits later intake to supply only identities, dates, sources and observations, and permits no later scientific design choices. Which specification bytes a clean-room team receives is a design choice.",
+    "effect_if_violated": "The test becomes retrospectively specified and forfeits confirmatory status.",
+    "discretionary": false,
+    "promotion_required_before": [
+      "enrolling any R2 team",
+      "sealing any R2 input"
+    ]
+  },
+  "canonical_pre_execution_state": {
+    "claim": "Before this correction, the canonical EFR authorities recorded no sealed R2 input, executed R2 test, or external case.",
+    "machine_checked_evidence": {
+      "efr_r2_status": "PREREGISTERED_NOT_EXECUTED",
+      "all_test_statuses": "PREREGISTERED_NOT_EXECUTED",
+      "efr_r2_input_slot_state": "EMPTY_AWAITING_INDEPENDENT_CUSTODIAN_SEAL",
+      "current_results_tests_executed": 0,
+      "current_results_external_cases": 0
+    },
+    "scope_boundary": "These repository checks do not establish the global nonexistence of unregistered external files, communications, private experiments, or other activity outside the canonical EFR intake. Any such undisclosed activity, if it existed, is governed by the v1.0 exposure/protocol-breach rules."
+  },
+  "bound_specification_package": [
+    {
+      "path": "docs/specification/far-ir-2.0-contract.md",
+      "git_blob_sha": "4dbc3d8e5fa42d0397c58b6719b764f1ce003d7e",
+      "role": "W3 comparison-contract specification including diagnostic vocabulary and sequence/suppression semantics",
+      "provenance": "changed_by_amendment"
+    },
+    {
+      "path": "docs/specification/far-ir-2.1-approximation-cost.md",
+      "git_blob_sha": "cec3368e426c4220010fe25f7058710dc9bb5017",
+      "role": "W5 approximation/cost specification including diagnostic vocabulary and gate semantics",
+      "provenance": "changed_by_amendment"
+    },
+    {
+      "path": "schemas/far-contract-v2.schema.json",
+      "git_blob_sha": "e424359f804d268210e0f65fdf2fd28efc7e616b",
+      "role": "far-ir/2.0 schema",
+      "provenance": "unchanged_from_v1.0_baseline"
+    },
+    {
+      "path": "schemas/far-contract-v2.1.schema.json",
+      "git_blob_sha": "268adfca38bdddb4dddf137676f57e86e43994b5",
+      "role": "far-ir/2.1 schema",
+      "provenance": "unchanged_from_v1.0_baseline"
+    }
+  ],
+  "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
+  "permitted_package_is_specification_and_schema_only": true,
+  "prohibited_inputs_unchanged": [
+    "Project FAR verifier, checker, test, oracle or other implementation source",
+    "generated expected outputs",
+    "another team's code"
+  ],
+  "internal_declaration_not_in_r2_package": "mechanization/far_mechanization/diagnostic_vocabulary.py remains an internal consistency declaration but is not supplied to clean-room teams because the specifications publish the complete diagnostic tables.",
+  "nonclaims": [
+    "does not execute EFR-R2",
+    "does not make EFR-R2 acceptance more likely",
+    "does not establish external independence, replication, novelty, or empirical utility",
+    "does not establish that the corrected specification is sufficient for independent convergence, which is what EFR-R2 tests",
+    "does not establish global nonexistence of activity outside canonical EFR intake",
+    "does not change any assurance dimension",
+    "does not close OP-28"
+  ]
+}

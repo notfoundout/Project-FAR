@@ -72,6 +72,18 @@ The primary experiment used six unmodified W4 repaired controls and six determin
 
 This proves only the registered bounded material-loss-detection result. The corpus, mutation, oracle, and adjudication were Project-FAR-authored; there were no human participants or external investigators. Human disagreement reduction is `UNDERDETERMINED` and external real-world utility remains `OPEN`. No population sensitivity/specificity, superiority over alternative audit methods, or theorem-status change is inferred.
 
+## Assurance calibration
+
+[`far-core-epistemic-calibration-v1.0.md`](audits/far-core-epistemic-calibration-v1.0.md) is a non-authoritative Research calibration audit. It mutates no theory and changes no claim status, but it is the surface that states what the flat assurance labels above do **not** mean:
+
+- mathematical correctness is strong at the governed scopes;
+- mechanization is real and kernel-checked but heterogeneous in depth, so `14/14 FORMALIZED` is not fourteen deep or novel results;
+- foundational mathematical novelty is not established and is likely limited, because many core constructions instantiate standard patterns (Blackwell comparison, minimal sufficient statistics, Myhill-Nerode, coalgebraic minimization, abstract interpretation);
+- integrated methodology novelty is unresolved;
+- independent assurance remains I1; external empirical utility and commercial value are unestablished.
+
+Its recorded overall description is that Project FAR is a rigorously engineered contract-relative audit and representation methodology whose core mathematics is largely composed of standard or elementary structures, while the value and novelty of the integrated audit discipline remain external empirical and prior-art questions.
+
 ## Current phase
 
 Completed predecessor: `POST-CLOSURE-001` — [Post-Closure Assurance and Application Program v1.0](governance/post-closure-assurance-and-application-program-v1.0.md) — **complete at its six registered workstream scopes**.
@@ -108,4 +120,4 @@ The core reopens only for a reproducible contradiction to a stated theorem, proo
 
 ## Current authority navigation
 
-For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Historical or generated surfaces do not override that order.
+For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Read the non-authoritative [epistemic calibration audit](audits/far-core-epistemic-calibration-v1.0.md) alongside them for what the assurance labels exclude. Historical or generated surfaces do not override that order.
