@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "packet_id": "EFR-EXTERNAL-HANDOFF-V1.0",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "scientific_baseline": {
+    "commit": "195fc079d0a8993e4db3e063e09cf45d0bcd78c2",
+    "tree": "a01517ed65f45e62b3d47ffba9dc955fff2bae9b"
+  },
+  "execution_status": {
+    "efr_executed": false,
+    "i3_established": false,
+    "novelty_established": false,
+    "priority_established": false,
+    "tests_executed": 0
+  },
+  "cleanroom_rule": "Verify this package before derivation. During derivation use only this packet; do not access Project FAR repository, chats, prior audits, proofs, implementations, expected outputs, external copies, or withheld material. If technical isolation is not enforced, do not classify the run above I1.",
+  "common_definitions": {
+    "representation": "rho:X→R",
+    "behavior_family": "b:X→V^T",
+    "exact_decoder_domain": "d:ρ[X]→V^T",
+    "exact_sufficiency": "rho is exactly sufficient for b iff there exists d:ρ[X]→V^T such that b=d∘rho on X",
+    "collision_criterion": "rho is exactly sufficient iff rho(x)=rho(y) implies b(x)=b(y) for all x,y∈X",
+    "observational_equivalence": "x~_b y iff b(x)=b(y)",
+    "observational_quotient": "X/~_b"
+  },
+  "far_core_010_dependency": {
+    "exact_common_theory": "T_{L,J,I}",
+    "depends_on": ["L", "J", "I"],
+    "frame": "Γ",
+    "frame_subtracted_residue": "T_{L,J,I}\\Cn_L(Γ)",
+    "rule": "Changing Γ alone while L, J, I and the interpreted models are fixed does not change exact T_{L,J,I}; Γ additionally indexes only the frame-subtracted residue."
+  },
+  "far_core_014_bounded_definitions": {
+    "authority": {
+      "path": "research/independent-dialogue-theory/PROOFS.md",
+      "baseline_git_blob_sha": "8bb4cde696fbd778a0b6eed42a102d34d71f93e1",
+      "note": "Frozen baseline source. Historical PR #453 is provenance only and is not authority for this packet."
+    },
+    "representation_class": {
+      "name": "R_bin^Seq",
+      "state_type": "individual MLL sequent Seq",
+      "transition": "S→_π P iff P is a premise of some backward MLL rule instance with conclusion S",
+      "membership": "The rule-induced projected relation is the unique member; analyst-supplied alternative binary relations are outside the bounded class."
+    },
+    "decoder_class": {
+      "name": "D_succ",
+      "definition": "Prov is the least fixpoint of Φ(X)(S)=T(S)∨g({X(P):S→P}), where T(S) holds iff S concludes a zero-premise rule instance, g:P({0,1})→{0,1} is monotone, g(∅)=0, and one uniform g is used for all S.",
+      "members": {
+        "TERM": [0,0,0],
+        "AND": [0,0,1],
+        "OR": [0,1,1],
+        "NONEMPTY": [1,1,1]
+      }
+    },
+    "witnesses": {
+      "S_or": "⊢ a^⊥, a^⊥, a⊗b",
+      "S_or_fact": "unprovable, nonterminal, and has a provable projected successor; refutes OR and NONEMPTY",
+      "S_and": "⊢ a^⊥, b^⊥, a⊗b",
+      "S_and_fact": "provable, nonterminal, and has an unprovable projected successor; refutes TERM and AND"
+    },
+    "bounded_result": "No pair in R_bin^Seq×D_succ computes MLL provability.",
+    "scope_guard": "This is not an impossibility for arbitrary binary relations, arbitrary decoders, or richer state types. Resource-labelled hyperedges on individual sequents and a binary relation on frontier multisets are adequate constructions."
+  },
+  "claims": [
+    {"id":"FAR-CORE-001","status":"proved","scope":"any Set-based exact contract","claim":"exact sufficiency iff behavior factors through the representation"},
+    {"id":"FAR-CORE-002","status":"proved","scope":"any Set-based exact contract; cardinal minimum when finite","claim":"the observational quotient is the unique least-informative exact representation up to isomorphism"},
+    {"id":"FAR-CORE-003","status":"proved","scope":"declared action/test closure","claim":"context closure makes observational equivalence action-compatible"},
+    {"id":"FAR-CORE-004","status":"proved","scope":"nontrivial domain with observation contract allowed to vary","claim":"no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied"},
+    {"id":"FAR-CORE-005","status":"proved","scope":"nested admitted transformation classes","claim":"invariants are antitone in the admitted re-representation class"},
+    {"id":"FAR-CORE-006","status":"proved","scope":"injective transport with decoder","claim":"unconstrained encoding establishes host capacity, not native common structure"},
+    {"id":"FAR-CORE-007","status":"proved","scope":"faithful reification/tagging regime","claim":"primitive vocabulary count is not representation invariant"},
+    {"id":"FAR-CORE-008","status":"proved","scope":"finite operator family with tagged tuples","claim":"finite operator count is not representation invariant"},
+    {"id":"FAR-CORE-009","status":"proved","scope":"proper finite subset of an open domain","claim":"finite panels do not establish open-domain universality"},
+    {"id":"FAR-CORE-010","status":"proved","scope":"fixed language, interpretation profiles/models, and target class; frame additionally indexes the frame-subtracted residue","claim":"exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ"},
+    {"id":"FAR-CORE-011","status":"proved","scope":"any exact contract","claim":"omitting a consequence-affecting parameter refutes sufficiency"},
+    {"id":"FAR-CORE-012","status":"proved","scope":"contracts distinguishing determinate absence from Unknown","claim":"sufficient representations must preserve that distinction"},
+    {"id":"FAR-CORE-013","status":"proved","scope":"canonical FARA definition of Ω","claim":"Ω is a semantically eliminable derived materialized view"},
+    {"id":"FAR-CORE-014","status":"supported_derived","scope":"PR #453 stated representation and decoder classes","claim":"Search-State Sufficiency is a bounded factorization instance, not a universal architecture"}
+  ],
+  "registered_efr_tests": [
+    {"id":"EFR-R1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-R2","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-H1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-A1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-HD1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-U1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-C1","state":"PREREGISTERED_NOT_EXECUTED"},
+    {"id":"EFR-N1","state":"PREREGISTERED_NOT_EXECUTED"}
+  ],
+  "sealed_output_rule": "Save the complete evaluator report and compute its SHA-256 before viewing or releasing any withheld material."
+}
