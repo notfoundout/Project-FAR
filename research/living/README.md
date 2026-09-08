@@ -41,6 +41,22 @@ would let anyone able to push there run code under a write-scoped token on a sch
 The branch is rebuilt as a single commit on current `main` each run, so the rolling PR stays a
 readable one-commit diff and cannot conflict with its own base.
 
+## Attention terms are derived, never accumulated
+
+Each provider's attention-term matches are stored on that provider's source entry and
+replaced whenever the provider is seen again; `triage.attention_terms` is recomputed as the
+union of those, filtered to the currently configured terms. A term removed from
+`attention_terms` in the configuration therefore clears on the next sighting instead of
+marking a candidate high-attention forever.
+
+## Run-report validation
+
+`tools/check_living_research.py` validates the newest 500 run reports. Reports are immutable
+and are validated when written, so every automatic path uses that bound; the full historical
+scan is `--all-runs`, reachable on demand through the workflow's `audit` dispatch mode. The
+`validate` mode dispatched after each unattended update stays bounded, because it runs as
+often as discovery does.
+
 ## The rolling PR starts with no checks
 
 The branch is pushed and the PR opened by `GITHUB_TOKEN`, and GitHub does not start workflow

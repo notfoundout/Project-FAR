@@ -409,6 +409,14 @@ def normalize_doi(value: Any) -> str | None:
     return doi or None
 
 
+FALLBACK_IDENTITY_MARKER = "-fallback:"
+
+
+def is_fallback_identity(source_key: str) -> bool:
+    """True when the identity is a metadata hash rather than a resolvable provider id."""
+    return FALLBACK_IDENTITY_MARKER in source_key
+
+
 def source_identity(provider: str, item: dict[str, Any]) -> str:
     if provider == "Crossref":
         doi = normalize_doi(item.get("DOI"))
@@ -589,12 +597,17 @@ def process_item(
         "signal_hits": signal,
         "bridge_hits": bridge,
     }
+    observed_title = clean_text(item.get("title") if provider != "OpenAlex" else item.get("display_name"))
     if not accepted:
-        # Rejected results keep their resolvable identity (source_key carries the DOI or
-        # provider id) and the exact rejection reason, but not the title. Titles dominate
-        # report size and every run re-reports the same rejected window.
+        # Rejected results keep their exact rejection reason and their identity. Where that
+        # identity resolves on its own (a DOI, an OpenAlex or Open Library id) the title is
+        # dropped: titles dominate report size and every run re-reports the same rejected
+        # window. Where `source_identity` fell back to a metadata hash there is nothing to
+        # resolve, so the title is kept and the rejection stays reconstructible.
+        if is_fallback_identity(source_key):
+            result["title"] = observed_title
         return result, False
-    result["title"] = clean_text(item.get("title") if provider != "OpenAlex" else item.get("display_name"))
+    result["title"] = observed_title
 
     source = {
         "Crossref": crossref_source,
@@ -644,8 +657,26 @@ def process_item(
         qbinds.sort(key=lambda b: (b.get("target_id") or "", b.get("query") or "", b.get("provider") or ""))
     record["discovery"]["last_seen_utc"] = now_iso
 
-    attn = boundary_hits(text, attention_terms)
-    record["triage"]["attention_terms"] = sorted(set(record["triage"].get("attention_terms", [])) | set(attn))
+    # Attention terms are derived, not accumulated. Each provider's contribution is stored
+    # on its own source entry and replaced whenever that provider is seen again, and the
+    # triage list is recomputed as the union filtered to the currently configured terms.
+    # Unioning into the persisted list instead would make a match permanent: a term dropped
+    # from the configuration, or one matched by a superseded matcher, could never clear, and
+    # the candidate would be published as high-attention forever.
+    configured = set(attention_terms)
+    for entry in sources:
+        if isinstance(entry, dict) and (entry.get("provider"), entry.get("provider_id")) == source_fingerprint:
+            entry["attention_terms"] = boundary_hits(text, attention_terms)
+    record["triage"]["attention_terms"] = sorted(
+        {
+            term
+            for entry in sources
+            if isinstance(entry, dict)
+            for term in entry.get("attention_terms", [])
+            if term in configured
+        },
+        key=str.lower,
+    )
     if binding.get("lens"):
         record["triage"]["lenses"] = sorted(set(record["triage"].get("lenses", [])) | {binding["lens"]})
     potential = set(record.get("potential_claim_ids", []))

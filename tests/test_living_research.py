@@ -151,6 +151,27 @@ class LivingResearchTests(unittest.TestCase):
         self.assertEqual(params["sort"],["relevance"]); self.assertNotIn("order",params)
         self.assertEqual(params["filter"],["from-index-date:2026-09-01,until-index-date:2026-09-08"])
 
+    def test_attention_terms_are_recomputed_not_accumulated(self):
+        repo=TempRepo()
+        def run_pass(terms):
+            return lr.process_item(root=repo.root,provider="Crossref",item={"DOI":"10.1/attn","title":["A quotient counterexample and a contradiction"],"type":"journal-article"},binding={"target_id":"FAR-RQ-003","target_ids":["FAR-RQ-003"],"query":"quotient algorithm","provider":"Crossref","mode":"incremental"},signal_terms=["quotient"],min_signal_hits=1,lens=None,attention_terms=terms,all_claim_ids=[f"FAR-CORE-{n:03d}" for n in range(1,15)],questions={q["id"]:q for q in rq_registry()["questions"]},now_iso="2026-01-01T00:00:00Z")
+        try:
+            run_pass(["counterexample","contradiction"])
+            path=next((repo.root/lr.CANDIDATE_DIR).glob("*.json"))
+            self.assertEqual(lr.read_json(path)["triage"]["attention_terms"],["contradiction","counterexample"])
+            run_pass(["contradiction"])  # counterexample removed from configuration
+            self.assertEqual(lr.read_json(path)["triage"]["attention_terms"],["contradiction"])
+        finally: repo.close()
+
+    def test_rejected_fallback_identity_keeps_title_for_audit(self):
+        repo=TempRepo()
+        common=dict(root=repo.root,provider="Crossref",binding={"target_id":"FAR-RQ-003","target_ids":["FAR-RQ-003"],"query":"quotient algorithm","provider":"Crossref","mode":"incremental"},signal_terms=["quotient"],min_signal_hits=1,lens=None,attention_terms=[],all_claim_ids=[f"FAR-CORE-{n:03d}" for n in range(1,15)],questions={q["id"]:q for q in rq_registry()["questions"]},now_iso="2026-01-01T00:00:00Z")
+        try:
+            no_doi,_=lr.process_item(item={"title":["Unrelated chemistry result"],"type":"journal-article","publisher":"X"},**common)
+            self.assertTrue(lr.is_fallback_identity(no_doi["source_key"]))
+            self.assertEqual(no_doi["decision"],"REJECT"); self.assertEqual(no_doi["title"],"Unrelated chemistry result")
+        finally: repo.close()
+
     def test_rejected_results_keep_identity_without_title(self):
         repo=TempRepo()
         try:

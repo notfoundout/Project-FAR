@@ -6,13 +6,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Run discovery or validate the current ref only
+        description: Run discovery, validate the current ref, or audit every run report
         required: true
         default: discover
         type: choice
         options:
           - discover
           - validate
+          - audit
   pull_request:
     branches:
       - main
@@ -37,7 +38,7 @@ on:
       - 'docs/research/living-repository.md'
 
 concurrency:
-  group: living-research-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || inputs.mode == 'validate' && 'validator' || 'writer' }}
+  group: living-research-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || (inputs.mode == 'validate' || inputs.mode == 'audit') && 'validator' || 'writer' }}
   cancel-in-progress: false
 
 env:
@@ -45,7 +46,7 @@ env:
 
 jobs:
   validate:
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'validate')
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && (inputs.mode == 'validate' || inputs.mode == 'audit'))
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -64,7 +65,11 @@ jobs:
       - name: Reconcile canonical living-repository state
         run: python tools/reconcile_living_repo.py
       - name: Validate living repository invariants
-        run: python tools/check_living_research.py --all-runs
+        # Bounded on every automatic path. This job is dispatched by `discover` after each
+        # unattended update, so a full historical scan here would put unbounded and steadily
+        # growing work on the highest-frequency validation path. `audit` mode is the
+        # explicit full scan.
+        run: python tools/check_living_research.py ${{ inputs.mode == 'audit' && '--all-runs' || '' }}
       - name: Validate governed research gates
         run: python tools/check_research_gates.py
       - name: Run repository fast health profile
