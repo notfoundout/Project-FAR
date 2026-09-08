@@ -159,6 +159,23 @@ def validate_bindings(
     if missing:
         raise LivingResearchError(f"unknown threat guard(s): {', '.join(missing)}")
 
+    # Every source is called with `source["endpoint"]` and `source["user_agent"]`. A key
+    # missing from the configuration used to surface as a per-query KeyError that silently
+    # killed the whole lane while the run still reported partial success: run
+    # 34227532304 lost both the OpenAlex and Open Library lanes that way. Fail closed here
+    # instead, before any request is issued.
+    sources = config.get("sources")
+    if not isinstance(sources, dict) or not sources:
+        raise LivingResearchError("sources must be a nonempty object")
+    for name in ("crossref", "openalex", "openlibrary"):
+        source = sources.get(name)
+        if not isinstance(source, dict):
+            raise LivingResearchError(f"source {name!r} must be an object")
+        for field in ("endpoint", "user_agent"):
+            value = source.get(field)
+            if not isinstance(value, str) or not value.strip():
+                raise LivingResearchError(f"source {name!r} missing required {field!r}")
+
     claim_ids = list(claim_index(claim_ledger).keys()) if claim_ledger else []
     targets = config.get("targets")
     if not isinstance(targets, list) or not targets:
@@ -767,7 +784,10 @@ def run(
     lookback_days = int(crossref_cfg.get("initial_lookback_days", 14))
     cursor_raw = state.get("incremental_cursor_utc")
     start = parse_utc(cursor_raw) - timedelta(days=overlap_days) if cursor_raw else now - timedelta(days=lookback_days)
-    index_window = (utc_iso(start), now_iso)
+    # Crossref's index-date filters take a calendar date. Passing a full timestamp
+    # (`2026-08-25T12:42:01Z`) makes every incremental request fail with HTTP 400, which
+    # is what run 34227532304 recorded for all 24 incremental queries.
+    index_window = (start.date().isoformat(), now.date().isoformat())
 
     for target in config["targets"]:
         target_id = target["target_id"]
