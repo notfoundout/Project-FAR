@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Unattended, fail-closed literature discovery for Project FAR.
+"""Project FAR unattended living-research discovery engine.
 
-This tool discovers *candidate* research records only. It never changes theorem,
-claim, evidence, EFR, novelty, or acceptance status. Source failures and rejected
-results are preserved in per-run reports so absence is never inferred from failure.
+This program is Research-only infrastructure. It discovers, deduplicates, routes,
+and records candidate literature and historical/philosophical sources. It never
+promotes evidence, changes a canonical claim, executes EFR, or creates external
+independence. Any candidate that could affect a FAR claim is only routed into the
+governed review/reopening path.
 """
 from __future__ import annotations
 
@@ -17,7 +19,6 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Callable, Iterable
@@ -26,6 +27,7 @@ CONFIG_PATH = Path("research/living/config-v1.0.json")
 STATE_PATH = Path("research/living/state-v1.0.json")
 RQ_PATH = Path("research/registry/research-questions-v1.0.json")
 THREAT_PATH = Path("research/registry/epistemic-threats-v1.0.json")
+CLAIM_PATH = Path("theory/terminal/project-far-core-theory-v1.1.json")
 CANDIDATE_DIR = Path("research/living/inbox/candidates")
 RUN_DIR = Path("research/living/runs")
 DASHBOARD_PATH = Path("docs/research/living-research-status.md")
@@ -37,19 +39,14 @@ AUTHORITY_BOUNDARY = (
 )
 _TAG_RE = re.compile(r"<[^>]+>")
 _SPACE_RE = re.compile(r"\s+")
+_CLAIM_RE = re.compile(r"FAR-CORE-(\d{3})")
 
 
 class LivingResearchError(RuntimeError):
-    """Configuration or invariant failure; never a negative search result."""
+    """Configuration, source, or invariant failure; never a negative research result."""
 
 
-@dataclass(frozen=True)
-class QueryResult:
-    items: list[dict[str, Any]]
-    request: dict[str, Any]
-
-
-def _read_json(path: Path) -> dict[str, Any]:
+def read_json(path: Path) -> dict[str, Any]:
     with path.open("r", encoding="utf-8") as handle:
         value = json.load(handle)
     if not isinstance(value, dict):
@@ -57,27 +54,30 @@ def _read_json(path: Path) -> dict[str, Any]:
     return value
 
 
-def _write_json(path: Path, value: dict[str, Any]) -> None:
+def write_json(path: Path, value: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
 
 
-def _utc_iso(value: datetime) -> str:
+def utc_iso(value: datetime) -> str:
     return value.astimezone(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
-def _parse_utc(value: str) -> datetime:
+def parse_utc(value: str) -> datetime:
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
     if parsed.tzinfo is None:
         raise LivingResearchError(f"timestamp must include timezone: {value}")
     return parsed.astimezone(timezone.utc)
 
 
-def _sha256_text(value: str) -> str:
+def sha256_text(value: str) -> str:
     return hashlib.sha256(value.encode("utf-8")).hexdigest()
 
 
-def _clean_text(value: Any, limit: int = 4000) -> str:
+def clean_text(value: Any, limit: int = 5000) -> str:
     if value is None:
         return ""
     if isinstance(value, list):
@@ -86,101 +86,21 @@ def _clean_text(value: Any, limit: int = 4000) -> str:
     return _SPACE_RE.sub(" ", text).strip()[:limit]
 
 
-def _first(item: dict[str, Any], key: str) -> str:
-    value = item.get(key)
-    return _clean_text(value[0]) if isinstance(value, list) and value else _clean_text(value)
+def claim_ids_from_question(question: dict[str, Any], all_claim_ids: list[str]) -> list[str]:
+    """Extract exact explicit FAR-CORE references/ranges from governed RQ text and dependencies."""
+    corpus = " ".join(
+        clean_text(question.get(key))
+        for key in ("exact_question", "governing_scope", "dependencies", "falsifier_resolution_criterion")
+    )
+    found = {f"FAR-CORE-{m}" for m in _CLAIM_RE.findall(corpus)}
+    range_match = re.search(r"FAR-CORE-(\d{3})\s+(?:through|to|–|-)\s+FAR-CORE-(\d{3})", corpus)
+    if range_match:
+        lo, hi = map(int, range_match.groups())
+        found.update(f"FAR-CORE-{n:03d}" for n in range(lo, hi + 1))
+    return [claim_id for claim_id in all_claim_ids if claim_id in found]
 
 
-def _source_key(item: dict[str, Any]) -> str:
-    doi = _clean_text(item.get("DOI"), 500).lower()
-    if doi:
-        return f"doi:{doi}"
-    stable = {
-        "title": _first(item, "title").lower(),
-        "publisher": _clean_text(item.get("publisher"), 500).lower(),
-        "type": _clean_text(item.get("type"), 100).lower(),
-        "published": item.get("published") or item.get("issued") or {},
-    }
-    encoded = json.dumps(stable, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
-    return f"crossref-fallback:{_sha256_text(encoded)}"
-
-
-def _candidate_id(source_key: str) -> str:
-    return "FAR-LIT-" + _sha256_text(source_key)[:16].upper()
-
-
-def _item_search_text(item: dict[str, Any]) -> str:
-    fields = [item.get(key) for key in ("title", "subtitle", "abstract", "subject", "container-title", "publisher")]
-    return " ".join(_clean_text(field).lower() for field in fields if field)
-
-
-def _signal_hits(item: dict[str, Any], terms: Iterable[str]) -> list[str]:
-    haystack = _item_search_text(item)
-    hits = [term for term in terms if (normalized := _clean_text(term, 200).lower()) and normalized in haystack]
-    return sorted(set(hits), key=str.lower)
-
-
-def _attention_hits(item: dict[str, Any], terms: Iterable[str]) -> list[str]:
-    haystack = _item_search_text(item)
-    return sorted({term for term in terms if term.lower() in haystack}, key=str.lower)
-
-
-def _authors(item: dict[str, Any], limit: int = 25) -> list[str]:
-    raw = item.get("author")
-    if not isinstance(raw, list):
-        return []
-    result: list[str] = []
-    for author in raw[:limit]:
-        if not isinstance(author, dict):
-            continue
-        name = " ".join(part for part in (_clean_text(author.get("given"), 200), _clean_text(author.get("family"), 200)) if part)
-        if name:
-            result.append(name)
-    return result
-
-
-def _published_date(item: dict[str, Any]) -> str | None:
-    for key in ("published-online", "published-print", "published", "issued", "created"):
-        value = item.get(key)
-        if not isinstance(value, dict):
-            continue
-        parts = value.get("date-parts")
-        if not isinstance(parts, list) or not parts or not isinstance(parts[0], list) or not parts[0]:
-            continue
-        try:
-            nums = parts[0]
-            year = int(nums[0])
-            month = int(nums[1]) if len(nums) > 1 else 1
-            day = int(nums[2]) if len(nums) > 2 else 1
-            return f"{year:04d}-{month:02d}-{day:02d}"
-        except (TypeError, ValueError):
-            continue
-    return None
-
-
-def _indexed_timestamp(item: dict[str, Any]) -> str | None:
-    indexed = item.get("indexed")
-    value = indexed.get("date-time") if isinstance(indexed, dict) else None
-    return value if isinstance(value, str) else None
-
-
-def _candidate_source(item: dict[str, Any]) -> dict[str, Any]:
-    return {
-        "provider": "Crossref REST API",
-        "source_key": _source_key(item),
-        "doi": _clean_text(item.get("DOI"), 500) or None,
-        "url": _clean_text(item.get("URL"), 2000) or None,
-        "title": _first(item, "title"),
-        "authors": _authors(item),
-        "container_title": _first(item, "container-title") or None,
-        "publisher": _clean_text(item.get("publisher"), 500) or None,
-        "work_type": _clean_text(item.get("type"), 100) or None,
-        "published_date": _published_date(item),
-        "indexed_timestamp": _indexed_timestamp(item),
-    }
-
-
-def _question_index(registry: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def question_index(registry: dict[str, Any]) -> dict[str, dict[str, Any]]:
     questions = registry.get("questions")
     if not isinstance(questions, list):
         raise LivingResearchError("research-question registry missing questions array")
@@ -194,11 +114,11 @@ def _question_index(registry: dict[str, Any]) -> dict[str, dict[str, Any]]:
     return result
 
 
-def _threat_ids(registry: dict[str, Any]) -> set[str]:
+def threat_ids(registry: dict[str, Any]) -> set[str]:
     threats = registry.get("threats")
     if not isinstance(threats, list):
         raise LivingResearchError("epistemic-threat registry missing threats array")
-    result: set[str] = set()
+    result = set()
     for threat in threats:
         if not isinstance(threat, dict) or not isinstance(threat.get("id"), str):
             raise LivingResearchError("malformed epistemic-threat registry entry")
@@ -206,22 +126,43 @@ def _threat_ids(registry: dict[str, Any]) -> set[str]:
     return result
 
 
-def validate_bindings(config: dict[str, Any], rq_registry: dict[str, Any], threat_registry: dict[str, Any]) -> dict[str, dict[str, Any]]:
+def claim_index(ledger: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    claims = ledger.get("claims")
+    if not isinstance(claims, list):
+        raise LivingResearchError("core claim ledger missing claims array")
+    result: dict[str, dict[str, Any]] = {}
+    for claim in claims:
+        if not isinstance(claim, dict) or not isinstance(claim.get("id"), str):
+            raise LivingResearchError("malformed core claim ledger entry")
+        result[claim["id"]] = claim
+    expected = [f"FAR-CORE-{n:03d}" for n in range(1, 15)]
+    if list(result) != expected:
+        raise LivingResearchError("living engine requires exact FAR-CORE-001 through FAR-CORE-014 ledger")
+    return result
+
+
+def validate_bindings(
+    config: dict[str, Any],
+    rq_registry: dict[str, Any],
+    threat_registry: dict[str, Any],
+    claim_ledger: dict[str, Any] | None = None,
+) -> dict[str, dict[str, Any]]:
     if config.get("program_id") != "FAR-LIVING-RESEARCH-001":
         raise LivingResearchError("unexpected living-research program_id")
     if config.get("authority_boundary") != AUTHORITY_BOUNDARY:
         raise LivingResearchError("authority boundary drift")
-    questions = _question_index(rq_registry)
-    threats = _threat_ids(threat_registry)
+    questions = question_index(rq_registry)
     guards = config.get("threat_guards")
     if not isinstance(guards, list) or not guards:
-        raise LivingResearchError("threat_guards must be a nonempty array")
-    missing_guards = sorted(set(guards) - threats)
-    if missing_guards:
-        raise LivingResearchError(f"unknown threat guard(s): {', '.join(missing_guards)}")
+        raise LivingResearchError("threat_guards must be nonempty")
+    missing = sorted(set(guards) - threat_ids(threat_registry))
+    if missing:
+        raise LivingResearchError(f"unknown threat guard(s): {', '.join(missing)}")
+
+    claim_ids = list(claim_index(claim_ledger).keys()) if claim_ledger else []
     targets = config.get("targets")
     if not isinstance(targets, list) or not targets:
-        raise LivingResearchError("targets must be a nonempty array")
+        raise LivingResearchError("targets must be nonempty")
     seen: set[str] = set()
     for target in targets:
         if not isinstance(target, dict):
@@ -234,62 +175,72 @@ def validate_bindings(config: dict[str, Any], rq_registry: dict[str, Any], threa
         seen.add(target_id)
         allowed = target.get("allowed_dispositions")
         if not isinstance(allowed, list) or not allowed:
-            raise LivingResearchError(f"{target_id}: allowed_dispositions must be nonempty")
+            raise LivingResearchError(f"{target_id}: allowed_dispositions required")
         disposition = questions[target_id].get("current_disposition")
         if disposition not in allowed:
-            raise LivingResearchError(f"{target_id}: current disposition {disposition!r} is not watched; update config deliberately")
-        queries = target.get("queries")
-        if not isinstance(queries, list) or not queries or not all(isinstance(q, str) and q.strip() for q in queries):
-            raise LivingResearchError(f"{target_id}: queries must be nonempty strings")
-        terms = target.get("signal_terms")
-        if not isinstance(terms, list) or not terms or not all(isinstance(t, str) and t.strip() for t in terms):
-            raise LivingResearchError(f"{target_id}: signal_terms must be nonempty strings")
+            raise LivingResearchError(
+                f"{target_id}: current disposition {disposition!r} is not watched; update config deliberately"
+            )
+        for field in ("queries", "signal_terms"):
+            values = target.get(field)
+            if not isinstance(values, list) or not values or not all(isinstance(x, str) and x.strip() for x in values):
+                raise LivingResearchError(f"{target_id}: {field} must be nonempty strings")
         if not isinstance(target.get("candidate_relation"), str):
-            raise LivingResearchError(f"{target_id}: candidate_relation is required")
+            raise LivingResearchError(f"{target_id}: candidate_relation required")
+        if claim_ids:
+            target["_derived_claim_ids"] = claim_ids_from_question(questions[target_id], claim_ids)
+
+    lenses = config.get("lenses")
+    if not isinstance(lenses, dict) or not lenses:
+        raise LivingResearchError("lenses must be a nonempty object")
+    for lens_id, lens in lenses.items():
+        if not isinstance(lens, dict):
+            raise LivingResearchError(f"lens {lens_id}: must be object")
+        if not isinstance(lens.get("bridge_terms"), list):
+            raise LivingResearchError(f"lens {lens_id}: bridge_terms must be array")
+        if int(lens.get("min_bridge_hits", 0)) < 0:
+            raise LivingResearchError(f"lens {lens_id}: invalid min_bridge_hits")
+
+    backfill = config.get("historical_backfill")
+    if not isinstance(backfill, dict):
+        raise LivingResearchError("historical_backfill missing")
+    queries = backfill.get("queries")
+    if not isinstance(queries, list) or not queries:
+        raise LivingResearchError("historical_backfill.queries must be nonempty")
+    for item in queries:
+        if not isinstance(item, dict):
+            raise LivingResearchError("historical query must be object")
+        if item.get("lens") not in lenses:
+            raise LivingResearchError(f"historical query {item.get('id')}: unknown lens")
+        tids = item.get("target_ids")
+        if not isinstance(tids, list) or not tids or any(t not in questions for t in tids):
+            raise LivingResearchError(f"historical query {item.get('id')}: invalid target_ids")
     return questions
 
 
-def _default_transport(url: str, headers: dict[str, str], timeout: int) -> dict[str, Any]:
+def default_transport(url: str, headers: dict[str, str], timeout: int) -> dict[str, Any]:
     request = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(request, timeout=timeout) as response:
-        data = response.read()
-    decoded = json.loads(data.decode("utf-8"))
-    if not isinstance(decoded, dict):
-        raise LivingResearchError("Crossref response was not a JSON object")
-    return decoded
+        payload = json.loads(response.read().decode("utf-8"))
+    if not isinstance(payload, dict):
+        raise LivingResearchError("source response was not a JSON object")
+    return payload
 
 
-def crossref_query(query: str, start_date: str, end_date: str, source: dict[str, Any], *, transport: Callable[[str, dict[str, str], int], dict[str, Any]] = _default_transport, sleep_fn: Callable[[float], None] = time.sleep) -> QueryResult:
-    endpoint = source.get("endpoint")
-    if endpoint != "https://api.crossref.org/works":
-        raise LivingResearchError("Crossref endpoint drift")
-    rows = int(source.get("rows_per_query", 8))
-    timeout = int(source.get("timeout_seconds", 30))
-    retries = int(source.get("max_retries", 3))
-    params = {
-        "query.bibliographic": query,
-        "filter": f"from-index-date:{start_date},until-index-date:{end_date}",
-        "rows": str(rows),
-        "sort": "indexed",
-        "order": "desc",
-    }
-    mailto = os.environ.get("CROSSREF_MAILTO", "").strip()
-    if mailto:
-        params["mailto"] = mailto
-    url = endpoint + "?" + urllib.parse.urlencode(params)
-    headers = {"Accept": "application/json", "User-Agent": str(source.get("user_agent", "Project-FAR-Living-Research/1.0"))}
+def request_json(
+    url: str,
+    *,
+    user_agent: str,
+    timeout: int,
+    retries: int,
+    transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> dict[str, Any]:
+    headers = {"Accept": "application/json", "User-Agent": user_agent}
     last_error: Exception | None = None
     for attempt in range(retries + 1):
         try:
-            payload = transport(url, headers, timeout)
-            message = payload.get("message")
-            if not isinstance(message, dict):
-                raise LivingResearchError("Crossref response missing message object")
-            items = message.get("items")
-            if not isinstance(items, list):
-                raise LivingResearchError("Crossref response missing items array")
-            clean_items = [item for item in items if isinstance(item, dict)]
-            return QueryResult(items=clean_items, request={"provider": "Crossref REST API", "endpoint": endpoint, "parameters": params, "rows_returned": len(clean_items)})
+            return transport(url, headers, timeout)
         except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, json.JSONDecodeError, LivingResearchError) as exc:
             last_error = exc
             if attempt >= retries:
@@ -299,201 +250,657 @@ def crossref_query(query: str, start_date: str, end_date: str, source: dict[str,
     raise last_error
 
 
-def _load_state(root: Path) -> dict[str, Any]:
+def crossref_query(
+    query: str,
+    source: dict[str, Any],
+    *,
+    index_window: tuple[str, str] | None = None,
+    publication_window: tuple[int, int] | None = None,
+    transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    endpoint = source["endpoint"]
+    params: dict[str, str] = {
+        "query.bibliographic": query,
+        "rows": str(int(source.get("rows_per_query", 8))),
+    }
+    if index_window:
+        params["filter"] = f"from-index-date:{index_window[0]},until-index-date:{index_window[1]}"
+        params["sort"] = "indexed"
+        params["order"] = "desc"
+    elif publication_window:
+        params["filter"] = f"from-pub-date:{publication_window[0]},until-pub-date:{publication_window[1]}"
+        params["sort"] = "relevance"
+    else:
+        raise LivingResearchError("Crossref query requires an index or publication window")
+    mailto = os.environ.get("CROSSREF_MAILTO", "").strip()
+    if mailto:
+        params["mailto"] = mailto
+    url = endpoint + "?" + urllib.parse.urlencode(params)
+    payload = request_json(
+        url,
+        user_agent=source["user_agent"],
+        timeout=int(source.get("timeout_seconds", 30)),
+        retries=int(source.get("max_retries", 3)),
+        transport=transport,
+        sleep_fn=sleep_fn,
+    )
+    message = payload.get("message")
+    if not isinstance(message, dict) or not isinstance(message.get("items"), list):
+        raise LivingResearchError("Crossref response missing message.items")
+    items = [item for item in message["items"] if isinstance(item, dict)]
+    return items, {"provider": "Crossref", "parameters": params, "rows_returned": len(items)}
+
+
+def openalex_query(
+    query: str,
+    source: dict[str, Any],
+    start_year: int,
+    end_year: int,
+    *,
+    transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    params: dict[str, str] = {
+        "search": query,
+        "filter": f"from_publication_date:{start_year}-01-01,to_publication_date:{end_year}-12-31",
+        "per_page": str(int(source.get("rows_per_query", 8))),
+        "sort": "relevance_score:desc",
+        "select": "id,doi,display_name,publication_date,type,cited_by_count,authorships,keywords,topics,primary_location",
+    }
+    key = os.environ.get("OPENALEX_API_KEY", "").strip()
+    if key:
+        params["api_key"] = key
+    mailto = os.environ.get("OPENALEX_MAILTO", "").strip()
+    if mailto:
+        params["mailto"] = mailto
+    url = source["endpoint"] + "?" + urllib.parse.urlencode(params)
+    payload = request_json(
+        url,
+        user_agent=source["user_agent"],
+        timeout=int(source.get("timeout_seconds", 30)),
+        retries=int(source.get("max_retries", 2)),
+        transport=transport,
+        sleep_fn=sleep_fn,
+    )
+    if not isinstance(payload.get("results"), list):
+        raise LivingResearchError("OpenAlex response missing results")
+    items = [item for item in payload["results"] if isinstance(item, dict)]
+    return items, {"provider": "OpenAlex", "parameters": {k: ("<set>" if k == "api_key" else v) for k, v in params.items()}, "rows_returned": len(items)}
+
+
+def openlibrary_query(
+    query: str,
+    source: dict[str, Any],
+    page: int,
+    *,
+    transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    params = {
+        "q": query,
+        "fields": "key,title,author_name,first_publish_year,subject,edition_count,isbn,lcc,ddc",
+        "sort": "old",
+        "limit": str(int(source.get("rows_per_query", 5))),
+        "page": str(max(1, page)),
+    }
+    url = source["endpoint"] + "?" + urllib.parse.urlencode(params)
+    payload = request_json(
+        url,
+        user_agent=source["user_agent"],
+        timeout=int(source.get("timeout_seconds", 30)),
+        retries=int(source.get("max_retries", 2)),
+        transport=transport,
+        sleep_fn=sleep_fn,
+    )
+    docs = payload.get("docs")
+    if not isinstance(docs, list):
+        raise LivingResearchError("Open Library response missing docs")
+    items = [item for item in docs if isinstance(item, dict)]
+    return items, {"provider": "Open Library", "parameters": params, "rows_returned": len(items)}
+
+
+def crossref_text(item: dict[str, Any]) -> str:
+    fields = [item.get(k) for k in ("title", "subtitle", "abstract", "subject", "container-title", "publisher")]
+    return " ".join(clean_text(x).lower() for x in fields if x)
+
+
+def openalex_text(item: dict[str, Any]) -> str:
+    fields: list[Any] = [item.get("display_name"), item.get("type")]
+    for key in ("keywords", "topics"):
+        values = item.get(key)
+        if isinstance(values, list):
+            fields.extend(v.get("display_name") for v in values if isinstance(v, dict))
+    return " ".join(clean_text(x).lower() for x in fields if x)
+
+
+def openlibrary_text(item: dict[str, Any]) -> str:
+    return " ".join(clean_text(item.get(k)).lower() for k in ("title", "author_name", "subject", "lcc", "ddc") if item.get(k))
+
+
+def hits(text: str, terms: Iterable[str]) -> list[str]:
+    return sorted({term for term in terms if clean_text(term, 200).lower() in text}, key=str.lower)
+
+
+def normalize_doi(value: Any) -> str | None:
+    doi = clean_text(value, 500).lower()
+    for prefix in ("https://doi.org/", "http://doi.org/", "doi:"):
+        if doi.startswith(prefix):
+            doi = doi[len(prefix):]
+    return doi or None
+
+
+def source_identity(provider: str, item: dict[str, Any]) -> str:
+    if provider == "Crossref":
+        doi = normalize_doi(item.get("DOI"))
+        if doi:
+            return f"doi:{doi}"
+        stable = {
+            "title": clean_text(item.get("title")).lower(),
+            "publisher": clean_text(item.get("publisher")).lower(),
+            "type": clean_text(item.get("type")).lower(),
+            "published": item.get("published") or item.get("issued") or {},
+        }
+    elif provider == "OpenAlex":
+        doi = normalize_doi(item.get("doi"))
+        if doi:
+            return f"doi:{doi}"
+        ident = clean_text(item.get("id"), 500)
+        if ident:
+            return f"openalex:{ident.rsplit('/', 1)[-1].lower()}"
+        stable = {"title": clean_text(item.get("display_name")).lower(), "date": item.get("publication_date")}
+    elif provider == "Open Library":
+        key = clean_text(item.get("key"), 500)
+        if key:
+            return f"openlibrary:{key.lower()}"
+        stable = {"title": clean_text(item.get("title")).lower(), "year": item.get("first_publish_year")}
+    else:
+        raise LivingResearchError(f"unknown provider: {provider}")
+    encoded = json.dumps(stable, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return f"{provider.lower().replace(' ', '-')}-fallback:{sha256_text(encoded)}"
+
+
+def candidate_id(source_key: str) -> str:
+    return "FAR-LIT-" + sha256_text(source_key)[:16].upper()
+
+
+def crossref_source(item: dict[str, Any]) -> dict[str, Any]:
+    title = clean_text(item.get("title"))
+    authors = []
+    if isinstance(item.get("author"), list):
+        for author in item["author"][:25]:
+            if isinstance(author, dict):
+                name = " ".join(x for x in (clean_text(author.get("given"), 200), clean_text(author.get("family"), 200)) if x)
+                if name:
+                    authors.append(name)
+    date = None
+    for key in ("published-online", "published-print", "published", "issued"):
+        raw = item.get(key)
+        if isinstance(raw, dict) and isinstance(raw.get("date-parts"), list) and raw["date-parts"]:
+            parts = raw["date-parts"][0]
+            if parts:
+                try:
+                    y = int(parts[0]); m = int(parts[1]) if len(parts) > 1 else 1; d = int(parts[2]) if len(parts) > 2 else 1
+                    date = f"{y:04d}-{m:02d}-{d:02d}"
+                    break
+                except (TypeError, ValueError):
+                    pass
+    return {
+        "provider": "Crossref",
+        "doi": normalize_doi(item.get("DOI")),
+        "provider_id": normalize_doi(item.get("DOI")),
+        "url": clean_text(item.get("URL"), 2000) or None,
+        "title": title,
+        "authors": authors,
+        "published_date": date,
+        "work_type": clean_text(item.get("type"), 100) or None,
+        "container": clean_text(item.get("container-title"), 500) or None,
+        "publisher": clean_text(item.get("publisher"), 500) or None,
+    }
+
+
+def openalex_source(item: dict[str, Any]) -> dict[str, Any]:
+    authors = []
+    for authorship in item.get("authorships") or []:
+        if isinstance(authorship, dict) and isinstance(authorship.get("author"), dict):
+            name = clean_text(authorship["author"].get("display_name"), 300)
+            if name:
+                authors.append(name)
+    location = item.get("primary_location") if isinstance(item.get("primary_location"), dict) else {}
+    return {
+        "provider": "OpenAlex",
+        "doi": normalize_doi(item.get("doi")),
+        "provider_id": clean_text(item.get("id"), 500) or None,
+        "url": clean_text(location.get("landing_page_url"), 2000) or clean_text(item.get("id"), 500) or None,
+        "title": clean_text(item.get("display_name")),
+        "authors": authors[:25],
+        "published_date": clean_text(item.get("publication_date"), 40) or None,
+        "work_type": clean_text(item.get("type"), 100) or None,
+        "cited_by_count": item.get("cited_by_count") if isinstance(item.get("cited_by_count"), int) else None,
+    }
+
+
+def openlibrary_source(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "provider": "Open Library",
+        "doi": None,
+        "provider_id": clean_text(item.get("key"), 500) or None,
+        "url": ("https://openlibrary.org" + clean_text(item.get("key"), 500)) if item.get("key") else None,
+        "title": clean_text(item.get("title")),
+        "authors": [clean_text(x, 300) for x in (item.get("author_name") or [])[:25]],
+        "published_date": f"{int(item['first_publish_year']):04d}-01-01" if isinstance(item.get("first_publish_year"), int) else None,
+        "work_type": "book",
+        "edition_count": item.get("edition_count") if isinstance(item.get("edition_count"), int) else None,
+    }
+
+
+def load_state(root: Path, config: dict[str, Any], now: datetime) -> dict[str, Any]:
     path = root / STATE_PATH
-    if not path.exists():
-        return {"schema_version": "1.0", "program_id": "FAR-LIVING-RESEARCH-001", "source_cursor_utc": None, "last_run_id": None, "last_run_status": "NEVER_RUN", "total_unique_candidates": 0, "updated_utc": None}
-    state = _read_json(path)
-    if state.get("program_id") != "FAR-LIVING-RESEARCH-001":
-        raise LivingResearchError("state program_id drift")
-    return state
-
-
-def _candidate_path(root: Path, candidate_id: str) -> Path:
-    if not re.fullmatch(r"FAR-LIT-[0-9A-F]{16}", candidate_id):
-        raise LivingResearchError(f"unsafe candidate id: {candidate_id}")
-    return root / CANDIDATE_DIR / f"{candidate_id}.json"
-
-
-def _merge_binding(record: dict[str, Any], binding: dict[str, Any], now_iso: str) -> None:
-    discovery = record.setdefault("discovery", {})
-    if not isinstance(discovery, dict):
-        raise LivingResearchError("candidate discovery field must be object")
-    bindings = discovery.setdefault("query_bindings", [])
-    if not isinstance(bindings, list):
-        raise LivingResearchError("candidate query_bindings must be array")
-    key = (binding["target_id"], binding["query"])
-    existing = {(item.get("target_id"), item.get("query")) for item in bindings if isinstance(item, dict)}
-    if key not in existing:
-        bindings.append(binding)
-        bindings.sort(key=lambda item: (item.get("target_id", ""), item.get("query", "")))
-    discovery["last_seen_utc"] = now_iso
-
-
-def _new_candidate(item: dict[str, Any], candidate_id: str, binding: dict[str, Any], now_iso: str, attention: list[str]) -> dict[str, Any]:
-    return {
+    if path.exists():
+        state = read_json(path)
+    else:
+        state = {}
+    cursor = state.get("incremental_cursor_utc") or state.get("source_cursor_utc")
+    current_year = now.year
+    default = {
         "schema_version": "1.0",
-        "record_type": "CANDIDATE_LITERATURE",
-        "authority": "Research",
-        "candidate_id": candidate_id,
-        "source": _candidate_source(item),
-        "discovery": {"first_seen_utc": now_iso, "last_seen_utc": now_iso, "query_bindings": [binding]},
-        "triage": {"status": "UNREVIEWED_CANDIDATE", "attention_terms": attention, "attention": "HIGH" if attention else "NORMAL"},
-        "epistemic_boundary": {
-            "statement": AUTHORITY_BOUNDARY,
-            "may_change_claim_status": False,
-            "may_establish_novelty": False,
-            "may_execute_efr": False,
-            "may_count_as_external_independence": False,
+        "program_id": "FAR-LIVING-RESEARCH-001",
+        "incremental_cursor_utc": cursor,
+        "historical": {
+            "query_index": 0,
+            "window_end_year": current_year,
+            "complete": False,
+            "completed_utc": None,
         },
+        "openlibrary": {"query_index": 0, "page": 1},
+        "run_count": int(state.get("run_count", 0)),
+        "last_run_id": state.get("last_run_id"),
+        "last_run_status": state.get("last_run_status", "NEVER_RUN"),
+        "total_unique_candidates": int(state.get("total_unique_candidates", 0)),
+        "updated_utc": state.get("updated_utc"),
     }
+    if isinstance(state.get("historical"), dict):
+        default["historical"].update(state["historical"])
+    if isinstance(state.get("openlibrary"), dict):
+        default["openlibrary"].update(state["openlibrary"])
+    return default
 
 
-def _make_binding(target: dict[str, Any], question: dict[str, Any], query: str, hits: list[str]) -> dict[str, Any]:
-    return {
-        "target_id": target["target_id"],
-        "candidate_relation": target["candidate_relation"],
-        "query": query,
-        "signal_terms_hit": hits,
-        "governed_question_sha256": _sha256_text(str(question.get("exact_question", ""))),
+def candidate_path(root: Path, cid: str) -> Path:
+    if not re.fullmatch(r"FAR-LIT-[0-9A-F]{16}", cid):
+        raise LivingResearchError(f"unsafe candidate id: {cid}")
+    return root / CANDIDATE_DIR / f"{cid}.json"
+
+
+def process_item(
+    *,
+    root: Path,
+    provider: str,
+    item: dict[str, Any],
+    binding: dict[str, Any],
+    signal_terms: list[str],
+    min_signal_hits: int,
+    lens: dict[str, Any] | None,
+    attention_terms: list[str],
+    all_claim_ids: list[str],
+    questions: dict[str, dict[str, Any]],
+    now_iso: str,
+    accept_allowed: bool = True,
+) -> tuple[dict[str, Any], bool]:
+    text_fn = {"Crossref": crossref_text, "OpenAlex": openalex_text, "Open Library": openlibrary_text}[provider]
+    text = text_fn(item)
+    signal = hits(text, signal_terms)
+    bridge = hits(text, (lens or {}).get("bridge_terms", []))
+    required_bridge = int((lens or {}).get("min_bridge_hits", 0))
+    eligible = len(signal) >= min_signal_hits and len(bridge) >= required_bridge
+    accepted = eligible and accept_allowed
+    reason = "ACCEPTED_SIGNAL_MATCH" if accepted else (
+        "QUERY_ACCEPTANCE_CAP" if eligible and not accept_allowed else
+        "INSUFFICIENT_MATHEMATICAL_BRIDGE" if len(signal) >= min_signal_hits and len(bridge) < required_bridge
+        else "NO_SIGNAL_TERM"
+    )
+    source_key = source_identity(provider, item)
+    cid = candidate_id(source_key)
+    result = {
+        "provider": provider,
+        "source_key": source_key,
+        "candidate_id": cid,
+        "title": clean_text(item.get("title") if provider != "OpenAlex" else item.get("display_name")),
+        "decision": "ACCEPT" if accepted else "REJECT",
+        "reason": reason,
+        "signal_hits": signal,
+        "bridge_hits": bridge,
     }
+    if not accepted:
+        return result, False
+
+    source = {
+        "Crossref": crossref_source,
+        "OpenAlex": openalex_source,
+        "Open Library": openlibrary_source,
+    }[provider](item)
+    path = candidate_path(root, cid)
+    was_new = not path.exists()
+    if path.exists():
+        record = read_json(path)
+    else:
+        record = {
+            "schema_version": "1.0",
+            "record_type": "CANDIDATE_LITERATURE",
+            "authority": "Research",
+            "candidate_id": cid,
+            "source_key": source_key,
+            "authority_boundary": AUTHORITY_BOUNDARY,
+            "sources": [],
+            "discovery": {"first_seen_utc": now_iso, "last_seen_utc": now_iso, "query_bindings": []},
+            "triage": {"status": "UNREVIEWED_CANDIDATE", "attention_terms": [], "lenses": []},
+            "potential_claim_ids": [],
+            "lifecycle": {
+                "stage": "DISCOVERED",
+                "may_change_claim_status": False,
+                "may_establish_novelty": False,
+                "may_execute_efr": False,
+                "may_count_as_external_independence": False,
+            },
+        }
+
+    sources = record.setdefault("sources", [])
+    source_fingerprint = (source.get("provider"), source.get("provider_id"))
+    existing = {(s.get("provider"), s.get("provider_id")) for s in sources if isinstance(s, dict)}
+    if source_fingerprint not in existing:
+        sources.append(source)
+        sources.sort(key=lambda s: (s.get("provider") or "", s.get("provider_id") or ""))
+
+    qbinds = record["discovery"].setdefault("query_bindings", [])
+    bind_key = (binding["target_id"], binding["query"], binding.get("historical_query_id"), provider)
+    existing_binds = {
+        (b.get("target_id"), b.get("query"), b.get("historical_query_id"), b.get("provider"))
+        for b in qbinds if isinstance(b, dict)
+    }
+    if bind_key not in existing_binds:
+        qbinds.append(binding)
+        qbinds.sort(key=lambda b: (b.get("target_id") or "", b.get("query") or "", b.get("provider") or ""))
+    record["discovery"]["last_seen_utc"] = now_iso
+
+    attn = hits(text, attention_terms)
+    record["triage"]["attention_terms"] = sorted(set(record["triage"].get("attention_terms", [])) | set(attn))
+    if binding.get("lens"):
+        record["triage"]["lenses"] = sorted(set(record["triage"].get("lenses", [])) | {binding["lens"]})
+    potential = set(record.get("potential_claim_ids", []))
+    for target_id in binding.get("target_ids", [binding["target_id"]]):
+        potential.update(claim_ids_from_question(questions[target_id], all_claim_ids))
+    record["potential_claim_ids"] = [cid_ for cid_ in all_claim_ids if cid_ in potential]
+    write_json(path, record)
+    return result, was_new
 
 
-def _window(state: dict[str, Any], now: datetime, source: dict[str, Any]) -> tuple[datetime, datetime]:
-    cursor = state.get("source_cursor_utc")
-    start = _parse_utc(cursor) - timedelta(days=int(source.get("overlap_days", 2))) if isinstance(cursor, str) and cursor else now - timedelta(days=int(source.get("initial_lookback_days", 14)))
-    return start, now
-
-
-def _run_id(now: datetime) -> str:
-    suffix = re.sub(r"[^A-Za-z0-9_.-]", "-", os.environ.get("GITHUB_RUN_ID", "local"))[:80]
-    return now.strftime("%Y%m%dT%H%M%SZ") + "-" + suffix
-
-
-def render_dashboard(root: Path, state: dict[str, Any]) -> None:
-    candidates = sorted((root / CANDIDATE_DIR).glob("FAR-LIT-*.json")) if (root / CANDIDATE_DIR).exists() else []
+def render_dashboard(root: Path, state: dict[str, Any], run: dict[str, Any]) -> None:
+    candidates = sorted((root / CANDIDATE_DIR).glob("FAR-LIT-*.json"))
     high = 0
-    targets: dict[str, int] = {}
+    philosophical = 0
+    historical = 0
     for path in candidates:
-        record = _read_json(path)
-        if record.get("triage", {}).get("attention") == "HIGH":
+        record = read_json(path)
+        if record.get("triage", {}).get("attention_terms"):
             high += 1
-        bindings = record.get("discovery", {}).get("query_bindings", [])
-        if isinstance(bindings, list):
-            for binding in bindings:
-                if isinstance(binding, dict) and isinstance(binding.get("target_id"), str):
-                    targets[binding["target_id"]] = targets.get(binding["target_id"], 0) + 1
-    lines = [
-        "# Living research status", "", "Status: **Generated Research view; never theory or evidence authority**", "",
-        "This page is generated from `research/living/`. Candidate literature remains unreviewed until a separate governed review promotes a relationship. Search absence, model agreement, and automated triage change no Project FAR claim status.", "",
-        f"- Last run: `{state.get('last_run_id') or 'never'}`", f"- Last run status: `{state.get('last_run_status') or 'unknown'}`", f"- Source cursor: `{state.get('source_cursor_utc') or 'not established'}`",
-        f"- Unique candidate records: **{len(candidates)}**", f"- High-attention candidates: **{high}**", "", "## Candidates by governed research question", "",
-    ]
-    lines.extend((f"- `{target_id}`: {count}" for target_id, count in sorted(targets.items())) if targets else ["No candidates recorded yet."])
-    lines.extend(["", "## Authority boundary", "", AUTHORITY_BOUNDARY, "", "Source failures and result-level rejection reasons are preserved under `research/living/runs/`.", ""])
+        lenses = set(record.get("triage", {}).get("lenses", []))
+        if lenses & {"philosophy_of_science", "formal_metaphysics", "history_of_logic", "historical_foundations"}:
+            philosophical += 1
+        if any(b.get("mode") == "historical_backfill" for b in record.get("discovery", {}).get("query_bindings", []) if isinstance(b, dict)):
+            historical += 1
+    hist = state["historical"]
+    text = f"""# Living Research Status
+
+Status: **Research infrastructure; never theory or evidence authority**
+
+{AUTHORITY_BOUNDARY}
+
+- Last run: `{state.get('last_run_id')}`
+- Last status: `{state.get('last_run_status')}`
+- Total unique candidates: **{len(candidates)}**
+- High-attention metadata candidates: **{high}**
+- Philosophical / metaphysical / historical-lens candidates: **{philosophical}**
+- Historical-backfill candidates: **{historical}**
+- Incremental cursor: `{state.get('incremental_cursor_utc')}`
+- Historical backfill window end: `{hist.get('window_end_year')}`
+- Historical backfill complete: `{hist.get('complete')}`
+- Source failures in latest run: **{len(run.get('failures', []))}**
+
+The watcher discovers and routes candidates. It does not adjudicate them, establish novelty,
+change FAR-CORE status, execute EFR, or create independent evidence.
+"""
     path = root / DASHBOARD_PATH
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("\n".join(lines), encoding="utf-8")
+    path.write_text(text, encoding="utf-8")
 
 
-def run_once(root: Path, *, now: datetime | None = None, transport: Callable[[str, dict[str, str], int], dict[str, Any]] = _default_transport, sleep_fn: Callable[[float], None] = time.sleep) -> dict[str, Any]:
-    supplied_now = now is not None
-    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc).replace(microsecond=0)
-    now_iso = _utc_iso(now)
-    config = _read_json(root / CONFIG_PATH)
-    questions = validate_bindings(config, _read_json(root / RQ_PATH), _read_json(root / THREAT_PATH))
-    state = _load_state(root)
-    source = config.get("source")
-    if not isinstance(source, dict):
-        raise LivingResearchError("source config missing")
-    start, end = _window(state, now, source)
-    start_date, end_date = start.date().isoformat(), end.date().isoformat()
-    run_id = _run_id(now)
-    report: dict[str, Any] = {
-        "schema_version": "1.0", "program_id": "FAR-LIVING-RESEARCH-001", "run_id": run_id, "authority": "Research", "authority_boundary": AUTHORITY_BOUNDARY,
-        "started_utc": now_iso, "source_window": {"from_index_date": start_date, "until_index_date": end_date, "overlap_days": int(source.get("overlap_days", 2))},
-        "queries": [], "failures": [], "summary": {},
+def run(
+    root: Path,
+    *,
+    now: datetime | None = None,
+    crossref_transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    openalex_transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    openlibrary_transport: Callable[[str, dict[str, str], int], dict[str, Any]] = default_transport,
+    sleep_fn: Callable[[float], None] = time.sleep,
+) -> dict[str, Any]:
+    now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    now_iso = utc_iso(now)
+    config = read_json(root / CONFIG_PATH)
+    rq_registry = read_json(root / RQ_PATH)
+    threat_registry = read_json(root / THREAT_PATH)
+    claim_ledger = read_json(root / CLAIM_PATH)
+    questions = validate_bindings(config, rq_registry, threat_registry, claim_ledger)
+    claims = claim_index(claim_ledger)
+    all_claim_ids = list(claims)
+    state = load_state(root, config, now)
+
+    run_id = now.strftime("%Y%m%dT%H%M%SZ") + "-" + os.environ.get("GITHUB_RUN_ID", "local")
+    run_record: dict[str, Any] = {
+        "schema_version": "1.0",
+        "run_id": run_id,
+        "authority": "Research",
+        "authority_boundary": AUTHORITY_BOUNDARY,
+        "started_utc": now_iso,
+        "status": "RUNNING",
+        "queries": [],
+        "failures": [],
+        "cursor_advanced": False,
+        "historical_advanced": False,
     }
-    seen_in_run: set[tuple[str, str, str]] = set()
-    accepted_new = accepted_seen = rejected = 0
-    all_queries_succeeded = True
-    attention_terms = config.get("attention_terms", [])
-    if not isinstance(attention_terms, list):
-        raise LivingResearchError("attention_terms must be an array")
+    source_cfg = config["sources"]
+    crossref_cfg = source_cfg["crossref"]
+
+    overlap_days = int(crossref_cfg.get("overlap_days", 2))
+    lookback_days = int(crossref_cfg.get("initial_lookback_days", 14))
+    cursor_raw = state.get("incremental_cursor_utc")
+    start = parse_utc(cursor_raw) - timedelta(days=overlap_days) if cursor_raw else now - timedelta(days=lookback_days)
+    index_window = (utc_iso(start), now_iso)
 
     for target in config["targets"]:
-        question = questions[target["target_id"]]
-        min_hits = int(target.get("min_signal_hits", 1))
-        cap = int(target.get("max_candidates_per_query", 3))
+        target_id = target["target_id"]
+        qsha = sha256_text(clean_text(questions[target_id].get("exact_question")))
         for query in target["queries"]:
-            qreport: dict[str, Any] = {"target_id": target["target_id"], "candidate_relation": target["candidate_relation"], "query": query, "governed_question_sha256": _sha256_text(str(question.get("exact_question", ""))), "request": None, "results": []}
-            try:
-                result = crossref_query(query, start_date, end_date, source, transport=transport, sleep_fn=sleep_fn)
-                qreport["request"] = result.request
-            except Exception as exc:
-                all_queries_succeeded = False
-                failure = {"target_id": target["target_id"], "query": query, "error_type": type(exc).__name__, "error": _clean_text(str(exc), 1000)}
-                report["failures"].append(failure)
-                qreport["failure"] = failure
-                report["queries"].append(qreport)
-                continue
             accepted_for_query = 0
-            for rank, item in enumerate(result.items, start=1):
-                source_key = _source_key(item)
-                cid = _candidate_id(source_key)
-                hits = _signal_hits(item, target["signal_terms"])
-                decision, reason = "REJECTED", "NO_SIGNAL_TERM"
-                if len(hits) >= min_hits and accepted_for_query < cap:
-                    dedup_key = (cid, target["target_id"], query)
-                    if dedup_key in seen_in_run:
-                        decision, reason = "ACCEPTED_DUPLICATE_IN_RUN", "DUPLICATE_SOURCE_BINDING"
-                    else:
-                        seen_in_run.add(dedup_key)
-                        accepted_for_query += 1
-                        binding = _make_binding(target, question, query, hits)
-                        path = _candidate_path(root, cid)
-                        if path.exists():
-                            record = _read_json(path)
-                            if record.get("candidate_id") != cid or record.get("source", {}).get("source_key") != source_key:
-                                raise LivingResearchError(f"candidate identity collision: {cid}")
-                            _merge_binding(record, binding, now_iso)
-                            _write_json(path, record)
-                            accepted_seen += 1
-                            decision, reason = "ACCEPTED_SEEN", "MATCHED_AND_DEDUPED"
-                        else:
-                            _write_json(path, _new_candidate(item, cid, binding, now_iso, _attention_hits(item, attention_terms)))
-                            accepted_new += 1
-                            decision, reason = "ACCEPTED_NEW", "MATCHED_SIGNAL_TERMS"
-                elif len(hits) >= min_hits:
-                    rejected += 1
-                    reason = "QUERY_ACCEPTANCE_CAP"
-                else:
-                    rejected += 1
-                qreport["results"].append({"rank": rank, "candidate_id": cid, "source_key": source_key, "title": _first(item, "title")[:500], "decision": decision, "reason": reason, "signal_terms_hit": hits})
-            report["queries"].append(qreport)
+            try:
+                items, request = crossref_query(
+                    query, crossref_cfg, index_window=index_window,
+                    transport=crossref_transport, sleep_fn=sleep_fn
+                )
+            except Exception as exc:
+                run_record["failures"].append({"provider": "Crossref", "mode": "incremental", "target_id": target_id, "query": query, "error": f"{type(exc).__name__}: {exc}"})
+                continue
+            qrec = {"provider": "Crossref", "mode": "incremental", "target_id": target_id, "query": query, "request": request, "results": []}
+            for rank, item in enumerate(items, 1):
+                binding = {
+                    "provider": "Crossref",
+                    "mode": "incremental",
+                    "target_id": target_id,
+                    "target_ids": [target_id],
+                    "query": query,
+                    "governed_question_sha256": qsha,
+                    "candidate_relation": target["candidate_relation"],
+                    "lens": "governed_question",
+                    "seen_utc": now_iso,
+                }
+                outcome, _ = process_item(
+                    root=root, provider="Crossref", item=item, binding=binding,
+                    signal_terms=target["signal_terms"], min_signal_hits=int(target.get("min_signal_hits", 1)),
+                    lens={"bridge_terms": [], "min_bridge_hits": 0},
+                    attention_terms=config["attention_terms"], all_claim_ids=all_claim_ids,
+                    questions=questions, now_iso=now_iso,
+                    accept_allowed=accepted_for_query < int(target.get("max_candidates_per_query", 3)),
+                )
+                outcome["rank"] = rank
+                if outcome["decision"] == "ACCEPT":
+                    accepted_for_query += 1
+                qrec["results"].append(outcome)
+            run_record["queries"].append(qrec)
 
-    status = "SUCCESS" if all_queries_succeeded else "PARTIAL_SOURCE_FAILURE"
-    state.update({"last_run_id": run_id, "last_run_status": status, "updated_utc": now_iso})
-    if all_queries_succeeded:
-        state["source_cursor_utc"] = now_iso
-    count = len(list((root / CANDIDATE_DIR).glob("FAR-LIT-*.json"))) if (root / CANDIDATE_DIR).exists() else 0
-    state["total_unique_candidates"] = count
-    report["summary"] = {"status": status, "queries_total": len(report["queries"]), "queries_failed": len(report["failures"]), "accepted_new": accepted_new, "accepted_seen": accepted_seen, "rejected_results": rejected, "unique_candidates_after_run": count, "cursor_advanced": all_queries_succeeded}
-    report["finished_utc"] = now_iso if supplied_now else _utc_iso(datetime.now(timezone.utc))
-    _write_json(root / RUN_DIR / f"{run_id}.json", report)
-    _write_json(root / STATE_PATH, state)
-    render_dashboard(root, state)
-    return report
+    hist_cfg = config["historical_backfill"]
+    hist = state["historical"]
+    if not hist.get("complete"):
+        historical_queries = hist_cfg["queries"]
+        qindex = int(hist.get("query_index", 0)) % len(historical_queries)
+        hq = historical_queries[qindex]
+        end_year = int(hist.get("window_end_year", now.year))
+        width = int(hist_cfg.get("window_years", 10))
+        min_year = int(hist_cfg.get("min_year", 1600))
+        start_year = max(min_year, end_year - width + 1)
+        lens = config["lenses"][hq["lens"]]
+        for provider in ("Crossref", "OpenAlex"):
+            try:
+                if provider == "Crossref":
+                    items, request = crossref_query(
+                        hq["query"], crossref_cfg, publication_window=(start_year, end_year),
+                        transport=crossref_transport, sleep_fn=sleep_fn
+                    )
+                else:
+                    items, request = openalex_query(
+                        hq["query"], source_cfg["openalex"], start_year, end_year,
+                        transport=openalex_transport, sleep_fn=sleep_fn
+                    )
+            except Exception as exc:
+                run_record["failures"].append({"provider": provider, "mode": "historical_backfill", "historical_query_id": hq["id"], "query": hq["query"], "window": [start_year, end_year], "error": f"{type(exc).__name__}: {exc}"})
+                continue
+            qrec = {"provider": provider, "mode": "historical_backfill", "historical_query_id": hq["id"], "query": hq["query"], "window": [start_year, end_year], "request": request, "results": []}
+            for rank, item in enumerate(items, 1):
+                target_id = hq["target_ids"][0]
+                qsha = sha256_text(clean_text(questions[target_id].get("exact_question")))
+                binding = {
+                    "provider": provider,
+                    "mode": "historical_backfill",
+                    "target_id": target_id,
+                    "target_ids": hq["target_ids"],
+                    "query": hq["query"],
+                    "historical_query_id": hq["id"],
+                    "governed_question_sha256": qsha,
+                    "candidate_relation": "HISTORICAL_OR_FOUNDATIONAL_CANDIDATE",
+                    "lens": hq["lens"],
+                    "publication_window": [start_year, end_year],
+                    "seen_utc": now_iso,
+                }
+                outcome, _ = process_item(
+                    root=root, provider=provider, item=item, binding=binding,
+                    signal_terms=hq["signal_terms"], min_signal_hits=int(hq.get("min_signal_hits", 1)),
+                    lens=lens, attention_terms=config["attention_terms"], all_claim_ids=all_claim_ids,
+                    questions=questions, now_iso=now_iso,
+                )
+                outcome["rank"] = rank
+                qrec["results"].append(outcome)
+            run_record["queries"].append(qrec)
+
+        slice_failed = any(
+            f.get("mode") == "historical_backfill" and f.get("historical_query_id") == hq["id"]
+            for f in run_record["failures"]
+        )
+        if not slice_failed:
+            qindex += 1
+            if qindex >= len(historical_queries):
+                qindex = 0
+                end_year = start_year - 1
+                if end_year < min_year:
+                    hist["complete"] = True
+                    hist["completed_utc"] = now_iso
+                    end_year = min_year
+            hist["query_index"] = qindex
+            hist["window_end_year"] = end_year
+            run_record["historical_advanced"] = True
+
+    ol_cfg = source_cfg.get("openlibrary", {})
+    if ol_cfg.get("enabled", True) and state["run_count"] % int(ol_cfg.get("interval_runs", 4)) == 0:
+        book_queries = hist_cfg.get("book_queries", [])
+        if book_queries:
+            ol_state = state["openlibrary"]
+            qindex = int(ol_state.get("query_index", 0)) % len(book_queries)
+            bq = book_queries[qindex]
+            page = int(ol_state.get("page", 1))
+            try:
+                items, request = openlibrary_query(
+                    bq["query"], ol_cfg, page, transport=openlibrary_transport, sleep_fn=sleep_fn
+                )
+                qrec = {"provider": "Open Library", "mode": "historical_book_backfill", "historical_query_id": bq["id"], "query": bq["query"], "page": page, "request": request, "results": []}
+                lens = config["lenses"][bq["lens"]]
+                for rank, item in enumerate(items, 1):
+                    target_id = bq["target_ids"][0]
+                    binding = {
+                        "provider": "Open Library",
+                        "mode": "historical_backfill",
+                        "target_id": target_id,
+                        "target_ids": bq["target_ids"],
+                        "query": bq["query"],
+                        "historical_query_id": bq["id"],
+                        "governed_question_sha256": sha256_text(clean_text(questions[target_id].get("exact_question"))),
+                        "candidate_relation": "HISTORICAL_PRIMARY_OR_BOOK_CANDIDATE",
+                        "lens": bq["lens"],
+                        "seen_utc": now_iso,
+                    }
+                    outcome, _ = process_item(
+                        root=root, provider="Open Library", item=item, binding=binding,
+                        signal_terms=bq["signal_terms"], min_signal_hits=int(bq.get("min_signal_hits", 1)),
+                        lens=lens, attention_terms=config["attention_terms"], all_claim_ids=all_claim_ids,
+                        questions=questions, now_iso=now_iso,
+                    )
+                    outcome["rank"] = rank
+                    qrec["results"].append(outcome)
+                run_record["queries"].append(qrec)
+                next_index = (qindex + 1) % len(book_queries)
+                ol_state["query_index"] = next_index
+                ol_state["page"] = page + 1 if next_index == 0 else page
+            except Exception as exc:
+                run_record["failures"].append({"provider": "Open Library", "mode": "historical_book_backfill", "historical_query_id": bq["id"], "query": bq["query"], "page": page, "error": f"{type(exc).__name__}: {exc}"})
+
+    incremental_failed = any(f.get("mode") == "incremental" for f in run_record["failures"])
+    if not incremental_failed:
+        state["incremental_cursor_utc"] = now_iso
+        run_record["cursor_advanced"] = True
+
+    state["run_count"] += 1
+    state["last_run_id"] = run_id
+    state["last_run_status"] = "PARTIAL_SOURCE_FAILURE" if run_record["failures"] else "SUCCESS"
+    state["updated_utc"] = now_iso
+    state["total_unique_candidates"] = len(list((root / CANDIDATE_DIR).glob("FAR-LIT-*.json")))
+    run_record["status"] = state["last_run_status"]
+    run_record["finished_utc"] = now_iso
+    write_json(root / STATE_PATH, state)
+    write_json(root / RUN_DIR / f"{run_id}.json", run_record)
+    render_dashboard(root, state, run_record)
+    return run_record
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the Project FAR unattended research discovery loop")
-    parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--now", help="Override UTC time for deterministic testing, e.g. 2026-09-08T02:00:00Z")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--root", default=".")
     args = parser.parse_args()
-    report = run_once(args.root.resolve(), now=_parse_utc(args.now) if args.now else None)
-    print(json.dumps(report["summary"], indent=2, sort_keys=True))
-    return 0
+    result = run(Path(args.root))
+    print(json.dumps({
+        "run_id": result["run_id"],
+        "status": result["status"],
+        "queries": len(result["queries"]),
+        "failures": len(result["failures"]),
+        "cursor_advanced": result["cursor_advanced"],
+        "historical_advanced": result["historical_advanced"],
+    }, sort_keys=True))
+    return 0 if result["status"] in {"SUCCESS", "PARTIAL_SOURCE_FAILURE"} else 1
 
 
 if __name__ == "__main__":

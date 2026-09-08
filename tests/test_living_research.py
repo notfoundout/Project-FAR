@@ -1,129 +1,158 @@
 from __future__ import annotations
 
-import importlib.util
+import copy
 import json
-import sys
 import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
-MODULE_PATH = Path(__file__).resolve().parents[1] / "tools" / "run_living_research.py"
-spec = importlib.util.spec_from_file_location("run_living_research", MODULE_PATH)
-assert spec and spec.loader
-living = importlib.util.module_from_spec(spec)
-sys.modules[spec.name] = living
-spec.loader.exec_module(living)
+from tools import run_living_research as lr
+from tools import reconcile_living_repo as rr
 
-RQ = {"questions": [{"id": "FAR-RQ-003", "exact_question": "Can the quotient be computed?", "current_disposition": "OPEN"}]}
-THREATS = {"threats": [{"id": "THREAT-004"}]}
-CONFIG = {
-    "schema_version": "1.0",
-    "program_id": "FAR-LIVING-RESEARCH-001",
-    "authority_boundary": living.AUTHORITY_BOUNDARY,
-    "source": {
-        "provider": "Crossref REST API",
-        "endpoint": "https://api.crossref.org/works",
-        "rows_per_query": 8,
-        "initial_lookback_days": 14,
-        "overlap_days": 2,
-        "timeout_seconds": 1,
-        "max_retries": 0,
-        "user_agent": "test"
-    },
-    "threat_guards": ["THREAT-004"],
-    "attention_terms": ["counterexample"],
-    "targets": [{
-        "target_id": "FAR-RQ-003",
-        "allowed_dispositions": ["OPEN"],
-        "candidate_relation": "COMPUTABILITY_OR_OBSTRUCTION_CANDIDATE",
-        "queries": ["observational quotient"],
-        "signal_terms": ["observational", "quotient"],
-        "min_signal_hits": 1,
-        "max_candidates_per_query": 3
-    }]
-}
+
+def write_json(path: Path, value):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+
+
+def claims():
+    return {"theory_id":"PROJECT-FAR-CORE-THEORY-1.1","claims":[{"id":f"FAR-CORE-{n:03d}","status":"proved","scope":f"scope {n}","claim":f"claim {n}"} for n in range(1,15)]}
+
+
+def assurance():
+    rows=[]
+    for n in range(1,15):
+        deps=[f"FAR-CORE-{n-1:03d}"] if n>1 else ["set_presentation"]
+        rows.append({"id":f"FAR-CORE-{n:03d}","exact_statement":f"claim {n}","scope":f"scope {n}","dependencies":deps,"truth_disposition":"PROVED","formalization_status":"FORMALIZED","novelty_prior_art_status":"NOT_ESTABLISHED","governance_status":"ACCEPTED_CURRENT"})
+    return {"claims":rows}
+
+
+def rq_registry():
+    return {"questions":[
+        {"id":"FAR-RQ-003","exact_question":"Can FAR-CORE-002 be computed?","governing_scope":"FAR-CORE-002","dependencies":["FAR-CORE-002"],"current_disposition":"OPEN"},
+        {"id":"FAR-RQ-009","exact_question":"Does evidence contradict FAR-CORE-001 through FAR-CORE-014?","governing_scope":"FAR-CORE-001 through FAR-CORE-014","dependencies":[],"current_disposition":"OPEN"}
+    ]}
+
+
+def threat_registry():
+    return {"threats":[{"id":"THREAT-004"}]}
+
+
+def minimal_config():
+    return {
+        "schema_version":"1.0","program_id":"FAR-LIVING-RESEARCH-001","authority":"Research","authority_boundary":lr.AUTHORITY_BOUNDARY,"schedule_intent":"every_30_minutes",
+        "sources":{
+            "crossref":{"endpoint":"https://api.crossref.org/works","rows_per_query":8,"initial_lookback_days":14,"overlap_days":2,"timeout_seconds":1,"max_retries":0,"user_agent":"test"},
+            "openalex":{"endpoint":"https://api.openalex.org/works","rows_per_query":8,"timeout_seconds":1,"max_retries":0,"user_agent":"test"},
+            "openlibrary":{"endpoint":"https://openlibrary.org/search.json","enabled":True,"interval_runs":4,"rows_per_query":5,"timeout_seconds":1,"max_retries":0,"user_agent":"test"}},
+        "threat_guards":["THREAT-004"],"attention_terms":["counterexample","contradiction"],
+        "lenses":{"governed_question":{"bridge_terms":[],"min_bridge_hits":0},"formal_mathematics":{"bridge_terms":["formal"],"min_bridge_hits":0},"formal_metaphysics":{"bridge_terms":["formal","logic","identity"],"min_bridge_hits":1}},
+        "historical_backfill":{"min_year":1600,"window_years":10,"queries":[{"id":"HIST-ONE","query":"equivalence quotient","target_ids":["FAR-RQ-009"],"lens":"formal_mathematics","signal_terms":["equivalence","quotient"],"min_signal_hits":1}],"book_queries":[{"id":"BOOK-ONE","query":"metaphysics identity logic","target_ids":["FAR-RQ-009"],"lens":"formal_metaphysics","signal_terms":["metaphysics","identity"],"min_signal_hits":1}]},
+        "targets":[{"target_id":"FAR-RQ-003","allowed_dispositions":["OPEN"],"candidate_relation":"COMPUTABILITY","queries":["quotient algorithm"],"signal_terms":["quotient"],"min_signal_hits":1,"max_candidates_per_query":3}]
+    }
+
+
+class TempRepo:
+    def __init__(self):
+        self.tmp=tempfile.TemporaryDirectory(); self.root=Path(self.tmp.name)
+        write_json(self.root/lr.CONFIG_PATH,minimal_config()); write_json(self.root/lr.RQ_PATH,rq_registry()); write_json(self.root/lr.THREAT_PATH,threat_registry()); write_json(self.root/lr.CLAIM_PATH,claims())
+        write_json(self.root/lr.STATE_PATH,{"schema_version":"1.0","program_id":"FAR-LIVING-RESEARCH-001","incremental_cursor_utc":None,"historical":{"query_index":0,"window_end_year":2026,"complete":False,"completed_utc":None},"openlibrary":{"query_index":0,"page":1},"run_count":0,"last_run_id":None,"last_run_status":"NEVER_RUN","total_unique_candidates":0,"updated_utc":None})
+    def close(self): self.tmp.cleanup()
+
+
+def crossref_payload(title="Quotient algorithm equivalence counterexample",doi="10.1/test"):
+    return {"message":{"items":[{"DOI":doi,"title":[title],"type":"journal-article","publisher":"Test","published":{"date-parts":[[2001,1,1]]},"URL":"https://doi.org/"+doi}]}}
+
+
+def openalex_payload(title="Equivalence quotient theorem",doi="https://doi.org/10.1/test"):
+    return {"results":[{"id":"https://openalex.org/W1","doi":doi,"display_name":title,"publication_date":"2001-01-01","type":"article","cited_by_count":10,"authorships":[],"keywords":[{"display_name":"equivalence"}],"topics":[],"primary_location":{"landing_page_url":"https://example.org"}}]}
+
+
+def openlibrary_payload():
+    return {"docs":[{"key":"/works/OL1W","title":"Metaphysics of Identity and Formal Logic","author_name":["A. Thinker"],"first_publish_year":1800,"subject":["Metaphysics","Logic","Identity"],"edition_count":2}]}
 
 
 class LivingResearchTests(unittest.TestCase):
-    def make_root(self) -> Path:
-        temp = tempfile.TemporaryDirectory()
-        self.addCleanup(temp.cleanup)
-        root = Path(temp.name)
-        for relative, value in ((living.CONFIG_PATH, CONFIG), (living.RQ_PATH, RQ), (living.THREAT_PATH, THREATS)):
-            path = root / relative
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(json.dumps(value), encoding="utf-8")
-        return root
+    def test_cross_provider_doi_identity_is_stable(self):
+        cr={"DOI":"10.1234/ABC","title":["A"]}; oa={"doi":"https://doi.org/10.1234/abc","display_name":"A"}
+        self.assertEqual(lr.source_identity("Crossref",cr),"doi:10.1234/abc"); self.assertEqual(lr.source_identity("Crossref",cr),lr.source_identity("OpenAlex",oa)); self.assertEqual(lr.candidate_id(lr.source_identity("Crossref",cr)),lr.candidate_id(lr.source_identity("OpenAlex",oa)))
 
-    def test_source_identity_is_stable_and_case_insensitive_for_doi(self):
-        a = {"DOI": "10.1000/ABC", "title": ["One"]}
-        b = {"DOI": "10.1000/abc", "title": ["Changed metadata"]}
-        self.assertEqual(living._source_key(a), "doi:10.1000/abc")
-        self.assertEqual(living._candidate_id(living._source_key(a)), living._candidate_id(living._source_key(b)))
+    def test_claim_range_expands_to_all_fourteen(self):
+        ids=[f"FAR-CORE-{n:03d}" for n in range(1,15)]; self.assertEqual(lr.claim_ids_from_question(rq_registry()["questions"][1],ids),ids)
 
-    def test_binding_validation_fails_on_unknown_governed_target(self):
-        bad = json.loads(json.dumps(CONFIG))
-        bad["targets"][0]["target_id"] = "FAR-RQ-999"
-        with self.assertRaises(living.LivingResearchError):
-            living.validate_bindings(bad, RQ, THREATS)
+    def test_unknown_target_fails_closed(self):
+        cfg=minimal_config(); cfg["targets"][0]["target_id"]="FAR-RQ-999"
+        with self.assertRaises(lr.LivingResearchError): lr.validate_bindings(cfg,rq_registry(),threat_registry(),claims())
 
-    def test_binding_validation_fails_when_question_is_no_longer_watched(self):
-        changed = json.loads(json.dumps(RQ))
-        changed["questions"][0]["current_disposition"] = "RESOLVED"
-        with self.assertRaises(living.LivingResearchError):
-            living.validate_bindings(CONFIG, changed, THREATS)
+    def test_disposition_drift_fails_closed(self):
+        cfg=minimal_config(); rq=rq_registry(); rq["questions"][0]["current_disposition"]="RESOLVED"
+        with self.assertRaises(lr.LivingResearchError): lr.validate_bindings(cfg,rq,threat_registry(),claims())
 
-    def test_success_writes_candidate_run_state_and_advances_cursor(self):
-        root = self.make_root()
-        def transport(url, headers, timeout):
-            self.assertIn("from-index-date%3A2026-08-25", url)
-            return {"message": {"items": [
-                {"DOI": "10.1234/example", "title": ["An observational quotient counterexample"], "author": [{"given": "Ada", "family": "Lovelace"}], "publisher": "Example", "type": "journal-article", "indexed": {"date-time": "2026-09-08T00:00:00Z"}},
-                {"DOI": "10.1234/noise", "title": ["Unrelated chemistry result"]}
-            ]}}
-        now = datetime(2026, 9, 8, 2, 0, tzinfo=timezone.utc)
-        report = living.run_once(root, now=now, transport=transport, sleep_fn=lambda _: None)
-        self.assertEqual(report["summary"]["status"], "SUCCESS")
-        self.assertEqual(report["summary"]["accepted_new"], 1)
-        self.assertEqual(report["summary"]["rejected_results"], 1)
-        state = living._read_json(root / living.STATE_PATH)
-        self.assertEqual(state["source_cursor_utc"], "2026-09-08T02:00:00Z")
-        files = list((root / living.CANDIDATE_DIR).glob("*.json"))
-        self.assertEqual(len(files), 1)
-        candidate = living._read_json(files[0])
-        self.assertEqual(candidate["authority"], "Research")
-        self.assertFalse(candidate["epistemic_boundary"]["may_change_claim_status"])
-        self.assertEqual(candidate["triage"]["attention"], "HIGH")
-        self.assertEqual(report["queries"][0]["results"][1]["reason"], "NO_SIGNAL_TERM")
+    def test_formal_metaphysics_requires_mathematical_bridge(self):
+        repo=TempRepo()
+        try:
+            item={"key":"/works/OLXW","title":"Metaphysics and Being","author_name":[],"subject":["Metaphysics"]}
+            outcome,_=lr.process_item(root=repo.root,provider="Open Library",item=item,binding={"target_id":"FAR-RQ-009","target_ids":["FAR-RQ-009"],"query":"x","provider":"Open Library","mode":"historical_backfill","lens":"formal_metaphysics"},signal_terms=["metaphysics"],min_signal_hits=1,lens={"bridge_terms":["formal","logic","identity"],"min_bridge_hits":1},attention_terms=[],all_claim_ids=[f"FAR-CORE-{n:03d}" for n in range(1,15)],questions={q["id"]:q for q in rq_registry()["questions"]},now_iso="2026-01-01T00:00:00Z")
+            self.assertEqual(outcome["reason"],"INSUFFICIENT_MATHEMATICAL_BRIDGE"); self.assertFalse(list((repo.root/lr.CANDIDATE_DIR).glob("*.json")))
+        finally: repo.close()
 
-    def test_repeat_discovery_deduplicates_candidate_and_binding(self):
-        root = self.make_root()
-        def transport(url, headers, timeout):
-            return {"message": {"items": [{"DOI": "10.1234/example", "title": ["Observational quotient"]}]}}
-        living.run_once(root, now=datetime(2026, 9, 8, 2, 0, tzinfo=timezone.utc), transport=transport, sleep_fn=lambda _: None)
-        report = living.run_once(root, now=datetime(2026, 9, 8, 8, 0, tzinfo=timezone.utc), transport=transport, sleep_fn=lambda _: None)
-        self.assertEqual(report["summary"]["accepted_new"], 0)
-        self.assertEqual(report["summary"]["accepted_seen"], 1)
-        candidate = living._read_json(next((root / living.CANDIDATE_DIR).glob("*.json")))
-        self.assertEqual(len(candidate["discovery"]["query_bindings"]), 1)
-        self.assertEqual(candidate["discovery"]["last_seen_utc"], "2026-09-08T08:00:00Z")
+    def test_successful_run_merges_crossref_and_openalex_same_doi(self):
+        repo=TempRepo()
+        try:
+            result=lr.run(repo.root,now=datetime(2026,9,8,12,0,tzinfo=timezone.utc),crossref_transport=lambda *a:crossref_payload(),openalex_transport=lambda *a:openalex_payload(),openlibrary_transport=lambda *a:openlibrary_payload(),sleep_fn=lambda _:None)
+            self.assertEqual(result["status"],"SUCCESS"); state=lr.read_json(repo.root/lr.STATE_PATH); self.assertEqual(state["incremental_cursor_utc"],"2026-09-08T12:00:00Z"); self.assertTrue(result["historical_advanced"])
+            candidates=list((repo.root/lr.CANDIDATE_DIR).glob("*.json")); self.assertEqual(len(candidates),2); doi_record=next(lr.read_json(p) for p in candidates if lr.read_json(p)["source_key"].startswith("doi:")); self.assertEqual({s["provider"] for s in doi_record["sources"]},{"Crossref","OpenAlex"}); self.assertTrue(doi_record["triage"]["attention_terms"])
+        finally: repo.close()
 
-    def test_source_failure_is_preserved_and_cursor_does_not_advance(self):
-        root = self.make_root()
-        state = {"schema_version": "1.0", "program_id": "FAR-LIVING-RESEARCH-001", "source_cursor_utc": "2026-09-08T00:00:00Z", "last_run_id": "old", "last_run_status": "SUCCESS", "total_unique_candidates": 0, "updated_utc": "2026-09-08T00:00:00Z"}
-        path = root / living.STATE_PATH
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(state), encoding="utf-8")
-        def transport(url, headers, timeout):
-            raise TimeoutError("synthetic timeout")
-        report = living.run_once(root, now=datetime(2026, 9, 8, 8, 0, tzinfo=timezone.utc), transport=transport, sleep_fn=lambda _: None)
-        self.assertEqual(report["summary"]["status"], "PARTIAL_SOURCE_FAILURE")
-        self.assertEqual(report["summary"]["queries_failed"], 1)
-        after = living._read_json(root / living.STATE_PATH)
-        self.assertEqual(after["source_cursor_utc"], "2026-09-08T00:00:00Z")
-        self.assertEqual(report["failures"][0]["error_type"], "TimeoutError")
+    def test_incremental_failure_does_not_advance_incremental_cursor(self):
+        repo=TempRepo()
+        try:
+            def cr(url,headers,timeout):
+                qs=parse_qs(urlparse(url).query)
+                if "from-index-date" in qs.get("filter",[""])[0]: raise TimeoutError("boom")
+                return crossref_payload()
+            result=lr.run(repo.root,now=datetime(2026,9,8,12,0,tzinfo=timezone.utc),crossref_transport=cr,openalex_transport=lambda *a:openalex_payload(),openlibrary_transport=lambda *a:openlibrary_payload(),sleep_fn=lambda _:None)
+            self.assertEqual(result["status"],"PARTIAL_SOURCE_FAILURE"); self.assertFalse(result["cursor_advanced"]); self.assertIsNone(lr.read_json(repo.root/lr.STATE_PATH)["incremental_cursor_utc"])
+        finally: repo.close()
+
+    def test_historical_failure_freezes_historical_cursor(self):
+        repo=TempRepo()
+        try:
+            def oa(url,headers,timeout): raise TimeoutError("openalex unavailable")
+            result=lr.run(repo.root,now=datetime(2026,9,8,12,0,tzinfo=timezone.utc),crossref_transport=lambda *a:crossref_payload(),openalex_transport=oa,openlibrary_transport=lambda *a:openlibrary_payload(),sleep_fn=lambda _:None)
+            state=lr.read_json(repo.root/lr.STATE_PATH); self.assertEqual(result["status"],"PARTIAL_SOURCE_FAILURE"); self.assertTrue(result["cursor_advanced"]); self.assertFalse(result["historical_advanced"]); self.assertEqual(state["historical"]["query_index"],0); self.assertEqual(state["historical"]["window_end_year"],2026)
+        finally: repo.close()
+
+    def test_acceptance_cap_prevents_extra_candidate_files(self):
+        repo=TempRepo()
+        try:
+            cfg=lr.read_json(repo.root/lr.CONFIG_PATH); cfg["targets"][0]["max_candidates_per_query"]=1; write_json(repo.root/lr.CONFIG_PATH,cfg)
+            def cr(url,headers,timeout): return {"message":{"items":[{"DOI":"10.1/a","title":["quotient one"],"published":{"date-parts":[[2000]]}},{"DOI":"10.1/b","title":["quotient two"],"published":{"date-parts":[[2000]]}}]}}
+            lr.run(repo.root,now=datetime(2026,9,8,12,0,tzinfo=timezone.utc),crossref_transport=cr,openalex_transport=lambda *a:{"results":[]},openlibrary_transport=lambda *a:{"docs":[]},sleep_fn=lambda _:None)
+            incremental=[lr.read_json(p) for p in (repo.root/lr.CANDIDATE_DIR).glob("*.json") if any(b.get("mode")=="incremental" for b in lr.read_json(p)["discovery"]["query_bindings"])]
+            self.assertEqual(len(incremental),1)
+        finally: repo.close()
 
 
-if __name__ == "__main__":
-    unittest.main()
+class ReconcilerTests(unittest.TestCase):
+    def make_repo(self):
+        tmp=tempfile.TemporaryDirectory(); root=Path(tmp.name); write_json(root/rr.CLAIM_LEDGER,claims()); write_json(root/rr.ASSURANCE_LEDGER,assurance()); write_json(root/rr.RQ_LEDGER,rq_registry()); write_json(root/rr.SURFACES_PATH,{"authority_boundary":rr.AUTHORITY_BOUNDARY,"surfaces":[{"path":str(rr.CLAIM_LEDGER),"role":"claims"},{"path":str(rr.ASSURANCE_LEDGER),"role":"assurance"},{"path":str(rr.RQ_LEDGER),"role":"rq"}]}); return tmp,root
+
+    def test_reconciler_builds_dependency_fallout_and_review_queue(self):
+        tmp,root=self.make_repo()
+        try:
+            write_json(root/rr.CANDIDATE_DIR/"FAR-LIT-AAAAAAAAAAAAAAAA.json",{"candidate_id":"FAR-LIT-AAAAAAAAAAAAAAAA","triage":{"attention_terms":["counterexample"],"lenses":["formal_mathematics"]},"potential_claim_ids":["FAR-CORE-002"],"discovery":{"query_bindings":[{"mode":"historical_backfill"}]}})
+            state=rr.reconcile(root); self.assertEqual(len(state["claims"]),14); self.assertEqual(state["candidate_counts"]["candidates"],1); self.assertEqual(len(state["core_claim_review_queue"]),1); self.assertIn("FAR-CORE-014",state["core_claim_review_queue"][0]["downstream_claim_ids"]); self.assertEqual(state["core_claim_review_queue"][0]["epistemic_status"],"METADATA_SIGNAL_ONLY")
+        finally: tmp.cleanup()
+
+    def test_reconciler_rejects_exact_statement_drift(self):
+        tmp,root=self.make_repo()
+        try:
+            bad=assurance(); bad["claims"][0]["exact_statement"]="changed"; write_json(root/rr.ASSURANCE_LEDGER,bad)
+            with self.assertRaises(rr.ReconciliationError): rr.reconcile(root)
+        finally: tmp.cleanup()
+
+
+if __name__=="__main__": unittest.main()

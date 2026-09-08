@@ -1,9 +1,20 @@
 {
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-RESEARCH-001",
+  "incremental_cursor_utc": null,
+  "historical": {
+    "query_index": 0,
+    "window_end_year": 2026,
+    "complete": false,
+    "completed_utc": null
+  },
+  "openlibrary": {
+    "query_index": 0,
+    "page": 1
+  },
+  "run_count": 0,
   "last_run_id": null,
   "last_run_status": "NEVER_RUN",
-  "program_id": "FAR-LIVING-RESEARCH-001",
-  "schema_version": "1.0",
-  "source_cursor_utc": null,
   "total_unique_candidates": 0,
   "updated_utc": null
 }

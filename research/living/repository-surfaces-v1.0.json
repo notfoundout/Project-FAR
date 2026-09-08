@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-REPOSITORY-001",
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "purpose": "Content-address the canonical governed surfaces whose drift can affect claim, evidence, research, dependency, limitation, or program state.",
+  "surfaces": [
+    {"path":"README.md","role":"canonical_entry"},
+    {"path":"docs/project-status.md","role":"project_status"},
+    {"path":"docs/CANONICAL_MAP.md","role":"authority_map"},
+    {"path":"docs/governance/research-execution-charter.md","role":"execution_governance"},
+    {"path":"docs/governance/research-tool-authority-v1.0.md","role":"tool_governance"},
+    {"path":"docs/governance/claim-status-matrix.md","role":"claim_status"},
+    {"path":"docs/governance/theorem-proof-status-register.md","role":"proof_status"},
+    {"path":"docs/governance/limitations-register.md","role":"limitations"},
+    {"path":"docs/governance/open-problems-register.md","role":"open_problems"},
+    {"path":"docs/governance/unresolved-questions-register.md","role":"unresolved_questions"},
+    {"path":"docs/governance/framework-boundaries.md","role":"framework_boundaries"},
+    {"path":"docs/governance/dependency-specification.md","role":"dependency_authority"},
+    {"path":"docs/governance/w1-w6-claim-evidence-matrix-v1.0.md","role":"assurance_matrix"},
+    {"path":"docs/governance/external-falsification-and-replication-program-v1.0.md","role":"external_program"},
+    {"path":"theory/terminal/project-far-core-theory-v1.1.json","role":"governing_claim_ledger"},
+    {"path":"theory/evaluation/far-core-assurance-v1.0.json","role":"claim_assurance_ledger"},
+    {"path":"research/registry/research-questions-v1.0.json","role":"research_questions"},
+    {"path":"research/registry/epistemic-threats-v1.0.json","role":"epistemic_threats"},
+    {"path":"research/registry/opportunities-v1.0.json","role":"opportunities"},
+    {"path":"research/registry/citation-links-v1.0.json","role":"claim_source_links"}
+  ]
+}
