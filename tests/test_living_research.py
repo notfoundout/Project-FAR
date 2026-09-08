@@ -151,6 +151,40 @@ class LivingResearchTests(unittest.TestCase):
         self.assertEqual(params["sort"],["relevance"]); self.assertNotIn("order",params)
         self.assertEqual(params["filter"],["from-index-date:2026-09-01,until-index-date:2026-09-08"])
 
+    def test_incremental_index_filter_uses_calendar_dates(self):
+        # Crossref rejects a full timestamp in from-index-date/until-index-date with HTTP
+        # 400; run 34227532304 failed all 24 incremental queries that way.
+        repo=TempRepo(); seen={}
+        def cr(url,headers,timeout):
+            seen.setdefault("urls",[]).append(url); return crossref_payload()
+        try:
+            lr.run(repo.root,now=datetime(2026,9,8,12,42,1,tzinfo=timezone.utc),crossref_transport=cr,openalex_transport=lambda *a:openalex_payload(),openlibrary_transport=lambda *a:openlibrary_payload(),sleep_fn=lambda _:None)
+            inc=[u for u in seen["urls"] if "from-index-date" in u]
+            self.assertTrue(inc)
+            for url in inc:
+                filt=parse_qs(urlparse(url).query)["filter"][0]
+                self.assertEqual(filt,"from-index-date:2026-08-25,until-index-date:2026-09-08")
+                self.assertNotIn("T",filt); self.assertNotIn("Z",filt)
+        finally: repo.close()
+
+    def test_source_missing_user_agent_fails_closed(self):
+        # A source key missing from configuration used to raise KeyError per query and
+        # silently kill that lane; it must be rejected before any request is issued.
+        for name in ("crossref","openalex","openlibrary"):
+            cfg=minimal_config(); cfg["sources"][name].pop("user_agent")
+            with self.assertRaises(lr.LivingResearchError):
+                lr.validate_bindings(cfg,rq_registry(),threat_registry(),claims())
+            cfg=minimal_config(); cfg["sources"][name].pop("endpoint")
+            with self.assertRaises(lr.LivingResearchError):
+                lr.validate_bindings(cfg,rq_registry(),threat_registry(),claims())
+
+    def test_shipped_config_declares_every_source_credential(self):
+        # Guards the real configuration, not just the fixture.
+        cfg=lr.read_json(Path(__file__).resolve().parents[1]/lr.CONFIG_PATH)
+        for name in ("crossref","openalex","openlibrary"):
+            self.assertTrue(cfg["sources"][name].get("user_agent"),f"{name} missing user_agent")
+            self.assertTrue(cfg["sources"][name].get("endpoint"),f"{name} missing endpoint")
+
     def test_attention_terms_are_recomputed_not_accumulated(self):
         repo=TempRepo()
         def run_pass(terms):

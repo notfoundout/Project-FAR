@@ -6,8 +6,8 @@
   "schedule_intent": "every_30_minutes",
   "sources": {
     "crossref": {"provider":"Crossref REST API","endpoint":"https://api.crossref.org/works","rows_per_query":8,"initial_lookback_days":14,"overlap_days":2,"timeout_seconds":30,"max_retries":3,"user_agent":"Project-FAR-Living-Research/1.0 (+https://github.com/notfoundout/Project-FAR)"},
-    "openalex": {"provider":"OpenAlex API","endpoint":"https://api.openalex.org/works","rows_per_query":8,"timeout_seconds":30,"max_retries":2,"usage_policy":"one historical search per scheduled run; optional OPENALEX_API_KEY; keyless failure is preserved"},
-    "openlibrary": {"provider":"Open Library Search API","endpoint":"https://openlibrary.org/search.json","enabled":true,"interval_runs":4,"rows_per_query":5,"timeout_seconds":30,"max_retries":2,"usage_policy":"low-volume historical book discovery only; never bulk harvesting"}
+    "openalex": {"provider":"OpenAlex API","endpoint":"https://api.openalex.org/works","rows_per_query":8,"timeout_seconds":30,"max_retries":2,"usage_policy":"one historical search per scheduled run; optional OPENALEX_API_KEY; keyless failure is preserved","user_agent":"Project-FAR-Living-Research/1.0 (+https://github.com/notfoundout/Project-FAR)"},
+    "openlibrary": {"provider":"Open Library Search API","endpoint":"https://openlibrary.org/search.json","enabled":true,"interval_runs":4,"rows_per_query":5,"timeout_seconds":30,"max_retries":2,"usage_policy":"low-volume historical book discovery only; never bulk harvesting","user_agent":"Project-FAR-Living-Research/1.0 (+https://github.com/notfoundout/Project-FAR)"}
   },
   "threat_guards": ["THREAT-004","THREAT-009","THREAT-010","THREAT-011","THREAT-012"],
   "attention_terms": ["counterexample","impossibility","no-go","retraction","correction","erratum","failure","replication","contradiction","inconsistent","undecidable","non-computable","noncomputable","refutation"],
