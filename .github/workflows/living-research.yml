@@ -111,16 +111,17 @@ jobs:
           # The working tree is always built from protected `main`, so every tool and
           # configuration file executed below is reviewed, merge-authority-gated code.
           # Only accumulated *data* is carried over from the inbox branch. Checking the
-          # inbox branch out and running it would let anyone able to push to that
-          # unprotected branch execute code under a write-scoped token on a schedule.
+          # inbox branch out and running it would let anyone able to push there run code
+          # under a write-scoped token on a schedule.
           git switch -C "$branch" origin/main
           branch_exists=false
           if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
             branch_exists=true
             git fetch origin "$branch"
-            # Carried over whatever the PR state is: closing a stale rolling PR must not
-            # silently discard the accumulated inbox. Already-merged data restores to the
-            # identical content main now holds, so this is a no-op in that case.
+            # Carry accumulated Research-only state forward from the unprotected inbox.
+            # The whole inbox directory is intentional: it includes the noncandidate
+            # .rolling-pr-anchor.json that keeps the permanent draft PR non-empty after a
+            # canonical snapshot promotion. No code from this branch is executed.
             for path in research/living/inbox research/living/runs \
                         research/living/state-v1.0.json \
                         research/living/repository-state-v1.0.json; do
@@ -165,8 +166,8 @@ jobs:
             docs/research/living-repository-status.md
           git commit -m "research: update unattended living repository"
           # The branch is rebuilt as exactly one commit on current main each run, so the
-          # rolling PR stays a readable single-commit diff instead of accumulating a merge
-          # commit per run, and it can never conflict with its own base.
+          # permanent inbox PR stays a readable single-commit diff instead of accumulating
+          # merge commits, and it can never conflict with its own base.
           if [[ "${{ steps.inbox.outputs.branch_exists }}" == "true" ]]; then
             git push --force-with-lease="$LIVING_RESEARCH_BRANCH:$(git rev-parse "origin/$LIVING_RESEARCH_BRANCH")" \
               origin "HEAD:$LIVING_RESEARCH_BRANCH"
@@ -184,66 +185,68 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Steady-state governance requires one permanent human-bootstrapped draft PR.
+          # Do not silently broaden automation authority if that review surface disappears.
+          # Research data has already been pushed, and later always() steps still maintain
+          # the issue queue and dispatch validation before the terminal guard makes the run red.
+          if [[ -z "$OPEN_PR" ]]; then
+            echo "::error title=Permanent living-research PR missing::No open PR exists for $LIVING_RESEARCH_BRANCH -> main. Research data was preserved on the branch. Human bootstrap of one replacement permanent draft PR is required; automation will not create or self-approve it."
+            exit 1
+          fi
+
           cat > /tmp/living-research-pr.md <<'EOF'
-          ## Summary
+          ## Permanent noncanonical living-research inbox — DO NOT MERGE OR CLOSE
 
-          Rolling unattended **Research-only** living-repository inbox produced by
-          `FAR-LIVING-RESEARCH-001` / `FAR-LIVING-REPOSITORY-001`.
+          This is the persistent review surface for `FAR-LIVING-RESEARCH-001` /
+          `FAR-LIVING-REPOSITORY-001`. Scheduled discovery rewrites the branch as one
+          **Research-only** commit on current protected `main` and refreshes this same PR.
 
-          The branch records incremental and historical discovery, deterministic
-          acceptance/rejection reasons, cross-provider identities, source failures,
-          canonical-surface reconciliation, claim dependency impact, and metadata-only
-          core-claim review queues. It is intentionally non-authoritative.
+          **Normal operation requires this PR to remain open and draft. Do not merge it,
+          close/reopen it to obtain checks, or use it as the canonical promotion vehicle.**
+
+          ## Promotion rule
+
+          Canonical ingestion uses a separate snapshot branch created from current protected
+          `main`. Copy only the reviewed living-research state intended for promotion and
+          explicitly exclude `research/living/inbox/.rolling-pr-anchor.json`. Open a normal
+          snapshot PR and let the ordinary protected checks, Exact Head Assurance, and
+          `merge-authority` attach to the exact promoted bytes. This permanent inbox PR stays open.
 
           ## Research Contribution and Claim Boundary
 
           - **Central claim tested:** none by discovery alone
-          - **Evidential role:** discovery, historical backfill, triage, and reconciliation
+          - **Evidential role:** discovery, historical backfill, triage, provenance, and reconciliation
           - **Current uncertainty reduced:** none until candidates pass governed review
           - **Result that could count against FAR:** only a later exact reproducible contradiction under canonical premises
           - **Frozen theory:** current governed main theory; living state never silently rewrites it
           - **Independence:** none claimed; Project-FAR-authored automation
-          - **Strongest claim supported:** listed source metadata matched the declared routing rules and canonical surfaces reconciled mechanically
+          - **Strongest claim supported:** listed source metadata matched declared routing rules and canonical surfaces reconciled mechanically
           - **Explicit nonclaims:** no theorem, novelty, priority, external-validity, utility, independence, EFR, OP-28, W1-W6, or commercial-status change
 
-          ## Historical and philosophical scope
+          Research candidate only. Discovery or triage does not establish support, dispute,
+          novelty, priority, external validity, utility, independence, theorem status, EFR
+          result, or any other Project FAR claim/evidence disposition.
 
-          Backfill walks publication windows to 1600 using Crossref and OpenAlex, plus
-          low-volume Open Library book discovery. Philosophy/metaphysics lanes require
-          an explicit formal or mathematical bridge.
-
-          ## Validation
+          ## Validation boundary
 
           Every unattended update runs unit tests, deterministic reconciliation,
-          living-repository invariants, governed research gates, and repository fast health.
+          living-repository invariants, governed research gates, and repository fast health,
+          then dispatches bounded validation against the branch head.
 
-          ## Check status: this PR starts with no checks, by construction
+          `GITHUB_TOKEN`-caused updates do not manufacture protected PR status checks. That is
+          intentional: this permanent inbox is not mergeable scientific authority. Protected
+          status checks belong on separate human-authored snapshot/promotion PRs.
 
-          This branch is pushed and this PR is opened by `GITHUB_TOKEN`. GitHub does not
-          start workflow runs from events caused by `GITHUB_TOKEN`, so **no required check
-          reports here on its own** — including protected `merge-authority`. The PR is not
-          mergeable until a human takes one action:
+          ## Anchor
 
-          - close and reopen this PR, or
-          - push any commit to the branch under a human identity.
-
-          Either one makes the normal required checks run. The automation deliberately does
-          not work around this: posting a commit status from the workflow would forge the
-          merge-authority signal rather than satisfy it, and reintroducing a privileged
-          token was retired in `docs/governance/privileged-token-retirement-2026-09-05.md`.
-
-          Independent of this PR, each unattended update dispatches a validation run of this
-          workflow against the branch head, so the content is checked even while the PR has
-          no check of its own. That run is not a PR status check and does not satisfy branch
-          protection.
-
-          This PR is deliberately not auto-merged. Protected `main` remains the sole canonical state.
+          `research/living/inbox/.rolling-pr-anchor.json` is a noncandidate branch anchor whose
+          merge policy is `NEVER_MERGE_THIS_ANCHOR`. It keeps this PR non-empty immediately after
+          snapshot promotion and must never be copied into a promotion snapshot.
           EOF
-          if [[ -n "$OPEN_PR" ]]; then
-            gh pr edit "$OPEN_PR" --repo "$GITHUB_REPOSITORY" --title "Research: rolling living-repository inbox" --body-file /tmp/living-research-pr.md
-          else
-            gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$LIVING_RESEARCH_BRANCH" --title "Research: rolling living-repository inbox" --body-file /tmp/living-research-pr.md
-          fi
+
+          gh pr edit "$OPEN_PR" --repo "$GITHUB_REPOSITORY" \
+            --title "Research: permanent rolling living-repository inbox — DO NOT MERGE" \
+            --body-file /tmp/living-research-pr.md
       - name: Maintain core-claim review queue issue
         id: review_queue
         if: always() && steps.push.outputs.changed == 'true'
