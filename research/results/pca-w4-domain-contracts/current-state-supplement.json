@@ -1,0 +1,60 @@
+{
+  "schema_version": "1.0",
+  "supplement_id": "PCA-W4-CURRENT-STATE-SUPPLEMENT-1.0",
+  "campaign": "PCA-W4-DOMAIN-CONTRACTS",
+  "supplements_manifest": "research/results/pca-w4-domain-contracts/manifest.json",
+  "manifest_status": "HISTORICAL_EXECUTED_BYTES_NOT_REWRITTEN",
+  "provenance_semantics": "manifest.json records the bytes of every campaign artifact as of execution and is never rewritten. This supplement records the artifacts whose current bytes differ, with the reason for each. An artifact absent from this list must still match the executed manifest exactly. Protected artifacts - the frozen records and every experimental input, output, or recorded result - may never appear here; tools/campaign_current_state.py rejects such an entry.",
+  "recorded_result_unchanged": true,
+  "supersedes": "The removed W6_MUTABLE_SUPPORT_PATHS allowlist, which permitted ten documentation paths to drift unchecked once W6 completed, recording neither a reason nor the executed/current digest pair.",
+  "nonclaims": [
+    "does not re-date the campaign",
+    "does not change any recorded result or boundary",
+    "does not upgrade any assurance dimension",
+    "declared drift is documentation/tooling only, never experimental evidence"
+  ],
+  "entries": [
+    {
+      "path": "README.md",
+      "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
+      "current_sha256": "dbf4827adb689b2863b6d33a1f864bb84de022c055170e22055e6a62d1049695",
+      "class": "documentation_surface",
+      "reason": "Linked the non-authoritative epistemic calibration audit, which was previously unreachable from any top-level navigation surface. No W4 claim, boundary, or result changed."
+    },
+    {
+      "path": "docs/CANONICAL_MAP.md",
+      "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
+      "current_sha256": "8ea2a4ddd49d8b8c884790318f3933cc51251660ba088a0335325ab59ce3e292",
+      "class": "documentation_surface",
+      "reason": "Registered the epistemic calibration audit and the EFR-R2 input-specification amendment. No W4 claim, boundary, or result changed."
+    },
+    {
+      "path": "docs/governance/limitations-register.md",
+      "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
+      "current_sha256": "f681570976dd410d767b37b233f7c892b95cd90e102a8af24525d3c64555521a",
+      "class": "governance_register",
+      "reason": "Added LIM-045 and LIM-046 and recorded LIM-046's closure. Registers are living surfaces; no W4 result or boundary was weakened."
+    },
+    {
+      "path": "docs/project-status.md",
+      "executed_sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666",
+      "current_sha256": "f636f10b62d2d6da6b9d6c901976cd283ab042e1ee65e3255b610e00fb64ba73",
+      "class": "documentation_surface",
+      "reason": "Added the assurance-calibration section. No workstream status, boundary, or result changed."
+    },
+    {
+      "path": "tests/test_pca_w4_domain_contracts.py",
+      "executed_sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
+      "current_sha256": "7d139ddba1003cabc4b7435e294455c35a1c75b4d3aa9a761e031e8d844faf95",
+      "class": "verification_tooling",
+      "reason": "Migrated the manifest-integrity tests from the removed allow_w6_mutable_support_drift allowlist to the current-state supplement contract, and added a control proving a frozen record can never be supplemented. Tests the same or stronger fail-closed properties."
+    },
+    {
+      "path": "tools/check_pca_w4_domain_contracts.py",
+      "executed_sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2",
+      "current_sha256": "d63b2997adf48b65549c501d9ccf834ac65c1dd095a314961ee623788f74a322",
+      "class": "verification_tooling",
+      "reason": "Removed the W6_MUTABLE_SUPPORT_PATHS allowlist, which silently skipped ten documentation paths once W6 completed without recording a reason or digest pair, and delegated artifact comparison to tools/campaign_current_state.py. Declares PROTECTED_SUPPORTING_ARTIFACTS; the twelve frozen records remain always-protected. No W4 input, computation, or recorded result changed."
+    }
+  ]
+}
