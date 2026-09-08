@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-REPOSITORY-001",
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "status": "PENDING_FIRST_RECONCILIATION",
+  "surfaces": [],
+  "claims": [],
+  "research_questions": [],
+  "candidate_counts": {"candidates": 0},
+  "core_claim_review_queue": []
+}

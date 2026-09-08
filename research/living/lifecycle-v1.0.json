@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-REPOSITORY-001",
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "stages": [
+    {"id":"DISCOVERED","automation_may_enter":true,"description":"Source metadata matched governed search and triage rules."},
+    {"id":"SCREENED","automation_may_enter":false,"description":"Primary source identity/content and relevance reviewed under governed provenance."},
+    {"id":"ATTACK_EXECUTED","automation_may_enter":false,"description":"Exact affected claim reconstructed and falsification/derivation executed."},
+    {"id":"REPLICATION_REQUIRED","automation_may_enter":false,"description":"A surviving consequential result awaits independent or otherwise governance-required replication."},
+    {"id":"ACCEPTANCE_READY","automation_may_enter":false,"description":"Required replication and adjudication artifacts are complete."},
+    {"id":"PROMOTION_PROPOSED","automation_may_enter":false,"description":"Minimal canonical change is prepared with exact dependency fallout and provenance."},
+    {"id":"CANONICAL","automation_may_enter":false,"description":"Protected merge path accepted and landed the change on main."}
+  ],
+  "transition_rule": "No stage may be skipped. Automation can discover, reconcile, validate, and prepare review queues; accepted intellectual content changes only after the repository's governed discovery lifecycle and protected merge path.",
+  "core_claim_reopening_rule": "A metadata hit, citation, consensus, or model judgment cannot reopen a core claim. A minimized reproducible contradiction satisfying exact canonical premises and negating the exact conclusion may trigger the smallest affected governed correction path.",
+  "external_boundary": "EFR remains separately preregistered and externally executed; living-repository discovery never counts as EFR execution or external independence."
+}

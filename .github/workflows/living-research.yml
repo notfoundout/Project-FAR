@@ -1,0 +1,245 @@
+name: Living Research Watch
+
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Run discovery or validate the current ref only
+        required: true
+        default: discover
+        type: choice
+        options:
+          - discover
+          - validate
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-research.yml'
+      - 'tools/run_living_research.py'
+      - 'tools/reconcile_living_repo.py'
+      - 'tools/check_living_research.py'
+      - 'tests/test_living_research.py'
+      - 'research/living/**'
+      - 'research/registry/research-questions-v1.0.json'
+      - 'research/registry/epistemic-threats-v1.0.json'
+      - 'research/registry/opportunities-v1.0.json'
+      - 'research/registry/citation-links-v1.0.json'
+      - 'theory/terminal/project-far-core-theory-v1.1.json'
+      - 'theory/evaluation/far-core-assurance-v1.0.json'
+      - 'docs/project-status.md'
+      - 'docs/CANONICAL_MAP.md'
+      - 'docs/governance/**'
+      - 'docs/research/living-research-status.md'
+      - 'docs/research/living-repository-status.md'
+      - 'docs/research/living-repository.md'
+
+concurrency:
+  group: living-research-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'writer' }}
+  cancel-in-progress: false
+
+env:
+  LIVING_RESEARCH_BRANCH: automation/living-research-inbox
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'validate')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install canonical repository dependencies
+        run: pip install -r requirements.txt
+      - name: Unit-test living repository
+        run: python -m unittest tests.test_living_research -v
+      - name: Reconcile canonical living-repository state
+        run: python tools/reconcile_living_repo.py
+      - name: Validate living repository invariants
+        run: python tools/check_living_research.py
+      - name: Validate governed research gates
+        run: python tools/check_research_gates.py
+      - name: Run repository fast health profile
+        run: python tools/repo_health_check.py --fast
+
+  discover:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'discover')
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install canonical repository dependencies
+        run: pip install -r requirements.txt
+      - name: Prepare persistent research inbox branch
+        id: inbox
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="$LIVING_RESEARCH_BRANCH"
+          git config user.name "project-far-research-bot"
+          git config user.email "project-far-research-bot@users.noreply.github.com"
+          git fetch origin main
+          open_pr="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$branch" --base main --state open --json number --jq '.[0].number // empty')"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            git fetch origin "$branch"
+            if [[ -n "$open_pr" ]]; then
+              git switch -C "$branch" "origin/$branch"
+              git merge --no-edit origin/main
+            else
+              git switch -C "$branch" origin/main
+            fi
+          else
+            git switch -c "$branch" origin/main
+          fi
+          echo "open_pr=$open_pr" >> "$GITHUB_OUTPUT"
+      - name: Preflight tests and authority checks
+        run: |
+          python -m unittest tests.test_living_research -v
+          python tools/reconcile_living_repo.py
+          python tools/check_living_research.py
+          python tools/check_research_gates.py
+      - name: Discover current and historical research
+        env:
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
+          CROSSREF_MAILTO: ${{ secrets.CROSSREF_MAILTO }}
+        run: python tools/run_living_research.py
+      - name: Reconcile dependency, claim, and project state
+        run: python tools/reconcile_living_repo.py
+      - name: Validate generated living repository
+        run: |
+          python tools/check_living_research.py
+          python -m unittest tests.test_living_research -v
+          python tools/check_research_gates.py
+          python tools/repo_health_check.py --fast
+      - name: Commit and push inbox state
+        id: push
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet && [[ -z "$(git status --porcelain --untracked-files=all)" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add research/living \
+            docs/research/living-research-status.md \
+            docs/research/living-repository-status.md
+          git commit -m "research: update unattended living repository"
+          if git ls-remote --exit-code --heads origin "$LIVING_RESEARCH_BRANCH" >/dev/null 2>&1; then
+            git push --force-with-lease origin "HEAD:$LIVING_RESEARCH_BRANCH"
+          else
+            git push -u origin "HEAD:$LIVING_RESEARCH_BRANCH"
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Create or refresh rolling research PR
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPEN_PR: ${{ steps.inbox.outputs.open_pr }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/living-research-pr.md <<'EOF'
+          ## Summary
+
+          Rolling unattended **Research-only** living-repository inbox produced by
+          `FAR-LIVING-RESEARCH-001` / `FAR-LIVING-REPOSITORY-001`.
+
+          The branch records incremental and historical discovery, deterministic
+          acceptance/rejection reasons, cross-provider identities, source failures,
+          canonical-surface reconciliation, claim dependency impact, and metadata-only
+          core-claim review queues. It is intentionally non-authoritative.
+
+          ## Research Contribution and Claim Boundary
+
+          - **Central claim tested:** none by discovery alone
+          - **Evidential role:** discovery, historical backfill, triage, and reconciliation
+          - **Current uncertainty reduced:** none until candidates pass governed review
+          - **Result that could count against FAR:** only a later exact reproducible contradiction under canonical premises
+          - **Frozen theory:** current governed main theory; living state never silently rewrites it
+          - **Independence:** none claimed; Project-FAR-authored automation
+          - **Strongest claim supported:** listed source metadata matched the declared routing rules and canonical surfaces reconciled mechanically
+          - **Explicit nonclaims:** no theorem, novelty, priority, external-validity, utility, independence, EFR, OP-28, W1-W6, or commercial-status change
+
+          ## Historical and philosophical scope
+
+          Backfill walks publication windows to 1600 using Crossref and OpenAlex, plus
+          low-volume Open Library book discovery. Philosophy/metaphysics lanes require
+          an explicit formal or mathematical bridge.
+
+          ## Validation
+
+          Every unattended update runs unit tests, deterministic reconciliation,
+          living-repository invariants, governed research gates, and repository fast health.
+
+          This PR is deliberately not auto-merged. Protected `main` remains the sole canonical state.
+          EOF
+          if [[ -n "$OPEN_PR" ]]; then
+            gh pr edit "$OPEN_PR" --repo "$GITHUB_REPOSITORY" --title "Research: rolling living-repository inbox" --body-file /tmp/living-research-pr.md
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$LIVING_RESEARCH_BRANCH" --title "Research: rolling living-repository inbox" --body-file /tmp/living-research-pr.md
+          fi
+      - name: Maintain core-claim review queue issue
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY' > /tmp/claim-review.md
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("research/living/repository-state-v1.0.json").read_text())
+          queue = data.get("core_claim_review_queue", [])
+          print("## Living repository core-claim review queue")
+          print()
+          print("**Research metadata signals only. Nothing here is a contradiction or claim-status change.**")
+          print()
+          if not queue:
+              print("No current high-attention candidates are mapped to FAR-CORE claims.")
+          for item in queue[:50]:
+              claims = ", ".join(item.get("claim_ids", []))
+              fallout = ", ".join(item.get("downstream_claim_ids", [])) or "none"
+              terms = ", ".join(item.get("attention_terms", []))
+              print(f"- `{item.get('candidate_id')}` → {claims}; terms: {terms}; downstream claim fallout if independently substantiated: {fallout}")
+          print()
+          print("Required path: verify primary source → reconstruct exact premises/conclusion → attack → replicate → adjudicate → smallest governed correction if warranted.")
+          PY
+          count="$(python -c 'import json; print(len(json.load(open("research/living/repository-state-v1.0.json"))["core_claim_review_queue"]))')"
+          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search '"Living repository: core-claim review queue" in:title' --json number --jq '.[0].number // empty')"
+          if [[ "$count" -gt 0 ]]; then
+            if [[ -n "$existing" ]]; then
+              gh issue edit "$existing" --repo "$GITHUB_REPOSITORY" --body-file /tmp/claim-review.md
+            else
+              gh issue create --repo "$GITHUB_REPOSITORY" --title "Living repository: core-claim review queue" --body-file /tmp/claim-review.md
+            fi
+          elif [[ -n "$existing" ]]; then
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY" --comment "Living repository reconciliation currently has no metadata-only core-claim review candidates."
+          fi
+      - name: Dispatch explicit validation for automated head
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$LIVING_RESEARCH_BRANCH" -f mode=validate
