@@ -1,0 +1,60 @@
+{
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "candidate_id": "FAR-LIT-F1DBBC1D0CB74461",
+  "discovery": {
+    "first_seen_utc": "2026-09-08T14:07:29Z",
+    "last_seen_utc": "2026-09-08T14:07:29Z",
+    "query_bindings": [
+      {
+        "candidate_relation": "COST_EFFECTIVENESS_EVIDENCE_CANDIDATE",
+        "governed_question_sha256": "4dda90b4b58a6aa0c2b1fa1f713675b633cc05c37fa3e70c6f81720a666fd956",
+        "lens": "governed_question",
+        "mode": "incremental",
+        "provider": "Crossref",
+        "query": "reasoning audit workload efficiency",
+        "seen_utc": "2026-09-08T14:07:29Z",
+        "target_id": "FAR-RQ-006",
+        "target_ids": [
+          "FAR-RQ-006"
+        ]
+      }
+    ]
+  },
+  "lifecycle": {
+    "may_change_claim_status": false,
+    "may_count_as_external_independence": false,
+    "may_establish_novelty": false,
+    "may_execute_efr": false,
+    "stage": "DISCOVERED"
+  },
+  "potential_claim_ids": [],
+  "record_type": "CANDIDATE_LITERATURE",
+  "schema_version": "1.0",
+  "source_key": "doi:10.36406/jemi.v35i2.351",
+  "sources": [
+    {
+      "attention_terms": [],
+      "authors": [
+        "Nurfadhilah Zahra",
+        "Harry Budiantoro"
+      ],
+      "container": "Jurnal STEI Ekonomi",
+      "doi": "10.36406/jemi.v35i2.351",
+      "provider": "Crossref",
+      "provider_id": "10.36406/jemi.v35i2.351",
+      "published_date": "2026-07-11",
+      "publisher": "Sekolah Tinggi llmu Ekonomi Indonesia",
+      "title": "Pengaruh audit tenure, workload auditor, reputasi auditor, dan fee audit terhadap kualitas audit dengan risiko perusahaan sebagai variabel moderasi",
+      "url": "https://doi.org/10.36406/jemi.v35i2.351",
+      "work_type": "journal-article"
+    }
+  ],
+  "triage": {
+    "attention_terms": [],
+    "lenses": [
+      "governed_question"
+    ],
+    "status": "UNREVIEWED_CANDIDATE"
+  }
+}

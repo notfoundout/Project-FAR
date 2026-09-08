@@ -1,0 +1,62 @@
+{
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "candidate_id": "FAR-LIT-688562646950539F",
+  "discovery": {
+    "first_seen_utc": "2026-09-08T14:12:39Z",
+    "last_seen_utc": "2026-09-08T14:35:12Z",
+    "query_bindings": [
+      {
+        "candidate_relation": "COMPUTABILITY_OR_OBSTRUCTION_CANDIDATE",
+        "governed_question_sha256": "463edff1358d273674ca2a6db985091ac053ff29b86169583dbf2e1894cdc21d",
+        "lens": "governed_question",
+        "mode": "incremental",
+        "provider": "Crossref",
+        "query": "minimal sufficient statistic algorithm representation",
+        "seen_utc": "2026-09-08T14:12:39Z",
+        "target_id": "FAR-RQ-003",
+        "target_ids": [
+          "FAR-RQ-003"
+        ]
+      }
+    ]
+  },
+  "lifecycle": {
+    "may_change_claim_status": false,
+    "may_count_as_external_independence": false,
+    "may_establish_novelty": false,
+    "may_execute_efr": false,
+    "stage": "DISCOVERED"
+  },
+  "potential_claim_ids": [
+    "FAR-CORE-002"
+  ],
+  "record_type": "CANDIDATE_LITERATURE",
+  "schema_version": "1.0",
+  "source_key": "doi:10.1093/restud/rdac076",
+  "sources": [
+    {
+      "attention_terms": [],
+      "authors": [
+        "Arnaud Costinot",
+        "Iván Werning"
+      ],
+      "container": "The Review of Economic Studies",
+      "doi": "10.1093/restud/rdac076",
+      "provider": "Crossref",
+      "provider_id": "10.1093/restud/rdac076",
+      "published_date": "2022-11-04",
+      "publisher": "Oxford University Press (OUP)",
+      "title": "Robots, Trade, and Luddism: A Sufficient Statistic Approach to Optimal Technology Regulation",
+      "url": "https://doi.org/10.1093/restud/rdac076",
+      "work_type": "journal-article"
+    }
+  ],
+  "triage": {
+    "attention_terms": [],
+    "lenses": [
+      "governed_question"
+    ],
+    "status": "UNREVIEWED_CANDIDATE"
+  }
+}
