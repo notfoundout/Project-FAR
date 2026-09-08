@@ -30,6 +30,28 @@ Every 30 minutes the scheduled workflow:
 14. validates the result before writing only to `automation/living-research-inbox`;
 15. maintains one rolling PR. It never writes directly to protected `main`.
 
+## Execution boundary
+
+The scheduled job builds its working tree from protected `main` and carries only accumulated
+*data* (`inbox/`, `runs/`, `state-v1.0.json`, `repository-state-v1.0.json`) across from
+`automation/living-research-inbox`. Tools and configuration always come from `main`. The job
+never checks out and executes code from the inbox branch, which is not protected; doing so
+would let anyone able to push there run code under a write-scoped token on a schedule.
+
+The branch is rebuilt as a single commit on current `main` each run, so the rolling PR stays a
+readable one-commit diff and cannot conflict with its own base.
+
+## The rolling PR starts with no checks
+
+The branch is pushed and the PR opened by `GITHUB_TOKEN`, and GitHub does not start workflow
+runs from `GITHUB_TOKEN`-caused events. No required check — `merge-authority` included —
+reports on that PR until a human closes and reopens it, or pushes to the branch under a human
+identity. The workflow does not work around this: posting a commit status from the job would
+forge the merge-authority signal, and a privileged token was deliberately retired in
+`docs/governance/privileged-token-retirement-2026-09-05.md`. Each update dispatches a
+validation run against the branch head instead, which checks the content but is not a PR
+status check and does not satisfy branch protection.
+
 ## Historical, philosophical, and metaphysical coverage
 
 Historical backfill starts at the present and walks backward in ten-year publication windows to

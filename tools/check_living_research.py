@@ -2,6 +2,7 @@
 """Network-free invariant checker for Project FAR living-repository infrastructure."""
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -153,8 +154,17 @@ def validate_candidates(config: dict[str, Any], questions: dict[str, dict[str, A
     return count
 
 
-def validate_runs() -> None:
-    for path in sorted((ROOT / RUN_DIR).glob("*.json")):
+def validate_runs(limit: int | None) -> int:
+    """Validate run reports, newest first.
+
+    Run reports are append-only and are validated at the moment they are written, so
+    re-parsing every historical report on every 30-minute run makes validation cost grow
+    without bound. The scheduled job checks the newest `limit` reports; `--all-runs`
+    (used by the pull-request job) still checks every one of them.
+    """
+    paths = sorted((ROOT / RUN_DIR).glob("*.json"))
+    selected = paths if limit is None else paths[-limit:]
+    for path in selected:
         run = read_json(path)
         require(run.get("authority") == "Research", f"{path}: authority drift")
         require(run.get("authority_boundary") == AUTHORITY_BOUNDARY, f"{path}: boundary drift")
@@ -167,6 +177,7 @@ def validate_runs() -> None:
             require(run.get("cursor_advanced") is True, f"{path}: SUCCESS did not advance incremental cursor")
         else:
             require(failures, f"{path}: partial failure missing failure records")
+    return len(selected)
 
 
 def validate_generated(candidate_count: int) -> None:
@@ -175,8 +186,17 @@ def validate_generated(candidate_count: int) -> None:
         require(repo.get("program_id") == "FAR-LIVING-REPOSITORY-001", "repository state program drift")
         require(repo.get("authority") == "Research", "repository state authority drift")
         require(repo.get("authority_boundary") == AUTHORITY_BOUNDARY, "repository state boundary drift")
-        require(len(repo.get("claims", [])) == 14, "repository reconciliation must contain 14 claims")
-        require(repo.get("candidate_counts", {}).get("candidates") == candidate_count, "repository candidate count mismatch")
+        # `main` ships a documented placeholder that `tools/reconcile_living_repo.py`
+        # replaces on first reconciliation. Asserting the reconciled shape against it made
+        # this checker fail on a clean checkout, so the placeholder is accepted explicitly
+        # and every populated state is still held to the full invariant.
+        if repo.get("status") == "PENDING_FIRST_RECONCILIATION":
+            require(not repo.get("claims"), "placeholder repository state must not carry claims")
+            require(not repo.get("surfaces"), "placeholder repository state must not carry surfaces")
+            require(not repo.get("core_claim_review_queue"), "placeholder repository state must not carry a review queue")
+        else:
+            require(len(repo.get("claims", [])) == 14, "repository reconciliation must contain 14 claims")
+            require(repo.get("candidate_counts", {}).get("candidates") == candidate_count, "repository candidate count mismatch")
         for item in repo.get("core_claim_review_queue", []):
             require(item.get("epistemic_status") == "METADATA_SIGNAL_ONLY", "review queue overclaim")
             require(item.get("stage") == "REVIEW_REQUIRED", "review queue stage drift")
@@ -186,15 +206,25 @@ def validate_generated(candidate_count: int) -> None:
             require(AUTHORITY_BOUNDARY in text, f"{path}: missing authority boundary")
 
 
+RECENT_RUN_REPORTS = 500
+
+
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Validate Project FAR living-repository invariants")
+    parser.add_argument(
+        "--all-runs",
+        action="store_true",
+        help=f"validate every run report instead of the newest {RECENT_RUN_REPORTS}",
+    )
+    args = parser.parse_args()
     config, questions, claims = validate_config()
     validate_lifecycle()
     validate_surfaces()
     validate_state(config)
     count = validate_candidates(config, questions, claims)
-    validate_runs()
+    runs = validate_runs(None if args.all_runs else RECENT_RUN_REPORTS)
     validate_generated(count)
-    print(f"living repository invariants: PASS ({count} candidates)")
+    print(f"living repository invariants: PASS ({count} candidates, {runs} run reports checked)")
     return 0
 
 

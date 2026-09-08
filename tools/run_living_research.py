@@ -265,9 +265,11 @@ def crossref_query(
         "rows": str(int(source.get("rows_per_query", 8))),
     }
     if index_window:
+        # Rank by relevance inside the index-date window. Sorting by index date instead
+        # would return the most recently deposited members of a large fuzzy match set,
+        # which is close to arbitrary with respect to the governed question.
         params["filter"] = f"from-index-date:{index_window[0]},until-index-date:{index_window[1]}"
-        params["sort"] = "indexed"
-        params["order"] = "desc"
+        params["sort"] = "relevance"
     elif publication_window:
         params["filter"] = f"from-pub-date:{publication_window[0]},until-pub-date:{publication_window[1]}"
         params["sort"] = "relevance"
@@ -379,7 +381,24 @@ def openlibrary_text(item: dict[str, Any]) -> str:
 
 
 def hits(text: str, terms: Iterable[str]) -> list[str]:
+    """Recall-oriented substring match, used for signal and bridge terms."""
     return sorted({term for term in terms if clean_text(term, 200).lower() in text}, key=str.lower)
+
+
+def boundary_hits(text: str, terms: Iterable[str]) -> list[str]:
+    """Precision-oriented whole-word match, used for attention terms.
+
+    Attention terms route candidates toward human review, so a substring match is the
+    wrong trade-off: bare `in` lets `correction` fire on `corrections`, `failure` on
+    `failures`, and any term on an unrelated journal or publisher name. Signal terms
+    keep substring matching because there the cost of a miss outweighs the cost of noise.
+    """
+    found: set[str] = set()
+    for term in terms:
+        normalized = clean_text(term, 200).lower()
+        if normalized and re.search(rf"(?<!\w){re.escape(normalized)}(?!\w)", text):
+            found.add(term)
+    return sorted(found, key=str.lower)
 
 
 def normalize_doi(value: Any) -> str | None:
@@ -565,14 +584,17 @@ def process_item(
         "provider": provider,
         "source_key": source_key,
         "candidate_id": cid,
-        "title": clean_text(item.get("title") if provider != "OpenAlex" else item.get("display_name")),
         "decision": "ACCEPT" if accepted else "REJECT",
         "reason": reason,
         "signal_hits": signal,
         "bridge_hits": bridge,
     }
     if not accepted:
+        # Rejected results keep their resolvable identity (source_key carries the DOI or
+        # provider id) and the exact rejection reason, but not the title. Titles dominate
+        # report size and every run re-reports the same rejected window.
         return result, False
+    result["title"] = clean_text(item.get("title") if provider != "OpenAlex" else item.get("display_name"))
 
     source = {
         "Crossref": crossref_source,
@@ -622,7 +644,7 @@ def process_item(
         qbinds.sort(key=lambda b: (b.get("target_id") or "", b.get("query") or "", b.get("provider") or ""))
     record["discovery"]["last_seen_utc"] = now_iso
 
-    attn = hits(text, attention_terms)
+    attn = boundary_hits(text, attention_terms)
     record["triage"]["attention_terms"] = sorted(set(record["triage"].get("attention_terms", [])) | set(attn))
     if binding.get("lens"):
         record["triage"]["lenses"] = sorted(set(record["triage"].get("lenses", [])) | {binding["lens"]})

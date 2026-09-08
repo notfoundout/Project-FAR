@@ -136,6 +136,31 @@ class LivingResearchTests(unittest.TestCase):
         finally: repo.close()
 
 
+    def test_attention_terms_match_whole_words_only(self):
+        self.assertEqual(lr.boundary_hits("a correction to the record",["correction"]),["correction"])
+        self.assertEqual(lr.boundary_hits("corrections and failures",["correction","failure"]),[])
+        self.assertEqual(lr.boundary_hits("a no-go theorem",["no-go"]),["no-go"])
+        self.assertEqual(lr.hits("corrections and failures",["correction","failure"]),["correction","failure"])
+
+    def test_incremental_crossref_query_ranks_by_relevance(self):
+        seen={}
+        def transport(url,headers,timeout):
+            seen["url"]=url; return crossref_payload()
+        lr.crossref_query("quotient algorithm",minimal_config()["sources"]["crossref"],index_window=("2026-09-01","2026-09-08"),transport=transport,sleep_fn=lambda _:None)
+        params=parse_qs(urlparse(seen["url"]).query)
+        self.assertEqual(params["sort"],["relevance"]); self.assertNotIn("order",params)
+        self.assertEqual(params["filter"],["from-index-date:2026-09-01,until-index-date:2026-09-08"])
+
+    def test_rejected_results_keep_identity_without_title(self):
+        repo=TempRepo()
+        try:
+            item={"DOI":"10.1/unrelated","title":["Unrelated chemistry result"],"type":"journal-article"}
+            outcome,was_new=lr.process_item(root=repo.root,provider="Crossref",item=item,binding={"target_id":"FAR-RQ-003","target_ids":["FAR-RQ-003"],"query":"quotient algorithm","provider":"Crossref","mode":"incremental"},signal_terms=["quotient"],min_signal_hits=1,lens=None,attention_terms=[],all_claim_ids=[f"FAR-CORE-{n:03d}" for n in range(1,15)],questions={q["id"]:q for q in rq_registry()["questions"]},now_iso="2026-01-01T00:00:00Z")
+            self.assertEqual(outcome["decision"],"REJECT"); self.assertFalse(was_new)
+            self.assertNotIn("title",outcome)
+            self.assertEqual(outcome["source_key"],"doi:10.1/unrelated"); self.assertTrue(outcome["candidate_id"].startswith("FAR-LIT-"))
+        finally: repo.close()
+
 class ReconcilerTests(unittest.TestCase):
     def make_repo(self):
         tmp=tempfile.TemporaryDirectory(); root=Path(tmp.name); write_json(root/rr.CLAIM_LEDGER,claims()); write_json(root/rr.ASSURANCE_LEDGER,assurance()); write_json(root/rr.RQ_LEDGER,rq_registry()); write_json(root/rr.SURFACES_PATH,{"authority_boundary":rr.AUTHORITY_BOUNDARY,"surfaces":[{"path":str(rr.CLAIM_LEDGER),"role":"claims"},{"path":str(rr.ASSURANCE_LEDGER),"role":"assurance"},{"path":str(rr.RQ_LEDGER),"role":"rq"}]}); return tmp,root
