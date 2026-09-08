@@ -15,6 +15,7 @@ These tests enforce the separation for `PCA-W5` and `PCA-W6`:
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -228,3 +229,100 @@ class CampaignManifestProvenanceTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CampaignMigrationCoverageTests(unittest.TestCase):
+    """No campaign manifest may mix living documentation with evidence unmigrated.
+
+    LIM-046 recorded that campaign manifests enumerate experimental artifacts and living
+    documentation surfaces under one hash list. W4, W5 and W6 are migrated to the
+    manifest/supplement separation. This test makes the remaining obligation deterministic:
+    a new campaign manifest that lists a living documentation surface must be migrated too,
+    or this fails and says so.
+    """
+
+    #: Campaign manifests known to list living documentation surfaces and migrated to the
+    #: manifest/supplement separation.
+    MIGRATED = {
+        "research/results/pca-w4-domain-contracts/manifest.json",
+        "research/results/pca-w5-approximation-and-cost/manifest.json",
+        "research/results/pca-w6-empirical-audit-utility/manifest.json",
+    }
+
+    LIVING_DOC = re.compile(
+        r"^(README\.md"
+        r"|docs/(CANONICAL_MAP|ROADMAP|project-status)\.md"
+        r"|docs/governance/"
+        r"|docs/planning/"
+        r"|docs/specification/)"
+    )
+
+    @staticmethod
+    def _paths(document: object) -> list[str]:
+        found: list[str] = []
+
+        def walk(node: object) -> None:
+            if isinstance(node, dict):
+                value = node.get("path")
+                if isinstance(value, str):
+                    found.append(value)
+                for item in node.values():
+                    walk(item)
+            elif isinstance(node, list):
+                for item in node:
+                    walk(item)
+
+        walk(document)
+        return found
+
+    def test_specification_surfaces_are_classified_as_living_documentation(self) -> None:
+        self.assertIsNotNone(
+            self.LIVING_DOC.match("docs/specification/far-ir-2.1-approximation-cost.md")
+        )
+
+    def test_every_manifest_with_documentation_surfaces_is_migrated(self) -> None:
+        offenders = []
+        for manifest_path in sorted(ROOT.glob("**/manifest.json")):
+            if ".git" in manifest_path.parts:
+                continue
+            relative = manifest_path.relative_to(ROOT).as_posix()
+            try:
+                document = json.loads(manifest_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if not any(self.LIVING_DOC.match(path) for path in self._paths(document)):
+                continue
+            if relative not in self.MIGRATED:
+                offenders.append(relative)
+        self.assertEqual(
+            offenders,
+            [],
+            "campaign manifest(s) list living documentation surfaces but are not migrated to "
+            f"the manifest/current-state-supplement separation: {offenders}. Migrate them "
+            "(see tools/campaign_current_state.py) or exclude the documentation surfaces.",
+        )
+
+    def test_every_migrated_campaign_has_a_supplement_and_protected_set(self) -> None:
+        import tools.check_pca_w4_domain_contracts as W4
+        import tools.check_pca_w5_approximation_cost as W5
+        import tools.check_pca_w6_empirical_audit_utility as W6
+
+        for label, supplement, protected in (
+            ("W4", ROOT / W4.SUPPLEMENT_RELATIVE_PATH, W4.PROTECTED_SUPPORTING_ARTIFACTS),
+            ("W5", ROOT / W5.SUPPLEMENT_RELATIVE_PATH, W5.PROTECTED_ARTIFACTS),
+            ("W6", W6.SUPPLEMENT_PATH, W6.PROTECTED_ARTIFACTS),
+        ):
+            with self.subTest(campaign=label):
+                self.assertTrue(supplement.is_file(), f"{label}: no current-state supplement")
+                self.assertTrue(protected, f"{label}: empty protected set")
+
+    def test_w4_records_are_all_protected(self) -> None:
+        """W4's twelve frozen records must be protected, not merely listed."""
+        import tools.check_pca_w4_domain_contracts as W4
+
+        manifest = load(ROOT / "research/results/pca-w4-domain-contracts/manifest.json")
+        records = {entry["path"] for entry in manifest["records"]}
+        self.assertEqual(len(records), 12)
+        supplement = load(ROOT / W4.SUPPLEMENT_RELATIVE_PATH)
+        declared = {entry["path"] for entry in supplement["entries"]}
+        self.assertEqual(records & declared, set(), "a frozen W4 record was supplemented")

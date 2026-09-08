@@ -27,10 +27,25 @@ from __future__ import annotations
 
 import hashlib
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 REQUIRED_ENTRY_FIELDS = ("path", "executed_sha256", "current_sha256", "class", "reason")
+
+
+@dataclass(frozen=True, slots=True)
+class ArtifactFinding:
+    """One provenance finding, before it is rendered into a campaign's error vocabulary.
+
+    Campaigns differ in how they report errors: `PCA-W5`/`PCA-W6` emit prefixed strings while
+    `PCA-W4` emits structured `{code, message}` records. The comparison itself is identical, so
+    it is performed once here and each campaign renders these findings in its own vocabulary.
+    """
+
+    kind: str
+    path: str
+    detail: str
 
 
 def sha256_of(path: Path) -> str:
@@ -67,6 +82,105 @@ def load_supplement(path: Path, prefix: str) -> tuple[dict[str, Mapping[str, Any
     return entries, errors
 
 
+def compare_campaign_artifacts(
+    root: Path,
+    manifest_hashes: Mapping[str, str],
+    supplement_path: Path,
+    protected_paths: Iterable[str],
+) -> list[ArtifactFinding]:
+    """Compare current bytes against the executed manifest, allowing declared drift.
+
+    ``manifest_hashes`` maps repository-relative path to the digest recorded at execution.
+    ``protected_paths`` are artifacts that may never drift: experimental inputs, outputs, and
+    recorded results. Every protected path must be present in ``manifest_hashes``; otherwise the
+    protection configuration itself is invalid and the comparison fails closed.
+
+    Returns findings in a campaign-neutral form; callers render them in their own vocabulary.
+    """
+    entries, load_errors = load_supplement(supplement_path, "")
+    findings: list[ArtifactFinding] = []
+    for error in load_errors:
+        # load_supplement is called with an empty prefix, so each error reads
+        # "_CODE detail"; split the code from its detail so rendering does not repeat it.
+        kind, _, detail = error.lstrip("_").partition(" ")
+        findings.append(ArtifactFinding(kind, "", detail))
+    protected = set(protected_paths)
+    manifest_paths = set(manifest_hashes)
+
+    orphaned_protected = sorted(protected - manifest_paths)
+    if orphaned_protected:
+        findings.append(
+            ArtifactFinding(
+                "PROTECTED_ARTIFACT_NOT_IN_MANIFEST",
+                "",
+                f"{orphaned_protected}: protected paths must name artifacts in the "
+                "executed manifest",
+            )
+        )
+
+    unknown = sorted(set(entries) - manifest_paths)
+    if unknown:
+        findings.append(ArtifactFinding("SUPPLEMENT_UNKNOWN_ARTIFACT", "", f"{unknown}"))
+
+    forbidden = sorted(set(entries) & protected)
+    if forbidden:
+        findings.append(
+            ArtifactFinding(
+                "SUPPLEMENT_FORBIDDEN_FOR_PROTECTED_ARTIFACT",
+                "",
+                f"{forbidden}: experimental inputs, outputs and recorded results may not be "
+                "re-pointed at post-execution bytes",
+            )
+        )
+
+    for rel in sorted(manifest_hashes):
+        path = root / rel
+        if not path.is_file():
+            findings.append(ArtifactFinding("ARTIFACT_MISSING", rel, rel))
+            continue
+        executed = manifest_hashes[rel]
+        actual = sha256_of(path)
+        if actual == executed:
+            if rel in entries:
+                findings.append(
+                    ArtifactFinding(
+                        "SUPPLEMENT_STALE",
+                        rel,
+                        f"{rel}: artifact matches the executed manifest, so its supplement "
+                        "entry must be removed",
+                    )
+                )
+            continue
+        entry = entries.get(rel)
+        if entry is None:
+            findings.append(
+                ArtifactFinding(
+                    "ARTIFACT_HASH_MISMATCH",
+                    rel,
+                    f"{rel}: executed={executed} actual={actual}; declare the change in the "
+                    "current-state supplement or restore the bytes",
+                )
+            )
+            continue
+        if entry["executed_sha256"] != executed:
+            findings.append(
+                ArtifactFinding(
+                    "SUPPLEMENT_EXECUTED_DIGEST_DRIFT",
+                    rel,
+                    f"{rel}: supplement={entry['executed_sha256']} manifest={executed}",
+                )
+            )
+        if entry["current_sha256"] != actual:
+            findings.append(
+                ArtifactFinding(
+                    "SUPPLEMENT_CURRENT_DIGEST_DRIFT",
+                    rel,
+                    f"{rel}: supplement={entry['current_sha256']} actual={actual}",
+                )
+            )
+    return findings
+
+
 def artifact_hash_errors(
     root: Path,
     manifest_hashes: Mapping[str, str],
@@ -74,68 +188,15 @@ def artifact_hash_errors(
     protected_paths: Iterable[str],
     prefix: str,
 ) -> list[str]:
-    """Check current bytes against the executed manifest, allowing declared documentation drift.
-
-    ``manifest_hashes`` maps repository-relative path to the digest recorded at execution.
-    ``protected_paths`` are artifacts that may never drift: experimental inputs, outputs, and
-    recorded results. Every protected path must be present in ``manifest_hashes``; otherwise the
-    protection configuration itself is invalid and the checker fails closed.
-    """
-    entries, errors = load_supplement(supplement_path, prefix)
-    protected = set(protected_paths)
-    manifest_paths = set(manifest_hashes)
-
-    orphaned_protected = sorted(protected - manifest_paths)
-    if orphaned_protected:
-        errors.append(
-            f"{prefix}_PROTECTED_ARTIFACT_NOT_IN_MANIFEST {orphaned_protected}: "
-            "protected paths must name artifacts in the executed manifest"
-        )
-
-    unknown = sorted(set(entries) - manifest_paths)
-    if unknown:
-        errors.append(f"{prefix}_SUPPLEMENT_UNKNOWN_ARTIFACT {unknown}")
-
-    forbidden = sorted(set(entries) & protected)
-    if forbidden:
-        errors.append(
-            f"{prefix}_SUPPLEMENT_FORBIDDEN_FOR_PROTECTED_ARTIFACT {forbidden}: "
-            "experimental inputs, outputs and recorded results may not be re-pointed at "
-            "post-execution bytes"
-        )
-
-    for rel in sorted(manifest_hashes):
-        path = root / rel
-        if not path.is_file():
-            errors.append(f"{prefix}_ARTIFACT_MISSING {rel}")
-            continue
-        executed = manifest_hashes[rel]
-        actual = sha256_of(path)
-        if actual == executed:
-            if rel in entries:
-                errors.append(
-                    f"{prefix}_SUPPLEMENT_STALE {rel}: artifact matches the executed manifest, "
-                    "so its supplement entry must be removed"
-                )
-            continue
-        entry = entries.get(rel)
-        if entry is None:
-            errors.append(
-                f"{prefix}_ARTIFACT_HASH_MISMATCH {rel}: executed={executed} actual={actual}; "
-                "declare the change in the current-state supplement or restore the bytes"
+    """Render :func:`compare_campaign_artifacts` findings as prefixed campaign error strings."""
+    return sorted(
+        {
+            f"{prefix}_{finding.kind} {finding.detail}"
+            for finding in compare_campaign_artifacts(
+                root, manifest_hashes, supplement_path, protected_paths
             )
-            continue
-        if entry["executed_sha256"] != executed:
-            errors.append(
-                f"{prefix}_SUPPLEMENT_EXECUTED_DIGEST_DRIFT {rel}: "
-                f"supplement={entry['executed_sha256']} manifest={executed}"
-            )
-        if entry["current_sha256"] != actual:
-            errors.append(
-                f"{prefix}_SUPPLEMENT_CURRENT_DIGEST_DRIFT {rel}: "
-                f"supplement={entry['current_sha256']} actual={actual}"
-            )
-    return sorted(set(errors))
+        }
+    )
 
 
 def manifest_hash_map(

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import inspect
 import json
 import tempfile
 import unittest
@@ -9,6 +10,8 @@ from pathlib import Path
 
 from mechanization.far_mechanization.contract_v2 import contract_sha256
 from tools.check_pca_w4_domain_contracts import (
+    CAMPAIGN_METADATA_FILES,
+    PROTECTED_SUPPORTING_ARTIFACTS,
     RESULTS,
     audit_document,
     load_json,
@@ -25,9 +28,14 @@ class PCAW4DomainContractTests(unittest.TestCase):
     def test_complete_campaign_passes(self) -> None:
         self.assertEqual(validate_campaign(ROOT), [])
         self.assertEqual(
-            len([path for path in RESULTS.glob("*.json") if path.name != "manifest.json"]),
+            len([path for path in RESULTS.glob("*.json") if path.name not in CAMPAIGN_METADATA_FILES]),
             12,
         )
+
+    def test_validate_campaign_resolves_supplement_under_requested_root(self) -> None:
+        source = inspect.getsource(validate_campaign)
+        self.assertIn("supplement_path=root / SUPPLEMENT_RELATIVE_PATH", source)
+        self.assertNotIn("supplement_path=ROOT / SUPPLEMENT_RELATIVE_PATH", source)
 
     def test_all_six_domains_have_checked_collision_and_repair(self) -> None:
         for lossy_path in sorted(RESULTS.glob("*-lossy.json")):
@@ -95,6 +103,35 @@ class PCAW4DomainContractTests(unittest.TestCase):
         codes = {item["code"] for item in manifest_record_set_errors(broken)}
         self.assertIn("W4_MANIFEST_RECORD_SET_MISMATCH", codes)
 
+    def test_every_protected_support_path_is_manifest_bound_and_exists(self) -> None:
+        manifest = load_json(RESULTS / "manifest.json")
+        declared = {
+            str(item["path"])
+            for item in list(manifest["records"]) + list(manifest["supporting_artifacts"])
+        }
+        orphaned = sorted(set(PROTECTED_SUPPORTING_ARTIFACTS) - declared)
+        self.assertEqual(
+            orphaned,
+            [],
+            f"W4 protected path(s) are absent from the executed manifest: {orphaned}",
+        )
+        for rel in PROTECTED_SUPPORTING_ARTIFACTS:
+            self.assertTrue((ROOT / rel).is_file(), f"W4 protected path does not exist: {rel}")
+
+    def test_orphaned_protected_support_path_fails_closed_in_w4_checker(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            errors = manifest_integrity_errors(
+                {"records": [], "supporting_artifacts": []},
+                root,
+                supplement_path=root / "absent-supplement.json",
+                protected_supporting_artifacts={"does-not-exist.json"},
+            )
+            self.assertIn(
+                "W4_PROTECTED_ARTIFACT_NOT_IN_MANIFEST",
+                {item["code"] for item in errors},
+            )
+
     def test_frozen_record_hash_drift_never_becomes_mutable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -107,7 +144,10 @@ class PCAW4DomainContractTests(unittest.TestCase):
             codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, allow_w6_mutable_support_drift=True
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
@@ -126,33 +166,138 @@ class PCAW4DomainContractTests(unittest.TestCase):
             codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, allow_w6_mutable_support_drift=True
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
 
     def test_allowlisted_support_drift_requires_terminal_w6(self) -> None:
+        """Stable regression ID: terminal W6 no longer grants an unchecked drift bypass."""
+        program = load_json(
+            ROOT
+            / "theory"
+            / "evaluation"
+            / "post-closure-assurance-and-application-program-v1.0.json"
+        )
+        self.assertTrue(
+            any(
+                item["id"] == "PCA-W6-EMPIRICAL-AUDIT-UTILITY" and item["state"] == "complete"
+                for item in program["workstreams"]
+            )
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "README.md"
+            path.write_text("drift after terminal W6\n", encoding="utf-8")
+            manifest = {
+                "records": [],
+                "supporting_artifacts": [{"path": "README.md", "sha256": "0" * 64}],
+            }
+            codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
+                )
+            }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
+
+    def test_support_drift_requires_a_declared_supplement_entry(self) -> None:
+        """Documentation drift is declared with a reason, not silently skipped."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             path = root / "README.md"
             path.write_text("downstream governed state\n", encoding="utf-8")
+            current = hashlib.sha256(path.read_bytes()).hexdigest()
             manifest = {
                 "records": [],
                 "supporting_artifacts": [
                     {"path": "README.md", "sha256": "0" * 64}
                 ],
             }
+            undeclared = root / "absent-supplement.json"
             before_codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, allow_w6_mutable_support_drift=False
+                    manifest,
+                    root,
+                    supplement_path=undeclared,
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
-            after_errors = manifest_integrity_errors(
-                manifest, root, allow_w6_mutable_support_drift=True
-            )
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", before_codes)
-            self.assertEqual(after_errors, [])
+
+            declared = root / "supplement.json"
+            declared.write_text(
+                json.dumps(
+                    {
+                        "entries": [
+                            {
+                                "path": "README.md",
+                                "executed_sha256": "0" * 64,
+                                "current_sha256": current,
+                                "class": "documentation_surface",
+                                "reason": "downstream governed state moved after execution",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                manifest_integrity_errors(
+                    manifest,
+                    root,
+                    supplement_path=declared,
+                    protected_supporting_artifacts=frozenset(),
+                ),
+                [],
+            )
+
+    def test_a_record_can_never_be_supplemented(self) -> None:
+        """Frozen evidence stays frozen even with a well-formed supplement entry."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "frozen.json"
+            path.write_text("mutated\n", encoding="utf-8")
+            current = hashlib.sha256(path.read_bytes()).hexdigest()
+            manifest = {
+                "records": [{"path": "frozen.json", "sha256": "0" * 64}],
+                "supporting_artifacts": [],
+            }
+            declared = root / "supplement.json"
+            declared.write_text(
+                json.dumps(
+                    {
+                        "entries": [
+                            {
+                                "path": "frozen.json",
+                                "executed_sha256": "0" * 64,
+                                "current_sha256": current,
+                                "class": "documentation_surface",
+                                "reason": "attempt to launder a frozen W4 record",
+                            }
+                        ]
+                    }
+                ),
+                encoding="utf-8",
+            )
+            codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest,
+                    root,
+                    supplement_path=declared,
+                    protected_supporting_artifacts=frozenset(),
+                )
+            }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
+            self.assertIn("W4_SUPPLEMENT_FORBIDDEN_FOR_PROTECTED_ARTIFACT", codes)
 
     def test_matching_support_hash_is_always_accepted(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -168,14 +313,17 @@ class PCAW4DomainContractTests(unittest.TestCase):
             }
             self.assertEqual(
                 manifest_integrity_errors(
-                    manifest, root, allow_w6_mutable_support_drift=False
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 ),
                 [],
             )
 
     def test_records_remain_exact_and_do_not_claim_w5_semantics(self) -> None:
         for path in RESULTS.glob("*.json"):
-            if path.name == "manifest.json":
+            if path.name in CAMPAIGN_METADATA_FILES:
                 continue
             document = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(document["contract"]["mode"], "exact")

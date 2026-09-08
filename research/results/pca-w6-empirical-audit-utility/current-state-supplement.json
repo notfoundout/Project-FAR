@@ -30,9 +30,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "7f476221cc54aab83ea2b944116c99bce08bb9cff976847b79ac5ed42d329134",
+      "current_sha256": "8cf59321cc38294f50314fa8a5e6f713fa8426a5e1307800c60ad9a199c34948",
       "class": "governance_register",
-      "reason": "Added LIM-045 (EFR-R2 input-specification defect and its mandatory amendment consequence) and LIM-046 (campaign manifest provenance separation). Registers are living surfaces; no W6 result or boundary was weakened."
+      "reason": "Added LIM-045/LIM-046 and reconciled LIM-046 with the register's execution-only closure rule: remediation is implemented on PR #481 but closure takes effect only on protected-main promotion after merge-authority. Registers are living surfaces; no W6 result or boundary was weakened."
     },
     {
       "path": "docs/project-status.md",
@@ -42,11 +42,25 @@
       "reason": "Added the assurance-calibration section pointing at the epistemic calibration audit. No workstream status, boundary, or result changed."
     },
     {
+      "path": "tests/test_pca_w4_domain_contracts.py",
+      "executed_sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
+      "current_sha256": "c4f97f11510e86a65944e7e94689285d2cb421c4c61a590bc2408e9e8766c76c",
+      "class": "verification_tooling",
+      "reason": "Migrated W4 manifest-integrity tests to the supplement contract, retained the historical terminal-W6 drift regression identity, added manifest-membership/runtime-orphan controls, and pins caller-root supplement resolution. No W6 input, computation, or recorded result changed."
+    },
+    {
       "path": "tests/test_pca_w6_empirical_audit_utility.py",
       "executed_sha256": "52a42da350bd08c065034d8564bb16b41f0bbcfcba67e03e8c3064bb3b13a7c7",
       "current_sha256": "11ecc54fa9acf4f3fae54bab8ca573ad152cf894b42ce943a555d40e4686906a",
       "class": "verification_tooling",
       "reason": "Updated one assertion to the new W6_ARTIFACT_HASH_MISMATCH diagnostic emitted by the shared current-state checker. Tests the same fail-closed property."
+    },
+    {
+      "path": "tools/check_pca_w4_domain_contracts.py",
+      "executed_sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2",
+      "current_sha256": "eeb59c02ebdcdf5b48f73771418f5e048197a25ad882c361d6a48a9289f97095",
+      "class": "verification_tooling",
+      "reason": "Removed W6_MUTABLE_SUPPORT_PATHS, delegated general comparison to tools/campaign_current_state.py, retained explicit W4-local frozen/protected preflight checks, passes the full W4 protected set so orphaned protection fails closed, resolves supplements under the requested repository root, and excludes campaign metadata from the CLI record count. The W6 preregistered protocol-base blob pin is untouched; no W6 input, computation, or recorded result changed."
     },
     {
       "path": "tools/check_pca_w6_empirical_audit_utility.py",

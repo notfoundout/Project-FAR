@@ -8,13 +8,14 @@ import sys
 from copy import deepcopy
 from fractions import Fraction
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from mechanization.far_mechanization.contract_v2 import canonical_json, validate_contract
+from tools.campaign_current_state import compare_campaign_artifacts
 
 RESULTS = ROOT / "research" / "results" / "pca-w4-domain-contracts"
 DOCS = ROOT / "docs" / "research" / "pca-w4-domain-contracts"
@@ -45,22 +46,42 @@ DOMAINS = {
 }
 VARIANTS = {"lossy", "repaired"}
 
-# W4's twelve result records and domain-local research artifacts stay frozen.
-# These named repository-wide authority/status surfaces are intentionally mutable
-# under later governed POST-CLOSURE-001 workstreams. A downstream transition may
-# rebind only this closed allowlist; arbitrary supporting-artifact drift remains
-# a validation failure.
-W6_MUTABLE_SUPPORT_PATHS = {
-    "README.md",
-    "docs/CANONICAL_MAP.md",
-    "docs/ROADMAP.md",
-    "docs/governance/limitations-register.md",
-    "docs/governance/open-problems-register.md",
-    "docs/governance/post-closure-assurance-and-application-program-v1.0.md",
-    "docs/project-status.md",
-    "docs/planning/next-actions.md",
-    "governance/repository-truth-authority-v1.json",
-    "theory/evaluation/post-closure-assurance-and-application-program-v1.0.json",
+SUPPLEMENT_RELATIVE_PATH = "research/results/pca-w4-domain-contracts/current-state-supplement.json"
+
+#: Files in the results directory that are campaign metadata rather than evidence records.
+#: manifest.json is the executed record; current-state-supplement.json declares
+#: post-execution documentation drift. Neither is a W4 domain-contract record.
+CAMPAIGN_METADATA_FILES = frozenset({"manifest.json", "current-state-supplement.json"})
+
+# Experimental inputs, outputs, and recorded results. These may never be re-pointed at
+# post-execution bytes through the current-state supplement. The twelve frozen records are
+# added to this set at comparison time, so they are always protected.
+PROTECTED_SUPPORTING_ARTIFACTS = frozenset({
+    "docs/research/pca-w4-domain-contracts/00-protocol.md",
+    "docs/research/pca-w4-domain-contracts/01-discovery-log.md",
+    "docs/research/pca-w4-domain-contracts/01-source-manifest.json",
+    "docs/research/pca-w4-domain-contracts/02-results.md",
+    "docs/research/pca-w4-domain-contracts/native/argumentation.md",
+    "docs/research/pca-w4-domain-contracts/native/bayesian-causal.md",
+    "docs/research/pca-w4-domain-contracts/native/formal-logic.md",
+    "docs/research/pca-w4-domain-contracts/native/model-based-reasoning.md",
+    "docs/research/pca-w4-domain-contracts/native/proof-theory.md",
+    "docs/research/pca-w4-domain-contracts/native/type-theory.md",
+    "docs/research/pca-w4-domain-contracts/references.bib",
+    "docs/research/pca-w4-domain-contracts/tools/wolfram-final-raw.txt",
+    "docs/research/pca-w4-domain-contracts/tools/wolfram-first-failure.txt",
+    "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses-output.txt",
+    "docs/research/pca-w4-domain-contracts/tools/wolfram-witnesses.wl",
+    "docs/research/pca-w4-domain-contracts/tools/zotero-status.json",
+    "research/campaigns/pca-w4-domain-contracts-v1.0.json",
+    "theory/evaluation/pca-w4-domain-contracts-v1.0.json",
+})
+
+# Findings that name a specific artifact map onto W4's historical hash/missing codes so the
+# campaign's error vocabulary is unchanged; provenance-configuration findings keep their own.
+_FINDING_CODES = {
+    "ARTIFACT_MISSING": "W4_MANIFEST_ARTIFACT_MISSING",
+    "ARTIFACT_HASH_MISMATCH": "W4_MANIFEST_HASH_MISMATCH",
 }
 
 
@@ -285,9 +306,19 @@ def manifest_integrity_errors(
     artifact_manifest: Mapping[str, Any],
     root: Path,
     *,
-    allow_w6_mutable_support_drift: bool,
+    supplement_path: Path | None = None,
+    protected_supporting_artifacts: Iterable[str] | None = None,
 ) -> list[dict[str, str]]:
-    """Verify immutable W4 records and governed supporting-artifact integrity."""
+    """Verify immutable W4 records and governed supporting-artifact integrity.
+
+    The executed manifest is historical evidence and is never rewritten. A documentation
+    surface that has legitimately changed since execution must be declared in the campaign's
+    current-state supplement with its executed digest, current digest, class, and reason.
+
+    W4 retains explicit local preflight checks for frozen records and named protected supporting
+    artifacts before delegating the general manifest/supplement comparison. This prevents a
+    shared-helper refactor from reducing the campaign checker's own fail-closed structure.
+    """
     errors: list[dict[str, str]] = []
     records = list(artifact_manifest.get("records", []))
     supports = list(artifact_manifest.get("supporting_artifacts", []))
@@ -296,26 +327,55 @@ def manifest_integrity_errors(
     if len(manifest_paths) != len(set(manifest_paths)):
         errors.append({"code": "W4_MANIFEST_DUPLICATE_PATH", "message": "artifact paths"})
 
-    # Frozen evidence records are never eligible for downstream rebinding.
-    for item in records:
-        rel = str(item["path"])
-        path = root / rel
-        if not path.is_file():
-            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
-        elif sha256_path(path) != item["sha256"]:
-            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+    if supplement_path is None:
+        supplement_path = root / SUPPLEMENT_RELATIVE_PATH
+    if protected_supporting_artifacts is None:
+        protected_supporting_artifacts = PROTECTED_SUPPORTING_ARTIFACTS
 
-    for item in supports:
-        rel = str(item["path"])
+    hashes = {str(item["path"]): str(item["sha256"]) for item in manifest_items}
+    record_paths = {str(item["path"]) for item in records}
+    protected_supports = set(protected_supporting_artifacts)
+    protected = record_paths | protected_supports
+
+    # Keep record integrity visible in the W4 checker itself. Shared comparison still receives
+    # the same paths so supplement attempts are rejected; duplicate missing/hash findings are
+    # filtered below.
+    locally_reported: set[tuple[str, str]] = set()
+    for rel in sorted(record_paths):
         path = root / rel
         if not path.is_file():
             errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+            locally_reported.add(("ARTIFACT_MISSING", rel))
+        elif sha256_path(path) != hashes[rel]:
+            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+            locally_reported.add(("ARTIFACT_HASH_MISMATCH", rel))
+
+    # Named protected supporting artifacts must themselves be manifest-bound. Do not intersect
+    # this set with manifest paths: doing so would make a misspelling silently protect nothing.
+    for rel in sorted(protected_supports):
+        if rel not in hashes:
+            errors.append({"code": "W4_PROTECTED_ARTIFACT_NOT_IN_MANIFEST", "message": rel})
             continue
-        if sha256_path(path) == item["sha256"]:
+        path = root / rel
+        if not path.is_file():
+            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+            locally_reported.add(("ARTIFACT_MISSING", rel))
+        elif sha256_path(path) != hashes[rel]:
+            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+            locally_reported.add(("ARTIFACT_HASH_MISMATCH", rel))
+
+    for finding in compare_campaign_artifacts(root, hashes, supplement_path, protected):
+        if (finding.kind, finding.path) in locally_reported:
             continue
-        if allow_w6_mutable_support_drift and rel in W6_MUTABLE_SUPPORT_PATHS:
+        if finding.kind == "PROTECTED_ARTIFACT_NOT_IN_MANIFEST":
+            # The local preflight reports each orphaned protected support path separately.
             continue
-        errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+        errors.append(
+            {
+                "code": _FINDING_CODES.get(finding.kind, f"W4_{finding.kind}"),
+                "message": finding.detail if finding.kind not in _FINDING_CODES else finding.path,
+            }
+        )
     return errors
 
 
@@ -349,7 +409,9 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
     results = root / RESULTS.relative_to(ROOT)
     docs = root / DOCS.relative_to(ROOT)
     expected_files = {f"{slug}-{variant}.json" for slug in DOMAINS for variant in VARIANTS}
-    actual_files = {path.name for path in results.glob("*.json") if path.name != "manifest.json"}
+    actual_files = {
+        path.name for path in results.glob("*.json") if path.name not in CAMPAIGN_METADATA_FILES
+    }
     if actual_files != expected_files:
         errors.append({
             "code": "W4_RECORD_SET_MISMATCH",
@@ -378,7 +440,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
         manifest_integrity_errors(
             artifact_manifest,
             root,
-            allow_w6_mutable_support_drift=w6_is_complete(program),
+            supplement_path=root / SUPPLEMENT_RELATIVE_PATH,
         )
     )
 
@@ -460,7 +522,9 @@ def main() -> int:
     errors = validate_campaign()
     result = {
         "success": not errors,
-        "records": len([path for path in RESULTS.glob("*.json") if path.name != "manifest.json"]),
+        "records": len(
+            [path for path in RESULTS.glob("*.json") if path.name not in CAMPAIGN_METADATA_FILES]
+        ),
         "diagnostics": errors,
     }
     if args.json:
