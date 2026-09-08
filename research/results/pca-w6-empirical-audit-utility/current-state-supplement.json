@@ -30,9 +30,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "f681570976dd410d767b37b233f7c892b95cd90e102a8af24525d3c64555521a",
+      "current_sha256": "8cf59321cc38294f50314fa8a5e6f713fa8426a5e1307800c60ad9a199c34948",
       "class": "governance_register",
-      "reason": "Added LIM-045 (EFR-R2 input-specification defect and its mandatory amendment consequence) and LIM-046 (campaign manifest provenance separation). Registers are living surfaces; no W6 result or boundary was weakened."
+      "reason": "Added LIM-045/LIM-046 and reconciled LIM-046 with the register's execution-only closure rule: remediation is implemented on PR #481 but closure takes effect only on protected-main promotion after merge-authority. Registers are living surfaces; no W6 result or boundary was weakened."
     },
     {
       "path": "docs/project-status.md",
@@ -44,9 +44,9 @@
     {
       "path": "tests/test_pca_w4_domain_contracts.py",
       "executed_sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
-      "current_sha256": "1023aa1aa6091bf55a75227626e1455a287b7bf86f1a0ffa1231f0f32da91c31",
+      "current_sha256": "c4f97f11510e86a65944e7e94689285d2cb421c4c61a590bc2408e9e8766c76c",
       "class": "verification_tooling",
-      "reason": "Migrated W4 manifest-integrity tests to the supplement contract, retained the historical terminal-W6 drift regression identity, and added manifest-membership/runtime-orphan controls for W4 protected paths. No W6 input, computation, or recorded result changed."
+      "reason": "Migrated W4 manifest-integrity tests to the supplement contract, retained the historical terminal-W6 drift regression identity, added manifest-membership/runtime-orphan controls, and pins caller-root supplement resolution. No W6 input, computation, or recorded result changed."
     },
     {
       "path": "tests/test_pca_w6_empirical_audit_utility.py",
@@ -58,9 +58,9 @@
     {
       "path": "tools/check_pca_w4_domain_contracts.py",
       "executed_sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2",
-      "current_sha256": "694f9720db2eedc577cc9a9957a02b70aa4ebce790739b6f08e831e4e2ad1cc6",
+      "current_sha256": "eeb59c02ebdcdf5b48f73771418f5e048197a25ad882c361d6a48a9289f97095",
       "class": "verification_tooling",
-      "reason": "Removed the W6_MUTABLE_SUPPORT_PATHS allowlist, delegated general comparison to tools/campaign_current_state.py, retained explicit W4-local frozen/protected preflight checks, and passes the full W4 protected set so orphaned protection fails closed. The W6 preregistered protocol-base blob pin is untouched; no W6 input, computation, or recorded result changed."
+      "reason": "Removed W6_MUTABLE_SUPPORT_PATHS, delegated general comparison to tools/campaign_current_state.py, retained explicit W4-local frozen/protected preflight checks, passes the full W4 protected set so orphaned protection fails closed, resolves supplements under the requested repository root, and excludes campaign metadata from the CLI record count. The W6 preregistered protocol-base blob pin is untouched; no W6 input, computation, or recorded result changed."
     },
     {
       "path": "tools/check_pca_w6_empirical_audit_utility.py",
