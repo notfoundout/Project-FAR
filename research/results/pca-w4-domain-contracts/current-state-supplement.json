@@ -31,7 +31,7 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "288cdde63f5d348052f4ef1210798b0a02e730903f54ab1ee7830bfa626dd197",
+      "current_sha256": "5f1e8d70dd5bd98080deef8c555607e6550902117ff70a1400b127f32a7761f3",
       "class": "governance_register",
       "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. This is a governance-state update only; no W4 input, computation, result, claim boundary, or assurance dimension changed."
     },
