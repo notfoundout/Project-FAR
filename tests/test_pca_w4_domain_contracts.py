@@ -10,6 +10,7 @@ from pathlib import Path
 from mechanization.far_mechanization.contract_v2 import contract_sha256
 from tools.check_pca_w4_domain_contracts import (
     CAMPAIGN_METADATA_FILES,
+    PROTECTED_SUPPORTING_ARTIFACTS,
     RESULTS,
     audit_document,
     load_json,
@@ -96,6 +97,35 @@ class PCAW4DomainContractTests(unittest.TestCase):
         codes = {item["code"] for item in manifest_record_set_errors(broken)}
         self.assertIn("W4_MANIFEST_RECORD_SET_MISMATCH", codes)
 
+    def test_every_protected_support_path_is_manifest_bound_and_exists(self) -> None:
+        manifest = load_json(RESULTS / "manifest.json")
+        declared = {
+            str(item["path"])
+            for item in list(manifest["records"]) + list(manifest["supporting_artifacts"])
+        }
+        orphaned = sorted(set(PROTECTED_SUPPORTING_ARTIFACTS) - declared)
+        self.assertEqual(
+            orphaned,
+            [],
+            f"W4 protected path(s) are absent from the executed manifest: {orphaned}",
+        )
+        for rel in PROTECTED_SUPPORTING_ARTIFACTS:
+            self.assertTrue((ROOT / rel).is_file(), f"W4 protected path does not exist: {rel}")
+
+    def test_orphaned_protected_support_path_fails_closed_in_w4_checker(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            errors = manifest_integrity_errors(
+                {"records": [], "supporting_artifacts": []},
+                root,
+                supplement_path=root / "absent-supplement.json",
+                protected_supporting_artifacts={"does-not-exist.json"},
+            )
+            self.assertIn(
+                "W4_PROTECTED_ARTIFACT_NOT_IN_MANIFEST",
+                {item["code"] for item in errors},
+            )
+
     def test_frozen_record_hash_drift_never_becomes_mutable(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -108,7 +138,10 @@ class PCAW4DomainContractTests(unittest.TestCase):
             codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, supplement_path=root / "absent-supplement.json"
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
@@ -127,18 +160,49 @@ class PCAW4DomainContractTests(unittest.TestCase):
             codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, supplement_path=root / "absent-supplement.json"
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
+                )
+            }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
+
+    def test_allowlisted_support_drift_requires_terminal_w6(self) -> None:
+        """Stable regression ID: terminal W6 no longer grants an unchecked drift bypass."""
+        program = load_json(
+            ROOT
+            / "theory"
+            / "evaluation"
+            / "post-closure-assurance-and-application-program-v1.0.json"
+        )
+        self.assertTrue(
+            any(
+                item["id"] == "PCA-W6-EMPIRICAL-AUDIT-UTILITY" and item["state"] == "complete"
+                for item in program["workstreams"]
+            )
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = root / "README.md"
+            path.write_text("drift after terminal W6\n", encoding="utf-8")
+            manifest = {
+                "records": [],
+                "supporting_artifacts": [{"path": "README.md", "sha256": "0" * 64}],
+            }
+            codes = {
+                item["code"]
+                for item in manifest_integrity_errors(
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
 
     def test_support_drift_requires_a_declared_supplement_entry(self) -> None:
-        """Documentation drift is declared with a reason, not silently skipped.
-
-        This replaces the earlier allowlist behaviour, under which ten documentation paths
-        stopped being checked entirely once W6 completed, recording neither a reason nor the
-        executed/current digest pair.
-        """
+        """Documentation drift is declared with a reason, not silently skipped."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             path = root / "README.md"
@@ -154,7 +218,10 @@ class PCAW4DomainContractTests(unittest.TestCase):
             before_codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, supplement_path=undeclared
+                    manifest,
+                    root,
+                    supplement_path=undeclared,
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
             self.assertIn("W4_MANIFEST_HASH_MISMATCH", before_codes)
@@ -177,7 +244,13 @@ class PCAW4DomainContractTests(unittest.TestCase):
                 encoding="utf-8",
             )
             self.assertEqual(
-                manifest_integrity_errors(manifest, root, supplement_path=declared), []
+                manifest_integrity_errors(
+                    manifest,
+                    root,
+                    supplement_path=declared,
+                    protected_supporting_artifacts=frozenset(),
+                ),
+                [],
             )
 
     def test_a_record_can_never_be_supplemented(self) -> None:
@@ -211,9 +284,13 @@ class PCAW4DomainContractTests(unittest.TestCase):
             codes = {
                 item["code"]
                 for item in manifest_integrity_errors(
-                    manifest, root, supplement_path=declared
+                    manifest,
+                    root,
+                    supplement_path=declared,
+                    protected_supporting_artifacts=frozenset(),
                 )
             }
+            self.assertIn("W4_MANIFEST_HASH_MISMATCH", codes)
             self.assertIn("W4_SUPPLEMENT_FORBIDDEN_FOR_PROTECTED_ARTIFACT", codes)
 
     def test_matching_support_hash_is_always_accepted(self) -> None:
@@ -230,7 +307,10 @@ class PCAW4DomainContractTests(unittest.TestCase):
             }
             self.assertEqual(
                 manifest_integrity_errors(
-                    manifest, root, supplement_path=root / "absent-supplement.json"
+                    manifest,
+                    root,
+                    supplement_path=root / "absent-supplement.json",
+                    protected_supporting_artifacts=frozenset(),
                 ),
                 [],
             )

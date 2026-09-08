@@ -8,7 +8,7 @@ import sys
 from copy import deepcopy
 from fractions import Fraction
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -46,11 +46,6 @@ DOMAINS = {
 }
 VARIANTS = {"lossy", "repaired"}
 
-# W4's twelve result records and domain-local research artifacts stay frozen.
-# These named repository-wide authority/status surfaces are intentionally mutable
-# under later governed POST-CLOSURE-001 workstreams. A downstream transition may
-# rebind only this closed allowlist; arbitrary supporting-artifact drift remains
-# a validation failure.
 SUPPLEMENT_RELATIVE_PATH = "research/results/pca-w4-domain-contracts/current-state-supplement.json"
 
 #: Files in the results directory that are campaign metadata rather than evidence records.
@@ -312,6 +307,7 @@ def manifest_integrity_errors(
     root: Path,
     *,
     supplement_path: Path | None = None,
+    protected_supporting_artifacts: Iterable[str] | None = None,
 ) -> list[dict[str, str]]:
     """Verify immutable W4 records and governed supporting-artifact integrity.
 
@@ -319,9 +315,9 @@ def manifest_integrity_errors(
     surface that has legitimately changed since execution must be declared in the campaign's
     current-state supplement with its executed digest, current digest, class, and reason.
 
-    This replaces an earlier allowlist that silently skipped ten documentation paths once W6
-    completed. That allowlist recorded no reason and no digest pair, so the executed bytes and
-    the current bytes were indistinguishable, and it left the drift entirely unchecked.
+    W4 retains explicit local preflight checks for frozen records and named protected supporting
+    artifacts before delegating the general manifest/supplement comparison. This prevents a
+    shared-helper refactor from reducing the campaign checker's own fail-closed structure.
     """
     errors: list[dict[str, str]] = []
     records = list(artifact_manifest.get("records", []))
@@ -333,13 +329,47 @@ def manifest_integrity_errors(
 
     if supplement_path is None:
         supplement_path = root / SUPPLEMENT_RELATIVE_PATH
+    if protected_supporting_artifacts is None:
+        protected_supporting_artifacts = PROTECTED_SUPPORTING_ARTIFACTS
 
     hashes = {str(item["path"]): str(item["sha256"]) for item in manifest_items}
-    # Frozen evidence records are never eligible for downstream rebinding.
-    protected = {str(item["path"]) for item in records} | (
-        PROTECTED_SUPPORTING_ARTIFACTS & set(hashes)
-    )
+    record_paths = {str(item["path"]) for item in records}
+    protected_supports = set(protected_supporting_artifacts)
+    protected = record_paths | protected_supports
+
+    # Keep record integrity visible in the W4 checker itself. Shared comparison still receives
+    # the same paths so supplement attempts are rejected; duplicate missing/hash findings are
+    # filtered below.
+    locally_reported: set[tuple[str, str]] = set()
+    for rel in sorted(record_paths):
+        path = root / rel
+        if not path.is_file():
+            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+            locally_reported.add(("ARTIFACT_MISSING", rel))
+        elif sha256_path(path) != hashes[rel]:
+            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+            locally_reported.add(("ARTIFACT_HASH_MISMATCH", rel))
+
+    # Named protected supporting artifacts must themselves be manifest-bound. Do not intersect
+    # this set with manifest paths: doing so would make a misspelling silently protect nothing.
+    for rel in sorted(protected_supports):
+        if rel not in hashes:
+            errors.append({"code": "W4_PROTECTED_ARTIFACT_NOT_IN_MANIFEST", "message": rel})
+            continue
+        path = root / rel
+        if not path.is_file():
+            errors.append({"code": "W4_MANIFEST_ARTIFACT_MISSING", "message": rel})
+            locally_reported.add(("ARTIFACT_MISSING", rel))
+        elif sha256_path(path) != hashes[rel]:
+            errors.append({"code": "W4_MANIFEST_HASH_MISMATCH", "message": rel})
+            locally_reported.add(("ARTIFACT_HASH_MISMATCH", rel))
+
     for finding in compare_campaign_artifacts(root, hashes, supplement_path, protected):
+        if (finding.kind, finding.path) in locally_reported:
+            continue
+        if finding.kind == "PROTECTED_ARTIFACT_NOT_IN_MANIFEST":
+            # The local preflight reports each orphaned protected support path separately.
+            continue
         errors.append(
             {
                 "code": _FINDING_CODES.get(finding.kind, f"W4_{finding.kind}"),
