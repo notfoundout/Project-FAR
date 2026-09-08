@@ -30,9 +30,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "8cf59321cc38294f50314fa8a5e6f713fa8426a5e1307800c60ad9a199c34948",
+      "current_sha256": "5f1e8d70dd5bd98080deef8c555607e6550902117ff70a1400b127f32a7761f3",
       "class": "governance_register",
-      "reason": "Added LIM-045/LIM-046 and reconciled LIM-046 with the register's execution-only closure rule: remediation is implemented on PR #481 but closure takes effect only on protected-main promotion after merge-authority. Registers are living surfaces; no W6 result or boundary was weakened."
+      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. Registers are living surfaces; no W6 input, computation, recorded result, claim boundary, or assurance dimension changed."
     },
     {
       "path": "docs/project-status.md",
