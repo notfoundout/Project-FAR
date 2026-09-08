@@ -4,7 +4,7 @@
   "campaign": "PCA-W6-EMPIRICAL-AUDIT-UTILITY",
   "supplements_manifest": "research/results/pca-w6-empirical-audit-utility/manifest.json",
   "manifest_status": "HISTORICAL_EXECUTED_BYTES_NOT_REWRITTEN",
-  "provenance_semantics": "manifest.json records the bytes of every campaign artifact as of execution and is never rewritten. This supplement records the artifacts whose current bytes differ, with the reason for each. An artifact absent from this list must still match the executed manifest exactly. Protected artifacts - experimental inputs, outputs, recorded results, and any pinned protocol base - may never appear here; tools/campaign_current_state.py rejects such an entry.",
+  "provenance_semantics": "manifest.json records the bytes as of execution and is never rewritten. This supplement records the artifacts whose current bytes differ, with the reason for each. An artifact absent from this list must still match the executed manifest exactly. Protected artifacts - experimental inputs, outputs, recorded results, and any pinned protocol base - may never appear here; tools/campaign_current_state.py rejects such an entry.",
   "recorded_result_unchanged": true,
   "nonclaims": [
     "does not re-date the campaign",
@@ -30,9 +30,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "8cf59321cc38294f50314fa8a5e6f713fa8426a5e1307800c60ad9a199c34948",
+      "current_sha256": "288cdde63f5d348052f4ef1210798b0a02e730903f54ab1ee7830bfa626dd197",
       "class": "governance_register",
-      "reason": "Added LIM-045/LIM-046 and reconciled LIM-046 with the register's execution-only closure rule: remediation is implemented on PR #481 but closure takes effect only on protected-main promotion after merge-authority. Registers are living surfaces; no W6 result or boundary was weakened."
+      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. Registers are living surfaces; no W6 input, computation, recorded result, claim boundary, or assurance dimension changed."
     },
     {
       "path": "docs/project-status.md",
