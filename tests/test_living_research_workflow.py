@@ -58,6 +58,25 @@ class LivingResearchWorkflowTests(unittest.TestCase):
             self.text.index("- name: Fail if required post-push governance surfaces failed"),
         )
 
+    def test_permanent_inbox_pr_is_refreshed_and_anchor_survives_rebuild(self):
+        prepare = step_block(self.text, "Prepare persistent research inbox branch")
+        rolling = step_block(self.text, "Create or refresh rolling research PR")
+
+        # The unattended writer first discovers an already-open PR before rebuilding the
+        # branch from protected main. The whole inbox directory is then carried forward,
+        # which preserves the noncandidate .rolling-pr-anchor.json used by the permanent
+        # review surface without ever executing code from the unprotected branch.
+        self.assertIn("gh pr list", prepare)
+        self.assertIn("--state open", prepare)
+        self.assertIn("git switch -C \"$branch\" origin/main", prepare)
+        self.assertIn("for path in research/living/inbox research/living/runs", prepare)
+
+        # Normal unattended operation refreshes the existing permanent PR. The create path
+        # is only bootstrap/fail-closed fallback; repository-wide self-approval permission
+        # is not required for steady state.
+        self.assertIn('if [[ -n "$OPEN_PR" ]]', rolling)
+        self.assertIn('gh pr edit "$OPEN_PR"', rolling)
+
 
 if __name__ == "__main__":
     unittest.main()
