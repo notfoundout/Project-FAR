@@ -1,0 +1,139 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-RESEARCH-001",
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "source": {
+    "provider": "Crossref REST API",
+    "endpoint": "https://api.crossref.org/works",
+    "rows_per_query": 8,
+    "initial_lookback_days": 14,
+    "overlap_days": 2,
+    "timeout_seconds": 30,
+    "max_retries": 3,
+    "user_agent": "Project-FAR-Living-Research/1.0 (+https://github.com/notfoundout/Project-FAR)"
+  },
+  "threat_guards": [
+    "THREAT-004",
+    "THREAT-009",
+    "THREAT-010",
+    "THREAT-011",
+    "THREAT-012"
+  ],
+  "attention_terms": [
+    "counterexample",
+    "impossibility",
+    "no-go",
+    "retraction",
+    "correction",
+    "failure",
+    "replication",
+    "contradiction"
+  ],
+  "targets": [
+    {
+      "target_id": "FAR-RQ-003",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "COMPUTABILITY_OR_OBSTRUCTION_CANDIDATE",
+      "queries": [
+        "observational equivalence quotient algorithm minimization",
+        "bisimulation quotient minimization computation",
+        "minimal sufficient statistic algorithm representation"
+      ],
+      "signal_terms": ["observational", "quotient", "bisimulation", "minimization", "minimal sufficient", "sufficient statistic"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-004",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "APPROXIMATION_METRIC_OR_COST_CANDIDATE",
+      "queries": [
+        "approximate sufficiency representation loss metric",
+        "multiobjective cost preorder Pareto representation",
+        "information bottleneck decision loss sufficient statistic"
+      ],
+      "signal_terms": ["approximate", "loss", "metric", "pareto", "multiobjective", "information bottleneck", "sufficient statistic"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-005",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "EXTERNAL_UTILITY_METHOD_CANDIDATE",
+      "queries": [
+        "structured reasoning audit error detection human evaluation",
+        "representation loss audit empirical study",
+        "decision audit omission detection experiment"
+      ],
+      "signal_terms": ["audit", "error detection", "human evaluation", "representation", "omission", "empirical"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-006",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "COST_EFFECTIVENESS_EVIDENCE_CANDIDATE",
+      "queries": [
+        "formal audit representation cost effectiveness",
+        "structured argument audit cost benefit",
+        "reasoning audit workload efficiency"
+      ],
+      "signal_terms": ["audit", "cost", "effectiveness", "efficiency", "workload", "structured argument"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-007",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "INTEGRATED_PRIOR_ART_CANDIDATE",
+      "queries": [
+        "reasoning representation audit provenance failure unknown factorization",
+        "information preserving representation audit observational equivalence",
+        "structured reasoning contract provenance audit"
+      ],
+      "signal_terms": ["reasoning", "representation", "audit", "provenance", "factorization", "observational equivalence", "contract"],
+      "min_signal_hits": 2,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-008",
+      "allowed_dispositions": ["BLOCKED"],
+      "candidate_relation": "EXTERNAL_ORIENTATION_METHOD_CANDIDATE",
+      "queries": [
+        "preference elicitation multi criteria orientation Pareto",
+        "partial order preference elicitation incomparable criteria",
+        "multiobjective decision external preference orientation"
+      ],
+      "signal_terms": ["preference", "elicitation", "multi-criteria", "multicriteria", "pareto", "partial order", "multiobjective"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-009",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "POTENTIAL_COUNTEREXAMPLE_OR_RELATED_THEOREM",
+      "queries": [
+        "minimal sufficient statistic counterexample observational equivalence",
+        "Blackwell sufficiency quotient counterexample",
+        "observational quotient impossibility theorem"
+      ],
+      "signal_terms": ["counterexample", "sufficiency", "sufficient statistic", "Blackwell", "observational", "quotient", "impossibility"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    },
+    {
+      "target_id": "FAR-RQ-010",
+      "allowed_dispositions": ["OPEN"],
+      "candidate_relation": "REVIEWER_CALIBRATION_METHOD_CANDIDATE",
+      "queries": [
+        "large language model adversarial reviewer calibration independent evaluation",
+        "multi agent debate correlated errors independence evaluation",
+        "AI peer review false positive calibration"
+      ],
+      "signal_terms": ["language model", "reviewer", "calibration", "independent", "multi-agent", "multi agent", "peer review", "false positive"],
+      "min_signal_hits": 1,
+      "max_candidates_per_query": 3
+    }
+  ]
+}
