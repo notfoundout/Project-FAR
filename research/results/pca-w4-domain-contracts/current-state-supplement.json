@@ -47,7 +47,7 @@
       "executed_sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
       "current_sha256": "c4f97f11510e86a65944e7e94689285d2cb421c4c61a590bc2408e9e8766c76c",
       "class": "verification_tooling",
-      "reason": "Migrated manifest-integrity tests to the current-state supplement contract, retained the historical terminal-W6 drift regression identity, added manifest-membership/runtime-orphan controls, and pins that validate_campaign resolves the supplement beneath its caller-supplied repository root. Tests stronger fail-closed properties."
+      "reason": "Migrated manifest-integrity tests to the supplement contract, retained the historical terminal-W6 drift regression identity, added manifest-membership/runtime-orphan controls, and pins that validate_campaign resolves the supplement beneath its caller-supplied repository root. Tests stronger fail-closed properties."
     },
     {
       "path": "tools/check_pca_w4_domain_contracts.py",
