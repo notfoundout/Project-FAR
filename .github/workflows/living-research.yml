@@ -23,6 +23,7 @@ on:
       - 'tools/reconcile_living_repo.py'
       - 'tools/check_living_research.py'
       - 'tests/test_living_research.py'
+      - 'tests/test_living_research_workflow.py'
       - 'research/living/**'
       - 'research/registry/research-questions-v1.0.json'
       - 'research/registry/epistemic-threats-v1.0.json'
@@ -61,7 +62,7 @@ jobs:
       - name: Install canonical repository dependencies
         run: pip install -r requirements.txt
       - name: Unit-test living repository
-        run: python -m unittest tests.test_living_research -v
+        run: python -m unittest tests.test_living_research tests.test_living_research_workflow -v
       - name: Reconcile canonical living-repository state
         run: python tools/reconcile_living_repo.py
       - name: Validate living repository invariants
@@ -132,7 +133,7 @@ jobs:
           echo "branch_exists=$branch_exists" >> "$GITHUB_OUTPUT"
       - name: Preflight tests and authority checks
         run: |
-          python -m unittest tests.test_living_research -v
+          python -m unittest tests.test_living_research tests.test_living_research_workflow -v
           python tools/reconcile_living_repo.py
           python tools/check_living_research.py
           python tools/check_research_gates.py
@@ -147,7 +148,7 @@ jobs:
       - name: Validate generated living repository
         run: |
           python tools/check_living_research.py
-          python -m unittest tests.test_living_research -v
+          python -m unittest tests.test_living_research tests.test_living_research_workflow -v
           python tools/check_research_gates.py
           python tools/repo_health_check.py --fast
       - name: Commit and push inbox state
@@ -174,7 +175,9 @@ jobs:
           fi
           echo "changed=true" >> "$GITHUB_OUTPUT"
       - name: Create or refresh rolling research PR
+        id: rolling_pr
         if: steps.push.outputs.changed == 'true'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           OPEN_PR: ${{ steps.inbox.outputs.open_pr }}
@@ -242,7 +245,9 @@ jobs:
             gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$LIVING_RESEARCH_BRANCH" --title "Research: rolling living-repository inbox" --body-file /tmp/living-research-pr.md
           fi
       - name: Maintain core-claim review queue issue
-        if: steps.push.outputs.changed == 'true'
+        id: review_queue
+        if: always() && steps.push.outputs.changed == 'true'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
@@ -280,7 +285,34 @@ jobs:
             gh issue close "$existing" --repo "$GITHUB_REPOSITORY" --comment "Living repository reconciliation currently has no metadata-only core-claim review candidates."
           fi
       - name: Dispatch explicit validation for automated head
-        if: steps.push.outputs.changed == 'true'
+        id: validation_dispatch
+        if: always() && steps.push.outputs.changed == 'true'
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$LIVING_RESEARCH_BRANCH" -f mode=validate
+      - name: Fail if required post-push governance surfaces failed
+        if: always() && steps.push.outputs.changed == 'true'
+        env:
+          ROLLING_PR_OUTCOME: ${{ steps.rolling_pr.outcome }}
+          REVIEW_QUEUE_OUTCOME: ${{ steps.review_queue.outcome }}
+          VALIDATION_DISPATCH_OUTCOME: ${{ steps.validation_dispatch.outcome }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          failures=0
+          check_outcome() {
+            local surface="$1"
+            local outcome="$2"
+            if [[ "$outcome" != "success" ]]; then
+              echo "::error title=Living repository governance surface failed::$surface outcome=$outcome"
+              failures=1
+            fi
+          }
+          check_outcome "rolling research PR" "$ROLLING_PR_OUTCOME"
+          check_outcome "core-claim review queue" "$REVIEW_QUEUE_OUTCOME"
+          check_outcome "explicit validation dispatch" "$VALIDATION_DISPATCH_OUTCOME"
+          if [[ "$failures" -ne 0 ]]; then
+            echo "::error title=Living repository post-push failure::Research data was preserved on $LIVING_RESEARCH_BRANCH, but one or more required governance or validation surfaces failed after the push."
+            exit 1
+          fi
