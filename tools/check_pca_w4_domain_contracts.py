@@ -440,7 +440,7 @@ def validate_campaign(root: Path = ROOT) -> list[dict[str, str]]:
         manifest_integrity_errors(
             artifact_manifest,
             root,
-            supplement_path=ROOT / SUPPLEMENT_RELATIVE_PATH,
+            supplement_path=root / SUPPLEMENT_RELATIVE_PATH,
         )
     )
 
@@ -522,7 +522,9 @@ def main() -> int:
     errors = validate_campaign()
     result = {
         "success": not errors,
-        "records": len([path for path in RESULTS.glob("*.json") if path.name != "manifest.json"]),
+        "records": len(
+            [path for path in RESULTS.glob("*.json") if path.name not in CAMPAIGN_METADATA_FILES]
+        ),
         "diagnostics": errors,
     }
     if args.json:

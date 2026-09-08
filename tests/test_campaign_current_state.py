@@ -253,7 +253,8 @@ class CampaignMigrationCoverageTests(unittest.TestCase):
         r"^(README\.md"
         r"|docs/(CANONICAL_MAP|ROADMAP|project-status)\.md"
         r"|docs/governance/"
-        r"|docs/planning/)"
+        r"|docs/planning/"
+        r"|docs/specification/)"
     )
 
     @staticmethod
@@ -273,6 +274,11 @@ class CampaignMigrationCoverageTests(unittest.TestCase):
 
         walk(document)
         return found
+
+    def test_specification_surfaces_are_classified_as_living_documentation(self) -> None:
+        self.assertIsNotNone(
+            self.LIVING_DOC.match("docs/specification/far-ir-2.1-approximation-cost.md")
+        )
 
     def test_every_manifest_with_documentation_surfaces_is_migrated(self) -> None:
         offenders = []

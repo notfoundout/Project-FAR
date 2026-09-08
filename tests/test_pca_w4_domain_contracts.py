@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import hashlib
+import inspect
 import json
 import tempfile
 import unittest
@@ -30,6 +31,11 @@ class PCAW4DomainContractTests(unittest.TestCase):
             len([path for path in RESULTS.glob("*.json") if path.name not in CAMPAIGN_METADATA_FILES]),
             12,
         )
+
+    def test_validate_campaign_resolves_supplement_under_requested_root(self) -> None:
+        source = inspect.getsource(validate_campaign)
+        self.assertIn("supplement_path=root / SUPPLEMENT_RELATIVE_PATH", source)
+        self.assertNotIn("supplement_path=ROOT / SUPPLEMENT_RELATIVE_PATH", source)
 
     def test_all_six_domains_have_checked_collision_and_repair(self) -> None:
         for lossy_path in sorted(RESULTS.glob("*-lossy.json")):
