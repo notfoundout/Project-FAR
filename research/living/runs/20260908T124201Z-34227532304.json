@@ -1,0 +1,344 @@
+{
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "cursor_advanced": false,
+  "failures": [
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "observational equivalence quotient algorithm minimization",
+      "target_id": "FAR-RQ-003"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "bisimulation quotient minimization computation",
+      "target_id": "FAR-RQ-003"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "minimal sufficient statistic algorithm representation",
+      "target_id": "FAR-RQ-003"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "approximate sufficiency representation loss metric",
+      "target_id": "FAR-RQ-004"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "multiobjective cost preorder Pareto representation",
+      "target_id": "FAR-RQ-004"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "information bottleneck decision loss sufficient statistic",
+      "target_id": "FAR-RQ-004"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "structured reasoning audit error detection human evaluation",
+      "target_id": "FAR-RQ-005"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "representation loss audit empirical study",
+      "target_id": "FAR-RQ-005"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "decision audit omission detection experiment",
+      "target_id": "FAR-RQ-005"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "formal audit representation cost effectiveness",
+      "target_id": "FAR-RQ-006"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "structured argument audit cost benefit",
+      "target_id": "FAR-RQ-006"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "reasoning audit workload efficiency",
+      "target_id": "FAR-RQ-006"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "reasoning representation audit provenance failure unknown factorization",
+      "target_id": "FAR-RQ-007"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "information preserving representation audit observational equivalence",
+      "target_id": "FAR-RQ-007"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "structured reasoning contract provenance audit",
+      "target_id": "FAR-RQ-007"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "preference elicitation multi criteria orientation Pareto",
+      "target_id": "FAR-RQ-008"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "partial order preference elicitation incomparable criteria",
+      "target_id": "FAR-RQ-008"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "multiobjective decision external preference orientation",
+      "target_id": "FAR-RQ-008"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "minimal sufficient statistic counterexample observational equivalence",
+      "target_id": "FAR-RQ-009"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "Blackwell sufficiency quotient counterexample",
+      "target_id": "FAR-RQ-009"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "observational quotient impossibility theorem",
+      "target_id": "FAR-RQ-009"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "large language model adversarial reviewer calibration independent evaluation",
+      "target_id": "FAR-RQ-010"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "multi agent debate correlated errors independence evaluation",
+      "target_id": "FAR-RQ-010"
+    },
+    {
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "mode": "incremental",
+      "provider": "Crossref",
+      "query": "AI peer review false positive calibration",
+      "target_id": "FAR-RQ-010"
+    },
+    {
+      "error": "KeyError: 'user_agent'",
+      "historical_query_id": "HIST-SUFFICIENCY",
+      "mode": "historical_backfill",
+      "provider": "OpenAlex",
+      "query": "sufficiency sufficient statistic information experiment comparison",
+      "window": [
+        2017,
+        2026
+      ]
+    },
+    {
+      "error": "KeyError: 'user_agent'",
+      "historical_query_id": "BOOK-HISTORY-LOGIC",
+      "mode": "historical_book_backfill",
+      "page": 1,
+      "provider": "Open Library",
+      "query": "logic formal reasoning relation identity"
+    }
+  ],
+  "finished_utc": "2026-09-08T12:42:01Z",
+  "historical_advanced": false,
+  "queries": [
+    {
+      "historical_query_id": "HIST-SUFFICIENCY",
+      "mode": "historical_backfill",
+      "provider": "Crossref",
+      "query": "sufficiency sufficient statistic information experiment comparison",
+      "request": {
+        "parameters": {
+          "filter": "from-pub-date:2017,until-pub-date:2026",
+          "query.bibliographic": "sufficiency sufficient statistic information experiment comparison",
+          "rows": "8",
+          "sort": "relevance"
+        },
+        "provider": "Crossref",
+        "rows_returned": 8
+      },
+      "results": [
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-20A0FAABD3234D03",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 1,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.2139/ssrn.4703678",
+          "title": "Examples of Sufficient or Non-Sufficient Statistic |X|For an Unknown Parameter Θ: Discrete Distributions"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-8D4F92BE3B260796",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 2,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "information",
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.1109/isit50566.2022.9834568",
+          "title": "Sufficient Statistic Memory Approximate Message Passing"
+        },
+        {
+          "bridge_hits": [
+            "statistics"
+          ],
+          "candidate_id": "FAR-LIT-FE691D81EAA4E867",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 3,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "experiment",
+            "information",
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.59543/jidmis.v3.1618",
+          "title": "Sufficient Statistic Aggregation for Scalable Regression Analytics"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-49B135493AAF1C75",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 4,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.2139/ssrn.4892335",
+          "title": "Optimal Policy Without Rational Expectations: A Sufficient Statistic Solution"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-80E004DBD9A56D85",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 5,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.3386/w33949",
+          "title": "Designing Human-AI Collaboration: A Sufficient-Statistic Approach"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-61E7185BE1577C40",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 6,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "information",
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.1007/s00220-024-05053-z",
+          "title": "Sufficient Statistic and Recoverability via Quantum Fisher Information"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-62BC360827EEFA47",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 7,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "experiment",
+            "information",
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.2139/ssrn.5330791",
+          "title": "Designing Human-Ai Collaboration: A Sufficient-Statistic Approach"
+        },
+        {
+          "bridge_hits": [],
+          "candidate_id": "FAR-LIT-5892F4207E8C1FF3",
+          "decision": "ACCEPT",
+          "provider": "Crossref",
+          "rank": 8,
+          "reason": "ACCEPTED_SIGNAL_MATCH",
+          "signal_hits": [
+            "statistic",
+            "sufficien"
+          ],
+          "source_key": "doi:10.3386/w25103",
+          "title": "Robots, Trade, and Luddism: A Sufficient Statistic Approach to Optimal Technology Regulation"
+        }
+      ],
+      "window": [
+        2017,
+        2026
+      ]
+    }
+  ],
+  "run_id": "20260908T124201Z-34227532304",
+  "schema_version": "1.0",
+  "started_utc": "2026-09-08T12:42:01Z",
+  "status": "PARTIAL_SOURCE_FAILURE"
+}

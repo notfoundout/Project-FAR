@@ -4,15 +4,16 @@ Status: **Research infrastructure; never theory or evidence authority**
 
 Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.
 
-- Schedule intent: **every 30 minutes**
-- Last run: `NEVER_RUN`
-- Last status: `NEVER_RUN`
-- Total unique candidates: **0**
-- Incremental source: Crossref index-date watch
-- Historical scholarly backfill: Crossref + OpenAlex, ten-year windows back to 1600
-- Historical book lane: low-volume Open Library search every fourth run
-- Philosophy/metaphysics rule: formal or mathematical bridge required where configured
-- EFR execution: **forbidden**
-- Automated canonical claim promotion: **forbidden**
+- Last run: `20260908T143512Z-34228633115`
+- Last status: `SUCCESS`
+- Total unique candidates: **156**
+- High-attention metadata candidates: **11**
+- Philosophical / metaphysical / historical-lens candidates: **0**
+- Historical-backfill candidates: **47**
+- Incremental cursor: `2026-09-08T14:35:12Z`
+- Historical backfill window end: `2026`
+- Historical backfill complete: `False`
+- Source failures in latest run: **0**
 
-The first unattended run after merge will replace this initialization with generated state.
+The watcher discovers and routes candidates. It does not adjudicate them, establish novelty,
+change FAR-CORE status, execute EFR, or create independent evidence.

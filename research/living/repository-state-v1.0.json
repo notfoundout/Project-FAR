@@ -1,12 +1,827 @@
 {
-  "schema_version": "1.0",
-  "program_id": "FAR-LIVING-REPOSITORY-001",
   "authority": "Research",
   "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
-  "status": "PENDING_FIRST_RECONCILIATION",
-  "surfaces": [],
-  "claims": [],
-  "research_questions": [],
-  "candidate_counts": {"candidates": 0},
-  "core_claim_review_queue": []
+  "candidate_counts": {
+    "candidates": 156,
+    "claim_mapped": 74,
+    "high_attention": 11,
+    "historical": 47,
+    "philosophy_metaphysics_history": 0
+  },
+  "canonical_theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
+  "changed_surfaces": [],
+  "claim_dependency_impact": {
+    "FAR-CORE-001": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ]
+    },
+    "FAR-CORE-002": {
+      "direct_dependencies": [
+        "FAR-CORE-001"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-014"
+      ]
+    },
+    "FAR-CORE-003": {
+      "direct_dependencies": [
+        "FAR-CORE-002"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-014"
+      ]
+    },
+    "FAR-CORE-004": {
+      "direct_dependencies": [
+        "FAR-CORE-002"
+      ],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-005": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-006": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": [
+        "FAR-CORE-007"
+      ]
+    },
+    "FAR-CORE-007": {
+      "direct_dependencies": [
+        "FAR-CORE-006"
+      ],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-008": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-009": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-010": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-011": {
+      "direct_dependencies": [
+        "FAR-CORE-001"
+      ],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-012": {
+      "direct_dependencies": [
+        "FAR-CORE-001"
+      ],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-013": {
+      "direct_dependencies": [],
+      "downstream_claim_ids": []
+    },
+    "FAR-CORE-014": {
+      "direct_dependencies": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003"
+      ],
+      "downstream_claim_ids": []
+    }
+  },
+  "claims": [
+    {
+      "dependencies": [
+        "set_presentation",
+        "explicit_totalized_semantics",
+        "fixed_contract_evaluation",
+        "extensional_exactness"
+      ],
+      "exact_statement": "exact sufficiency iff behavior factors through the representation",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-001",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "any Set-based exact contract",
+      "scope_relation": "TEXT_COMPATIBLE",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-001",
+        "set_presentation",
+        "extensional_exactness"
+      ],
+      "exact_statement": "the observational quotient is the unique least-informative exact representation up to isomorphism",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-002",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "any Set-based exact contract; cardinal minimum when finite",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-002",
+        "fixed_contract_evaluation"
+      ],
+      "exact_statement": "context closure makes observational equivalence action-compatible",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-003",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "declared action/test closure",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-002"
+      ],
+      "exact_statement": "no single representation is simultaneously a least-informative sufficient representation for every observation contract; universal sufficiency alone is not denied",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-004",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "nontrivial domain with observation contract allowed to vary",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "declared_invariance"
+      ],
+      "exact_statement": "invariants are antitone in the admitted re-representation class",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-005",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "nested admitted transformation classes",
+      "scope_relation": "TEXT_COMPATIBLE",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "set_presentation"
+      ],
+      "exact_statement": "unconstrained encoding establishes host capacity, not native common structure",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-006",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "injective transport with decoder",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-006",
+        "declared_invariance"
+      ],
+      "exact_statement": "primitive vocabulary count is not representation invariant",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-007",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "faithful reification/tagging regime",
+      "scope_relation": "TEXT_COMPATIBLE",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "declared_invariance"
+      ],
+      "exact_statement": "finite operator count is not representation invariant",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-008",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "finite operator family with tagged tuples",
+      "scope_relation": "TEXT_COMPATIBLE",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "scope_closure"
+      ],
+      "exact_statement": "finite panels do not establish open-domain universality",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-009",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "scope": "proper finite subset of an open domain",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "fixed_logical_semantics",
+        "extensional_exactness"
+      ],
+      "exact_statement": "exact common theory is relative to L,J,I; the substantive residue is additionally relative to Γ",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-010",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "fixed language, interpretation profiles/models, and target class; frame additionally indexes the frame-subtracted residue",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-001"
+      ],
+      "exact_statement": "omitting a consequence-affecting parameter refutes sufficiency",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-011",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "scope": "any exact contract",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-001",
+        "typed_outcomes"
+      ],
+      "exact_statement": "sufficient representations must preserve that distinction",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-012",
+      "novelty_prior_art_status": "NOT_APPLICABLE",
+      "scope": "contracts distinguishing determinate absence from Unknown",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "canonical_FARA_semantics",
+        "function_composition"
+      ],
+      "exact_statement": "Ω is a semantically eliminable derived materialized view",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_CURRENT",
+      "id": "FAR-CORE-013",
+      "novelty_prior_art_status": "NOT_ESTABLISHED",
+      "scope": "canonical FARA definition of Ω",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "proved",
+      "truth_disposition": "PROVED"
+    },
+    {
+      "dependencies": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "PR-453-SSS"
+      ],
+      "exact_statement": "Search-State Sufficiency is a bounded factorization instance, not a universal architecture",
+      "formalization_status": "FORMALIZED",
+      "governance_status": "ACCEPTED_BOUNDED_APPLICATION",
+      "id": "FAR-CORE-014",
+      "novelty_prior_art_status": "NOT_ESTABLISHED_STRONG_PRIOR_ART",
+      "scope": "PR #453 stated representation and decoder classes",
+      "scope_relation": "TEXT_DIFF_REVIEWED_SEPARATELY",
+      "status": "supported_derived",
+      "truth_disposition": "PROVED"
+    }
+  ],
+  "core_claim_review_queue": [
+    {
+      "attention_terms": [
+        "impossibility"
+      ],
+      "candidate_id": "FAR-LIT-552B3F4A53BDEF61",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "counterexample"
+      ],
+      "candidate_id": "FAR-LIT-5C441F014FBC6F1A",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "undecidable"
+      ],
+      "candidate_id": "FAR-LIT-8698902E49C77D94",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "impossibility"
+      ],
+      "candidate_id": "FAR-LIT-898EFFBC10C6F2E3",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "impossibility"
+      ],
+      "candidate_id": "FAR-LIT-8F01E91F70D72629",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "undecidable"
+      ],
+      "candidate_id": "FAR-LIT-D89F9D13B70C96FC",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "impossibility"
+      ],
+      "candidate_id": "FAR-LIT-F804CEB7D08998C0",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    },
+    {
+      "attention_terms": [
+        "impossibility"
+      ],
+      "candidate_id": "FAR-LIT-FC8A05734544703E",
+      "claim_ids": [
+        "FAR-CORE-001",
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-005",
+        "FAR-CORE-006",
+        "FAR-CORE-007",
+        "FAR-CORE-008",
+        "FAR-CORE-009",
+        "FAR-CORE-010",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-013",
+        "FAR-CORE-014"
+      ],
+      "downstream_claim_ids": [
+        "FAR-CORE-002",
+        "FAR-CORE-003",
+        "FAR-CORE-004",
+        "FAR-CORE-007",
+        "FAR-CORE-011",
+        "FAR-CORE-012",
+        "FAR-CORE-014"
+      ],
+      "epistemic_status": "METADATA_SIGNAL_ONLY",
+      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
+      "stage": "REVIEW_REQUIRED"
+    }
+  ],
+  "program_id": "FAR-LIVING-REPOSITORY-001",
+  "research_questions": [
+    {
+      "current_disposition": "ACTIVE",
+      "dependencies": [
+        "PROJECT-FAR-CORE-THEORY-1.1",
+        "PCA-W1-INDEPENDENT-REVIEW"
+      ],
+      "exact_question": "What is the smallest faithful Lean formalization of each exact FAR-CORE-001 through FAR-CORE-014 statement under PROJECT-FAR-CORE-THEORY-1.1, and which classical, choice, extensionality, or application-specific premises does it require?",
+      "id": "FAR-RQ-001",
+      "relevant_workstream": "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "PCA-W2-PROOF-ASSISTANT-FORMALIZATION",
+        "FAR-CORE-001",
+        "FAR-CORE-002"
+      ],
+      "exact_question": "Which versioned contract schema can express cases, tests, typed outcomes, behavior, representations, decoders, collisions, quotients, profiles, frames, and cost orders without selecting domain semantics by convention?",
+      "id": "FAR-RQ-002",
+      "relevant_workstream": "PCA-W3-CONTRACT-SCHEMA"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "FAR-CORE-002",
+        "PCA-W3-CONTRACT-SCHEMA",
+        "PCA-W5-APPROXIMATION-AND-COST"
+      ],
+      "exact_question": "Under which computability, finiteness, oracle, or approximation assumptions can an observational quotient be constructed, learned, or represented compactly?",
+      "id": "FAR-RQ-003",
+      "relevant_workstream": "PCA-W5-APPROXIMATION-AND-COST"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "PCA-W3-CONTRACT-SCHEMA",
+        "PCA-W4-DOMAIN-CONTRACTS"
+      ],
+      "exact_question": "Which metrics, divergences, decision losses, tolerances, and cost preorders are independently justified for approximate adequacy or implementation-minimality in each domain?",
+      "id": "FAR-RQ-004",
+      "relevant_workstream": "PCA-W5-APPROXIMATION-AND-COST"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "PCA-W3-CONTRACT-SCHEMA",
+        "PCA-W4-DOMAIN-CONTRACTS",
+        "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+      ],
+      "exact_question": "Does a preregistered use of the Project FAR contract/factorization audit catch material representation loss or improve investigation outcomes relative to appropriate controls?",
+      "id": "FAR-RQ-005",
+      "relevant_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "PCA-W4-DOMAIN-CONTRACTS",
+        "PCA-W5-APPROXIMATION-AND-COST",
+        "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+      ],
+      "exact_question": "Is the retained FARA finite explicit auditable kernel cost-effective under independently supplied real-world audit contracts?",
+      "id": "FAR-RQ-006",
+      "relevant_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "OPP-016",
+        "OPP-018",
+        "OPP-024"
+      ],
+      "exact_question": "Does prior work contain an independently motivated synthesis materially equivalent to Project FAR's integrated contract-freezing, factorization, collision, Unknown, provenance, and failure-boundary audit discipline?",
+      "id": "FAR-RQ-007",
+      "relevant_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+    },
+    {
+      "current_disposition": "BLOCKED",
+      "dependencies": [
+        "OP-21",
+        "R5-CROSS-CONTEXT-001"
+      ],
+      "exact_question": "Can any comparison or selection relation among serious preservation contracts be justified by externally supplied dimensions with externally justified orientations?",
+      "id": "FAR-RQ-008",
+      "relevant_workstream": "PCA-W4-DOMAIN-CONTRACTS"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "PCA-W1-INDEPENDENT-REVIEW",
+        "PCA-W2-PROOF-ASSISTANT-FORMALIZATION"
+      ],
+      "exact_question": "After the completed independent W1 review, does any later evidence produce a reproducible contradiction to an exact FAR-CORE premise, proof step, or theorem?",
+      "id": "FAR-RQ-009",
+      "relevant_workstream": "POST-CLOSURE-001"
+    },
+    {
+      "current_disposition": "OPEN",
+      "dependencies": [
+        "OPP-013",
+        "OPP-014",
+        "OPP-015"
+      ],
+      "exact_question": "Under which frozen task classes and independence controls does a provider-neutral adversarial multi-reasoner harness improve issue discovery or calibration without laundering consensus into proof?",
+      "id": "FAR-RQ-010",
+      "relevant_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
+    }
+  ],
+  "rules": {
+    "candidate_metadata_may_reopen_claim": false,
+    "canonical_claim_change_requires_governed_lifecycle_and_protected_merge": true,
+    "external_research_never_executes_efr_implicitly": true,
+    "negative_search_never_establishes_novelty": true,
+    "reproducible_exact_contradiction_may_trigger_reopening": true
+  },
+  "schema_version": "1.0",
+  "surface_count": 20,
+  "surfaces": [
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "README.md",
+      "role": "canonical_entry",
+      "sha256": "dbf4827adb689b2863b6d33a1f864bb84de022c055170e22055e6a62d1049695"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/project-status.md",
+      "role": "project_status",
+      "sha256": "f636f10b62d2d6da6b9d6c901976cd283ab042e1ee65e3255b610e00fb64ba73"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/CANONICAL_MAP.md",
+      "role": "authority_map",
+      "sha256": "8ea2a4ddd49d8b8c884790318f3933cc51251660ba088a0335325ab59ce3e292"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/research-execution-charter.md",
+      "role": "execution_governance",
+      "sha256": "1a5d958354aae05fcf5ffddff7b7610c55e8004475d039c837a881c3c879e0cf"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/research-tool-authority-v1.0.md",
+      "role": "tool_governance",
+      "sha256": "efe8ca6f19b7e3f8afd7579fbd0ed7de743b8a4ef53547f4dce015d0ffeb78b3"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/claim-status-matrix.md",
+      "role": "claim_status",
+      "sha256": "8215a1254351a111ba7a8ddafdc378bf730f99f9b09f4a1a85ad73f275a79237"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/theorem-proof-status-register.md",
+      "role": "proof_status",
+      "sha256": "684029245f0b53a3603e58bae8460fb26eb516a958db545d520196cc532de2fb"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/limitations-register.md",
+      "role": "limitations",
+      "sha256": "5f1e8d70dd5bd98080deef8c555607e6550902117ff70a1400b127f32a7761f3"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/open-problems-register.md",
+      "role": "open_problems",
+      "sha256": "5c6f33bc69cb0848c929a88c250159355e69e501690e609edf3abf2157de960d"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/unresolved-questions-register.md",
+      "role": "unresolved_questions",
+      "sha256": "a4ef925b677c80a12c2a09acfc8f55b89c884fc9b928b75120065fb2ad6020a2"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/framework-boundaries.md",
+      "role": "framework_boundaries",
+      "sha256": "fef98d2fbf9dc77a5379a77cb78cb90e2b8ffa992668159becf3a2708884a7d3"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/dependency-specification.md",
+      "role": "dependency_authority",
+      "sha256": "0bc23eb468a2505b91b80abc2ee915d42299b9030de47cbff88d2c155771c0b5"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+      "role": "assurance_matrix",
+      "sha256": "08cf27fc610d7910a6a28d6b2baadf6221942b6b2cd78ef7357f36451b03d9ad"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+      "role": "external_program",
+      "sha256": "f98b44e50a05e0cf3652d01683221aadd43606f75a904ff8d52a145c52f9f23c"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "theory/terminal/project-far-core-theory-v1.1.json",
+      "role": "governing_claim_ledger",
+      "sha256": "e1e0ca8d563ad515a084f33f27a3f6c94feecd042d9081ee60ac97d27350bb78"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "theory/evaluation/far-core-assurance-v1.0.json",
+      "role": "claim_assurance_ledger",
+      "sha256": "740a4e17398f0cf3b320c81547efbde6ad29eba50da1afe44cfe96879dddb355"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "research/registry/research-questions-v1.0.json",
+      "role": "research_questions",
+      "sha256": "0343925af6f4cb67a2075f6f8e1f23348d022cb0d080a8794fa3f3afcf790ced"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "research/registry/epistemic-threats-v1.0.json",
+      "role": "epistemic_threats",
+      "sha256": "7b01f6eea9cc4dfd51a5ccc64b22d018473111727d27cbb880028dc34c59e905"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "research/registry/opportunities-v1.0.json",
+      "role": "opportunities",
+      "sha256": "65dc1c36f47e5dbe6420b54d0f3e01ff59daff05f1ba6d1958a6390992bc77a2"
+    },
+    {
+      "changed_since_last_reconciliation": false,
+      "path": "research/registry/citation-links-v1.0.json",
+      "role": "claim_source_links",
+      "sha256": "04ddfc04679f2fa2e716d14c1a8130e139b981e92c15cfb7cb2106a05b3a0853"
+    }
+  ]
 }

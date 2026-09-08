@@ -1,0 +1,61 @@
+{
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "candidate_id": "FAR-LIT-4DA11F10E06B7DED",
+  "discovery": {
+    "first_seen_utc": "2026-09-08T14:12:39Z",
+    "last_seen_utc": "2026-09-08T14:35:12Z",
+    "query_bindings": [
+      {
+        "candidate_relation": "EXTERNAL_UTILITY_METHOD_CANDIDATE",
+        "governed_question_sha256": "330fba62f06fb3a4551256163f4c41267441b49bafbccc578936388598981c9d",
+        "lens": "governed_question",
+        "mode": "incremental",
+        "provider": "Crossref",
+        "query": "structured reasoning audit error detection human evaluation",
+        "seen_utc": "2026-09-08T14:12:39Z",
+        "target_id": "FAR-RQ-005",
+        "target_ids": [
+          "FAR-RQ-005"
+        ]
+      }
+    ]
+  },
+  "lifecycle": {
+    "may_change_claim_status": false,
+    "may_count_as_external_independence": false,
+    "may_establish_novelty": false,
+    "may_execute_efr": false,
+    "stage": "DISCOVERED"
+  },
+  "potential_claim_ids": [],
+  "record_type": "CANDIDATE_LITERATURE",
+  "schema_version": "1.0",
+  "source_key": "doi:10.1109/iros47612.2022.9981726",
+  "sources": [
+    {
+      "attention_terms": [],
+      "authors": [
+        "Maia Stiber",
+        "Russell Taylor",
+        "Chien-Ming Huang"
+      ],
+      "container": "2022 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)",
+      "doi": "10.1109/iros47612.2022.9981726",
+      "provider": "Crossref",
+      "provider_id": "10.1109/iros47612.2022.9981726",
+      "published_date": "2022-10-23",
+      "publisher": "IEEE",
+      "title": "Modeling Human Response to Robot Errors for Timely Error Detection",
+      "url": "https://doi.org/10.1109/iros47612.2022.9981726",
+      "work_type": "proceedings-article"
+    }
+  ],
+  "triage": {
+    "attention_terms": [],
+    "lenses": [
+      "governed_question"
+    ],
+    "status": "UNREVIEWED_CANDIDATE"
+  }
+}
