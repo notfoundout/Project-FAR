@@ -6,13 +6,14 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Run discovery or validate the current ref only
+        description: Run discovery, validate the current ref, or audit every run report
         required: true
         default: discover
         type: choice
         options:
           - discover
           - validate
+          - audit
   pull_request:
     branches:
       - main
@@ -37,7 +38,7 @@ on:
       - 'docs/research/living-repository.md'
 
 concurrency:
-  group: living-research-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'writer' }}
+  group: living-research-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || (inputs.mode == 'validate' || inputs.mode == 'audit') && 'validator' || 'writer' }}
   cancel-in-progress: false
 
 env:
@@ -45,7 +46,7 @@ env:
 
 jobs:
   validate:
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'validate')
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && (inputs.mode == 'validate' || inputs.mode == 'audit'))
     runs-on: ubuntu-latest
     timeout-minutes: 25
     permissions:
@@ -64,7 +65,11 @@ jobs:
       - name: Reconcile canonical living-repository state
         run: python tools/reconcile_living_repo.py
       - name: Validate living repository invariants
-        run: python tools/check_living_research.py
+        # Bounded on every automatic path. This job is dispatched by `discover` after each
+        # unattended update, so a full historical scan here would put unbounded and steadily
+        # growing work on the highest-frequency validation path. `audit` mode is the
+        # explicit full scan.
+        run: python tools/check_living_research.py ${{ inputs.mode == 'audit' && '--all-runs' || '' }}
       - name: Validate governed research gates
         run: python tools/check_research_gates.py
       - name: Run repository fast health profile
@@ -101,18 +106,30 @@ jobs:
           git config user.email "project-far-research-bot@users.noreply.github.com"
           git fetch origin main
           open_pr="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$branch" --base main --state open --json number --jq '.[0].number // empty')"
+
+          # The working tree is always built from protected `main`, so every tool and
+          # configuration file executed below is reviewed, merge-authority-gated code.
+          # Only accumulated *data* is carried over from the inbox branch. Checking the
+          # inbox branch out and running it would let anyone able to push to that
+          # unprotected branch execute code under a write-scoped token on a schedule.
+          git switch -C "$branch" origin/main
+          branch_exists=false
           if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            branch_exists=true
             git fetch origin "$branch"
-            if [[ -n "$open_pr" ]]; then
-              git switch -C "$branch" "origin/$branch"
-              git merge --no-edit origin/main
-            else
-              git switch -C "$branch" origin/main
-            fi
-          else
-            git switch -c "$branch" origin/main
+            # Carried over whatever the PR state is: closing a stale rolling PR must not
+            # silently discard the accumulated inbox. Already-merged data restores to the
+            # identical content main now holds, so this is a no-op in that case.
+            for path in research/living/inbox research/living/runs \
+                        research/living/state-v1.0.json \
+                        research/living/repository-state-v1.0.json; do
+              if git cat-file -e "origin/$branch:$path" 2>/dev/null; then
+                git checkout "origin/$branch" -- "$path"
+              fi
+            done
           fi
           echo "open_pr=$open_pr" >> "$GITHUB_OUTPUT"
+          echo "branch_exists=$branch_exists" >> "$GITHUB_OUTPUT"
       - name: Preflight tests and authority checks
         run: |
           python -m unittest tests.test_living_research -v
@@ -146,8 +163,12 @@ jobs:
             docs/research/living-research-status.md \
             docs/research/living-repository-status.md
           git commit -m "research: update unattended living repository"
-          if git ls-remote --exit-code --heads origin "$LIVING_RESEARCH_BRANCH" >/dev/null 2>&1; then
-            git push --force-with-lease origin "HEAD:$LIVING_RESEARCH_BRANCH"
+          # The branch is rebuilt as exactly one commit on current main each run, so the
+          # rolling PR stays a readable single-commit diff instead of accumulating a merge
+          # commit per run, and it can never conflict with its own base.
+          if [[ "${{ steps.inbox.outputs.branch_exists }}" == "true" ]]; then
+            git push --force-with-lease="$LIVING_RESEARCH_BRANCH:$(git rev-parse "origin/$LIVING_RESEARCH_BRANCH")" \
+              origin "HEAD:$LIVING_RESEARCH_BRANCH"
           else
             git push -u origin "HEAD:$LIVING_RESEARCH_BRANCH"
           fi
@@ -192,6 +213,26 @@ jobs:
 
           Every unattended update runs unit tests, deterministic reconciliation,
           living-repository invariants, governed research gates, and repository fast health.
+
+          ## Check status: this PR starts with no checks, by construction
+
+          This branch is pushed and this PR is opened by `GITHUB_TOKEN`. GitHub does not
+          start workflow runs from events caused by `GITHUB_TOKEN`, so **no required check
+          reports here on its own** — including protected `merge-authority`. The PR is not
+          mergeable until a human takes one action:
+
+          - close and reopen this PR, or
+          - push any commit to the branch under a human identity.
+
+          Either one makes the normal required checks run. The automation deliberately does
+          not work around this: posting a commit status from the workflow would forge the
+          merge-authority signal rather than satisfy it, and reintroducing a privileged
+          token was retired in `docs/governance/privileged-token-retirement-2026-09-05.md`.
+
+          Independent of this PR, each unattended update dispatches a validation run of this
+          workflow against the branch head, so the content is checked even while the PR has
+          no check of its own. That run is not a PR status check and does not satisfy branch
+          protection.
 
           This PR is deliberately not auto-merged. Protected `main` remains the sole canonical state.
           EOF

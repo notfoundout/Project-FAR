@@ -10,7 +10,7 @@
     "openlibrary": {"provider":"Open Library Search API","endpoint":"https://openlibrary.org/search.json","enabled":true,"interval_runs":4,"rows_per_query":5,"timeout_seconds":30,"max_retries":2,"usage_policy":"low-volume historical book discovery only; never bulk harvesting"}
   },
   "threat_guards": ["THREAT-004","THREAT-009","THREAT-010","THREAT-011","THREAT-012"],
-  "attention_terms": ["counterexample","impossibility","no-go","retraction","correction","erratum","failure","replication","contradiction","inconsistent","undecidable","non-computable","noncomputable","refutation","false","limitation"],
+  "attention_terms": ["counterexample","impossibility","no-go","retraction","correction","erratum","failure","replication","contradiction","inconsistent","undecidable","non-computable","noncomputable","refutation"],
   "lenses": {
     "governed_question": {"description":"Direct governed research-question watch","bridge_terms":[],"min_bridge_hits":0},
     "formal_mathematics": {"description":"Mathematical and formal-computational antecedents or attacks","bridge_terms":["theorem","proof","formal","logic","equivalence","quotient","factorization","bisimulation","invariant","order","category","algebra","semantics","automata","statistics"],"min_bridge_hits":0},

@@ -40,7 +40,7 @@ def main()->int:
         add('branch/PR triage drift',[sys.executable,'tools/branch_pr_triage.py',
             '--input','artifacts/governance/live-branch-pr-snapshot-v1.0.json',
             '--output','artifacts/governance/branch-pr-triage-v1.0.json','--check'])
-    tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_final_newline.py','check_release_consistency.py','check_current_state_consistency.py','check_internal_links.py','check_status_consistency.py','check_project_far_theory_closure.py','far_research_registry.py','check_far_core_v11_formalization.py','research_campaign.py']
+    tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_final_newline.py','check_release_consistency.py','check_current_state_consistency.py','check_internal_links.py','check_status_consistency.py','check_project_far_theory_closure.py','far_research_registry.py','check_far_core_v11_formalization.py','research_campaign.py','check_living_research.py']
     if full: tools += ['check_claims_audit.py','check_project_status.py','check_proof_assurance.py','check_external_validation_terms.py','check_mechanization_claims.py','check_ci_workflows.py']
     for tool in tools:
         if (ROOT/'tools'/tool).exists():

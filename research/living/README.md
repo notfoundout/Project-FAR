@@ -30,6 +30,44 @@ Every 30 minutes the scheduled workflow:
 14. validates the result before writing only to `automation/living-research-inbox`;
 15. maintains one rolling PR. It never writes directly to protected `main`.
 
+## Execution boundary
+
+The scheduled job builds its working tree from protected `main` and carries only accumulated
+*data* (`inbox/`, `runs/`, `state-v1.0.json`, `repository-state-v1.0.json`) across from
+`automation/living-research-inbox`. Tools and configuration always come from `main`. The job
+never checks out and executes code from the inbox branch, which is not protected; doing so
+would let anyone able to push there run code under a write-scoped token on a schedule.
+
+The branch is rebuilt as a single commit on current `main` each run, so the rolling PR stays a
+readable one-commit diff and cannot conflict with its own base.
+
+## Attention terms are derived, never accumulated
+
+Each provider's attention-term matches are stored on that provider's source entry and
+replaced whenever the provider is seen again; `triage.attention_terms` is recomputed as the
+union of those, filtered to the currently configured terms. A term removed from
+`attention_terms` in the configuration therefore clears on the next sighting instead of
+marking a candidate high-attention forever.
+
+## Run-report validation
+
+`tools/check_living_research.py` validates the newest 500 run reports. Reports are immutable
+and are validated when written, so every automatic path uses that bound; the full historical
+scan is `--all-runs`, reachable on demand through the workflow's `audit` dispatch mode. The
+`validate` mode dispatched after each unattended update stays bounded, because it runs as
+often as discovery does.
+
+## The rolling PR starts with no checks
+
+The branch is pushed and the PR opened by `GITHUB_TOKEN`, and GitHub does not start workflow
+runs from `GITHUB_TOKEN`-caused events. No required check — `merge-authority` included —
+reports on that PR until a human closes and reopens it, or pushes to the branch under a human
+identity. The workflow does not work around this: posting a commit status from the job would
+forge the merge-authority signal, and a privileged token was deliberately retired in
+`docs/governance/privileged-token-retirement-2026-09-05.md`. Each update dispatches a
+validation run against the branch head instead, which checks the content but is not a PR
+status check and does not satisfy branch protection.
+
 ## Historical, philosophical, and metaphysical coverage
 
 Historical backfill starts at the present and walks backward in ten-year publication windows to
