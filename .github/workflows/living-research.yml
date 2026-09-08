@@ -1,0 +1,170 @@
+name: Living Research Watch
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Run discovery or validate the current ref only
+        required: true
+        default: discover
+        type: choice
+        options:
+          - discover
+          - validate
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-research.yml'
+      - 'tools/run_living_research.py'
+      - 'tools/check_living_research.py'
+      - 'tests/test_living_research.py'
+      - 'research/living/**'
+      - 'research/registry/research-questions-v1.0.json'
+      - 'research/registry/epistemic-threats-v1.0.json'
+      - 'docs/research/living-research-status.md'
+
+concurrency:
+  group: living-research-${{ github.event_name == 'pull_request' && github.event.pull_request.number || 'writer' }}
+  cancel-in-progress: false
+
+env:
+  LIVING_RESEARCH_BRANCH: automation/living-research-inbox
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'validate')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit-test living research engine
+        run: python -m unittest tests.test_living_research -v
+      - name: Validate living research state
+        run: python tools/check_living_research.py
+      - name: Validate governed research gates
+        run: python tools/check_research_gates.py
+      - name: Run repository fast health profile
+        run: python tools/repo_health_check.py --fast
+
+  discover:
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'discover')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare persistent research inbox branch
+        id: inbox
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          branch="$LIVING_RESEARCH_BRANCH"
+          git config user.name "project-far-research-bot"
+          git config user.email "project-far-research-bot@users.noreply.github.com"
+          git fetch origin main
+          open_pr="$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$branch" --base main --state open --json number --jq '.[0].number // empty')"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            git fetch origin "$branch"
+            if [[ -n "$open_pr" ]]; then
+              git switch -C "$branch" "origin/$branch"
+              git merge --no-edit origin/main
+            else
+              git switch -C "$branch" origin/main
+            fi
+          else
+            git switch -c "$branch" origin/main
+          fi
+          echo "open_pr=$open_pr" >> "$GITHUB_OUTPUT"
+      - name: Preflight tests and authority checks
+        run: |
+          python -m unittest tests.test_living_research -v
+          python tools/check_living_research.py
+          python tools/check_research_gates.py
+      - name: Discover and triage current literature
+        run: python tools/run_living_research.py
+      - name: Validate generated research state
+        run: |
+          python tools/check_living_research.py
+          python -m unittest tests.test_living_research -v
+          python tools/check_research_gates.py
+          python tools/repo_health_check.py --fast
+      - name: Commit and push inbox state
+        id: push
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet && [[ -z "$(git status --porcelain --untracked-files=all)" ]]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add research/living docs/research/living-research-status.md
+          git commit -m "research: update unattended living-research inbox"
+          if git ls-remote --exit-code --heads origin "$LIVING_RESEARCH_BRANCH" >/dev/null 2>&1; then
+            git push --force-with-lease origin "HEAD:$LIVING_RESEARCH_BRANCH"
+          else
+            git push -u origin "HEAD:$LIVING_RESEARCH_BRANCH"
+          fi
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+      - name: Create or refresh rolling research PR
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OPEN_PR: ${{ steps.inbox.outputs.open_pr }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat > /tmp/living-research-pr.md <<'EOF'
+          ## Summary
+
+          Rolling unattended **Research-only** inbox produced by `FAR-LIVING-RESEARCH-001`.
+
+          This branch records Crossref query windows, returned result identities at the configured cap, deterministic acceptance/rejection reasons, deduplicated candidate literature, and source failures. It is intentionally non-authoritative.
+
+          ## Research Contribution and Claim Boundary
+
+          - **Central claim tested:** none
+          - **Evidential role:** discovery / candidate triage only
+          - **Current uncertainty reduced:** none until candidates receive separate governed review
+          - **Result that could count against FAR:** none at this stage; a later reviewed source may motivate a governed attack or evidence record
+          - **Frozen theory:** `PROJECT-FAR-CORE-THEORY-1.1`, unchanged
+          - **Independence:** none claimed; automated Project FAR discovery
+          - **Strongest claim supported:** listed sources matched the declared search/triage rules
+          - **Explicit nonclaims:** no theorem, claim, novelty, priority, external-validity, utility, independence, EFR, OP-28, W1-W6, or commercial-status change
+
+          ## Validation
+
+          Each unattended update runs the dedicated unit suite, living-state validator, research gates, and repository fast health profile before push. Source failure freezes the discovery cursor and is preserved rather than interpreted as no evidence.
+
+          This PR is deliberately not auto-merged. Protected `main` remains the only canonical state.
+          EOF
+          if [[ -n "$OPEN_PR" ]]; then
+            gh pr edit "$OPEN_PR" --repo "$GITHUB_REPOSITORY" --title "Research: rolling living-research inbox" --body-file /tmp/living-research-pr.md
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$LIVING_RESEARCH_BRANCH" --title "Research: rolling living-research inbox" --body-file /tmp/living-research-pr.md
+          fi
+      - name: Dispatch explicit validation for automated head
+        if: steps.push.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$LIVING_RESEARCH_BRANCH" -f mode=validate
