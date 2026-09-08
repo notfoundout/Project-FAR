@@ -70,12 +70,23 @@ class LivingResearchWorkflowTests(unittest.TestCase):
         self.assertIn("--state open", prepare)
         self.assertIn("git switch -C \"$branch\" origin/main", prepare)
         self.assertIn("for path in research/living/inbox research/living/runs", prepare)
+        self.assertIn(".rolling-pr-anchor.json", prepare)
 
-        # Normal unattended operation refreshes the existing permanent PR. The create path
-        # is only bootstrap/fail-closed fallback; repository-wide self-approval permission
-        # is not required for steady state.
-        self.assertIn('if [[ -n "$OPEN_PR" ]]', rolling)
+        # Normal unattended operation refreshes the existing human-bootstrapped permanent
+        # PR. Missing-PR recovery is explicit and fail-closed; the workflow may not create a
+        # replacement or depend on repository-wide create/approve permission.
+        self.assertIn('if [[ -z "$OPEN_PR" ]]', rolling)
+        self.assertIn("Permanent living-research PR missing", rolling)
+        self.assertIn("Human bootstrap", rolling)
         self.assertIn('gh pr edit "$OPEN_PR"', rolling)
+        self.assertNotIn("gh pr create", rolling)
+
+        # The generated maintainer-facing surface must preserve the governance rule rather
+        # than inviting a human to make the permanent inbox mergeable.
+        self.assertIn("DO NOT MERGE OR CLOSE", rolling)
+        self.assertIn("separate snapshot branch", rolling)
+        self.assertIn("NEVER_MERGE_THIS_ANCHOR", rolling)
+        self.assertNotIn("close and reopen this PR", rolling)
 
 
 if __name__ == "__main__":
