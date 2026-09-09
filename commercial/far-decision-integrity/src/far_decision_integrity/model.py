@@ -145,6 +145,32 @@ class DecisionPackage:
                 f"{missing_requirements}"
             )
 
+        binding_ids: list[str] = []
+        for index, binding in enumerate(self.semantic_contracts):
+            binding_id = binding.get("binding_id")
+            if not isinstance(binding_id, str) or not binding_id.strip():
+                raise PackageValidationError(
+                    f"semantic_contracts[{index}].binding_id must be a non-empty string"
+                )
+            binding_ids.append(binding_id)
+            target_node_id = binding.get("target_node_id")
+            if not isinstance(target_node_id, str) or not target_node_id.strip():
+                raise PackageValidationError(
+                    f"semantic_contracts[{index}].target_node_id must be a non-empty string"
+                )
+            if target_node_id not in known:
+                raise PackageValidationError(
+                    f"semantic contract binding {binding_id!r} targets undeclared node "
+                    f"{target_node_id!r}"
+                )
+        duplicate_bindings = sorted(
+            {binding_id for binding_id in binding_ids if binding_ids.count(binding_id) > 1}
+        )
+        if duplicate_bindings:
+            raise PackageValidationError(
+                f"duplicate semantic binding_id values: {duplicate_bindings}"
+            )
+
 
 def _required_text(data: dict[str, Any], key: str) -> str:
     value = data.get(key)
