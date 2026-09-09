@@ -4,7 +4,9 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
-SCHEMA_VERSION = "far-decision-package/0.1"
+LEGACY_SCHEMA_VERSION = "far-decision-package/0.1"
+SCHEMA_VERSION = "far-decision-package/0.2"
+SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, SCHEMA_VERSION)
 
 
 class IntegrityStatus(str, Enum):
@@ -63,6 +65,7 @@ class DecisionPackage:
     authorization_requirements: tuple[str, ...]
     unknowns: tuple[str, ...]
     trace_completeness: float
+    semantic_contracts: tuple[dict[str, Any], ...] = ()
     metadata: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
@@ -70,9 +73,19 @@ class DecisionPackage:
         if not isinstance(data, dict):
             raise PackageValidationError("decision package must be a JSON object")
         schema_version = _required_text(data, "schema_version")
-        if schema_version != SCHEMA_VERSION:
+        if schema_version not in SUPPORTED_SCHEMA_VERSIONS:
             raise PackageValidationError(
-                f"unsupported schema_version {schema_version!r}; expected {SCHEMA_VERSION!r}"
+                f"unsupported schema_version {schema_version!r}; expected one of "
+                f"{SUPPORTED_SCHEMA_VERSIONS!r}"
+            )
+        semantic_contracts = tuple(
+            _mapping(item, "semantic_contracts[]")
+            for item in _list(data.get("semantic_contracts", []), "semantic_contracts")
+        )
+        if schema_version == LEGACY_SCHEMA_VERSION and semantic_contracts:
+            raise PackageValidationError(
+                f"{LEGACY_SCHEMA_VERSION} predates semantic_contracts; use {SCHEMA_VERSION} "
+                "instead of reinterpreting the historical schema"
             )
         package = cls(
             schema_version=schema_version,
@@ -96,6 +109,7 @@ class DecisionPackage:
             trace_completeness=_bounded_number(
                 data.get("trace_completeness"), "trace_completeness", 0.0, 1.0
             ),
+            semantic_contracts=semantic_contracts,
             metadata=_mapping(data.get("metadata", {}), "metadata"),
         )
         package.validate_graph()
