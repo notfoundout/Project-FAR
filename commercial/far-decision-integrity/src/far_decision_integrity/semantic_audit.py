@@ -13,11 +13,18 @@ _SUPPORTED_FORMATS = {
     "far-ir/2.0": ("contract_v2", "schemas/far-contract-v2.schema.json"),
     "far-ir/2.1": ("contract_v21", "schemas/far-contract-v2.1.schema.json"),
 }
+_SUPPORTED_PURPOSES = {
+    "exact_sufficiency",
+    "approximation_candidate",
+    "analysis_only",
+}
 
 
 class SemanticDisposition(str, Enum):
-    PRESERVES = "preserves"
+    SATISFIES = "satisfies"
     MATERIAL_LOSS = "material_loss"
+    OUTSIDE_TOLERANCE = "outside_tolerance"
+    VERIFIED_ANALYSIS = "verified_analysis"
     UNKNOWN = "unknown"
     INVALID = "invalid"
     UNAVAILABLE = "unavailable"
@@ -39,6 +46,10 @@ class SemanticArtifact:
 
 @dataclass(frozen=True, slots=True)
 class SemanticAudit:
+    binding_id: str | None
+    target_node_id: str | None
+    purpose: str | None
+    selected_candidate_id: str | None
     document_id: str | None
     contract_id: str | None
     format_version: str | None
@@ -47,6 +58,10 @@ class SemanticAudit:
     verifier_success: bool
     diagnostics: tuple[SemanticDiagnostic, ...]
     verifier_artifacts: tuple[SemanticArtifact, ...] = ()
+
+    @property
+    def is_gating(self) -> bool:
+        return self.purpose in {"exact_sufficiency", "approximation_candidate"}
 
 
 @dataclass(frozen=True, slots=True)
@@ -59,32 +74,101 @@ class SemanticVerifierUnavailable(RuntimeError):
     """Raised when the canonical FAR semantic verifier cannot be loaded exactly."""
 
 
-def audit_semantic_contract(document: object) -> SemanticAudit:
-    """Validate one embedded FAR IR contract using the canonical repository verifier.
+def audit_semantic_contract(binding: object) -> SemanticAudit:
+    """Audit one decision-bound semantic contract with canonical FAR IR machinery.
 
-    The commercial product deliberately delegates semantic truth to the governed
-    FAR IR verifier instead of reimplementing factorization, collision, quotient,
-    or approximation/cost semantics. Failure to locate or execute that verifier
-    is therefore an explicit UNAVAILABLE result, never a successful audit.
+    A binding is intentionally distinct from the FAR IR record itself. It states
+    which decision node the record bears on and how the record is being used.
+    This prevents an unrelated valid FAR IR fixture from silently authorizing a
+    decision and prevents a generic v2.1 PROVED analysis from being mistaken for
+    exact preservation.
     """
 
-    if not isinstance(document, dict):
-        return _result(
-            document,
+    if not isinstance(binding, dict):
+        return _binding_result(
+            {},
+            {},
             disposition=SemanticDisposition.INVALID,
             verifier_success=False,
             diagnostics=(
                 SemanticDiagnostic(
-                    "SEMANTIC_CONTRACT_NOT_OBJECT",
-                    "Embedded semantic contract must be a JSON object.",
+                    "SEMANTIC_BINDING_NOT_OBJECT",
+                    "semantic_contracts entries must be binding objects.",
                 ),
             ),
         )
 
-    format_version = document.get("format_version")
+    binding_id = binding.get("binding_id")
+    target_node_id = binding.get("target_node_id")
+    purpose = binding.get("purpose")
+    selected_candidate_id = binding.get("selected_candidate_id")
+    record = binding.get("record")
+
+    binding_errors: list[SemanticDiagnostic] = []
+    if not isinstance(binding_id, str) or not binding_id.strip():
+        binding_errors.append(
+            SemanticDiagnostic(
+                "SEMANTIC_BINDING_ID_INVALID",
+                "binding_id must be a non-empty string.",
+                ("binding_id",),
+            )
+        )
+    if not isinstance(target_node_id, str) or not target_node_id.strip():
+        binding_errors.append(
+            SemanticDiagnostic(
+                "SEMANTIC_BINDING_TARGET_INVALID",
+                "target_node_id must be a non-empty string.",
+                ("target_node_id",),
+            )
+        )
+    if not isinstance(purpose, str) or purpose not in _SUPPORTED_PURPOSES:
+        binding_errors.append(
+            SemanticDiagnostic(
+                "SEMANTIC_BINDING_PURPOSE_UNSUPPORTED",
+                f"purpose must be one of {sorted(_SUPPORTED_PURPOSES)}.",
+                ("purpose",),
+            )
+        )
+    if purpose == "approximation_candidate":
+        if not isinstance(selected_candidate_id, str) or not selected_candidate_id.strip():
+            binding_errors.append(
+                SemanticDiagnostic(
+                    "SEMANTIC_SELECTED_CANDIDATE_REQUIRED",
+                    "approximation_candidate bindings require selected_candidate_id.",
+                    ("selected_candidate_id",),
+                )
+            )
+    elif selected_candidate_id is not None:
+        binding_errors.append(
+            SemanticDiagnostic(
+                "SEMANTIC_SELECTED_CANDIDATE_NOT_ALLOWED",
+                "selected_candidate_id is only valid for approximation_candidate bindings.",
+                ("selected_candidate_id",),
+            )
+        )
+    if not isinstance(record, dict):
+        binding_errors.append(
+            SemanticDiagnostic(
+                "SEMANTIC_RECORD_NOT_OBJECT",
+                "record must contain one FAR IR JSON object.",
+                ("record",),
+            )
+        )
+
+    if binding_errors:
+        return _binding_result(
+            binding,
+            record if isinstance(record, dict) else {},
+            disposition=SemanticDisposition.INVALID,
+            verifier_success=False,
+            diagnostics=tuple(binding_errors),
+        )
+
+    format_version = record.get("format_version")
     if not isinstance(format_version, str) or format_version not in _SUPPORTED_FORMATS:
-        return _result(
-            document,
+        return _binding_result(
+            binding,
+            record,
             disposition=SemanticDisposition.INVALID,
             verifier_success=False,
             diagnostics=(
@@ -92,7 +176,36 @@ def audit_semantic_contract(document: object) -> SemanticAudit:
                     "SEMANTIC_CONTRACT_FORMAT_UNSUPPORTED",
                     f"Unsupported semantic contract format {format_version!r}; "
                     f"expected one of {sorted(_SUPPORTED_FORMATS)}.",
-                    ("format_version",),
+                    ("record", "format_version"),
+                ),
+            ),
+        )
+
+    if purpose == "exact_sufficiency" and format_version != "far-ir/2.0":
+        return _binding_result(
+            binding,
+            record,
+            disposition=SemanticDisposition.INVALID,
+            verifier_success=False,
+            diagnostics=(
+                SemanticDiagnostic(
+                    "SEMANTIC_PURPOSE_FORMAT_MISMATCH",
+                    "exact_sufficiency requires a far-ir/2.0 exact semantic record.",
+                    ("purpose",),
+                ),
+            ),
+        )
+    if purpose == "approximation_candidate" and format_version != "far-ir/2.1":
+        return _binding_result(
+            binding,
+            record,
+            disposition=SemanticDisposition.INVALID,
+            verifier_success=False,
+            diagnostics=(
+                SemanticDiagnostic(
+                    "SEMANTIC_PURPOSE_FORMAT_MISMATCH",
+                    "approximation_candidate requires a far-ir/2.1 approximation/cost record.",
+                    ("purpose",),
                 ),
             ),
         )
@@ -100,18 +213,20 @@ def audit_semantic_contract(document: object) -> SemanticAudit:
     try:
         bundle = _load_validator(format_version)
     except SemanticVerifierUnavailable as exc:
-        return _result(
-            document,
+        return _binding_result(
+            binding,
+            record,
             disposition=SemanticDisposition.UNAVAILABLE,
             verifier_success=False,
             diagnostics=(SemanticDiagnostic("SEMANTIC_VERIFIER_UNAVAILABLE", str(exc)),),
         )
 
     try:
-        validation = bundle.validate(document)
+        validation = bundle.validate(record)
     except Exception as exc:  # fail closed around the governed verifier boundary
-        return _result(
-            document,
+        return _binding_result(
+            binding,
+            record,
             disposition=SemanticDisposition.UNAVAILABLE,
             verifier_success=False,
             diagnostics=(
@@ -128,7 +243,7 @@ def audit_semantic_contract(document: object) -> SemanticAudit:
             SemanticDiagnostic(
                 str(getattr(item, "code", "SEMANTIC_VERIFIER_DIAGNOSTIC")),
                 str(getattr(item, "message", "Canonical verifier rejected the record.")),
-                tuple(getattr(item, "path", ()) or ()),
+                ("record",) + tuple(getattr(item, "path", ()) or ()),
             )
             for item in tuple(getattr(validation, "diagnostics", ()) or ())
         )
@@ -139,39 +254,115 @@ def audit_semantic_contract(document: object) -> SemanticAudit:
                     "Canonical FAR semantic verifier rejected the record without diagnostics.",
                 ),
             )
-        return _result(
-            document,
+        return _binding_result(
+            binding,
+            record,
             disposition=SemanticDisposition.INVALID,
             verifier_success=False,
             diagnostics=diagnostics,
             artifacts=bundle.artifacts,
         )
 
-    report = document.get("report")
+    report = record.get("report")
+    evidence = report.get("evidence") if isinstance(report, dict) else None
     outcome = report.get("outcome") if isinstance(report, dict) else None
-    if outcome == "PROVED":
-        disposition = SemanticDisposition.PRESERVES
-    elif outcome == "REFUTED":
-        disposition = SemanticDisposition.MATERIAL_LOSS
-    elif outcome == "Unknown":
-        disposition = SemanticDisposition.UNKNOWN
-    else:
-        return _result(
-            document,
+    evidence_kind = evidence.get("kind") if isinstance(evidence, dict) else None
+
+    if purpose == "analysis_only":
+        return _binding_result(
+            binding,
+            record,
+            disposition=SemanticDisposition.VERIFIED_ANALYSIS,
+            verifier_success=True,
+            diagnostics=(),
+            artifacts=bundle.artifacts,
+        )
+
+    if purpose == "exact_sufficiency":
+        if outcome == "PROVED" and evidence_kind == "factorization":
+            disposition = SemanticDisposition.SATISFIES
+        elif outcome == "REFUTED" and evidence_kind == "collision":
+            disposition = SemanticDisposition.MATERIAL_LOSS
+        elif outcome == "Unknown" and evidence_kind == "unknown":
+            disposition = SemanticDisposition.UNKNOWN
+        else:
+            return _binding_result(
+                binding,
+                record,
+                disposition=SemanticDisposition.INVALID,
+                verifier_success=True,
+                diagnostics=(
+                    SemanticDiagnostic(
+                        "SEMANTIC_PURPOSE_EVIDENCE_MISMATCH",
+                        "exact_sufficiency accepts only PROVED factorization, REFUTED collision, "
+                        "or typed Unknown evidence; a quotient proof is analysis, not a proof that "
+                        "the package representation is sufficient.",
+                        ("record", "report", "evidence", "kind"),
+                    ),
+                ),
+                artifacts=bundle.artifacts,
+            )
+        return _binding_result(
+            binding,
+            record,
+            disposition=disposition,
+            verifier_success=True,
+            diagnostics=(),
+            artifacts=bundle.artifacts,
+        )
+
+    # approximation_candidate: canonical v2.1 validation establishes the claimed
+    # frontier. The decision binding additionally names the candidate actually
+    # selected by this decision. Only a selected candidate in the verified
+    # feasible set clears the semantic gate.
+    if outcome != "PROVED" or evidence_kind != "approximation_cost":
+        return _binding_result(
+            binding,
+            record,
             disposition=SemanticDisposition.INVALID,
             verifier_success=True,
             diagnostics=(
                 SemanticDiagnostic(
-                    "SEMANTIC_CONTRACT_OUTCOME_INVALID",
-                    f"Canonical verifier accepted a record with unsupported outcome {outcome!r}.",
-                    ("report", "outcome"),
+                    "SEMANTIC_PURPOSE_EVIDENCE_MISMATCH",
+                    "approximation_candidate requires a PROVED approximation_cost record.",
+                    ("record", "report", "evidence", "kind"),
                 ),
             ),
             artifacts=bundle.artifacts,
         )
 
-    return _result(
-        document,
+    candidates = evidence.get("candidates") if isinstance(evidence, dict) else None
+    candidate_ids = {
+        item.get("id")
+        for item in candidates
+        if isinstance(candidates, list) and isinstance(item, dict) and isinstance(item.get("id"), str)
+    } if isinstance(candidates, list) else set()
+    if selected_candidate_id not in candidate_ids:
+        return _binding_result(
+            binding,
+            record,
+            disposition=SemanticDisposition.INVALID,
+            verifier_success=True,
+            diagnostics=(
+                SemanticDiagnostic(
+                    "SEMANTIC_SELECTED_CANDIDATE_UNKNOWN",
+                    f"selected_candidate_id {selected_candidate_id!r} is not a declared candidate.",
+                    ("selected_candidate_id",),
+                ),
+            ),
+            artifacts=bundle.artifacts,
+        )
+
+    feasible = evidence.get("claimed_feasible") if isinstance(evidence, dict) else None
+    feasible_ids = {item for item in feasible if isinstance(item, str)} if isinstance(feasible, list) else set()
+    disposition = (
+        SemanticDisposition.SATISFIES
+        if selected_candidate_id in feasible_ids
+        else SemanticDisposition.OUTSIDE_TOLERANCE
+    )
+    return _binding_result(
+        binding,
+        record,
         disposition=disposition,
         verifier_success=True,
         diagnostics=(),
@@ -179,21 +370,25 @@ def audit_semantic_contract(document: object) -> SemanticAudit:
     )
 
 
-def _result(
-    document: object,
+def _binding_result(
+    binding: dict[str, Any],
+    record: dict[str, Any],
     *,
     disposition: SemanticDisposition,
     verifier_success: bool,
     diagnostics: tuple[SemanticDiagnostic, ...],
     artifacts: tuple[SemanticArtifact, ...] = (),
 ) -> SemanticAudit:
-    payload = document if isinstance(document, dict) else {}
-    contract = payload.get("contract")
-    report = payload.get("report")
+    contract = record.get("contract")
+    report = record.get("report")
     return SemanticAudit(
-        document_id=_optional_text(payload.get("id")),
+        binding_id=_optional_text(binding.get("binding_id")),
+        target_node_id=_optional_text(binding.get("target_node_id")),
+        purpose=_optional_text(binding.get("purpose")),
+        selected_candidate_id=_optional_text(binding.get("selected_candidate_id")),
+        document_id=_optional_text(record.get("id")),
         contract_id=_optional_text(contract.get("id")) if isinstance(contract, dict) else None,
-        format_version=_optional_text(payload.get("format_version")),
+        format_version=_optional_text(record.get("format_version")),
         outcome=_optional_text(report.get("outcome")) if isinstance(report, dict) else None,
         disposition=disposition,
         verifier_success=verifier_success,
@@ -264,7 +459,6 @@ def _candidate_repo_roots() -> tuple[Path, ...]:
         candidates.append(Path(env_root).expanduser().resolve())
 
     source = Path(__file__).resolve()
-    # In a source checkout: <repo>/commercial/far-decision-integrity/src/package/file.py
     if len(source.parents) > 4:
         candidates.append(source.parents[4])
 
