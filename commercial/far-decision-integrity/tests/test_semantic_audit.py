@@ -15,7 +15,7 @@ from far_decision_integrity.adjudicate import adjudicate
 from far_decision_integrity.cli import main
 from far_decision_integrity.model import (
     LEGACY_SCHEMA_VERSION,
-    SCHEMA_VERSION,
+    SEMANTIC_SCHEMA_VERSION,
     DecisionPackage,
     IntegrityStatus,
     PackageValidationError,
@@ -29,7 +29,7 @@ from far_decision_integrity.semantic_audit import (
 
 def payload() -> dict:
     return {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": SEMANTIC_SCHEMA_VERSION,
         "decision_id": "semantic-case-001",
         "decision_type": "external_agent_action",
         "policy_version": "policy/1",
