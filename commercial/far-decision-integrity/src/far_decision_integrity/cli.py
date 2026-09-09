@@ -20,9 +20,17 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="far-decision")
     parser.add_argument("package")
     parser.add_argument("--output")
+    parser.add_argument(
+        "--require-semantic-contract",
+        action="store_true",
+        help="fail closed as unverifiable when the package supplies no FAR IR semantic contract",
+    )
     args = parser.parse_args(argv)
     try:
-        result = adjudicate(load_package(args.package))
+        result = adjudicate(
+            load_package(args.package),
+            require_semantic_contract=args.require_semantic_contract,
+        )
     except PackageValidationError as exc:
         print(json.dumps({"status": "invalid-package", "error": str(exc)}, sort_keys=True))
         return 40
