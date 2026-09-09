@@ -56,6 +56,25 @@ def fixture(relative: str) -> dict:
     return json.loads((REPO_ROOT / relative).read_text(encoding="utf-8"))
 
 
+def binding(
+    record: dict,
+    *,
+    purpose: str = "exact_sufficiency",
+    selected_candidate_id: str | None = None,
+    target_node_id: str = "conclusion",
+    binding_id: str = "semantic.binding.1",
+) -> dict:
+    result = {
+        "binding_id": binding_id,
+        "target_node_id": target_node_id,
+        "purpose": purpose,
+        "record": record,
+    }
+    if selected_candidate_id is not None:
+        result["selected_candidate_id"] = selected_candidate_id
+    return result
+
+
 class TestSemanticAudit(unittest.TestCase):
     def test_legacy_package_remains_readable(self):
         data = payload()
@@ -70,19 +89,31 @@ class TestSemanticAudit(unittest.TestCase):
         data = payload()
         data["schema_version"] = LEGACY_SCHEMA_VERSION
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/valid-factorization.json")
+            binding(fixture("conformance/far-ir-2.0/valid-factorization.json"))
         ]
         with self.assertRaisesRegex(PackageValidationError, "predates semantic_contracts"):
             DecisionPackage.from_dict(data)
 
-    def test_factorization_clears_semantic_gate_and_binds_verifier(self):
+    def test_binding_must_target_declared_decision_node(self):
         data = payload()
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/valid-factorization.json")
+            binding(
+                fixture("conformance/far-ir-2.0/valid-factorization.json"),
+                target_node_id="missing",
+            )
+        ]
+        with self.assertRaisesRegex(PackageValidationError, "targets undeclared node"):
+            DecisionPackage.from_dict(data)
+
+    def test_factorization_clears_exact_semantic_gate_and_binds_verifier(self):
+        data = payload()
+        data["semantic_contracts"] = [
+            binding(fixture("conformance/far-ir-2.0/valid-factorization.json"))
         ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
         self.assertEqual(result.status, IntegrityStatus.JUSTIFIED)
-        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.PRESERVES)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.SATISFIES)
+        self.assertEqual(result.semantic_audits[0].target_node_id, "conclusion")
         roles = {artifact.role for artifact in result.semantic_audits[0].verifier_artifacts}
         self.assertEqual(roles, {"semantic-verifier", "semantic-schema"})
         for artifact in result.semantic_audits[0].verifier_artifacts:
@@ -90,16 +121,37 @@ class TestSemanticAudit(unittest.TestCase):
 
     def test_valid_collision_forces_unsupported(self):
         data = payload()
-        data["semantic_contracts"] = [fixture("conformance/far-ir-2.0/valid-collision.json")]
+        data["semantic_contracts"] = [
+            binding(fixture("conformance/far-ir-2.0/valid-collision.json"))
+        ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
         self.assertEqual(result.status, IntegrityStatus.UNSUPPORTED)
         self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.MATERIAL_LOSS)
         self.assertIn("semantic-material-loss", {finding.rule_id for finding in result.findings})
 
+    def test_quotient_is_verified_analysis_but_not_exact_sufficiency(self):
+        quotient = fixture("conformance/far-ir-2.0/valid-quotient.json")
+        data = payload()
+        data["semantic_contracts"] = [binding(quotient, purpose="analysis_only")]
+        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.VERIFIED_ANALYSIS)
+        self.assertEqual(result.status, IntegrityStatus.UNVERIFIABLE)
+        self.assertIn("semantic-contract-required", {finding.rule_id for finding in result.findings})
+
+        data = payload()
+        data["semantic_contracts"] = [binding(quotient, purpose="exact_sufficiency")]
+        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.INVALID)
+        self.assertEqual(result.status, IntegrityStatus.UNVERIFIABLE)
+        self.assertIn(
+            "SEMANTIC_PURPOSE_EVIDENCE_MISMATCH",
+            {item.code for item in result.semantic_audits[0].diagnostics},
+        )
+
     def test_invalid_factorization_fails_closed_and_preserves_diagnostic(self):
         data = payload()
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/invalid-factorization.json")
+            binding(fixture("conformance/far-ir-2.0/invalid-factorization.json"))
         ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
         self.assertEqual(result.status, IntegrityStatus.UNVERIFIABLE)
@@ -112,22 +164,61 @@ class TestSemanticAudit(unittest.TestCase):
             {item["code"] for item in encoded["semantic_audits"][0]["diagnostics"]},
         )
 
-    def test_v21_approximation_frontier_uses_shared_exact_verifier(self):
+    def test_v21_selected_feasible_candidate_clears_gate(self):
         data = payload()
-        data["semantic_contracts"] = [fixture("conformance/far-ir-2.1/valid-frontier.json")]
+        data["semantic_contracts"] = [
+            binding(
+                fixture("conformance/far-ir-2.1/valid-frontier.json"),
+                purpose="approximation_candidate",
+                selected_candidate_id="randomized",
+            )
+        ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
         self.assertEqual(result.status, IntegrityStatus.JUSTIFIED)
-        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.PRESERVES)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.SATISFIES)
         roles = {artifact.role for artifact in result.semantic_audits[0].verifier_artifacts}
         self.assertEqual(
             roles,
             {"semantic-verifier", "semantic-schema", "shared-exact-verifier"},
         )
 
+    def test_v21_selected_infeasible_candidate_forces_unsupported(self):
+        data = payload()
+        data["semantic_contracts"] = [
+            binding(
+                fixture("conformance/far-ir-2.1/valid-zero-boundary.json"),
+                purpose="approximation_candidate",
+                selected_candidate_id="randomized",
+            )
+        ]
+        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.OUTSIDE_TOLERANCE)
+        self.assertEqual(result.status, IntegrityStatus.UNSUPPORTED)
+        self.assertIn("semantic-outside-tolerance", {finding.rule_id for finding in result.findings})
+
+    def test_v21_unknown_selected_candidate_is_unverifiable(self):
+        data = payload()
+        data["semantic_contracts"] = [
+            binding(
+                fixture("conformance/far-ir-2.1/valid-frontier.json"),
+                purpose="approximation_candidate",
+                selected_candidate_id="not-a-candidate",
+            )
+        ]
+        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        self.assertEqual(result.status, IntegrityStatus.UNVERIFIABLE)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.INVALID)
+        self.assertIn(
+            "SEMANTIC_SELECTED_CANDIDATE_UNKNOWN",
+            {item.code for item in result.semantic_audits[0].diagnostics},
+        )
+
     def test_unsupported_ir_version_is_unverifiable(self):
         data = payload()
-        data["semantic_contracts"] = [{"format_version": "far-ir/999"}]
-        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        data["semantic_contracts"] = [
+            binding({"format_version": "far-ir/999"}, purpose="analysis_only")
+        ]
+        result = adjudicate(DecisionPackage.from_dict(data))
         self.assertEqual(result.status, IntegrityStatus.UNVERIFIABLE)
         self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.INVALID)
 
@@ -139,7 +230,7 @@ class TestSemanticAudit(unittest.TestCase):
     def test_canonical_verifier_unavailable_fails_closed(self):
         data = payload()
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/valid-factorization.json")
+            binding(fixture("conformance/far-ir-2.0/valid-factorization.json"))
         ]
         with patch(
             "far_decision_integrity.semantic_audit._load_validator",
@@ -153,17 +244,23 @@ class TestSemanticAudit(unittest.TestCase):
         data = payload()
         data["nodes"][0]["attributes"] = {"contradicted": True}
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/valid-factorization.json")
+            binding(fixture("conformance/far-ir-2.0/valid-factorization.json"))
         ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
-        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.PRESERVES)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.SATISFIES)
         self.assertEqual(result.status, IntegrityStatus.UNSUPPORTED)
 
-    def test_any_material_loss_dominates_a_preserving_contract(self):
+    def test_any_material_loss_dominates_a_satisfying_contract(self):
         data = payload()
         data["semantic_contracts"] = [
-            fixture("conformance/far-ir-2.0/valid-factorization.json"),
-            fixture("conformance/far-ir-2.0/valid-collision.json"),
+            binding(
+                fixture("conformance/far-ir-2.0/valid-factorization.json"),
+                binding_id="semantic.binding.good",
+            ),
+            binding(
+                fixture("conformance/far-ir-2.0/valid-collision.json"),
+                binding_id="semantic.binding.bad",
+            ),
         ]
         result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
         self.assertEqual(result.status, IntegrityStatus.UNSUPPORTED)
