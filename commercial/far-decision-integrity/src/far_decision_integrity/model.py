@@ -5,6 +5,9 @@ from enum import Enum
 from typing import Any
 
 SCHEMA_VERSION = "far-decision-package/0.1"
+LEGACY_SCHEMA_VERSION = SCHEMA_VERSION
+SEMANTIC_SCHEMA_VERSION = "far-decision-package/0.2"
+SUPPORTED_SCHEMA_VERSIONS = (SCHEMA_VERSION, SEMANTIC_SCHEMA_VERSION)
 
 
 class IntegrityStatus(str, Enum):
@@ -63,6 +66,7 @@ class DecisionPackage:
     authorization_requirements: tuple[str, ...]
     unknowns: tuple[str, ...]
     trace_completeness: float
+    semantic_contracts: tuple[dict[str, Any], ...] = ()
     metadata: dict[str, Any] = field(default_factory=dict)
 
     @classmethod
@@ -70,9 +74,19 @@ class DecisionPackage:
         if not isinstance(data, dict):
             raise PackageValidationError("decision package must be a JSON object")
         schema_version = _required_text(data, "schema_version")
-        if schema_version != SCHEMA_VERSION:
+        if schema_version not in SUPPORTED_SCHEMA_VERSIONS:
             raise PackageValidationError(
-                f"unsupported schema_version {schema_version!r}; expected {SCHEMA_VERSION!r}"
+                f"unsupported schema_version {schema_version!r}; expected one of "
+                f"{SUPPORTED_SCHEMA_VERSIONS!r}"
+            )
+        semantic_contracts = tuple(
+            _mapping(item, "semantic_contracts[]")
+            for item in _list(data.get("semantic_contracts", []), "semantic_contracts")
+        )
+        if schema_version == SCHEMA_VERSION and semantic_contracts:
+            raise PackageValidationError(
+                f"{SCHEMA_VERSION} predates semantic_contracts; use {SEMANTIC_SCHEMA_VERSION} "
+                "instead of reinterpreting the historical schema"
             )
         package = cls(
             schema_version=schema_version,
@@ -96,6 +110,7 @@ class DecisionPackage:
             trace_completeness=_bounded_number(
                 data.get("trace_completeness"), "trace_completeness", 0.0, 1.0
             ),
+            semantic_contracts=semantic_contracts,
             metadata=_mapping(data.get("metadata", {}), "metadata"),
         )
         package.validate_graph()
@@ -129,6 +144,32 @@ class DecisionPackage:
             raise PackageValidationError(
                 "authorization_requirements reference undeclared nodes: "
                 f"{missing_requirements}"
+            )
+
+        binding_ids: list[str] = []
+        for index, binding in enumerate(self.semantic_contracts):
+            binding_id = binding.get("binding_id")
+            if not isinstance(binding_id, str) or not binding_id.strip():
+                raise PackageValidationError(
+                    f"semantic_contracts[{index}].binding_id must be a non-empty string"
+                )
+            binding_ids.append(binding_id)
+            target_node_id = binding.get("target_node_id")
+            if not isinstance(target_node_id, str) or not target_node_id.strip():
+                raise PackageValidationError(
+                    f"semantic_contracts[{index}].target_node_id must be a non-empty string"
+                )
+            if target_node_id not in known:
+                raise PackageValidationError(
+                    f"semantic contract binding {binding_id!r} targets undeclared node "
+                    f"{target_node_id!r}"
+                )
+        duplicate_bindings = sorted(
+            {binding_id for binding_id in binding_ids if binding_ids.count(binding_id) > 1}
+        )
+        if duplicate_bindings:
+            raise PackageValidationError(
+                f"duplicate semantic binding_id values: {duplicate_bindings}"
             )
 
 
