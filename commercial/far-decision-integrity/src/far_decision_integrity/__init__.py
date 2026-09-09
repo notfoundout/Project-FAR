@@ -5,6 +5,7 @@ from .io import load_package
 from .model import (
     LEGACY_SCHEMA_VERSION,
     SCHEMA_VERSION,
+    SEMANTIC_SCHEMA_VERSION,
     SUPPORTED_SCHEMA_VERSIONS,
     DecisionNode,
     DecisionPackage,
@@ -32,6 +33,7 @@ __all__ = [
     "LEGACY_SCHEMA_VERSION",
     "PackageValidationError",
     "SCHEMA_VERSION",
+    "SEMANTIC_SCHEMA_VERSION",
     "SUPPORTED_SCHEMA_VERSIONS",
     "SemanticArtifact",
     "SemanticAudit",
@@ -45,4 +47,4 @@ __all__ = [
     "write_report",
 ]
 
-__version__ = "1.1.0"
+__version__ = "1.0.0"
