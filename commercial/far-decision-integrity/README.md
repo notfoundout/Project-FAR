@@ -11,17 +11,17 @@ This package validates explicit decision packages and deterministically classifi
 
 ## Semantic integrity
 
-A 0.2 package may embed one or more governed FAR IR records in `semantic_contracts`. The commercial package does **not** reimplement FAR IR semantics. It locates the canonical Project FAR repository, invokes the governed `far-ir/2.0` or `far-ir/2.1` verifier, and records SHA-256 identities for the exact verifier and schema used.
+A 0.2 package may bind governed FAR IR records to declared decision nodes. Each entry in `semantic_contracts` names a `binding_id`, `target_node_id`, purpose, and FAR IR `record`. This binding layer is deliberate: an unrelated valid FAR IR record cannot silently authorize a decision.
 
-The adjudication mapping is fail-closed:
+The commercial package does **not** reimplement FAR IR semantics. It locates the canonical Project FAR repository, invokes the governed `far-ir/2.0` or `far-ir/2.1` verifier, and records SHA-256 identities for the exact verifier and schema used.
 
-- a valid `PROVED` FAR IR record clears only its semantic gate;
-- a valid `REFUTED` record is `semantic-material-loss` and forces `unsupported`;
-- a valid `Unknown` record is not evidence of preservation and yields `unverifiable` unless a stronger existing status applies;
-- malformed or semantically invalid FAR IR evidence yields `unverifiable`;
-- an unavailable or crashing canonical verifier yields `unverifiable`, never success.
+Supported purposes are:
 
-A semantic `PROVED` result cannot override contradicted evidence, missing authorization, material alternatives, declared unknowns, or incomplete traces.
+- `exact_sufficiency`: requires `far-ir/2.0`; only a valid `PROVED` factorization clears the gate, a valid `REFUTED` collision forces `unsupported`, and a quotient proof is treated as analysis rather than a proof that the package representation is sufficient;
+- `approximation_candidate`: requires `far-ir/2.1` plus `selected_candidate_id`; a valid approximation/cost result clears the gate only when the selected candidate is in the verifier-confirmed feasible set, while an infeasible selected candidate forces `unsupported`;
+- `analysis_only`: verifies quotient or other FAR IR analysis and reports its evidence, but does not satisfy `--require-semantic-contract` by itself.
+
+Malformed bindings, invalid FAR IR evidence, typed `Unknown`, or an unavailable/crashing canonical verifier fail closed as `unverifiable` unless a stronger existing status applies. A satisfying semantic result cannot override contradicted evidence, missing authorization, material alternatives, declared unknowns, or incomplete traces.
 
 ## Use
 
@@ -32,30 +32,35 @@ python -m pip install ./commercial/far-decision-integrity
 far-decision package.json --require-semantic-contract --output report.json
 ```
 
-If the package is installed outside the checkout, set `FAR_REPO_ROOT` to the canonical Project FAR repository root. `--require-semantic-contract` makes absence of a semantic contract fail closed as `unverifiable`; without the flag, legacy and non-semantic workflows preserve their existing behavior.
+If the package is installed outside the checkout, set `FAR_REPO_ROOT` to the canonical Project FAR repository root. `--require-semantic-contract` requires at least one decision-gating `exact_sufficiency` or `approximation_candidate` binding; without the flag, legacy and non-semantic workflows preserve their existing behavior.
 
-A 0.2 package extends the previous shape with:
+A 0.2 package extends the previous shape with a binding such as:
 
 ```json
 {
   "schema_version": "far-decision-package/0.2",
   "semantic_contracts": [
     {
-      "format_version": "far-ir/2.0",
-      "id": "example.semantic.audit",
-      "contract": {},
-      "report": {},
-      "provenance": {},
-      "freeze": {}
+      "binding_id": "decision.semantic.1",
+      "target_node_id": "conclusion",
+      "purpose": "exact_sufficiency",
+      "record": {
+        "format_version": "far-ir/2.0",
+        "id": "example.semantic.audit",
+        "contract": {},
+        "report": {},
+        "provenance": {},
+        "freeze": {}
+      }
     }
   ]
 }
 ```
 
-The embedded FAR IR object must satisfy its own canonical schema and semantic verifier; the abbreviated object above only shows placement.
+The abbreviated FAR IR object above only shows placement; the embedded record must satisfy its own canonical schema and semantic verifier.
 
 ## Claim boundary
 
 This package evaluates disclosed package structure, dependencies, contradictions, alternatives, unknowns, declared trace completeness, and the finite explicit semantics actually encoded in supplied FAR IR records. It does not infer hidden reasoning, prove external factual truth, establish that a domain mapping is correct or complete, certify safety, certify legal compliance, establish empirical utility, or establish novelty.
 
-A `justified` decision means that no failure is present under the disclosed package rules and any required semantic contracts passed their recorded FAR verifier. It is not a universal truth or safety certificate.
+A `justified` decision means that no failure is present under the disclosed package rules and every required semantic binding cleared its explicitly declared gate. It is not a universal truth or safety certificate.
