@@ -4,9 +4,10 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
 
-LEGACY_SCHEMA_VERSION = "far-decision-package/0.1"
-SCHEMA_VERSION = "far-decision-package/0.2"
-SUPPORTED_SCHEMA_VERSIONS = (LEGACY_SCHEMA_VERSION, SCHEMA_VERSION)
+SCHEMA_VERSION = "far-decision-package/0.1"
+LEGACY_SCHEMA_VERSION = SCHEMA_VERSION
+SEMANTIC_SCHEMA_VERSION = "far-decision-package/0.2"
+SUPPORTED_SCHEMA_VERSIONS = (SCHEMA_VERSION, SEMANTIC_SCHEMA_VERSION)
 
 
 class IntegrityStatus(str, Enum):
@@ -82,9 +83,9 @@ class DecisionPackage:
             _mapping(item, "semantic_contracts[]")
             for item in _list(data.get("semantic_contracts", []), "semantic_contracts")
         )
-        if schema_version == LEGACY_SCHEMA_VERSION and semantic_contracts:
+        if schema_version == SCHEMA_VERSION and semantic_contracts:
             raise PackageValidationError(
-                f"{LEGACY_SCHEMA_VERSION} predates semantic_contracts; use {SCHEMA_VERSION} "
+                f"{SCHEMA_VERSION} predates semantic_contracts; use {SEMANTIC_SCHEMA_VERSION} "
                 "instead of reinterpreting the historical schema"
             )
         package = cls(
