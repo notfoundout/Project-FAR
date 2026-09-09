@@ -89,25 +89,41 @@ def adjudicate(
         )
 
     semantic_audits = tuple(audit_semantic_contract(item) for item in package.semantic_contracts)
-    if require_semantic_contract and not semantic_audits:
+    gating_audits = tuple(audit for audit in semantic_audits if audit.is_gating)
+    if require_semantic_contract and not gating_audits:
         findings.append(
             Finding(
                 "semantic-contract-required",
                 "warning",
-                "A FAR IR semantic contract is required for this adjudication but none was supplied.",
+                "A decision-gating FAR IR semantic contract is required but none was supplied; "
+                "analysis_only records do not satisfy this requirement.",
+                package.decision_root,
             )
         )
 
     for audit in semantic_audits:
-        identity = audit.contract_id or audit.document_id or "<unnamed>"
+        identity = audit.binding_id or audit.contract_id or audit.document_id or "<unnamed>"
+        target = audit.target_node_id
         if audit.disposition is SemanticDisposition.MATERIAL_LOSS:
             findings.append(
                 Finding(
                     "semantic-material-loss",
                     "error",
-                    f"Semantic contract {identity!r} is a valid REFUTED FAR IR record; "
-                    "the declared representation loses behavior required by its frozen contract.",
-                    audit.contract_id,
+                    f"Semantic binding {identity!r} is a valid REFUTED collision for target "
+                    f"{target!r}; the declared representation loses behavior required by its "
+                    "frozen exact contract.",
+                    target,
+                )
+            )
+        elif audit.disposition is SemanticDisposition.OUTSIDE_TOLERANCE:
+            findings.append(
+                Finding(
+                    "semantic-outside-tolerance",
+                    "error",
+                    f"Semantic binding {identity!r} selected candidate "
+                    f"{audit.selected_candidate_id!r}, which is outside the verified feasible set "
+                    "for the frozen approximation/cost contract.",
+                    target,
                 )
             )
         elif audit.disposition is SemanticDisposition.UNKNOWN:
@@ -115,9 +131,9 @@ def adjudicate(
                 Finding(
                     "semantic-contract-unknown",
                     "warning",
-                    f"Semantic contract {identity!r} has valid FAR IR outcome Unknown; "
-                    "semantic preservation is not established.",
-                    audit.contract_id,
+                    f"Semantic binding {identity!r} has valid typed Unknown evidence; "
+                    "semantic sufficiency is not established.",
+                    target,
                 )
             )
         elif audit.disposition is SemanticDisposition.INVALID:
@@ -126,9 +142,9 @@ def adjudicate(
                 Finding(
                     "semantic-contract-invalid",
                     "warning",
-                    f"Semantic contract {identity!r} failed canonical FAR IR validation "
-                    f"({codes}); it cannot support the decision.",
-                    audit.contract_id,
+                    f"Semantic binding {identity!r} failed binding or canonical FAR IR validation "
+                    f"({codes}); it cannot support the target decision node.",
+                    target,
                 )
             )
         elif audit.disposition is SemanticDisposition.UNAVAILABLE:
@@ -137,9 +153,9 @@ def adjudicate(
                 Finding(
                     "semantic-verifier-unavailable",
                     "warning",
-                    f"Semantic contract {identity!r} could not be verified by canonical FAR IR machinery: "
+                    f"Semantic binding {identity!r} could not be checked by canonical FAR IR machinery: "
                     f"{detail}",
-                    audit.contract_id,
+                    target,
                 )
             )
 
@@ -149,6 +165,7 @@ def adjudicate(
         "required-node-invalid",
         "evidence-contradicted",
         "semantic-material-loss",
+        "semantic-outside-tolerance",
     }
     unverifiable = {
         "declared-unknowns",
