@@ -21,6 +21,10 @@ def report_payload(result: Adjudication) -> dict:
         ],
         "semantic_audits": [
             {
+                "binding_id": audit.binding_id,
+                "target_node_id": audit.target_node_id,
+                "purpose": audit.purpose,
+                "selected_candidate_id": audit.selected_candidate_id,
                 "document_id": audit.document_id,
                 "contract_id": audit.contract_id,
                 "format_version": audit.format_version,
