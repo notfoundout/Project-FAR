@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import hashlib
-import importlib
+import importlib.util
 import os
 import sys
 from dataclasses import dataclass
@@ -75,15 +75,7 @@ class SemanticVerifierUnavailable(RuntimeError):
 
 
 def audit_semantic_contract(binding: object) -> SemanticAudit:
-    """Audit one decision-bound semantic contract with canonical FAR IR machinery.
-
-    A binding is intentionally distinct from the FAR IR record itself. It states
-    which decision node the record bears on and how the record is being used.
-    This prevents an unrelated valid FAR IR fixture from silently authorizing a
-    decision and prevents a generic v2.1 PROVED analysis from being mistaken for
-    exact preservation.
-    """
-
+    """Audit one decision-bound semantic contract with canonical FAR IR machinery."""
     if not isinstance(binding, dict):
         return _binding_result(
             {},
@@ -104,9 +96,9 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
     selected_candidate_id = binding.get("selected_candidate_id")
     record = binding.get("record")
 
-    binding_errors: list[SemanticDiagnostic] = []
+    errors: list[SemanticDiagnostic] = []
     if not isinstance(binding_id, str) or not binding_id.strip():
-        binding_errors.append(
+        errors.append(
             SemanticDiagnostic(
                 "SEMANTIC_BINDING_ID_INVALID",
                 "binding_id must be a non-empty string.",
@@ -114,7 +106,7 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
             )
         )
     if not isinstance(target_node_id, str) or not target_node_id.strip():
-        binding_errors.append(
+        errors.append(
             SemanticDiagnostic(
                 "SEMANTIC_BINDING_TARGET_INVALID",
                 "target_node_id must be a non-empty string.",
@@ -122,7 +114,7 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
             )
         )
     if not isinstance(purpose, str) or purpose not in _SUPPORTED_PURPOSES:
-        binding_errors.append(
+        errors.append(
             SemanticDiagnostic(
                 "SEMANTIC_BINDING_PURPOSE_UNSUPPORTED",
                 f"purpose must be one of {sorted(_SUPPORTED_PURPOSES)}.",
@@ -131,7 +123,7 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
         )
     if purpose == "approximation_candidate":
         if not isinstance(selected_candidate_id, str) or not selected_candidate_id.strip():
-            binding_errors.append(
+            errors.append(
                 SemanticDiagnostic(
                     "SEMANTIC_SELECTED_CANDIDATE_REQUIRED",
                     "approximation_candidate bindings require selected_candidate_id.",
@@ -139,7 +131,7 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
                 )
             )
     elif selected_candidate_id is not None:
-        binding_errors.append(
+        errors.append(
             SemanticDiagnostic(
                 "SEMANTIC_SELECTED_CANDIDATE_NOT_ALLOWED",
                 "selected_candidate_id is only valid for approximation_candidate bindings.",
@@ -147,21 +139,20 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
             )
         )
     if not isinstance(record, dict):
-        binding_errors.append(
+        errors.append(
             SemanticDiagnostic(
                 "SEMANTIC_RECORD_NOT_OBJECT",
                 "record must contain one FAR IR JSON object.",
                 ("record",),
             )
         )
-
-    if binding_errors:
+    if errors:
         return _binding_result(
             binding,
             record if isinstance(record, dict) else {},
             disposition=SemanticDisposition.INVALID,
             verifier_success=False,
-            diagnostics=tuple(binding_errors),
+            diagnostics=tuple(errors),
         )
 
     format_version = record.get("format_version")
@@ -223,7 +214,7 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
 
     try:
         validation = bundle.validate(record)
-    except Exception as exc:  # fail closed around the governed verifier boundary
+    except Exception as exc:
         return _binding_result(
             binding,
             record,
@@ -311,10 +302,6 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
             artifacts=bundle.artifacts,
         )
 
-    # approximation_candidate: canonical v2.1 validation establishes the claimed
-    # frontier. The decision binding additionally names the candidate actually
-    # selected by this decision. Only a selected candidate in the verified
-    # feasible set clears the semantic gate.
     if outcome != "PROVED" or evidence_kind != "approximation_cost":
         return _binding_result(
             binding,
@@ -332,11 +319,15 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
         )
 
     candidates = evidence.get("candidates") if isinstance(evidence, dict) else None
-    candidate_ids = {
-        item.get("id")
-        for item in candidates
-        if isinstance(candidates, list) and isinstance(item, dict) and isinstance(item.get("id"), str)
-    } if isinstance(candidates, list) else set()
+    candidate_ids = (
+        {
+            item.get("id")
+            for item in candidates
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        }
+        if isinstance(candidates, list)
+        else set()
+    )
     if selected_candidate_id not in candidate_ids:
         return _binding_result(
             binding,
@@ -354,7 +345,11 @@ def audit_semantic_contract(binding: object) -> SemanticAudit:
         )
 
     feasible = evidence.get("claimed_feasible") if isinstance(evidence, dict) else None
-    feasible_ids = {item for item in feasible if isinstance(item, str)} if isinstance(feasible, list) else set()
+    feasible_ids = (
+        {item for item in feasible if isinstance(item, str)}
+        if isinstance(feasible, list)
+        else set()
+    )
     disposition = (
         SemanticDisposition.SATISFIES
         if selected_candidate_id in feasible_ids
@@ -399,35 +394,48 @@ def _binding_result(
 
 def _load_validator(format_version: str) -> _ValidatorBundle:
     module_name, schema_rel = _SUPPORTED_FORMATS[format_version]
+    searched: list[Path] = []
     for root in _candidate_repo_roots():
         module_path = root / "mechanization" / "far_mechanization" / f"{module_name}.py"
         schema_path = root / schema_rel
+        searched.append(root)
         if not module_path.is_file() or not schema_path.is_file():
             continue
 
-        root_text = str(root)
-        mechanization_text = str(root / "mechanization")
-        if root_text not in sys.path:
-            sys.path.insert(0, root_text)
-        if mechanization_text not in sys.path:
-            sys.path.insert(0, mechanization_text)
-
-        qualified_name = f"far_mechanization.{module_name}"
-        try:
-            module = importlib.import_module(qualified_name)
-        except Exception as exc:
+        # Load only the governed verifier module. Importing far_mechanization as a
+        # package executes its broad convenience __init__ (including YAML parsing),
+        # which is unrelated to contract verification and made the bridge depend on
+        # optional mechanization dependencies. The contract modules themselves are
+        # intentionally self-contained and depend only on stdlib + jsonschema.
+        unique_name = (
+            f"_far_semantic_{module_name}_"
+            f"{hashlib.sha256(str(module_path.resolve()).encode('utf-8')).hexdigest()[:16]}"
+        )
+        spec = importlib.util.spec_from_file_location(unique_name, module_path)
+        if spec is None or spec.loader is None:
             raise SemanticVerifierUnavailable(
-                f"Found canonical FAR repository at {root} but could not import "
-                f"{qualified_name}: {type(exc).__name__}: {exc}"
+                f"Could not create a loader for canonical FAR verifier {module_path}."
+            )
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[unique_name] = module
+        try:
+            spec.loader.exec_module(module)
+        except Exception as exc:
+            sys.modules.pop(unique_name, None)
+            raise SemanticVerifierUnavailable(
+                f"Found canonical FAR repository at {root} but could not load "
+                f"{module_path}: {type(exc).__name__}: {exc}"
             ) from exc
 
         loaded_path = Path(getattr(module, "__file__", "")).resolve()
         if loaded_path != module_path.resolve():
+            sys.modules.pop(unique_name, None)
             raise SemanticVerifierUnavailable(
                 f"Refusing non-canonical verifier {loaded_path}; expected {module_path.resolve()}."
             )
         validate = getattr(module, "validate_contract", None)
         if not callable(validate):
+            sys.modules.pop(unique_name, None)
             raise SemanticVerifierUnavailable(
                 f"Canonical verifier {module_path} does not export validate_contract()."
             )
@@ -445,7 +453,7 @@ def _load_validator(format_version: str) -> _ValidatorBundle:
             artifacts.append(_artifact("shared-exact-verifier", shared, root))
         return _ValidatorBundle(validate=validate, artifacts=tuple(artifacts))
 
-    locations = ", ".join(str(path) for path in _candidate_repo_roots())
+    locations = ", ".join(str(path) for path in searched)
     raise SemanticVerifierUnavailable(
         "Canonical Project FAR semantic verifier was not found. Run from a Project FAR checkout "
         "or set FAR_REPO_ROOT to its repository root. Searched: " + locations
