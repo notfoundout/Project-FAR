@@ -7,7 +7,7 @@ from .adjudicate import Adjudication
 
 
 def report_payload(result: Adjudication) -> dict:
-    return {
+    payload = {
         "decision_id": result.decision_id,
         "status": result.status.value,
         "findings": [
@@ -19,7 +19,9 @@ def report_payload(result: Adjudication) -> dict:
             }
             for finding in result.findings
         ],
-        "semantic_audits": [
+    }
+    if result.semantic_audits:
+        payload["semantic_audits"] = [
             {
                 "binding_id": audit.binding_id,
                 "target_node_id": audit.target_node_id,
@@ -49,8 +51,8 @@ def report_payload(result: Adjudication) -> dict:
                 ],
             }
             for audit in result.semantic_audits
-        ],
-    }
+        ]
+    return payload
 
 
 def write_report(result: Adjudication, output: str | Path) -> Path:
