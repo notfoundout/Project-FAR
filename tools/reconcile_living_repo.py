@@ -180,18 +180,25 @@ def rq_inventory(registry: dict[str, Any]) -> list[dict[str, Any]]:
 
 
 def is_direct_core_threat_candidate(record: dict[str, Any]) -> bool:
-    """Route only the governed exact-counterexample lane into the core-claim queue.
+    """Route exact counterexample alerts without silently dropping legacy ambiguity.
 
-    Historical/foundational backfill remains discoverable research and prior-art material, but
-    it does not become a claim-reopening alert merely because its target set includes RQ-009.
+    Fully identified historical/foundational backfill remains research and prior-art material,
+    but does not become a claim-reopening alert merely because its target set includes RQ-009.
+    Older records or synthetic fixtures that lack both target and relation metadata are retained
+    conservatively in the review queue until they can be classified.
     """
     bindings = record.get("discovery", {}).get("query_bindings", [])
-    return any(
-        isinstance(binding, dict)
-        and binding.get("target_id") == CORE_THREAT_TARGET
-        and binding.get("candidate_relation") == CORE_THREAT_RELATION
-        for binding in bindings
-    )
+    for binding in bindings:
+        if not isinstance(binding, dict):
+            continue
+        if (
+            binding.get("target_id") == CORE_THREAT_TARGET
+            and binding.get("candidate_relation") == CORE_THREAT_RELATION
+        ):
+            return True
+        if "target_id" not in binding and "candidate_relation" not in binding:
+            return True
+    return False
 
 
 def candidate_queue(
