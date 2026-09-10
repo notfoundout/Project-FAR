@@ -4,9 +4,9 @@ Status: Audit
 
 This directory reconciles every finding classified `resolved_incorrectly` in the frozen
 merged-PR review classification against main commit
-`5ca27d5c40281771cf74aa29704c2a06868a16ae`. The reconciliation commit itself changes
-only this machinery and its generated audit surfaces; it does not repair residual
-findings.
+`8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad`. Dispositions are tied to that audited
+main state. Repairs proposed alongside the audit are not counted as merged fixes
+until their actual protected promotion is recorded.
 
 `disposition-ledger.json` is authoritative. `RECONCILIATION_REPORT.md` is its complete
 human-readable rendering. `RESIDUAL_REMEDIATION_QUEUE.md` contains only

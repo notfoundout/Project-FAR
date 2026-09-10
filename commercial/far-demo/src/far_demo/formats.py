@@ -5,14 +5,20 @@ import io
 import json
 import re
 import tomllib
+from xml.parsers.expat import ExpatError
+from zipfile import BadZipFile
 from pathlib import Path
 from typing import Any
 
 import xmltodict
 import yaml
 from docx import Document
+from docx.opc.exceptions import PackageNotFoundError
+from lxml.etree import XMLSyntaxError
 from openpyxl import load_workbook
+from openpyxl.utils.exceptions import InvalidFileException
 from pypdf import PdfReader
+from pypdf.errors import PdfReadError
 
 SUPPORTED_EXTENSIONS = {
     ".json",
@@ -33,6 +39,14 @@ ACCEPT_ATTRIBUTE = ",".join(sorted(SUPPORTED_EXTENSIONS))
 
 
 def parse_package_file(filename: str, data: bytes) -> dict[str, Any]:
+    try:
+        return _parse_package_file(filename, data)
+    except (yaml.YAMLError, ExpatError, BadZipFile, PackageNotFoundError,
+            XMLSyntaxError, InvalidFileException, PdfReadError, KeyError) as exc:
+        raise ValueError(f"Invalid {Path(filename).suffix.lower()} package: {exc}") from exc
+
+
+def _parse_package_file(filename: str, data: bytes) -> dict[str, Any]:
     suffix = Path(filename or "").suffix.lower()
     if suffix not in SUPPORTED_EXTENSIONS:
         supported = ", ".join(sorted(SUPPORTED_EXTENSIONS))
@@ -126,7 +140,8 @@ def _normalize_xml(data: dict[str, Any]) -> dict[str, Any]:
         unknowns = unknowns.get("unknown", [])
     payload["unknowns"] = _as_list(unknowns)
 
-    payload["trace_completeness"] = float(payload.get("trace_completeness", 0))
+    if "trace_completeness" in payload:
+        payload["trace_completeness"] = float(payload["trace_completeness"])
     payload.setdefault("metadata", {})
     payload.setdefault("proposed_action", {})
     for node in payload["nodes"]:

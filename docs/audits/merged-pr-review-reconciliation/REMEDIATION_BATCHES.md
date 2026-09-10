@@ -1,7 +1,25 @@
 # Residual remediation batches
 
-Only findings with an explicitly demonstrated shared root-cause mechanism may be batched.
+## `validation:timeout-output-bytes`
 
-No residual finding currently has a verified root-cause batch.
+- Finding: `PR231:PRRT_kwDOTH_vCM6ScNF3`
+- Trace: PR `231`, thread `PRRT_kwDOTH_vCM6ScNF3`, comment `PRRC_kwDOTH_vCM7XtW9E`
+- Risk: `medium`
+- Experiment blocking: `true`
+- Boundary: Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure.
 
-The 400 unaudited findings remain `cannot_verify` and retain distinct source traceability and remediation boundaries until audited.
+## `validation:renamed-python-strength`
+
+- Finding: `PR232:PRRT_kwDOTH_vCM6Sd90_`
+- Trace: PR `232`, thread `PRRT_kwDOTH_vCM6Sd90_`, comment `PRRC_kwDOTH_vCM7Xv5LQ`
+- Risk: `high`
+- Experiment blocking: `true`
+- Boundary: Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure.
+
+## `validation:unobserved-dirfd-read`
+
+- Finding: `PR232:PRRT_kwDOTH_vCM6Sd91A`
+- Trace: PR `232`, thread `PRRT_kwDOTH_vCM6Sd91A`, comment `PRRC_kwDOTH_vCM7Xv5LR`
+- Risk: `medium`
+- Experiment blocking: `true`
+- Boundary: Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure.

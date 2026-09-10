@@ -16,7 +16,7 @@ The project no longer seeks one contract-free universal primitive inventory. It 
 - **Primitive/operator branch:** global counts are not invariant under faithful reification, tagging, splitting, or combination.
 - **Finite-evidence branch:** finite panels establish only panel-relative results unless a separate theorem covers the remainder.
 
-The central theory is Accepted as internal deductive work corrected after a non-independent hostile audit and subsequently confirmed by a separate sealed independent review under its exact scopes. That review found 14 `PROVED`, no adverse or unresolved claim verdicts, and no required correction; it did not establish novelty or priority.
+The central theory is Accepted as internal deductive work corrected after a non-independent hostile audit and subsequently subjected to one sealed **I1 — Claimed Isolation** exact-scope review. That staged Codex review returned 14 `PROVED`, no adverse or unresolved claim verdicts, and no required correction. Under the canonical isolation doctrine it is not I2 verified isolation, not I3 external independent validation, and not independent replication; it establishes neither novelty nor priority.
 
 ## Program architecture after closure
 
@@ -35,7 +35,7 @@ Historical `PROJECT-FAR-CORE-THEORY-1.0` is also preserved byte-for-byte at SHA-
 
 ## Current legitimate work
 
-The [Post-Closure Assurance and Application Program](post-closure-assurance-and-application-program-v1.0.md) completed W1–W6 at their exact governed scopes: independent-review assurance, proof-assistant formalization, the versioned FAR IR contract/checker, six bounded domain contracts, approximation/cost semantics, and the controlled-artifact audit-utility campaign.
+The [Post-Closure Assurance and Application Program](post-closure-assurance-and-application-program-v1.0.md) completed W1–W6 at their exact governed scopes: I1 claimed-isolation review assurance, proof-assistant formalization, the versioned FAR IR contract/checker, six bounded domain contracts, approximation/cost semantics, and the controlled-artifact audit-utility campaign.
 
 The active research successor is [External Falsification and Replication Program v1.0](external-falsification-and-replication-program-v1.0.md). EFR-001 is `PREREGISTERED_NOT_EXECUTED` and addresses evidence classes internally authored work cannot supply: independent deductive replication, clean-room technical replication, held-out external cases, adversarial counterexamples, human disagreement, prospective real-world utility, externally observed cost/burden, and scoped novelty/prior-art testing.
 

@@ -3,15 +3,18 @@
   "source": "docs/audits/merged-pr-review-classification/findings.json",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
   "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
-  "audited_main_commit": "5ca27d5c40281771cf74aa29704c2a06868a16ae",
+  "audited_main_commit": "8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad",
   "decisions": [
     {
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bR",
       "disposition": "fixed_on_current_main",
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
-      "current_lines": [1303, 1340],
+      "current_lines": [
+        1303,
+        1340
+      ],
       "evidence": [
-        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE — NON-PASSING execution audit.",
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE \u2014 NON-PASSING execution audit.",
         "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
         "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures."
       ],
@@ -23,7 +26,10 @@
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
       "disposition": "fixed_on_current_main",
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
-      "current_lines": [1226, 1236],
+      "current_lines": [
+        1226,
+        1236
+      ],
       "evidence": [
         "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
         "research/validation/investigations/VI-002-primitive-minimality.md:1230 records Property as Independent (Provisional), consistent with the audited final summary.",
@@ -32,6 +38,128 @@
       "failure_mechanism": "The stale interim Property row contradicted the final investigation summary; the interim table is no longer a live result surface and the current audited table is synchronized.",
       "smallest_complete_remediation_boundary": "Complete: retain the supersession marker, synchronized final summary, and execution-manifest validator.",
       "root_cause_id": "vi-002:divergent-result-surfaces"
+    },
+    {
+      "finding_id": "PR231:PRRT_kwDOTH_vCM6ScNF3",
+      "disposition": "still_reproducible",
+      "current_path": "far_validation/assured_engine.py",
+      "root_cause_id": "validation:timeout-output-bytes",
+      "blocks_experiment_reconstruction": true,
+      "failure_mechanism": "A timed-out subprocess leaves byte output in CheckResult; JSON serialization raises TypeError. The base-engine repair does not repair the separately implemented assured-engine handler.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
+        "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+      ],
+      "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
+    },
+    {
+      "finding_id": "PR232:PRRT_kwDOTH_vCM6Sd90_",
+      "disposition": "still_reproducible",
+      "current_path": "far_validation/weakening.py",
+      "root_cause_id": "validation:renamed-python-strength",
+      "blocks_experiment_reconstruction": true,
+      "failure_mechanism": "The Python-strength path uses rename detection and reads only the destination from the base; a real R099 rename removing an assertion is accepted. The separate protected-file path already disables renames but does not cover this unpinned test.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
+        "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+      ],
+      "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
+    },
+    {
+      "finding_id": "PR232:PRRT_kwDOTH_vCM6Sd91A",
+      "disposition": "still_reproducible",
+      "current_path": "far_validation/tracing.py",
+      "root_cause_id": "validation:unobserved-dirfd-read",
+      "blocks_experiment_reconstruction": true,
+      "failure_mechanism": "The trace parser drops successful relative accesses through numeric directory fds, including kernel-annotated fds; the repository input is absent from observed reads and violations.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
+        "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+      ],
+      "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
+    },
+    {
+      "finding_id": "PR21:PRRT_kwDOTH_vCM6OUG3P",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "docs/project-status.md",
+      "failure_mechanism": "docs/PROJECT_STATUS.md is absent; docs/README.md links project-status.md and the current status explicitly identifies itself as the canonical project-level surface. The competing current-status file no longer exists.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: docs/PROJECT_STATUS.md is absent; docs/README.md links project-status.md and the current status explicitly identifies itself as the canonical project-level surface. The competing current-status file no longer exists."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR29:PRRT_kwDOTH_vCM6OYXwk",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "frameworks/FARO/README.md",
+      "failure_mechanism": "The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR36:PRRT_kwDOTH_vCM6OZFPU",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "frameworks/FARM/README.md",
+      "failure_mechanism": "The FARM README records v1.0 Stable and current requirement-driven coordination; it no longer directs execution of the already completed Phase 3 audit.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARM README records v1.0 Stable and current requirement-driven coordination; it no longer directs execution of the already completed Phase 3 audit."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR91:PRRT_kwDOTH_vCM6PSncK",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "docs/project-status.md",
+      "failure_mechanism": "Current status and README identify POST-CLOSURE-001 as complete and EFR as the successor. update_readme_dashboard.py no longer emits either conflicting v0.4 active-phase string; its remaining block is explicitly historical.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: Current status and README identify POST-CLOSURE-001 as complete and EFR as the successor. update_readme_dashboard.py no longer emits either conflicting v0.4 active-phase string; its remaining block is explicitly historical."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR155:PRRT_kwDOTH_vCM6QMr9J",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "README.md",
+      "failure_mechanism": "The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR229:PRRT_kwDOTH_vCM6SaGao",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "README.md",
+      "failure_mechanism": "The current README contains no BEGIN GENERATED PROJECT FAR DASHBOARD block. The release profile generator.dashboard check ran successfully in its sandbox and found no committed generated drift. The abbreviated generated-task block at issue has been removed.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no BEGIN GENERATED PROJECT FAR DASHBOARD block. The release profile generator.dashboard check ran successfully in its sandbox and found no committed generated drift. The abbreviated generated-task block at issue has been removed."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR70:PRRT_kwDOTH_vCM6OvPir",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "README.md",
+      "failure_mechanism": "README latest-release prose, badge target, and explicit release link all identify v1.0.0 rather than the old conflicting v0.1/v0.2 pointers. The release consistency check passes within full repository health.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: README latest-release prose, badge target, and explicit release link all identify v1.0.0 rather than the old conflicting v0.1/v0.2 pointers. The release consistency check passes within full repository health."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR221:PRRT_kwDOTH_vCM6SIzy3",
+      "disposition": "obsolete_after_later_changes",
+      "current_path": "tools/check_deduction_first_program.py",
+      "failure_mechanism": "The current checker no longer requires the obsolete exact README phrase. The uncached release profile research.deduction-program check passes on the audited main tree; the reported assertion failure is no longer reproducible.",
+      "evidence": [
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current checker no longer requires the obsolete exact README phrase. The uncached release profile research.deduction-program check passes on the audited main tree; the reported assertion failure is no longer reproducible."
+      ],
+      "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     }
   ]
 }

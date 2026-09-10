@@ -15,6 +15,10 @@ from .app import PAGE, app
 from .formats import ACCEPT_ATTRIBUTE
 
 logger = logging.getLogger("far.validation")
+if not logger.handlers:
+    logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.INFO)
+logger.propagate = False
 
 Role = Literal[
     "founder_or_executive",

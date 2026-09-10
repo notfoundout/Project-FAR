@@ -10,6 +10,12 @@ Targeted reproductions nevertheless confirmed the defects below. The review
 reconciliation has 402 source findings, two previously resolved and 400 awaiting
 verification. This audit does not claim to have adjudicated all 400.
 
+Follow-up inspection at `8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad` establishes
+eight exact historical findings as obsolete and three protected defects as still
+reproducible. The regenerated reconciliation retains 392 residual findings:
+389 awaiting verification and those three confirmed defects. Proposed fixes are
+not credited as already merged.
+
 | Original finding | Observation on audited main | Repair boundary |
 | --- | --- | --- |
 | `PR231:PRRT_kwDOTH_vCM6ScNF9` | Direct files do not match globstars; another matching check prevents fallback and the intended check is omitted. | Reuse existing zero-directory glob expansion in selection. |
@@ -19,12 +25,27 @@ verification. This audit does not claim to have adjudicated all 400.
 | `PR369:PRRT_kwDOTH_vCM6Ttjrh` | Metadata accepts NaN/infinities and serialization emits non-JSON values. | Reject non-finite metadata/serialization; preserve valid canonical bytes. |
 | `PR151:PRRT_kwDOTH_vCM6PxMgL` | An investigation and claim sharing `C1` produce no duplicate diagnostic. | Include the investigation in the identifier map. |
 | `PR151:PRRT_kwDOTH_vCM6PxMgM` | Invalid runtime graph node/edge kinds pass validation. | Validate both enums with the existing `FAR-IR-004` diagnostic. |
+| `PR348:PRRT_kwDOTH_vCM6Tc-2A` | Upload results link to the canned report. | Generate the download from the currently rendered artifact and revoke obsolete Blob URLs. |
+| `PR353:PRRT_kwDOTH_vCM6TfYVy` | Malformed supported uploads raise parser exceptions through the API. | Normalize supported parser failures to validation errors. |
+| `PR353:PRRT_kwDOTH_vCM6TfYV2` | XML invents a zero completeness value when the required field is absent. | Preserve absence so model validation rejects it. |
+| `PR354:PRRT_kwDOTH_vCM6Tfu7K` | Removing non-authorization support can leave a release PASS beside a high-severity regression. | Require review without changing the candidate's own adjudication status. |
+| `PR355:PRRT_kwDOTH_vCM6Tm8c9` | Default WARNING logging discards feedback despite returning recorded. | Configure the named logger and test actual stream emission under default root logging. |
 
 The new tests in `tests/test_internal_assurance_regressions.py` and
 `tests/mechanization/test_canonical_ir.py` fail on the baseline and pass after the
 unprotected repairs. The complete mechanization directory passes 53 tests. No
 FAR-CORE statement, frozen campaign, W1–W6 result, or EFR input changes. Record
 canonical closure only against an actual protected promotion commit.
+
+The optional demo suite passes all 21 tests with its declared dependencies
+available. The same suite on the audited baseline reports three failures and six
+errors. [The JavaScript runtime check](check_demo_download.cjs) executes the real
+page script, renders two distinct artifacts, verifies downloaded Blob contents,
+and checks revocation of the prior URL. Run it with
+`node research/internal-assurance-2026-09-10/check_demo_download.cjs`.
+The unkeyed hash is no longer presented as a digital signature. These local tests
+use synthetic inputs only; no website deployment, participant recruitment, or
+external study execution occurs.
 
 ## Protected candidate
 

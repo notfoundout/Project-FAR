@@ -8,10 +8,13 @@ if importlib.util.find_spec("fastapi") is None:
         "far-demo tests require the optional dependencies declared by commercial/far-demo"
     )
 from unittest.mock import patch
+import io
+import json
+import logging
 
 from fastapi.testclient import TestClient
 
-from far_demo.validation_app import app
+from far_demo.validation_app import app, logger
 
 
 class TestValidationFeedback(unittest.TestCase):
@@ -65,6 +68,25 @@ class TestValidationFeedback(unittest.TestCase):
         response = self.client.post("/api/feedback", json=payload)
         self.assertEqual(response.status_code, 400)
         self.assertIn("Consent is required", response.json()["detail"])
+
+    def test_feedback_is_emitted_with_default_warning_root_level(self) -> None:
+        stream = io.StringIO()
+        root = logging.getLogger()
+        previous = root.level
+        root.setLevel(logging.WARNING)
+        handler = logger.handlers[0]
+        old_stream = handler.setStream(stream)
+        try:
+            response = self.client.post("/api/feedback", json=self.payload)
+        finally:
+            handler.setStream(old_stream)
+            root.setLevel(previous)
+        self.assertEqual(response.status_code, 200)
+        records = stream.getvalue().splitlines()
+        self.assertEqual(len(records), 1)
+        prefix, event = records[0].split(" ", 1)
+        self.assertEqual(prefix, "far_validation_feedback")
+        self.assertEqual(json.loads(event)["session_id"], self.payload["session_id"])
 
     def test_feedback_rejects_out_of_range_scores(self) -> None:
         payload = {**self.payload, "clarity_score": 6}
