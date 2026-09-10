@@ -33,6 +33,8 @@ ALLOWED_REVIEW_DISPOSITIONS = {
     "ADJACENT_NO_CONTRADICTION",
     "N1_PRIOR_ART_LEAD",
 }
+CORE_THREAT_TARGET = "FAR-RQ-009"
+CORE_THREAT_RELATION = "POTENTIAL_COUNTEREXAMPLE_OR_RELATED_THEOREM"
 
 
 class ReconciliationError(RuntimeError):
@@ -177,6 +179,21 @@ def rq_inventory(registry: dict[str, Any]) -> list[dict[str, Any]]:
     } for q in questions if isinstance(q, dict)]
 
 
+def is_direct_core_threat_candidate(record: dict[str, Any]) -> bool:
+    """Route only the governed exact-counterexample lane into the core-claim queue.
+
+    Historical/foundational backfill remains discoverable research and prior-art material, but
+    it does not become a claim-reopening alert merely because its target set includes RQ-009.
+    """
+    bindings = record.get("discovery", {}).get("query_bindings", [])
+    return any(
+        isinstance(binding, dict)
+        and binding.get("target_id") == CORE_THREAT_TARGET
+        and binding.get("candidate_relation") == CORE_THREAT_RELATION
+        for binding in bindings
+    )
+
+
 def candidate_queue(
     root: Path,
     reverse: dict[str, list[str]],
@@ -190,6 +207,7 @@ def candidate_queue(
         "claim_mapped": 0,
         "historical": 0,
         "philosophy_metaphysics_history": 0,
+        "direct_core_threat": 0,
         "reviewed": 0,
         "review_required": 0,
     }
@@ -201,10 +219,13 @@ def candidate_queue(
         attention = triage.get("attention_terms", []) if isinstance(triage, dict) else []
         claims = record.get("potential_claim_ids", [])
         lenses = set(triage.get("lenses", [])) if isinstance(triage, dict) else set()
+        direct_core_threat = is_direct_core_threat_candidate(record)
         if attention:
             counts["high_attention"] += 1
         if claims:
             counts["claim_mapped"] += 1
+        if direct_core_threat:
+            counts["direct_core_threat"] += 1
         if candidate_id in reviewed:
             counts["reviewed"] += 1
         if any(
@@ -214,7 +235,7 @@ def candidate_queue(
             counts["historical"] += 1
         if lenses & {"philosophy_of_science", "formal_metaphysics", "history_of_logic", "historical_foundations"}:
             counts["philosophy_metaphysics_history"] += 1
-        if attention and claims and candidate_id not in reviewed:
+        if attention and claims and direct_core_threat and candidate_id not in reviewed:
             fallout = sorted({
                 dep for cid in claims if isinstance(cid, str)
                 for dep in transitive_dependents(cid, reverse)
@@ -309,6 +330,7 @@ def reconcile(root: Path) -> dict[str, Any]:
             "external_research_never_executes_efr_implicitly": True,
             "negative_search_never_establishes_novelty": True,
             "reviewed_candidates_remain_preserved_but_leave_active_queue": True,
+            "historical_backfill_does_not_self_escalate_to_core_reopening_queue": True,
         },
     }
     write_json(root / STATE_PATH, state)
@@ -328,6 +350,7 @@ def reconcile(root: Path) -> dict[str, Any]:
         f"- Historical-backfill candidates: **{counts['historical']}**",
         f"- Philosophy/metaphysics/history-lens candidates: **{counts['philosophy_metaphysics_history']}**",
         f"- High-attention metadata candidates: **{counts['high_attention']}**",
+        f"- Direct core-threat candidates: **{counts['direct_core_threat']}**",
         f"- Canonically reviewed candidates present: **{counts['reviewed']}**",
         f"- Canonical review dispositions recorded: **{len(review_dispositions)}**",
         f"- Core-claim review queue: **{len(queue)}**",
@@ -340,7 +363,9 @@ def reconcile(root: Path) -> dict[str, Any]:
         "requires an exact reproducible contradiction (or another governance-authorized basis), replication,",
         "acceptance, promotion, and the protected merge path. Historical claim text remains recoverable in Git.",
         "Reviewed raw candidates remain preserved but are omitted from the active metadata review queue when",
-        "their protected review disposition is recorded in the canonical review registry.",
+        "their protected review disposition is recorded in the canonical review registry. Historical/foundational",
+        "backfill remains research and prior-art material unless it also entered through the governed direct",
+        "core-counterexample/theorem-threat lane.",
         "",
     ]
     (root / STATUS_PATH).parent.mkdir(parents=True, exist_ok=True)
