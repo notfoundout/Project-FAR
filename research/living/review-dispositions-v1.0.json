@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-REVIEW-DISPOSITIONS-001",
+  "authority": "Research",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
+  "allowed_dispositions": [
+    "IRRELEVANT_FALSE_POSITIVE",
+    "ADJACENT_NO_CONTRADICTION",
+    "N1_PRIOR_ART_LEAD"
+  ],
+  "queue_semantics": "A listed candidate has completed enough governed internal review to leave the metadata-only core-claim review queue. The raw candidate remains preserved. A disposition does not change FAR-CORE status, execute EFR, establish novelty, or count as external independence.",
+  "reviewed_candidates": [
+    {"candidate_id":"FAR-LIT-2D565B9982141065","source_key":"doi:10.1007/s00355-025-01609-7","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-552B3F4A53BDEF61","source_key":"doi:10.1007/s00199-004-0556-7","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-5C441F014FBC6F1A","source_key":"doi:10.1609/aaai.v34i04.5977","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-7C1F6E88689DF4EA","source_key":"doi:10.1017/s0266267100000249","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-8698902E49C77D94","source_key":"doi:10.2139/ssrn.7366621","disposition":"N1_PRIOR_ART_LEAD","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-86CA6D7B2442BB38","source_key":"doi:10.1103/physrevlett.111.070402","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-88F64D9376E250FC","source_key":"doi:10.1145/3498721","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-898EFFBC10C6F2E3","source_key":"doi:10.2139/ssrn.7382939","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-8F01E91F70D72629","source_key":"doi:10.1016/s0012-365x(98)00077-6","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-9E321B76249179AF","source_key":"doi:10.1086/466667","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-A8C87468F4CB48F2","source_key":"doi:10.1093/oso/9780192894885.003.0013","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-C28489AE4D339427","source_key":"doi:10.1613/jair.5222","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-D89F9D13B70C96FC","source_key":"doi:10.1007/s10626-020-00311-3","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-DDA83861514E8635","source_key":"doi:10.1007/s00165-016-0406-y","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-F804CEB7D08998C0","source_key":"doi:10.1007/s00199-012-0693-3","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-FC8A05734544703E","source_key":"doi:10.2139/ssrn.7352078","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-39EF4FD80D5956BD","source_key":"doi:10.2139/ssrn.7406858","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/living-review-lifecycle-closure-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-C566FE21125E277F","source_key":"doi:10.2139/ssrn.2379562","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/living-review-lifecycle-closure-2026-09-10.md","suppress_from_core_claim_review_queue":true},
+    {"candidate_id":"FAR-LIT-DC526D11098789EF","source_key":"doi:10.1007/s00236-017-0294-5","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-10","review_basis":"docs/audits/living-review-lifecycle-closure-2026-09-10.md","suppress_from_core_claim_review_queue":true}
+  ]
+}
