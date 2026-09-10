@@ -6,7 +6,9 @@ Status: **Governance/research audit — no FAR-CORE or EFR status change**
 
 PR #493 reviewed the then-current 16 high-attention candidates and repaired a generic `impossibility` routing defect. A later scheduled living-research run showed a separate lifecycle defect: `tools/reconcile_living_repo.py` rebuilt `core_claim_review_queue` from every high-attention, claim-mapped raw candidate without consulting any durable record of completed governed review. The scheduled workflow therefore republished already-reviewed candidates into issue #489 as if review were still required.
 
-Raw candidate records are discovery history and must remain preserved. Mutating or deleting those records would lose provenance, while promoting automation-created candidate records beyond `DISCOVERED` would violate the living-repository lifecycle. The repair is therefore a canonical review-disposition registry on protected `main`. Reconciliation suppresses only candidates explicitly recorded there from the active metadata review queue; it does not rewrite the source record or alter a claim.
+A second routing defect was exposed while repairing that lifecycle: historical/foundational prior-art backfill could enter the core-claim contradiction queue merely because its target set included `FAR-RQ-009`, even when its registered candidate relation was historical rather than a direct counterexample/theorem threat.
+
+Raw candidate records are discovery history and must remain preserved. Mutating or deleting those records would lose provenance, while promoting automation-created candidate records beyond `DISCOVERED` would violate the living-repository lifecycle. The repair is therefore a canonical review-disposition registry on protected `main`, plus an explicit routing boundary for the core-claim queue. Reconciliation suppresses only candidates explicitly recorded as reviewed, and fully identified historical/foundational records remain research or prior-art material unless they also enter through the direct governed threat lane. It does not rewrite the source record or alter a claim.
 
 ## Three candidates discovered after PR #493
 
@@ -42,10 +44,12 @@ The registry cannot establish support, novelty, priority, external validity, ind
 
 ## Required reconciliation behavior
 
-A candidate remains in `core_claim_review_queue` exactly when it is high-attention, claim-mapped, and lacks a canonical suppressing review disposition. Reconciliation validates the registry before using it, rejects duplicate IDs, unknown dispositions, malformed candidate IDs, or non-suppressing rows, and reports reviewed versus active-review counts separately.
+A candidate enters `core_claim_review_queue` only when it is high-attention, claim-mapped, routed through the explicit `FAR-RQ-009` / `POTENTIAL_COUNTEREXAMPLE_OR_RELATED_THEOREM` lane, and lacks a canonical suppressing review disposition. A legacy record whose binding lacks both target and candidate-relation metadata remains review-required conservatively until it is classified; missing routing metadata may not silently suppress a possible threat. Fully identified historical/foundational backfill does not self-escalate into the core-claim queue merely because one of its target IDs is `FAR-RQ-009`.
 
-This closes the queue-memory defect while preserving the lifecycle boundary: unattended automation continues to create only `DISCOVERED` candidate records, and protected canonical review state controls whether an already-reviewed candidate is presented again as requiring review.
+Reconciliation validates the review registry before using it, rejects duplicate IDs, unknown dispositions, malformed candidate IDs, or non-suppressing rows, and reports direct-core-threat, reviewed, and active-review counts separately.
+
+This closes the queue-memory and route-escalation defects while preserving the lifecycle boundary: unattended automation continues to create only `DISCOVERED` candidate records, and protected canonical review state controls whether an already-reviewed candidate is presented again as requiring review.
 
 ## Result
 
-The 19 candidates present in issue #489 at this audit snapshot contain no established reproducible contradiction to FAR-CORE-001–014. One previously reviewed candidate, `FAR-LIT-8698902E49C77D94`, remains a material novelty/prior-art lead for independent EFR-N1. The active queue should contain only later or otherwise unreviewed qualifying candidates after reconciliation under the repaired logic.
+The 19 candidates present in issue #489 at this audit snapshot contain no established reproducible contradiction to FAR-CORE-001–014. One previously reviewed candidate, `FAR-LIT-8698902E49C77D94`, remains a material novelty/prior-art lead for independent EFR-N1. The active core-claim queue should contain only later unreviewed direct threats or ambiguous legacy records after reconciliation under the repaired logic.
