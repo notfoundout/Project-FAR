@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "hash_kind": "git_blob_sha1",
+  "git_blob_sha1": {
+    "inventory-summary.md": "629c25389b309c4425c90bffbd2380302db28d6d",
+    "raw-pr-inventory.json": "1ab2d8eaf68822844c847f12b5375be8379cef07",
+    "raw-review-comments.json": "ff4959c85c640e1d33fc406032ac01649ad7be7d",
+    "raw-review-submissions.json": "e98a6f41e8cd4f7aab5b7ba61270fdfcb660ee0a",
+    "raw-review-threads.json": "b0796df38ae355735991c9ae025cdbad82dbb8e9",
+    "retrieval-limitations.md": "0a4b7f8e084bb69decc6d6a5c77ad09390e81d38"
+  }
+}
