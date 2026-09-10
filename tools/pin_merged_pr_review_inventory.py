@@ -5,11 +5,13 @@ The live GitHub API can advance while an export is running. This post-processor
 keeps only PRs whose merge is both temporally no later than the audited commit
 and reachable from that exact Git history. Objects observed after the audited
 commit are excluded and recorded. Ambiguous missing history at or before the
-cutoff fails closed.
+cutoff fails closed. The finalized evidence files are content-bound by an
+independent Git-blob hash manifest consumed by the inventory validator.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import pathlib
 import subprocess
@@ -19,6 +21,14 @@ from datetime import datetime
 from typing import Any
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+EVIDENCE_FILES = (
+    "inventory-summary.md",
+    "raw-pr-inventory.json",
+    "raw-review-comments.json",
+    "raw-review-submissions.json",
+    "raw-review-threads.json",
+    "retrieval-limitations.md",
+)
 
 
 def _load(path: pathlib.Path) -> dict[str, Any]:
@@ -30,6 +40,25 @@ def _load(path: pathlib.Path) -> dict[str, Any]:
 
 def _write(path: pathlib.Path, value: Any) -> None:
     path.write_text(json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8")
+
+
+def _git_blob_sha1(path: pathlib.Path) -> str:
+    raw = path.read_bytes()
+    return hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
+
+
+def _write_evidence_hashes(directory: pathlib.Path) -> None:
+    missing = [name for name in EVIDENCE_FILES if not (directory / name).is_file()]
+    if missing:
+        raise ValueError(f"cannot freeze incomplete evidence set: {missing}")
+    _write(
+        directory / "evidence-hashes.json",
+        {
+            "schema_version": 1,
+            "hash_kind": "git_blob_sha1",
+            "git_blob_sha1": {name: _git_blob_sha1(directory / name) for name in EVIDENCE_FILES},
+        },
+    )
 
 
 def _git(root: pathlib.Path, *args: str) -> subprocess.CompletedProcess[str]:
@@ -183,6 +212,7 @@ def pin_inventory(directory: pathlib.Path, repository_root: pathlib.Path, audite
     _write(directory / "raw-review-submissions.json", reviews_data)
     _write(directory / "raw-review-threads.json", threads_data)
     _write(directory / "retrieval-manifest.json", manifest)
+    _write_evidence_hashes(directory)
     return manifest
 
 
