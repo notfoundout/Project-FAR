@@ -79,6 +79,11 @@ class DecisionPackage:
                 f"unsupported schema_version {schema_version!r}; expected one of "
                 f"{SUPPORTED_SCHEMA_VERSIONS!r}"
             )
+        for required in ("authorization_requirements", "unknowns"):
+            if required not in data:
+                raise PackageValidationError(
+                    f"{required} is required and must be explicit; absence cannot be interpreted as empty"
+                )
         semantic_contracts = tuple(
             _mapping(item, "semantic_contracts[]")
             for item in _list(data.get("semantic_contracts", []), "semantic_contracts")
@@ -104,9 +109,9 @@ class DecisionPackage:
                 for item in _list(data.get("dependencies"), "dependencies")
             ),
             authorization_requirements=tuple(
-                _text_list(data.get("authorization_requirements", []), "authorization_requirements")
+                _text_list(data["authorization_requirements"], "authorization_requirements")
             ),
-            unknowns=tuple(_text_list(data.get("unknowns", []), "unknowns")),
+            unknowns=tuple(_text_list(data["unknowns"], "unknowns")),
             trace_completeness=_bounded_number(
                 data.get("trace_completeness"), "trace_completeness", 0.0, 1.0
             ),
@@ -126,6 +131,7 @@ class DecisionPackage:
             raise PackageValidationError(
                 f"decision_root {self.decision_root!r} does not identify a declared node"
             )
+        adjacency: dict[str, list[str]] = {node_id: [] for node_id in node_ids}
         for dependency in self.dependencies:
             if dependency.source_id not in known:
                 raise PackageValidationError(
@@ -137,6 +143,9 @@ class DecisionPackage:
                 )
             if dependency.source_id == dependency.target_id:
                 raise PackageValidationError("self-dependencies are not permitted")
+            adjacency[dependency.source_id].append(dependency.target_id)
+        _reject_dependency_cycles(adjacency)
+
         missing_requirements = sorted(
             requirement for requirement in self.authorization_requirements if requirement not in known
         )
@@ -171,6 +180,30 @@ class DecisionPackage:
             raise PackageValidationError(
                 f"duplicate semantic binding_id values: {duplicate_bindings}"
             )
+
+
+def _reject_dependency_cycles(adjacency: dict[str, list[str]]) -> None:
+    state: dict[str, int] = {node_id: 0 for node_id in adjacency}
+    stack: list[str] = []
+
+    def visit(node_id: str) -> None:
+        state[node_id] = 1
+        stack.append(node_id)
+        for target_id in adjacency[node_id]:
+            if state[target_id] == 0:
+                visit(target_id)
+            elif state[target_id] == 1:
+                start = stack.index(target_id)
+                cycle = stack[start:] + [target_id]
+                raise PackageValidationError(
+                    "dependency graph must be acyclic; cycle detected: " + " -> ".join(cycle)
+                )
+        stack.pop()
+        state[node_id] = 2
+
+    for node_id in adjacency:
+        if state[node_id] == 0:
+            visit(node_id)
 
 
 def _required_text(data: dict[str, Any], key: str) -> str:
