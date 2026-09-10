@@ -17,6 +17,7 @@ from typing import Any
 SURFACES_PATH = Path("research/living/repository-surfaces-v1.0.json")
 STATE_PATH = Path("research/living/repository-state-v1.0.json")
 CANDIDATE_DIR = Path("research/living/inbox/candidates")
+REVIEW_DISPOSITIONS_PATH = Path("research/living/review-dispositions-v1.0.json")
 STATUS_PATH = Path("docs/research/living-repository-status.md")
 CLAIM_LEDGER = Path("theory/terminal/project-far-core-theory-v1.1.json")
 ASSURANCE_LEDGER = Path("theory/evaluation/far-core-assurance-v1.0.json")
@@ -27,6 +28,11 @@ AUTHORITY_BOUNDARY = (
     "novelty, priority, external validity, utility, independence, theorem status, EFR result, "
     "or any other Project FAR claim/evidence disposition."
 )
+ALLOWED_REVIEW_DISPOSITIONS = {
+    "IRRELEVANT_FALSE_POSITIVE",
+    "ADJACENT_NO_CONTRADICTION",
+    "N1_PRIOR_ART_LEAD",
+}
 
 
 class ReconciliationError(RuntimeError):
@@ -52,6 +58,49 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def load_review_dispositions(root: Path) -> dict[str, dict[str, Any]]:
+    """Load protected review memory without mutating raw discovery records.
+
+    The file is optional for synthetic/legacy fixtures; canonical main carries it and tests
+    require the shipped registry. Any present registry fails closed on malformed rows.
+    """
+    path = root / REVIEW_DISPOSITIONS_PATH
+    if not path.exists():
+        return {}
+    registry = read_json(path)
+    if registry.get("program_id") != "FAR-LIVING-REVIEW-DISPOSITIONS-001":
+        raise ReconciliationError("unexpected living review-disposition program_id")
+    if registry.get("authority") != "Research":
+        raise ReconciliationError("review-disposition authority drift")
+    if registry.get("authority_boundary") != AUTHORITY_BOUNDARY:
+        raise ReconciliationError("review-disposition authority boundary drift")
+    declared = registry.get("allowed_dispositions")
+    if not isinstance(declared, list) or set(declared) != ALLOWED_REVIEW_DISPOSITIONS:
+        raise ReconciliationError("review-disposition allowed set drift")
+    rows = registry.get("reviewed_candidates")
+    if not isinstance(rows, list):
+        raise ReconciliationError("reviewed_candidates must be an array")
+    result: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ReconciliationError("review-disposition row must be an object")
+        candidate_id = row.get("candidate_id")
+        if not isinstance(candidate_id, str) or re.fullmatch(r"FAR-LIT-[0-9A-F]{16}", candidate_id) is None:
+            raise ReconciliationError(f"invalid reviewed candidate id: {candidate_id!r}")
+        if candidate_id in result:
+            raise ReconciliationError(f"duplicate reviewed candidate id: {candidate_id}")
+        if row.get("disposition") not in ALLOWED_REVIEW_DISPOSITIONS:
+            raise ReconciliationError(f"{candidate_id}: unknown review disposition")
+        if row.get("suppress_from_core_claim_review_queue") is not True:
+            raise ReconciliationError(f"{candidate_id}: reviewed row must explicitly suppress active queue")
+        if not isinstance(row.get("source_key"), str) or not row["source_key"].strip():
+            raise ReconciliationError(f"{candidate_id}: source_key required")
+        if not isinstance(row.get("review_basis"), str) or not row["review_basis"].strip():
+            raise ReconciliationError(f"{candidate_id}: review_basis required")
+        result[candidate_id] = row
+    return result
 
 
 def exact_claim_inventory(claim_ledger: dict[str, Any], assurance: dict[str, Any]) -> tuple[list[dict[str, Any]], dict[str, list[str]]]:
@@ -128,18 +177,26 @@ def rq_inventory(registry: dict[str, Any]) -> list[dict[str, Any]]:
     } for q in questions if isinstance(q, dict)]
 
 
-def candidate_queue(root: Path, reverse: dict[str, list[str]]) -> tuple[list[dict[str, Any]], dict[str, int]]:
+def candidate_queue(
+    root: Path,
+    reverse: dict[str, list[str]],
+    review_dispositions: dict[str, dict[str, Any]] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
     queue: list[dict[str, Any]] = []
+    reviewed = review_dispositions or {}
     counts = {
         "candidates": 0,
         "high_attention": 0,
         "claim_mapped": 0,
         "historical": 0,
         "philosophy_metaphysics_history": 0,
+        "reviewed": 0,
+        "review_required": 0,
     }
     for path in sorted((root / CANDIDATE_DIR).glob("FAR-LIT-*.json")):
         record = read_json(path)
         counts["candidates"] += 1
+        candidate_id = record.get("candidate_id")
         triage = record.get("triage", {})
         attention = triage.get("attention_terms", []) if isinstance(triage, dict) else []
         claims = record.get("potential_claim_ids", [])
@@ -148,6 +205,8 @@ def candidate_queue(root: Path, reverse: dict[str, list[str]]) -> tuple[list[dic
             counts["high_attention"] += 1
         if claims:
             counts["claim_mapped"] += 1
+        if candidate_id in reviewed:
+            counts["reviewed"] += 1
         if any(
             isinstance(b, dict) and b.get("mode") == "historical_backfill"
             for b in record.get("discovery", {}).get("query_bindings", [])
@@ -155,13 +214,13 @@ def candidate_queue(root: Path, reverse: dict[str, list[str]]) -> tuple[list[dic
             counts["historical"] += 1
         if lenses & {"philosophy_of_science", "formal_metaphysics", "history_of_logic", "historical_foundations"}:
             counts["philosophy_metaphysics_history"] += 1
-        if attention and claims:
+        if attention and claims and candidate_id not in reviewed:
             fallout = sorted({
                 dep for cid in claims if isinstance(cid, str)
                 for dep in transitive_dependents(cid, reverse)
             })
             queue.append({
-                "candidate_id": record.get("candidate_id"),
+                "candidate_id": candidate_id,
                 "claim_ids": claims,
                 "downstream_claim_ids": fallout,
                 "attention_terms": attention,
@@ -174,6 +233,7 @@ def candidate_queue(root: Path, reverse: dict[str, list[str]]) -> tuple[list[dic
                     "reopening/correction path. Do not infer contradiction from metadata."
                 ),
             })
+            counts["review_required"] += 1
     return queue, counts
 
 
@@ -216,6 +276,7 @@ def reconcile(root: Path) -> dict[str, Any]:
     claim_ledger = read_json(root / CLAIM_LEDGER)
     assurance = read_json(root / ASSURANCE_LEDGER)
     rq = read_json(root / RQ_LEDGER)
+    review_dispositions = load_review_dispositions(root)
     claims, deps = exact_claim_inventory(claim_ledger, assurance)
     reverse = reverse_graph(deps)
     impacts = {
@@ -225,7 +286,7 @@ def reconcile(root: Path) -> dict[str, Any]:
         }
         for claim in claims
     }
-    queue, counts = candidate_queue(root, reverse)
+    queue, counts = candidate_queue(root, reverse, review_dispositions)
     state = {
         "schema_version": "1.0",
         "program_id": "FAR-LIVING-REPOSITORY-001",
@@ -239,6 +300,7 @@ def reconcile(root: Path) -> dict[str, Any]:
         "claim_dependency_impact": impacts,
         "research_questions": rq_inventory(rq),
         "candidate_counts": counts,
+        "review_disposition_count": len(review_dispositions),
         "core_claim_review_queue": queue,
         "rules": {
             "candidate_metadata_may_reopen_claim": False,
@@ -246,6 +308,7 @@ def reconcile(root: Path) -> dict[str, Any]:
             "canonical_claim_change_requires_governed_lifecycle_and_protected_merge": True,
             "external_research_never_executes_efr_implicitly": True,
             "negative_search_never_establishes_novelty": True,
+            "reviewed_candidates_remain_preserved_but_leave_active_queue": True,
         },
     }
     write_json(root / STATE_PATH, state)
@@ -265,6 +328,8 @@ def reconcile(root: Path) -> dict[str, Any]:
         f"- Historical-backfill candidates: **{counts['historical']}**",
         f"- Philosophy/metaphysics/history-lens candidates: **{counts['philosophy_metaphysics_history']}**",
         f"- High-attention metadata candidates: **{counts['high_attention']}**",
+        f"- Canonically reviewed candidates present: **{counts['reviewed']}**",
+        f"- Canonical review dispositions recorded: **{len(review_dispositions)}**",
         f"- Core-claim review queue: **{len(queue)}**",
         f"- Canonical surfaces changed since prior reconciliation: **{len(changed)}**",
         "",
@@ -274,6 +339,8 @@ def reconcile(root: Path) -> dict[str, Any]:
         "claim fallout. It may not rewrite the claim from metadata or model judgment. A canonical correction",
         "requires an exact reproducible contradiction (or another governance-authorized basis), replication,",
         "acceptance, promotion, and the protected merge path. Historical claim text remains recoverable in Git.",
+        "Reviewed raw candidates remain preserved but are omitted from the active metadata review queue when",
+        "their protected review disposition is recorded in the canonical review registry.",
         "",
     ]
     (root / STATUS_PATH).parent.mkdir(parents=True, exist_ok=True)
@@ -290,6 +357,7 @@ def main() -> int:
         "surface_count": state["surface_count"],
         "claims": len(state["claims"]),
         "candidate_counts": state["candidate_counts"],
+        "review_disposition_count": state["review_disposition_count"],
         "claim_review_queue": len(state["core_claim_review_queue"]),
     }, sort_keys=True))
     return 0
