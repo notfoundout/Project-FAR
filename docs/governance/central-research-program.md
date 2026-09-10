@@ -24,7 +24,8 @@ The central theory is Accepted as internal deductive work corrected after a non-
 - **FARA:** the selected finite explicit auditable v1 representation target, not a universal source ontology.
 - **FAR:** contract freezing, representation construction, factorization/collision testing, relative minimization, and loss reporting.
 - **FARO:** execution, materialized views, comparison, audit, and reporting.
-- **Post-closure assurance/application:** governed by `POST-CLOSURE-001`.
+- **Post-closure assurance/application:** `POST-CLOSURE-001` completed its six registered W1–W6 scopes.
+- **External successor:** `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` (`EFR-001`) is preregistered and not executed.
 
 ## Historical UPP line
 
@@ -34,16 +35,13 @@ Historical `PROJECT-FAR-CORE-THEORY-1.0` is also preserved byte-for-byte at SHA-
 
 ## Current legitimate work
 
-The [Post-Closure Assurance and Application Program](post-closure-assurance-and-application-program-v1.0.md) authorizes:
+The [Post-Closure Assurance and Application Program](post-closure-assurance-and-application-program-v1.0.md) completed W1–W6 at their exact governed scopes: independent-review assurance, proof-assistant formalization, the versioned FAR IR contract/checker, six bounded domain contracts, approximation/cost semantics, and the controlled-artifact audit-utility campaign.
 
-1. the completed `PCA-W1-INDEPENDENT-REVIEW` sealed record and its assurance promotion;
-2. proof-assistant formalization — `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is the active workstream, with 13 claims formalized and FAR-CORE-014 partial at the actual MLL witness bridge;
-3. a versioned contract and factorization-report schema;
-4. independently motivated domain contracts;
-5. approximate and cost-aware extensions;
-6. empirical tests of audit utility.
+The active research successor is [External Falsification and Replication Program v1.0](external-falsification-and-replication-program-v1.0.md). EFR-001 is `PREREGISTERED_NOT_EXECUTED` and addresses evidence classes internally authored work cannot supply: independent deductive replication, clean-room technical replication, held-out external cases, adversarial counterexamples, human disagreement, prospective real-world utility, externally observed cost/burden, and scoped novelty/prior-art testing.
 
-These workstreams change assurance, applicability, or implementation. They do not reopen the core unless they produce a genuine contradiction to a stated proof or premise.
+Internal living-repository discovery, implementation hardening, and commercial product work may continue within their own governance boundaries. They do not satisfy EFR independence or clear an EFR gate.
+
+These workstreams change assurance, applicability, implementation, or external evidence. They do not reopen the core unless they produce a genuine contradiction to a stated proof or premise.
 
 ## Proof and evidence discipline
 
@@ -69,6 +67,9 @@ Current:
 - `docs/audits/project-far-core-theory-v1.1-correction-audit.md`
 - `theory/evaluation/project-far-core-theory-v1.1-regressions.json`
 - `docs/governance/post-closure-assurance-and-application-program-v1.0.md`
+- `docs/governance/external-falsification-and-replication-program-v1.0.md`
+- `theory/evaluation/external-falsification-and-replication-program-v1.0.json`
+- `theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json`
 
 Historical preserved base:
 
