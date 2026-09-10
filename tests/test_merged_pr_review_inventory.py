@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import pathlib
 import tempfile
@@ -58,10 +59,18 @@ class InventoryValidatorTests(unittest.TestCase):
                 },
             },
         }
+        (self.directory / "inventory-summary.md").write_text("summary\n", encoding="utf-8")
+        (self.directory / "retrieval-limitations.md").write_text("none\n", encoding="utf-8")
         self.write()
+        self.freeze_evidence_hashes()
 
     def tearDown(self):
         self.temp.cleanup()
+
+    @staticmethod
+    def git_blob_sha1(path: pathlib.Path) -> str:
+        raw = path.read_bytes()
+        return hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
 
     def write(self):
         for name, data in (
@@ -72,6 +81,22 @@ class InventoryValidatorTests(unittest.TestCase):
             ("retrieval-manifest.json", self.manifest),
         ):
             (self.directory / name).write_text(json.dumps(data), encoding="utf-8")
+
+    def freeze_evidence_hashes(self):
+        names = (
+            "inventory-summary.md",
+            "raw-pr-inventory.json",
+            "raw-review-comments.json",
+            "raw-review-submissions.json",
+            "raw-review-threads.json",
+            "retrieval-limitations.md",
+        )
+        payload = {
+            "schema_version": 1,
+            "hash_kind": "git_blob_sha1",
+            "git_blob_sha1": {name: self.git_blob_sha1(self.directory / name) for name in names},
+        }
+        (self.directory / "evidence-hashes.json").write_text(json.dumps(payload), encoding="utf-8")
 
     def assert_invalid(self, text):
         self.write()
@@ -100,6 +125,12 @@ class InventoryValidatorTests(unittest.TestCase):
         self.comments["comments"].append(copy.deepcopy(self.comments["comments"][0]))
         self.assert_invalid("duplicate comment id")
 
+    def test_duplicate_conflicting_comment_id(self):
+        duplicate = copy.deepcopy(self.comments["comments"][0])
+        duplicate["kind"] = "issue_comment"
+        self.comments["comments"].append(duplicate)
+        self.assert_invalid("duplicate comment id")
+
     def test_missing_thread_id(self):
         del self.threads["threads"][0]["id"]
         self.assert_invalid("lacks id")
@@ -119,8 +150,21 @@ class InventoryValidatorTests(unittest.TestCase):
         self.manifest["retrievals"][2]["items"] = 0
         self.assert_invalid("retrieval count mismatch")
 
+    def test_count_mismatch(self):
+        self.manifest["counts"]["review_threads"] = 2
+        self.assert_invalid("manifest count mismatch")
+
+    def test_skipped_page(self):
+        self.manifest["retrievals"][1]["complete"] = False
+        self.manifest["retrievals"][1]["errors"] = ["skipped page 2"]
+        self.assert_invalid("retrieval incomplete")
+
     def test_unreported_api_failure(self):
         self.manifest["retrievals"][1]["complete"] = False
+        self.manifest["retrievals"][1]["errors"] = ["HTTP 500"]
+        self.assert_invalid("retrieval incomplete")
+
+    def test_omitted_limitation(self):
         self.manifest["retrievals"][1]["errors"] = ["HTTP 500"]
         self.assert_invalid("retrieval incomplete")
 
@@ -134,6 +178,12 @@ class InventoryValidatorTests(unittest.TestCase):
     def test_reply_parent_must_exist(self):
         self.comments["comments"][0]["in_reply_to_id"] = 999
         self.assert_invalid("reply parent missing")
+
+    def test_frozen_evidence_mutation(self):
+        path = self.directory / "raw-pr-inventory.json"
+        path.write_text(path.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+        failures = validate(self.root)
+        self.assertTrue(any("frozen evidence mutation detected" in item for item in failures), failures)
 
 
 if __name__ == "__main__":
