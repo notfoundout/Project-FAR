@@ -62,12 +62,20 @@ For every adjacent candidate, the attempted contradiction fails at premise/scope
 
 The screen was repeated against the canonical core boundary in `central-research-program.md`: none of the 16 candidates provides a minimized reproducible contradiction satisfying the exact FAR premises and negating an exact conclusion. Therefore no FAR-CORE claim is reopened by this queue snapshot.
 
+## Discovery precision defect and repair
+
+The false-positive cluster exposed a deterministic routing defect in the shipped FAR-RQ-009 target. Its subject signal list admitted a candidate when the Crossref metadata contained any one configured term, and the generic term `impossibility` was one of those terms. That made unrelated impossibility theorems eligible even though the query was intended to watch representation sufficiency, observational quotients, Blackwell comparison, and counterexamples.
+
+The repaired configuration keeps `impossibility` in the global **attention** vocabulary but removes it as a standalone FAR-RQ-009 **subject relevance** signal. The target retains `counterexample`, `sufficiency`, `sufficient statistic`, `Blackwell`, `observational`, and `quotient`, and adds `minimal sufficient` so the Pan source class remains discoverable. A regression verifies both directions: a generic time-crystal impossibility title has zero FAR-RQ-009 signal hits, while minimal-sufficient and observational-quotient titles remain eligible.
+
+This changes discovery precision only. Existing candidate records remain historical Research data, and no source is deleted or reclassified as evidence by the automation.
+
 ## Result
 
 - Core-theory threat from the 16 reviewed #489 candidates: **none established**.
 - Broad mathematical novelty pressure: **materially increased**, principally by Pan 2026 and the already-known abstract-interpretation/automata/bisimulation families.
 - EFR-N1 status: unchanged, `PREREGISTERED_NOT_EXECUTED`; this audit is a lead-preservation step only.
 - EFR activation: internally unblocked at the queue-governance level once the accompanying fix-register reconciliation lands.
-- Living repository: remains open; future candidates can create new review obligations.
+- Living repository: remains open; future candidates can create new review obligations, with the FAR-RQ-009 generic-impossibility false-positive path removed.
 
 No novelty, priority, external-validity, utility, commercial-readiness, or EFR result is claimed here.
