@@ -40,7 +40,10 @@ def normalize_status(raw: str | None) -> str:
         return "established conditional"
     if "established" in text:
         return "established"
-    for status in ["completed", "supported", "not supported", "research", "active", "pending", "undetermined", "open"]:
+    # Match the negative compound before its positive substring. Status parsing
+    # is semantic input to contradiction detection, so "not supported" must
+    # never be silently promoted to "supported".
+    for status in ["completed", "not supported", "supported", "research", "active", "pending", "undetermined", "open"]:
         if status in text:
             return status
     return text or "missing"
@@ -75,7 +78,6 @@ def title_similarity(a: str, b: str) -> float:
     if not ta or not tb:
         return 0.0
     return len(ta & tb) / math.sqrt(len(ta) * len(tb))
-
 
 
 def title_scope(title: str) -> str:
