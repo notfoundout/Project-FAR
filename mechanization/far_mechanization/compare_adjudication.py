@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import math
 import json
 import re
 import sys
@@ -91,7 +92,7 @@ class InterfaceError(ValueError):
 
 def canonical_json_bytes(value: object) -> bytes:
     return (
-        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True, separators=(",", ": "))
+        json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True, separators=(",", ": "), allow_nan=False)
         + "\n"
     ).encode("utf-8")
 
@@ -158,6 +159,8 @@ def _metadata(value: Any, path: str) -> dict[str, Any]:
         _require_string(key, f"{path} key")
         if not isinstance(item, (str, int, float, bool)) and item is not None:
             raise InterfaceError(f"{path}.{key} must be a JSON scalar")
+        if isinstance(item, float) and not math.isfinite(item):
+            raise InterfaceError(f"{path}.{key} must be a finite JSON scalar")
     return dict(sorted(mapping.items()))
 
 

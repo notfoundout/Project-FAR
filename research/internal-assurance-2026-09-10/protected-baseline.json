@@ -1,0 +1,31 @@
+{
+  "defects_observed": {
+    "dirfd_trace": true,
+    "renamed_test": true,
+    "timeout_json": true
+  },
+  "expected_observation": "defective",
+  "negative_control_failed_fd_accepted": true,
+  "observation_matches": true,
+  "rename": {
+    "accepted": true,
+    "findings": [
+      "tests/test_new.py"
+    ],
+    "git_status": "R099\ttests/test_old.py\ttests/test_new.py"
+  },
+  "scope": "internal synthetic maintenance reproductions; not EFR or independent validation",
+  "source_sha256": {
+    "far_validation/assured_engine.py": "3daddc9bd13af064f27f624e731c65d483b57c4936c0e27d7b1dcc83a537666d",
+    "far_validation/tracing.py": "3cd16ac267cc450d93db7a0939621b2ba71473fac42ca3507613c59153423830",
+    "far_validation/weakening.py": "647e758cd11f23afa184f1b5b19ae0d759b6f72d74514502fef2f669cef62993"
+  },
+  "timeout": {
+    "json_serializable": false,
+    "status": "timed_out"
+  },
+  "trace": {
+    "resolved_reads": [],
+    "unresolved_violations": []
+  }
+}

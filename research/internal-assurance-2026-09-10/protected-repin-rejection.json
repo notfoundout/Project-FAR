@@ -1,0 +1,79 @@
+{
+  "base": "6a5aa1af92d738f480ab07affc1f5aa9e66e9dec",
+  "findings": [
+    {
+      "after": {
+        "assertions": 0,
+        "ast_nodes": 3100,
+        "branches": 41,
+        "failure_paths": 0,
+        "raises": 5,
+        "skips": 0,
+        "tests": []
+      },
+      "before": {
+        "assertions": 0,
+        "ast_nodes": 3060,
+        "branches": 41,
+        "failure_paths": 0,
+        "raises": 5,
+        "skips": 0,
+        "tests": []
+      },
+      "failures": [
+        "protected artifact far_validation/assured_engine.py changed and its content pin in validation_bootstrap/assurance-lock.json was repinned 3daddc9bd13a->c37adf86c9cf in the same change; this transition is not authorized by validation/test-weakening-waivers.json in the comparison base, and a candidate may not authorize its own protected-artifact repin"
+      ],
+      "path": "far_validation/assured_engine.py"
+    },
+    {
+      "after": {
+        "assertions": 0,
+        "ast_nodes": 2220,
+        "branches": 51,
+        "failure_paths": 0,
+        "raises": 1,
+        "skips": 0,
+        "tests": []
+      },
+      "before": {
+        "assertions": 0,
+        "ast_nodes": 2139,
+        "branches": 49,
+        "failure_paths": 0,
+        "raises": 1,
+        "skips": 0,
+        "tests": []
+      },
+      "failures": [
+        "protected artifact far_validation/tracing.py changed and its content pin in validation_bootstrap/assurance-lock.json was repinned 3cd16ac267cc->d9a62a0332a9 in the same change; this transition is not authorized by validation/test-weakening-waivers.json in the comparison base, and a candidate may not authorize its own protected-artifact repin"
+      ],
+      "path": "far_validation/tracing.py"
+    },
+    {
+      "after": {
+        "assertions": 0,
+        "ast_nodes": 7821,
+        "branches": 235,
+        "failure_paths": 0,
+        "raises": 4,
+        "skips": 0,
+        "tests": []
+      },
+      "before": {
+        "assertions": 0,
+        "ast_nodes": 7820,
+        "branches": 235,
+        "failure_paths": 0,
+        "raises": 4,
+        "skips": 0,
+        "tests": []
+      },
+      "failures": [
+        "protected artifact far_validation/weakening.py changed and its content pin in validation_bootstrap/assurance-lock.json was repinned 647e758cd11f->5f86d021703e in the same change; this transition is not authorized by validation/test-weakening-waivers.json in the comparison base, and a candidate may not authorize its own protected-artifact repin"
+      ],
+      "path": "far_validation/weakening.py"
+    }
+  ],
+  "successful": false,
+  "waivers_used": []
+}

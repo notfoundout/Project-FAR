@@ -18,6 +18,7 @@ from typing import Iterable
 
 from .manifest import load_manifest
 from .model import CheckDefinition, CheckResult, RunSummary
+from .tracing import _pattern_variants
 
 ENGINE_VERSION = "0.1.0"
 
@@ -92,9 +93,12 @@ def _snapshot_files(root: Path) -> dict[str, str]:
 def _matches(path: str, patterns: Iterable[str]) -> bool:
     normalized = path.replace(os.sep, "/")
     for pattern in patterns:
-        if fnmatch.fnmatch(normalized, pattern) or Path(normalized).match(pattern):
+        if any(
+            fnmatch.fnmatch(normalized, candidate) or Path(normalized).match(candidate)
+            for candidate in _pattern_variants(pattern)
+        ):
             return True
-        prefix = pattern.rstrip("/**")
+        prefix = pattern[:-3].rstrip("/")
         if pattern.endswith("/**") and (normalized == prefix or normalized.startswith(prefix + "/")):
             return True
     return False
@@ -561,8 +565,8 @@ class ValidationEngine:
                 failure_code="FAR-VAL-TIMEOUT-001",
                 summary=f"timed out after {definition.timeout_seconds}s",
                 command=command,
-                stdout=exc.stdout or "",
-                stderr=exc.stderr or "",
+                stdout=exc.stdout.decode("utf-8", errors="replace") if isinstance(exc.stdout, bytes) else exc.stdout or "",
+                stderr=exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else exc.stderr or "",
             )
         except OSError as exc:
             return CheckResult(

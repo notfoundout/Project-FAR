@@ -34,3 +34,7 @@ python tools/reconcile_merged_pr_review_findings.py \
 
 Use `--check` for a read-only deterministic validation. A nonzero residual count is an
 active verification or remediation state and must not be described as a clear queue.
+
+The [2026-09-10 internal assurance audit](../../../research/internal-assurance-2026-09-10/README.md)
+records fresh reproductions, unprotected repairs, and the blocked protected-validator
+candidate. It does not declare the residual queue clear.

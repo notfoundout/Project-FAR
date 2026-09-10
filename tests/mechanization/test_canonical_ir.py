@@ -55,6 +55,22 @@ class CanonicalIRTests(unittest.TestCase):
         self.assertEqual(ref.expected_kind, IRKind.CLAIM)
         self.assertEqual(ref.validate(), ())
 
+    def test_investigation_identifier_cannot_be_reused_by_claim(self):
+        document = FARDocument(Identifier("DOC1"), Investigation(Identifier("C1"), question="question"),
+                               claims=(Claim(Identifier("C1"), statement="claim"),))
+        duplicates = [d for d in document.validate() if d.code == DiagnosticCode.DUPLICATE_LOCAL_IDENTIFIER]
+        self.assertEqual(len(duplicates), 1)
+        self.assertEqual(duplicates[0].details["first_collection"], "investigation")
+        self.assertEqual(duplicates[0].details["duplicate_collection"], "claims")
+
+    def test_untyped_graph_kinds_are_rejected_at_runtime(self):
+        for value in ("bogus", None, 1):
+            with self.subTest(value=value):
+                node = GraphNode(Identifier("N1"), value)
+                edge = GraphEdge(Identifier("E1"), value, Reference(Identifier("N1")), Reference(Identifier("N2")))
+                self.assertTrue(any(d.code == DiagnosticCode.INVALID_ENUM_VALUE for d in node.validate()))
+                self.assertTrue(any(d.code == DiagnosticCode.INVALID_ENUM_VALUE for d in edge.validate()))
+
     def test_graph_node_and_edge_construction(self):
         node = GraphNode(Identifier("C1"), GraphNodeKind.CLAIM)
         edge = GraphEdge(Identifier("E1"), GraphEdgeKind.SUPPORTS, Reference(Identifier("A1"), IRKind.ASSUMPTION), Reference(Identifier("C1"), IRKind.CLAIM))
