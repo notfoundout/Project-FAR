@@ -14,6 +14,7 @@ from typing import Any
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REL = pathlib.Path("docs/audits/merged-pr-review-audit")
 EXPECTED_SCHEMA_VERSION = 2
+EVIDENCE_HASH_SCHEMA_VERSION = 1
 EVIDENCE_FILES = (
     "inventory-summary.md",
     "raw-pr-inventory.json",
@@ -71,6 +72,40 @@ def _require_unique(records: list[dict[str, Any]], key: str, label: str, errors:
             seen.add(value)
 
 
+def _verify_evidence_hashes(directory: pathlib.Path, errors: list[str]) -> None:
+    try:
+        hashes = _load(directory / "evidence-hashes.json")
+    except ValueError as exc:
+        errors.append(str(exc))
+        return
+    if hashes.get("schema_version") != EVIDENCE_HASH_SCHEMA_VERSION:
+        errors.append(f"evidence hash schema_version must be {EVIDENCE_HASH_SCHEMA_VERSION}")
+    entries = hashes.get("git_blob_sha1")
+    if not isinstance(entries, dict):
+        errors.append("evidence hash git_blob_sha1 must be an object")
+        return
+    expected_names = set(EVIDENCE_FILES)
+    actual_names = set(entries)
+    if actual_names != expected_names:
+        errors.append(
+            "evidence hash coverage mismatch: "
+            f"expected {sorted(expected_names)}, got {sorted(actual_names)}"
+        )
+    for name in EVIDENCE_FILES:
+        expected = entries.get(name)
+        path = directory / name
+        if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{40}", expected) is None:
+            errors.append(f"evidence hash missing or malformed: {name}")
+            continue
+        try:
+            actual = _git_blob_sha1(path)
+        except OSError as exc:
+            errors.append(f"cannot hash evidence file {name}: {exc}")
+            continue
+        if actual != expected:
+            errors.append(f"frozen evidence mutation detected: {name}: {actual} != {expected}")
+
+
 def validate(root: pathlib.Path = ROOT, expected_main_sha: str | None = None) -> list[str]:
     errors: list[str] = []
     directory = root / REL
@@ -82,6 +117,8 @@ def validate(root: pathlib.Path = ROOT, expected_main_sha: str | None = None) ->
         manifest = _load(directory / "retrieval-manifest.json")
     except ValueError as exc:
         return [str(exc)]
+
+    _verify_evidence_hashes(directory, errors)
 
     for label, data in (
         ("PR inventory", prs_data),
@@ -221,31 +258,6 @@ def validate(root: pathlib.Path = ROOT, expected_main_sha: str | None = None) ->
             item = uniqueness.get(name)
             if not isinstance(item, dict) or item.get("ok") is not True or item.get("duplicates_or_nulls") not in ([], None):
                 errors.append(f"manifest uniqueness check failed or missing: {name}")
-
-    evidence_hashes = integrity.get("evidence_git_blob_sha1")
-    if not isinstance(evidence_hashes, dict):
-        errors.append("manifest evidence_git_blob_sha1 must be an object")
-    else:
-        expected_names = set(EVIDENCE_FILES)
-        actual_names = set(evidence_hashes)
-        if actual_names != expected_names:
-            errors.append(
-                "manifest evidence hash coverage mismatch: "
-                f"expected {sorted(expected_names)}, got {sorted(actual_names)}"
-            )
-        for name in EVIDENCE_FILES:
-            expected = evidence_hashes.get(name)
-            path = directory / name
-            if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{40}", expected) is None:
-                errors.append(f"manifest evidence hash missing or malformed: {name}")
-                continue
-            try:
-                actual = _git_blob_sha1(path)
-            except OSError as exc:
-                errors.append(f"cannot hash evidence file {name}: {exc}")
-                continue
-            if actual != expected:
-                errors.append(f"frozen evidence mutation detected: {name}: {actual} != {expected}")
 
     if manifest.get("completeness_status") != "COMPLETE":
         errors.append("inventory does not assert COMPLETE")
