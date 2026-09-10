@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import pathlib
 import re
@@ -13,6 +14,14 @@ from typing import Any
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 REL = pathlib.Path("docs/audits/merged-pr-review-audit")
 EXPECTED_SCHEMA_VERSION = 2
+EVIDENCE_FILES = (
+    "inventory-summary.md",
+    "raw-pr-inventory.json",
+    "raw-review-comments.json",
+    "raw-review-submissions.json",
+    "raw-review-threads.json",
+    "retrieval-limitations.md",
+)
 PER_PR_ENDPOINTS = (
     "GET /repos/{owner}/{repo}/issues/{pr}/comments",
     "GET /repos/{owner}/{repo}/pulls/{pr}/reviews",
@@ -29,6 +38,11 @@ def _load(path: pathlib.Path) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError(f"{path} must contain a JSON object")
     return value
+
+
+def _git_blob_sha1(path: pathlib.Path) -> str:
+    raw = path.read_bytes()
+    return hashlib.sha1(f"blob {len(raw)}\0".encode("ascii") + raw).hexdigest()
 
 
 def _records(data: dict[str, Any], key: str, label: str, errors: list[str]) -> list[dict[str, Any]]:
@@ -207,6 +221,31 @@ def validate(root: pathlib.Path = ROOT, expected_main_sha: str | None = None) ->
             item = uniqueness.get(name)
             if not isinstance(item, dict) or item.get("ok") is not True or item.get("duplicates_or_nulls") not in ([], None):
                 errors.append(f"manifest uniqueness check failed or missing: {name}")
+
+    evidence_hashes = integrity.get("evidence_git_blob_sha1")
+    if not isinstance(evidence_hashes, dict):
+        errors.append("manifest evidence_git_blob_sha1 must be an object")
+    else:
+        expected_names = set(EVIDENCE_FILES)
+        actual_names = set(evidence_hashes)
+        if actual_names != expected_names:
+            errors.append(
+                "manifest evidence hash coverage mismatch: "
+                f"expected {sorted(expected_names)}, got {sorted(actual_names)}"
+            )
+        for name in EVIDENCE_FILES:
+            expected = evidence_hashes.get(name)
+            path = directory / name
+            if not isinstance(expected, str) or re.fullmatch(r"[0-9a-f]{40}", expected) is None:
+                errors.append(f"manifest evidence hash missing or malformed: {name}")
+                continue
+            try:
+                actual = _git_blob_sha1(path)
+            except OSError as exc:
+                errors.append(f"cannot hash evidence file {name}: {exc}")
+                continue
+            if actual != expected:
+                errors.append(f"frozen evidence mutation detected: {name}: {actual} != {expected}")
 
     if manifest.get("completeness_status") != "COMPLETE":
         errors.append("inventory does not assert COMPLETE")
