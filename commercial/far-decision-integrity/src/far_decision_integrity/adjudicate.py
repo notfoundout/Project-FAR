@@ -28,22 +28,23 @@ def adjudicate(
     require_semantic_contract: bool = False,
 ) -> Adjudication:
     findings: list[Finding] = []
-    incoming = {
+    authorizing = {
         dependency.source_id
         for dependency in package.dependencies
         if dependency.target_id == package.decision_root
+        and dependency.relation.strip().lower() == "authorizes"
     }
 
     for requirement in sorted(
         requirement
         for requirement in package.authorization_requirements
-        if requirement not in incoming
+        if requirement not in authorizing
     ):
         findings.append(
             Finding(
                 "authorization-dependency-missing",
                 "error",
-                f"Required authorization node {requirement!r} is not connected to the decision root.",
+                f"Required authorization node {requirement!r} is not connected to the decision root by an 'authorizes' edge.",
                 requirement,
             )
         )

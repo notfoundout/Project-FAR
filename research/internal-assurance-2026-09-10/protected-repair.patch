@@ -1,0 +1,65 @@
+diff --git a/far_validation/assured_engine.py b/far_validation/assured_engine.py
+index 7726c98d..2e84ee1a 100644
+--- a/far_validation/assured_engine.py
++++ b/far_validation/assured_engine.py
+@@ -313,8 +313,8 @@ class ValidationEngine(BaseValidationEngine):
+                 failure_code="FAR-VAL-TIMEOUT-001",
+                 summary=f"timed out after {definition.timeout_seconds}s",
+                 command=command,
+-                stdout=exc.stdout or "",
+-                stderr=exc.stderr or "",
++                stdout=exc.stdout.decode("utf-8", errors="replace") if isinstance(exc.stdout, bytes) else exc.stdout or "",
++                stderr=exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else exc.stderr or "",
+             )
+         except OSError as exc:
+             return CheckResult(
+diff --git a/far_validation/tracing.py b/far_validation/tracing.py
+index 51c1b8dc..2378c29d 100644
+--- a/far_validation/tracing.py
++++ b/far_validation/tracing.py
+@@ -142,6 +142,9 @@ def _at_path(call: str, stripped: str, quoted: list[str]) -> str | None:
+     if call in {"openat", "newfstatat", "unlinkat", "mkdirat", "readlinkat", "renameat", "renameat2"}:
+         before_quote = stripped.split('"', 1)[0]
+         if "AT_FDCWD" not in before_quote and not Path(quoted[0]).is_absolute():
++            descriptor = re.search(r"\(\s*\d+<([^>]+)>,", before_quote)
++            if descriptor and Path(descriptor.group(1)).is_absolute():
++                return str(Path(descriptor.group(1)) / quoted[0])
+             return None
+         return quoted[0]
+     return quoted[0]
+@@ -193,6 +196,8 @@ def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
+             continue
+         raw_path = _at_path(call, stripped, quoted)
+         if raw_path is None:
++            if quoted and quoted[0] and not _FAILED_RESULT.search(stripped):
++                report.violations.append(f"unresolved directory-relative access: {stripped}")
+             continue
+         relative = _normalize_observed(raw_path, current_cwd, root)
+         if relative is None:
+@@ -237,6 +242,7 @@ def run_traced(
+         strace,
+         "-f",
+         "-qq",
++        "-yy",
+         "-s",
+         "4096",
+         "-e",
+diff --git a/far_validation/weakening.py b/far_validation/weakening.py
+index d05379f6..7ed52003 100644
+--- a/far_validation/weakening.py
++++ b/far_validation/weakening.py
+@@ -906,6 +906,7 @@ def _changed_python(root: Path, base: str) -> list[tuple[str, str]]:
+         root,
+         "diff",
+         "--name-status",
++        "--no-renames",
+         f"{base}...HEAD",
+         "--",
+         "tests",
+@@ -1042,4 +1043,4 @@ def main(argv: list[str] | None = None) -> int:
+ 
+ 
+ if __name__ == "__main__":
+-    raise SystemExit(main())
+\ No newline at end of file
++    raise SystemExit(main())

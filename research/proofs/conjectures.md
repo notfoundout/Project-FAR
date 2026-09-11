@@ -1,22 +1,22 @@
 # Conjectures
 
+Status: Research; non-canonical
+
 ## Purpose
 
-This document serves as the canonical registry of conjectures within Project FAR.
+This document is a research-stage working registry of conjectures and validation links within `research/`.
 
-A conjecture is a formally stated claim that has not yet been established by an accepted proof or disproven by a counterexample.
+It is not the Project FAR canonical conjecture authority. Current canonical locations and accepted status must be resolved through [`../../docs/CANONICAL_MAP.md`](../../docs/CANONICAL_MAP.md) and the applicable theory/governance source. The accepted-theory conjecture record currently lives at [`../../theory/theorems/conjectures.md`](../../theory/theorems/conjectures.md).
 
-Conjectures represent active research questions.
-
-They shall not be treated as accepted results.
+A conjecture recorded here is a research claim that has not been established as an accepted result. Its presence, identifier, or status in this file does not promote it into accepted theory.
 
 ---
 
 # Relationship to Formal Proofs
 
-Conjectures occupy an intermediate position between research and formal proof.
+This file may track research-stage relationships between conjectures, validation investigations, and proof attempts. Accepted formal status is controlled by the applicable canonical theory/governance artifact, not by this research registry.
 
-A conjecture may eventually become:
+A research conjecture may eventually become:
 
 - a lemma;
 - a proposition;
@@ -29,11 +29,13 @@ or it may be:
 - revised;
 - withdrawn.
 
+Any such change becomes accepted only through the governed acceptance and promotion path.
+
 ---
 
-# Status Classifications
+# Research Status Classifications
 
-Every conjecture shall possess exactly one status.
+Each entry in this working registry uses one research-stage status:
 
 - Proposed
 - Under Investigation
@@ -42,9 +44,11 @@ Every conjecture shall possess exactly one status.
 - Promoted
 - Withdrawn
 
+These labels describe this research record only and must not be read as competing canonical status declarations.
+
 ---
 
-# Conjecture Catalog
+# Research Conjecture Catalog
 
 | ID | Title | Status | Related Validation | Notes |
 |----|-------|--------|--------------------|-------|
@@ -56,55 +60,40 @@ Every conjecture shall possess exactly one status.
 
 ---
 
-# Numbering Convention
+# Research Numbering Convention
 
-Conjectures shall use the prefix:
+Entries in this research file use the local prefix:
 
 - CJ-XXX
 
-Identifiers are assigned sequentially.
-
-Identifiers shall never be reused.
+Identifiers are retained for research traceability and are not canonical theory identifiers merely because they appear here.
 
 ---
 
-# Promotion Criteria
+# Promotion Boundary
 
-A conjecture may be promoted to the formal proof system only after:
-
-1. its statement has been precisely specified;
-2. all required definitions are established;
-3. dependencies have been identified;
-4. a complete proof has been accepted.
-
-Promotion changes the conjecture's status to **Promoted** and creates the corresponding proof artifact.
+This research file cannot promote a conjecture. Promotion requires the applicable governed process and an accepted canonical artifact. If promotion occurs elsewhere, this file may record that event only as a non-canonical research/history reference to the controlling source.
 
 ---
 
-# Refutation
+# Refutation Boundary
 
-A conjecture shall be classified as **Refuted** if an accepted counterexample or formal proof demonstrates that the claim is false.
-
-Refuted conjectures shall remain in this document for historical traceability.
+This file may record a research-stage refutation result, but accepted refutation status must be determined by the applicable canonical authority and evidence path.
 
 ---
 
 # Maintenance Policy
 
-Whenever a new conjecture is proposed:
+When this working registry changes:
 
-1. Assign the next available identifier.
-2. Record its title.
-3. Record its current status.
-4. Record any related validation investigations.
-5. Record links to associated proof attempts.
-
-Whenever a conjecture changes status, this registry shall be updated accordingly.
+1. Preserve existing research identifiers for traceability.
+2. Record relevant validation or proof-attempt links.
+3. Do not present this file as a canonical source.
+4. Do not use a research status here to override canonical theory/governance.
+5. Route any accepted-status change through the governed acceptance/promotion process.
 
 ---
 
-# Current Status
+# Current Research Status
 
-The conjecture registry has been established.
-
-No conjecture has yet been promoted to an accepted formal result.
+This working research registry exists for traceability and navigation. It establishes no accepted theorem, canonical conjecture identity, or promotion by itself.

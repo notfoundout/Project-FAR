@@ -7,6 +7,9 @@ from typing import Any
 from .external_trace import ExternalEvent, ExternalTrace, ProvenanceKind, SourceLocation
 
 
+OBSERVATION_TYPES = frozenset({"observation", "tool-output", "tool_output", "tool-result", "tool_result"})
+
+
 def load_swe_agent_trace(path: str | Path, *, trace_id: str | None = None) -> ExternalTrace:
     source = Path(path)
     try:
@@ -20,9 +23,18 @@ def load_swe_agent_trace(path: str | Path, *, trace_id: str | None = None) -> Ex
         if not isinstance(record, dict):
             continue
         actor = _first_text(record, "role", "actor", "agent") or "unknown"
+        message_type = (_first_text(record, "message_type", "type") or "").lower().replace(" ", "_")
         content = _first_text(record, "content", "message", "text", "thought")
         action = record.get("action") or record.get("tool_call") or record.get("command")
         observation = record.get("observation") or record.get("result") or record.get("output")
+
+        # SWE-agent trajectories also encode observations as typed messages, for
+        # example {"message_type": "observation", "message": "..."}. Treating
+        # those as agent messages loses the environment/tool-output distinction.
+        if message_type in OBSERVATION_TYPES and observation is None and content is not None:
+            observation = content
+            content = None
+            actor = "environment"
 
         if content:
             events.append(_event(source.name, index, len(events), actor, "message", content, {}))

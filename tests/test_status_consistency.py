@@ -17,6 +17,10 @@ class StatusConsistencyTests(unittest.TestCase):
     def rec(self, cls, title, status, ident=None):
         return csc.StatusRecord("fixture.md", cls, 1, 1, ident, title, status, csc.normalize_status(status))
 
+    def test_not_supported_is_not_promoted_to_supported(self):
+        self.assertEqual(csc.normalize_status("Not supported"), "not supported")
+        self.assertEqual(csc.normalize_status("Result: NOT SUPPORTED by this campaign."), "not supported")
+
     def test_scoped_conditional_titles_do_not_match_broad_investigations(self):
         resolved_min = self.rec("theorem", "Conditional Primitive Minimality", "Established, conditional", "T-001")
         research_min = self.rec("investigation", "Primitive Minimality", "Research", "VI-002")

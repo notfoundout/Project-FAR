@@ -11,6 +11,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from far_decision_integrity.adjudicate import adjudicate
 from far_decision_integrity.cli import main
+from far_decision_integrity.evidence import verify_evidence_bundle, write_evidence_bundle
 from far_decision_integrity.model import DecisionPackage, IntegrityStatus, PackageValidationError, SCHEMA_VERSION
 
 
@@ -31,7 +32,7 @@ def payload() -> dict:
             {"source_id": "evidence", "target_id": "conclusion", "relation": "supports"},
             {"source_id": "rule", "target_id": "conclusion", "relation": "authorizes"},
         ],
-        "authorization_requirements": ["evidence", "rule"],
+        "authorization_requirements": ["rule"],
         "unknowns": [],
         "trace_completeness": 1.0,
         "metadata": {},
@@ -43,11 +44,34 @@ class TestCore(unittest.TestCase):
         package = DecisionPackage.from_dict(payload())
         self.assertEqual(adjudicate(package).status, IntegrityStatus.JUSTIFIED)
 
+    def test_requires_explicit_authorization_and_unknown_fields(self):
+        for field in ("authorization_requirements", "unknowns"):
+            with self.subTest(field=field):
+                data = payload()
+                del data[field]
+                with self.assertRaisesRegex(PackageValidationError, f"{field} is required"):
+                    DecisionPackage.from_dict(data)
+
     def test_rejects_dangling_dependency(self):
         data = payload()
         data["dependencies"][0]["source_id"] = "missing"
         with self.assertRaisesRegex(PackageValidationError, "dependency source"):
             DecisionPackage.from_dict(data)
+
+    def test_rejects_dependency_cycles(self):
+        data = payload()
+        data["dependencies"].append(
+            {"source_id": "conclusion", "target_id": "rule", "relation": "supports"}
+        )
+        with self.assertRaisesRegex(PackageValidationError, "cycle detected"):
+            DecisionPackage.from_dict(data)
+
+    def test_support_edge_does_not_satisfy_authorization(self):
+        data = payload()
+        data["dependencies"][1]["relation"] = "supports"
+        result = adjudicate(DecisionPackage.from_dict(data))
+        self.assertEqual(result.status, IntegrityStatus.UNSUPPORTED)
+        self.assertIn("authorization-dependency-missing", {item.rule_id for item in result.findings})
 
     def test_unsupported_precedes_unknown(self):
         data = payload()
@@ -75,6 +99,22 @@ class TestCore(unittest.TestCase):
             first = report.read_bytes()
             self.assertEqual(main([str(source), "--output", str(report)]), 0)
             self.assertEqual(first, report.read_bytes())
+
+    def test_evidence_bundle_verifies_report_and_all_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            source = root / "source.json"
+            bundle = root / "bundle"
+            source.write_text('{"value":1}\n', encoding="utf-8")
+            write_evidence_bundle(
+                bundle,
+                report_name="report.json",
+                report_payload={"status": "ok"},
+                source_files={"source": source},
+            )
+            self.assertTrue(verify_evidence_bundle(bundle))
+            source.write_text('{"value":2}\n', encoding="utf-8")
+            self.assertFalse(verify_evidence_bundle(bundle))
 
 
 if __name__ == "__main__":

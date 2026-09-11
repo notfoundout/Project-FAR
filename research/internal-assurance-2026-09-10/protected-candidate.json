@@ -1,0 +1,36 @@
+{
+  "defects_observed": {
+    "dirfd_trace": false,
+    "renamed_test": false,
+    "timeout_json": false
+  },
+  "expected_observation": "repaired",
+  "negative_control_failed_fd_accepted": true,
+  "observation_matches": true,
+  "rename": {
+    "accepted": false,
+    "findings": [
+      "tests/test_new.py",
+      "tests/test_old.py"
+    ],
+    "git_status": "R099\ttests/test_old.py\ttests/test_new.py"
+  },
+  "scope": "internal synthetic maintenance reproductions; not EFR or independent validation",
+  "source_sha256": {
+    "far_validation/assured_engine.py": "c37adf86c9cf75b4387ebe987b0b2ac0db012d6d9dff4ccb1dd64235a319c457",
+    "far_validation/tracing.py": "d9a62a0332a9747fc09c639e08bf52412b7c44a89157156dd83cf65fa7f79e25",
+    "far_validation/weakening.py": "5f86d021703e877740ef1a0fcadeb7b288e5a45024c73c1912a992da05b694f0"
+  },
+  "timeout": {
+    "json_serializable": true,
+    "status": "timed_out"
+  },
+  "trace": {
+    "resolved_reads": [
+      "secret.txt"
+    ],
+    "unresolved_violations": [
+      "unresolved directory-relative access: openat(3, \"secret.txt\", O_RDONLY) = 4"
+    ]
+  }
+}

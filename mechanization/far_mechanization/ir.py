@@ -174,6 +174,8 @@ class GraphNode:
 
     def validate(self) -> tuple[Diagnostic, ...]:
         diagnostics = list(self.identifier.validate())
+        if not isinstance(self.node_kind, GraphNodeKind):
+            diagnostics.append(Diagnostic(DiagnosticCode.INVALID_ENUM_VALUE, DiagnosticSeverity.ERROR, "node_kind must be a GraphNodeKind", related_identifier=str(self.identifier)))
         if self.source:
             diagnostics.extend(self.source.validate())
         return tuple(diagnostics)
@@ -193,6 +195,8 @@ class GraphEdge:
 
     def validate(self) -> tuple[Diagnostic, ...]:
         diagnostics = list(self.identifier.validate()) + list(self.source.validate()) + list(self.target.validate())
+        if not isinstance(self.edge_kind, GraphEdgeKind):
+            diagnostics.append(Diagnostic(DiagnosticCode.INVALID_ENUM_VALUE, DiagnosticSeverity.ERROR, "edge_kind must be a GraphEdgeKind", related_identifier=str(self.identifier)))
         if self.provenance:
             diagnostics.extend(self.provenance.validate())
         return tuple(diagnostics)
@@ -248,7 +252,7 @@ class FARDocument:
             diagnostics.extend(self.source.validate())
         if self.graph:
             diagnostics.extend(self.graph.validate())
-        seen: dict[str, str] = {}
+        seen: dict[str, str] = {str(self.investigation.identifier): "investigation"}
         for collection_name in ("representations", "structures", "interpretations", "claims", "assumptions", "evidence", "operations", "reasoning_steps", "dependencies", "proofs"):
             for item in getattr(self, collection_name):
                 diagnostics.extend(item.validate())

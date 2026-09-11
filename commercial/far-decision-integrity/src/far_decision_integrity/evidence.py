@@ -58,19 +58,62 @@ def write_evidence_bundle(
     return report_path, manifest_path
 
 
+def _safe_report_path(root: Path, raw_path: Any) -> Path | None:
+    if not isinstance(raw_path, str) or not raw_path or Path(raw_path).is_absolute():
+        return None
+    root_resolved = root.resolve()
+    candidate = (root / raw_path).resolve()
+    try:
+        candidate.relative_to(root_resolved)
+    except ValueError:
+        return None
+    return candidate
+
+
 def verify_evidence_bundle(output_directory: str | Path) -> bool:
     root = Path(output_directory)
     try:
         manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return False
-    if manifest.get("schema_version") != EVIDENCE_MANIFEST_VERSION:
+    if not isinstance(manifest, dict) or manifest.get("schema_version") != EVIDENCE_MANIFEST_VERSION:
         return False
     report = manifest.get("report")
-    if not isinstance(report, dict):
+    sources = manifest.get("sources")
+    if not isinstance(report, dict) or not isinstance(sources, list):
         return False
-    report_path = root / str(report.get("path", ""))
+    report_path = _safe_report_path(root, report.get("path"))
+    expected_report_hash = report.get("sha256")
+    if report_path is None or not isinstance(expected_report_hash, str):
+        return False
     try:
-        return sha256_bytes(report_path.read_bytes()) == report.get("sha256")
+        if sha256_bytes(report_path.read_bytes()) != expected_report_hash:
+            return False
     except OSError:
         return False
+
+    seen_names: set[str] = set()
+    for source in sources:
+        if not isinstance(source, dict):
+            return False
+        name = source.get("name")
+        raw_path = source.get("path")
+        expected_hash = source.get("sha256")
+        if (
+            not isinstance(name, str)
+            or not name
+            or name in seen_names
+            or not isinstance(raw_path, str)
+            or not raw_path
+            or not isinstance(expected_hash, str)
+            or len(expected_hash) != 64
+        ):
+            return False
+        seen_names.add(name)
+        source_path = Path(raw_path)
+        try:
+            if sha256_bytes(source_path.read_bytes()) != expected_hash:
+                return False
+        except OSError:
+            return False
+    return True

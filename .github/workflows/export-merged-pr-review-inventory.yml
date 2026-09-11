@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - tools/export_merged_pr_review_inventory.py
+      - tools/pin_merged_pr_review_inventory.py
+      - tools/check_merged_pr_review_inventory.py
       - .github/workflows/export-merged-pr-review-inventory.yml
 
 permissions:
@@ -15,7 +17,7 @@ permissions:
   pull-requests: read
 
 concurrency:
-  group: merged-pr-review-inventory-${{ github.ref }}
+  group: merged-pr-review-inventory-main
   cancel-in-progress: false
 
 jobs:
@@ -23,30 +25,58 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - name: Check out audited main
+      - name: Check out exact audited main
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          ref: main
+          fetch-depth: 0
+
+      - name: Capture audited main identity
+        id: audited
+        shell: bash
+        run: |
+          set -euo pipefail
+          audited_sha="$(git rev-parse HEAD)"
+          echo "sha=${audited_sha}" >> "$GITHUB_OUTPUT"
+          echo "Audited main: ${audited_sha}"
 
       - name: Export authenticated GitHub review inventory
         id: export
         env:
           GITHUB_TOKEN: ${{ github.token }}
           MAX_EXPORT_ATTEMPTS: "4"
+          AUDITED_SHA: ${{ steps.audited.outputs.sha }}
         run: |
           set +e
           export_rc=2
+          attempts_used=0
           attempt=1
 
           while [[ "$attempt" -le "$MAX_EXPORT_ATTEMPTS" ]]; do
+            attempts_used="$attempt"
             echo "Starting authenticated export attempt ${attempt}/${MAX_EXPORT_ATTEMPTS}."
             rm -rf docs/audits/merged-pr-review-audit
 
             python tools/export_merged_pr_review_inventory.py \
               --repository "${GITHUB_REPOSITORY}" \
-              --audited-sha "${GITHUB_SHA}" \
+              --audited-sha "${AUDITED_SHA}" \
               --output docs/audits/merged-pr-review-audit
             export_rc=$?
+
+            if [[ "$export_rc" -eq 0 ]]; then
+              python tools/pin_merged_pr_review_inventory.py \
+                --repository-root . \
+                --audited-sha "${AUDITED_SHA}" \
+                --inventory docs/audits/merged-pr-review-audit
+              export_rc=$?
+            fi
+
+            if [[ "$export_rc" -eq 0 ]]; then
+              python tools/check_merged_pr_review_inventory.py \
+                --root . \
+                --expected-main-sha "${AUDITED_SHA}"
+              export_rc=$?
+            fi
 
             if [[ "$export_rc" -eq 0 ]]; then
               echo "Authenticated export completed successfully on attempt ${attempt}."
@@ -54,7 +84,7 @@ jobs:
             fi
 
             if [[ "$export_rc" -ne 2 ]]; then
-              echo "Exporter returned non-retryable exit code ${export_rc}."
+              echo "Export pipeline returned non-retryable exit code ${export_rc}."
               break
             fi
 
@@ -68,7 +98,7 @@ jobs:
           done
 
           echo "export_rc=${export_rc}" >> "$GITHUB_OUTPUT"
-          echo "attempts=${attempt}" >> "$GITHUB_OUTPUT"
+          echo "attempts=${attempts_used}" >> "$GITHUB_OUTPUT"
 
           if [[ "$export_rc" -ne 0 && "$export_rc" -ne 2 ]]; then
             exit "$export_rc"
@@ -98,14 +128,14 @@ jobs:
       - name: Upload raw authenticated export
         uses: actions/upload-artifact@v4
         with:
-          name: merged-pr-review-inventory-${{ github.run_id }}
+          name: merged-pr-review-inventory-${{ github.run_id }}-${{ github.run_attempt }}
           path: docs/audits/merged-pr-review-audit/
           if-no-files-found: error
           retention-days: 30
 
       - name: Push generated inventory branch
         env:
-          EXPORT_BRANCH: audit/authenticated-review-data-${{ github.run_id }}
+          EXPORT_BRANCH: audit/authenticated-review-data-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"

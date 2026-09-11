@@ -1,70 +1,75 @@
 # Documentation Index
 
-Project-level documentation lives here. This directory is for orientation, project governance, and navigation; canonical theory lives in `../theory/`, foundations live in `../foundations/`, and exploratory work lives in `../research/`.
+Project-level documentation lives here. This directory provides orientation, governance, status, audit evidence, and navigation. Current canonical theory lives in `../theory/`; foundations live in `../foundations/`; exploratory work lives in `../research/` and is non-canonical unless separately promoted.
 
-## Documents
+## Current authority and status
+
+- `CANONICAL_MAP.md` — canonical location map for major concepts and the controlling navigation surface for authority.
+- `project-status.md` — current project-level governance and milestone status.
+- `governance/central-research-program.md` — terminal central-research answer and evidence discipline.
+- `../theory/theorems/Project-FAR-Theory-Closure-v1.1.md` — current corrected Project FAR Core Theory v1.1.
+- `../theory/theorems/Project-FAR-Theory-Closure-v1.0.md` — immutable historical v1.0 base; preserved for provenance and superseded as current authority.
+- `governance/w1-w6-claim-evidence-matrix-v1.0.md` — canonical W1–W6 claims, evidence, scopes, and prohibited promotions.
+- `governance/external-falsification-and-replication-program-v1.0.md` — separate post-W1–W6 External Falsification and Replication program; its external work is not established by internal repository validation.
+- `governance/limitations-register.md` — current limitations.
+- `governance/unresolved-questions-register.md` — unresolved questions.
+
+## Core documentation
 
 - `ARCHITECTURE.md` — repository architecture and structural decisions.
-- `ROADMAP.md` — project roadmap.
-- `project-status.md` — current project status.
-- `../theory/theorems/Project-FAR-Theory-Closure-v1.0.md` — canonical closed core theory.
-- `governance/post-closure-assurance-and-application-program-v1.0.md` — current assurance and application program.
-- `governance/pca-w1-independent-review-promotion-v1.0.md` — completed W1 assurance promotion.
-- `governance/pca-w2-formalization-status-v1.0.md` — active W2 outcome and exact obstruction.
-- `assurance/far-core-assurance.md` — generated multidimensional FAR-CORE assurance view.
-- `planning/opportunity-registry.md` and `research/research-question-registry.md` — generated governed research-memory views.
+- `ROADMAP.md` — gated future work.
 - `CHANGELOG.md` — chronological change history.
 - `DECISION_LOG.md` — canonical project decision log.
 - `OVERVIEW.md` — project overview.
-- `CANONICAL_MAP.md` — canonical location map for major concepts.
-- [`planning/repository-index.md`](planning/repository-index.md) — generated
-  repository-wide artifact navigation; it is an index, not a source of authority.
+- [`planning/repository-index.md`](planning/repository-index.md) — generated repository-wide artifact navigation; an index, not an authority source.
 - `STYLE_GUIDE.md` — documentation style standards.
 - `SEMANTIC_AUDIT.md` — repository-wide semantic consistency audit and dependency graph.
-- `governance/central-research-program.md` — authoritative central research question, research objectives, evidence standard, and completion criteria.
-- `governance/repository-certification-standard.md` — canonical Repository Certification Standard.
-- `reports/foundation-health-verification.md` — Phase 1 Step 2 repository health verification report.
+- `governance/repository-certification-standard.md` — frozen canonical Repository Certification Standard.
+- `reports/foundation-health-verification.md` — bounded Foundation health-verification report.
 
-## Related Entry Points
+## Related entry points
 
-- `../README.md` — repository-level navigation.
+- `../README.md` — repository-level command center.
 - `../foundations/README.md` — foundations index.
 - `../theory/README.md` — theory index.
-- `../frameworks/` — FAR, FARA, and FARO framework material.
-- `../methodology/README.md` — proof, validation, falsification, and comparison methodology.
-- `../research/README.md` — exploratory research index.
-- [Central Research Program](governance/central-research-program.md) - terminal core answer and standards for post-closure assurance and application.
-- [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) - inventory baseline, classification, metrics, findings, and architecture map.
-- [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) - semantic certification glossary and authoritative vocabulary index by reference to canonical definitions.
-- [Semantic Certification Report](audits/semantic-certification-report.md) - semantic, terminology, glossary, reachability, and canonical-home certification report.
-- [Repository Architecture Certification Report](audits/repository-architecture-certification-report.md) - architecture policy, report-root policy, reference-document policy, navigation, and discoverability report.
-- [Repository Certification Index](certification/README.md) - navigation hub for all Repository Certification artifacts.
-- [Repository Domain Registry](architecture/repository-domain-registry.md) - authoritative registry for repository domains, responsibilities, roots, owners, and allowed artifact classes.
-- [Documentation Standardization Report](audits/documentation-standardization-report.md) - documentation structure, metadata, accessibility, navigation, and consistency report.
-- [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) - compliance enforcement, automation coverage, regression prevention, and findings update.
-- [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) - certification matrix, governance consistency, integrity, regression, and automation verification audit.
-- [Repository Certification Status](certification/repository-certification-status.md) - certification decision, evidence matrix, repository integrity summary, and maintenance readiness assessment.
-## Evaluation Methodology Navigation
+- `../frameworks/` — FAR-family framework material.
+- `../methodology/README.md` — supporting proof, validation, falsification, and comparison methodology.
+- `../research/README.md` — non-canonical exploratory research index.
+- [Central Research Program](governance/central-research-program.md) — terminal core answer and standards for post-closure assurance/application.
 
-- Preliminary external validation: `../theory/evaluation/external-validation-methodology.md`.
-- Comparative representation protocol: `../theory/evaluation/comparative-representation/protocol-v1.0.md`.
-- Comparative experiment registry: `../theory/evaluation/comparative-representation/experiment-registry.json`.
+## Repository Certification navigation
 
+- [Repository Certification Standard](governance/repository-certification-standard.md) — governing certification criteria and completion rule.
+- [Repository Certification Inventory Audit](audits/repository-certification-inventory-audit.md) — inventory baseline, classifications, metrics, findings, and architecture map.
+- [Canonical Vocabulary Index](glossary/canonical-vocabulary-index.md) — vocabulary navigation by reference to canonical definitions.
+- [Semantic Certification Report](audits/semantic-certification-report.md) — semantic, terminology, glossary, reachability, and canonical-home audit report.
+- [Repository Architecture Certification Report](audits/repository-architecture-certification-report.md) — architecture policy and discoverability audit.
+- [Documentation Standardization Report](audits/documentation-standardization-report.md) — documentation structure and consistency audit.
+- [Repository Certification Index](certification/README.md) — certification artifact navigation hub.
+- [Repository Domain Registry](architecture/repository-domain-registry.md) — frozen authoritative registry of repository domains, responsibilities, roots, owners, and allowed artifact classes.
+- [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) — compliance automation coverage and findings.
+- [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) — preserved certification audit evidence; consult the current certification status before relying on its conclusion.
+- [Repository Certification Status](certification/repository-certification-status.md) — current repository-level certification decision. This status fails closed against unresolved merged-review reconciliation findings.
 
-## Release Navigation
+## Evaluation methodology navigation
 
-- Current release: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md).
+These are bounded methodology/evidence surfaces. Their presence does not establish external validity.
+
+- Preliminary external-validation methodology: `../theory/evaluation/external-validation-methodology.md`.
+- Comparative-representation protocol: `../theory/evaluation/comparative-representation/protocol-v1.0.md`.
+- Comparative-experiment registry: `../theory/evaluation/comparative-representation/experiment-registry.json`.
+
+## Release navigation
+
+- Current release record: [`releases/project-far-v1.0.0.md`](releases/project-far-v1.0.0.md).
 - Previous maintenance release: [`releases/project-far-v0.3.1.md`](releases/project-far-v0.3.1.md).
 - Internal-validation baseline: [`releases/project-far-v0.3.0.md`](releases/project-far-v0.3.0.md).
 
-## Correction-phase entry points
+Release records are historical/version records; they do not override the current canonical theory, governance, claim/evidence matrix, limitations, or certification status.
 
-Use the [canonical map](CANONICAL_MAP.md) for authority, [canonical terminology](glossary/canonical-terminology.md) for terms, [framework boundaries](governance/framework-boundaries.md) and [dependency specification](governance/dependency-specification.md) for architecture, and the claim/limitations/unresolved/open-problem/counterexample/derivation/theorem registers under `governance/` for status.
+## Supporting documentation
 
-## Supporting documentation navigation
-
-These supporting records are non-canonical; the canonical map and governance
-registers above remain authoritative.
+The following records are supporting or scoped surfaces. They do not replace the canonical map or current governance/status registers.
 
 - Architecture records: [repository convergence](architecture/repository-convergence-2026-07-23.md), [terminology status](architecture/terminology-status-2026-07-23.md), [validation architecture](architecture/unified-validation-architecture.md), and [validator assurance](architecture/validator-assurance-hardening.md).
 - Governance and operations: [CI responsibility matrix](ci/responsibility-matrix.md), [anti-self-validation clarification](governance/anti-self-validation-deduction-clarification.md), [fix-register control](governance/fix-register-control.md), and [repository-truth revalidation scope](governance/repository-truth-revalidation-scope.md).
@@ -73,3 +78,5 @@ registers above remain authoritative.
 - Planning records: [anti-self-validation implementation](planning/anti-self-validation-implementation-plan.md), [deduction-first roadmap](planning/deduction-first-proof-roadmap.md), and [external-validation convergence](planning/external-validation-convergence-plan-2026-07-23.md).
 - Review and reusable controls: [S-core review package](review/s-core-w5-independent-proof-review-package-v1.0.md), [pipeline threat model](security/swe-agent-v2-pipeline-threat-model.md), [claim-ledger template](templates/claim-ledger-entry.md), and [S-core review form](templates/s-core-w5-independent-proof-review-form-v1.0.md).
 - Registered comparative packages: [CRE-002-EXT-001-REP-001 preregistration](../theory/evaluation/comparative-representation/experiments/CRE-002-EXT-001-REP-001/preregistration.md) and [CRE-004-RUN-001](../theory/evaluation/comparative-representation/experiments/CRE-004/runs/CRE-004-RUN-001/README.md).
+
+For any authority conflict, use `CANONICAL_MAP.md` and the applicable canonical governance/status register rather than this index.

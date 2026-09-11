@@ -32,6 +32,25 @@ class TestExternalTraceAdapter(unittest.TestCase):
             self.assertTrue(all(event.provenance is ProvenanceKind.OBSERVED for event in trace.events))
             self.assertEqual(trace.events[0].source.record, "0")
 
+    def test_typed_observation_message_is_environment_output(self):
+        payload = {
+            "trajectory": [
+                {"role": "assistant", "message": "run tests", "action": "pytest"},
+                {"message_type": "observation", "message": "1 failed, 4 passed"},
+            ]
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            source = pathlib.Path(directory) / "typed.traj.json"
+            source.write_text(json.dumps(payload), encoding="utf-8")
+            trace = load_swe_agent_trace(source)
+            self.assertEqual(trace.events[-1].actor, "environment")
+            self.assertEqual(trace.events[-1].event_type, "tool-output")
+            self.assertIn("1 failed, 4 passed", trace.events[-1].statement)
+            self.assertFalse(any(
+                event.event_type == "message" and "1 failed, 4 passed" in event.statement
+                for event in trace.events
+            ))
+
     def test_compilation_preserves_unknown_completeness(self):
         with tempfile.TemporaryDirectory() as directory:
             source = pathlib.Path(directory) / "trace.json"

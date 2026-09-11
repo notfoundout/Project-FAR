@@ -9,6 +9,7 @@ if importlib.util.find_spec("fastapi") is None:
     )
 
 import csv
+import copy
 import io
 import json
 
@@ -143,6 +144,43 @@ class TestFarDemo(unittest.TestCase):
             },
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_removed_non_authorization_support_requires_review(self) -> None:
+        candidate = copy.deepcopy(SAMPLE_BASELINE)
+        candidate["decision_id"] = "candidate-with-support-removed"
+        candidate["dependencies"] = [d for d in candidate["dependencies"] if d["source_id"] != "invoice-match"]
+        response = self.client.post("/api/analyze", files={
+            "baseline": ("base.json", json.dumps(SAMPLE_BASELINE), "application/json"),
+            "candidate": ("candidate.json", json.dumps(candidate), "application/json"),
+        })
+        self.assertEqual(response.status_code, 200)
+        payload = response.json()
+        self.assertEqual(payload["status"], "justified")
+        self.assertEqual(payload["release_decision"], "REVIEW_REQUIRED")
+        self.assertEqual(payload["artifact"]["release_decision"], "REVIEW_REQUIRED")
+        self.assertEqual(payload["structural_changes"][0]["type"], "decision_dependency_removed")
+
+    def test_malformed_supported_uploads_return_validation_error(self) -> None:
+        for extension, raw in (("yaml", b"a: ["), ("xml", b"<unclosed>"),
+                               ("xlsx", b"not a zip"), ("docx", b"not a zip"), ("pdf", b"not a pdf")):
+            with self.subTest(extension=extension):
+                response = self.client.post("/api/analyze", files={
+                    "baseline": ("bad." + extension, raw, "application/octet-stream"),
+                    "candidate": ("good.json", json.dumps(SAMPLE_BASELINE), "application/json"),
+                })
+                self.assertEqual(response.status_code, 400)
+                self.assertIn("Invalid", response.json()["detail"])
+
+    def test_xml_does_not_fabricate_required_trace_completeness(self) -> None:
+        parsed = parse_package_file("missing.xml", b"<package><decision_id>case</decision_id></package>")
+        self.assertNotIn("trace_completeness", parsed)
+
+    def test_download_link_targets_current_rendered_artifact(self) -> None:
+        page = self.client.get("/").text
+        self.assertIn('id="downloadReport"', page)
+        self.assertIn('updateReportDownload(d.artifact)', page)
+        self.assertNotIn('href="/api/example/report"', page)
+        self.assertNotIn('signed evidence report', page)
 
 
 if __name__ == "__main__":

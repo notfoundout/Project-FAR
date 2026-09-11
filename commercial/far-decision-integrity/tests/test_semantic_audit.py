@@ -44,7 +44,7 @@ def payload() -> dict:
             {"source_id": "evidence", "target_id": "conclusion", "relation": "supports"},
             {"source_id": "rule", "target_id": "conclusion", "relation": "authorizes"},
         ],
-        "authorization_requirements": ["evidence", "rule"],
+        "authorization_requirements": ["rule"],
         "unknowns": [],
         "trace_completeness": 1.0,
         "semantic_contracts": [],

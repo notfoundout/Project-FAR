@@ -1,11 +1,11 @@
 # Authoritative residual verification and remediation queue
 
-Residual count: 400
+Residual count: 392
 
-- `cannot_verify`: 400
-- `still_reproducible`: 0
+- `cannot_verify`: 389
+- `still_reproducible`: 3
 
 All unaudited source findings remain active through the ledger composition rule. They must be verified before remediation batching or experiment-blocking classification.
 
-- Risk counts: `{"high": 124, "medium": 276}`
-- Experiment-blocking counts: `{"unknown": 400}`
+- Risk counts: `{"high": 123, "medium": 269}`
+- Experiment-blocking counts: `{"true": 3, "unknown": 389}`
