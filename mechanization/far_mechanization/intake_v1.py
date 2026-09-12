@@ -27,6 +27,7 @@ EXCLUSION_REASONS = {
     "OTHER",
 }
 EXCLUSION_BASES = {"RAW_INPUT", "SOURCE", "INFERENCE"}
+PARAMETER_BASES = {"RAW_INPUT", "SOURCE", "INTERPRETATION", "ASSUMPTION", "INFERENCE"}
 EVALUATION_OUTCOMES = {
     "PROVED",
     "REFUTED",
@@ -115,10 +116,7 @@ def _schema_errors(manifest: Any) -> list[str]:
         validator = Draft202012Validator(_load_schema())
     except (OSError, json.JSONDecodeError, ValueError) as exc:
         return [f"schema unavailable or invalid: {exc}"]
-    errors = sorted(
-        validator.iter_errors(manifest),
-        key=lambda e: (tuple(str(p) for p in e.path), e.message),
-    )
+    errors = sorted(validator.iter_errors(manifest), key=lambda e: (tuple(str(p) for p in e.path), e.message))
     result: list[str] = []
     for error in errors:
         path = ".".join(str(p) for p in error.path) or "$"
@@ -143,10 +141,116 @@ def _validate_exclusion_basis(
     derivation = row.get("derivation")
     if basis == "SOURCE" and not source_ids:
         errors.append(f"{label} with SOURCE basis requires source provenance")
-    if basis in {"RAW_INPUT", "INFERENCE"} and (
-        not isinstance(derivation, str) or not derivation.strip()
-    ):
+    if basis in {"RAW_INPUT", "INFERENCE"} and (not isinstance(derivation, str) or not derivation.strip()):
         errors.append(f"{label} with {basis} basis requires explicit derivation")
+
+
+def _json_pointer_token(value: object) -> str:
+    return str(value).replace("~", "~0").replace("/", "~1")
+
+
+def _json_leaf_paths(value: Any, base: str = "") -> set[str]:
+    """Return JSON Pointer paths for every scalar or empty-container leaf."""
+    if isinstance(value, dict):
+        if not value:
+            return {base or "/"}
+        result: set[str] = set()
+        for key, child in value.items():
+            result.update(_json_leaf_paths(child, f"{base}/{_json_pointer_token(key)}"))
+        return result
+    if isinstance(value, list):
+        if not value:
+            return {base or "/"}
+        result: set[str] = set()
+        for index, child in enumerate(value):
+            result.update(_json_leaf_paths(child, f"{base}/{index}"))
+        return result
+    return {base or "/"}
+
+
+def _validate_materiality_basis(
+    term_id: str,
+    term: dict[str, Any],
+    sources: dict[str, dict[str, Any]],
+    errors: list[str],
+) -> None:
+    basis = term.get("materiality_basis")
+    source_ids = term.get("materiality_source_ids")
+    derivation = term.get("materiality_derivation")
+    if not isinstance(source_ids, list) or any(s not in sources for s in source_ids):
+        errors.append(f"term {term_id} has invalid materiality_source_ids")
+        source_ids = []
+    if basis == "SOURCE" and not source_ids:
+        errors.append(f"term {term_id} SOURCE materiality requires source provenance")
+    if basis in {"RAW_INPUT", "INFERENCE"} and not (
+        isinstance(derivation, str) and derivation.strip()
+    ):
+        errors.append(f"term {term_id} {basis} materiality requires explicit derivation")
+
+
+def _validate_parameter_provenance(
+    candidate_id: str,
+    candidate: dict[str, Any],
+    assignments: dict[str, str],
+    sources: dict[str, dict[str, Any]],
+    interpretations: dict[str, dict[str, Any]],
+    assumptions: dict[str, dict[str, Any]],
+    errors: list[str],
+) -> None:
+    rows = candidate.get("parameter_provenance")
+    if not isinstance(rows, list):
+        errors.append(f"contract candidate {candidate_id}.parameter_provenance must be an array")
+        return
+    declared_paths: list[str] = []
+    assigned_interpretations = set(assignments.values())
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict):
+            errors.append(f"contract candidate {candidate_id}.parameter_provenance[{index}] must be an object")
+            continue
+        path = row.get("path")
+        if isinstance(path, str):
+            declared_paths.append(path)
+        basis = row.get("basis")
+        source_ids = row.get("source_ids")
+        interpretation_ids = row.get("interpretation_ids")
+        assumption_ids = row.get("assumption_ids")
+        if not isinstance(source_ids, list) or any(s not in sources for s in source_ids):
+            errors.append(f"contract candidate {candidate_id} provenance {path} has invalid source_ids")
+            source_ids = []
+        if not isinstance(interpretation_ids, list) or any(i not in interpretations for i in interpretation_ids):
+            errors.append(f"contract candidate {candidate_id} provenance {path} has invalid interpretation_ids")
+            interpretation_ids = []
+        if not isinstance(assumption_ids, list) or any(a not in assumptions for a in assumption_ids):
+            errors.append(f"contract candidate {candidate_id} provenance {path} has invalid assumption_ids")
+            assumption_ids = []
+        if basis == "SOURCE" and not source_ids:
+            errors.append(f"contract candidate {candidate_id} provenance {path} SOURCE basis requires source provenance")
+        elif basis == "INTERPRETATION":
+            if not interpretation_ids:
+                errors.append(f"contract candidate {candidate_id} provenance {path} INTERPRETATION basis requires interpretation_ids")
+            elif any(i not in assigned_interpretations for i in interpretation_ids):
+                errors.append(f"contract candidate {candidate_id} provenance {path} uses interpretation outside candidate assignments")
+        elif basis == "ASSUMPTION" and not assumption_ids:
+            errors.append(f"contract candidate {candidate_id} provenance {path} ASSUMPTION basis requires assumption_ids")
+        if basis not in PARAMETER_BASES:
+            errors.append(f"contract candidate {candidate_id} provenance {path} has invalid basis")
+    for path in sorted(_duplicates(declared_paths)):
+        errors.append(f"contract candidate {candidate_id} has duplicate parameter provenance path {path}")
+    try:
+        expected_paths = _json_leaf_paths(candidate.get("contract"))
+    except (TypeError, ValueError):
+        return
+    declared_set = set(declared_paths)
+    missing = sorted(expected_paths - declared_set)
+    extra = sorted(declared_set - expected_paths)
+    if missing:
+        errors.append(
+            f"contract candidate {candidate_id} lacks parameter provenance for: " + ", ".join(missing)
+        )
+    if extra:
+        errors.append(
+            f"contract candidate {candidate_id} has provenance for non-leaf paths: " + ", ".join(extra)
+        )
 
 
 def new_manifest(raw_text: str, identifier: str = "FAR-INTAKE-DRAFT") -> dict[str, Any]:
@@ -176,12 +280,7 @@ def new_manifest(raw_text: str, identifier: str = "FAR-INTAKE-DRAFT") -> dict[st
             },
             "contract_candidates": [],
         },
-        "freeze": {
-            "status": "DRAFT",
-            "frozen_at": None,
-            "intake_sha256": None,
-            "freeze_sha256": None,
-        },
+        "freeze": {"status": "DRAFT", "frozen_at": None, "intake_sha256": None, "freeze_sha256": None},
         "evaluations": [],
     }
 
@@ -192,6 +291,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
         return schema_errors
 
     errors: list[str] = []
+    # Schema validation above guarantees the top-level shape and primitive types.
     assert isinstance(manifest, dict)
     raw = manifest["raw_input"]
     discovery = manifest["discovery"]
@@ -237,13 +337,11 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             source_ids = []
         if origin in {"SOURCE_EXPLICIT", "SOURCE_SYNTHESIS"} and not source_ids:
             errors.append(f"interpretation {iid} requires source provenance")
-        if origin in {"SOURCE_SYNTHESIS", "INFERENCE"} and not (
-            isinstance(row["derivation"], str) and row["derivation"].strip()
-        ):
+        if origin in {"SOURCE_SYNTHESIS", "INFERENCE"} and not (isinstance(row["derivation"], str) and row["derivation"].strip()):
             errors.append(f"interpretation {iid} requires explicit derivation")
 
     parse_excluded: set[str] = set()
-    for row in discovery["claim_parse_exclusions"]:
+    for i, row in enumerate(discovery["claim_parse_exclusions"]):
         pid = row["claim_parse_id"]
         label = f"claim parse exclusion {pid}"
         if pid not in parses:
@@ -257,7 +355,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
         _validate_exclusion_basis(row, label, sources, errors)
 
     interp_excluded: set[str] = set()
-    for row in discovery["interpretation_exclusions"]:
+    for i, row in enumerate(discovery["interpretation_exclusions"]):
         iid = row["interpretation_id"]
         label = f"interpretation exclusion {iid}"
         if iid not in interpretations:
@@ -277,17 +375,14 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
         unknown = sorted({t for t in term_ids if t not in terms})
         if unknown:
             errors.append(f"claim parse {pid} references unknown terms: {', '.join(unknown)}")
-        if parse["origin"] == "INFERENCE" and not (
-            isinstance(parse["derivation"], str) and parse["derivation"].strip()
-        ):
+        if parse["origin"] == "INFERENCE" and not (isinstance(parse["derivation"], str) and parse["derivation"].strip()):
             errors.append(f"claim parse {pid} requires derivation")
 
     for term_id, term in terms.items():
         declared = term["interpretation_ids"]
         if set(declared) != per_term[term_id]:
-            errors.append(
-                f"term {term_id}.interpretation_ids must exactly enumerate its interpretations"
-            )
+            errors.append(f"term {term_id}.interpretation_ids must exactly enumerate its interpretations")
+        _validate_materiality_basis(term_id, term, sources, errors)
         if term["material"] and term_id not in referenced_terms:
             errors.append(f"material term {term_id} is not referenced by any claim parse")
 
@@ -301,38 +396,22 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
     qids: list[str] = []
     query_term_coverage: set[str] = set()
     query_parse_coverage: set[str] = set()
-    for query in queries:
+    for i, query in enumerate(queries):
         qid = query["id"]
         qids.append(qid)
         unknown_terms = sorted({tid for tid in query["term_ids"] if tid not in terms})
-        unknown_parses = sorted(
-            {pid for pid in query["claim_parse_ids"] if pid not in parses}
-        )
+        unknown_parses = sorted({pid for pid in query["claim_parse_ids"] if pid not in parses})
         if unknown_terms:
-            errors.append(
-                f"search query {qid} references unknown terms: {', '.join(unknown_terms)}"
-            )
+            errors.append(f"search query {qid} references unknown terms: {', '.join(unknown_terms)}")
         if unknown_parses:
-            errors.append(
-                f"search query {qid} references unknown parses: {', '.join(unknown_parses)}"
-            )
-        nonmaterial = sorted(
-            {
-                tid
-                for tid in query["term_ids"]
-                if tid in terms and terms[tid]["material"] is not True
-            }
-        )
+            errors.append(f"search query {qid} references unknown parses: {', '.join(unknown_parses)}")
+        nonmaterial = sorted({tid for tid in query["term_ids"] if tid in terms and terms[tid]["material"] is not True})
         if nonmaterial:
-            errors.append(
-                f"search query {qid} targets non-material terms: {', '.join(nonmaterial)}"
-            )
+            errors.append(f"search query {qid} targets non-material terms: {', '.join(nonmaterial)}")
         if not query["term_ids"] and not query["claim_parse_ids"]:
             errors.append(f"search query {qid} must target at least one term or claim parse")
         query_term_coverage.update(tid for tid in query["term_ids"] if tid in terms)
-        query_parse_coverage.update(
-            pid for pid in query["claim_parse_ids"] if pid in parses
-        )
+        query_parse_coverage.update(pid for pid in query["claim_parse_ids"] if pid in parses)
     for qid in sorted(_duplicates(qids)):
         errors.append(f"duplicate search query id: {qid}")
 
@@ -349,57 +428,34 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
     saturation_query_coverage: set[str] = set()
     saturation_source_coverage: set[str] = set()
     rounds: list[int] = []
-    source_time_map = dict(source_times)
-    known_qids = set(qids)
-    for row in protocol["saturation_observations"]:
+    for i, row in enumerate(protocol["saturation_observations"]):
         round_number = row["round"]
         rounds.append(round_number)
         observed = _timestamp(row["observed_at"])
         if observed is None:
-            errors.append(
-                f"saturation observation round {round_number} requires timezone-aware observed_at"
-            )
+            errors.append(f"saturation observation round {round_number} requires timezone-aware observed_at")
         else:
             saturation_times.append((round_number, observed))
-        unknown_qids = sorted({qid for qid in row["query_ids"] if qid not in known_qids})
+        unknown_qids = sorted({qid for qid in row["query_ids"] if qid not in set(qids)})
         if unknown_qids:
-            errors.append(
-                f"saturation observation round {round_number} references unknown queries: "
-                + ", ".join(unknown_qids)
-            )
-        saturation_query_coverage.update(qid for qid in row["query_ids"] if qid in known_qids)
+            errors.append(f"saturation observation round {round_number} references unknown queries: {', '.join(unknown_qids)}")
+        saturation_query_coverage.update(qid for qid in row["query_ids"] if qid in set(qids))
         unknown_source_ids = sorted({sid for sid in row["source_ids"] if sid not in sources})
         if unknown_source_ids:
-            errors.append(
-                f"saturation observation round {round_number} references unknown sources: "
-                + ", ".join(unknown_source_ids)
-            )
+            errors.append(f"saturation observation round {round_number} references unknown sources: {', '.join(unknown_source_ids)}")
         saturation_source_coverage.update(sid for sid in row["source_ids"] if sid in sources)
         if observed is not None:
+            source_time_map = dict(source_times)
             for sid in row["source_ids"]:
                 retrieved = source_time_map.get(sid)
                 if retrieved is not None and observed < retrieved:
-                    errors.append(
-                        f"saturation observation round {round_number} predates source retrieval {sid}"
-                    )
-        unknown_parses = sorted(
-            {pid for pid in row["new_claim_parse_ids"] if pid not in parses}
-        )
+                    errors.append(f"saturation observation round {round_number} predates source retrieval {sid}")
+        unknown_parses = sorted({pid for pid in row["new_claim_parse_ids"] if pid not in parses})
         if unknown_parses:
-            errors.append(
-                f"saturation observation round {round_number} has invalid new_claim_parse_ids"
-            )
-        unknown_iids = sorted(
-            {
-                iid
-                for iid in row["new_material_interpretation_ids"]
-                if iid not in interpretations
-            }
-        )
+            errors.append(f"saturation observation round {round_number} has invalid new_claim_parse_ids")
+        unknown_iids = sorted({iid for iid in row["new_material_interpretation_ids"] if iid not in interpretations})
         if unknown_iids:
-            errors.append(
-                f"saturation observation round {round_number} has invalid new_material_interpretation_ids"
-            )
+            errors.append(f"saturation observation round {round_number} has invalid new_material_interpretation_ids")
         nonmaterial_iids = sorted(
             {
                 iid
@@ -410,10 +466,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             }
         )
         if nonmaterial_iids:
-            errors.append(
-                f"saturation observation round {round_number} reports non-material interpretations: "
-                + ", ".join(nonmaterial_iids)
-            )
+            errors.append(f"saturation observation round {round_number} reports non-material interpretations: {', '.join(nonmaterial_iids)}")
 
     if rounds != sorted(rounds) or len(rounds) != len(set(rounds)):
         errors.append("saturation observation rounds must be unique and strictly increasing")
@@ -438,51 +491,30 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
         else:
             final = protocol["saturation_observations"][-1]
             if final["new_claim_parse_ids"] or final["new_material_interpretation_ids"]:
-                errors.append(
-                    "freeze requires a final saturation observation with no new claim parses or material interpretations"
-                )
-        if known_qids - saturation_query_coverage:
-            missing_qids = sorted(known_qids - saturation_query_coverage)
-            errors.append(
-                "registered search queries lack saturation execution records: "
-                + ", ".join(missing_qids)
-            )
+                errors.append("freeze requires a final saturation observation with no new claim parses or material interpretations")
+        if set(qids) - saturation_query_coverage:
+            missing_qids = sorted(set(qids) - saturation_query_coverage)
+            errors.append("registered search queries lack saturation execution records: " + ", ".join(missing_qids))
         if set(sources) - saturation_source_coverage:
             missing_sources = sorted(set(sources) - saturation_source_coverage)
-            errors.append(
-                "registered sources lack saturation provenance: " + ", ".join(missing_sources)
-            )
+            errors.append("registered sources lack saturation provenance: " + ", ".join(missing_sources))
         missing_term_search = sorted(active_material_terms - query_term_coverage)
         if missing_term_search:
-            errors.append(
-                "active material terms lack recorded search coverage: "
-                + ", ".join(missing_term_search)
-            )
+            errors.append("active material terms lack recorded search coverage: " + ", ".join(missing_term_search))
         missing_parse_search = sorted(set(active_parses) - query_parse_coverage)
         if missing_parse_search:
-            errors.append(
-                "active claim parses lack recorded search coverage: "
-                + ", ".join(missing_parse_search)
-            )
+            errors.append("active claim parses lack recorded search coverage: " + ", ".join(missing_parse_search))
         for pid, parse in active_parses.items():
             for tid in parse["term_ids"]:
-                if (
-                    tid in terms
-                    and terms[tid]["material"] is True
-                    and not (per_term[tid] - interp_excluded)
-                ):
-                    errors.append(
-                        f"active material term {tid} in parse {pid} has no active interpretation"
-                    )
+                if tid in terms and terms[tid]["material"] is True and not (per_term[tid] - interp_excluded):
+                    errors.append(f"active material term {tid} in parse {pid} has no active interpretation")
         if cutoff is not None:
             for sid, retrieved in source_times:
                 if retrieved > cutoff:
                     errors.append(f"source {sid} was retrieved after evidence_cutoff")
             for round_number, observed in saturation_times:
                 if observed > cutoff:
-                    errors.append(
-                        f"saturation observation round {round_number} occurred after evidence_cutoff"
-                    )
+                    errors.append(f"saturation observation round {round_number} occurred after evidence_cutoff")
 
     compat = discovery["compatibility_exclusions"]
     excluded_combos: set[tuple[str, tuple[tuple[str, str], ...]]] = set()
@@ -501,18 +533,14 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             if tid in terms and terms[tid]["material"] is True
         }
         if set(assignments) != required:
-            errors.append(
-                f"compatibility exclusion {i} assignments must exactly cover material terms for {pid}"
-            )
+            errors.append(f"compatibility exclusion {i} assignments must exactly cover material terms for {pid}")
         for tid, iid in assignments.items():
             if iid not in interpretations:
                 errors.append(f"compatibility exclusion {i} references unknown interpretation {iid}")
             elif interpretations[iid]["term_id"] != tid:
                 errors.append(f"compatibility exclusion {i} assigns {iid} to wrong term {tid}")
             elif iid in interp_excluded:
-                errors.append(
-                    f"compatibility exclusion {i} redundantly uses excluded interpretation {iid}"
-                )
+                errors.append(f"compatibility exclusion {i} redundantly uses excluded interpretation {iid}")
         key = (pid, tuple(sorted((str(k), str(v)) for k, v in assignments.items())))
         if key in excluded_combos:
             errors.append(f"duplicate compatibility exclusion for {pid}: {dict(assignments)}")
@@ -534,9 +562,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             if tid in terms and terms[tid]["material"] is True
         }
         if set(assignments) != required:
-            errors.append(
-                f"contract candidate {cid} assignments must exactly cover material terms for {pid}"
-            )
+            errors.append(f"contract candidate {cid} assignments must exactly cover material terms for {pid}")
         for tid, iid in assignments.items():
             if iid not in interpretations:
                 errors.append(f"contract candidate {cid} references unknown interpretation {iid}")
@@ -546,40 +572,30 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
                 errors.append(f"contract candidate {cid} uses excluded interpretation {iid}")
         key = (pid, tuple(sorted((str(k), str(v)) for k, v in assignments.items())))
         if key in candidate_keys:
-            errors.append(
-                f"duplicate contract candidate assignments: {cid} and {candidate_keys[key]}"
-            )
+            errors.append(f"duplicate contract candidate assignments: {cid} and {candidate_keys[key]}")
         candidate_keys[key] = cid
-        contract_digest = _checked_sha256_json(
-            row["contract"], f"contract candidate {cid}.contract", errors
-        )
+        contract_digest = _checked_sha256_json(row["contract"], f"contract candidate {cid}.contract", errors)
         if contract_digest is not None and row["sha256"] != contract_digest:
             errors.append(f"contract candidate {cid}.sha256 mismatch")
+        _validate_parameter_provenance(
+            cid, row, assignments, sources, interpretations, assumptions, errors
+        )
 
     if require_complete and active_parses and terms:
         expected: set[tuple[str, tuple[tuple[str, str], ...]]] = set()
         for pid, parse in active_parses.items():
-            material = [
-                tid
-                for tid in parse["term_ids"]
-                if tid in terms and terms[tid]["material"] is True
-            ]
+            material = [tid for tid in parse["term_ids"] if tid in terms and terms[tid]["material"] is True]
             options = [sorted(per_term[tid] - interp_excluded) for tid in material]
-            if all(options):
+            if all(options):  # all([]) is True: zero material terms yields one empty assignment.
                 for values in itertools.product(*options):
                     key = (pid, tuple(sorted(zip(material, values))))
                     if key not in excluded_combos:
                         expected.add(key)
-        missing = expected - set(candidate_keys)
-        extra = set(candidate_keys) - expected
+        missing, extra = expected - set(candidate_keys), set(candidate_keys) - expected
         if missing:
-            errors.append(
-                f"contract family omits {len(missing)} admissible interpretation combination(s)"
-            )
+            errors.append(f"contract family omits {len(missing)} admissible interpretation combination(s)")
         if extra:
-            errors.append(
-                f"contract family contains {len(extra)} non-admissible interpretation combination(s)"
-            )
+            errors.append(f"contract family contains {len(extra)} non-admissible interpretation combination(s)")
 
     evaluations = manifest["evaluations"]
     if evaluations and status != "FROZEN":
@@ -599,12 +615,8 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
         if row["outcome"] not in EVALUATION_OUTCOMES:
             errors.append(f"evaluation {cid} has invalid outcome")
         if row["outcome"] != "Unknown" and not row["evidence_refs"]:
-            errors.append(
-                f"evaluation {cid} requires evidence_refs for non-Unknown outcome"
-            )
-        if row["outcome"] == "Unknown" and not (
-            isinstance(row.get("notes"), str) and row["notes"].strip()
-        ):
+            errors.append(f"evaluation {cid} requires evidence_refs for non-Unknown outcome")
+        if row["outcome"] == "Unknown" and not (isinstance(row.get("notes"), str) and row["notes"].strip()):
             errors.append(f"evaluation {cid} with Unknown outcome requires notes")
         evaluated_at = _timestamp(row["evaluated_at"])
         if evaluated_at is None:
@@ -625,9 +637,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
                     errors.append(f"freeze time predates source retrieval {sid}")
             for round_number, observed in saturation_times:
                 if frozen_at < observed:
-                    errors.append(
-                        f"freeze time predates saturation observation round {round_number}"
-                    )
+                    errors.append(f"freeze time predates saturation observation round {round_number}")
         digest = freeze["intake_sha256"]
         expected_intake = _checked_sha256_json(
             {"raw_input": manifest["raw_input"], "discovery": discovery},
@@ -640,11 +650,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             errors.append("freeze intake_sha256 mismatch")
         freeze_digest = freeze.get("freeze_sha256")
         expected_freeze = None
-        if (
-            isinstance(digest, str)
-            and _HEX64.fullmatch(digest)
-            and isinstance(freeze.get("frozen_at"), str)
-        ):
+        if isinstance(digest, str) and _HEX64.fullmatch(digest) and isinstance(freeze.get("frozen_at"), str):
             expected_freeze = _checked_sha256_json(
                 {"intake_sha256": digest, "frozen_at": freeze["frozen_at"]},
                 "freeze identity payload",
@@ -680,12 +686,8 @@ def freeze_manifest(manifest: dict[str, Any], *, frozen_at: str | None = None) -
     for observation in result["discovery"]["search_protocol"]["saturation_observations"]:
         observed = _timestamp(observation["observed_at"])
         if observed is not None and parsed_stamp < observed:
-            raise ValueError(
-                f"frozen_at cannot predate saturation observation round {observation['round']}"
-            )
-    intake_digest = sha256_json(
-        {"raw_input": result["raw_input"], "discovery": result["discovery"]}
-    )
+            raise ValueError(f"frozen_at cannot predate saturation observation round {observation['round']}")
+    intake_digest = sha256_json({"raw_input": result["raw_input"], "discovery": result["discovery"]})
     freeze_digest = sha256_json({"intake_sha256": intake_digest, "frozen_at": stamp})
     result["freeze"] = {
         "status": "FROZEN",
@@ -704,14 +706,8 @@ def aggregate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
     if errors:
         return {"outcome": "INVALID", "errors": errors, "contract_outcomes": {}}
     if manifest["freeze"]["status"] != "FROZEN":
-        return {
-            "outcome": "INCOMPLETE",
-            "errors": ["manifest is not frozen"],
-            "contract_outcomes": {},
-        }
-    candidates = {
-        row["id"]: row for row in manifest["discovery"]["contract_candidates"]
-    }
+        return {"outcome": "INCOMPLETE", "errors": ["manifest is not frozen"], "contract_outcomes": {}}
+    candidates = {row["id"]: row for row in manifest["discovery"]["contract_candidates"]}
     evaluations = {row["contract_id"]: row["outcome"] for row in manifest["evaluations"]}
     if set(evaluations) != set(candidates):
         missing = sorted(set(candidates) - set(evaluations))
@@ -719,15 +715,9 @@ def aggregate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         messages = (["missing evaluations: " + ", ".join(missing)] if missing else []) + (
             ["unexpected evaluations: " + ", ".join(extra)] if extra else []
         )
-        return {
-            "outcome": "INCOMPLETE",
-            "errors": messages,
-            "contract_outcomes": evaluations,
-        }
+        return {"outcome": "INCOMPLETE", "errors": messages, "contract_outcomes": evaluations}
     unknown_assumptions = sorted(
-        row["id"]
-        for row in manifest["discovery"]["assumptions"]
-        if row["status"] == "Unknown"
+        row["id"] for row in manifest["discovery"]["assumptions"] if row["status"] == "Unknown"
     )
     if unknown_assumptions:
         return {
@@ -745,11 +735,7 @@ def aggregate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
         aggregate = "CONTRACT_SENSITIVE"
     else:
         aggregate = "UNDERDETERMINED"
-    return {
-        "outcome": aggregate,
-        "errors": [],
-        "contract_outcomes": dict(sorted(evaluations.items())),
-    }
+    return {"outcome": aggregate, "errors": [], "contract_outcomes": dict(sorted(evaluations.items()))}
 
 
 def _load(path: str) -> dict[str, Any]:
@@ -764,9 +750,7 @@ def _dump(value: Any) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        prog="far-intake", description="Project FAR governed pre-contract intake"
-    )
+    parser = argparse.ArgumentParser(prog="far-intake", description="Project FAR governed pre-contract intake")
     sub = parser.add_subparsers(dest="command", required=True)
     init_p = sub.add_parser("init", help="create a draft intake manifest")
     init_p.add_argument("raw_text")
@@ -779,18 +763,14 @@ def main(argv: list[str] | None = None) -> int:
     freeze_p.add_argument("file")
     freeze_p.add_argument("--write")
     freeze_p.add_argument("--frozen-at")
-    aggregate_p = sub.add_parser(
-        "aggregate", help="mechanically aggregate frozen contract outcomes"
-    )
+    aggregate_p = sub.add_parser("aggregate", help="mechanically aggregate frozen contract outcomes")
     aggregate_p.add_argument("file")
     args = parser.parse_args(argv)
     try:
         if args.command == "init":
             result = new_manifest(args.raw_text, args.id)
             text = _dump(result)
-            Path(args.write).write_text(text, encoding="utf-8") if args.write else print(
-                text, end=""
-            )
+            Path(args.write).write_text(text, encoding="utf-8") if args.write else print(text, end="")
             return 0
         if args.command == "validate":
             errors = validate_manifest(_load(args.file), require_complete=args.ready or None)
@@ -798,9 +778,7 @@ def main(argv: list[str] | None = None) -> int:
             return 0 if not errors else 1
         if args.command == "freeze":
             text = _dump(freeze_manifest(_load(args.file), frozen_at=args.frozen_at))
-            Path(args.write).write_text(text, encoding="utf-8") if args.write else print(
-                text, end=""
-            )
+            Path(args.write).write_text(text, encoding="utf-8") if args.write else print(text, end="")
             return 0
         if args.command == "aggregate":
             result = aggregate_manifest(_load(args.file))
