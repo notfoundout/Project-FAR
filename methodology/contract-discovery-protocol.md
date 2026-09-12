@@ -8,59 +8,62 @@ Accepted methodology correction.
 
 This protocol governs the transition from under-specified input to the explicit comparison contracts required by FAR.
 
-Its purpose is to prevent an investigator, model, or tool from silently selecting a result-determining interpretation, scope, frame, target class, or comparison objective before evaluation.
+Its purpose is to prevent an investigator, model, or tool from silently selecting a result-determining parse, interpretation, scope, frame, target class, or comparison objective before evaluation.
 
-It does not establish facts about an application domain. It governs how candidate interpretations and contracts are discovered, recorded, frozen, and handed to the existing contract-relative evaluation machinery.
+It does not establish facts about an application domain. It governs how candidate parses, interpretations, assumptions, exclusions, and contracts are discovered, recorded, frozen, and handed to the existing contract-relative evaluation machinery.
 
 ## Trigger
 
 Run this protocol whenever the supplied input does not already determine every comparison parameter needed by the governing FAR claim type.
 
-A missing parameter shall remain `Unknown` until supported. It shall not be filled from convention, model prior, unstated preference, or remembered context.
+A missing parameter remains `Unknown` until supported. It shall not be filled from convention, model prior, unstated preference, or remembered context.
 
-If the supplied input already contains a complete contract, record that fact and its provenance; do not manufacture alternative meanings without evidence of material ambiguity.
+If the supplied input already contains a complete contract, record that fact and its provenance; do not manufacture alternatives without evidence of material ambiguity.
 
 ## Core Rule
 
-No material interpretation may enter or leave the evaluated contract family silently.
+No material parse, interpretation, assumption, exclusion, or contract choice may enter or leave the evaluated family silently.
 
-A material interpretation is one whose substitution can change a required behavior, admissible case, evaluation outcome, scope boundary, or terminal verdict.
+A difference is material when substituting it can change a required behavior, admissible case, evaluation outcome, scope boundary, or terminal verdict.
 
 ## Required Intake Record
 
 The governed intake record uses `far-intake/1.0` and records:
 
-- the exact raw input and its SHA-256;
-- every retained claim parse;
+- the exact raw input and SHA-256;
+- every retained claim parse and any explicit parse exclusions;
 - every material term;
-- the bounded source search protocol and evidence cutoff;
-- source identity, scope, retrieval time, and content hash;
+- the bounded source-search protocol and evidence cutoff;
+- source identity, scope, retrieval time, and declared content hash;
 - source-supported interpretations;
-- explicit synthesis or inference steps;
-- interpretation exclusions and their reasons;
-- explicit assumptions and the consequence if each assumption is false;
-- compatibility exclusions between otherwise active interpretations;
-- the resulting contract family;
-- the freeze hash binding all discovery inputs;
-- only after freeze, per-contract evaluations.
+- explicit synthesis and inference steps;
+- interpretation and compatibility exclusions with auditable bases;
+- explicit assumptions and the consequence if each is false;
+- the complete bounded contract family;
+- a freeze identity binding the exact intake state before evaluation;
+- only after freeze, hash-bound per-contract evaluations.
 
-The schema records shape. The semantic validator enforces provenance, coverage, hash binding, freeze order, and aggregation rules.
+The JSON Schema governs document shape. The semantic validator applies the schema first, then enforces provenance, coverage, chronology, hash binding, freeze order, and aggregation rules.
 
 ## Discovery Procedure
 
 ### 1. Preserve the input
 
-Record the supplied input byte-for-byte as text and bind it by SHA-256.
+Record the supplied input as text and bind it by SHA-256.
 
-Do not replace the input with a paraphrase.
+Do not substitute a paraphrase for the recorded input.
+
+Cryptographic immutability begins at freeze. A single draft manifest cannot prove its own prior draft history; therefore any pre-freeze edits must remain reviewable through the surrounding version-control or investigation record when historical reconstruction matters.
 
 ### 2. Enumerate materially distinct parses
 
 Record each materially distinct parse required to represent the input.
 
-A parse inferred beyond the surface form must carry an explicit derivation.
+A parse inferred beyond the surface form requires an explicit derivation.
 
 Do not collapse parses merely because one is more familiar or convenient.
+
+A discovered parse may be removed from the active family only through an explicit parse-exclusion record. At least one parse must remain active at freeze.
 
 ### 3. Identify material terms
 
@@ -68,37 +71,50 @@ A term is material when a supported change in its interpretation can change the 
 
 Terms that cannot affect the result may be marked non-material. That classification remains auditable and revisable.
 
+Every material term in an active parse must retain at least one active interpretation before freeze.
+
 ### 4. Search before interpretation selection
 
-Run a recorded, bounded source search directed at materially distinct interpretations.
+Run a recorded, bounded source search directed at materially distinct parses and interpretations.
 
-For each search record:
+Each registered query records:
 
-- the query;
-- the target ambiguity;
+- the query text;
+- its target ambiguity;
 - the source scope;
+- the material term identifiers it targets;
+- the claim-parse identifiers it targets.
+
+Every active material term and active claim parse must have recorded search coverage.
+
+The search protocol additionally records:
+
 - the evidence cutoff;
 - the stopping rule;
 - saturation observations;
 - known limitations.
 
-Bounded saturation does not establish open-world semantic completeness. It establishes only that the recorded search stopped under the recorded rule.
+Each saturation observation records its time, executed query identifiers, sources considered, and newly found material parses or interpretations. Registered queries and registered sources must appear in the saturation provenance. The final saturation observation must report no new material parse or material interpretation.
+
+Bounded saturation does not establish open-world semantic completeness. It establishes only that the recorded bounded search stopped under the recorded rule.
 
 ### 5. Bind interpretations to provenance
 
-Each interpretation must be classified as:
+Each interpretation is classified as:
 
 - `SOURCE_EXPLICIT` — directly stated by identified source material;
 - `SOURCE_SYNTHESIS` — constructed from identified source material, with the synthesis written out;
 - `INFERENCE` — introduced by reasoning, with the derivation written out.
 
-Source-explicit and source-synthesis interpretations require source references. Synthesis and inference require an explicit derivation.
+Source-explicit and source-synthesis interpretations require source references. Synthesis and inference require explicit derivation.
 
-### 6. Preserve exclusions
+### 6. Preserve exclusions with an auditable basis
 
-An interpretation discovered during intake may be excluded only by an explicit exclusion record.
+A discovered parse, interpretation, or interpretation combination may be excluded only by an explicit exclusion record.
 
-Allowed reason classes are:
+Interpretation and parse exclusions retain the excluded item in the manifest. Deletion is not an exclusion record.
+
+Allowed exclusion reason classes are:
 
 - duplicate;
 - wrong domain;
@@ -107,34 +123,51 @@ Allowed reason classes are:
 - incompatible with the frozen scope;
 - other, with a written reason.
 
-The excluded interpretation remains in the manifest. Deletion is not an exclusion record.
+Every exclusion also records one of these bases:
+
+- `SOURCE` — requires non-empty source provenance;
+- `RAW_INPUT` — requires an explicit derivation from the preserved input;
+- `INFERENCE` — requires an explicit reasoning derivation.
+
+An analyst-written reason by itself cannot prune a result-determining interpretation or contract combination.
 
 ### 7. Record assumptions
 
 Every known result-relevant assumption must be listed with:
 
 - its statement;
-- whether it is explicit or `Unknown`;
+- status `EXPLICIT` or `Unknown`;
 - supporting sources, if any;
 - what changes if it is false.
 
 The protocol does not claim that a finite record proves the absence of all possible hidden assumptions. It makes detected assumptions reviewable and makes silent completion non-conforming.
 
+If any frozen result-relevant assumption remains `Unknown`, the cross-contract aggregate cannot be promoted to an invariant proved or refuted verdict; it remains `UNDERDETERMINED` even if all candidate evaluations happen to agree.
+
 ### 8. Generate the complete bounded contract family
 
-For each retained claim parse, take the Cartesian product of active interpretations for every material term.
+For each active claim parse, take the Cartesian product of active interpretations for every material term.
 
 Every admissible combination must correspond to exactly one contract candidate.
 
-A combination may be removed only through an explicit compatibility exclusion with a reason and provenance.
+A retained parse with zero material terms still contributes exactly one candidate with an empty assignment map. This is the singleton Cartesian product, not an omitted parse.
 
-This requirement prevents cherry-picking one supported interpretation while silently omitting another.
+A combination may be removed only through an explicit compatibility exclusion satisfying the exclusion-basis rules above.
 
-### 9. Freeze before evaluation
+This requirement prevents cherry-picking one supported interpretation or parse while silently omitting another.
+
+### 9. Freeze after discovery and before evaluation
 
 No contract outcome may be recorded while the intake manifest is `DRAFT`.
 
-A frozen manifest binds the exact raw input plus the complete discovery object by canonical SHA-256. Any change to parses, terms, sources, interpretations, exclusions, assumptions, search protocol, or contract candidates invalidates the freeze.
+Freeze time must be no earlier than the evidence cutoff, all recorded source retrieval times, and all saturation-observation times.
+
+A frozen manifest records:
+
+- `intake_sha256` — SHA-256 of canonical JSON for the exact `raw_input` plus complete `discovery` object;
+- `freeze_sha256` — SHA-256 of canonical JSON binding `intake_sha256` to the exact freeze timestamp.
+
+Any change to raw input, parses, exclusions, terms, sources, interpretations, assumptions, search protocol, contract candidates, or freeze timestamp invalidates the corresponding binding.
 
 Each contract candidate independently binds its downstream contract object by SHA-256.
 
@@ -142,7 +175,15 @@ Each contract candidate independently binds its downstream contract object by SH
 
 Evaluation occurs only after freeze.
 
-Each result must reference the frozen contract identifier and exact contract hash. Evaluation time must not predate the freeze.
+Each evaluation must reference:
+
+- the frozen contract identifier;
+- the exact candidate contract hash;
+- the exact `freeze_sha256`;
+- a typed outcome;
+- a post-freeze evaluation timestamp.
+
+Every non-`Unknown` outcome requires at least one evidence reference. An `Unknown` outcome requires an explanatory note.
 
 The downstream evaluator remains responsible for the existing `far-ir/2.0` or successor contract checks.
 
@@ -150,8 +191,9 @@ The downstream evaluator remains responsible for the existing `far-ir/2.0` or su
 
 Once every frozen contract candidate has an evaluation, the aggregate is determined without analyst discretion:
 
-| Frozen per-contract outcomes | Aggregate |
+| Frozen per-contract state | Aggregate |
 |---|---|
+| any result-relevant assumption remains `Unknown` | `UNDERDETERMINED` |
 | all `PROVED` | `INVARIANTLY_PROVED` |
 | all `REFUTED` | `INVARIANTLY_REFUTED` |
 | at least one `PROVED` and at least one `REFUTED` | `CONTRACT_SENSITIVE` |
@@ -165,20 +207,29 @@ The aggregate rule must not be changed after outcomes are known.
 
 The intake is non-conforming if any of the following occurs:
 
-- raw input is altered without a new intake identity;
-- a material interpretation lacks required provenance;
-- synthesis or inference is presented as source-explicit;
-- a discovered interpretation disappears without an exclusion record;
+- the document violates the published schema;
+- a material parse disappears without an exclusion record;
+- a material interpretation lacks required provenance or derivation;
+- an exclusion lacks an auditable source/raw-input/inference basis;
+- an active parse or material term lacks registered search coverage;
+- registered queries or sources are absent from saturation provenance;
+- freeze is declared before recorded discovery evidence is complete;
 - an admissible interpretation combination is omitted from the contract family;
+- a zero-material retained parse has no singleton contract;
 - evaluation begins before freeze;
-- evaluation refers to a contract whose hash differs from the frozen candidate;
-- a frozen discovery object is modified without invalidating the freeze;
-- a terminal aggregate is selected by judgment instead of the fixed aggregation rule.
+- evaluation refers to a different candidate or freeze hash;
+- a non-`Unknown` evaluation carries no evidence reference;
+- an `Unknown` evaluation carries no explanation;
+- a frozen intake or freeze timestamp is modified without invalidating its hash;
+- an unresolved `Unknown` assumption is ignored during aggregation;
+- a terminal aggregate is selected by judgment instead of the fixed rule.
 
 ## Boundary
 
-This protocol reduces untracked analyst freedom. It does not prove that a bounded search found every meaning, every source, or every assumption in an open domain.
+This protocol reduces untracked analyst freedom. It does not prove that a bounded search found every meaning, source, parse, or assumption in an open domain.
 
-Claims of source completeness, semantic completeness, authority, or domain adequacy require their own evidence and scope.
+A source record preserves a locator and declared content hash; the intake validator does not independently retrieve external bytes to prove that the declared hash matches the remote source. Retrieval and independent source verification remain provenance/replication obligations.
 
-The protocol is methodology. It does not alter the current core theory or the semantics of `far-ir/2.0`.
+Claims of source completeness, semantic completeness, authority, factual correctness, or domain adequacy require their own evidence and scope.
+
+The protocol is methodology. It does not alter the current core theory or the semantics of `far-ir/2.0` or `far-ir/2.1`.
