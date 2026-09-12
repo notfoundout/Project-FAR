@@ -1,125 +1,42 @@
-# Formal Proofs
+# Formal Proof Research
+
+Status: Research; non-canonical
 
 ## Purpose
 
-This directory contains the formal proof system of Project FAR.
+This directory is a working area for proof research, proof attempts, conjecture tracking, and proof-navigation records within `research/`.
 
-Its objective is to establish mathematically justified results concerning the Foundational Architecture of Reasoning Analysis (FARA) and related components of Project FAR.
+It is not the Project FAR canonical proof system and does not establish accepted theorem, lemma, proposition, corollary, or conjecture status. Current accepted theorem/proof status is governed by the [Theorem and Proof-Status Register](../../docs/governance/theorem-proof-status-register.md), with canonical locations resolved through the [Canonical Map](../../docs/CANONICAL_MAP.md).
 
-Unlike the validation investigations, which collect empirical and structural evidence, this directory contains formal mathematical arguments.
-
----
-
-# Relationship to Validation
-
-Validation investigations provide evidence.
-
-Formal proofs establish conclusions.
-
-A successful validation investigation does not constitute a proof.
-
-Likewise, a failed validation investigation does not necessarily refute a theorem.
-
-Validation and proof are complementary activities.
+The parent [Research Index](../README.md) governs this directory as non-canonical research material.
 
 ---
 
-# Scope
+## Current contents
 
-This directory contains:
+The current directory contains only these research/navigation artifacts:
 
-- formal definitions used within proofs;
-- lemmas;
-- propositions;
-- theorems;
-- corollaries;
-- proof attempts;
-- counterexamples;
-- unresolved conjectures.
+- [`README.md`](README.md) — this authority and scope boundary;
+- [`methodology.md`](methodology.md) — research-stage proof-attempt guidance;
+- [`theorem-catalog.md`](theorem-catalog.md) — proposed proof topics and research identifiers, not proof artifacts;
+- [`conjectures.md`](conjectures.md) — research-stage conjecture tracking, not canonical conjecture authority.
+
+No `lemmas/`, `propositions/`, `theorems/`, `corollaries/`, `counterexamples/`, or `proof-attempts/` subdirectory is represented here as an existing proof library unless that artifact actually exists in the repository.
 
 ---
 
-# Organization
+## Research proof discipline
 
-```
-proofs/
-├── README.md
-├── methodology.md
-├── theorem-catalog.md
-├── conjectures.md
-├── proof-obligations.md
-├── lemmas/
-├── propositions/
-├── theorems/
-├── corollaries/
-├── counterexamples/
-└── proof-attempts/
-```
+A proof attempt recorded in this research area should make its statement, premises, dependencies, assumptions, inference steps, conclusion, limitations, and evidentiary status explicit. Circular reasoning, hidden assumptions, undefined terminology, and unsupported generalization remain defects in a research proof attempt.
+
+A successful validation investigation does not by itself constitute a proof. Conversely, a failed validation investigation does not by itself refute a theorem. Validation evidence and proof status must remain separately identified.
+
+Canonical terminology used by a proof attempt should resolve to the applicable canonical source rather than be redefined here. Research material may preserve failed, superseded, incomplete, or contradictory attempts for provenance.
 
 ---
 
-# Proof Hierarchy
+## Promotion boundary
 
-The proof hierarchy follows:
+Nothing in this directory becomes accepted theory or canonical proof authority merely because it is labeled a lemma, proposition, theorem, proof, conjecture, or draft. Any accepted-status change must follow the governed research, acceptance, and promotion path and be recorded in the applicable canonical authority.
 
-Definition
-
-↓
-
-Lemma
-
-↓
-
-Proposition
-
-↓
-
-Theorem
-
-↓
-
-Corollary
-
-Each level may depend only upon previously established results.
-
-Circular reasoning is prohibited.
-
----
-
-# Acceptable Evidence
-
-A proof may rely upon:
-
-- accepted canonical definitions;
-- previously established lemmas;
-- previously established propositions;
-- previously established theorems;
-- explicitly stated assumptions.
-
-A proof may not rely upon:
-
-- intuition;
-- authority;
-- consensus;
-- undocumented assumptions;
-- examples alone.
-
----
-
-# Proof Status
-
-Every proof artifact shall possess one of the following statuses.
-
-- Draft
-- Under Review
-- Accepted
-- Refuted
-- Superseded
-
----
-
-# Guiding Principle
-
-The objective of this directory is not to accumulate proofs.
-
-The objective is to identify which conclusions follow necessarily from the accepted foundations of Project FAR.
+The objective of this directory is to preserve auditable proof research without allowing research-stage records to masquerade as accepted results.
