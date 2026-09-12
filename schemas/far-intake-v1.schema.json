@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-intake-v1.schema.json",
+  "title": "Project FAR governed pre-contract intake manifest",
+  "description": "Records raw input, source-grounded interpretation discovery, explicit exclusions and assumptions, a complete bounded contract family, freeze metadata, and post-freeze evaluations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format_version", "id", "raw_input", "discovery", "freeze", "evaluations"],
+  "properties": {
+    "format_version": {"const": "far-intake/1.0"},
+    "id": {"$ref": "#/$defs/Identifier"},
+    "raw_input": {"$ref": "#/$defs/RawInput"},
+    "discovery": {"$ref": "#/$defs/Discovery"},
+    "freeze": {"$ref": "#/$defs/Freeze"},
+    "evaluations": {"type": "array", "items": {"$ref": "#/$defs/Evaluation"}}
+  },
+  "$defs": {
+    "Identifier": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"},
+    "Sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "NonEmptyText": {"type": "string", "minLength": 1},
+    "RawInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "sha256"],
+      "properties": {
+        "text": {"$ref": "#/$defs/NonEmptyText"},
+        "sha256": {"$ref": "#/$defs/Sha256"}
+      }
+    },
+    "ClaimParse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "term_ids", "origin", "derivation"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "statement": {"$ref": "#/$defs/NonEmptyText"},
+        "term_ids": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}},
+        "origin": {"enum": ["SURFACE", "INFERENCE"]},
+        "derivation": {"type": ["string", "null"]}
+      }
+    },
+    "Term": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "surface", "material", "interpretation_ids"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "surface": {"$ref": "#/$defs/NonEmptyText"},
+        "material": {"type": "boolean"},
+        "interpretation_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}}
+      }
+    },
+    "Source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "locator", "sha256", "source_type", "retrieved_at", "scope"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "locator": {"$ref": "#/$defs/NonEmptyText"},
+        "sha256": {"$ref": "#/$defs/Sha256"},
+        "source_type": {"enum": ["PRIMARY", "SCHOLARLY", "REFERENCE", "USER_SUPPLIED", "OTHER"]},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "scope": {"$ref": "#/$defs/NonEmptyText"}
+      }
+    },
+    "Interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "term_id", "statement", "origin", "source_ids", "derivation", "scope"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "term_id": {"$ref": "#/$defs/Identifier"},
+        "statement": {"$ref": "#/$defs/NonEmptyText"},
+        "origin": {"enum": ["SOURCE_EXPLICIT", "SOURCE_SYNTHESIS", "INFERENCE"]},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}},
+        "derivation": {"type": ["string", "null"]},
+        "scope": {"$ref": "#/$defs/NonEmptyText"}
+      }
+    },
+    "InterpretationExclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interpretation_id", "reason_code", "reason", "source_ids"],
+      "properties": {
+        "interpretation_id": {"$ref": "#/$defs/Identifier"},
+        "reason_code": {"enum": ["DUPLICATE", "WRONG_DOMAIN", "ANACHRONISTIC", "UNSUPPORTED", "INCOMPATIBLE_WITH_SCOPE", "OTHER"]},
+        "reason": {"$ref": "#/$defs/NonEmptyText"},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}}
+      }
+    },
+    "CompatibilityExclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_parse_id", "assignments", "reason", "source_ids"],
+      "properties": {
+        "claim_parse_id": {"$ref": "#/$defs/Identifier"},
+        "assignments": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/Identifier"}},
+        "reason": {"$ref": "#/$defs/NonEmptyText"},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}}
+      }
+    },
+    "Assumption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "statement", "status", "source_ids", "effect_if_false"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "statement": {"$ref": "#/$defs/NonEmptyText"},
+        "status": {"enum": ["EXPLICIT", "Unknown"]},
+        "source_ids": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/Identifier"}},
+        "effect_if_false": {"$ref": "#/$defs/NonEmptyText"}
+      }
+    },
+    "SearchQuery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "query", "target", "source_scope"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "query": {"$ref": "#/$defs/NonEmptyText"},
+        "target": {"$ref": "#/$defs/NonEmptyText"},
+        "source_scope": {"$ref": "#/$defs/NonEmptyText"}
+      }
+    },
+    "SearchProtocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_cutoff", "queries", "stopping_rule", "saturation_observations", "limitations"],
+      "properties": {
+        "evidence_cutoff": {"type": ["string", "null"], "format": "date-time"},
+        "queries": {"type": "array", "items": {"$ref": "#/$defs/SearchQuery"}},
+        "stopping_rule": {"type": ["string", "null"]},
+        "saturation_observations": {"type": "array", "items": {"type": "object"}},
+        "limitations": {"type": "array", "items": {"$ref": "#/$defs/NonEmptyText"}}
+      }
+    },
+    "ContractCandidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "claim_parse_id", "assignments", "contract", "sha256"],
+      "properties": {
+        "id": {"$ref": "#/$defs/Identifier"},
+        "claim_parse_id": {"$ref": "#/$defs/Identifier"},
+        "assignments": {"type": "object", "additionalProperties": {"$ref": "#/$defs/Identifier"}},
+        "contract": {"type": "object"},
+        "sha256": {"$ref": "#/$defs/Sha256"}
+      }
+    },
+    "Discovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_parses", "terms", "sources", "interpretations", "interpretation_exclusions", "compatibility_exclusions", "assumptions", "search_protocol", "contract_candidates"],
+      "properties": {
+        "claim_parses": {"type": "array", "items": {"$ref": "#/$defs/ClaimParse"}},
+        "terms": {"type": "array", "items": {"$ref": "#/$defs/Term"}},
+        "sources": {"type": "array", "items": {"$ref": "#/$defs/Source"}},
+        "interpretations": {"type": "array", "items": {"$ref": "#/$defs/Interpretation"}},
+        "interpretation_exclusions": {"type": "array", "items": {"$ref": "#/$defs/InterpretationExclusion"}},
+        "compatibility_exclusions": {"type": "array", "items": {"$ref": "#/$defs/CompatibilityExclusion"}},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/Assumption"}},
+        "search_protocol": {"$ref": "#/$defs/SearchProtocol"},
+        "contract_candidates": {"type": "array", "items": {"$ref": "#/$defs/ContractCandidate"}}
+      }
+    },
+    "Freeze": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "frozen_at", "intake_sha256"],
+      "properties": {
+        "status": {"enum": ["DRAFT", "FROZEN"]},
+        "frozen_at": {"type": ["string", "null"], "format": "date-time"},
+        "intake_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "Evaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contract_id", "contract_sha256", "outcome", "evaluated_at", "evidence_refs"],
+      "properties": {
+        "contract_id": {"$ref": "#/$defs/Identifier"},
+        "contract_sha256": {"$ref": "#/$defs/Sha256"},
+        "outcome": {"enum": ["PROVED", "REFUTED", "UNDERDETERMINED", "OPEN", "BLOCKED", "NOT_APPLICABLE", "Unknown"]},
+        "evaluated_at": {"type": "string", "format": "date-time"},
+        "evidence_refs": {"type": "array", "items": {"$ref": "#/$defs/NonEmptyText"}},
+        "notes": {"type": "string"}
+      }
+    }
+  }
+}
