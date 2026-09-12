@@ -18,6 +18,14 @@ class LocalJsonSchemaSemanticsTests(unittest.TestCase):
         self.assertTrue(self.errors(schema, [1, 1]))
         self.assertTrue(self.errors(schema, [1, 2, 3, 4]))
 
+    def test_json_equality_distinguishes_boolean_from_number(self):
+        self.assertTrue(self.errors({"const": 1}, True))
+        self.assertTrue(self.errors({"enum": [1]}, True))
+        schema = {"type": "array", "uniqueItems": True}
+        self.assertEqual(self.errors(schema, [True, 1]), [])
+        self.assertEqual(self.errors(schema, [{"value": True}, {"value": 1}]), [])
+        self.assertTrue(self.errors(schema, [1, 1.0]))
+
     def test_object_cardinality(self):
         schema = {"type": "object", "minProperties": 1, "maxProperties": 2}
         self.assertTrue(self.errors(schema, {}))
