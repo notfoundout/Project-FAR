@@ -4,6 +4,7 @@ import unittest
 ROOT=Path(__file__).resolve().parents[1]
 WORKFLOW=ROOT/".github/workflows/living-research-promotion.yml"
 RUNNER=ROOT/"tools/run_living_research_promotion.py"
+README=ROOT/"research/living/README.md"
 TEST_RUNNER=ROOT/"tools/run_tests.py"
 PROMOTION_TEST=ROOT/"tests/test_living_research_promotion.py"
 
@@ -12,15 +13,23 @@ class PromotionWorkflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.workflow=WORKFLOW.read_text(encoding="utf-8")
         cls.runner=RUNNER.read_text(encoding="utf-8")
+        cls.readme=README.read_text(encoding="utf-8")
         cls.test_runner=TEST_RUNNER.read_text(encoding="utf-8")
         cls.promotion_test=PROMOTION_TEST.read_text(encoding="utf-8")
 
     def test_workflow_has_one_canonical_transaction_entrypoint(self):
         self.assertIn("ref: main",self.workflow)
-        self.assertIn("python tools/run_living_research_promotion.py",self.workflow)
+        self.assertIn("python -m tools.run_living_research_promotion",self.workflow)
+        self.assertNotIn("python tools/run_living_research_promotion.py",self.workflow)
         self.assertNotIn("gh pr create",self.workflow)
         self.assertNotIn("git add -A",self.workflow)
         self.assertNotIn("automation/living-research-inbox",self.workflow)
+
+    def test_documented_promotion_entrypoints_use_module_execution(self):
+        self.assertIn("python -m tools.run_living_research_promotion",self.readme)
+        self.assertIn("python -m tools.check_living_promotion_head",self.readme)
+        self.assertNotIn("python tools/run_living_research_promotion.py",self.readme)
+        self.assertNotIn("python tools/check_living_promotion_head.py",self.readme)
 
     def test_runner_freezes_exact_permanent_source_and_base(self):
         self.assertIn('SOURCE_PR = 490',self.runner)
