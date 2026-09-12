@@ -35,6 +35,7 @@ The implementation is tested against failure modes including:
 - schema-invalid records reaching semantic validation or freeze;
 - malformed nested values causing uncaught semantic-validator exceptions;
 - incorrect JSON Schema regex semantics;
+- JSON Schema equality collapsing booleans into numbers for `const`, `enum`, or `uniqueItems`;
 - ignored array uniqueness/cardinality, object cardinality, or schema-valued additional-property constraints;
 - source-derived interpretation without provenance;
 - synthesis or inference without derivation;
@@ -66,8 +67,8 @@ The implementation is tested against failure modes including:
 - `Unknown` evaluation without explanatory note;
 - incomplete evaluation of the frozen family;
 - invariant promotion despite a frozen result-relevant `Unknown` assumption;
-- non-JSON contract values causing failure-open behavior;
-- package metadata declaring `far-intake` while the build backend omits the entrypoint;
+- non-finite number tokens (`NaN`, `Infinity`, `-Infinity`) or other non-JSON contract values reaching canonical hashing;
+- non-editable wheel relocation with the implementation or intake schema absent, or with an absolute source-checkout `.pth` masking the defect;
 - structural type mutations across major manifest objects.
 
 The dedicated regressions are intentionally generic and are also exercised by the canonical repository test and health profiles before merge.
@@ -76,9 +77,11 @@ The dedicated regressions are intentionally generic and are also exercised by th
 
 `tests/test_far_intake_v1.py` reconstructs the bounded intake semantics using only generic entities, relations, sources, interpretations, and contracts. It contains no application-specific taxonomy or expected domain verdict.
 
-`tests/test_local_jsonschema_pattern_semantics.py` independently pins the constrained local schema engine's regex-search, array/object cardinality, uniqueness, and schema-valued `additionalProperties` behavior.
+`tests/test_local_jsonschema_pattern_semantics.py` independently pins the constrained local schema engine's regex-search, JSON-value equality, array/object cardinality, uniqueness, and schema-valued `additionalProperties` behavior.
 
-Together the regressions verify schema-first validation, materiality provenance, interpretation provenance and derivation rules, complete parse/interpretation-family coverage, leaf-level contract-parameter provenance, explicit exclusions, search and saturation bookkeeping, chronology, deterministic hash binding, evaluation ordering/evidence, unresolved-assumption handling, fixed aggregation, fail-closed malformed-input behavior, and console-entrypoint packaging.
+`tests/test_far_wheel_relocation.py` builds the non-editable wheel, extracts it outside the repository, disables normal site initialization with `python -S`, and verifies that the packaged intake implementation, constrained schema engine, and intake schema operate without a source-checkout `.pth`.
+
+Together the regressions verify schema-first validation, materiality provenance, interpretation provenance and derivation rules, complete parse/interpretation-family coverage, leaf-level contract-parameter provenance, explicit exclusions, search and saturation bookkeeping, chronology, deterministic strict-JSON hash binding, evaluation ordering/evidence, unresolved-assumption handling, fixed aggregation, fail-closed malformed-input behavior, schema-subset semantics, and relocated console-target packaging.
 
 ## Acceptance
 
@@ -108,7 +111,9 @@ The accepted correction is promoted through:
 - [`../../mechanization/far_mechanization/intake_v1.py`](../../mechanization/far_mechanization/intake_v1.py);
 - [`../../tests/test_far_intake_v1.py`](../../tests/test_far_intake_v1.py);
 - [`../../tests/test_local_jsonschema_pattern_semantics.py`](../../tests/test_local_jsonschema_pattern_semantics.py);
-- the package console-entrypoint metadata;
+- [`../../tests/test_far_wheel_relocation.py`](../../tests/test_far_wheel_relocation.py);
+- the package console-entrypoint metadata and relocatable non-editable wheel contents;
+- the project-status and canonical-map authority surfaces;
 - the FAR workflow, methodology, application, dependency, design, and investigation-validation surfaces.
 
 ## Nonclaims and permanent limits
