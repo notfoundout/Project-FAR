@@ -28,21 +28,23 @@ The Admissibility Structure (Ω) is defined by FARA. FAR specifies when it is co
 
 The canonical stage sequence assumes that result-determining contract parameters are explicit before substantive evaluation.
 
-When supplied input does not already determine those parameters, the investigation must first execute the [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) and materialize a `far-intake/1.0` record.
+When supplied input does not already determine those parameters, the investigation must first execute the [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) and materialize a schema-valid `far-intake/1.0` record.
 
 The intake gate requires:
 
 1. preservation and hashing of the exact supplied input;
-2. retention of materially distinct parses and interpretations with provenance;
-3. explicit recording of synthesis, inference, exclusions, assumptions, search scope, and stopping rule;
-4. construction of the complete bounded contract family over active material interpretations, except combinations removed by explicit compatibility exclusions;
-5. freezing the discovery object before any candidate contract is evaluated;
-6. binding each evaluation to the exact frozen candidate contract hash;
-7. mechanical aggregation across the complete frozen family.
+2. retention of materially distinct parses and interpretations, with explicit provenance or derivation for any exclusion;
+3. explicit recording of synthesis, inference, assumptions, search scope, search targets, stopping rule, saturation execution, evidence cutoff, and limitations;
+4. construction of the complete bounded contract family over every active parse and its active material interpretations, including a singleton empty-assignment candidate for a retained parse with no material terms;
+5. chronology in which registered discovery evidence and saturation precede freeze;
+6. freezing the raw input plus complete discovery object and binding the freeze timestamp before any candidate contract is evaluated;
+7. binding each evaluation to the exact frozen candidate contract hash and exact freeze identity, with explicit evidence or an `Unknown` explanation;
+8. evaluation of every frozen candidate before cross-contract aggregation;
+9. mechanical aggregation across the complete frozen family, with any result-relevant `Unknown` assumption preventing invariant promotion.
 
-A draft or incomplete intake cannot support a non-`Unknown` cross-contract verdict. If the intake cannot be completed, the investigation must preserve `Unknown`, `Incomplete`, `Suspended`, or another applicable typed boundary rather than silently completing the contract.
+A draft, incomplete, invalid, or unresolved-assumption intake cannot support an invariant non-`Unknown` cross-contract verdict. If the intake cannot be completed, the investigation must preserve `Unknown`, `Incomplete`, `Suspended`, `UNDERDETERMINED`, or another applicable typed boundary rather than silently completing the contract.
 
-This gate does not claim that a bounded search proves open-world semantic completeness.
+This gate does not claim that a bounded search proves open-world semantic completeness, source truth, or external source-byte verification.
 
 ## Contract-Relative Conformance Overlay
 
@@ -140,7 +142,7 @@ Record the resolution together with the reasoning process that produced it.
 
 The complete investigation should remain explicit, auditable, and reconstructible. Any sufficiency or minimality verdict must also carry its comparison contract and factorization/collision certificate.
 
-When multiple frozen contracts were required by intake, record every per-contract outcome and the fixed cross-contract aggregate. Do not replace the aggregate with a preferred contract's result.
+When multiple frozen contracts were required by intake, record every per-contract outcome and the fixed cross-contract aggregate. Do not replace the aggregate with a preferred contract's result. A frozen result-relevant `Unknown` assumption must remain visible in the terminal boundary and prevents invariant promotion.
 
 A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
 
