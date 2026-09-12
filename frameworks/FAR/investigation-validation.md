@@ -10,11 +10,37 @@ FARO may later operationalize or automate these checks, but the checks themselve
 
 ---
 
+## Contract-Discovery Intake Validation
+
+When the supplied input did not already determine every result-relevant comparison parameter, validation begins with the governed intake record.
+
+Require all of the following:
+
+- the exact raw input is preserved and its SHA-256 recomputes;
+- materially distinct claim parses and material terms are explicit;
+- source-derived interpretations have source provenance;
+- source synthesis and inference have explicit derivations;
+- discovered interpretations do not disappear without an exclusion record;
+- known assumptions state what changes if they are false;
+- the bounded search protocol, evidence cutoff, stopping rule, saturation observations, and limitations are recorded;
+- the contract family covers every active material interpretation combination unless the exact combination has an explicit compatibility exclusion;
+- each candidate contract hash recomputes;
+- no evaluation predates the intake freeze;
+- the frozen discovery hash recomputes;
+- each evaluation binds the exact frozen candidate contract hash;
+- every frozen candidate is evaluated before a cross-contract aggregate is issued;
+- the cross-contract aggregate follows the fixed `far-intake/1.0` rule rather than an analyst-selected preferred contract.
+
+A draft, incomplete, or invalid intake cannot support a non-`Unknown` cross-contract verdict.
+
+Passing intake validation establishes bounded procedural conformance only. It does not establish open-world semantic completeness, source truth, authority, or downstream contract adequacy.
+
 ## Contract-Relative Validation Gates
 
 Before the existing checklist, validate the following whenever the investigation makes a representation claim:
 
 - claim, domain, quantifiers, evidence cutoff, and nonclaims are frozen;
+- the intake gate is either satisfied or explicitly not applicable because the supplied input already determines the governing contract;
 - cases, tests/contexts, typed outcomes, observation semantics, and consequence-affecting parameters are explicit;
 - admitted translations/equivalences, interpretation profiles, and interface frame are explicit;
 - approximation or cost orders are present for any non-exact or non-information minimality claim;
@@ -39,7 +65,7 @@ Validation means the investigation was conducted and recorded according to FAR m
 
 ## Optional Stage Policy
 
-A workflow stage may be marked `Not applicable` only when the investigation record states why it is not applicable.
+A workflow stage may be marked `Not applicable` only when the investigation record states why the stage is not applicable.
 
 No stage shall be silently omitted.
 
@@ -56,6 +82,7 @@ A completed FAR investigation should satisfy the following checks.
 - The investigation is explicitly identified.
 - The objective is stated.
 - The relevant conditions or scope are stated.
+- The governed intake record is referenced when the input required contract discovery, or the reason it was not applicable is explicit.
 
 ---
 
@@ -71,6 +98,7 @@ A completed FAR investigation should satisfy the following checks.
 
 - The interpretation assigned to representations is stated.
 - Any changes in interpretation are explicitly recorded.
+- Material interpretations frozen by intake are preserved or superseded only by an explicit revision that invalidates dependent evaluations.
 
 ---
 
@@ -119,6 +147,7 @@ A completed FAR investigation should satisfy the following checks.
 - The resolution is explicitly recorded when one is produced.
 - The resolution is distinguishable from Ω, the resolution rule, and the resolution execution.
 - If no resolution is produced, the closure status is recorded.
+- When intake produced multiple frozen contracts, the record preserves all per-contract outcomes and the deterministic cross-contract aggregate.
 
 ---
 
@@ -130,6 +159,8 @@ If the investigation revisits an earlier stage, the record identifies:
 - the reason for revision;
 - the artifact changed;
 - the effect on later stages.
+
+Any revision to frozen intake content records the invalidation of the prior freeze and downstream evaluations.
 
 ---
 
@@ -201,6 +232,8 @@ If multiple candidates are admissible, the resolution rule must specify how they
 
 If interpretation changes during the investigation, the change must be recorded with its effect on later stages.
 
+If the changed interpretation was part of a frozen intake, the intake must be refrozen and dependent evaluations rerun.
+
 ---
 
 ### Changing Reasoning Calculi
@@ -220,6 +253,8 @@ They should not be recorded as resolved unless a resolution rule has actually pr
 ### Conflicting Resolutions
 
 If conflicting resolutions are produced, the conflict must be recorded and either resolved by a stated rule or preserved as unresolved.
+
+When the conflict is produced solely by different frozen contract interpretations, preserve it as contract sensitivity unless a pre-evaluation rule already licenses another aggregate.
 
 ---
 
