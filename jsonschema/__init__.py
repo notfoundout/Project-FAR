@@ -43,8 +43,39 @@ def _type_ok(instance: Any, typ: Any) -> bool:
         "boolean": isinstance(instance, bool),
     }.get(typ, True)
 
+def _json_equal(left: Any, right: Any) -> bool:
+    """Compare JSON values without Python's bool/int equality collapse."""
+    if isinstance(left, bool) or isinstance(right, bool):
+        return isinstance(left, bool) and isinstance(right, bool) and left is right
+    if left is None or right is None:
+        return left is None and right is None
+    left_number = isinstance(left, (int, float)) and not isinstance(left, bool)
+    right_number = isinstance(right, (int, float)) and not isinstance(right, bool)
+    if left_number or right_number:
+        return left_number and right_number and left == right
+    if isinstance(left, str) or isinstance(right, str):
+        return isinstance(left, str) and isinstance(right, str) and left == right
+    if isinstance(left, list) or isinstance(right, list):
+        return (
+            isinstance(left, list)
+            and isinstance(right, list)
+            and len(left) == len(right)
+            and all(_json_equal(a, b) for a, b in zip(left, right))
+        )
+    if isinstance(left, dict) or isinstance(right, dict):
+        return (
+            isinstance(left, dict)
+            and isinstance(right, dict)
+            and set(left) == set(right)
+            and all(_json_equal(left[key], right[key]) for key in left)
+        )
+    return False
+
 def _unique(values: list[Any]) -> bool:
-    return all(not any(value == prior for prior in values[:index]) for index, value in enumerate(values))
+    return all(
+        not any(_json_equal(value, prior) for prior in values[:index])
+        for index, value in enumerate(values)
+    )
 
 def _validate(instance: Any, schema: dict[str, Any], root: dict[str, Any], path: tuple[Any,...], spath: tuple[Any,...]):
     if "$ref" in schema:
@@ -59,9 +90,9 @@ def _validate(instance: Any, schema: dict[str, Any], root: dict[str, Any], path:
             errors.extend(errs)
         if len(matches)!=1:
             yield ValidationError("value must match exactly one allowed schema", path, spath+("oneOf",)); return
-    if "const" in schema and instance != schema["const"]:
+    if "const" in schema and not _json_equal(instance, schema["const"]):
         yield ValidationError(f"expected constant {schema['const']!r}", path, spath+("const",))
-    if "enum" in schema and instance not in schema["enum"]:
+    if "enum" in schema and not any(_json_equal(instance, item) for item in schema["enum"]):
         yield ValidationError(f"value {instance!r} is not in enum", path, spath+("enum",))
     typ=schema.get("type")
     if typ and not _type_ok(instance, typ):
