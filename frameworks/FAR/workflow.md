@@ -30,6 +30,8 @@ The canonical stage sequence assumes that result-determining contract parameters
 
 When supplied input does not already determine those parameters, the investigation must first execute the [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) and materialize a schema-valid `far-intake/1.0` record.
 
+The intake gate may be bypassed only when the supplied artifact is itself an explicit machine-readable downstream comparison contract accepted by the applicable contract schema and semantic validator. The investigation must record that artifact's format/version, content hash, and validation result. A prose assertion that the input is "complete" or that intake is "not applicable" is not sufficient.
+
 The intake gate requires:
 
 1. preservation and hashing of the exact supplied input;
@@ -52,7 +54,7 @@ This gate does not claim that a bounded search proves open-world semantic comple
 
 The stage sequence below is Project FAR's operational profile. Every investigation making an adequacy, preservation, common-content, invariance, or minimality claim must also satisfy these theory-derived gates:
 
-1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims. If the supplied input is under-specified, the intake gate must complete and freeze before substantive evaluation.
+1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims. If the supplied input is under-specified, the intake gate must complete and freeze before substantive evaluation. Intake bypass requires a supplied explicit contract artifact whose exact version/hash and successful applicable validation are recorded.
 2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order. When multiple source-supported contracts survive intake, freeze the complete family rather than selecting one by preference. Any analyst-supplied contract field must remain provenance-traceable.
 3. **Totalize without collapse.** Keep determinate absence, falsity, inapplicability, failure, unresolvedness, and epistemic Unknown distinct whenever observable.
 4. **Construct and charge the representation.** Record the mapping and every analyst-supplied tag, interpreter, sidecar, quotient, or hidden dependency.
@@ -70,7 +72,7 @@ Specify the investigation and its objective.
 
 The investigation establishes the context within which reasoning is performed.
 
-If the investigation began from under-specified external input, Stage 1 must reference the frozen governed intake record or explicitly record why the intake gate is not applicable.
+If the investigation began from under-specified external input, Stage 1 must reference the frozen governed intake record. If intake was bypassed, Stage 1 must instead reference the exact supplied downstream contract artifact, format/version, content hash, and successful applicable validation result.
 
 ---
 
