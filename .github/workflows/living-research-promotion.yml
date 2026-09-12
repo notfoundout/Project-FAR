@@ -1,0 +1,35 @@
+name: Living Research Promotion
+
+on:
+  schedule:
+    - cron: '27,57 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: living-research-promotion
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout protected main automation
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run fail-closed living-research promotion transaction
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python tools/run_living_research_promotion.py

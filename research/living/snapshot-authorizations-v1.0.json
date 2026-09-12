@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.1",
+  "program_id": "FAR-LIVING-SNAPSHOT-AUTHORIZATIONS-001",
+  "authority": "Research",
+  "authorizations": [],
+  "rule": "A Research snapshot is mechanically eligible only after a protected authorization binds the exact candidate SHA-256, exact canonical review row, exact review-basis bytes, source identity, disposition, and authorization_status ACCEPTED_FOR_MECHANICAL_SNAPSHOT. Review-disposition membership alone is never snapshot authority."
+}
