@@ -16,24 +16,34 @@ When the supplied input did not already determine every result-relevant comparis
 
 Require all of the following:
 
+- the record satisfies the published `far-intake/1.0` JSON Schema before semantic validation;
 - the exact raw input is preserved and its SHA-256 recomputes;
 - materially distinct claim parses and material terms are explicit;
+- parse, interpretation, and compatibility exclusions have an auditable source/raw-input/inference basis rather than an analyst-written reason alone;
 - source-derived interpretations have source provenance;
 - source synthesis and inference have explicit derivations;
-- discovered interpretations do not disappear without an exclusion record;
+- discovered parses and interpretations do not disappear without exclusion records;
+- at least one claim parse remains active;
 - known assumptions state what changes if they are false;
-- the bounded search protocol, evidence cutoff, stopping rule, saturation observations, and limitations are recorded;
-- the contract family covers every active material interpretation combination unless the exact combination has an explicit compatibility exclusion;
+- every active material term and active claim parse has recorded search coverage;
+- the bounded search protocol, evidence cutoff, stopping rule, timestamped saturation observations, and limitations are recorded;
+- registered queries and sources appear in saturation provenance and the final saturation observation reports no new material parse or interpretation;
+- source retrievals and saturation observations precede both the evidence cutoff and the freeze;
+- the contract family covers every active material interpretation combination unless that exact combination has a valid compatibility exclusion;
+- every retained zero-material parse contributes the singleton empty-assignment candidate;
 - each candidate contract hash recomputes;
+- `intake_sha256` binds the exact raw input and discovery object;
+- `freeze_sha256` binds the intake hash and exact freeze timestamp;
 - no evaluation predates the intake freeze;
-- the frozen discovery hash recomputes;
-- each evaluation binds the exact frozen candidate contract hash;
+- each evaluation binds both the exact frozen candidate contract hash and exact freeze identity;
+- each non-`Unknown` evaluation has evidence references, while `Unknown` has an explanation;
 - every frozen candidate is evaluated before a cross-contract aggregate is issued;
+- any result-relevant frozen `Unknown` assumption blocks invariant terminal promotion;
 - the cross-contract aggregate follows the fixed `far-intake/1.0` rule rather than an analyst-selected preferred contract.
 
-A draft, incomplete, or invalid intake cannot support a non-`Unknown` cross-contract verdict.
+A draft, incomplete, invalid, or unresolved-assumption intake cannot support an invariant non-`Unknown` cross-contract verdict.
 
-Passing intake validation establishes bounded procedural conformance only. It does not establish open-world semantic completeness, source truth, authority, or downstream contract adequacy.
+Passing intake validation establishes bounded procedural conformance only. It does not establish open-world semantic completeness, source truth or authority, independent retrieval of source bytes, or downstream contract adequacy.
 
 ## Contract-Relative Validation Gates
 
@@ -148,6 +158,7 @@ A completed FAR investigation should satisfy the following checks.
 - The resolution is distinguishable from Ω, the resolution rule, and the resolution execution.
 - If no resolution is produced, the closure status is recorded.
 - When intake produced multiple frozen contracts, the record preserves all per-contract outcomes and the deterministic cross-contract aggregate.
+- Any unresolved frozen assumption that constrains the terminal result remains explicit.
 
 ---
 
