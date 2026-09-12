@@ -45,7 +45,12 @@ def _wheel() -> str:
 
 
 def _entry_points() -> str:
-    return "[console_scripts]\nfar = mechanization.far_mechanization.cli:main\n"
+    return (
+        "[console_scripts]\n"
+        "far = mechanization.far_mechanization.cli:main\n"
+        "far-evidence = mechanization.far_mechanization.compare_adjudication:main\n"
+        "far-intake = mechanization.far_mechanization.intake_v1:main\n"
+    )
 
 
 def _hash(data: bytes) -> str:
