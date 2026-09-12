@@ -66,7 +66,9 @@ def _validate(instance: Any, schema: dict[str, Any], root: dict[str, Any], path:
     if isinstance(instance, str):
         import re
         if schema.get("minLength") is not None and len(instance)<schema["minLength"]: yield ValidationError("string is shorter than minLength", path, spath+("minLength",))
-        if schema.get("pattern") and not re.fullmatch(schema["pattern"], instance): yield ValidationError("string does not match pattern", path, spath+("pattern",))
+        # JSON Schema `pattern` succeeds when the regular expression matches
+        # anywhere in the instance; it is not an implicit full-string match.
+        if schema.get("pattern") and not re.search(schema["pattern"], instance): yield ValidationError("string does not match pattern", path, spath+("pattern",))
     if isinstance(instance, (int, float)) and not isinstance(instance, bool) and schema.get("minimum") is not None and instance < schema["minimum"]:
         yield ValidationError("number is below minimum", path, spath+("minimum",))
     if isinstance(instance, list):
