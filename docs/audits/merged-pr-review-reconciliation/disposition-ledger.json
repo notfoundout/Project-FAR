@@ -1,22 +1,22 @@
 {
-  "audited_main_commit": "315582a03557601190e2d79293ad75af5469d885",
+  "audited_main_commit": "15fb5e69bed1a334919bfa38949beafed15ba5da",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
   "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
   "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify, has unknown experiment-blocking status, and retains source traceability until audited.",
   "counts": {
     "by_disposition": {
-      "cannot_verify": 378,
-      "fixed_on_current_main": 13,
+      "cannot_verify": 377,
+      "fixed_on_current_main": 14,
       "obsolete_after_later_changes": 8,
       "still_reproducible": 3
     },
     "by_experiment_blocking": {
       "true": 3,
-      "unknown": 378
+      "unknown": 377
     },
     "by_risk": {
       "high": 122,
-      "medium": 259
+      "medium": 258
     },
     "by_subsystem": {
       "canonical-theory": 111,
@@ -28,12 +28,12 @@
       "frameworks": 13,
       "mechanization": 4,
       "repository-metadata": 2,
-      "research-records": 2,
+      "research-records": 1,
       "test-infrastructure": 7,
       "validation-engine": 3,
       "validators-and-tooling": 85
     },
-    "residual": 381,
+    "residual": 380,
     "total": 402
   },
   "default_disposition": "cannot_verify",
@@ -89,6 +89,18 @@
       "failure_mechanism": "The research index had been deleted while current navigation and semantic-audit evidence still referenced it.",
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bY",
       "root_cause_id": "research-navigation:missing-research-index"
+    },
+    {
+      "blocks_experiment_reconstruction": "unknown",
+      "disposition": "fixed_on_current_main",
+      "evidence": [
+        "PR #500 merged as 7c1f6cd4bb26a5a05274c3ab9ab6773bd6a4b5ee and reclassifies the research/proofs README, methodology, and theorem catalog as Research/non-canonical without creating proof artifacts.",
+        "research/proofs/theorem-catalog.md now preserves the L-/P-/T- entries as Proposed local research records, records `None recorded` for every proof artifact, and explicitly states that no corresponding lemma, proposition, theorem, or corollary proof artifact exists at this catalog revision.",
+        "The catalog delegates accepted theorem/proof status to docs/governance/theorem-proof-status-register.md and canonical locations to docs/CANONICAL_MAP.md; all ten post-merge workflows on 7c1f6cd4bb26a5a05274c3ab9ab6773bd6a4b5ee passed, including Exact Head Assurance and Validator Assurance."
+      ],
+      "failure_mechanism": "The research theorem catalog claimed canonical/complete proof authority and listed nonexistent proof-artifact paths, creating a false normalized proof-library surface.",
+      "finding_id": "PR14:PRRT_kwDOTH_vCM6OE6cl",
+      "root_cause_id": "research-navigation:phantom-proof-artifacts"
     },
     {
       "blocks_experiment_reconstruction": "unknown",
