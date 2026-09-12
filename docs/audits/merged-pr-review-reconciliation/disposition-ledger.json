@@ -1,5 +1,5 @@
 {
-  "audited_main_commit": "7c1f6cd4bb26a5a05274c3ab9ab6773bd6a4b5ee",
+  "audited_main_commit": "15fb5e69bed1a334919bfa38949beafed15ba5da",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
   "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
   "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify, has unknown experiment-blocking status, and retains source traceability until audited.",

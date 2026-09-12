@@ -1,6 +1,6 @@
 # Merged-PR finding reconciliation
 
-Audited main: `7c1f6cd4bb26a5a05274c3ab9ab6773bd6a4b5ee`
+Audited main: `15fb5e69bed1a334919bfa38949beafed15ba5da`
 Frozen baseline Git blob: `69b72e0247b1c1604e03789a472559f8be9eeffb`
 
 ## Result
