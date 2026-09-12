@@ -159,6 +159,16 @@ class IntakeV1Tests(unittest.TestCase):
     def test_non_json_contract_fails_closed(self):
         m = manifest(); m["discovery"]["contract_candidates"][0]["contract"]["bad"] = {1, 2}; self.has(validate_manifest(m, require_complete=True), "not canonical-JSON serializable")
 
+    def test_non_finite_contract_numbers_fail_closed(self):
+        for value in (float("nan"), float("inf"), float("-inf")):
+            with self.subTest(value=value):
+                m = manifest()
+                m["discovery"]["contract_candidates"][0]["contract"]["bad"] = value
+                self.has(
+                    validate_manifest(m, require_complete=True),
+                    "not canonical-JSON serializable",
+                )
+
     def test_freeze_does_not_mutate_input(self):
         m = manifest(); before = copy.deepcopy(m); freeze_manifest(m, frozen_at=STAMP); self.assertEqual(m, before)
 
