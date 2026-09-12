@@ -42,7 +42,13 @@ _ID = re.compile(r"^[A-Za-z][A-Za-z0-9_.:-]*$")
 
 
 def canonical_json(value: Any) -> str:
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        ensure_ascii=False,
+        allow_nan=False,
+    )
 
 
 def sha256_json(value: Any) -> str:
