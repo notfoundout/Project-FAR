@@ -34,24 +34,26 @@ The intake gate requires:
 
 1. preservation and hashing of the exact supplied input;
 2. retention of materially distinct parses and interpretations, with explicit provenance or derivation for any exclusion;
-3. explicit recording of synthesis, inference, assumptions, search scope, search targets, stopping rule, saturation execution, evidence cutoff, and limitations;
-4. construction of the complete bounded contract family over every active parse and its active material interpretations, including a singleton empty-assignment candidate for a retained parse with no material terms;
-5. chronology in which registered discovery evidence and saturation precede freeze;
-6. freezing the raw input plus complete discovery object and binding the freeze timestamp before any candidate contract is evaluated;
-7. binding each evaluation to the exact frozen candidate contract hash and exact freeze identity, with explicit evidence or an `Unknown` explanation;
-8. evaluation of every frozen candidate before cross-contract aggregation;
-9. mechanical aggregation across the complete frozen family, with any result-relevant `Unknown` assumption preventing invariant promotion.
+3. auditable material/non-material classification for every term, including the basis and consequence if misclassified;
+4. explicit recording of synthesis, inference, assumptions, search scope, search targets, stopping rule, saturation execution, evidence cutoff, and limitations;
+5. construction of the complete bounded contract family over every active parse and its active material interpretations, including a singleton empty-assignment candidate for a retained parse with no material terms;
+6. provenance for every scalar or empty-container leaf in every candidate downstream contract, with interpretation provenance restricted to the candidate's selected assignments;
+7. chronology in which registered discovery evidence and saturation precede freeze;
+8. freezing the raw input plus complete discovery object and binding the freeze timestamp before any candidate contract is evaluated;
+9. binding each evaluation to the exact frozen candidate contract hash and exact freeze identity, with explicit evidence or an `Unknown` explanation;
+10. evaluation of every frozen candidate before cross-contract aggregation;
+11. mechanical aggregation across the complete frozen family, with any result-relevant `Unknown` assumption preventing invariant promotion.
 
 A draft, incomplete, invalid, or unresolved-assumption intake cannot support an invariant non-`Unknown` cross-contract verdict. If the intake cannot be completed, the investigation must preserve `Unknown`, `Incomplete`, `Suspended`, `UNDERDETERMINED`, or another applicable typed boundary rather than silently completing the contract.
 
-This gate does not claim that a bounded search proves open-world semantic completeness, source truth, or external source-byte verification.
+This gate does not claim that a bounded search proves open-world semantic completeness, source truth, external source-byte verification, or uniquely unbiased contract selection.
 
 ## Contract-Relative Conformance Overlay
 
 The stage sequence below is Project FAR's operational profile. Every investigation making an adequacy, preservation, common-content, invariance, or minimality claim must also satisfy these theory-derived gates:
 
 1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims. If the supplied input is under-specified, the intake gate must complete and freeze before substantive evaluation.
-2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order. When multiple source-supported contracts survive intake, freeze the complete family rather than selecting one by preference.
+2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order. When multiple source-supported contracts survive intake, freeze the complete family rather than selecting one by preference. Any analyst-supplied contract field must remain provenance-traceable.
 3. **Totalize without collapse.** Keep determinate absence, falsity, inapplicability, failure, unresolvedness, and epistemic Unknown distinct whenever observable.
 4. **Construct and charge the representation.** Record the mapping and every analyst-supplied tag, interpreter, sidecar, quotient, or hidden dependency.
 5. **Run the factorization audit.** Construct a decoder proving \(\beta_C=d\circ\rho\) and search for a collision \(\rho(x)=\rho(y)\) with \(\beta_C(x)\ne\beta_C(y)\). Decoder proof means `PROVED`; collision means `REFUTED`; neither means `OPEN`.
