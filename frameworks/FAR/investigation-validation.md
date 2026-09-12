@@ -12,9 +12,11 @@ FARO may later operationalize or automate these checks, but the checks themselve
 
 ## Contract-Discovery Intake Validation
 
-When the supplied input did not already determine every result-relevant comparison parameter, validation begins with the governed intake record.
+When the supplied input is not itself an explicit validated downstream comparison-contract artifact, validation begins with the governed intake record.
 
-Require all of the following:
+Intake may be bypassed only when the supplied artifact itself is machine-readable, the applicable downstream schema and semantic validator accept it, and the investigation records the artifact's exact format/version, content hash, and validation result. A prose assertion that the contract is complete or that intake is not applicable fails this gate.
+
+When intake applies, require all of the following:
 
 - the record satisfies the published `far-intake/1.0` JSON Schema before semantic validation;
 - the exact raw input is preserved and its SHA-256 recomputes;
@@ -53,7 +55,7 @@ Passing intake validation establishes bounded procedural conformance only. It do
 Before the existing checklist, validate the following whenever the investigation makes a representation claim:
 
 - claim, domain, quantifiers, evidence cutoff, and nonclaims are frozen;
-- the intake gate is either satisfied or explicitly not applicable because the supplied input already determines the governing contract;
+- the intake gate is satisfied, or bypass is proven by an exact supplied machine-readable downstream contract artifact with recorded format/version, content hash, and successful applicable schema/semantic validation;
 - cases, tests/contexts, typed outcomes, observation semantics, and consequence-affecting parameters are explicit;
 - admitted translations/equivalences, interpretation profiles, and interface frame are explicit;
 - approximation or cost orders are present for any non-exact or non-information minimality claim;
@@ -95,7 +97,7 @@ A completed FAR investigation should satisfy the following checks.
 - The investigation is explicitly identified.
 - The objective is stated.
 - The relevant conditions or scope are stated.
-- The governed intake record is referenced when the input required contract discovery, or the reason it was not applicable is explicit.
+- The governed intake record is referenced when contract discovery was required; when intake was bypassed, the exact supplied validated contract artifact, format/version, content hash, and validation result are referenced instead.
 
 ---
 
