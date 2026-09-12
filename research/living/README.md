@@ -36,15 +36,21 @@ The branch is rebuilt as a single commit on current `main` each run, so the roll
 
 Steady-state operation uses one permanent draft PR for `automation/living-research-inbox`. `research/living/inbox/.rolling-pr-anchor.json` exists on that branch solely so the PR remains non-empty immediately after canonical snapshot promotion. The anchor is not a candidate or evidence item and must never be copied into a promotion snapshot.
 
-Because the PR already exists, the scheduled `GITHUB_TOKEN` only refreshes it. No repository-wide permission to let GitHub Actions create or approve pull requests is required, and no privileged administrator token is required.
+Because the PR already exists, the discovery scheduler only refreshes it. The permanent inbox PR must not be merged or closed during normal operation. If it disappears, the writer preserves research data on the branch and the governance step fails closed until a human bootstraps one replacement permanent PR. Broadening automation authority is not the recovery path.
 
-The permanent inbox PR must not be merged or closed during normal operation. If it disappears, the writer preserves research data on the branch and the governance step must fail closed until a human bootstraps one replacement permanent PR. Broadening automation authority is not the recovery path.
+## Governed promotion
 
-## Snapshot promotion
+Promotion is a separate transaction from discovery. `Living Research Promotion` executes code only from protected `main`, freezes the exact PR #490 head and exact current-main base, and may prepare/open a separate promotion PR. It never merges that PR.
 
-When reviewed Research-only state should enter canonical `main`, create a separate snapshot branch from current protected `main`, copy only the reviewed living-research state, explicitly exclude `.rolling-pr-anchor.json`, and open a normal promotion PR. That PR must pass the normal protected validation and `merge-authority` path. The permanent inbox PR remains open throughout.
+Review-disposition membership alone is not promotion authority. A Research snapshot requires an explicit protected entry in `snapshot-authorizations-v1.0.json` binding the exact candidate bytes, exact review row, exact review-basis bytes, source identity, and disposition. Existing review rows that lack such an authorization remain unpromoted.
+
+Canonical edits require the stronger `PROMOTION_PROPOSED` lifecycle stage and an explicit protected entry in `promotion-authorizations-v1.0.json` binding the exact proposal, candidate, operation set, and Question/Execution/Observation/Discovery/Replication/Acceptance hashes.
+
+Every promotion branch is keyed by the complete source SHA and complete base SHA, contains exactly one sealed promotion commit, excludes `.rolling-pr-anchor.json`, and must pass the ordinary protected `merge-authority` path. If PR #490 or `main` moves, the transaction fails and must be regenerated against the new exact state.
 
 Merging a Research-only snapshot does not itself establish support, dispute, novelty, external validity, utility, independence, theorem status, or EFR results.
+
+The detailed mechanical contract is in `PROMOTION.md`.
 
 ## Attention terms are derived, never accumulated
 
@@ -56,7 +62,9 @@ Each provider's attention-term matches are stored on that provider's source entr
 
 ## PR-status boundary
 
-Updates pushed by `GITHUB_TOKEN` do not manufacture protected PR status checks. Each unattended update dispatches bounded validation against the branch head for content assurance, but that dispatch is not a substitute for `merge-authority` and cannot make the permanent inbox canonical. Snapshot promotion uses a separate human-authored PR head so ordinary protected checks attach to the exact promoted bytes.
+Updates pushed to the permanent inbox by `GITHUB_TOKEN` do not manufacture protected PR status checks and never make PR #490 canonical. Promotion therefore uses a distinct exact source+base branch and PR. The transaction may explicitly dispatch validator assurance for that exact promotion head, but it cannot forge or replace the protected `merge-authority` result.
+
+Canonical tests independently verify the final promotion head. For pull-request CI, where GitHub checks out a synthetic merge commit, the verifier resolves `GITHUB_HEAD_REF` and checks the exact promotion commit. It is read-only and rejects stale bases, multiple commits, forged manifests, unauthorized or unsealed files, authorization/provenance drift, and protected/control-plane targets.
 
 ## Historical, philosophical, and metaphysical coverage
 
@@ -83,6 +91,11 @@ The automation may enter only `DISCOVERED` by itself. Every later scientific lif
 - `config-v1.0.json` — sources, governed questions, lenses, backfill, and triage.
 - `state-v1.0.json` — incremental and historical cursors.
 - `lifecycle-v1.0.json` — scientific stage-transition boundary.
+- `review-dispositions-v1.0.json` — protected review/queue memory; not promotion authority.
+- `snapshot-authorizations-v1.0.json` — protected exact-byte Research snapshot authority.
+- `promotion-authorizations-v1.0.json` — protected exact canonical-edit authority after `PROMOTION_PROPOSED`.
+- `promotion-policy-v1.0.json` — automatic write and sealing boundary.
+- `PROMOTION.md` — complete promotion contract.
 - `repository-surfaces-v1.0.json` — canonical surfaces monitored for drift.
 - `repository-state-v1.0.json` — generated reconciliation/impact state.
 - `inbox/candidates/` — deduplicated source candidates.
@@ -96,5 +109,7 @@ The automation may enter only `DISCOVERED` by itself. Every later scientific lif
 python tools/run_living_research.py
 python tools/reconcile_living_repo.py
 python tools/check_living_research.py
-python -m unittest tests.test_living_research tests.test_living_research_workflow -v
+python tools/run_living_research_promotion.py
+python tools/check_living_promotion_head.py
+python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_living_research_promotion tests.test_living_research_promotion_runner tests.test_living_research_promotion_workflow -v
 ```
