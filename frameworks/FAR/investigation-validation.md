@@ -18,7 +18,8 @@ Require all of the following:
 
 - the record satisfies the published `far-intake/1.0` JSON Schema before semantic validation;
 - the exact raw input is preserved and its SHA-256 recomputes;
-- materially distinct claim parses and material terms are explicit;
+- materially distinct claim parses and terms are explicit;
+- every term's material/non-material classification has an auditable source/raw-input/inference basis and records the consequence of misclassification;
 - parse, interpretation, and compatibility exclusions have an auditable source/raw-input/inference basis rather than an analyst-written reason alone;
 - source-derived interpretations have source provenance;
 - source synthesis and inference have explicit derivations;
@@ -32,6 +33,8 @@ Require all of the following:
 - the contract family covers every active material interpretation combination unless that exact combination has a valid compatibility exclusion;
 - every retained zero-material parse contributes the singleton empty-assignment candidate;
 - each candidate contract hash recomputes;
+- every scalar or empty-container leaf of each candidate downstream contract has exactly one valid provenance trace to raw input, sources, selected interpretations, declared assumptions, or explicit inference;
+- interpretation-based parameter provenance does not reference interpretations outside the candidate's selected assignments;
 - `intake_sha256` binds the exact raw input and discovery object;
 - `freeze_sha256` binds the intake hash and exact freeze timestamp;
 - no evaluation predates the intake freeze;
@@ -43,7 +46,7 @@ Require all of the following:
 
 A draft, incomplete, invalid, or unresolved-assumption intake cannot support an invariant non-`Unknown` cross-contract verdict.
 
-Passing intake validation establishes bounded procedural conformance only. It does not establish open-world semantic completeness, source truth or authority, independent retrieval of source bytes, or downstream contract adequacy.
+Passing intake validation establishes bounded procedural conformance only. It does not establish open-world semantic completeness, source truth or authority, independent retrieval of source bytes, uniquely unbiased contract selection, or downstream contract adequacy.
 
 ## Contract-Relative Validation Gates
 
