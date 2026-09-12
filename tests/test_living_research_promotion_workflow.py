@@ -17,7 +17,8 @@ class PromotionWorkflowTests(unittest.TestCase):
 
     def test_workflow_has_one_canonical_transaction_entrypoint(self):
         self.assertIn("ref: main",self.workflow)
-        self.assertIn("python tools/run_living_research_promotion.py",self.workflow)
+        self.assertIn("python -m tools.run_living_research_promotion",self.workflow)
+        self.assertNotIn("python tools/run_living_research_promotion.py",self.workflow)
         self.assertNotIn("gh pr create",self.workflow)
         self.assertNotIn("git add -A",self.workflow)
         self.assertNotIn("automation/living-research-inbox",self.workflow)
