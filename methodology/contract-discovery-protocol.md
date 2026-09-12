@@ -14,11 +14,13 @@ It does not establish facts about an application domain. It governs how candidat
 
 ## Trigger
 
-Run this protocol whenever the supplied input does not already determine every comparison parameter needed by the governing FAR claim type.
+Run this protocol unless the supplied artifact is itself an explicit machine-readable downstream comparison contract accepted by the applicable contract schema and semantic validator.
 
 A missing parameter remains `Unknown` until supported. It shall not be filled from convention, model prior, unstated preference, or remembered context.
 
-If the supplied input already contains a complete contract, record that fact and its provenance; do not manufacture alternatives without evidence of material ambiguity.
+Intake bypass requires the investigation to record the supplied contract artifact's exact format/version, content hash, and successful applicable validation result. A prose claim that the input is complete, already defines the contract, or makes intake unnecessary is not sufficient. If the supplied artifact fails downstream contract validation or leaves a result-determining parameter outside the artifact, this protocol applies.
+
+A validated supplied contract need not have speculative alternative meanings manufactured without evidence of material ambiguity.
 
 ## Core Rule
 
@@ -230,6 +232,7 @@ The aggregate rule must not be changed after outcomes are known.
 
 The intake is non-conforming if any of the following occurs:
 
+- intake is bypassed without an exact supplied machine-readable contract artifact, recorded format/version and content hash, and successful applicable downstream validation;
 - the document violates the published schema;
 - a material parse disappears without an exclusion record;
 - a material interpretation lacks required provenance or derivation;
