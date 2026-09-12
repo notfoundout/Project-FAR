@@ -109,7 +109,7 @@ The automation may enter only `DISCOVERED` by itself. Every later scientific lif
 python tools/run_living_research.py
 python tools/reconcile_living_repo.py
 python tools/check_living_research.py
-python tools/run_living_research_promotion.py
-python tools/check_living_promotion_head.py
+python -m tools.run_living_research_promotion
+python -m tools.check_living_promotion_head
 python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_living_research_promotion tests.test_living_research_promotion_runner tests.test_living_research_promotion_workflow -v
 ```
