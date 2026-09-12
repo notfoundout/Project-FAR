@@ -20,9 +20,11 @@ Its job is to make result-determining choices explicit before a comparison contr
 
 The published JSON Schema is normative for document shape. The semantic validator applies the schema first and stops semantic interpretation of a schema-invalid document.
 
+The repository's constrained local JSON Schema engine implements the structural keywords used by this format, including JSON Schema regex-search semantics for `pattern`, array/object cardinality and uniqueness, and schema-valued `additionalProperties`. Optional format assertions remain outside the local validator's decidable enforcement boundary unless separately checked semantically.
+
 Semantic checks then enforce cross-reference validity, provenance, complete bounded family coverage, chronology, hash binding, and aggregation.
 
-This order prevents the implementation from accepting records the published schema rejects.
+This order prevents the implementation from accepting records the published schema rejects within the supported schema subset.
 
 ## 3. Preserved raw input
 
@@ -35,18 +37,32 @@ Changing a frozen raw input invalidates the intake freeze. A single draft manife
 The `discovery` object contains:
 
 - claim parses and explicit claim-parse exclusions;
-- terms and their materiality classification;
+- terms and provenance-bearing materiality classifications;
 - source records;
 - interpretations;
 - interpretation exclusions;
 - compatibility exclusions;
 - assumptions;
 - the bounded search protocol;
-- contract candidates.
+- contract candidates and leaf-level contract-parameter provenance.
 
 The semantic validator checks identifiers and references across these tables.
 
-## 5. Interpretation provenance
+## 5. Materiality provenance
+
+Every term records whether it is material and why that classification is permitted to affect the contract family.
+
+The fields are:
+
+- `material`;
+- `materiality_basis` (`SOURCE`, `RAW_INPUT`, or `INFERENCE`);
+- `materiality_source_ids`;
+- `materiality_derivation`;
+- `effect_if_misclassified`.
+
+`SOURCE` requires source provenance. `RAW_INPUT` and `INFERENCE` require an explicit derivation. This prevents an untracked `material: false` choice from silently deleting a result-relevant ambiguity.
+
+## 6. Interpretation provenance
 
 Interpretations have one of three origins:
 
@@ -58,7 +74,7 @@ Source-explicit and source-synthesis rows require source references. Synthesis a
 
 The format therefore distinguishes source content from constructed or inferred content instead of flattening them into one field.
 
-## 6. Exclusion provenance
+## 7. Exclusion provenance
 
 Claim-parse, interpretation, and compatibility exclusions cannot rest on an analyst-written reason alone.
 
@@ -70,7 +86,7 @@ Every exclusion has an auditable basis:
 
 Interpretation and parse exclusions preserve the excluded item in the manifest. Deleting an item is not equivalent to recording its exclusion.
 
-## 7. Search and saturation record
+## 8. Search and saturation record
 
 Each search query records its text, target, source scope, material term identifiers, and claim-parse identifiers.
 
@@ -87,7 +103,7 @@ At freeze readiness:
 
 These checks establish bounded procedural completion only. They do not prove open-world semantic completeness.
 
-## 8. No-silent-pruning rule
+## 9. No-silent-pruning rule
 
 For each active claim parse, the validator determines its material terms and each term's active interpretations.
 
@@ -97,20 +113,23 @@ A retained parse with no material terms contributes one singleton candidate with
 
 At least one claim parse must remain active.
 
-## 9. Contract binding
+## 10. Contract binding and parameter provenance
 
 Each candidate contains:
 
 - a claim-parse identifier;
 - the exact material term-to-interpretation assignments;
 - a downstream contract object;
-- SHA-256 of canonical JSON for that contract object.
+- SHA-256 of canonical JSON for that contract object;
+- `parameter_provenance` covering every scalar or empty-container leaf in the downstream contract.
 
-The intake validator does not claim that the downstream contract is valid `far-ir/2.0`; the appropriate downstream semantic verifier remains authoritative for that question.
+Each provenance row identifies the leaf by JSON Pointer and classifies its basis as `RAW_INPUT`, `SOURCE`, `INTERPRETATION`, `ASSUMPTION`, or `INFERENCE`. It records the applicable source, interpretation, and assumption identifiers plus an explicit derivation/trace statement. Interpretation-based provenance may reference only interpretations selected by that candidate.
 
-Non-canonical-JSON contract values are rejected rather than causing an uncaught exception.
+The validator rejects duplicate provenance paths, missing leaf paths, provenance for non-leaf paths, unknown references, and interpretation references outside the candidate assignment map.
 
-## 10. Freeze identity and chronology
+The intake validator does not claim that the downstream contract is valid `far-ir/2.0`; the appropriate downstream semantic verifier remains authoritative for that question. Non-canonical-JSON contract values are rejected rather than causing an uncaught exception.
+
+## 11. Freeze identity and chronology
 
 A manifest can be `DRAFT` or `FROZEN`.
 
@@ -125,9 +144,9 @@ The freeze stores:
 - `intake_sha256` — SHA-256 of canonical JSON for the exact `raw_input` plus complete `discovery` object;
 - `freeze_sha256` — SHA-256 of canonical JSON for `{intake_sha256, frozen_at}`.
 
-Changing any frozen discovery input or changing the freeze timestamp invalidates the corresponding hash.
+Changing any frozen discovery input, including materiality or parameter-provenance records, or changing the freeze timestamp invalidates the corresponding hash.
 
-## 11. Evaluation order and evidence
+## 12. Evaluation order and evidence
 
 Evaluations are prohibited before freeze.
 
@@ -143,7 +162,7 @@ Each evaluation binds:
 
 The evaluation timestamp must not predate the freeze. Every non-`Unknown` outcome requires at least one evidence reference.
 
-## 12. Mechanical aggregation
+## 13. Mechanical aggregation
 
 The validator exposes a fixed aggregate over the complete frozen contract family:
 
@@ -157,7 +176,7 @@ The validator exposes a fixed aggregate over the complete frozen contract family
 
 No ranking, weighting, majority vote, or preferred interpretation is introduced by this format.
 
-## 13. CLI and packaging
+## 14. CLI and packaging
 
 The package exposes `far-intake` alongside the existing `far` and `far-evidence` console entrypoints:
 
@@ -170,14 +189,15 @@ far-intake aggregate intake.evaluated.json
 
 `init` deliberately creates a draft with no inferred meanings. Interpretation discovery remains an evidence-producing research activity governed by the protocol.
 
-## 14. Boundary
+## 15. Boundary
 
 A valid frozen intake establishes only that the recorded bounded discovery state is explicit, provenance-linked, complete relative to its active tables and exclusions, chronologically ordered, and cryptographically bound before evaluation.
 
 It does not establish:
 
-- open-world source, parse, interpretation, or assumption completeness;
+- open-world source, parse, interpretation, assumption, or contract-parameter completeness;
 - factual correctness or authority of a source merely because its locator and declared hash are recorded;
 - independent retrieval of external source bytes;
+- a uniquely unbiased or universally acceptable contract (`LIM-038` remains open);
 - downstream contract adequacy;
 - external independence, novelty, priority, empirical utility, or commercial value.
