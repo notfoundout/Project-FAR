@@ -340,6 +340,9 @@ class DiagnosticSequenceTests(unittest.TestCase):
         import copy
 
         document = copy.deepcopy(self.load_v21("valid-frontier.json"))
-        document["report"]["evidence"]["candidates"][0]["costs"] = []
+        # Keep the adversarial record schema-valid so this exercises semantic cost coverage.
+        document["report"]["evidence"]["candidates"][0]["costs"] = document["report"][
+            "evidence"
+        ]["candidates"][0]["costs"][:1]
         self.reseal(document)
         self.assertEqual(self.v21_codes(document), ["COST_COVERAGE_MISMATCH"])
