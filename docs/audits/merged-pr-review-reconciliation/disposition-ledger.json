@@ -213,7 +213,7 @@
       "blocks_experiment_reconstruction": "unknown",
       "disposition": "obsolete_after_later_changes",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARO README now records v1.0 Stable and current requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
         "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "failure_mechanism": "The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
