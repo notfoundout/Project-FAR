@@ -8,6 +8,8 @@
 
 FAR defines Project FAR's contract-relative investigation methodology. It freezes the claim and comparison contract, evaluates candidate representations by factorization or collisions, minimizes relative to declared objectives, and reports loss and Unknown. [FARA](../FARA/README.md) is one selected representation target.
 
+When supplied input does not already determine the comparison contract, FAR first uses the governed [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) to preserve ambiguity, provenance, assumptions, and the complete bounded contract family before evaluation.
+
 FAR does not introduce or rely on global FARA primitives. Construct, Differentiate, and Restrict are workflow verbs; Resolve is derived rule application.
 
 ---
@@ -16,13 +18,15 @@ FAR does not introduce or rely on global FARA primitives. Construct, Differentia
 
 FAR v1.0 Stable has been recorded.
 
+An accepted methodology correction now governs the previously unspecified boundary between under-specified input and the frozen comparison contracts required by the existing contract-relative machinery. The correction is additive and does not change the core theory or reinterpret `far-ir/2.0` or `far-ir/2.1`.
+
 Future FAR changes should be driven by concrete downstream requirements, worked examples, or validated methodological deficiencies.
 
 ---
 
 ## Framework Role
 
-FAR owns contract freezing and investigation methodology.
+FAR owns contract discovery when required, contract freezing, and investigation methodology.
 
 It defines how reasoning investigations are conducted, recorded, validated, revised, and closed.
 
@@ -41,6 +45,8 @@ It defines how reasoning investigations are conducted, recorded, validated, revi
 
 - [`workflow.md`](workflow.md) — Canonical source for the stages of a FAR investigation.
 - [`methodology.md`](methodology.md) — Defines methodological principles governing FAR investigations.
+- [`../../methodology/contract-discovery-protocol.md`](../../methodology/contract-discovery-protocol.md) — Governs pre-contract interpretation discovery and freeze-before-evaluation when input is under-specified.
+- [`../../docs/specification/far-intake-1.0.md`](../../docs/specification/far-intake-1.0.md) — Specifies the machine-readable governed intake format and deterministic aggregation semantics.
 - [`application.md`](application.md) — Describes how FAR is applied across domains.
 - [`dependency-graph.md`](dependency-graph.md) — Records FAR document and concept dependency order.
 - [`design-principles.md`](design-principles.md) — Records governing design principles for FAR.
@@ -58,6 +64,7 @@ It defines how reasoning investigations are conducted, recorded, validated, revi
 - [`../../docs/audits/FAR-PHASE-3-METHODOLOGY-AUDIT.md`](../../docs/audits/FAR-PHASE-3-METHODOLOGY-AUDIT.md)
 - [`../../docs/audits/FAR-PHASE-4-CONSISTENCY-AUDIT.md`](../../docs/audits/FAR-PHASE-4-CONSISTENCY-AUDIT.md)
 - [`../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md`](../../docs/audits/FRAMEWORK-NAVIGATION-NORMALIZATION-AUDIT.md)
+- [`../../docs/governance/far-contract-discovery-acceptance-v1.0.md`](../../docs/governance/far-contract-discovery-acceptance-v1.0.md) — Acceptance record for the governed intake correction.
 
 ---
 
@@ -83,6 +90,8 @@ It does not define representational architecture, operational procedures, mathem
 
 Candidate generation remains part of Stage 6 — Perform Reasoning. The applicable calculus classifies candidates; Stage 7 materializes those results and provenance in the derived Admissibility Structure.
 
+Pre-contract interpretation discovery is an intake obligation, not Stage 6 candidate generation. It determines which explicit comparison contracts must be evaluated; it does not choose the investigation's substantive resolution.
+
 ---
 
 ## Next Steps
@@ -102,7 +111,7 @@ Use canonical worked investigations to test whether declared behavior factors th
 
 ## Derivation boundary
 
-The factorization and quotient obligations are constrained by shared theory; sequencing, selection, governance, and reporting choices remain compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, and claim-dimension analysis are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
+The factorization and quotient obligations are constrained by shared theory; sequencing, selection, governance, and reporting choices remain compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, claim-dimension analysis, and contract-discovery intake procedure are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
 
 ## Theory-conformance rule
 
