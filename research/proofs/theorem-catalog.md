@@ -1,122 +1,77 @@
-# Theorem Catalog
+# Research Proof Catalog
+
+Status: Research; non-canonical
 
 ## Purpose
 
-This document serves as the canonical index of formal results within Project FAR.
+This document preserves proposed proof topics and research identifiers within `research/proofs/`. It is a research-planning and navigation record, not the Project FAR canonical theorem/proof index.
 
-Its purpose is to maintain a complete inventory of every accepted, proposed, superseded, or refuted formal result.
+Current accepted theorem/proof status is governed by the [Theorem and Proof-Status Register](../../docs/governance/theorem-proof-status-register.md), with canonical locations resolved through the [Canonical Map](../../docs/CANONICAL_MAP.md).
 
-This document is a navigation artifact.
-
-It does not contain proofs.
+The entries below do not assert that a corresponding proof artifact exists, do not establish the listed statement, and do not create accepted identifiers or statuses outside this research record.
 
 ---
 
-# Organization
+## Research status vocabulary
 
-Formal results are organized according to the following hierarchy:
+This catalog uses the following local research states:
 
-- Lemma;
-- Proposition;
-- Theorem;
-- Corollary.
+- Proposed — a proof topic has been recorded, but no proof artifact is represented here;
+- Draft — an actual research proof artifact exists and is incomplete or unaccepted;
+- Under Review — an actual research proof artifact is undergoing review;
+- Refuted — research evidence records a refutation, subject to the applicable canonical status authority;
+- Superseded — this research record has been replaced while retained for provenance.
 
-Each result receives a unique identifier.
-
-Identifiers shall never be reused.
-
----
-
-# Status Classifications
-
-Every formal result shall possess exactly one status:
-
-- Draft;
-- Under Review;
-- Accepted;
-- Refuted;
-- Superseded.
+No local research state is equivalent to accepted canonical theorem/proof status.
 
 ---
 
-# Lemmas
+## Proposed lemmas
 
-| ID | Title | Status | Dependencies | File |
-|----|-------|--------|--------------|------|
-| L-001 | Representation/Object Distinction | Draft | Object; Representation; Interpretation | `lemmas/L-001-representation-object-distinction.md` |
-| L-002 | Interpretation/Representation Distinction | Draft | Representation; Interpretation; L-001 | `lemmas/L-002-interpretation-representation-distinction.md` |
-| L-003 | Object/Property Distinction | Draft | Object; Property; L-001; L-002 | `lemmas/L-003-object-property-distinction.md` |
-| L-004 | Relation Non-Identity | Draft | Object; Property; Relation; L-001; L-003 | `lemmas/L-004-relation-non-identity.md` |
-| L-005 | Investigation/Reasoning Calculus Distinction | Draft | Investigation; Reasoning Calculus; L-001; L-002; L-003; L-004 | `lemmas/L-005-investigation-reasoning-calculus-distinction.md` |
-| L-006 | Representations Require Explicit Structure | Draft | Representation; Representational Structure; L-001; L-002 | `lemmas/L-006-representations-require-explicit-structure.md` |
-| L-007 | Interpretation Preserves Representational Identity | Draft | Representation; Interpretation; L-001; L-002; L-006 | `lemmas/L-007-interpretation-preserves-representational-identity.md` |
-
----
-
-# Propositions
-
-| ID | Title | Status | Dependencies | File |
-|----|-------|--------|--------------|------|
-| P-001 | Representational Integrity | Draft | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007 | `propositions/P-001-representational-integrity.md` |
+| Research ID | Topic | Research state | Dependencies recorded for investigation | Proof artifact |
+|---|---|---|---|---|
+| L-001 | Representation/Object Distinction | Proposed | Object; Representation; Interpretation | None recorded |
+| L-002 | Interpretation/Representation Distinction | Proposed | Representation; Interpretation; L-001 | None recorded |
+| L-003 | Object/Property Distinction | Proposed | Object; Property; L-001; L-002 | None recorded |
+| L-004 | Relation Non-Identity | Proposed | Object; Property; Relation; L-001; L-003 | None recorded |
+| L-005 | Investigation/Reasoning Calculus Distinction | Proposed | Investigation; Reasoning Calculus; L-001; L-002; L-003; L-004 | None recorded |
+| L-006 | Representations Require Explicit Structure | Proposed | Representation; Representational Structure; L-001; L-002 | None recorded |
+| L-007 | Interpretation Preserves Representational Identity | Proposed | Representation; Interpretation; L-001; L-002; L-006 | None recorded |
 
 ---
 
-# Theorems
+## Proposed propositions
 
-| ID | Title | Status | Dependencies | File |
-|----|-------|--------|--------------|------|
-| T-001 | Representational Integrity Theorem | Draft | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007; P-001 | `theorems/T-001-representational-integrity-theorem.md` |
-
----
-
-# Corollaries
-
-| ID | Title | Status | Dependencies | File |
-|----|-------|--------|--------------|------|
-| None | — | — | — | — |
+| Research ID | Topic | Research state | Dependencies recorded for investigation | Proof artifact |
+|---|---|---|---|---|
+| P-001 | Representational Integrity | Proposed | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007 | None recorded |
 
 ---
 
-# Numbering Convention
+## Proposed theorems
 
-The following prefixes shall be used:
-
-- L-XXX — Lemma;
-- P-XXX — Proposition;
-- T-XXX — Theorem;
-- C-XXX — Corollary.
-
-Identifiers are assigned sequentially.
-
-Numbers are never recycled.
+| Research ID | Topic | Research state | Dependencies recorded for investigation | Proof artifact |
+|---|---|---|---|---|
+| T-001 | Representational Integrity Theorem | Proposed | Representation; Representational Structure; Interpretation; L-001; L-002; L-006; L-007; P-001 | None recorded |
 
 ---
 
-# Dependency Policy
+## Proposed corollaries
 
-Every formal result shall list every dependency required for its proof.
-
-Dependencies may include:
-
-- canonical definitions;
-- accepted lemmas;
-- accepted propositions;
-- accepted theorems;
-- accepted corollaries;
-- explicitly stated assumptions.
-
-No dependency may be implicit.
+No research corollary topic is currently recorded in this catalog.
 
 ---
 
-# Current Status
+## Identifier boundary
 
-The initial proof library has been normalized.
+The L-/P-/T- identifiers above are retained as local research identifiers for provenance. Their presence here does not reserve or establish a canonical theorem/proof identifier. Any promoted result must use the identity and status assigned by the applicable governed acceptance process.
 
-Current artifacts:
+Dependencies listed above are research-planning records. They are not assertions that the dependencies are proved, accepted, sufficient, or currently available as proof objects.
 
-- seven draft lemmas;
-- one draft proposition;
-- one draft theorem.
+---
 
-No formal result has yet been accepted.
+## Current repository state
+
+At this catalog revision, `research/proofs/` contains research/navigation Markdown files but no lemma, proposition, theorem, or corollary proof artifact corresponding to the proposed entries above. The catalog therefore does not link to nonexistent proof files or describe the proposed entries as an existing normalized proof library.
+
+No result is accepted or promoted by this document. If a proof artifact is later created, this catalog should record the artifact that actually exists and preserve its research status until the governed acceptance path changes that status.

@@ -1,43 +1,39 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "source": "docs/audits/merged-pr-review-classification/findings.json",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
   "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
-  "audited_main_commit": "8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad",
+  "audited_main_commit": "315582a03557601190e2d79293ad75af5469d885",
   "decisions": [
     {
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bR",
       "disposition": "fixed_on_current_main",
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
-      "current_lines": [
-        1303,
-        1340
-      ],
-      "evidence": [
-        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE \u2014 NON-PASSING execution audit.",
-        "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
-        "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures."
-      ],
+      "current_lines": [1303, 1340],
+      "root_cause_id": "vi-002:unsupported-pass",
       "failure_mechanism": "The former PASS classification could be consumed despite missing reconstruction and VI-001 re-execution evidence; the current manifest and validator now prohibit that state.",
-      "smallest_complete_remediation_boundary": "Complete: the investigation, execution manifest, status surfaces, validator, and focused fail-closed tests now agree that VI-002 is non-passing.",
-      "root_cause_id": "vi-002:unsupported-pass"
+      "evidence": [
+        "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 replaces the unsupported pass claim with an explicit INCOMPLETE — NON-PASSING execution audit.",
+        "research/validation/executions/VI-002.execution.yaml records only 3 of 7 required steps complete and tools/check_investigation_execution.py validates the fail-closed manifest.",
+        "tests/test_investigation_execution_gates.py exercises incomplete evidence, dependency, step identity, and status propagation failures.",
+        "The audited main 315582a03557601190e2d79293ad75af5469d885 descends from the prior audited state and PR #496 did not modify this investigation or its execution gate."
+      ],
+      "smallest_complete_remediation_boundary": "Complete: the investigation, execution manifest, status surfaces, validator, and focused fail-closed tests now agree that VI-002 is non-passing."
     },
     {
       "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bU",
       "disposition": "fixed_on_current_main",
       "current_path": "research/validation/investigations/VI-002-primitive-minimality.md",
-      "current_lines": [
-        1226,
-        1236
-      ],
+      "current_lines": [1226, 1236],
+      "root_cause_id": "vi-002:divergent-result-surfaces",
+      "failure_mechanism": "The stale interim Property row contradicted the final investigation summary; the interim table is no longer a live result surface and the current audited table is synchronized.",
       "evidence": [
         "Commit 1f3b086dcdb0ab4995b1a4493c77d9e047a3ad61 labels the earlier partial table superseded and retains one audited seven-primitive summary.",
         "research/validation/investigations/VI-002-primitive-minimality.md:1230 records Property as Independent (Provisional), consistent with the audited final summary.",
-        "research/validation/executions/VI-002.execution.yaml is the machine-readable status authority validated by tools/check_investigation_execution.py."
+        "research/validation/executions/VI-002.execution.yaml is the machine-readable status authority validated by tools/check_investigation_execution.py.",
+        "The audited main 315582a03557601190e2d79293ad75af5469d885 descends from the prior audited state and PR #496 did not modify this investigation or its execution gate."
       ],
-      "failure_mechanism": "The stale interim Property row contradicted the final investigation summary; the interim table is no longer a live result surface and the current audited table is synchronized.",
-      "smallest_complete_remediation_boundary": "Complete: retain the supersession marker, synchronized final summary, and execution-manifest validator.",
-      "root_cause_id": "vi-002:divergent-result-surfaces"
+      "smallest_complete_remediation_boundary": "Complete: retain the supersession marker, synchronized final summary, and execution-manifest validator."
     },
     {
       "finding_id": "PR231:PRRT_kwDOTH_vCM6ScNF3",
@@ -49,7 +45,8 @@
       "evidence": [
         "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
         "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
-        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885 without changing the protected source; post-merge main therefore retains the reproduced defect."
       ],
       "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
     },
@@ -63,7 +60,8 @@
       "evidence": [
         "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
         "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
-        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885 without changing the protected source; post-merge main therefore retains the reproduced defect."
       ],
       "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
     },
@@ -77,7 +75,8 @@
       "evidence": [
         "research/internal-assurance-2026-09-10/protected-baseline.json records the executed reproduction and exact current source digest.",
         "research/internal-assurance-2026-09-10/protected-candidate.json shows the targeted proposed repair changes the observed result.",
-        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate."
+        "research/internal-assurance-2026-09-10/protected-repin-rejection.json records actual rejection by the required base-authorization gate.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885 without changing the protected source; post-merge main therefore retains the reproduced defect."
       ],
       "smallest_complete_remediation_boundary": "Authorize the exact protected transition through a legitimate governance path, apply and validate the recorded candidate, and promote through protected PR checks. Prepared code is not closure."
     },
@@ -87,7 +86,8 @@
       "current_path": "docs/project-status.md",
       "failure_mechanism": "docs/PROJECT_STATUS.md is absent; docs/README.md links project-status.md and the current status explicitly identifies itself as the canonical project-level surface. The competing current-status file no longer exists.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: docs/PROJECT_STATUS.md is absent; docs/README.md links project-status.md and the current status explicitly identifies itself as the canonical project-level surface. The competing current-status file no longer exists."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: docs/PROJECT_STATUS.md is absent; docs/README.md links project-status.md and the current status explicitly identifies itself as the canonical project-level surface. The competing current-status file no longer exists.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -97,7 +97,8 @@
       "current_path": "frameworks/FARO/README.md",
       "failure_mechanism": "The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARO README now records v1.0 Stable and requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARO README now records v1.0 Stable and current requirement-driven downstream work, while docs/project-status.md records EFR as current. Neither tells readers to run the obsolete Phase 7 instead of Phase 8.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -107,7 +108,8 @@
       "current_path": "frameworks/FARM/README.md",
       "failure_mechanism": "The FARM README records v1.0 Stable and current requirement-driven coordination; it no longer directs execution of the already completed Phase 3 audit.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARM README records v1.0 Stable and current requirement-driven coordination; it no longer directs execution of the already completed Phase 3 audit."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The FARM README records v1.0 Stable and current requirement-driven coordination; it no longer directs execution of the already completed Phase 3 audit.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -117,7 +119,8 @@
       "current_path": "docs/project-status.md",
       "failure_mechanism": "Current status and README identify POST-CLOSURE-001 as complete and EFR as the successor. update_readme_dashboard.py no longer emits either conflicting v0.4 active-phase string; its remaining block is explicitly historical.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: Current status and README identify POST-CLOSURE-001 as complete and EFR as the successor. update_readme_dashboard.py no longer emits either conflicting v0.4 active-phase string; its remaining block is explicitly historical."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: Current status and README identify POST-CLOSURE-001 as complete and EFR as the successor. update_readme_dashboard.py no longer emits either conflicting v0.4 active-phase string; its remaining block is explicitly historical.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -127,7 +130,8 @@
       "current_path": "README.md",
       "failure_mechanism": "The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -137,7 +141,8 @@
       "current_path": "README.md",
       "failure_mechanism": "The current README contains no BEGIN GENERATED PROJECT FAR DASHBOARD block. The release profile generator.dashboard check ran successfully in its sandbox and found no committed generated drift. The abbreviated generated-task block at issue has been removed.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no BEGIN GENERATED PROJECT FAR DASHBOARD block. The release profile generator.dashboard check ran successfully in its sandbox and found no committed generated drift. The abbreviated generated-task block at issue has been removed."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current README contains no BEGIN GENERATED PROJECT FAR DASHBOARD block. The release profile generator.dashboard check ran successfully in its sandbox and found no committed generated drift. The abbreviated generated-task block at issue has been removed.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -147,7 +152,8 @@
       "current_path": "README.md",
       "failure_mechanism": "README latest-release prose, badge target, and explicit release link all identify v1.0.0 rather than the old conflicting v0.1/v0.2 pointers. The release consistency check passes within full repository health.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: README latest-release prose, badge target, and explicit release link all identify v1.0.0 rather than the old conflicting v0.1/v0.2 pointers. The release consistency check passes within full repository health."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: README latest-release prose, badge target, and explicit release link all identify v1.0.0 rather than the old conflicting v0.1/v0.2 pointers. The release consistency check passes within full repository health.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
     },
@@ -157,9 +163,153 @@
       "current_path": "tools/check_deduction_first_program.py",
       "failure_mechanism": "The current checker no longer requires the obsolete exact README phrase. The uncached release profile research.deduction-program check passes on the audited main tree; the reported assertion failure is no longer reproducible.",
       "evidence": [
-        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current checker no longer requires the obsolete exact README phrase. The uncached release profile research.deduction-program check passes on the audited main tree; the reported assertion failure is no longer reproducible."
+        "Direct comparison against current default-branch commit 8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad: The current checker no longer requires the obsolete exact README phrase. The uncached release profile research.deduction-program check passes on the audited main tree; the reported assertion failure is no longer reproducible.",
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885; the exact historical condition remained absent on the post-merge validated main state."
       ],
       "smallest_complete_remediation_boundary": "No further repair for this exact historical finding. This does not close unrelated findings in the same files."
+    },
+    {
+      "finding_id": "PR231:PRRT_kwDOTH_vCM6ScNF9",
+      "disposition": "fixed_on_current_main",
+      "current_path": "far_validation/engine.py",
+      "root_cause_id": "validation:globstar-direct-file-selection",
+      "failure_mechanism": "Direct-file paths could fail `**` input matching and silently omit intended checks when another broad check matched.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the exact reproduction and repair boundary.",
+        "tests/test_internal_assurance_regressions.py::test_globstars_cover_zero_or_multiple_directories and ::test_changed_selection_includes_direct_files_even_if_other_check_matches exercise the repaired selection.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; post-merge exact-head and merge-authority validation passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR369:PRRT_kwDOTH_vCM6Ttjrh",
+      "disposition": "fixed_on_current_main",
+      "current_path": "mechanization/far_mechanization/compare_adjudication.py",
+      "root_cause_id": "mechanization:nonfinite-json-metadata",
+      "failure_mechanism": "NaN and infinities were accepted as scalar metadata and emitted as non-JSON tokens by canonical serialization.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the exact reproduction and repair boundary.",
+        "tests/test_internal_assurance_regressions.py::test_nonfinite_metadata_is_rejected_before_hashing and ::test_finite_scalar_metadata_preserves_canonical_bytes cover rejection and the valid negative control.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; the mechanization suite and protected main validation passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR151:PRRT_kwDOTH_vCM6PxMgL",
+      "disposition": "fixed_on_current_main",
+      "current_path": "mechanization/far_mechanization/ir.py",
+      "root_cause_id": "mechanization:investigation-id-uniqueness",
+      "failure_mechanism": "The duplicate-identifier map omitted the investigation identifier, allowing a claim or other local object to reuse it without a diagnostic.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the exact duplicate-ID reproduction.",
+        "tests/mechanization/test_canonical_ir.py contains the regression that requires investigation identifiers to participate in duplicate detection.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; all 53 mechanization tests passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR151:PRRT_kwDOTH_vCM6PxMgM",
+      "disposition": "fixed_on_current_main",
+      "current_path": "mechanization/far_mechanization/ir.py",
+      "root_cause_id": "mechanization:runtime-graph-kind-validation",
+      "failure_mechanism": "Runtime strings outside the GraphNodeKind/GraphEdgeKind enums could pass local validation because annotations were not enforced at runtime.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the exact invalid-kind reproduction.",
+        "tests/mechanization/test_canonical_ir.py covers invalid graph node and edge kinds through the existing FAR-IR-004 diagnostic.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; all 53 mechanization tests passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR348:PRRT_kwDOTH_vCM6Tc-2A",
+      "disposition": "fixed_on_current_main",
+      "current_path": "commercial/far-demo/src/far_demo/app.py",
+      "root_cause_id": "demo:download-current-artifact",
+      "failure_mechanism": "The upload UI rendered the analyzed artifact but downloaded the canned example report, so the saved evidence did not match the displayed analysis.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the reproduction and repair.",
+        "research/internal-assurance-2026-09-10/check_demo_download.cjs executes the actual page JavaScript, renders two distinct artifacts, verifies Blob contents, and checks prior-URL revocation.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; all 21 optional demo tests passed with declared dependencies."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR353:PRRT_kwDOTH_vCM6TfYVy",
+      "disposition": "fixed_on_current_main",
+      "current_path": "commercial/far-demo/src/far_demo/app.py",
+      "root_cause_id": "demo:malformed-upload-normalization",
+      "failure_mechanism": "Parser-specific exceptions from malformed supported uploads could escape the API as server errors instead of validation errors.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the malformed-upload reproduction and repair boundary.",
+        "commercial/far-demo/tests/test_demo.py and commercial/far-demo/tests/test_validation.py cover supported malformed inputs after normalization.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; the 21-test optional demo suite passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR353:PRRT_kwDOTH_vCM6TfYV2",
+      "disposition": "fixed_on_current_main",
+      "current_path": "commercial/far-demo/src/far_demo/formats.py",
+      "root_cause_id": "demo:xml-required-field-preservation",
+      "failure_mechanism": "XML parsing invented `trace_completeness=0` when the required field was absent, converting malformed evidence into a valid package.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the XML missing-field reproduction and repair boundary.",
+        "commercial/far-demo/tests/test_demo.py covers required-field preservation so model validation rejects omission.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; the 21-test optional demo suite passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR354:PRRT_kwDOTH_vCM6Tfu7K",
+      "disposition": "fixed_on_current_main",
+      "current_path": "commercial/far-demo/src/far_demo/app.py",
+      "root_cause_id": "demo:removed-support-review",
+      "failure_mechanism": "A candidate could remove recorded non-authorization support, emit a high-severity regression, and still present the release decision as PASS.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the removed-support reproduction and repair boundary.",
+        "commercial/far-demo/tests/test_demo.py covers review disposition for removed support without rewriting the candidate's own adjudication status.",
+        "PR #496 merged the repair as 315582a03557601190e2d79293ad75af5469d885; the optional demo suite passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR355:PRRT_kwDOTH_vCM6Tm8c9",
+      "disposition": "fixed_on_current_main",
+      "current_path": "commercial/far-demo/src/far_demo/validation_app.py",
+      "root_cause_id": "demo:feedback-log-emission",
+      "failure_mechanism": "The named feedback logger inherited WARNING and discarded its INFO record while the API returned `recorded`.",
+      "evidence": [
+        "research/internal-assurance-2026-09-10/README.md records the default-logging reproduction and repair boundary.",
+        "commercial/far-demo/tests/test_validation.py exercises actual stream emission under default root logging.",
+        "PR #496 merged the logger repair as 315582a03557601190e2d79293ad75af5469d885; the optional demo suite passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the reproduced failure is covered by a focused regression and the repair is merged on validated main."
+    },
+    {
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bV",
+      "disposition": "fixed_on_current_main",
+      "current_path": "research/proofs/conjectures.md",
+      "root_cause_id": "research-navigation:competing-canonical-conjecture-registry",
+      "failure_mechanism": "The research conjecture document claimed Project-wide canonical authority while another canonical conjecture registry already governed overlapping claims.",
+      "evidence": [
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885 and removes the competing Project-wide `canonical registry` claim from research/proofs/conjectures.md.",
+        "The repair preserves the document as a research conjecture surface without claiming authority over the canonical theorem/conjecture location.",
+        "Post-merge exact-head and repository-health validation passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the competing canonical-authority claim is removed; this does not promote or alter any conjecture."
+    },
+    {
+      "finding_id": "PR12:PRRT_kwDOTH_vCM6OD6bY",
+      "disposition": "fixed_on_current_main",
+      "current_path": "research/README.md",
+      "root_cause_id": "research-navigation:missing-research-index",
+      "failure_mechanism": "The research index had been deleted while current navigation and semantic-audit evidence still referenced it.",
+      "evidence": [
+        "PR #496 merged as 315582a03557601190e2d79293ad75af5469d885 and restores research/README.md rather than leaving current navigation and audit references dangling.",
+        "docs/README.md navigation and the restored research index now resolve to an existing repository artifact.",
+        "Post-merge link, markdown, exact-head, and repository-health validation passed."
+      ],
+      "smallest_complete_remediation_boundary": "Complete for this exact finding: the referenced research index exists again and repository link validation passes."
     }
   ]
 }

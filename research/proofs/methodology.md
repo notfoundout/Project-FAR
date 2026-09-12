@@ -1,28 +1,26 @@
-# Proof Methodology
+# Proof Research Methodology
+
+Status: Research; non-canonical
 
 ## Purpose
 
-This document defines the methodology governing formal proofs within Project FAR.
+This document records working standards for constructing and evaluating proof attempts inside `research/proofs/`.
 
-Its purpose is to establish uniform standards for constructing, evaluating, and maintaining formal proofs.
+It does not govern Project FAR accepted proof status and cannot promote a research argument into an accepted result. Current theorem/proof status is controlled by the [Theorem and Proof-Status Register](../../docs/governance/theorem-proof-status-register.md), and canonical locations are resolved through the [Canonical Map](../../docs/CANONICAL_MAP.md).
 
-Unless explicitly stated otherwise, canonical terminology is defined in:
-
-`theory/definitions/definitions.md`
+When a research proof attempt uses canonical terminology, the current theory definitions are available at [`../../theory/definitions/definitions.md`](../../theory/definitions/definitions.md). This research document does not redefine them.
 
 ---
 
-# Objective
+## Objective
 
-The objective of a formal proof is to demonstrate that a conclusion follows necessarily from explicitly stated premises according to valid rules of inference.
-
-Proofs establish necessity rather than plausibility.
+A proof attempt should demonstrate that a stated conclusion follows from explicit premises by identified rules of inference. The intended result is logical necessity relative to those premises, not plausibility or empirical frequency.
 
 ---
 
-# Scope
+## Scope
 
-This methodology applies to:
+This guidance applies only to research-stage:
 
 - lemmas;
 - propositions;
@@ -31,135 +29,67 @@ This methodology applies to:
 - proof attempts;
 - proof revisions.
 
-It does not govern exploratory research or validation investigations.
+It does not replace canonical governance, accepted theory, or validation protocols.
 
 ---
 
-# Required Structure
+## Recommended structure
 
-Every formal proof shall contain:
+A research proof attempt should identify:
 
-- identifier;
-- title;
-- status;
-- statement;
+- research identifier and title;
+- research status;
+- statement and scope;
 - purpose;
 - dependencies;
 - assumptions;
 - proof strategy;
-- numbered proof steps;
+- numbered inference steps;
 - conclusion;
 - consequences;
 - limitations;
 - related results.
 
----
-
-# Proof Strategy
-
-Every proof shall explicitly state its proof strategy.
-
-Permitted strategies include:
-
-- direct proof;
-- proof by contradiction;
-- proof by contrapositive;
-- proof by construction;
-- case analysis;
-- induction, when explicitly justified.
+Every dependency or assumption material to the conclusion should be explicit. A research attempt must not treat a later or unestablished result as an accepted premise without identifying that status.
 
 ---
 
-# Numbered Proof Steps
+## Proof strategies
 
-Every proof shall be written as numbered steps.
+Strategies may include direct proof, contradiction, contrapositive, construction, case analysis, or induction when the chosen strategy is justified by the stated premises and domain.
 
-Each step shall contain:
-
-1. the claim established at that step;
-2. a justification identifying the dependency, assumption, or inference rule used.
-
-No inference may be implicit.
+Each numbered step should state the claim established and identify the dependency, assumption, or inference rule used. Hidden inference is a defect to be exposed, not silently filled in.
 
 ---
 
-# Dependency Discipline
+## Completion and failure
 
-Every proof shall list every definition, lemma, proposition, theorem, corollary, or assumption used by the proof.
+A research attempt may use **Q.E.D.** only to mark that its own argument is intended as complete. That marker does not create accepted theorem status.
 
-No dependency may be implicit.
-
-Proofs shall not depend on later results.
-
-Circular reasoning is prohibited.
+An incomplete proof, counterexample, contradiction, failed construction, or unresolved obligation remains a valid research result and should retain its actual status rather than be promoted by terminology.
 
 ---
 
-# Termination
+## Quality checks
 
-Every completed proof shall end with:
-
-**Q.E.D.**
-
-A draft may include Q.E.D. only if the argument is intended as a complete proof rather than a partial attempt.
-
----
-
-# Proof Standards
-
-Every proof should satisfy:
+Research proof attempts should be checked for:
 
 - explicitness;
 - traceability;
 - dependency discipline;
-- minimal assumptions;
-- justified generality;
+- hidden assumptions;
+- undefined or equivocal terminology;
+- circularity;
+- unsupported generalization;
+- justified scope;
 - reproducibility.
 
----
-
-# Invalid Proof Practices
-
-The following are prohibited:
-
-- circular reasoning;
-- equivocation;
-- undefined terminology;
-- hidden assumptions;
-- dependency cycles;
-- unsupported generalization;
-- contradiction without explicit resolution;
-- appeal to examples as proof of universal claims.
+Examples alone do not prove universal claims. Validation evidence alone does not constitute a formal proof. A failed validation result does not automatically refute a theorem unless the theorem's premises and falsification conditions make that inference valid.
 
 ---
 
-# Relationship to Validation
+## Revision and preservation
 
-Validation investigations provide evidence regarding architectural claims.
+Research proof material may be revised when an error, stronger argument, dependency change, reduced assumption set, counterexample, or clearer reconstruction is established. Superseded or failed material should be preserved when it contains unique provenance or evidentiary value.
 
-Formal proofs establish logical necessity.
-
-Evidence alone does not constitute proof.
-
-Validation and proof complement one another but remain distinct.
-
----
-
-# Revision Policy
-
-Proofs may be revised only when:
-
-- an error is identified;
-- a stronger proof is discovered;
-- dependencies change;
-- assumptions are reduced;
-- a counterexample is discovered;
-- proof style is normalized across the proof library.
-
-Superseded proofs should be retained for historical traceability when they contain unique information.
-
----
-
-# Guiding Principle
-
-Every accepted theorem should be reproducible from explicitly documented assumptions through valid logical inference.
+Any move from research status to accepted proof status must occur through the governed acceptance and promotion path and be recorded by the applicable canonical authority. This file cannot authorize that transition.
