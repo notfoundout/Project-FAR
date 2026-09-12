@@ -4,6 +4,7 @@ Status: **Accepted**
 
 | Item | Owner | Current status | Basis |
 |---|---|---|---|
+| governed pre-contract discovery | FAR | compatible independent methodology | Required to prevent silent completion when supplied input leaves result-determining contract parameters open; exact source-search, provenance, exclusion, freeze, and aggregation procedure is methodological rather than a theorem of FARA. |
 | freeze claim and target class | FAR | theory-constrained method | Needed to make quantifiers and finite-panel boundaries explicit; exact field design is methodological. |
 | freeze comparison contract | FAR | theory-constrained method | Sufficiency/minimality are not well formed without cases, tests, typed outcomes, and semantics. |
 | totalize typed outcomes | FAR | theory-constrained method | `FAR-CORE-012` forbids collapsing distinctions observed by the contract; concrete types remain selected. |
