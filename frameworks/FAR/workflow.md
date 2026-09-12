@@ -24,27 +24,49 @@ The Admissibility Structure (Ω) is defined by FARA. FAR specifies when it is co
 
 ---
 
+## Contract-Discovery Intake Gate
+
+The canonical stage sequence assumes that result-determining contract parameters are explicit before substantive evaluation.
+
+When supplied input does not already determine those parameters, the investigation must first execute the [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) and materialize a `far-intake/1.0` record.
+
+The intake gate requires:
+
+1. preservation and hashing of the exact supplied input;
+2. retention of materially distinct parses and interpretations with provenance;
+3. explicit recording of synthesis, inference, exclusions, assumptions, search scope, and stopping rule;
+4. construction of the complete bounded contract family over active material interpretations, except combinations removed by explicit compatibility exclusions;
+5. freezing the discovery object before any candidate contract is evaluated;
+6. binding each evaluation to the exact frozen candidate contract hash;
+7. mechanical aggregation across the complete frozen family.
+
+A draft or incomplete intake cannot support a non-`Unknown` cross-contract verdict. If the intake cannot be completed, the investigation must preserve `Unknown`, `Incomplete`, `Suspended`, or another applicable typed boundary rather than silently completing the contract.
+
+This gate does not claim that a bounded search proves open-world semantic completeness.
+
 ## Contract-Relative Conformance Overlay
 
 The stage sequence below is Project FAR's operational profile. Every investigation making an adequacy, preservation, common-content, invariance, or minimality claim must also satisfy these theory-derived gates:
 
-1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims.
-2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order.
+1. **Freeze claim and target class.** State quantifiers, membership, evidence cutoff, and nonclaims. If the supplied input is under-specified, the intake gate must complete and freeze before substantive evaluation.
+2. **Freeze the comparison contract.** Declare cases, tests/contexts, typed outcomes, observation semantics, calculus/query/execution parameters, admitted translations/equivalences, profile, frame, and any loss/cost order. When multiple source-supported contracts survive intake, freeze the complete family rather than selecting one by preference.
 3. **Totalize without collapse.** Keep determinate absence, falsity, inapplicability, failure, unresolvedness, and epistemic Unknown distinct whenever observable.
 4. **Construct and charge the representation.** Record the mapping and every analyst-supplied tag, interpreter, sidecar, quotient, or hidden dependency.
-5. **Run the factorization audit.** Construct a decoder proving \(\beta_C=d\circ\rho\) and search for a collision \(\rho(x)=\rho(y)\) with \(\beta_C(x)\ne\beta_C(y)\). Decoder proof means \`PROVED\`; collision means \`REFUTED\`; neither means \`OPEN\`.
+5. **Run the factorization audit.** Construct a decoder proving \(\beta_C=d\circ\rho\) and search for a collision \(\rho(x)=\rho(y)\) with \(\beta_C(x)\ne\beta_C(y)\). Decoder proof means `PROVED`; collision means `REFUTED`; neither means `OPEN`.
 6. **Minimize relative to the objective.** Use the observational quotient for exact information minimality; declare a preorder for runtime, storage, cognitive, or explanatory cost.
 7. **Compute common content only after profiles are fixed.** Fix language, interpretations, frame, and target class; subtract frame consequences.
 8. **Attack by re-presentation.** Test reification, tagging, dualization, state/decoder enrichment, alternative bases, and cost reversal.
-9. **Issue a typed terminal report.** Preserve scope, contract, evidence, provenance, falsifiers, losses, machinery cost, and unresolved boundaries.
+9. **Issue a typed terminal report.** Preserve scope, contract, evidence, provenance, falsifiers, losses, machinery cost, unresolved boundaries, and—when intake produced more than one surviving contract—the fixed cross-contract aggregate.
 
-The overlay is mandatory for the affected claim types; stages that are not relevant must be marked \`NOT APPLICABLE\` with a reason.
+The overlay is mandatory for the affected claim types; stages that are not relevant must be marked `NOT APPLICABLE` with a reason.
 
 ## Stage 1 — Define the Investigation
 
 Specify the investigation and its objective.
 
 The investigation establishes the context within which reasoning is performed.
+
+If the investigation began from under-specified external input, Stage 1 must reference the frozen governed intake record or explicitly record why the intake gate is not applicable.
 
 ---
 
@@ -59,6 +81,8 @@ Identify the representations relevant to the investigation and organize them wit
 Assign interpretations to the representations.
 
 Changes in interpretation should be represented explicitly.
+
+Interpretations already frozen by the intake gate may not be silently replaced. A material change requires a new intake freeze or an explicit revision that invalidates dependent evaluations.
 
 ---
 
@@ -116,6 +140,8 @@ Record the resolution together with the reasoning process that produced it.
 
 The complete investigation should remain explicit, auditable, and reconstructible. Any sufficiency or minimality verdict must also carry its comparison contract and factorization/collision certificate.
 
+When multiple frozen contracts were required by intake, record every per-contract outcome and the fixed cross-contract aggregate. Do not replace the aggregate with a preferred contract's result.
+
 A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
 
 ---
@@ -140,6 +166,8 @@ Every return to an earlier stage should record:
 - the reason for revision;
 - the artifact changed;
 - the effect on later stages.
+
+A revision that changes any frozen intake field invalidates the intake freeze and all downstream evaluations bound to that freeze.
 
 ---
 
