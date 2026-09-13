@@ -17,6 +17,7 @@ on:
       - 'research/living/snapshot-authorizations-v1.0.json'
       - 'tests/test_living_implementation_contract.py'
       - 'tests/test_living_project_change_obligations.py'
+      - 'tests/test_living_project_change_workflow.py'
       - 'tools/check_living_project_change_obligations.py'
       - 'tools/living_implementation_contract.py'
       - 'tools/materialize_living_implementation.py'
@@ -68,11 +69,12 @@ jobs:
         run: >-
           python -m unittest
           tests.test_living_project_change_obligations
+          tests.test_living_project_change_workflow
           tests.test_living_implementation_contract
           tests.test_living_research_promotion
           tests.test_living_research_promotion_workflow -v
       - name: Validate scientific correction package against permanent inbox
-        run: python tools/check_living_project_change_obligations.py
+        run: python -m tools.check_living_project_change_obligations
       - name: Validate implementation package against frozen permanent inbox
         shell: bash
         run: |
@@ -82,7 +84,7 @@ jobs:
           base_sha="$(git rev-parse 'HEAD^{commit}')"
           source_dir="$(mktemp -d)"
           git archive --format=tar "$source_sha" | tar -x -C "$source_dir"
-          python tools/living_implementation_contract.py \
+          python -m tools.living_implementation_contract \
             --source-root "$source_dir" \
             --source-sha "$source_sha" \
             --base-sha "$base_sha" \
