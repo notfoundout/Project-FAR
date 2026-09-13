@@ -2,6 +2,47 @@
   "schema_version": "1.1",
   "program_id": "FAR-LIVING-SNAPSHOT-AUTHORIZATIONS-001",
   "authority": "Research",
-  "authorizations": [],
+  "authorizations": [
+    {
+      "candidate_id": "FAR-LIT-88F64D9376E250FC",
+      "candidate_sha256": "64f38d83cee81d5a56167fd3b92f2eecb67b0803a0c3b5af0f1aca6fbfd83d57",
+      "source_key": "doi:10.1145/3498721",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "review_basis_sha256": "bbb540f8222b59c5428e14e5b599784beface294bcf3e369cfde3172d62513cc",
+      "review_record_sha256": "9065ce53b7ea3d29148177a38e26cbe358f6f28be7557d4851cc6125956165d2",
+      "authorization_status": "ACCEPTED_FOR_MECHANICAL_SNAPSHOT"
+    },
+    {
+      "candidate_id": "FAR-LIT-C28489AE4D339427",
+      "candidate_sha256": "557a20340b50544448314a30ffcb50256117ed18e91f52da29501476d234c334",
+      "source_key": "doi:10.1613/jair.5222",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "review_basis_sha256": "bbb540f8222b59c5428e14e5b599784beface294bcf3e369cfde3172d62513cc",
+      "review_record_sha256": "0c8fe2467d657f3f9c64de85d6672d6d8277c5af8ea2f80a1c91f78915a4abe8",
+      "authorization_status": "ACCEPTED_FOR_MECHANICAL_SNAPSHOT"
+    },
+    {
+      "candidate_id": "FAR-LIT-DC526D11098789EF",
+      "candidate_sha256": "9ed36717547fed91804907968f1fe9bb5e48f7638ee43767ce63d64604b7cab6",
+      "source_key": "doi:10.1007/s00236-017-0294-5",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "review_basis": "docs/audits/living-review-lifecycle-closure-2026-09-10.md",
+      "review_basis_sha256": "77ba00e9a97d7f42f92a23f4cd4d326360b2444b4826938aea17de931a220598",
+      "review_record_sha256": "e3cff524ca243ecbbf4f17b73b5ba21e75a6aae700a39f01aaa785f566b5d012",
+      "authorization_status": "ACCEPTED_FOR_MECHANICAL_SNAPSHOT"
+    },
+    {
+      "candidate_id": "FAR-LIT-DDA83861514E8635",
+      "candidate_sha256": "0440aeb4b3e22daa5a51651907b80677bdd8b78c14f72e56186d061e5efa962d",
+      "source_key": "doi:10.1007/s00165-016-0406-y",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "review_basis_sha256": "bbb540f8222b59c5428e14e5b599784beface294bcf3e369cfde3172d62513cc",
+      "review_record_sha256": "dfd346e27c70bf7ff269615ab3886e1033d7038f4f091c106ed4745c6a623419",
+      "authorization_status": "ACCEPTED_FOR_MECHANICAL_SNAPSHOT"
+    }
+  ],
   "rule": "A Research snapshot is mechanically eligible only after a protected authorization binds the exact candidate SHA-256, exact canonical review row, exact review-basis bytes, source identity, disposition, and authorization_status ACCEPTED_FOR_MECHANICAL_SNAPSHOT. Review-disposition membership alone is never snapshot authority."
 }
