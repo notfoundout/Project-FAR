@@ -5,18 +5,9 @@
   "disposition": "PROJECT_CHANGE_REQUIRED",
   "source_pr": 490,
   "source_branch": "automation/living-research-inbox",
-  "required_review_fields": [
-    "candidate_id",
-    "source_key",
-    "disposition",
-    "reviewed_on",
-    "review_basis",
-    "proposal_id",
-    "implementation_required",
-    "implementation_proposal_id",
-    "suppress_from_core_claim_review_queue"
-  ],
+  "required_review_fields": ["candidate_id", "source_key", "disposition", "reviewed_on", "review_basis", "proposal_id", "suppress_from_core_claim_review_queue"],
+  "implementation_review_fields": ["implementation_required", "implementation_proposal_id"],
   "scientific_correction_required": true,
-  "implementation_rule": "implementation_required must be boolean. When false, implementation_proposal_id must be null. When true, implementation_proposal_id must identify one exact IMPLEMENTATION_PROPOSED package whose protected authorization permits automatic materialization only into a separate implementation PR built from protected main.",
-  "rule": "After governed review establishes that a living-research result requires a Project FAR correction, the review must bind one exact nonempty scientific correction proposal plus the protected snapshot and promotion authorizations. If the correction also requires executable or control-plane changes, the same review must declare implementation_required and bind one exact separately authorized implementation proposal. The automation opens the scientific correction PR and, when required, a separate protected implementation PR. Neither path may write directly to main; merge remains governed by protected validation."
+  "implementation_rule": "Every PROJECT_CHANGE_REQUIRED review must declare whether separate repository implementation is needed. When needed, it must bind an exact IMPLEMENTATION_PROPOSED package approved by the protected implementation authorization registry.",
+  "rule": "A governed project-changing result must bind its exact scientific correction package. When separate repository implementation is required, it must also bind an exact separately authorized implementation package. Scientific and implementation changes use separate pull requests and both remain subject to protected review and validation."
 }
