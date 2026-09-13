@@ -28,6 +28,8 @@ No material parse, interpretation, assumption, exclusion, materiality classifica
 
 A difference is material when substituting it can change a required behavior, admissible case, evaluation outcome, scope boundary, or terminal verdict.
 
+The governed machine-readable intake is strict JSON. Transport parsing and programmatic validation must not admit Python-only values, duplicate object keys, or non-finite numeric extensions that cannot be represented unambiguously in the governed JSON artifact.
+
 ## Required Intake Record
 
 The governed intake record uses `far-intake/1.0` and records:
@@ -46,7 +48,7 @@ The governed intake record uses `far-intake/1.0` and records:
 - a freeze identity binding the exact intake state before evaluation;
 - only after freeze, hash-bound per-contract evaluations.
 
-The JSON Schema governs document shape. The semantic validator applies the schema first, then enforces provenance, coverage, chronology, hash binding, freeze order, and aggregation rules.
+The JSON data-model gate runs before the JSON Schema. The JSON Schema then governs document shape, and the semantic validator enforces provenance, coverage, chronology, hash binding, freeze order, and aggregation rules.
 
 ## Discovery Procedure
 
@@ -103,9 +105,11 @@ The search protocol additionally records:
 - saturation observations;
 - known limitations.
 
-Each saturation observation records its time, executed query identifiers, sources considered, and newly found material parses or interpretations. Registered queries and registered sources must appear in the saturation provenance. The final saturation observation must report no new material parse or material interpretation.
+Each saturation observation records its time, executed query identifiers, sources considered, and newly found material parses or interpretations. Registered queries and registered sources must appear in saturation provenance.
 
-Bounded saturation does not establish open-world semantic completeness. It establishes only that the recorded bounded search stopped under the recorded rule.
+Termination requires a final saturation observation that both (a) reports no new material parse or material interpretation and (b) itself enumerates every registered query and every registered source. Cumulative coverage from older rounds is insufficient: a query or source last considered only in a prior round has not been rechecked under the terminal zero-new pass and cannot support a saturation stop.
+
+Bounded saturation does not establish open-world semantic completeness. It establishes only that the complete recorded query/source registry was rechecked in the terminal bounded pass and stopped under the recorded rule.
 
 ### 5. Bind interpretations to provenance
 
@@ -233,6 +237,7 @@ The aggregate rule must not be changed after outcomes are known.
 The intake is non-conforming if any of the following occurs:
 
 - intake is bypassed without an exact supplied machine-readable contract artifact, recorded format/version and content hash, and successful applicable downstream validation;
+- the input tree contains values outside the strict JSON data model, or CLI JSON contains duplicate object keys or non-finite numeric extensions;
 - the document violates the published schema;
 - a material parse disappears without an exclusion record;
 - a material interpretation lacks required provenance or derivation;
@@ -240,6 +245,7 @@ The intake is non-conforming if any of the following occurs:
 - an exclusion lacks an auditable source/raw-input/inference basis;
 - an active parse or material term lacks registered search coverage;
 - registered queries or sources are absent from saturation provenance;
+- the final zero-new saturation observation fails to recheck every registered query and every registered source;
 - freeze is declared before recorded discovery evidence is complete;
 - an admissible interpretation combination is omitted from the contract family;
 - a zero-material retained parse has no singleton contract;
