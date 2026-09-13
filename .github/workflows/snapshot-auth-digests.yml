@@ -1,0 +1,71 @@
+name: Snapshot Authorization Digest Diagnostic
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/snapshot-auth-digests.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  digests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch exact living-research source branch
+        run: git fetch --no-tags origin +refs/heads/automation/living-research-inbox:refs/remotes/origin/automation/living-research-inbox
+      - name: Emit exact authorization records
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+
+          def h(raw: bytes) -> str:
+              return hashlib.sha256(raw).hexdigest()
+
+          def canonical_json_sha(value) -> str:
+              raw = (json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n").encode()
+              return h(raw)
+
+          reviews_doc = json.loads(Path('research/living/review-dispositions-v1.0.json').read_text(encoding='utf-8'))
+          reviews = {row['candidate_id']: row for row in reviews_doc['reviewed_candidates']}
+          allowed = {'ADJACENT_NO_CONTRADICTION', 'N1_PRIOR_ART_LEAD'}
+          source_ref = 'origin/automation/living-research-inbox'
+          paths = subprocess.check_output([
+              'git','ls-tree','-r','--name-only',source_ref,'--','research/living/inbox/candidates'
+          ], text=True).splitlines()
+          records = []
+          for path in sorted(paths):
+              raw = subprocess.check_output(['git','show',f'{source_ref}:{path}'])
+              candidate = json.loads(raw.decode('utf-8'))
+              cid = candidate['candidate_id']
+              review = reviews.get(cid)
+              if not review or review['disposition'] not in allowed:
+                  continue
+              try:
+                  main_raw = Path(path).read_bytes()
+              except FileNotFoundError:
+                  main_raw = None
+              if main_raw == raw:
+                  continue
+              basis_path = Path(review['review_basis'])
+              basis_raw = basis_path.read_bytes()
+              records.append({
+                  'candidate_id': cid,
+                  'candidate_sha256': h(raw),
+                  'source_key': candidate['source_key'],
+                  'disposition': review['disposition'],
+                  'review_basis': review['review_basis'],
+                  'review_basis_sha256': h(basis_raw),
+                  'review_record_sha256': canonical_json_sha(review),
+                  'authorization_status': 'ACCEPTED_FOR_MECHANICAL_SNAPSHOT',
+              })
+          print('AUTHORIZATION_RECORDS_BEGIN')
+          print(json.dumps(records, indent=2, sort_keys=True, ensure_ascii=False))
+          print('AUTHORIZATION_RECORDS_END')
+          print(f'eligible_count={len(records)}')
+          PY
