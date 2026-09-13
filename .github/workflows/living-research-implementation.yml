@@ -1,0 +1,54 @@
+name: Living Research Implementation
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/living/implementation-authorizations-v1.0.json'
+      - 'research/living/implementation-policy-v1.0.json'
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'tools/living_implementation_contract.py'
+      - 'tools/materialize_living_implementation.py'
+      - 'tools/run_living_research_implementation.py'
+  workflow_run:
+    workflows:
+      - Living Research Watch
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+concurrency:
+  group: living-research-implementation
+  cancel-in-progress: false
+
+jobs:
+  implement:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout protected main automation
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test implementation contract without source execution
+        run: python -m unittest tests.test_living_implementation_contract -v
+      - name: Materialize protected-authorized implementation PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -m tools.run_living_research_implementation

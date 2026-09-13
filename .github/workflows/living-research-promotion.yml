@@ -3,6 +3,11 @@ name: Living Research Promotion
 on:
   schedule:
     - cron: '27,57 * * * *'
+  workflow_run:
+    workflows:
+      - Living Research Watch
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -16,6 +21,7 @@ concurrency:
 
 jobs:
   promote:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:

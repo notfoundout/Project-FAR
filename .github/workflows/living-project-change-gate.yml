@@ -1,0 +1,102 @@
+name: Living Project Change Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-project-change-gate.yml'
+      - '.github/workflows/living-research-implementation.yml'
+      - '.github/workflows/living-research-promotion.yml'
+      - 'research/living/implementation-authorizations-v1.0.json'
+      - 'research/living/implementation-policy-v1.0.json'
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/promotion-authorizations-v1.0.json'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'research/living/snapshot-authorizations-v1.0.json'
+      - 'tests/test_living_implementation_contract.py'
+      - 'tests/test_living_project_change_obligations.py'
+      - 'tools/check_living_project_change_obligations.py'
+      - 'tools/living_implementation_contract.py'
+      - 'tools/materialize_living_implementation.py'
+      - 'tools/reconcile_living_repo.py'
+      - 'tools/run_living_research_implementation.py'
+      - 'tools/run_living_research_promotion.py'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/living/implementation-authorizations-v1.0.json'
+      - 'research/living/implementation-policy-v1.0.json'
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/promotion-authorizations-v1.0.json'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'research/living/snapshot-authorizations-v1.0.json'
+      - 'tools/check_living_project_change_obligations.py'
+      - 'tools/living_implementation_contract.py'
+      - 'tools/materialize_living_implementation.py'
+      - 'tools/run_living_research_implementation.py'
+      - 'tools/run_living_research_promotion.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: living-project-change-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'refresh' }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run focused project-change regressions
+        run: >-
+          python -m unittest
+          tests.test_living_project_change_obligations
+          tests.test_living_implementation_contract
+          tests.test_living_research_promotion
+          tests.test_living_research_promotion_workflow -v
+      - name: Validate scientific correction package against permanent inbox
+        run: python tools/check_living_project_change_obligations.py
+      - name: Validate implementation package against frozen permanent inbox
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin '+refs/heads/automation/living-research-inbox:refs/remotes/origin/automation/living-research-inbox'
+          source_sha="$(git rev-parse 'refs/remotes/origin/automation/living-research-inbox^{commit}')"
+          base_sha="$(git rev-parse 'HEAD^{commit}')"
+          source_dir="$(mktemp -d)"
+          git archive --format=tar "$source_sha" | tar -x -C "$source_dir"
+          python tools/living_implementation_contract.py \
+            --source-root "$source_dir" \
+            --source-sha "$source_sha" \
+            --base-sha "$base_sha" \
+            --output /tmp/living-implementation-plan.json
+
+  refresh:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Refresh permanent inbox on new protected authorization state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref main -f mode=discover
