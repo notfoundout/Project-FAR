@@ -71,6 +71,8 @@ The implementation is tested against failure modes including:
 - non-editable wheel relocation with the implementation or intake schema absent, or with an absolute source-checkout `.pth` masking the defect;
 - structural type mutations across major manifest objects.
 
+The completion audit additionally reproduced module-reload recursion, malformed freeze shapes read before validation, unpaired-surrogate and cyclic/deep-input failures, backwards saturation timestamps, explicit invalid freeze timestamps silently replaced by the current time, and frozen completeness disabled by an explicit false flag. Regression coverage now requires controlled rejection through the public operations and CLI. Exact family cardinality checks reject a small record missing `2**40` combinations without materializing those combinations, while retaining singleton and exclusion controls.
+
 The dedicated regressions are intentionally generic and are also exercised by the canonical repository test and health profiles before merge.
 
 ## Replication
@@ -80,6 +82,8 @@ The dedicated regressions are intentionally generic and are also exercised by th
 `tests/test_local_jsonschema_pattern_semantics.py` independently pins the constrained local schema engine's regex-search, JSON-value equality, array/object cardinality, uniqueness, and schema-valued `additionalProperties` behavior.
 
 `tests/test_far_wheel_relocation.py` builds the non-editable wheel, extracts it outside the repository, disables normal site initialization with `python -S`, and verifies that the packaged intake implementation, constrained schema engine, and intake schema operate without a source-checkout `.pth`.
+
+It also installs the wheel without network access into a fresh virtual environment and runs the generated console script through the complete intake lifecycle and negative controls. `tests/test_far_intake_hardening.py` exercises the public boundaries, reload behavior, chronology, and complete-family enforcement. These are internal implementation regressions, not external methodological replication.
 
 Together the regressions verify schema-first validation, materiality provenance, interpretation provenance and derivation rules, complete parse/interpretation-family coverage, leaf-level contract-parameter provenance, explicit exclusions, search and saturation bookkeeping, chronology, deterministic strict-JSON hash binding, evaluation ordering/evidence, unresolved-assumption handling, fixed aggregation, fail-closed malformed-input behavior, schema-subset semantics, and relocated console-target packaging.
 

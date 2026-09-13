@@ -4,7 +4,7 @@ Status: Audit
 
 This directory reconciles every finding classified `resolved_incorrectly` in the frozen
 merged-PR review classification against main commit
-`8d6f5ae10acd373461e4eeaf4b4ec5817c77b2ad`. Dispositions are tied to that audited
+`ff398005894827ef2dbf91a0195b98048a9deafd`. Dispositions are tied to that audited
 main state. Repairs proposed alongside the audit are not counted as merged fixes
 until their actual protected promotion is recorded.
 

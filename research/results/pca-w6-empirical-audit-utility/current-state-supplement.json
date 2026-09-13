@@ -25,7 +25,7 @@
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
       "current_sha256": "0f53be3a05e0e862dd942be49d541fe8062270575fc9482e1f582952effd2d28",
       "class": "documentation_surface",
-      "reason": "Registered the epistemic calibration audit and the EFR-R2 input-specification amendment. No claim status changed."
+      "reason": "Registered the epistemic calibration audit, the EFR-R2 input-specification amendment, and the accepted governed contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed."
     },
     {
       "path": "docs/governance/limitations-register.md",
@@ -39,7 +39,7 @@
       "executed_sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666",
       "current_sha256": "148f1c888cd43830cf9ad9a2bc149e829a0cc6067ce8424061bbc66a213818ab",
       "class": "documentation_surface",
-      "reason": "Added the assurance-calibration section pointing at the epistemic calibration audit. No workstream status, boundary, or result changed."
+      "reason": "Added assurance calibration and registered the accepted governed contract-discovery intake correction as current methodology authority. No W6 claim, boundary, input, computation, or result changed."
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",

@@ -4,8 +4,8 @@ from __future__ import annotations
 import argparse
 import copy
 import hashlib
-import itertools
 import json
+import math
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -109,8 +109,144 @@ def _index(items: Any, label: str, errors: list[str]) -> dict[str, dict[str, Any
     return result
 
 
+def _json_native_errors(value: Any, path: str = "$", _ancestors: set[int] | None = None) -> list[str]:
+    """Reject values that cannot exist in a strict JSON data model.
+
+    Programmatic callers can otherwise bypass the parser and supply Python-only
+    containers, non-string object keys, custom scalar subclasses, or non-finite
+    floats.  Reject them before JSON Schema sees the instance so the schema and
+    canonical hash operate on the same data model.
+    """
+    value_type = type(value)
+    ancestors = set() if _ancestors is None else _ancestors
+    if value_type in {dict, list}:
+        if id(value) in ancestors:
+            return [f"{path} is not canonical-JSON serializable: cyclic container"]
+        ancestors = ancestors | {id(value)}
+    if value_type is dict:
+        errors: list[str] = []
+        for key, child in value.items():
+            if type(key) is not str:
+                errors.append(
+                    f"{path} has non-string object key {key!r}; value is not canonical-JSON serializable"
+                )
+                continue
+            try:
+                key.encode("utf-8")
+            except UnicodeEncodeError:
+                errors.append(f"{path} has a non-UTF-8 object key {key!r}; value is not canonical-JSON serializable")
+                continue
+            errors.extend(_json_native_errors(child, f"{path}/{_json_pointer_token(key)}", ancestors))
+        return errors
+    if value_type is list:
+        errors: list[str] = []
+        for index, child in enumerate(value):
+            errors.extend(_json_native_errors(child, f"{path}/{index}", ancestors))
+        return errors
+    if value_type is str:
+        try:
+            value.encode("utf-8")
+        except UnicodeEncodeError:
+            return [f"{path} is not canonical-JSON serializable: string is not valid UTF-8"]
+        return []
+    if value is None or value_type in {int, bool}:
+        return []
+    if value_type is float:
+        if math.isfinite(value):
+            return []
+        return [f"{path} is not canonical-JSON serializable: non-finite number"]
+    return [
+        f"{path} is not canonical-JSON serializable: unsupported Python type {value_type.__name__}"
+    ]
+
+
+def _terminal_saturation_errors(
+    protocol: dict[str, Any],
+    registered_query_ids: set[str],
+    registered_source_ids: set[str],
+) -> list[str]:
+    """Require the terminating zero-new round itself to recheck the full registry."""
+    observations = protocol.get("saturation_observations")
+    if not isinstance(observations, list) or not observations:
+        return []
+    final = observations[-1]
+    if not isinstance(final, dict):
+        return []
+    final_query_ids = set(final.get("query_ids", []))
+    final_source_ids = set(final.get("source_ids", []))
+    errors: list[str] = []
+    missing_queries = sorted(registered_query_ids - final_query_ids)
+    if missing_queries:
+        errors.append(
+            "final saturation observation does not recheck registered queries: "
+            + ", ".join(missing_queries)
+        )
+    missing_sources = sorted(registered_source_ids - final_source_ids)
+    if missing_sources:
+        errors.append(
+            "final saturation observation does not recheck registered sources: "
+            + ", ".join(missing_sources)
+        )
+    return errors
+
+
+def validate_manifest(manifest: Any, *, require_complete: bool | None = None) -> list[str]:
+    try:
+        return _validate_bounded_manifest(manifest, require_complete=require_complete)
+    except RecursionError:
+        return ["manifest nesting exceeds the supported validation depth"]
+
+
+def _validate_bounded_manifest(manifest: Any, *, require_complete: bool | None = None) -> list[str]:
+    native_errors = _json_native_errors(manifest)
+    if native_errors:
+        return native_errors
+
+    errors = _validate_manifest(manifest, require_complete=require_complete)
+    if errors:
+        return errors
+
+    effective_complete = manifest["freeze"]["status"] == "FROZEN" or require_complete
+    if effective_complete:
+        protocol = manifest["discovery"]["search_protocol"]
+        registered_query_ids = {row["id"] for row in protocol["queries"]}
+        registered_source_ids = {row["id"] for row in manifest["discovery"]["sources"]}
+        errors.extend(
+            _terminal_saturation_errors(protocol, registered_query_ids, registered_source_ids)
+        )
+    return errors
+
+
+def _reject_duplicate_object_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON object key: {key}")
+        result[key] = value
+    return result
+
+
+def _reject_nonfinite_constant(value: str) -> None:
+    raise ValueError(f"non-finite JSON number is not permitted: {value}")
+
+
+def _strict_json_loads(text: str) -> Any:
+    try:
+        data = json.loads(
+            text,
+            object_pairs_hook=_reject_duplicate_object_pairs,
+            parse_constant=_reject_nonfinite_constant,
+        )
+        native_errors = _json_native_errors(data)
+    except RecursionError as exc:
+        raise ValueError("JSON nesting exceeds the supported parsing depth") from exc
+    if native_errors:
+        raise ValueError("; ".join(native_errors))
+    return data
+
+
 def _load_schema() -> dict[str, Any]:
-    schema = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
+    schema = _strict_json_loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     if not isinstance(schema, dict):
         raise ValueError("intake schema root must be an object")
     Draft202012Validator.check_schema(schema)
@@ -291,7 +427,7 @@ def new_manifest(raw_text: str, identifier: str = "FAR-INTAKE-DRAFT") -> dict[st
     }
 
 
-def validate_manifest(manifest: Any, *, require_complete: bool | None = None) -> list[str]:
+def _validate_manifest(manifest: Any, *, require_complete: bool | None = None) -> list[str]:
     schema_errors = _schema_errors(manifest)
     if schema_errors:
         return schema_errors
@@ -303,8 +439,7 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
     discovery = manifest["discovery"]
     freeze = manifest["freeze"]
     status = freeze["status"]
-    if require_complete is None:
-        require_complete = status == "FROZEN"
+    require_complete = status == "FROZEN" or require_complete
 
     if raw["sha256"] != sha256_text(raw["text"]):
         errors.append("raw_input.sha256 mismatch")
@@ -476,6 +611,8 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
 
     if rounds != sorted(rounds) or len(rounds) != len(set(rounds)):
         errors.append("saturation observation rounds must be unique and strictly increasing")
+    if any(later[1] < earlier[1] for earlier, later in zip(saturation_times, saturation_times[1:])):
+        errors.append("saturation observation timestamps must be nondecreasing in round order")
 
     if require_complete:
         if not parses:
@@ -587,19 +724,20 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
             cid, row, assignments, sources, interpretations, assumptions, errors
         )
 
-    if require_complete and active_parses and terms:
-        expected: set[tuple[str, tuple[tuple[str, str], ...]]] = set()
+    if require_complete and active_parses and terms and not errors:
+        # Membership and uniqueness were checked above. Count the Cartesian
+        # family exactly instead of materializing exponentially many missing
+        # combinations from a small, incomplete manifest.
+        expected_count = 0
         for pid, parse in active_parses.items():
-            material = [tid for tid in parse["term_ids"] if tid in terms and terms[tid]["material"] is True]
-            options = [sorted(per_term[tid] - interp_excluded) for tid in material]
-            if all(options):  # all([]) is True: zero material terms yields one empty assignment.
-                for values in itertools.product(*options):
-                    key = (pid, tuple(sorted(zip(material, values))))
-                    if key not in excluded_combos:
-                        expected.add(key)
-        missing, extra = expected - set(candidate_keys), set(candidate_keys) - expected
+            material = [tid for tid in parse["term_ids"] if terms[tid]["material"] is True]
+            # prod([]) is 1: zero material terms has one empty assignment.
+            expected_count += math.prod(len(per_term[tid] - interp_excluded) for tid in material)
+        expected_count -= len(excluded_combos)
+        extra = set(candidate_keys) & excluded_combos
+        missing = expected_count - len(set(candidate_keys) - excluded_combos)
         if missing:
-            errors.append(f"contract family omits {len(missing)} admissible interpretation combination(s)")
+            errors.append(f"contract family omits {missing} admissible interpretation combination(s)")
         if extra:
             errors.append(f"contract family contains {len(extra)} non-admissible interpretation combination(s)")
 
@@ -670,15 +808,15 @@ def validate_manifest(manifest: Any, *, require_complete: bool | None = None) ->
 
 
 def freeze_manifest(manifest: dict[str, Any], *, frozen_at: str | None = None) -> dict[str, Any]:
-    if manifest.get("freeze", {}).get("status") == "FROZEN":
-        raise ValueError("manifest is already frozen")
-    if manifest.get("evaluations"):
-        raise ValueError("cannot freeze a manifest that already contains evaluations")
     errors = validate_manifest(manifest, require_complete=True)
     if errors:
         raise ValueError("cannot freeze invalid manifest: " + "; ".join(errors))
+    if manifest["freeze"]["status"] == "FROZEN":
+        raise ValueError("manifest is already frozen")
+    if manifest["evaluations"]:
+        raise ValueError("cannot freeze a manifest that already contains evaluations")
     result = copy.deepcopy(manifest)
-    stamp = frozen_at or datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+    stamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z") if frozen_at is None else frozen_at
     parsed_stamp = _timestamp(stamp)
     if parsed_stamp is None:
         raise ValueError("frozen_at must be timezone-aware RFC3339/ISO-8601")
@@ -745,14 +883,16 @@ def aggregate_manifest(manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def _load(path: str) -> dict[str, Any]:
-    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    data = _strict_json_loads(Path(path).read_text(encoding="utf-8"))
     if not isinstance(data, dict):
         raise ValueError("manifest root must be an object")
     return data
 
 
 def _dump(value: Any) -> str:
-    return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
+    # Escape even malformed Unicode in diagnostics so reporting an invalid input
+    # cannot itself fail when written to a UTF-8 terminal.
+    return json.dumps(value, indent=2, sort_keys=True, ensure_ascii=True, allow_nan=False) + "\n"
 
 
 def main(argv: list[str] | None = None) -> int:

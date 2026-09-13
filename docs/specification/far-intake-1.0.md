@@ -22,6 +22,8 @@ The accepted instance domain is strict JSON. CLI parsing rejects duplicate objec
 
 The published JSON Schema is normative for document shape after that JSON-domain gate. The semantic validator applies the schema and stops semantic interpretation of a schema-invalid document.
 
+Strings and object keys must encode as UTF-8; unpaired surrogates are rejected. Cyclic programmatic containers and nesting beyond the runtime's supported depth produce validation errors. Freeze validates shape before reading fields. Validation, freeze, aggregation, and the installed CLI share this boundary without import-time rebinding, so reloading the public module does not change validation behavior.
+
 The repository's constrained local JSON Schema engine implements the structural keywords used by this format, including Draft 2020-12 numeric type semantics, regex-search semantics for `pattern`, array/object cardinality and uniqueness, and schema-valued `additionalProperties`. In particular, mathematically integral finite JSON numbers such as `1.0` satisfy `type: integer`, while booleans do not. Optional format assertions remain outside the local validator's decidable enforcement boundary unless separately checked semantically.
 
 Semantic checks then enforce cross-reference validity, provenance, complete bounded family coverage, chronology, hash binding, terminal saturation coverage, and aggregation.
@@ -98,7 +100,7 @@ At freeze readiness:
 - every active claim parse has query coverage;
 - every registered query appears in saturation execution provenance;
 - every registered source appears in saturation provenance;
-- saturation observations are timestamped and ordered;
+- saturation round numbers are unique and strictly increasing, and their timestamps are nondecreasing in that order (equivalent instants across timezones are allowed);
 - an observation cannot predate a source it claims to include;
 - source retrievals and saturation observations must be no later than the evidence cutoff;
 - the final saturation observation records no new material parse or material interpretation; and
@@ -112,7 +114,7 @@ These checks establish bounded procedural completion only. They do not prove ope
 
 For each active claim parse, the validator determines its material terms and each term's active interpretations.
 
-It computes the Cartesian product of those interpretation sets. Every product element must appear as exactly one contract candidate unless that exact combination has a valid compatibility exclusion.
+Every element of the Cartesian product of those interpretation sets must appear as exactly one contract candidate unless that exact combination has a valid compatibility exclusion. The validator checks membership and uniqueness, then compares exact cardinalities after exclusions; it does not enumerate an exponentially large absent family merely to reject an incomplete record.
 
 A retained parse with no material terms contributes one singleton candidate with an empty assignment object. It is not silently omitted.
 
@@ -137,6 +139,8 @@ The intake validator does not claim that the downstream contract is valid `far-i
 ## 11. Freeze identity and chronology
 
 A manifest can be `DRAFT` or `FROZEN`.
+
+Frozen records always require complete intake validation; passing `require_complete=False` cannot disable that requirement. An explicitly supplied invalid freeze timestamp is rejected rather than silently replaced by the current time.
 
 Freezing requires a complete intake and no pre-existing evaluations. Freeze time may not predate:
 
@@ -193,6 +197,8 @@ far-intake aggregate intake.evaluated.json
 ```
 
 The CLI accepts strict JSON rather than Python's permissive JSON extensions: duplicate object keys and non-finite numeric tokens are errors, not silently normalized inputs.
+
+Non-editable wheels include the runtime and schema. Relocation coverage both imports the extracted wheel with site initialization disabled and installs it into a fresh virtual environment to execute the generated `far-intake` script through draft, readiness, freeze, evaluation aggregation, and tamper rejection.
 
 `init` deliberately creates a draft with no inferred meanings. Interpretation discovery remains an evidence-producing research activity governed by the protocol.
 
