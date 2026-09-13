@@ -1,7 +1,9 @@
 name: Snapshot Authorization Digest Diagnostic
 
 on:
-  pull_request:
+  push:
+    branches:
+      - snapshot-auth-digests
     paths:
       - '.github/workflows/snapshot-auth-digests.yml'
 
