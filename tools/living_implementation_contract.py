@@ -73,17 +73,25 @@ def validate_policy(policy: dict[str, Any]) -> None:
         "source_pr": 490,
         "source_branch": "automation/living-research-inbox",
         "proposal_stage": "IMPLEMENTATION_PROPOSED",
+        "proposal_prefix": f"{PROPOSAL_PREFIX}/",
+        "payload_prefix": f"{PAYLOAD_PREFIX}/",
+        "authorization_registry": IMPLEMENTATION_AUTHS,
         "authorization_status": "ACCEPTED_FOR_PROTECTED_IMPLEMENTATION_PR",
+        "manifest_prefix": "research/living/implementation-promotions/",
+        "branch_prefix": "automation/living-implementation-",
     }
     for key, wanted in expected.items():
         if policy.get(key) != wanted:
             raise ImplementationContractError(f"implementation policy drift: {key}")
-    for key in ("write_roots", "write_exact_paths"):
+    for key in ("write_roots", "write_exact_paths", "assurance_sensitive_exact_paths"):
         values = policy.get(key)
         if not isinstance(values, list) or not values or len(values) != len(set(values)):
             raise ImplementationContractError(f"implementation policy {key} malformed")
-        if any(not isinstance(item, str) or not item for item in values):
+        if any(not isinstance(item, str) or not item or safe_path(item) != item for item in values):
             raise ImplementationContractError(f"implementation policy {key} malformed")
+    for path in policy["assurance_sensitive_exact_paths"]:
+        if path not in set(policy["write_exact_paths"]) and not any(under(path, root) for root in policy["write_roots"]):
+            raise ImplementationContractError(f"assurance-sensitive path outside implementation surface: {path}")
 
 
 def validate_target(path: str, policy: dict[str, Any]) -> str:
