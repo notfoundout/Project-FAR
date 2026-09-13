@@ -2,11 +2,14 @@
   "authority": "Research",
   "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
   "candidate_counts": {
-    "candidates": 156,
-    "claim_mapped": 74,
-    "high_attention": 11,
-    "historical": 47,
-    "philosophy_metaphysics_history": 0
+    "candidates": 160,
+    "claim_mapped": 78,
+    "direct_core_threat": 16,
+    "high_attention": 15,
+    "historical": 51,
+    "philosophy_metaphysics_history": 2,
+    "review_required": 0,
+    "reviewed": 12
   },
   "canonical_theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
   "changed_surfaces": [],
@@ -310,280 +313,7 @@
       "truth_disposition": "PROVED"
     }
   ],
-  "core_claim_review_queue": [
-    {
-      "attention_terms": [
-        "impossibility"
-      ],
-      "candidate_id": "FAR-LIT-552B3F4A53BDEF61",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "counterexample"
-      ],
-      "candidate_id": "FAR-LIT-5C441F014FBC6F1A",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "undecidable"
-      ],
-      "candidate_id": "FAR-LIT-8698902E49C77D94",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "impossibility"
-      ],
-      "candidate_id": "FAR-LIT-898EFFBC10C6F2E3",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "impossibility"
-      ],
-      "candidate_id": "FAR-LIT-8F01E91F70D72629",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "undecidable"
-      ],
-      "candidate_id": "FAR-LIT-D89F9D13B70C96FC",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "impossibility"
-      ],
-      "candidate_id": "FAR-LIT-F804CEB7D08998C0",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    },
-    {
-      "attention_terms": [
-        "impossibility"
-      ],
-      "candidate_id": "FAR-LIT-FC8A05734544703E",
-      "claim_ids": [
-        "FAR-CORE-001",
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-005",
-        "FAR-CORE-006",
-        "FAR-CORE-007",
-        "FAR-CORE-008",
-        "FAR-CORE-009",
-        "FAR-CORE-010",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-013",
-        "FAR-CORE-014"
-      ],
-      "downstream_claim_ids": [
-        "FAR-CORE-002",
-        "FAR-CORE-003",
-        "FAR-CORE-004",
-        "FAR-CORE-007",
-        "FAR-CORE-011",
-        "FAR-CORE-012",
-        "FAR-CORE-014"
-      ],
-      "epistemic_status": "METADATA_SIGNAL_ONLY",
-      "required_next_step": "Obtain and verify the primary source where available; reconstruct the exact claim under the canonical FAR premises; attempt a reproducible counterexample or derivation; if an exact contradiction survives, open the smallest governed reopening/correction path. Do not infer contradiction from metadata.",
-      "stage": "REVIEW_REQUIRED"
-    }
-  ],
+  "core_claim_review_queue": [],
   "program_id": "FAR-LIVING-REPOSITORY-001",
   "research_questions": [
     {
@@ -693,12 +423,15 @@
       "relevant_workstream": "PCA-W6-EMPIRICAL-AUDIT-UTILITY"
     }
   ],
+  "review_disposition_count": 19,
   "rules": {
     "candidate_metadata_may_reopen_claim": false,
     "canonical_claim_change_requires_governed_lifecycle_and_protected_merge": true,
     "external_research_never_executes_efr_implicitly": true,
+    "historical_backfill_does_not_self_escalate_to_core_reopening_queue": true,
     "negative_search_never_establishes_novelty": true,
-    "reproducible_exact_contradiction_may_trigger_reopening": true
+    "reproducible_exact_contradiction_may_trigger_reopening": true,
+    "reviewed_candidates_remain_preserved_but_leave_active_queue": true
   },
   "schema_version": "1.0",
   "surface_count": 20,
