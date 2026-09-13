@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-IMPLEMENTATION-001",
+  "authority": "Research",
+  "source_pr": 490,
+  "source_branch": "automation/living-research-inbox",
+  "proposal_stage": "IMPLEMENTATION_PROPOSED",
+  "proposal_prefix": "research/living/inbox/implementation-proposals/",
+  "payload_prefix": "research/living/inbox/implementation-payloads/",
+  "authorization_registry": "research/living/implementation-authorizations-v1.0.json",
+  "authorization_status": "ACCEPTED_FOR_PROTECTED_IMPLEMENTATION_PR",
+  "write_roots": [".github", "docs/governance", "scripts", "tests", "tools"],
+  "write_exact_paths": ["Makefile", "pyproject.toml", "requirements.txt"],
+  "manifest_prefix": "research/living/implementation-promotions/",
+  "branch_prefix": "automation/living-implementation-",
+  "rule": "A control-plane or executable change required by an accepted PROJECT_CHANGE_REQUIRED study may be materialized only into a separate implementation PR. The permanent inbox may carry proposal and payload bytes, but protected main must first authorize the exact candidate SHA-256, exact proposal SHA-256, exact operation-set SHA-256, and every operation must bind an exact main preimage and payload SHA-256. The write-scoped runner executes only code from protected main, never executes source-branch payloads, seals the exact generated diff, and leaves merge authority to the ordinary protected PR path."
+}
