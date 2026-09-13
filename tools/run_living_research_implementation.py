@@ -44,20 +44,27 @@ def gh(*args: str, check: bool = True) -> str:
 
 
 def source_snapshot() -> str:
-    raw = gh("pr", "view", str(SOURCE_PR), "--repo", os.environ["GITHUB_REPOSITORY"], "--json", "state,isDraft,baseRefName,headRefName,headRefOid")
+    raw = gh(
+        "pr", "view", str(SOURCE_PR), "--repo", os.environ["GITHUB_REPOSITORY"],
+        "--json", "state,isDraft,baseRefName,headRefName,headRefOid",
+    )
     data = json.loads(raw)
     expected = {"state": "OPEN", "isDraft": True, "baseRefName": BASE_BRANCH, "headRefName": SOURCE_BRANCH}
     for key, wanted in expected.items():
         if data.get(key) != wanted:
             raise RunnerError(f"PR #490 identity invariant failed: {key}")
     head = data.get("headRefOid")
-    if not isinstance(head, str) or len(head) != 40:
-        raise RunnerError("PR #490 did not return an exact head SHA")
+    if not isinstance(head, str) or len(head) != 40 or any(ch not in "0123456789abcdef" for ch in head):
+        raise RunnerError("PR #490 did not return an exact lowercase 40-hex head SHA")
     return head
 
 
 def fetch_inputs() -> None:
-    git("fetch", "--no-tags", "origin", "+refs/heads/main:refs/remotes/origin/main", f"+refs/heads/{SOURCE_BRANCH}:refs/remotes/origin/{SOURCE_BRANCH}")
+    git(
+        "fetch", "--no-tags", "origin",
+        "+refs/heads/main:refs/remotes/origin/main",
+        f"+refs/heads/{SOURCE_BRANCH}:refs/remotes/origin/{SOURCE_BRANCH}",
+    )
 
 
 def export_source(commit: str, destination: Path) -> None:
@@ -77,6 +84,15 @@ def planned_paths(plan: dict[str, Any]) -> set[str]:
     return paths
 
 
+def expected_sealed_rows(plan: dict[str, Any]) -> list[dict[str, str]]:
+    rows = [
+        {"path": op["path"], "sha256": op["result_sha256"], "proposal_id": proposal["proposal_id"]}
+        for proposal in plan["proposals"]
+        for op in proposal["operations"]
+    ]
+    return sorted(rows, key=lambda row: row["path"])
+
+
 def changed_paths() -> set[str]:
     modified = {x for x in git("diff", "--name-only", "--").splitlines() if x}
     untracked = {x for x in git("ls-files", "--others", "--exclude-standard").splitlines() if x}
@@ -86,17 +102,44 @@ def changed_paths() -> set[str]:
 def verify_existing(branch: str, plan: dict[str, Any]) -> str:
     git("fetch", "--no-tags", "origin", f"+refs/heads/{branch}:refs/remotes/origin/{branch}")
     head = git("rev-parse", f"origin/{branch}^{{commit}}")
-    if git("rev-parse", f"{head}^") != plan["base_main_sha"]:
-        raise RunnerError("existing implementation branch parent mismatch")
+    ancestry = git("rev-list", "--parents", "-n", "1", head).split()
+    if len(ancestry) != 2 or ancestry[1] != plan["base_main_sha"]:
+        raise RunnerError("existing implementation branch must be exactly one single-parent commit on its frozen base")
+    if int(git("rev-list", "--count", f"{plan['base_main_sha']}..{head}")) != 1:
+        raise RunnerError("existing implementation branch contains more than one commit")
     raw = run("git", "show", f"{head}:{plan['manifest_path']}", text=False).stdout
-    manifest = json.loads(raw.decode("utf-8"))
-    if manifest.get("source_head_sha") != plan["source_head_sha"] or manifest.get("base_main_sha") != plan["base_main_sha"]:
+    try:
+        manifest = json.loads(raw.decode("utf-8"))
+    except Exception as exc:
+        raise RunnerError(f"existing implementation manifest is invalid JSON: {exc}") from exc
+    required_keys = {
+        "schema_version", "program_id", "source_pr", "source_branch", "source_head_sha",
+        "base_main_sha", "proposals", "sealed_files",
+    }
+    if not isinstance(manifest, dict) or set(manifest) != required_keys:
+        raise RunnerError("existing implementation manifest fields are malformed")
+    identity = {
+        "schema_version": "1.0",
+        "program_id": "FAR-LIVING-IMPLEMENTATION-001",
+        "source_pr": 490,
+        "source_branch": plan["source_branch"],
+        "source_head_sha": plan["source_head_sha"],
+        "base_main_sha": plan["base_main_sha"],
+    }
+    if any(manifest.get(key) != value for key, value in identity.items()):
         raise RunnerError("existing implementation manifest identity mismatch")
-    changed = {x for x in git("diff", "--name-only", "--no-renames", plan["base_main_sha"], head, "--").splitlines() if x}
-    expected = {row["path"] for row in manifest.get("sealed_files", [])} | {plan["manifest_path"]}
-    if changed != expected:
+    if manifest.get("proposals") != plan["proposals"]:
+        raise RunnerError("existing implementation manifest proposals differ from protected plan")
+    expected_rows = expected_sealed_rows(plan)
+    if manifest.get("sealed_files") != expected_rows:
+        raise RunnerError("existing implementation manifest seal set differs from protected plan")
+    expected_paths = {row["path"] for row in expected_rows} | {plan["manifest_path"]}
+    changed = {
+        x for x in git("diff", "--name-only", "--no-renames", plan["base_main_sha"], head, "--").splitlines() if x
+    }
+    if changed != expected_paths:
         raise RunnerError("existing implementation branch has unsealed paths")
-    for row in manifest.get("sealed_files", []):
+    for row in expected_rows:
         blob = run("git", "show", f"{head}:{row['path']}", text=False).stdout
         if sha256(blob) != row["sha256"]:
             raise RunnerError(f"existing implementation seal mismatch: {row['path']}")
@@ -109,10 +152,16 @@ def remote_branch_exists(branch: str) -> bool:
 
 def create_or_recover_pr(branch: str, plan: dict[str, Any], sensitive: bool) -> tuple[int, bool]:
     repo = os.environ["GITHUB_REPOSITORY"]
-    existing = gh("pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH, "--state", "open", "--json", "number", "--jq", ".[0].number // empty")
+    existing = gh(
+        "pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH,
+        "--state", "open", "--json", "number", "--jq", ".[0].number // empty",
+    )
     if existing:
         return int(existing), False
-    closed = gh("pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH, "--state", "closed", "--json", "number", "--jq", ".[0].number // empty")
+    closed = gh(
+        "pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH,
+        "--state", "closed", "--json", "number", "--jq", ".[0].number // empty",
+    )
     if closed:
         raise RunnerError(f"implementation branch has a closed PR #{closed}; automation will not override that review decision")
     body = [
@@ -129,10 +178,17 @@ def create_or_recover_pr(branch: str, plan: dict[str, Any], sensitive: bool) -> 
         "The write-scoped materializer executed only code already present on protected main. Inbox payload bytes were hash-checked, copied, sealed, and never executed by the materialization job. This PR does not write directly to main and does not bypass protected review.",
     ]
     if sensitive:
-        body += ["", "Because this proposal changes merge-authority's own assurance surface, automation deliberately did not self-dispatch merge-authority from this branch. The PR requires independent protected review/validation of that self-change."]
+        body += [
+            "",
+            "Because this proposal changes merge-authority's own assurance surface, automation deliberately did not self-dispatch merge-authority from this branch. The PR requires independent protected review/validation of that self-change.",
+        ]
     body_path = Path(tempfile.gettempdir()) / "living-implementation-pr.md"
     body_path.write_text("\n".join(body) + "\n", encoding="utf-8")
-    created = gh("pr", "create", "--repo", repo, "--base", BASE_BRANCH, "--head", branch, "--title", "Implementation: protected living-research project correction", "--body-file", str(body_path))
+    created = gh(
+        "pr", "create", "--repo", repo, "--base", BASE_BRANCH, "--head", branch,
+        "--title", "Implementation: protected living-research project correction",
+        "--body-file", str(body_path),
+    )
     number = int(gh("pr", "view", created, "--repo", repo, "--json", "number", "--jq", ".number"))
     return number, True
 
@@ -157,7 +213,12 @@ def main() -> int:
         source_root = Path(tmp) / "source"
         export_source(first_source, source_root)
         plan = build_plan(ROOT, source_root, source_sha=first_source, base_sha=base_sha)
-        print(json.dumps({"source_head": first_source, "base_main": base_sha, "actionable": plan["actionable"], "proposals": len(plan["proposals"])}, sort_keys=True))
+        print(json.dumps({
+            "source_head": first_source,
+            "base_main": base_sha,
+            "actionable": plan["actionable"],
+            "proposals": len(plan["proposals"]),
+        }, sort_keys=True))
         if not plan["actionable"]:
             return 0
         branch = branch_name(policy, first_source, base_sha)
@@ -184,15 +245,22 @@ def main() -> int:
             git("config", "user.name", "project-far-implementation-bot")
             git("config", "user.email", "project-far-implementation-bot@users.noreply.github.com")
             git("commit", "-m", f"implementation: materialize protected living-research correction {first_source}")
-            head = git("rev-parse", "HEAD^{commit}")
-            if git("rev-parse", "HEAD^") != base_sha:
-                raise RunnerError("implementation branch is not exactly one commit on frozen main")
+            local_head = git("rev-parse", "HEAD^{commit}")
+            ancestry = git("rev-list", "--parents", "-n", "1", local_head).split()
+            if len(ancestry) != 2 or ancestry[1] != base_sha:
+                raise RunnerError("implementation branch is not exactly one single-parent commit on frozen main")
             git("push", "origin", f"HEAD:refs/heads/{branch}")
+            head = verify_existing(branch, plan)
+            if head != local_head:
+                raise RunnerError("remote implementation head differs from exact locally sealed commit")
         else:
             head = verify_existing(branch, plan)
         pr_number, created = create_or_recover_pr(branch, plan, sensitive)
         if not sensitive:
-            checks = gh("api", f"repos/{os.environ['GITHUB_REPOSITORY']}/commits/{head}/check-runs", "--jq", '[.check_runs[] | select(.name == "merge-authority")] | length')
+            checks = gh(
+                "api", f"repos/{os.environ['GITHUB_REPOSITORY']}/commits/{head}/check-runs",
+                "--jq", '[.check_runs[] | select(.name == "merge-authority")] | length',
+            )
             if int(checks) == 0:
                 gh("workflow", "run", "validator-assurance.yml", "--repo", os.environ["GITHUB_REPOSITORY"], "--ref", branch)
         print(f"Implementation PR #{pr_number} is open for exact head {head}; protected merge remains controlling. created={created} sensitive={sensitive}")
