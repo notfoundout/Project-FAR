@@ -3,17 +3,6 @@ name: Living Research Implementation
 on:
   schedule:
     - cron: '7,37 * * * *'
-  push:
-    branches:
-      - main
-    paths:
-      - 'research/living/implementation-authorizations-v1.0.json'
-      - 'research/living/implementation-policy-v1.0.json'
-      - 'research/living/project-change-policy-v1.0.json'
-      - 'research/living/review-dispositions-v1.0.json'
-      - 'tools/living_implementation_contract.py'
-      - 'tools/materialize_living_implementation.py'
-      - 'tools/run_living_research_implementation.py'
   workflow_run:
     workflows:
       - Living Research Watch
@@ -47,7 +36,10 @@ jobs:
       - name: Install canonical repository dependencies
         run: python -m pip install -r requirements.txt
       - name: Test implementation contract without source execution
-        run: python -m unittest tests.test_living_implementation_contract -v
+        run: >-
+          python -m unittest
+          tests.test_living_implementation_contract
+          tests.test_living_research_implementation_runner -v
       - name: Materialize protected-authorized implementation PR
         env:
           GH_TOKEN: ${{ github.token }}
