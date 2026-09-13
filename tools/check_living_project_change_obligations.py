@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from tools import promote_living_research as promoter
+
 REVIEWS = Path("research/living/review-dispositions-v1.0.json")
 PROMOTION_AUTHS = Path("research/living/promotion-authorizations-v1.0.json")
 SNAPSHOT_AUTHS = Path("research/living/snapshot-authorizations-v1.0.json")
@@ -32,6 +34,26 @@ REQUIRED_REVIEW_FIELDS = {
     "review_basis",
     "proposal_id",
     "suppress_from_core_claim_review_queue",
+}
+SNAPSHOT_AUTH_FIELDS = {
+    "candidate_id",
+    "candidate_sha256",
+    "source_key",
+    "disposition",
+    "review_basis",
+    "review_basis_sha256",
+    "review_record_sha256",
+    "authorization_status",
+}
+PROMOTION_AUTH_FIELDS = {
+    "proposal_id",
+    "candidate_id",
+    "proposal_sha256",
+    "candidate_sha256",
+    "operations_sha256",
+    "lifecycle_stage",
+    "authorization_status",
+    "provenance_sha256",
 }
 
 
@@ -117,22 +139,68 @@ def local_obligations(root: Path) -> list[dict[str, str]]:
         promotion = p_auths.get(proposal_id)
         if promotion is None:
             raise ObligationError(f"{candidate_id}: missing promotion authorization for {proposal_id}")
+        if set(promotion) != PROMOTION_AUTH_FIELDS:
+            raise ObligationError(f"{candidate_id}: promotion authorization fields are malformed")
         if promotion.get("candidate_id") != candidate_id:
             raise ObligationError(f"{candidate_id}: promotion authorization candidate mismatch")
         if promotion.get("lifecycle_stage") != "PROMOTION_PROPOSED":
             raise ObligationError(f"{candidate_id}: promotion authorization stage mismatch")
         if promotion.get("authorization_status") != "ACCEPTED_FOR_MECHANICAL_PROMOTION":
             raise ObligationError(f"{candidate_id}: promotion authorization status mismatch")
+        for field in ("proposal_sha256", "candidate_sha256", "operations_sha256"):
+            value = promotion.get(field)
+            if not isinstance(value, str) or promoter.HEX64_RE.fullmatch(value) is None:
+                raise ObligationError(f"{candidate_id}: promotion authorization {field} is malformed")
+        provenance_hashes = promotion.get("provenance_sha256")
+        if (
+            not isinstance(provenance_hashes, dict)
+            or set(provenance_hashes) != set(promoter.PROV_KEYS)
+            or any(
+                not isinstance(provenance_hashes[key], str)
+                or promoter.HEX64_RE.fullmatch(provenance_hashes[key]) is None
+                for key in promoter.PROV_KEYS
+            )
+        ):
+            raise ObligationError(f"{candidate_id}: promotion authorization provenance hashes are malformed")
 
         snapshot = s_auths.get(candidate_id)
         if snapshot is None:
             raise ObligationError(f"{candidate_id}: missing snapshot authorization")
+        if set(snapshot) != SNAPSHOT_AUTH_FIELDS:
+            raise ObligationError(f"{candidate_id}: snapshot authorization fields are malformed")
+        for field in ("candidate_sha256", "review_basis_sha256", "review_record_sha256"):
+            value = snapshot.get(field)
+            if not isinstance(value, str) or promoter.HEX64_RE.fullmatch(value) is None:
+                raise ObligationError(f"{candidate_id}: snapshot authorization {field} is malformed")
         for field in ("source_key", "review_basis", "disposition"):
             if snapshot.get(field) != review.get(field):
                 raise ObligationError(f"{candidate_id}: snapshot authorization {field} mismatch")
         if snapshot.get("authorization_status") != "ACCEPTED_FOR_MECHANICAL_SNAPSHOT":
             raise ObligationError(f"{candidate_id}: snapshot authorization status mismatch")
-        obligations.append({"candidate_id": candidate_id, "proposal_id": proposal_id})
+        if snapshot["review_record_sha256"] != promoter.canonical_json_sha(review):
+            raise ObligationError(f"{candidate_id}: snapshot authorization review-record hash mismatch")
+        try:
+            basis_path = promoter.safe(review["review_basis"])
+            basis = promoter.mainbytes(root, basis_path)
+        except promoter.PromotionError as exc:
+            raise ObligationError(f"{candidate_id}: invalid review-basis path: {exc}") from exc
+        if basis is None or promoter.h(basis) != snapshot["review_basis_sha256"]:
+            raise ObligationError(f"{candidate_id}: snapshot authorization review-basis hash mismatch")
+
+        obligations.append(
+            {
+                "candidate_id": candidate_id,
+                "proposal_id": proposal_id,
+                "snapshot_candidate_sha256": snapshot["candidate_sha256"],
+                "promotion_candidate_sha256": promotion["candidate_sha256"],
+                "proposal_sha256": promotion["proposal_sha256"],
+                "operations_sha256": promotion["operations_sha256"],
+                **{
+                    f"provenance_{key}_sha256": provenance_hashes[key]
+                    for key in promoter.PROV_KEYS
+                },
+            }
+        )
     return obligations
 
 
@@ -165,12 +233,21 @@ def source_obligations(root: Path, source_ref: str, obligations: list[dict[str, 
     for obligation in obligations:
         candidate_id = obligation["candidate_id"]
         proposal_id = obligation["proposal_id"]
-        if git_show(root, source_ref, f"{CANDIDATE_PREFIX}{candidate_id}.json") is None:
+        candidate_raw = git_show(root, source_ref, f"{CANDIDATE_PREFIX}{candidate_id}.json")
+        if candidate_raw is None:
             raise ObligationError(f"{candidate_id}: candidate missing from {source_ref}")
+        candidate_sha = promoter.h(candidate_raw)
+        if candidate_sha != obligation["snapshot_candidate_sha256"]:
+            raise ObligationError(f"{candidate_id}: snapshot authorization candidate hash mismatch")
+        if candidate_sha != obligation["promotion_candidate_sha256"]:
+            raise ObligationError(f"{candidate_id}: promotion authorization candidate hash mismatch")
+
         proposal_path = f"{PROPOSAL_PREFIX}{proposal_id}.json"
         raw = git_show(root, source_ref, proposal_path)
         if raw is None:
             raise ObligationError(f"{candidate_id}: correction proposal {proposal_id} missing from {source_ref}")
+        if promoter.h(raw) != obligation["proposal_sha256"]:
+            raise ObligationError(f"{proposal_id}: protected proposal hash mismatch")
         try:
             proposal = json.loads(raw.decode("utf-8"))
         except Exception as exc:
@@ -179,11 +256,34 @@ def source_obligations(root: Path, source_ref: str, obligations: list[dict[str, 
             raise ObligationError(f"{proposal_id}: proposal must be an object")
         if proposal.get("proposal_id") != proposal_id or proposal.get("candidate_id") != candidate_id:
             raise ObligationError(f"{proposal_id}: identity binding mismatch")
+        if proposal.get("candidate_sha256") != candidate_sha:
+            raise ObligationError(f"{proposal_id}: proposal candidate hash mismatch")
         if proposal.get("lifecycle_stage") != "PROMOTION_PROPOSED":
             raise ObligationError(f"{proposal_id}: proposal stage mismatch")
         operations = proposal.get("operations")
         if not isinstance(operations, list) or not operations:
             raise ObligationError(f"{proposal_id}: project change requires nonempty operations")
+        if promoter.canonical_json_sha(operations) != obligation["operations_sha256"]:
+            raise ObligationError(f"{proposal_id}: protected operation-set hash mismatch")
+
+        provenance = proposal.get("provenance")
+        if not isinstance(provenance, dict) or set(provenance) != set(promoter.PROV_KEYS):
+            raise ObligationError(f"{proposal_id}: incomplete provenance")
+        for key in promoter.PROV_KEYS:
+            item = provenance[key]
+            if not isinstance(item, dict) or set(item) != {"path", "sha256"}:
+                raise ObligationError(f"{proposal_id}: malformed {key} provenance")
+            expected = obligation[f"provenance_{key}_sha256"]
+            if item.get("sha256") != expected:
+                raise ObligationError(f"{proposal_id}: protected {key} provenance hash mismatch")
+            try:
+                path = promoter.safe(item.get("path"))
+                current = promoter.mainbytes(root, path)
+            except promoter.PromotionError as exc:
+                raise ObligationError(f"{proposal_id}: invalid {key} provenance path: {exc}") from exc
+            if current is None or promoter.h(current) != expected:
+                raise ObligationError(f"{proposal_id}: current {key} provenance hash mismatch")
+
         seen: set[str] = set()
         for operation in operations:
             if not isinstance(operation, dict) or operation.get("op") != "write_file":
@@ -196,8 +296,12 @@ def source_obligations(root: Path, source_ref: str, obligations: list[dict[str, 
             prefix = f"{PAYLOAD_PREFIX}{proposal_id}/"
             if not isinstance(source_path, str) or not source_path.startswith(prefix):
                 raise ObligationError(f"{proposal_id}: payload path is outside proposal directory")
-            if git_show(root, source_ref, source_path) is None:
+            payload = git_show(root, source_ref, source_path)
+            if payload is None:
                 raise ObligationError(f"{proposal_id}: missing payload {source_path}")
+            result_sha = operation.get("result_sha256")
+            if not isinstance(result_sha, str) or result_sha != promoter.h(payload):
+                raise ObligationError(f"{proposal_id}: payload hash mismatch for {target}")
 
 
 def check(root: Path, source_ref: str | None = None) -> list[str]:
@@ -206,7 +310,7 @@ def check(root: Path, source_ref: str | None = None) -> list[str]:
         if source_ref:
             source_obligations(root, source_ref, obligations)
         return []
-    except ObligationError as exc:
+    except (ObligationError, promoter.PromotionError) as exc:
         return [str(exc)]
 
 
