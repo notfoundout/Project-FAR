@@ -18,6 +18,7 @@ on:
       - 'tests/test_living_implementation_contract.py'
       - 'tests/test_living_project_change_obligations.py'
       - 'tests/test_living_project_change_workflow.py'
+      - 'tests/test_living_research_implementation_runner.py'
       - 'tools/check_living_project_change_obligations.py'
       - 'tools/living_implementation_contract.py'
       - 'tools/materialize_living_implementation.py'
@@ -71,6 +72,7 @@ jobs:
           tests.test_living_project_change_obligations
           tests.test_living_project_change_workflow
           tests.test_living_implementation_contract
+          tests.test_living_research_implementation_runner
           tests.test_living_research_promotion
           tests.test_living_research_promotion_workflow -v
       - name: Validate scientific correction package against permanent inbox
