@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.1",
+  "program_id": "FAR-LIVING-PROJECT-CHANGE-001",
+  "authority": "Research",
+  "disposition": "PROJECT_CHANGE_REQUIRED",
+  "source_pr": 490,
+  "source_branch": "automation/living-research-inbox",
+  "required_review_fields": ["candidate_id", "source_key", "disposition", "reviewed_on", "review_basis", "proposal_id", "suppress_from_core_claim_review_queue"],
+  "implementation_review_fields": ["implementation_required", "implementation_proposal_id"],
+  "scientific_correction_required": true,
+  "implementation_rule": "Every PROJECT_CHANGE_REQUIRED review must declare whether separate repository implementation is needed. When needed, it must bind an exact IMPLEMENTATION_PROPOSED package approved by the protected implementation authorization registry.",
+  "rule": "A governed project-changing result must bind its exact scientific correction package. When separate repository implementation is required, it must also bind an exact separately authorized implementation package. Scientific and implementation changes use separate pull requests and both remain subject to protected review and validation."
+}

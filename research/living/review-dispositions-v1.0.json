@@ -6,9 +6,10 @@
   "allowed_dispositions": [
     "IRRELEVANT_FALSE_POSITIVE",
     "ADJACENT_NO_CONTRADICTION",
-    "N1_PRIOR_ART_LEAD"
+    "N1_PRIOR_ART_LEAD",
+    "PROJECT_CHANGE_REQUIRED"
   ],
-  "queue_semantics": "A listed candidate has completed enough governed internal review to leave the metadata-only core-claim review queue. The raw candidate remains preserved. A disposition does not change FAR-CORE status, execute EFR, establish novelty, or count as external independence.",
+  "queue_semantics": "A listed candidate has completed enough governed internal review to leave the metadata-only core-claim review queue. The raw candidate remains preserved. PROJECT_CHANGE_REQUIRED records that governed review found a repository correction necessary; the correction remains proposed until its separate protected promotion PR merges. Other dispositions do not change FAR-CORE status. No disposition executes EFR, establishes novelty, or counts as external independence.",
   "reviewed_candidates": [
     {"candidate_id":"FAR-LIT-2D565B9982141065","source_key":"doi:10.1007/s00355-025-01609-7","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
     {"candidate_id":"FAR-LIT-552B3F4A53BDEF61","source_key":"doi:10.1007/s00199-004-0556-7","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-10","review_basis":"docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md","suppress_from_core_claim_review_queue":true},
