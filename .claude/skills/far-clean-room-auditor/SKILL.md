@@ -36,7 +36,9 @@ Produce a conclusion that another reviewer can reproduce from the exact proposit
 
 ## Project FAR authority routing
 
-For Project FAR audits:
+For Project FAR audits, the coordinator performs this routing before preparing an isolated evaluator's packet. Before launch, reconcile the supplied-input restriction with applicable repository and task instructions; this skill does not create an exception to `AGENTS.md`. If those instructions cannot be reconciled, report the conflict and leave the affected independent stage blocked. An evaluator authorized to use only supplied inputs must use the supplied authority records rather than opening the live repository. If a required record is absent, record the dependency as blocked and return it to the coordinator; do not relax the isolation boundary to retrieve it.
+
+For unrestricted internal audits and coordinator preparation:
 
 1. Read `AGENTS.md` and `docs/governance/research-execution-charter.md`.
 2. Resolve current state from `README.md`, `docs/project-status.md`, and `docs/CANONICAL_MAP.md`.
@@ -47,6 +49,21 @@ For Project FAR audits:
 7. Internal audit results do not satisfy external replication, independence, novelty, utility, or other governed stages merely because the audit is rigorous.
 
 Use `far-canonical-source-resolver` first when repository authority is unclear. Use `far-theory-auditor` for a narrower logical attack on theory claims; use this skill when the audit also requires provenance, authority, state, evidence-lineage, reproducibility, or typed-verdict discipline.
+
+## Isolation gate
+
+Invoking this skill does not create evaluator isolation. Apply the [Isolation Classification Doctrine](../../../docs/doctrine/isolation-classification.md) and the target protocol before claiming completion of any independent-audit stage. A protocol can require stronger controls than the general doctrine.
+
+- A pass in the construction session, including switching skills or adopting a reviewer role, is **I0 — No Isolation**. Use it for internal exploratory findings; it does not satisfy independent validation.
+- **I1 — Claimed Isolation** requires a separately instantiated evaluation context receiving only the explicitly supplied frozen inputs, with repository access prohibited by instruction. Do not forward conversation history, prior verdicts, construction notes, or other material outside the registered packet. Record evaluator/context identity, supplied input hashes, exposure, and the access restriction. A fresh context alone does not establish the restriction.
+- **I2 — Verified Isolation** additionally requires evidence that the environment technically prevents access beyond the supplied inputs. A promise, skill invocation, new agent, or shared-filesystem workspace is not that evidence.
+- **I3 — External Independent Validation** requires independent researchers or external systems to reproduce the result without Project FAR controlling the evaluation or supplying its reasoning as the basis. A Project-FAR-orchestrated evaluator is not I3 merely because it uses another model.
+
+If the required controls are unavailable or fail, disclose actual exposure, use only the class supported by evidence, and leave the required independent stage unsatisfied. Continue any useful authorized internal checks. Do not promote a claim on the premise that the missing stage completed. Preserve negative findings; isolation limits do not erase a counterexample or establish its correctness.
+
+Every validation report must include an **Isolation Classification** section with the class, evaluation method, technical limitations, and whether repository access was prohibited by instruction or prevented technically. Report truth verdict, repository acceptance status, and isolation separately. Do not retroactively relabel historical reports solely to apply the doctrine.
+
+When context or access-control evidence is absent, report **isolation class not established** and identify the missing evidence. Do not invent I0 or any stronger class; independent-stage completion is not established.
 
 ## Audit contract
 
@@ -128,7 +145,7 @@ A successful attack changes the verdict only to the extent licensed by the exact
 
 ## Verdict vocabulary
 
-Use exactly one primary verdict for each atomic claim:
+Use the target protocol's mandated verdict vocabulary and decision rules when it supplies them; preserve exact recorded labels without silently translating their meanings. Otherwise use exactly one primary verdict for each atomic claim:
 
 - **VERIFIED** — the exact claim is established within its frozen scope by deductive proof, justified exhaustive closed-world checking, direct authoritative record/state evidence, or complete conformance evidence. This does not imply broader empirical generalization.
 - **SUPPORTED** — defeasible empirical, statistical, causal, historical, predictive, comparative, or bounded-search evidence satisfies the frozen evidentiary rule at the stated strength.
@@ -174,5 +191,7 @@ Lead with the verdict. Then provide:
 6. **Verdict** — one typed verdict per atomic claim.
 7. **Material limits** — only limitations that could change interpretation or generalization.
 8. **Required correction** — smallest complete correction when the audited object fails.
+
+For Project FAR validation, include the Isolation Classification report required above and state explicitly whether the applicable independent-audit stage is satisfied. Recommendations do not themselves change governed claim status.
 
 Never end with a stronger summary claim than the evidence ledger and atomic verdicts license.

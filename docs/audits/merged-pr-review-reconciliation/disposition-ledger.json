@@ -1,21 +1,21 @@
 {
-  "audited_main_commit": "15fb5e69bed1a334919bfa38949beafed15ba5da",
+  "audited_main_commit": "ff398005894827ef2dbf91a0195b98048a9deafd",
   "baseline_commit": "cb55c50324a9912deb8c73b62d0fbb242f026933",
   "baseline_git_blob_sha": "69b72e0247b1c1604e03789a472559f8be9eeffb",
   "composition_rule": "Apply explicit_findings by finding_id; every remaining resolved_incorrectly source finding is cannot_verify, has unknown experiment-blocking status, and retains source traceability until audited.",
   "counts": {
     "by_disposition": {
-      "cannot_verify": 377,
-      "fixed_on_current_main": 14,
+      "cannot_verify": 376,
+      "fixed_on_current_main": 15,
       "obsolete_after_later_changes": 8,
       "still_reproducible": 3
     },
     "by_experiment_blocking": {
       "true": 3,
-      "unknown": 377
+      "unknown": 376
     },
     "by_risk": {
-      "high": 122,
+      "high": 121,
       "medium": 258
     },
     "by_subsystem": {
@@ -25,7 +25,7 @@
       "comparative-experiments": 26,
       "documentation-and-governance": 65,
       "external-validation": 35,
-      "frameworks": 13,
+      "frameworks": 12,
       "mechanization": 4,
       "repository-metadata": 2,
       "research-records": 1,
@@ -33,7 +33,7 @@
       "validation-engine": 3,
       "validators-and-tooling": 85
     },
-    "residual": 380,
+    "residual": 379,
     "total": 402
   },
   "default_disposition": "cannot_verify",
@@ -136,6 +136,18 @@
       "failure_mechanism": "The current README contains no generated TASK-004 block, and update_readme_dashboard.py no longer parses TASK-004 branch/title data. Its generator changes only an existing bounded historical block, which the current README does not contain.",
       "finding_id": "PR155:PRRT_kwDOTH_vCM6QMr9J",
       "root_cause_id": "unverified:PR155:PRRT_kwDOTH_vCM6QMr9J"
+    },
+    {
+      "blocks_experiment_reconstruction": "unknown",
+      "disposition": "fixed_on_current_main",
+      "evidence": [
+        "PR #506 merged as ff398005894827ef2dbf91a0195b98048a9deafd and preserves the three superseded proof bodies under frameworks/FARE/mathematics/proofs/archive/legacy/ while leaving non-identifying compatibility pointers at the former root paths.",
+        "tools/check_fare_theorem_ids.py scans active FARE proof Markdown for MT-NNN identifier declarations while excluding proofs/archive/**; tests/test_fare_theorem_id_hygiene.py proves duplicate active identifiers fail and archived historical duplicates are excluded.",
+        "All ten push-triggered workflows on merge SHA ff398005894827ef2dbf91a0195b98048a9deafd passed, including Repository Health, Exact Head Assurance, and Validator Assurance."
+      ],
+      "failure_mechanism": "The active FARE mathematics surface reused MT-001 through MT-003 across the current theorem sequence and three superseded root-level proof documents, so the same active identifiers resolved to different theorem statements.",
+      "finding_id": "PR20:PRRT_kwDOTH_vCM6OTp-R",
+      "root_cause_id": "fare-mathematics:duplicate-active-theorem-identifiers"
     },
     {
       "blocks_experiment_reconstruction": "unknown",
