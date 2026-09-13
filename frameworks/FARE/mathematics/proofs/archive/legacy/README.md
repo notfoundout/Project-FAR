@@ -20,6 +20,14 @@ Proofs shall not be deleted merely because their numbering conflicts with a newe
 
 # Current Status
 
-No legacy proof files were recovered during this update.
+This archive preserves three superseded legacy proof documents recovered from the active proof root after their historical identifiers were found to collide with the current theorem sequence.
 
-This archive exists so future superseded proof work can be preserved rather than discarded.
+| Archived file | Historical identifier | Historical title |
+|---|---|---|
+| `T001-identity-path-is-geodesic.md` | `MT-001` | Identity Path Is a Geodesic |
+| `T002-path-composition-preserves-reachability.md` | `MT-002` | Path Composition Preserves Reachability |
+| `T003-every-geodesic-is-a-path.md` | `MT-003` | Every Geodesic Is an Evaluation Path |
+
+The archived proof bodies are preserved byte-for-byte from their former root locations. Their historical `Accepted` status text is retained as provenance only; placement under `archive/legacy/` makes them non-active under the rules above.
+
+The active theorem sequence is controlled by `../../../theorem-index.md` and the active proof subdirectories outside `archive/`.
