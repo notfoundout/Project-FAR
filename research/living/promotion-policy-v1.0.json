@@ -17,6 +17,8 @@
   "trusted_generated_paths": ["docs/research/living-repository-status.md", "research/living/repository-state-v1.0.json"],
   "protected_exact_paths": [
     "research/living/config-v1.0.json",
+    "research/living/implementation-authorizations-v1.0.json",
+    "research/living/implementation-policy-v1.0.json",
     "research/living/lifecycle-v1.0.json",
     "research/living/project-change-policy-v1.0.json",
     "research/living/promotion-authorizations-v1.0.json",
@@ -28,5 +30,5 @@
   ],
   "forbidden_path": "research/living/inbox/.rolling-pr-anchor.json",
   "authorization_registry": "research/living/promotion-authorizations-v1.0.json",
-  "rule": "Review-disposition membership alone is never promotion authority. A Research snapshot requires a separate protected authorization binding the exact candidate SHA-256, exact canonical review row, exact review-basis SHA-256, source identity, and disposition. PROJECT_CHANGE_REQUIRED is valid only when governed review also binds an exact nonempty PROMOTION_PROPOSED correction proposal plus the protected snapshot and canonical-promotion authorizations required to open a separate correction PR automatically. Canonical edits require an exact protected-main authorization binding the accepted PROMOTION_PROPOSED proposal, candidate, operation set, and provenance hashes. Source-branch code is never executed. Exact main preimages, payload hashes, regular-file paths, a sealed final diff, a single-commit promotion branch, and protected merge-authority are mandatory."
+  "rule": "Review-disposition membership alone is never promotion authority. A Research snapshot requires a separate protected authorization binding the exact candidate SHA-256, exact canonical review row, exact review-basis SHA-256, source identity, and disposition. PROJECT_CHANGE_REQUIRED is valid only when governed review also binds an exact nonempty PROMOTION_PROPOSED scientific correction proposal plus the protected snapshot and canonical-promotion authorizations required to open a separate correction PR automatically. Executable and control-plane changes are never materialized by this scientific promoter; when implementation_required is true they use the separately authorized FAR-LIVING-IMPLEMENTATION-001 path. Canonical edits require an exact protected-main authorization binding the accepted PROMOTION_PROPOSED proposal, candidate, operation set, and provenance hashes. Source-branch code is never executed. Exact main preimages, payload hashes, regular-file paths, a sealed final diff, a single-commit promotion branch, and protected merge-authority are mandatory."
 }
