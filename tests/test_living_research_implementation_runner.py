@@ -7,6 +7,7 @@ from tools.run_living_research_implementation import expected_sealed_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 RUNNER = ROOT / "tools/run_living_research_implementation.py"
+WORKFLOW = ROOT / ".github/workflows/living-research-implementation.yml"
 
 
 class LivingResearchImplementationRunnerTests(unittest.TestCase):
@@ -37,6 +38,13 @@ class LivingResearchImplementationRunnerTests(unittest.TestCase):
         self.assertIn('git("rev-list", "--parents", "-n", "1", head)', text)
         self.assertIn('git("rev-list", "--count", f"{plan[\'base_main_sha\']}..{head}")', text)
         self.assertIn('head = verify_existing(branch, plan)', text)
+
+    def test_implementation_routing_waits_for_refreshed_inbox(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("workflow_run:", text)
+        self.assertIn("Living Research Watch", text)
+        self.assertIn("github.event.workflow_run.event == 'workflow_dispatch'", text)
+        self.assertNotIn("\n  push:\n", text)
 
 
 if __name__ == "__main__":
