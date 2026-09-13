@@ -15,8 +15,8 @@ For each major question, use this sequence when applicable:
 6. Test minimality and irreducibility where applicable.
 7. Attempt cross-framework embeddings.
 8. search prior art.
-9. Independently audit the resulting argument.
-10. Update claim status only after the preceding evidence is evaluated.
+9. Route the audit through `far-clean-room-auditor` and its isolation gate. To satisfy the independent-audit stage, instantiate a separate evaluator using only the frozen supplied inputs and the access restrictions required by the applicable protocol and `docs/doctrine/isolation-classification.md`. Do not forward the construction session or its conclusions. Use `far-theory-auditor` inside that boundary for a narrower logical-theory attack when applicable. A pass in the construction session is internal I0. If the protocol's required isolation cannot be established, report the class actually supported by evidence and leave the independent-audit stage unsatisfied; an I1 evaluation remains I1 when a required I2 control is missing.
+10. Evaluate the preceding evidence and record unresolved findings. Update claim status only through the applicable acceptance/promotion process; an internal pass cannot satisfy a required independent-audit stage, and an audit verdict alone does not authorize promotion. Record a discovered defect even when independent validation is unavailable.
 11. Identify the highest-information unresolved question.
 
 Do not allow one successful test to substitute for another:

@@ -22,7 +22,7 @@ The accepted instance domain is strict JSON. CLI parsing rejects duplicate objec
 
 The published JSON Schema is normative for document shape after that JSON-domain gate. The semantic validator applies the schema and stops semantic interpretation of a schema-invalid document.
 
-Strings and object keys must encode as UTF-8; unpaired surrogates are rejected. Cyclic programmatic containers and nesting beyond the runtime's supported depth produce validation errors. Freeze validates shape before reading fields. Validation, freeze, aggregation, and the installed CLI share this boundary without import-time rebinding, so reloading the public module does not change validation behavior.
+Strings and object keys must encode as UTF-8; unpaired surrogates are rejected. Cyclic programmatic containers, nesting beyond the runtime's supported depth, and integers exceeding its decimal conversion limit produce validation errors. Diagnostics do not render rejected non-string keys. Freeze validates shape before reading fields. Validation, freeze, aggregation, and the installed CLI share this boundary without import-time rebinding, so reloading the public module does not change validation behavior.
 
 The repository's constrained local JSON Schema engine implements the structural keywords used by this format, including Draft 2020-12 numeric type semantics, regex-search semantics for `pattern`, array/object cardinality and uniqueness, and schema-valued `additionalProperties`. In particular, mathematically integral finite JSON numbers such as `1.0` satisfy `type: integer`, while booleans do not. Optional format assertions remain outside the local validator's decidable enforcement boundary unless separately checked semantically.
 

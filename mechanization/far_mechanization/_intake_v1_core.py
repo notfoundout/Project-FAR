@@ -128,7 +128,7 @@ def _json_native_errors(value: Any, path: str = "$", _ancestors: set[int] | None
         for key, child in value.items():
             if type(key) is not str:
                 errors.append(
-                    f"{path} has non-string object key {key!r}; value is not canonical-JSON serializable"
+                    f"{path} has non-string object key of type {type(key).__name__}; value is not canonical-JSON serializable"
                 )
                 continue
             try:
@@ -149,7 +149,13 @@ def _json_native_errors(value: Any, path: str = "$", _ancestors: set[int] | None
         except UnicodeEncodeError:
             return [f"{path} is not canonical-JSON serializable: string is not valid UTF-8"]
         return []
-    if value is None or value_type in {int, bool}:
+    if value_type is int:
+        try:
+            str(value)
+        except ValueError:
+            return [f"{path} is not canonical-JSON serializable: integer exceeds the runtime's decimal conversion limit"]
+        return []
+    if value is None or value_type is bool:
         return []
     if value_type is float:
         if math.isfinite(value):
@@ -737,7 +743,12 @@ def _validate_manifest(manifest: Any, *, require_complete: bool | None = None) -
         extra = set(candidate_keys) & excluded_combos
         missing = expected_count - len(set(candidate_keys) - excluded_combos)
         if missing:
-            errors.append(f"contract family omits {missing} admissible interpretation combination(s)")
+            try:
+                count = str(missing)
+            except ValueError:
+                errors.append("contract family omits admissible interpretation combinations (count exceeds the runtime's decimal conversion limit)")
+            else:
+                errors.append(f"contract family omits {count} admissible interpretation combination(s)")
         if extra:
             errors.append(f"contract family contains {len(extra)} non-admissible interpretation combination(s)")
 

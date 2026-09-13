@@ -48,6 +48,28 @@ class IntakeBoundaryHardeningTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "cannot freeze invalid manifest"):
                     freeze_manifest(value, frozen_at=STAMP)
 
+    def test_integer_conversion_limits_fail_closed_without_rendering_bad_keys(self):
+        previous_limit = sys.get_int_max_str_digits()
+        try:
+            sys.set_int_max_str_digits(640)
+            huge = 10 ** 640
+            for location in ("key", "status", "contract"):
+                m = manifest()
+                if location == "key":
+                    m["raw_input"][huge] = "bad key"
+                elif location == "status":
+                    m["freeze"]["status"] = huge
+                else:
+                    m["discovery"]["contract_candidates"][0]["contract"]["bad"] = huge
+                with self.subTest(location=location):
+                    self.assert_has(validate_manifest(m), "not canonical-JSON serializable")
+                    self.assertEqual(aggregate_manifest(m)["outcome"], "INVALID")
+                    with self.assertRaises(ValueError):
+                        freeze_manifest(m, frozen_at=STAMP)
+            self.assertEqual(_json_native_errors({"within_limit": 10 ** 600}), [])
+        finally:
+            sys.set_int_max_str_digits(previous_limit)
+
     def test_unpaired_surrogates_fail_closed_but_unicode_round_trips(self):
         for value in ("\ud800", "\udfff"):
             for location in ("text", "key", "contract"):
