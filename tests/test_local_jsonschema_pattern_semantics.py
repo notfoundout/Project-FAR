@@ -1,5 +1,7 @@
+import importlib
 import unittest
 
+import jsonschema
 from jsonschema import Draft202012Validator
 
 
@@ -40,6 +42,19 @@ class LocalJsonSchemaSemanticsTests(unittest.TestCase):
         }
         self.assertEqual(self.errors(schema, {"fixed": "x", "dynamic": 1}), [])
         self.assertTrue(self.errors(schema, {"fixed": "x", "dynamic": "wrong"}))
+
+    def test_module_reload_does_not_mutate_validator_semantics(self):
+        """Reloading the package must not stack wrappers or alter global type behavior."""
+        for _ in range(2):
+            module = importlib.reload(jsonschema)
+            validator = module.Draft202012Validator
+            self.assertEqual(list(validator({"type": "string"}).iter_errors("x")), [])
+            self.assertEqual(list(validator({"type": "integer"}).iter_errors(1.0)), [])
+            self.assertTrue(list(validator({"type": "integer"}).iter_errors(True)))
+            self.assertEqual(
+                list(validator({"type": "array", "uniqueItems": True}).iter_errors([True, 1])),
+                [],
+            )
 
 
 if __name__ == "__main__":
