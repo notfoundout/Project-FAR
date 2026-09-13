@@ -19,6 +19,11 @@ class PromotionTests(unittest.TestCase):
         (self.root / "research/living/lifecycle-v1.0.json").write_bytes(D({"stages":[{"id":"DISCOVERED","automation_may_enter":True},{"id":"PROMOTION_PROPOSED","automation_may_enter":False}]}))
         self.reviews([])
         subprocess.run(["git","init","-q"], cwd=self.root, check=True)
+        # These repositories are disposable test fixtures. Automatic Git maintenance is
+        # outside the test contract and may detach a pack-writing process that races
+        # TemporaryDirectory cleanup on CI.
+        subprocess.run(["git","config","maintenance.auto","false"], cwd=self.root, check=True)
+        subprocess.run(["git","config","gc.auto","0"], cwd=self.root, check=True)
         subprocess.run(["git","config","user.email","test@example.com"], cwd=self.root, check=True)
         subprocess.run(["git","config","user.name","test"], cwd=self.root, check=True)
         subprocess.run(["git","add","."], cwd=self.root, check=True); subprocess.run(["git","commit","-qm","base"], cwd=self.root, check=True)
@@ -47,6 +52,9 @@ class PromotionTests(unittest.TestCase):
         subprocess.run(["git","add",str(p.AUTHS)], cwd=self.root, check=True); subprocess.run(["git","commit","-qm","authorize"], cwd=self.root, check=True)
         self.base=subprocess.check_output(["git","rev-parse","HEAD"], cwd=self.root, text=True).strip(); self.mainref(self.base)
         return {f"{p.CANDIDATES}{CID}.json":candidate,f"{p.PROPOSALS}{PID}.json":raw,f"{p.PAYLOADS}{PID}/x.md":payload}
+    def test_ephemeral_repo_disables_automatic_maintenance(self):
+        self.assertEqual("false", subprocess.check_output(["git","config","--bool","maintenance.auto"], cwd=self.root, text=True).strip())
+        self.assertEqual("0", subprocess.check_output(["git","config","--int","gc.auto"], cwd=self.root, text=True).strip())
     def test_reviewed_candidate_requires_exact_path(self):
         basis="docs/review.md"; (self.root/basis).write_text("review\n")
         self.reviews([{"candidate_id":CID,"source_key":"doi:x","disposition":"N1_PRIOR_ART_LEAD","review_basis":basis}]); subprocess.run(["git","add",str(p.REVIEWS),basis],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","review"],cwd=self.root,check=True); self.base=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip(); self.mainref(self.base)
