@@ -6,7 +6,7 @@
   "source_branch": "automation/living-research-inbox",
   "source_pr_must_remain_open": true,
   "source_pr_must_remain_draft": true,
-  "snapshot_review_dispositions": ["ADJACENT_NO_CONTRADICTION", "N1_PRIOR_ART_LEAD"],
+  "snapshot_review_dispositions": ["ADJACENT_NO_CONTRADICTION", "N1_PRIOR_ART_LEAD", "PROJECT_CHANGE_REQUIRED"],
   "excluded_review_dispositions": ["IRRELEVANT_FALSE_POSITIVE"],
   "snapshot_requires_explicit_authorization": true,
   "snapshot_authorization_registry": "research/living/snapshot-authorizations-v1.0.json",
@@ -18,6 +18,7 @@
   "protected_exact_paths": [
     "research/living/config-v1.0.json",
     "research/living/lifecycle-v1.0.json",
+    "research/living/project-change-policy-v1.0.json",
     "research/living/promotion-authorizations-v1.0.json",
     "research/living/promotion-policy-v1.0.json",
     "research/living/repository-surfaces-v1.0.json",
@@ -27,5 +28,5 @@
   ],
   "forbidden_path": "research/living/inbox/.rolling-pr-anchor.json",
   "authorization_registry": "research/living/promotion-authorizations-v1.0.json",
-  "rule": "Review-disposition membership alone is never promotion authority. A Research snapshot requires a separate protected authorization binding the exact candidate SHA-256, exact canonical review row, exact review-basis SHA-256, source identity, and disposition. Canonical edits require an exact protected-main authorization binding the accepted PROMOTION_PROPOSED proposal, candidate, operation set, and provenance hashes. Source-branch code is never executed. Exact main preimages, payload hashes, regular-file paths, a sealed final diff, a single-commit promotion branch, and protected merge-authority are mandatory."
+  "rule": "Review-disposition membership alone is never promotion authority. A Research snapshot requires a separate protected authorization binding the exact candidate SHA-256, exact canonical review row, exact review-basis SHA-256, source identity, and disposition. PROJECT_CHANGE_REQUIRED is valid only when governed review also binds an exact nonempty PROMOTION_PROPOSED correction proposal plus the protected snapshot and canonical-promotion authorizations required to open a separate correction PR automatically. Canonical edits require an exact protected-main authorization binding the accepted PROMOTION_PROPOSED proposal, candidate, operation set, and provenance hashes. Source-branch code is never executed. Exact main preimages, payload hashes, regular-file paths, a sealed final diff, a single-commit promotion branch, and protected merge-authority are mandatory."
 }

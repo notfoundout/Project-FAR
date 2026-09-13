@@ -1,0 +1,10 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-PROJECT-CHANGE-001",
+  "authority": "Research",
+  "disposition": "PROJECT_CHANGE_REQUIRED",
+  "source_pr": 490,
+  "source_branch": "automation/living-research-inbox",
+  "required_review_fields": ["candidate_id", "source_key", "disposition", "reviewed_on", "review_basis", "proposal_id", "suppress_from_core_claim_review_queue"],
+  "rule": "After governed review establishes that a living-research result requires a Project FAR correction, the review must bind one exact nonempty correction proposal plus the protected snapshot and promotion authorizations. The promotion workflow opens a separate correction PR containing the study record and those changes. Merge remains governed by protected validation."
+}

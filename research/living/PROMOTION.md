@@ -58,9 +58,21 @@ Proposal provenance uses exact path/hash pairs:
 
 Each `write_file` operation binds the exact current-main preimage (`ABSENT` for a new file), exact payload hash, target path, and payload source path. Duplicate targets, cross-proposal collisions, unsafe paths, symlink paths, protected/control-plane paths, disallowed extensions, stale preimages, or payload hash mismatches fail closed.
 
+## Project-changing studies
+
+`PROJECT_CHANGE_REQUIRED` is a governed review disposition, not an automated relevance score. It may be recorded only after the ordinary research lifecycle has established that the accepted result requires a Project FAR correction.
+
+A row with that disposition is incomplete unless it binds one exact `proposal_id`, leaves the metadata-only review queue, and has both an exact snapshot authorization and an exact `PROMOTION_PROPOSED` canonical-edit authorization. The permanent inbox must contain the bound candidate, the exact proposal, at least one `write_file` operation, and every referenced payload. `tools/check_living_project_change_obligations.py` fails closed on any missing component before promotion runs.
+
+A successful explicit validation of the rolling inbox triggers the promotion workflow on protected `main`. Changes to the protected acceptance/authorization surfaces on `main` also trigger it. The scheduled pass remains a recovery path. The existing promotion transaction then independently revalidates hashes, provenance, preimages, targets, and the frozen source/base before opening the separate correction PR.
+
+Automatic PR creation is required once the accepted package is complete. Automatic merge is not permitted; Exact Head Assurance and protected `merge-authority` remain controlling.
+
 ## Write boundary
 
-Automatic canonical targets are limited by `promotion-policy-v1.0.json`. `.github/`, `tools/`, `tests/`, validation/bootstrap code, `docs/governance/`, all `research/living/` governance/control files, and `research/living/inbox/.rolling-pr-anchor.json` are never canonical payload targets. If accepted information requires such an implementation change, it uses the ordinary governed code path.
+Automatic canonical targets are limited by `promotion-policy-v1.0.json`. `.github/`, `tools/`, `tests/`, validation/bootstrap code, `docs/governance/`, all `research/living/` governance/control files, and `research/living/inbox/.rolling-pr-anchor.json` are never canonical payload targets. If accepted information requires such an implementation change, it uses the ordinary governed code path and the obligation remains explicit until that work lands.
+
+This restriction prevents executable bytes from the unprotected living inbox from running inside a write-scoped promotion job. The protected authorization binds the scientific/canonical payload exactly; it does not turn the inbox into a trusted software supply chain.
 
 The only non-plan files permitted to change during promotion are the explicitly declared deterministic reconciliation outputs in `trusted_generated_paths`.
 

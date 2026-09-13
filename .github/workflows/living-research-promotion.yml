@@ -3,6 +3,23 @@ name: Living Research Promotion
 on:
   schedule:
     - cron: '27,57 * * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/promotion-authorizations-v1.0.json'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'research/living/snapshot-authorizations-v1.0.json'
+      - 'tools/check_living_project_change_obligations.py'
+      - 'tools/promote_living_research.py'
+      - 'tools/run_living_research_promotion.py'
+  workflow_run:
+    workflows:
+      - Living Research Watch
+    types:
+      - completed
   workflow_dispatch:
 
 permissions:
@@ -16,6 +33,7 @@ concurrency:
 
 jobs:
   promote:
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -29,6 +47,8 @@ jobs:
           python-version: '3.12'
       - name: Install canonical repository dependencies
         run: python -m pip install -r requirements.txt
+      - name: Enforce accepted project-change obligations
+        run: python tools/check_living_project_change_obligations.py
       - name: Run fail-closed living-research promotion transaction
         env:
           GH_TOKEN: ${{ github.token }}
