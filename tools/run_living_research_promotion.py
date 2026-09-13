@@ -10,6 +10,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+from tools import check_living_project_change_obligations as project_changes
 from tools import check_living_promotion_head as integrity
 from tools import promote_living_research as promoter
 
@@ -63,6 +64,35 @@ def fetch_inputs() -> None:
         "+refs/heads/main:refs/remotes/origin/main",
         f"+refs/heads/{SOURCE_BRANCH}:refs/remotes/origin/{SOURCE_BRANCH}",
     )
+
+
+def project_change_obligation_gate(source_ref: str, plan: dict[str, Any]) -> None:
+    """Bind every accepted project change to this runner's exact frozen source."""
+    errors = project_changes.check(ROOT, source_ref)
+    if errors:
+        raise RunnerError("project-change obligation failed: " + "; ".join(errors))
+    obligations = project_changes.local_obligations(ROOT)
+    if not obligations or not plan.get("already_promoted"):
+        return
+    manifest_path = ROOT / plan["manifest_path"]
+    if not manifest_path.is_file():
+        raise RunnerError("already-promoted plan lacks its canonical manifest")
+    manifest = promoter.load(manifest_path)
+    represented = {
+        row.get("proposal_id")
+        for row in manifest.get("canonical_proposals", [])
+        if isinstance(row, dict) and isinstance(row.get("proposal_id"), str)
+    }
+    missing = sorted(
+        obligation["proposal_id"]
+        for obligation in obligations
+        if obligation["proposal_id"] not in represented
+    )
+    if missing:
+        raise RunnerError(
+            "this inbox head was promoted before newly required project-change proposals were authorized; "
+            "refresh the permanent inbox on current protected main before promotion: " + ", ".join(missing)
+        )
 
 
 def exact_snapshot_authorization_gate(plan: dict[str, Any]) -> list[dict[str, str]]:
@@ -181,7 +211,15 @@ def stage_authorized(plan: dict[str, Any]) -> None:
 
 def run_validations() -> None:
     commands = [
-        (sys.executable, "-m", "unittest", "tests.test_living_research_promotion", "tests.test_living_research_promotion_workflow", "-v"),
+        (
+            sys.executable,
+            "-m",
+            "unittest",
+            "tests.test_living_research_promotion",
+            "tests.test_living_research_promotion_workflow",
+            "tests.test_living_project_change_obligations",
+            "-v",
+        ),
         (sys.executable, "tools/reconcile_living_repo.py"),
         (sys.executable, "tools/check_living_research.py"),
         (sys.executable, "tools/check_research_gates.py"),
@@ -257,7 +295,8 @@ def main() -> int:
         raise RunnerError("GITHUB_REPOSITORY and GH_TOKEN are required")
     first = source_snapshot()
     fetch_inputs()
-    if git("rev-parse", f"origin/{SOURCE_BRANCH}^{{commit}}") != first["headRefOid"]:
+    source_ref = f"origin/{SOURCE_BRANCH}"
+    if git("rev-parse", f"{source_ref}^{{commit}}") != first["headRefOid"]:
         raise RunnerError("PR #490 head differs from fetched source branch")
     git("switch", "--detach", "origin/main")
     base_sha = git("rev-parse", "HEAD^{commit}")
@@ -265,7 +304,8 @@ def main() -> int:
 
     with tempfile.TemporaryDirectory(prefix="far-living-promotion-") as tmp:
         plan_path = Path(tmp) / f"{source_sha}.json"
-        plan = promoter.build(ROOT, promoter.GitSource(ROOT, f"origin/{SOURCE_BRANCH}"), source_sha, base_sha)
+        plan = promoter.build(ROOT, promoter.GitSource(ROOT, source_ref), source_sha, base_sha)
+        project_change_obligation_gate(source_ref, plan)
         blocked = exact_snapshot_authorization_gate(plan)
         forbidden_target_gate(plan)
         promoter.dump(plan_path, plan)
@@ -287,7 +327,7 @@ def main() -> int:
         new_materialization = not remote_branch_exists(branch)
         if new_materialization:
             git("switch", "-c", branch, base_sha)
-            promoter.materialize(ROOT, promoter.GitSource(ROOT, f"origin/{SOURCE_BRANCH}"), plan)
+            promoter.materialize(ROOT, promoter.GitSource(ROOT, source_ref), plan)
             promoter.install_precommit_hook(ROOT, plan_path)
             run_validations()
             stage_authorized(plan)
