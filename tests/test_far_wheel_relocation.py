@@ -18,12 +18,22 @@ class WheelRelocationTests(unittest.TestCase):
             root = Path(tmp)
             wheel_path = root / build_wheel(str(root))
             environment = root / "venv"
-            venv.EnvBuilder(with_pip=True).create(environment)
+            venv.EnvBuilder(with_pip=False).create(environment)
             scripts = environment / ("Scripts" if os.name == "nt" else "bin")
             python = scripts / ("python.exe" if os.name == "nt" else "python")
             env = os.environ.copy()
             env.pop("PYTHONPATH", None)
             env.pop("PYTHONHOME", None)
+            # Bootstrap and install with only this environment's executables.
+            # pip's user-agent metadata probes must not launch an unrelated host
+            # Rust toolchain or lsb_release shell helpers in an offline wheel test.
+            env["PATH"] = str(scripts)
+            env["PIP_CONFIG_FILE"] = os.devnull
+            bootstrapped = subprocess.run(
+                [str(python), "-I", "-m", "ensurepip", "--default-pip"],
+                cwd=root, env=env, text=True, capture_output=True, timeout=60,
+            )
+            self.assertEqual(bootstrapped.returncode, 0, bootstrapped.stdout + bootstrapped.stderr)
             installed = subprocess.run(
                 [str(python), "-I", "-m", "pip", "install", "--no-deps", "--no-index",
                  "--disable-pip-version-check", str(wheel_path)],
