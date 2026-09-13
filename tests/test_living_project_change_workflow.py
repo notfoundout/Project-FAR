@@ -15,6 +15,14 @@ class LivingProjectChangeWorkflowTests(unittest.TestCase):
         self.assertNotIn("python tools/check_living_project_change_obligations.py", text)
         self.assertNotIn("python tools/living_implementation_contract.py", text)
 
+    def test_scientific_and_implementation_checks_share_one_frozen_inbox_head(self) -> None:
+        text = WORKFLOW.read_text(encoding="utf-8")
+        self.assertIn("headRefOid", text)
+        self.assertIn("PR #490 moved during source freeze", text)
+        self.assertIn('--source-ref "$SOURCE_SHA"', text)
+        self.assertIn('--source-sha "$SOURCE_SHA"', text)
+        self.assertIn('--source-root "$SOURCE_DIR"', text)
+
 
 if __name__ == "__main__":
     unittest.main()
