@@ -45,6 +45,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 concurrency:
   group: living-project-change-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'refresh' }}
@@ -57,6 +58,7 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: read
+      pull-requests: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -75,20 +77,54 @@ jobs:
           tests.test_living_research_implementation_runner
           tests.test_living_research_promotion
           tests.test_living_research_promotion_workflow -v
-      - name: Validate scientific correction package against permanent inbox
-        run: python -m tools.check_living_project_change_obligations
-      - name: Validate implementation package against frozen permanent inbox
+      - name: Freeze exact permanent inbox source
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
+          raw="$(gh pr view 490 --repo "$GITHUB_REPOSITORY" --json state,isDraft,baseRefName,headRefName,headRefOid)"
+          SOURCE_JSON="$raw" python - <<'PY'
+          import json, os
+          data = json.loads(os.environ['SOURCE_JSON'])
+          expected = {
+              'state': 'OPEN',
+              'isDraft': True,
+              'baseRefName': 'main',
+              'headRefName': 'automation/living-research-inbox',
+          }
+          for key, wanted in expected.items():
+              if data.get(key) != wanted:
+                  raise SystemExit(f'PR #490 identity drift: {key}={data.get(key)!r}, expected {wanted!r}')
+          head = data.get('headRefOid')
+          if not isinstance(head, str) or len(head) != 40 or any(ch not in '0123456789abcdef' for ch in head):
+              raise SystemExit('PR #490 returned no exact lowercase 40-hex head')
+          print(head)
+          PY
+          source_sha="$(SOURCE_JSON="$raw" python -c 'import json,os; print(json.loads(os.environ["SOURCE_JSON"])["headRefOid"])')"
           git fetch --no-tags origin '+refs/heads/automation/living-research-inbox:refs/remotes/origin/automation/living-research-inbox'
-          source_sha="$(git rev-parse 'refs/remotes/origin/automation/living-research-inbox^{commit}')"
-          base_sha="$(git rev-parse 'HEAD^{commit}')"
+          fetched="$(git rev-parse 'refs/remotes/origin/automation/living-research-inbox^{commit}')"
+          [[ "$fetched" == "$source_sha" ]] || { echo "PR #490 moved during source freeze" >&2; exit 1; }
           source_dir="$(mktemp -d)"
           git archive --format=tar "$source_sha" | tar -x -C "$source_dir"
+          echo "sha=$source_sha" >> "$GITHUB_OUTPUT"
+          echo "dir=$source_dir" >> "$GITHUB_OUTPUT"
+      - name: Validate scientific correction package against frozen permanent inbox
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: python -m tools.check_living_project_change_obligations --source-ref "$SOURCE_SHA"
+      - name: Validate implementation package against same frozen permanent inbox
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_DIR: ${{ steps.source.outputs.dir }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_sha="$(git rev-parse 'HEAD^{commit}')"
           python -m tools.living_implementation_contract \
-            --source-root "$source_dir" \
-            --source-sha "$source_sha" \
+            --source-root "$SOURCE_DIR" \
+            --source-sha "$SOURCE_SHA" \
             --base-sha "$base_sha" \
             --output /tmp/living-implementation-plan.json
 
