@@ -335,13 +335,13 @@
       "finding_id": "PR20:PRRT_kwDOTH_vCM6OTp-R",
       "disposition": "fixed_on_current_main",
       "current_path": "frameworks/FARE/mathematics/theorem-index.md",
-      "root_cause_id": "fare-theorem-registry:duplicate-active-identifiers",
+      "root_cause_id": "fare-mathematics:duplicate-active-theorem-identifiers",
       "blocks_experiment_reconstruction": "unknown",
-      "failure_mechanism": "Three root-level active FARE proof files reused MT-001 through MT-003 for different theorem statements from the current theorem index, making active theorem references ambiguous.",
+      "failure_mechanism": "The active FARE mathematics surface reused MT-001 through MT-003 across the current theorem sequence and three superseded root-level proof documents, so the same active identifiers resolved to different theorem statements.",
       "evidence": [
-        "PR #506 merged as ff398005894827ef2dbf91a0195b98048a9deafd after moving the three colliding legacy proof bodies into frameworks/FARE/mathematics/proofs/archive/legacy/ while leaving non-identifying compatibility pointers at the former root paths.",
-        "tools/check_fare_theorem_ids.py now scans active FARE proof Markdown outside proofs/archive/** and rejects duplicate declared MT-NNN identifiers; tests/test_fare_theorem_id_hygiene.py covers current-corpus uniqueness, duplicate-active rejection, and archive exclusion.",
-        "All ten push-triggered workflows on ff398005894827ef2dbf91a0195b98048a9deafd passed, including both Repository Health workflows, Exact Head Assurance, Unified Validation Shadow, and Validator Assurance; protected main still requires merge-authority."
+        "PR #506 merged as ff398005894827ef2dbf91a0195b98048a9deafd and preserves the three superseded proof bodies under frameworks/FARE/mathematics/proofs/archive/legacy/ while leaving non-identifying compatibility pointers at the former root paths.",
+        "tools/check_fare_theorem_ids.py scans active FARE proof Markdown for MT-NNN identifier declarations while excluding proofs/archive/**; tests/test_fare_theorem_id_hygiene.py proves duplicate active identifiers fail and archived historical duplicates are excluded.",
+        "All ten push-triggered workflows on merge SHA ff398005894827ef2dbf91a0195b98048a9deafd passed, including Repository Health, Exact Head Assurance, and Validator Assurance."
       ],
       "smallest_complete_remediation_boundary": "Complete for this exact finding: the colliding legacy proof bodies are archived, former root paths are non-identifying compatibility pointers, active FARE theorem identifiers are mechanically required to be unique, and the promoted repair passed exact-head and post-merge protected validation."
     }
