@@ -1,6 +1,7 @@
 """Constrained local jsonschema-compatible validator used when PyPI is unavailable."""
 from __future__ import annotations
 from dataclasses import dataclass
+import math
 from typing import Any, Iterable
 
 __version__ = "4.22.0"
@@ -33,11 +34,16 @@ def _resolve(ref: str, root: dict[str, Any]) -> dict[str, Any]:
 def _type_ok(instance: Any, typ: Any) -> bool:
     if isinstance(typ, list):
         return any(_type_ok(instance, member) for member in typ)
+    if typ == "integer":
+        if isinstance(instance, bool):
+            return False
+        if isinstance(instance, int):
+            return True
+        return isinstance(instance, float) and math.isfinite(instance) and instance.is_integer()
     return {
         "object": isinstance(instance, dict),
         "array": isinstance(instance, list),
         "string": isinstance(instance, str),
-        "integer": isinstance(instance, int) and not isinstance(instance, bool),
         "number": isinstance(instance, (int, float)) and not isinstance(instance, bool),
         "null": instance is None,
         "boolean": isinstance(instance, bool),
