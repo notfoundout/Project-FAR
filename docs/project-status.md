@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently reviewed under sealed I1 claimed isolation at exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. I2 verified isolation, I3 external replication, novelty, and priority are not established.**
 
-Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
+Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, the accepted governed pre-contract discovery/intake correction, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
 ## Historical boundaries
 
@@ -49,6 +49,14 @@ W2 changes only mechanization assurance. It does not establish novelty, priority
 The v2 contract explicitly represents source/case domain, required behavior, representation, observation contexts, admitted transformations/equivalences, interpretation profile, target/model class, frame, typed outcomes including `Unknown`, factorization/collision/quotient evidence, failure reporting, provenance/freeze metadata, and optional approximation/loss/cost declarations. Checked finite-explicit evidence is recomputed by the semantic verifier. Loss-explicit migration from v1 preserves the legacy primitive payload and marks semantics absent from v1 `Unknown` rather than fabricating them.
 
 W3 does not establish application correspondence for any external domain and does not establish W5 approximation/cost semantics. Schema reuse is not primitive necessity or universal architecture evidence.
+
+## Governed pre-contract discovery disposition
+
+`FAR-CONTRACT-DISCOVERY-INTAKE-1.0` is an **Accepted internal methodology correction** for under-specified inputs. The governed `far-intake/1.0` layer preserves the exact raw input and provenance, records materially distinct parses, interpretations, materiality choices, exclusions, assumptions, and bounded search/saturation evidence, requires the complete bounded active contract family plus leaf-level parameter provenance, freezes discovery before evaluation, binds evaluations to exact candidate and freeze hashes, and aggregates the frozen family mechanically.
+
+The correction changes no core-theory claim and does not alter `far-ir/2.0` or `far-ir/2.1`. It does not prove open-world semantic or source completeness, uniquely unbiased contract construction, source authority or factual correctness, external validation, novelty, priority, empirical utility, or commercial value, and it does not close `LIM-038`.
+
+Current authority for this correction is the [Contract Discovery Protocol](../methodology/contract-discovery-protocol.md), [`far-intake/1.0` specification](specification/far-intake-1.0.md), and [acceptance record](governance/far-contract-discovery-acceptance-v1.0.md).
 
 ## W4 domain-contract disposition
 
@@ -107,7 +115,7 @@ No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed succe
 | Framework | Terminal role | Current status |
 |---|---|---|
 | FARA | Selected representation target | Stable; `FARA-FORMAL-KERNEL-001` retained only for finite, explicit, auditable Project FAR v1 records. |
-| FAR | Contract-relative methodology | Stable with contract freeze, factorization/collision, minimization, and typed-loss conformance. |
+| FAR | Contract-relative methodology | Stable with governed pre-contract discovery for under-specified inputs, contract freeze, factorization/collision, minimization, and typed-loss conformance. |
 | FARO | Downstream operations | Role defined; implementation, product, external-validation, and deployment readiness not established. |
 | FARE | Mathematical support | Requirement-driven; does not replace the canonical core theory. |
 | FARM | Change coordination | Stable; does not reverse the canonical dependency direction. |
@@ -120,4 +128,4 @@ The core reopens only for a reproducible contradiction to a stated theorem, proo
 
 ## Current authority navigation
 
-For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Read the non-authoritative [epistemic calibration audit](audits/far-core-epistemic-calibration-v1.0.md) alongside them for what the assurance labels exclude. Historical or generated surfaces do not override that order.
+For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the governed pre-contract discovery protocol/specification/acceptance when input is under-specified, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Read the non-authoritative [epistemic calibration audit](audits/far-core-epistemic-calibration-v1.0.md) alongside them for what the assurance labels exclude. Historical or generated surfaces do not override that order.

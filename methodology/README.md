@@ -10,6 +10,7 @@ Canonical definitions and theorems belong in `../theory/`; examples belong in `.
 
 - `research-doctrine.md` — canonical research doctrine for honesty, traceability, promotion, rejection, and revision.
 - `foundational-discovery-protocol.md` — canonical protocol for grounding Project FAR from first principles before deriving framework architecture.
+- `contract-discovery-protocol.md` — governs source-grounded discovery, explicit ambiguity retention, freeze-before-evaluation, and mechanical aggregation when an input does not already determine its comparison contract.
 
 ## Areas
 

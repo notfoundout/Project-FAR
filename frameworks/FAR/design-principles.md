@@ -112,6 +112,14 @@ Every FAR methodological claim should be traceable to:
 
 Unsupported methodological expansion should remain provisional until reviewed.
 
+## Principle 11 — Contract Completion Is Governed
+
+When supplied input leaves a result-determining contract parameter open, FAR shall not silently fill it from convention, model prior, preference, or remembered context.
+
+Material supported interpretations must remain explicit through the governed intake process. Exclusions require recorded reasons, the bounded contract family is frozen before evaluation, and cross-contract aggregation follows the predeclared rule.
+
+This principle makes contract construction auditable; it does not claim that a bounded intake proves open-world semantic completeness.
+
 ## Contract before adequacy
 
-Freeze the comparison contract before calling a representation sufficient, invariant, lossless, common, or minimal. Prefer a decoder/factorization proof; actively search for collisions; return OPEN when neither direction is established. Charge hidden interpreters and audit-only distinctions.
+Freeze the comparison contract before calling a representation sufficient, invariant, lossless, common, or minimal. When the contract is under-specified, complete the governed intake first. Prefer a decoder/factorization proof; actively search for collisions; return OPEN when neither direction is established. Charge hidden interpreters and audit-only distinctions.

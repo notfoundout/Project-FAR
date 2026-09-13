@@ -45,7 +45,12 @@ def _wheel() -> str:
 
 
 def _entry_points() -> str:
-    return "[console_scripts]\nfar = mechanization.far_mechanization.cli:main\n"
+    return (
+        "[console_scripts]\n"
+        "far = mechanization.far_mechanization.cli:main\n"
+        "far-evidence = mechanization.far_mechanization.compare_adjudication:main\n"
+        "far-intake = mechanization.far_mechanization.intake_v1:main\n"
+    )
 
 
 def _hash(data: bytes) -> str:
@@ -67,6 +72,27 @@ def _write_wheel(path: Path, files: dict[str, bytes]) -> None:
         zf.writestr(record_name, out.getvalue().encode("utf-8"))
 
 
+def _runtime_files(root: Path) -> dict[str, bytes]:
+    """Collect the pure-Python runtime and schemas needed by a relocated wheel."""
+    files: dict[str, bytes] = {}
+    for directory in (root / "mechanization" / "far_mechanization", root / "jsonschema"):
+        for path in sorted(directory.rglob("*.py")):
+            if "__pycache__" in path.parts:
+                continue
+            files[path.relative_to(root).as_posix()] = path.read_bytes()
+    for path in sorted((root / "schemas").rglob("*.json")):
+        files[path.relative_to(root).as_posix()] = path.read_bytes()
+    return files
+
+
+def _dist_info_files() -> dict[str, bytes]:
+    return {
+        f"{DIST_INFO}/METADATA": _metadata().encode("utf-8"),
+        f"{DIST_INFO}/WHEEL": _wheel().encode("utf-8"),
+        f"{DIST_INFO}/entry_points.txt": _entry_points().encode("utf-8"),
+    }
+
+
 def prepare_metadata_for_build_wheel(metadata_directory, config_settings=None):
     dist = Path(metadata_directory) / DIST_INFO
     dist.mkdir(parents=True, exist_ok=True)
@@ -85,15 +111,16 @@ def build_editable(wheel_directory, config_settings=None, metadata_directory=Non
     wheel_name = f"{NAME}-{VERSION}-py3-none-any.whl"
     files = {
         f"{NAME}.pth": (str(root) + os.linesep).encode("utf-8"),
-        f"{DIST_INFO}/METADATA": _metadata().encode("utf-8"),
-        f"{DIST_INFO}/WHEEL": _wheel().encode("utf-8"),
-        f"{DIST_INFO}/entry_points.txt": _entry_points().encode("utf-8"),
+        **_dist_info_files(),
     }
     _write_wheel(Path(wheel_directory) / wheel_name, files)
     return wheel_name
 
 
 def build_wheel(wheel_directory, config_settings=None, metadata_directory=None):
-    # The Phase 3 validation path uses editable installs. Non-editable wheels are
-    # intentionally minimal and include the repository path as a pure-Python pth.
-    return build_editable(wheel_directory, config_settings, metadata_directory)
+    root = Path(__file__).resolve().parent
+    wheel_name = f"{NAME}-{VERSION}-py3-none-any.whl"
+    files = _runtime_files(root)
+    files.update(_dist_info_files())
+    _write_wheel(Path(wheel_directory) / wheel_name, files)
+    return wheel_name

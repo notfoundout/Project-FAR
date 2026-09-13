@@ -28,6 +28,8 @@ The methodological principles governing this application are defined in:
 
 `methodology.md`
 
+When supplied input leaves result-determining comparison parameters open, the application must first satisfy the governed contract-discovery intake gate referenced by the workflow.
+
 This document does not maintain an independent stage list.
 
 ---
@@ -37,6 +39,7 @@ This document does not maintain an independent stage list.
 Every application of FAR should:
 
 - define the investigation explicitly;
+- preserve and govern under-specified input through the contract-discovery intake gate when applicable;
 - specify the representational structure;
 - specify the interpretation;
 - identify the reasoning calculus;
@@ -45,6 +48,8 @@ Every application of FAR should:
 - apply an appropriate resolution rule;
 - record the resulting resolution;
 - preserve auditability and reproducibility.
+
+When a governed intake produces multiple frozen contracts, the application must preserve the per-contract results and the fixed cross-contract aggregate. It may not substitute a preferred contract after outcomes are known.
 
 These requirements summarize the workflow but do not replace it as the canonical stage source.
 
