@@ -1,0 +1,71 @@
+name: Living Project Change Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-project-change-gate.yml'
+      - '.github/workflows/living-research-promotion.yml'
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/promotion-authorizations-v1.0.json'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'research/living/snapshot-authorizations-v1.0.json'
+      - 'tests/test_living_project_change_obligations.py'
+      - 'tools/check_living_project_change_obligations.py'
+      - 'tools/reconcile_living_repo.py'
+      - 'tools/run_living_research_promotion.py'
+  push:
+    branches:
+      - main
+    paths:
+      - 'research/living/project-change-policy-v1.0.json'
+      - 'research/living/promotion-authorizations-v1.0.json'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/review-dispositions-v1.0.json'
+      - 'research/living/snapshot-authorizations-v1.0.json'
+      - 'tools/check_living_project_change_obligations.py'
+      - 'tools/run_living_research_promotion.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: living-project-change-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || 'refresh' }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run focused project-change regressions
+        run: python -m unittest tests.test_living_project_change_obligations tests.test_living_research_promotion tests.test_living_research_promotion_workflow -v
+      - name: Validate accepted package against permanent inbox
+        run: python tools/check_living_project_change_obligations.py
+
+  refresh:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Refresh permanent inbox on new protected authorization state
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref main -f mode=discover
