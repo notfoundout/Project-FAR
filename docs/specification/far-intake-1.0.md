@@ -18,13 +18,15 @@ Its job is to make result-determining choices explicit before a comparison contr
 
 ## 2. Validation order
 
-The published JSON Schema is normative for document shape. The semantic validator applies the schema first and stops semantic interpretation of a schema-invalid document.
+The accepted instance domain is strict JSON. CLI parsing rejects duplicate object keys and the non-standard `NaN`, `Infinity`, and `-Infinity` tokens. Programmatic callers are checked recursively before schema validation: objects must be Python `dict` values with string keys, arrays must be Python `list` values, and scalars must be exactly JSON-native string, integer, finite float, boolean, or null values. Python-only containers, custom scalar subclasses, non-string object keys, and non-finite floats are rejected before they can reach schema semantics or canonical hashing.
 
-The repository's constrained local JSON Schema engine implements the structural keywords used by this format, including JSON Schema regex-search semantics for `pattern`, array/object cardinality and uniqueness, and schema-valued `additionalProperties`. Optional format assertions remain outside the local validator's decidable enforcement boundary unless separately checked semantically.
+The published JSON Schema is normative for document shape after that JSON-domain gate. The semantic validator applies the schema and stops semantic interpretation of a schema-invalid document.
 
-Semantic checks then enforce cross-reference validity, provenance, complete bounded family coverage, chronology, hash binding, and aggregation.
+The repository's constrained local JSON Schema engine implements the structural keywords used by this format, including Draft 2020-12 numeric type semantics, regex-search semantics for `pattern`, array/object cardinality and uniqueness, and schema-valued `additionalProperties`. In particular, mathematically integral finite JSON numbers such as `1.0` satisfy `type: integer`, while booleans do not. Optional format assertions remain outside the local validator's decidable enforcement boundary unless separately checked semantically.
 
-This order prevents the implementation from accepting records the published schema rejects within the supported schema subset.
+Semantic checks then enforce cross-reference validity, provenance, complete bounded family coverage, chronology, hash binding, terminal saturation coverage, and aggregation.
+
+This order prevents the implementation from accepting records the published schema rejects within the supported schema subset and prevents Python-only values from creating a larger programmatic instance domain than the JSON format itself.
 
 ## 3. Preserved raw input
 
@@ -99,7 +101,10 @@ At freeze readiness:
 - saturation observations are timestamped and ordered;
 - an observation cannot predate a source it claims to include;
 - source retrievals and saturation observations must be no later than the evidence cutoff;
-- the final saturation observation records no new material parse or material interpretation.
+- the final saturation observation records no new material parse or material interpretation; and
+- that same final zero-new observation must itself enumerate every registered query and every registered source.
+
+Earlier rounds may establish discovery history, but their cumulative coverage cannot substitute for the complete terminal recheck. A search therefore cannot terminate merely because a subset of the registry produced no new material result while another registered query or source was last considered only in an earlier round.
 
 These checks establish bounded procedural completion only. They do not prove open-world semantic completeness.
 
@@ -127,7 +132,7 @@ Each provenance row identifies the leaf by JSON Pointer and classifies its basis
 
 The validator rejects duplicate provenance paths, missing leaf paths, provenance for non-leaf paths, unknown references, and interpretation references outside the candidate assignment map.
 
-The intake validator does not claim that the downstream contract is valid `far-ir/2.0`; the appropriate downstream semantic verifier remains authoritative for that question. Non-canonical-JSON contract values are rejected rather than causing an uncaught exception.
+The intake validator does not claim that the downstream contract is valid `far-ir/2.0`; the appropriate downstream semantic verifier remains authoritative for that question. Non-JSON-native or non-canonical-JSON contract values are rejected rather than causing an uncaught exception.
 
 ## 11. Freeze identity and chronology
 
@@ -187,11 +192,13 @@ far-intake freeze intake.json --write intake.frozen.json
 far-intake aggregate intake.evaluated.json
 ```
 
+The CLI accepts strict JSON rather than Python's permissive JSON extensions: duplicate object keys and non-finite numeric tokens are errors, not silently normalized inputs.
+
 `init` deliberately creates a draft with no inferred meanings. Interpretation discovery remains an evidence-producing research activity governed by the protocol.
 
 ## 15. Boundary
 
-A valid frozen intake establishes only that the recorded bounded discovery state is explicit, provenance-linked, complete relative to its active tables and exclusions, chronologically ordered, and cryptographically bound before evaluation.
+A valid frozen intake establishes only that the recorded bounded discovery state is explicit, provenance-linked, complete relative to its active tables and exclusions, terminally rechecked across the registered query/source set, chronologically ordered, and cryptographically bound before evaluation.
 
 It does not establish:
 
