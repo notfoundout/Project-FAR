@@ -15,7 +15,7 @@ For each major question, use this sequence when applicable:
 6. Test minimality and irreducibility where applicable.
 7. Attempt cross-framework embeddings.
 8. search prior art.
-9. Independently audit the resulting argument.
+9. Independently audit the resulting argument with `far-clean-room-auditor`; use `far-theory-auditor` for the narrower logical-theory attack inside that audit when applicable.
 10. Update claim status only after the preceding evidence is evaluated.
 11. Identify the highest-information unresolved question.
 
