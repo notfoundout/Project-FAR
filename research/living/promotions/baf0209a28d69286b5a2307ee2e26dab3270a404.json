@@ -1,0 +1,81 @@
+{
+  "authority": "Research",
+  "base_main_sha": "442886b7b4c05298bb299c04e37bb8105234fbd7",
+  "canonical_proposals": [],
+  "program_id": "FAR-LIVING-PROMOTION-001",
+  "review_required_count_at_analysis": 0,
+  "schema_version": "1.1",
+  "sealed_files": [
+    {
+      "kind": "trusted_generated",
+      "path": "docs/research/living-repository-status.md",
+      "sha256": "84343bb65acd72f7090feec84f4c1001ef7b4350f050564ec5d9ba614a26a58e"
+    },
+    {
+      "kind": "planned",
+      "path": "research/living/inbox/candidates/FAR-LIT-88F64D9376E250FC.json",
+      "sha256": "64f38d83cee81d5a56167fd3b92f2eecb67b0803a0c3b5af0f1aca6fbfd83d57"
+    },
+    {
+      "kind": "planned",
+      "path": "research/living/inbox/candidates/FAR-LIT-C28489AE4D339427.json",
+      "sha256": "557a20340b50544448314a30ffcb50256117ed18e91f52da29501476d234c334"
+    },
+    {
+      "kind": "planned",
+      "path": "research/living/inbox/candidates/FAR-LIT-DC526D11098789EF.json",
+      "sha256": "9ed36717547fed91804907968f1fe9bb5e48f7638ee43767ce63d64604b7cab6"
+    },
+    {
+      "kind": "planned",
+      "path": "research/living/inbox/candidates/FAR-LIT-DDA83861514E8635.json",
+      "sha256": "0440aeb4b3e22daa5a51651907b80677bdd8b78c14f72e56186d061e5efa962d"
+    },
+    {
+      "kind": "trusted_generated",
+      "path": "research/living/repository-state-v1.0.json",
+      "sha256": "afd1cb1d8ba3c0da0bb2593d225c0c615027ed5652831b1d6aa7ac2624abfffb"
+    }
+  ],
+  "snapshot_candidates": [
+    {
+      "candidate_id": "FAR-LIT-88F64D9376E250FC",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "expected_main_sha256": "ABSENT",
+      "path": "research/living/inbox/candidates/FAR-LIT-88F64D9376E250FC.json",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "source_key": "doi:10.1145/3498721",
+      "source_sha256": "64f38d83cee81d5a56167fd3b92f2eecb67b0803a0c3b5af0f1aca6fbfd83d57"
+    },
+    {
+      "candidate_id": "FAR-LIT-C28489AE4D339427",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "expected_main_sha256": "ABSENT",
+      "path": "research/living/inbox/candidates/FAR-LIT-C28489AE4D339427.json",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "source_key": "doi:10.1613/jair.5222",
+      "source_sha256": "557a20340b50544448314a30ffcb50256117ed18e91f52da29501476d234c334"
+    },
+    {
+      "candidate_id": "FAR-LIT-DC526D11098789EF",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "expected_main_sha256": "ABSENT",
+      "path": "research/living/inbox/candidates/FAR-LIT-DC526D11098789EF.json",
+      "review_basis": "docs/audits/living-review-lifecycle-closure-2026-09-10.md",
+      "source_key": "doi:10.1007/s00236-017-0294-5",
+      "source_sha256": "9ed36717547fed91804907968f1fe9bb5e48f7638ee43767ce63d64604b7cab6"
+    },
+    {
+      "candidate_id": "FAR-LIT-DDA83861514E8635",
+      "disposition": "ADJACENT_NO_CONTRADICTION",
+      "expected_main_sha256": "ABSENT",
+      "path": "research/living/inbox/candidates/FAR-LIT-DDA83861514E8635.json",
+      "review_basis": "docs/audits/efr-activation-and-living-threat-triage-2026-09-10.md",
+      "source_key": "doi:10.1007/s00165-016-0406-y",
+      "source_sha256": "0440aeb4b3e22daa5a51651907b80677bdd8b78c14f72e56186d061e5efa962d"
+    }
+  ],
+  "source_branch": "automation/living-research-inbox",
+  "source_head_sha": "baf0209a28d69286b5a2307ee2e26dab3270a404",
+  "source_pr": 490
+}
