@@ -1,11 +1,6 @@
 name: Living Research Promotion
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/living-research-promotion.yml'
   schedule:
     - cron: '27,57 * * * *'
   workflow_dispatch:
