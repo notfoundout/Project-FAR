@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "program_id": "FAR-LIVING-IMPLEMENTATION-AUTHORIZATIONS-001",
+  "authority": "Research",
+  "authorizations": [],
+  "rule": "Each row authorizes exactly one implementation proposal for automatic materialization into a separate protected implementation PR. Authorization must bind the candidate, proposal, operation set, and exact proposal/candidate hashes; it never authorizes direct writes to main or execution of inbox code."
+}

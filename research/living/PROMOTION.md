@@ -58,11 +58,29 @@ Proposal provenance uses exact path/hash pairs:
 
 Each `write_file` operation binds the exact current-main preimage (`ABSENT` for a new file), exact payload hash, target path, and payload source path. Duplicate targets, cross-proposal collisions, unsafe paths, symlink paths, protected/control-plane paths, disallowed extensions, stale preimages, or payload hash mismatches fail closed.
 
+## Project-changing studies
+
+`PROJECT_CHANGE_REQUIRED` is a governed review disposition, not an automated relevance score. It may be recorded only after the ordinary research lifecycle has established that the accepted result requires a Project FAR correction.
+
+A row with that disposition is incomplete unless it binds one exact scientific `proposal_id`, leaves the metadata-only review queue, and has both an exact snapshot authorization and an exact `PROMOTION_PROPOSED` canonical-edit authorization. The permanent inbox must contain the bound candidate, the exact proposal, at least one `write_file` operation, and every referenced payload. `tools/check_living_project_change_obligations.py` fails closed on any missing component before promotion runs.
+
+The same governed review must also declare whether repository implementation is required. If `implementation_required` is false, `implementation_proposal_id` is null. If it is true, the review must bind one exact `IMPLEMENTATION_PROPOSED` package plus an exact protected authorization in `implementation-authorizations-v1.0.json`. That package is handled by `FAR-LIVING-IMPLEMENTATION-001`, not by the scientific promoter.
+
+A successful explicit validation of the rolling inbox triggers the protected-main routing workflows. Changes to the protected acceptance/authorization surfaces on `main` also trigger them. Scheduled passes remain recovery paths. The scientific promotion transaction independently revalidates hashes, provenance, preimages, targets, and the frozen source/base before opening the scientific correction PR. When implementation is required, the implementation transaction independently freezes the same trust boundary, validates exact authorization/preimage/payload hashes, and opens a separate implementation PR.
+
+Automatic PR creation is required once the accepted package is complete. Automatic merge is not permitted; protected review and merge authority remain controlling.
+
 ## Write boundary
 
-Automatic canonical targets are limited by `promotion-policy-v1.0.json`. `.github/`, `tools/`, `tests/`, validation/bootstrap code, `docs/governance/`, all `research/living/` governance/control files, and `research/living/inbox/.rolling-pr-anchor.json` are never canonical payload targets. If accepted information requires such an implementation change, it uses the ordinary governed code path.
+Automatic scientific/canonical targets are limited by `promotion-policy-v1.0.json`. `.github/`, `tools/`, `tests/`, validation/bootstrap code, `docs/governance/`, all `research/living/` governance/control files, and `research/living/inbox/.rolling-pr-anchor.json` are never scientific-promotion payload targets.
 
-The only non-plan files permitted to change during promotion are the explicitly declared deterministic reconciliation outputs in `trusted_generated_paths`.
+If accepted information also requires executable or control-plane changes, those changes use the separate `FAR-LIVING-IMPLEMENTATION-001` path defined in `implementation-policy-v1.0.json` and `IMPLEMENTATION.md`. PR #490 may carry the proposed implementation bytes as untrusted data, but protected `main` must first authorize the exact candidate, review row, proposal, operation set, preimages, and payload hashes. The implementation materializer executes only protected-main code; it copies and seals the exact authorized bytes without executing them, then opens a separate implementation PR.
+
+If that implementation PR changes merge-authority's own declared assurance-sensitive surface, automation may create the PR but may not use the modified assurance surface to certify itself. Independent protected validation is required for that self-change.
+
+This separation prevents the research inbox from becoming an unreviewed software supply chain while still ensuring that a project-changing study automatically surfaces all necessary scientific and implementation changes as reviewable PRs.
+
+The only non-plan files permitted to change during scientific promotion are the explicitly declared deterministic reconciliation outputs in `trusted_generated_paths`.
 
 ## Transaction seal
 
@@ -89,6 +107,8 @@ Strict branch protection requires the `merge-authority` check to be current with
 ## Publication boundary
 
 The scheduled workflow is only a small wrapper around `tools/run_living_research_promotion.py`. The runner may create/recover the separate promotion PR and dispatch protected validation. It never merges, approves itself, changes branch protection, writes directly to `main`, or uses the permanent inbox PR as the merge vehicle.
+
+The separate implementation runner follows the same publication rule: it may create/recover the exact implementation PR, but it never merges or writes directly to `main`. Its full contract is in `IMPLEMENTATION.md`.
 
 If GitHub Actions lacks permission to create a PR, the exact branch is preserved and the run fails. No broader token or protection bypass is substituted.
 
