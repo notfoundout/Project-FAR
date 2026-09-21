@@ -2,7 +2,7 @@
 
 Operational guidance only. This file does not establish or change Project FAR theory, evidence, governance, status, or authority.
 
-@AGENTS.md
+Claude's instructions are self-contained in this file. Do not import `AGENTS.md`; that file is reserved for Codex.
 
 ## Authority
 
