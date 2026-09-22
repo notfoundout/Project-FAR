@@ -57,6 +57,8 @@ Any change to the FAR stage sequence shall be made in `workflow.md` and then ref
 
 The contract-discovery intake gate is a precondition on Stage 1 when required; it does not create a second independent stage sequence.
 
+The post-evidence closure contract `FAR-EVIDENCE-CLOSURE-1.0` is defined in `workflow.md`. It governs when a claim-level logical disposition may be promoted into `Resolved` or `Provisionally resolved` investigation closure; dependent documents may validate or operationalize that contract but shall not maintain an independent closure definition.
+
 ---
 
 ## Delegated Architectural Concepts
@@ -107,9 +109,9 @@ This procedure controls analyst freedom; it does not claim open-world semantic c
 
 ### Auditability
 
-The complete investigation should be reconstructible from its governed intake when applicable, or from the exact supplied validated downstream contract artifact when intake is legitimately bypassed, together with contract mappings, reasoning states, transition signatures, decoder/collision evidence, revision records, validation status, and closure status.
+The complete investigation should be reconstructible from its governed intake when applicable, or from the exact supplied validated downstream contract artifact when intake is legitimately bypassed, together with contract mappings, reasoning states, transition signatures, decoder/collision evidence, revision records, validation status, claim-level logical dispositions, evidence-closure records, and closure status.
 
-An auditor should be able to distinguish source-explicit content from synthesis and inference, identify every material exclusion, recompute relevant hashes, and verify that evaluation followed rather than preceded the governing freeze or supplied validated contract identity.
+An auditor should be able to distinguish source-explicit content from synthesis and inference, identify every material exclusion, recompute relevant hashes, verify that evaluation followed rather than preceded the governing freeze or supplied validated contract identity, and determine whether the evidence-closure gate was satisfied independently of the atomic verdict.
 
 ---
 
@@ -143,6 +145,8 @@ Every such revision should record the stage revisited, the reason for revision, 
 
 A material revision to a frozen intake requires a new freeze and invalidates evaluations bound to the prior discovery hash.
 
+A terminal evidence-saturation pass that discovers new material evidence, a new claim decomposition, a new alternative explanation, or a new residual-uncertainty item also reopens the affected reasoning/search work. The investigation may retain any earlier atomic verdict that remains justified, but it may not retain a closure status whose prerequisites no longer hold.
+
 ---
 
 ### Closure Discipline
@@ -152,6 +156,12 @@ A FAR investigation should not simply stop without status.
 Closure should be recorded as resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
 
 Closure status is methodological rather than truth-guaranteeing.
+
+A claim-level logical disposition and an investigation closure status are separate. A decisive witness, counterexample, proof, authoritative record, or other sufficient atomic evidence may justify a claim verdict before the surrounding investigation is ready to close.
+
+`FAR-EVIDENCE-CLOSURE-1.0` requires bounded post-disposition evidence saturation before `Resolved` or `Provisionally resolved` closure. The investigation must cover its registered applicable evidence/search classes; check denominator, estimand, comparison class, mechanism/directness, measurement, classification, provenance, and ascertainment issues where material; seek the strongest support and strongest counterevidence; test material alternative explanations; preserve narrower surviving propositions and residual uncertainty; complete a terminal bounded saturation pass; and pass the methodology audit.
+
+The closure search remains bounded by the declared search frame, evidence cutoff, and stopping rule. Passing the closure gate does not establish open-world completeness.
 
 When a complete frozen contract family yields divergent exact outcomes, the divergence is preserved as contract sensitivity rather than resolved by selecting a preferred interpretation after evaluation.
 
@@ -180,5 +190,7 @@ FARO should not redefine FAR methodology, alter FAR workflow stages, or introduc
 FAR v1.0 remains Stable as the selected Project FAR methodology. The terminal core theory adds a mandatory contract-relative conformance overlay without claiming that the full workflow is uniquely derived.
 
 The accepted contract-discovery intake correction closes a validated application-boundary defect at the bounded procedural level: under-specified input can be carried into the existing contract-relative machinery without silently choosing a result-determining interpretation, while already explicit downstream contracts can bypass intake only through exact artifact identity and successful applicable validation. The correction changes no core-theory claim and does not reinterpret `far-ir/2.0` or `far-ir/2.1`.
+
+The accepted evidence-closure correction adds `FAR-EVIDENCE-CLOSURE-1.0` to prevent a correct atomic adjudication from being treated as proof that the broader investigation has completed its bounded evidence search. It changes closure discipline only; it changes no core-theory claim and does not reinterpret `far-ir/2.0`, `far-ir/2.1`, or the pre-contract intake semantics.
 
 Current post-closure work concerns independent assurance, proof-assistant formalization, contract-schema implementation, domain contracts, approximation/cost objectives, and empirical audit utility under the completed `POST-CLOSURE-001` program and its separately governed successors.

@@ -32,7 +32,8 @@ Produce a conclusion that another reviewer can reproduce from the exact proposit
 15. **Do not self-certify controls.** Labels such as `complete`, `fresh`, `independent`, `exhaustive`, `all requirements covered`, or `criterion frozen` require evidence; the label is not evidence for itself.
 16. **Require proof closure.** A decisive verdict must be traceable through its actual supporting/refuting premises. A wrapper derivation cannot make its leaves stronger, broader, newer, more authoritative, or more independent than they are.
 17. **Preserve conflicts.** Genuine incompatible admitted evidence remains visible. Do not average it away or discard the inconvenient side without a controlling rule.
-18. **End with a typed verdict and material limits.** State the exact claim, decisive evidence, strongest attacks, verdict, and only the limits that materially constrain interpretation.
+18. **Do not collapse adjudication into closure.** A decisive witness, counterexample, proof, or authoritative record may settle an atomic claim before the investigation is complete. Record the claim-level logical disposition immediately, then satisfy `FAR-EVIDENCE-CLOSURE-1.0` before `Resolved` or `Provisionally resolved` closure. The closure pass must test applicable evidence/search classes, denominator/estimand and mechanism/directness alignment, measurement/classification limits, strongest support and counterevidence, alternative explanations, narrower surviving claims, residual uncertainty, and terminal bounded saturation.
+19. **End with a typed verdict and material limits.** State the exact claim, decisive evidence, strongest attacks, verdict, and only the limits that materially constrain interpretation.
 
 ## Project FAR authority routing
 
@@ -76,7 +77,7 @@ Before substantive evaluation, record:
 - **Exact claim:** wording, logical form, quantifiers, domain, comparison class, assumptions, applicability, time/version, and nonclaims.
 - **Support condition:** evidence pattern that would satisfy the claim at the intended strength.
 - **Refutation condition:** evidence pattern that would defeat the exact claim.
-- **Search frame:** sources/locations searched, query or inspection strategy, cutoff, inclusion/exclusion rules, and stopping condition where completeness matters.
+- **Search frame:** sources/locations searched, query or inspection strategy, applicable evidence/search classes, directness/mechanism targets, cutoff, inclusion/exclusion rules, and stopping condition. Register enough structure to support the terminal bounded saturation pass required by `FAR-EVIDENCE-CLOSURE-1.0`.
 - **Adversarial obligations:** strongest plausible attacks that must be attempted.
 - **Isolation boundary:** prior exposure, corpus/tool/communication isolation, intervention history, and claimed independence level if independence matters.
 
@@ -116,6 +117,26 @@ Identify the logical form before deciding what could verify or falsify it.
 - **Completeness/novelty/prior-art claim:** define the search universe and cutoff; open-world search normally yields bounded support, not exhaustive verification.
 - **Normative claim:** freeze the normative criterion separately from factual premises; empirical evidence alone cannot establish the criterion.
 - **Formal theorem:** identify logic, premises/axioms, definitions, derivation, and any machine/kernel assumptions. Successful execution alone is not premise-free proof.
+
+## Evidence-closure gate
+
+Before reporting an investigation as `Resolved` or `Provisionally resolved`, execute `FAR-EVIDENCE-CLOSURE-1.0` from `frameworks/FAR/workflow.md`.
+
+A decisive atomic verdict is an input to this gate, not evidence that the gate passed. For each applicable closure requirement:
+
+1. Preserve the exact claim form and the claim-level logical disposition separately from closure status.
+2. Record the decisive evidence and the exact proposition it establishes or refutes.
+3. Enumerate the applicable evidence/search classes and either execute them or mark them `NOT APPLICABLE` with a reason.
+4. Test denominator, estimand, comparison class, mechanism, and level-of-directness alignment where material.
+5. Identify material measurement, classification, provenance, and ascertainment limitations.
+6. Seek the strongest support and strongest counterevidence still relevant after the initial disposition.
+7. Test material alternative explanations or inference paths where the claim form makes them relevant.
+8. Preserve narrower, adjacent, conditional, or comparative propositions that remain live.
+9. State residual uncertainty explicitly.
+10. Run a terminal bounded saturation pass over every registered applicable evidence/search class. The terminal pass must add no new material evidence, claim decomposition, alternative explanation, or residual-uncertainty item. If it does, update the search frame and continue.
+11. Run the methodology audit required by `methodology/methodology-audit-protocol.md`.
+
+This gate is bounded by the declared search frame and evidence cutoff. It does not prove open-world completeness. When the gate cannot be completed, preserve the atomic verdict at its exact scope and use a non-closure state such as `Suspended`, `Incomplete`, `Unresolved`, or another applicable typed boundary.
 
 ## Adversarial phase
 
@@ -175,7 +196,9 @@ Before finalizing, test every sentence for these invalid promotions:
 - search failure -> nonexistence;
 - finite corpus performance -> population performance;
 - novelty search -> priority claim;
-- evidence quantity -> evidence quality.
+- evidence quantity -> evidence quality;
+- decisive atomic verdict -> investigation completeness;
+- bounded saturation -> open-world completeness.
 
 Rewrite or narrow any sentence that crosses one of these boundaries without a separate warrant.
 
@@ -189,8 +212,9 @@ Lead with the verdict. Then provide:
 4. **Reasoning** — explicit derivations/inferences, with assumptions named.
 5. **Adversarial results** — strongest attacks attempted and whether they succeeded.
 6. **Verdict** — one typed verdict per atomic claim.
-7. **Material limits** — only limitations that could change interpretation or generalization.
-8. **Required correction** — smallest complete correction when the audited object fails.
+7. **Evidence-closure status** — whether `FAR-EVIDENCE-CLOSURE-1.0` passed, the terminal saturation result, surviving narrower propositions, and residual uncertainty.
+8. **Material limits** — only limitations that could change interpretation or generalization.
+9. **Required correction** — smallest complete correction when the audited object fails.
 
 For Project FAR validation, include the Isolation Classification report required above and state explicitly whether the applicable independent-audit stage is satisfied. Recommendations do not themselves change governed claim status.
 

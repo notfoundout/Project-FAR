@@ -14,10 +14,11 @@ For each major question, use this sequence when applicable:
 5. Search for counterexamples.
 6. Test minimality and irreducibility where applicable.
 7. Attempt cross-framework embeddings.
-8. search prior art.
+8. Search prior art.
 9. Route the audit through `far-clean-room-auditor` and its isolation gate. To satisfy the independent-audit stage, instantiate a separate evaluator using only the frozen supplied inputs and the access restrictions required by the applicable protocol and `docs/doctrine/isolation-classification.md`. Do not forward the construction session or its conclusions. Use `far-theory-auditor` inside that boundary for a narrower logical-theory attack when applicable. A pass in the construction session is internal I0. If the protocol's required isolation cannot be established, report the class actually supported by evidence and leave the independent-audit stage unsatisfied; an I1 evaluation remains I1 when a required I2 control is missing.
 10. Evaluate the preceding evidence and record unresolved findings. Update claim status only through the applicable acceptance/promotion process; an internal pass cannot satisfy a required independent-audit stage, and an audit verdict alone does not authorize promotion. Record a discovered defect even when independent validation is unavailable.
-11. Identify the highest-information unresolved question.
+11. Before treating the investigation as `Resolved` or `Provisionally resolved`, execute `FAR-EVIDENCE-CLOSURE-1.0` from `frameworks/FAR/workflow.md`. A decisive claim-level logical disposition may be recorded earlier, but it does not authorize investigation closure. Require the applicable evidence/search classes, denominator/estimand and mechanism/directness checks, measurement/classification limitations, strongest support and counterevidence, alternative explanations, surviving narrower propositions, residual uncertainty, terminal bounded saturation pass, and methodology audit. If the terminal pass finds new material information, keep the investigation open and continue from the affected step.
+12. Identify the highest-information unresolved question.
 
 Do not allow one successful test to substitute for another:
 - embedding is not minimality
@@ -26,6 +27,8 @@ Do not allow one successful test to substitute for another:
 - novelty is not usefulness
 - usefulness is not theoretical correctness
 - absence of counterexamples is not proof
+- a decisive atomic verdict is not evidence saturation
+- evidence saturation is not open-world completeness
 
 Prefer investigations capable of falsifying multiple hypotheses simultaneously.
 

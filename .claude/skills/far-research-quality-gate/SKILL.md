@@ -26,6 +26,16 @@ For every proposed claim, theorem, operator, architecture change, or major concl
 15. Scope matches the actual evidence.
 16. Confidence language is calibrated.
 17. The result is reproducible from recorded premises and evidence.
+18. Claim-level logical disposition is distinguished from investigation closure.
+19. Every applicable evidence/search class required by `FAR-EVIDENCE-CLOSURE-1.0` was executed or marked `NOT APPLICABLE` with a reason.
+20. Denominator, estimand, comparison-class, mechanism/directness, measurement, classification, provenance, and ascertainment issues were tested where material.
+21. The strongest support, strongest counterevidence, and material alternative explanations were considered after any initial decisive result.
+22. Narrower, adjacent, conditional, or comparative propositions that survive the main adjudication are preserved explicitly.
+23. Residual uncertainty is explicit.
+24. A terminal bounded saturation pass rechecked every registered applicable evidence/search class and produced no new material evidence, claim decomposition, alternative explanation, or residual-uncertainty item.
+25. The methodology audit required by `methodology/methodology-audit-protocol.md` passed for the claimed closure state.
+
+Checks 18-25 implement `FAR-EVIDENCE-CLOSURE-1.0` from `frameworks/FAR/workflow.md`. A decisive witness, counterexample, proof, or authoritative record can settle an atomic claim without satisfying those closure requirements. Do not treat atomic adjudication as evidence that the investigation is complete.
 
 Return exactly one disposition:
 
@@ -47,5 +57,7 @@ Do not confuse:
 - novelty with correctness
 - correctness with usefulness
 - formalization with validation
+- decisive claim adjudication with evidence saturation
+- bounded saturation with open-world completeness
 
 Canonical status must be earned by evidence and argument.
