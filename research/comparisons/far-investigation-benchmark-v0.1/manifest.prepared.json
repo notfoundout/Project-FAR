@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "FAR-INVESTIGATION-BENCHMARK-0.1",
+  "status": "prepared",
+  "target": {
+    "repository": "notfoundout/Project-FAR",
+    "commit": "83e753cf058b6fff8f8f3302781fd02efc1dc108",
+    "tree": "0000000000000000000000000000000000000000",
+    "theory_or_question": "FAR-RQ-005 / UQ-T35: Does use of the contract/factorization audit improve real investigations?",
+    "hashes": {}
+  },
+  "evaluators": [
+    {
+      "id": "ADJUDICATOR-PLACEHOLDER-1",
+      "identity": "UNASSIGNED",
+      "provider": "external-human-or-qualified-independent-evaluator",
+      "model": "NOT_APPLICABLE_OR_TO_BE_RECORDED",
+      "prior_exposure": "TO_BE_DECLARED_BEFORE_FREEZE",
+      "conflicts": "TO_BE_DECLARED_BEFORE_FREEZE",
+      "lane": "primary_adjudication"
+    }
+  ],
+  "environment": {
+    "recorded_at": "2026-09-22",
+    "tools": {
+      "execution_harness": "TO_BE_PINNED_BEFORE_FREEZE",
+      "retrieval": "TO_BE_PINNED_BEFORE_FREEZE",
+      "analysis": "TO_BE_PINNED_BEFORE_FREEZE"
+    }
+  },
+  "protocol": {
+    "id": "FAR-INVESTIGATION-BENCHMARK-PREREG-0.1",
+    "version": "0.1",
+    "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
+    "sha256": "TO_BE_COMPUTED_FROM_FINAL_PREREGISTRATION_BEFORE_FREEZE"
+  },
+  "stages": [
+    {
+      "id": "S0",
+      "name": "prepare_and_freeze",
+      "allow": ["case_selection", "prompt_freeze", "resource_freeze", "rubric_freeze", "reference_search_protocol_freeze", "hashing"],
+      "deny": ["condition_execution", "condition_output_inspection", "outcome_adjudication"],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S1",
+      "name": "execute_conditions_blind",
+      "allow": ["condition_execution", "raw_trace_capture", "integrity_checks"],
+      "deny": ["condition_comparison", "adjudication", "threshold_changes", "corpus_changes_except_preregistered_integrity_replacement"],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S2",
+      "name": "reference_evidence_and_blinded_adjudication",
+      "allow": ["bounded_reference_evidence_construction", "blinded_scoring", "third_rater_adjudication"],
+      "deny": ["condition_identity_disclosure", "threshold_changes", "post_hoc_confirmatory_metrics"],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S3",
+      "name": "locked_analysis_and_unblinding",
+      "allow": ["frozen_metric_computation", "frozen_statistical_tests", "integrity_reporting", "unblinding_after_scores_lock"],
+      "deny": ["retroactive_exclusions", "threshold_changes", "claim_promotion"],
+      "freeze_before_next": true,
+      "unblinding": true
+    },
+    {
+      "id": "S4",
+      "name": "replication_and_governed_disposition",
+      "allow": ["independent_replication", "deviation_reporting", "governed_status_proposal"],
+      "deny": ["silent_promotion", "universalization"],
+      "freeze_before_next": false,
+      "unblinding": true
+    }
+  ],
+  "source_manifest": [],
+  "artifacts": [
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
+      "sha256": "TO_BE_COMPUTED_FROM_FINAL_PREREGISTRATION_BEFORE_FREEZE",
+      "role": "preregistration",
+      "verify_current_path": true
+    }
+  ],
+  "times": {
+    "freeze_time": null,
+    "unblinding_time": null
+  },
+  "final_adjudication": {
+    "status": "NOT_EXECUTED",
+    "artifact": "research/comparisons/far-investigation-benchmark-v0.1/report.md"
+  },
+  "replay": {
+    "commands": [
+      ["python", "tools/far_investigation_benchmark.py", "validate", "--manifest", "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"],
+      ["python", "tools/far_investigation_benchmark.py", "analyze", "--manifest", "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"]
+    ],
+    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the harness, corpus, prompts, tool versions, hashes, and environment are frozen and validation passes."
+  },
+  "limitations": [
+    "Prepared, not frozen: corpus, prompts, resource budgets, tool/model versions, adjudicators, rubric, and evidence-reference search protocol remain unset.",
+    "The target tree placeholder must be replaced with the exact governed baseline tree before freeze.",
+    "The preregistration SHA-256 placeholders must be replaced after the preregistration text is final and before any condition execution.",
+    "No external-independence claim follows from project-authored preparation.",
+    "No benchmark result exists at prepared status."
+  ],
+  "benchmark_parameters": {
+    "case_count": 60,
+    "domains": 6,
+    "cases_per_domain": 10,
+    "confirmatory_baselines": ["B0", "B1", "B2"],
+    "m1_familywise_alpha": 0.05,
+    "m1_multiple_testing": "Holm",
+    "m1_permutation": {
+      "alternative": "two-sided",
+      "monte_carlo_permutations": 100000,
+      "seed": 20260922,
+      "use_exact_when_feasible": true
+    },
+    "m1_effect_size": {
+      "estimator": "Hodges-Lehmann paired median difference, FAR minus baseline",
+      "required_maximum": -0.05
+    },
+    "m2_noninferiority": {
+      "absolute_margin": 0.05,
+      "comparison": "FAR minus each confirmatory baseline",
+      "required_lower_95pct_bound": -0.05,
+      "bootstrap_resamples": 10000,
+      "seed": 20260922
+    }
+  }
+}
