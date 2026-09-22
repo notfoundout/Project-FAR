@@ -1,6 +1,6 @@
 # Project FAR Saturation Baseline v0.4
 
-Status: **Accepted implementation-planning baseline only — no FAR-CORE, EFR, novelty, independence, or empirical-utility status change**  
+Status: **Historical Research / Provisional implementation-planning artifact — preserved for provenance; no Accepted authority**  
 Version: `0.4`  
 Recorded: `2026-09-22`
 
@@ -8,7 +8,7 @@ Recorded: `2026-09-22`
 
 This document preserves the first capability-class saturation baseline for a prospective Project FAR evidence-and-reasoning verification system.
 
-It is the controlling **implementation-planning specification** when work is explicitly requested against `Saturation Baseline v0.4`. It does not supersede Project FAR's current theory, governance, research lifecycle, accepted schemas, or program status. Repository governance remains controlling where this planning baseline and an Accepted artifact differ.
+When work is explicitly requested against `Saturation Baseline v0.4`, this file is a historical task-scoped planning input only. It has no independent authority and is superseded for new planning work by the later baseline candidate on this branch. Current repository governance, canonical architecture, canonical FAR workflow, and applicable FARO operation contracts remain controlling.
 
 The baseline records the architecture reached after repeated searches across fact checking, computational argumentation, formal reasoning, provenance, evidence synthesis, causal inference, metrology, uncertainty, source-dependence analysis, safety assurance, reproducibility, software supply-chain provenance, research integrity, forecasting, and adjacent disciplines.
 
@@ -28,7 +28,7 @@ For every candidate mechanism:
 2. If yes, treat it as an implementation, benchmark, validator, adapter, protocol, or optimization candidate.
 3. If no, require an explicit architecture-change proposal that identifies the missing capability, supplies evidence that existing v0.4 classes cannot represent it, states the smallest required change, and preserves the Project FAR research/governance lifecycle.
 
-The burden of proof therefore reverses after v0.4: expansion must be demonstrated necessary.
+The planning burden of proof therefore reverses within this historical artifact after v0.4: expansion must be demonstrated necessary. This rule does not create repository-wide change-control authority.
 
 ## Hard invariants
 
@@ -866,9 +866,11 @@ audit/
 
 Software-supply-chain provenance patterns may be reused for computational attestations. Epistemic provenance (`what supports this?`) and computational provenance (`how did FAR produce this?`) remain distinct.
 
-## Reference implementation pipeline
+## Historical reference implementation capability map
 
-A complete reference implementation should expose the following logical stages even if some are implemented by shared services:
+This numbered sequence is preserved as historical planning material. It is not an independent FAR workflow. `frameworks/FAR/workflow.md` is the sole authority for FAR investigation stages and gates; applicable FARO operation contracts remain authoritative for operations. Any implementation using this historical artifact must map these capabilities into those authorities rather than execute the list as a replacement stage sequence.
+
+A complete reference implementation should expose the following logical capabilities even if some are implemented by shared services:
 
 ```text
 1. INGEST
@@ -993,13 +995,13 @@ A merge-ready implementation is complete only when, for every v0.4 capability cl
 
 If a capability requires external data, independent human review, restricted infrastructure, credentials, third-party approval, or evidence the repository cannot internally create, Codex must implement the interface/contract and deterministic fixtures where useful, mark the external dependency explicitly, and must **not** fabricate completion of the external step.
 
-The implementation may not silently promote this planning baseline into an Accepted scientific result. Scientific or empirical claims discovered during implementation remain subject to the repository's governing lifecycle.
+The implementation may not promote this Research / Provisional planning artifact into an Accepted scientific result, methodology, workflow, architecture, or other authority surface without the applicable governed lifecycle. Scientific or empirical claims discovered during implementation remain subject to the repository's governing lifecycle.
 
 ## Minimal Codex execution prompt
 
 Once this file exists on the target branch/default branch, the intended minimal instruction is:
 
-> Implement `docs/architecture/saturation-baseline-v0.4.md` end-to-end. Do not stop until everything internally actionable is complete, tested, documented, audited, and merge-ready.
+> Integrate the requirements in `docs/architecture/saturation-baseline-v0.4.md` under current repository authority, mapping investigation-facing capabilities to the canonical FAR workflow and applicable FARO operation contracts. Do not stop until everything internally actionable is complete, tested, documented, audited, and merge-ready.
 
 `AGENTS.md` and current repository governance remain controlling; this sentence supplies the objective, not an exemption from those controls.
 
@@ -1035,7 +1037,7 @@ These are implementation references, not authorities that override Project FAR g
 
 ## Baseline transition rule
 
-`v0.4` remains the saturation baseline until a later governed change demonstrates one of the following:
+`v0.4` is the historical saturation-planning candidate preserved by this file. Later planning candidates may revise it when one of the following is demonstrated:
 
 ```text
 A. an existing required capability class is invalid;
