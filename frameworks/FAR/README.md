@@ -10,6 +10,8 @@ FAR defines Project FAR's contract-relative investigation methodology. It freeze
 
 When supplied input does not already determine the comparison contract, FAR first uses the governed [Contract Discovery Protocol](../../methodology/contract-discovery-protocol.md) to preserve ambiguity, provenance, assumptions, and the complete bounded contract family before evaluation.
 
+After substantive evaluation, FAR uses the governed [Post-Evidence Closure Protocol](../../methodology/post-evidence-closure-protocol.md) to separate an atomic claim's logical disposition from the stronger question of whether the investigation has completed its declared evidence classes, interpretive checks, residual-uncertainty accounting, and bounded saturation pass.
+
 FAR does not introduce or rely on global FARA primitives. Construct, Differentiate, and Restrict are workflow verbs; Resolve is derived rule application.
 
 ---
@@ -20,13 +22,15 @@ FAR v1.0 Stable has been recorded.
 
 An accepted methodology correction now governs the previously unspecified boundary between under-specified input and the frozen comparison contracts required by the existing contract-relative machinery. The correction is additive and does not change the core theory or reinterpret `far-ir/2.0` or `far-ir/2.1`.
 
+A second bounded methodology correction now prevents premature evidentiary closure: a decisive proof, falsifier, or other atomic disposition does not by itself establish that the investigation is complete. New or modified PASS execution manifests must satisfy the machine-enforced post-evidence closure contract before they may represent full investigation completion.
+
 Future FAR changes should be driven by concrete downstream requirements, worked examples, or validated methodological deficiencies.
 
 ---
 
 ## Framework Role
 
-FAR owns contract discovery when required, contract freezing, and investigation methodology.
+FAR owns contract discovery when required, contract freezing, investigation methodology, and bounded post-evidence closure discipline.
 
 It defines how reasoning investigations are conducted, recorded, validated, revised, and closed.
 
@@ -46,6 +50,7 @@ It defines how reasoning investigations are conducted, recorded, validated, revi
 - [`workflow.md`](workflow.md) — Canonical source for the stages of a FAR investigation.
 - [`methodology.md`](methodology.md) — Defines methodological principles governing FAR investigations.
 - [`../../methodology/contract-discovery-protocol.md`](../../methodology/contract-discovery-protocol.md) — Governs pre-contract interpretation discovery and freeze-before-evaluation when input is under-specified.
+- [`../../methodology/post-evidence-closure-protocol.md`](../../methodology/post-evidence-closure-protocol.md) — Governs bounded post-evidence closure and prevents an early logical disposition from being mistaken for investigation completeness.
 - [`../../docs/specification/far-intake-1.0.md`](../../docs/specification/far-intake-1.0.md) — Specifies the machine-readable governed intake format and deterministic aggregation semantics.
 - [`application.md`](application.md) — Describes how FAR is applied across domains.
 - [`dependency-graph.md`](dependency-graph.md) — Records FAR document and concept dependency order.
@@ -92,11 +97,13 @@ Candidate generation remains part of Stage 6 — Perform Reasoning. The applicab
 
 Pre-contract interpretation discovery is an intake obligation, not Stage 6 candidate generation. It determines which explicit comparison contracts must be evaluated; it does not choose the investigation's substantive resolution.
 
+Post-evidence closure is a completion obligation, not a second truth rule. It does not change a logically established atomic verdict; it determines whether the investigation may additionally claim bounded completion under its declared search frame.
+
 ---
 
 ## Next Steps
 
-Use canonical worked investigations to test whether declared behavior factors through each representation and to expose collisions, hidden machinery, and contract sensitivity.
+Use canonical worked investigations to test whether declared behavior factors through each representation and to expose collisions, hidden machinery, contract sensitivity, and premature-closure failure modes.
 
 ---
 
@@ -111,7 +118,7 @@ Use canonical worked investigations to test whether declared behavior factors th
 
 ## Derivation boundary
 
-The factorization and quotient obligations are constrained by shared theory; sequencing, selection, governance, and reporting choices remain compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, claim-dimension analysis, and contract-discovery intake procedure are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
+The factorization and quotient obligations are constrained by shared theory; sequencing, selection, governance, and reporting choices remain compatible independent methodology unless a cited derivation establishes otherwise. The workflow, selections, failure reporting, claim-dimension analysis, contract-discovery intake procedure, and post-evidence closure procedure are not logical consequences of FARA. See the [derivation-status matrix](../../docs/governance/derivation-status-matrix.md).
 
 ## Theory-conformance rule
 
