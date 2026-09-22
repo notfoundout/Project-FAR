@@ -1,16 +1,16 @@
 # Project FAR Saturation Baseline v0.5
 
-Status: **Accepted implementation-planning baseline only — no FAR-CORE, EFR, novelty, independence, or empirical-utility status change**  
+Status: **Research / Provisional implementation-planning artifact — no Accepted authority and no FAR-CORE, EFR, novelty, independence, empirical-utility, or project-status change**  
 Version: `0.5`  
 Recorded: `2026-09-22`
 
 ## Purpose
 
-This document preserves the second governed capability-class saturation baseline for a prospective Project FAR evidence-and-reasoning verification system.
+This document preserves the second provisional capability-class saturation candidate for a prospective Project FAR evidence-and-reasoning verification system.
 
-It is the controlling **implementation-planning specification** when work is explicitly requested against `Saturation Baseline v0.5`. It does not supersede Project FAR's current theory, governance, research lifecycle, accepted schemas, or program status. Repository governance remains controlling where this planning baseline and an Accepted artifact differ.
+When work is explicitly requested against `Saturation Baseline v0.5`, this document is a task-scoped planning input only. It has no independent authority. `AGENTS.md`, `docs/project-status.md`, `docs/CANONICAL_MAP.md`, the Accepted FARA kernel, the canonical FAR workflow, FARO operation contracts, and other current governed artifacts remain controlling within their scopes. A conflict blocks the affected baseline requirement until it is mapped or governed; this file cannot resolve the conflict by placement, version number, or recency.
 
-The baseline incorporates the v0.4 architecture plus a governed architecture change triggered by stronger evidence that ecosystem assurance and governance-obligation assurance are distinct assurance targets. It also records the architecture reached after repeated searches across fact checking, computational argumentation, formal reasoning, provenance, evidence synthesis, causal inference, metrology, uncertainty, source-dependence analysis, safety assurance, reproducibility, software supply-chain provenance, research integrity, forecasting, and adjacent disciplines.
+The baseline candidate incorporates the v0.4 planning architecture plus a proposed architecture change triggered by evidence that ecosystem assurance and governance-obligation assurance are distinct assurance targets. It also records the architecture reached after repeated searches across fact checking, computational argumentation, formal reasoning, provenance, evidence synthesis, causal inference, metrology, uncertainty, source-dependence analysis, safety assurance, reproducibility, software supply-chain provenance, research integrity, forecasting, and adjacent disciplines.
 
 The saturation claim is intentionally bounded:
 
@@ -28,10 +28,10 @@ For every candidate mechanism:
 2. If yes, treat it as an implementation, benchmark, validator, adapter, protocol, or optimization candidate.
 3. If no, require an explicit architecture-change proposal that identifies the missing capability, supplies evidence that existing v0.4 classes cannot represent it, states the smallest required change, and preserves the Project FAR research/governance lifecycle.
 
-The burden of proof therefore reverses after v0.5: expansion must be demonstrated necessary.
+The planning burden of proof therefore reverses within this candidate after v0.5: expansion must be demonstrated necessary. This rule governs revisions of this planning artifact only and does not create repository-wide change-control authority.
 
 
-## v0.4 -> v0.5 governed delta
+## v0.4 -> v0.5 proposed delta
 
 v0.5 adds exactly two first-class assurance targets: **information ecosystem assurance** and **governance-obligation assurance**. It also incorporates four specification repairs identified during review of v0.4: (1) explicit subordination of graph views to the canonical FARA kernel, (2) separate claim/evidence/inference assessment types, (3) distinct acquisition and transaction timestamps, and (4) a machine-testable meta-assurance applicability rule. The hostile-source invariant is narrowed so validated source data may inform sandboxed search planning without allowing source instructions to become authority.
 
@@ -869,7 +869,7 @@ Each assurance claim must point to evidence or validation records. Meta-assuranc
 
 Provenance and source dependence answer where information came from; ecosystem assurance answers how claim instances move, mutate, reach actors, interact with coordinated behavior, and respond to interventions.
 
-A conforming implementation must be able to represent:
+An implementation claiming conformance to this planning candidate must be able to represent:
 
 ```text
 ECOSYSTEM
@@ -916,13 +916,13 @@ NOT_APPLICABLE
 
 Applicability itself is an auditable assertion. FAR must not silently convert legal, regulatory, contractual, policy, or organizational text into a controlling obligation without provenance, versioning, interpretation state, and authority scope.
 
-## v0.5 architecture-change evidence
+## v0.5 architecture-change evidence and proposal status
 
 The change from v0.4 is triggered by *SoK: Formal Methods for Fact-Checking and Information Integrity* (Kekatos et al., arXiv:2609.23239, submitted 2026-09-19; updated 2026-09-22). The survey organizes 121 works by five formalization targets: claim, reasoning, checking system, information ecosystem, and regulatory obligation. This supplies direct evidence that ecosystem and obligation assurance are treated as distinct objects of formalization rather than merely implementation techniques.
 
 Reference: https://arxiv.org/abs/2609.23239
 
-The paper is evidence for the distinction, not proof that its taxonomy is complete or uniquely correct. The architectural change is accepted here because v0.4 can encode pieces of propagation or compliance as generic graph data but does not give either target a first-class object family, assurance contract, or applicability/validation boundary. That fails v0.4 transition criterion C/D for these two assurance targets.
+The paper is evidence for the distinction, not proof that its taxonomy is complete or uniquely correct. The architectural change is proposed here because v0.4 can encode pieces of propagation or compliance as generic graph data but does not give either target a first-class object family, assurance contract, or applicability/validation boundary. Within the planning artifact's own transition test, that satisfies v0.4 criterion C/D for proposing these two assurance targets. Repository-level acceptance or promotion requires the applicable governed lifecycle and is not supplied by this document.
 
 The paper's warrant framing also strengthens, rather than changes, the existing proof-carrying-adjudication and meta-assurance invariants: a verification result should carry an independently inspectable statement of what was guaranteed and on what grounds.
 
@@ -981,9 +981,15 @@ audit/
 
 Software-supply-chain provenance patterns may be reused for computational attestations. Epistemic provenance (`what supports this?`) and computational provenance (`how did FAR produce this?`) remain distinct.
 
-## Reference implementation pipeline
+## Reference implementation capability map
 
-A complete reference implementation should expose the following logical stages even if some are implemented by shared services:
+The numbered sequence below is **not** a FAR workflow and must never be executed as an independent stage sequence. `frameworks/FAR/workflow.md` is the sole authority for FAR investigation stages, including the Contract-Discovery Intake Gate, Stages 1–9, the selected reasoning calculus, Admissibility Structure (Ω), resolution rule, Evidence-Closure Gate, optional-stage policy, iteration, and closure policy. FARO remains authoritative for operation contracts.
+
+The items below are implementation capabilities/services that must be invoked from, mapped into, or marked not applicable within the canonical FAR/FARO execution path. A baseline implementation is incomplete if it merely executes these capabilities in numeric order.
+
+Before substantive evaluation, the implementation must satisfy the canonical intake gate or its governed bypass rule. Before closure, it must satisfy the canonical Evidence-Closure Gate. Any capability that creates or changes a representation, interpretation, reasoning state, candidate, admissibility classification, resolution, operation, or report must preserve the corresponding FARA/FAR/FARO contract and provenance.
+
+A complete reference implementation should expose the following logical capabilities even if some are implemented by shared services:
 
 ```text
 1. INGEST
@@ -1094,13 +1100,13 @@ Models, search providers, proof assistants, databases, and renderers should be r
 
 ## Implementation completion contract
 
-When the user instructs Codex to implement this baseline end-to-end, the following is the intended internally controllable completion target.
+When the user instructs Codex to implement this baseline end-to-end, the following is the intended internally controllable completion target. Implementation means integrating these planning requirements into current repository authority; it does not authorize this document to replace canonical architecture, methodology, operations, governance, or theory.
 
 Codex must first inspect current repository authority and existing mechanisms. It must reuse accepted/current machinery where it already satisfies a requirement rather than duplicate it.
 
 A merge-ready implementation is complete only when, for every v0.5 capability class that is internally implementable:
 
-1. the requirement is mapped to an existing implementation or a new task-scoped implementation;
+1. the requirement is mapped to an existing implementation or a new task-scoped implementation, and every investigation-facing capability is mapped to the canonical FAR stage/gate and applicable FARO operation contract;
 2. machine-readable schemas/contracts exist where structure must be enforced;
 3. consequential transitions have validator contracts;
 4. a reference end-to-end path produces a reproducible audit package;
@@ -1118,13 +1124,13 @@ A merge-ready implementation is complete only when, for every v0.5 capability cl
 
 If a capability requires external data, independent human review, restricted infrastructure, credentials, third-party approval, or evidence the repository cannot internally create, Codex must implement the interface/contract and deterministic fixtures where useful, mark the external dependency explicitly, and must **not** fabricate completion of the external step.
 
-The implementation may not silently promote this planning baseline into an Accepted scientific result. Scientific or empirical claims discovered during implementation remain subject to the repository's governing lifecycle.
+The implementation may not promote this Research / Provisional planning artifact into an Accepted scientific result, Accepted methodology, canonical workflow, canonical architecture, or other authority surface without the applicable governed lifecycle. Scientific or empirical claims discovered during implementation remain subject to the repository's governing lifecycle.
 
 ## Minimal Codex execution prompt
 
 Once this file exists on the target branch/default branch, the intended minimal instruction is:
 
-> Implement `docs/architecture/saturation-baseline-v0.5.md` end-to-end. Do not stop until everything internally actionable is complete, tested, documented, audited, and merge-ready.
+> Integrate the requirements in `docs/architecture/saturation-baseline-v0.5.md` end-to-end under current repository authority. Map every investigation-facing capability to the canonical FAR workflow and applicable FARO operation contracts. Do not stop until everything internally actionable is complete, tested, documented, audited, and merge-ready.
 
 `AGENTS.md` and current repository governance remain controlling; this sentence supplies the objective, not an exemption from those controls.
 
@@ -1160,7 +1166,7 @@ These are implementation references, not authorities that override Project FAR g
 
 ## Baseline transition rule
 
-`v0.5` remains the saturation baseline until a later governed change demonstrates one of the following:
+`v0.5` remains the current **provisional planning candidate** for capability-class saturation until either governed promotion grants it a stronger status or a later planning revision demonstrates one of the following:
 
 ```text
 A. an existing required capability class is invalid;
@@ -1169,4 +1175,4 @@ C. a required real-world capability cannot be represented by the existing object
 D. implementation evidence demonstrates a missing first-class primitive rather than merely a missing module.
 ```
 
-A new paper, product, benchmark, model, standard, or algorithm that fits an existing extension point is not by itself grounds for a later baseline revision.
+A new paper, product, benchmark, model, standard, or algorithm that fits an existing extension point is not by itself grounds for a later planning revision. None of these transition rules supersedes FARM change control or any other repository governance.
