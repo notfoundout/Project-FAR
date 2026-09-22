@@ -35,7 +35,7 @@ Source-level deduplication is insufficient. Before deterministic selection, cand
 2. A claim family represents the same material proposition: subject, predicate, object, and material time, geography, population, quantity, or other scope qualifiers. Source, publication, eventual outcome, and evidence are ignored for family identity.
 3. Two independent selectors perform clustering without condition outputs. A separate clustering adjudicator resolves disagreements before selection.
 4. The canonical representative of each resolved family is the minimum tuple `(retrieval_rank, normalized_source_identity, candidate_id)`.
-5. `claim_cluster_id` is SHA-256 of the canonical representative's normalized claim text encoded as UTF-8.
+5. `claim_cluster_id` is SHA-256 of the canonical representative's clustering-normalized claim text encoded as UTF-8.
 6. Only canonical cluster representatives are eligible for final or reserve selection.
 
 ## 3. Case-selection declarations
@@ -53,7 +53,7 @@ Shared model-visible cache state is forbidden. Before S1 the frozen environment 
 - a provider-documented isolated/no-shared-cache context; or
 - a non-model-visible provider metadata/header nonce equal to `SHA256(UTF8("FAR-INVESTIGATION-BENCHMARK-0.1|cache|" + run_id))`.
 
-The nonce MUST NOT appear in system, developer, user, or tool-call content and MUST NOT consume the model-visible token budget. `environment-lock.json` MUST record the mechanism, channel, documentation/reference, and whether it is model-visible. If neither mechanism is available for every condition, the campaign is `BLOCKED` before S1.
+The nonce MUST NOT appear in system, developer, user, retrieval-query, or tool-call content and MUST NOT consume the model-visible token budget. `environment-lock.json` MUST record the mechanism, channel, documentation/reference, and whether it is model-visible. If neither mechanism is available for every condition, the campaign is `BLOCKED` before S1.
 
 ## 5. Resource ceilings are outcomes, not exclusions
 
@@ -79,7 +79,7 @@ M1 inferential-step boundaries are frozen before support scoring.
 4. Primary scorers receive the immutable unit IDs and may not split, merge, add, or delete M1 units.
 5. A nonmissing packet with zero ratable material-inference units is a scoring failure/nonratable packet; it is never assigned M1 = 0.
 
-## 8. Frozen evaluator lanes
+## 8. Frozen evaluator lanes and presentation order
 
 A frozen-or-later campaign MUST identify six distinct externally independent evaluators with these exact lane counts:
 
@@ -89,6 +89,12 @@ A frozen-or-later campaign MUST identify six distinct externally independent eva
 - 1 × `unitization_adjudicator`
 
 All evaluator IDs and identities MUST be distinct. `prior_exposure` and `conflicts` MUST be substantive declarations, not placeholders. Any campaign that cannot satisfy this requirement may still be run as a separately versioned internal study, but it cannot claim to instantiate this confirmatory external benchmark.
+
+Before any unitization or scoring output exists, `adjudication-schedule.json` MUST freeze the packet-presentation order for the two unitizers and two primary scorers. For each evaluator, sort the 60 final cases by `SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id))`. Let the zero-based base position be `j`, `rotation = j mod 4`, and the condition vector be `[F,B0,B1,B2]`. Across four rounds `r = 0..3`, traverse that same case order and present condition `conditions[(r + rotation) mod 4]`. The resulting 240-entry list is exact and immutable.
+
+This gives every evaluator exactly 60 packets per condition, 15 per condition in every 60-packet round, and places the four versions of one case exactly 60 positions apart. The validator MUST reproduce the schedule from evaluator IDs and the execution schedule; an arbitrary or condition-correlated presentation order is invalid.
+
+The unitization and scoring adjudicators see disputes only after the corresponding independent passes are locked. Before each adjudicator sees a dispute, the complete dispute list is sorted by `SHA256(UTF8("20260922|adjudication-dispute-order|" + evaluator_id + "|" + dispute_id))`. Condition identity and prior-vote identities remain hidden.
 
 ## 9. Blinding diagnostic
 
@@ -124,7 +130,7 @@ Before `unblinded` status, the following MUST exist, be hash-bound, current-path
 - `score-lock.json`
 - `metrics.csv`
 
-`score-lock.json` MUST identify the exact hashes of all scoring inputs/outputs above. Unblinding before that lock is invalid.
+`score-lock.json` MUST identify the exact hashes of all scoring inputs/outputs above except itself. Unblinding before that lock is invalid.
 
 ## 13. Completed-state gate
 
@@ -135,11 +141,11 @@ A `completed` or `completed_imported_sealed` campaign MUST additionally bind and
 - `report.md`
 - `checksums.sha256`
 
-The final adjudication status MUST be exactly one of `SURVIVES_TESTED_SCOPE`, `FALSIFIED_AT_TESTED_SCOPE`, or `INDETERMINATE`, and the final-adjudication object MUST contain nonempty `justification` and `evidence` fields. A status-only manifest without the completion artifacts is invalid.
+The final adjudication status MUST be exactly one of `SURVIVES_TESTED_SCOPE`, `NOT_SUPPORTED_AT_TESTED_SCOPE`, `FALSIFIED_AT_TESTED_SCOPE`, or `INDETERMINATE`, and the final-adjudication object MUST contain nonempty `justification` and `evidence` fields. A status-only manifest without the completion artifacts is invalid.
 
 ## 14. Fail-closed semantic validation
 
-Hash correctness is necessary but not sufficient. Before S1 the validator MUST reject semantically invalid frozen artifacts, including empty corpora, wrong stratum quotas, duplicate candidate/cluster identities, malformed reserve frames, incomplete Cartesian schedules, invalid cache nonces, nonfinite budgets, missing reference denominators, malformed declarations, unresolved placeholders, and treatment manifests that omit mandatory transitive sources.
+Hash correctness is necessary but not sufficient. Before S1 the validator MUST reject semantically invalid frozen artifacts, including empty corpora, wrong stratum quotas, duplicate candidate/cluster identities, malformed reserve frames, incomplete Cartesian execution schedules, invalid adjudication schedules, invalid cache nonces, nonfinite budgets, missing reference denominators, malformed declarations, unresolved placeholders, and treatment manifests that omit mandatory transitive sources.
 
 The validator MUST reject every `source_manifest` or `artifacts` record in frozen-or-later status that is not current-path verified, even if that record is not otherwise listed as a known mandatory artifact.
 
