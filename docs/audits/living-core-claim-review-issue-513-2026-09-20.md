@@ -126,6 +126,30 @@ No candidate in the reviewed snapshot supplies the minimum witness needed to reo
 - `FAR-CORE-013`: no argument that canonical FARA `Ω` is semantically non-eliminable.
 - `FAR-CORE-014`: no result about the bounded PR #453 Search-State Sufficiency representation/decoder classes.
 
+## Replication and adjudication
+
+Issue #513 requires the path `verify primary source → reconstruct exact premises/conclusion → attack → replicate → adjudicate`. The dispositions above were therefore re-run in a second internal contradiction pass against the canonical claim scopes rather than accepted from discovery keywords, titles, or the first-pass wording. This replication is an internal repeatability check only; it is not external independence, EFR execution, or evidence that could satisfy any EFR replication requirement.
+
+The replication pass used the following fail-closed witness tests:
+
+- for `FAR-CORE-001`, require an exact fixed-contract representation that is sufficient while the required behavior does not factor through it;
+- for `FAR-CORE-002`, require an exact representation strictly less informative than the canonical fixed-contract observational quotient, or a non-isomorphic competing least element under the same contract;
+- for `FAR-CORE-003`, require the stated action/test-closure premises together with a failure of action compatibility;
+- for `FAR-CORE-004`, require one representation proved least-informative sufficient across every varying observation contract on the governed nontrivial domain;
+- for `FAR-CORE-005`–`014`, require a witness satisfying the exact registered premises of the attacked claim and negating its exact conclusion.
+
+| Candidate | Replicated premise-match result | Adjudication |
+|---|---|---|
+| `FAR-LIT-55D89C727719FCBF` | No qualifying FAR-CORE witness; result remains hardware/control-resource scoped. | `ADJACENT_NO_CONTRADICTION` |
+| `FAR-LIT-5B2A64208C5F9673` | No qualifying FAR-CORE witness; CEGAR abstraction/refinement is intentionally over-approximating until refined, not an exact-contract countermodel. | `ADJACENT_NO_CONTRADICTION` |
+| `FAR-LIT-5E19D1DEF57C7EAB` | No qualifying FAR-CORE witness; counterexample is to uncountable-union continuity of measure. | `IRRELEVANT_FALSE_POSITIVE` |
+| `FAR-LIT-89948AB45C87260F` | No qualifying FAR-CORE witness; counterexample is a variational/PDE regularity result. | `IRRELEVANT_FALSE_POSITIVE` |
+| `FAR-LIT-A2D5163E82DFF6CA` | No qualifying FAR-CORE witness; counterexample is to the Hirsch graph-diameter bound. | `IRRELEVANT_FALSE_POSITIVE` |
+| `FAR-LIT-EF65407251DCB42E` | No qualifying FAR-CORE witness; equivalence concerns Green's functions of elliptic operators. | `IRRELEVANT_FALSE_POSITIVE` |
+| `FAR-LIT-F5985F3AEC6A66D8` | No qualifying FAR-CORE witness; counterexamples are model-checker traces used for debugging/abstraction. | `ADJACENT_NO_CONTRADICTION` |
+
+Adjudication result: the second pass reproduces all seven first-pass dispositions and finds zero surviving exact-claim contradiction witnesses. Because no consequential contradiction survives premise matching, there is no result to advance into the living lifecycle's `REPLICATION_REQUIRED` / `ACCEPTANCE_READY` correction path. The seven rows remain review/queue memory only: they suppress repeated metadata-only review, preserve the raw candidate records, and confer no claim, theorem, novelty, EFR, external-independence, or promotion status.
+
 ## Final disposition set
 
 | Candidate | Disposition |
