@@ -1,18 +1,18 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.0",
   "program_id": "FAR-LIVING-REPOSITORY-001",
   "authority": "Research",
-  "authority_boundary": "Living-repository automation may discover evidence and prepare bounded internal screening, attack, replication, adjudication, and promotion-proposal artifacts only on explicitly noncanonical automation/review surfaces. Those artifacts do not establish accepted support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or a canonical Project FAR change. Human merge through the protected path remains the authority boundary for accepted intellectual content and all canonical repository state.",
+  "authority_boundary": "Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.",
   "stages": [
     {"id":"DISCOVERED","automation_may_enter":true,"description":"Source metadata matched governed search and triage rules."},
-    {"id":"SCREENED","automation_may_enter":true,"automation_scope":"NONCANONICAL_AUTONOMOUS_REVIEW_ONLY","description":"Primary source identity/content and relevance may be screened automatically on a bounded review surface; the result remains a proposal until human merge."},
-    {"id":"ATTACK_EXECUTED","automation_may_enter":true,"automation_scope":"NONCANONICAL_AUTONOMOUS_REVIEW_ONLY","description":"Automation may reconstruct the exact affected claim and execute a bounded falsification/derivation attack; the result remains internal and noncanonical."},
-    {"id":"REPLICATION_REQUIRED","automation_may_enter":true,"automation_scope":"NONCANONICAL_AUTONOMOUS_REVIEW_ONLY","description":"Automation may perform an internal same-provider replication role. It never counts as external independence or final external replication."},
-    {"id":"ACCEPTANCE_READY","automation_may_enter":true,"automation_scope":"NONCANONICAL_AUTONOMOUS_REVIEW_ONLY","description":"Automation may assemble complete review/adjudication artifacts and mark them ready for human acceptance. It may not self-accept them into protected authority."},
-    {"id":"PROMOTION_PROPOSED","automation_may_enter":true,"automation_scope":"NONCANONICAL_AUTONOMOUS_REVIEW_ONLY","description":"Automation may prepare the minimal exact correction proposal, payloads, dependency fallout, and proposed authorization bytes. No proposal is mechanically promotable until a human merges the corresponding protected review PR."},
-    {"id":"CANONICAL","automation_may_enter":false,"description":"Only the protected human-merge path may land accepted scientific or implementation changes on main."}
+    {"id":"SCREENED","automation_may_enter":false,"description":"Primary source identity/content and relevance reviewed under governed provenance."},
+    {"id":"ATTACK_EXECUTED","automation_may_enter":false,"description":"Exact affected claim reconstructed and falsification/derivation executed."},
+    {"id":"REPLICATION_REQUIRED","automation_may_enter":false,"description":"A surviving consequential result awaits independent or otherwise governance-required replication."},
+    {"id":"ACCEPTANCE_READY","automation_may_enter":false,"description":"Required replication and adjudication artifacts are complete."},
+    {"id":"PROMOTION_PROPOSED","automation_may_enter":false,"description":"Minimal canonical change is prepared with exact dependency fallout and provenance."},
+    {"id":"CANONICAL","automation_may_enter":false,"description":"Protected merge path accepted and landed the change on main."}
   ],
-  "transition_rule": "No stage may be skipped. The autonomous-review path may traverse SCREENED through PROMOTION_PROPOSED only on explicitly noncanonical surfaces under the bounded FAR-LIVING-AUTONOMOUS-REVIEW-001 contract. Automation must preserve exact source and claim bindings, fail closed on unresolved gates, and may only prepare proposed authorization bytes. Those bytes acquire protected authority only when a human merges the review PR. CANONICAL is never entered automatically.",
-  "core_claim_reopening_rule": "A metadata hit, citation, consensus, or model judgment cannot reopen a core claim. A minimized reproducible contradiction satisfying exact canonical premises and negating the exact conclusion may trigger the smallest affected governed correction path; autonomous internal agreement alone is not external independence.",
-  "external_boundary": "EFR remains separately preregistered and externally executed; living-repository discovery and autonomous internal review never count as EFR execution, external independence, or final external review."
+  "transition_rule": "No stage may be skipped. Automation can discover, reconcile, validate, and prepare review queues; accepted intellectual content changes only after the repository's governed discovery lifecycle and protected merge path.",
+  "core_claim_reopening_rule": "A metadata hit, citation, consensus, or model judgment cannot reopen a core claim. A minimized reproducible contradiction satisfying exact canonical premises and negating the exact conclusion may trigger the smallest affected governed correction path.",
+  "external_boundary": "EFR remains separately preregistered and externally executed; living-repository discovery never counts as EFR execution or external independence."
 }
