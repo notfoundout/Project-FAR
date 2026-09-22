@@ -33,9 +33,9 @@ The planning burden of proof therefore reverses within this candidate after v0.5
 
 ## v0.4 -> v0.5 proposed delta
 
-v0.5 adds exactly two first-class assurance targets: **information ecosystem assurance** and **governance-obligation assurance**. It also incorporates four specification repairs identified during review of v0.4: (1) explicit subordination of graph views to the canonical FARA kernel, (2) separate claim/evidence/inference assessment types, (3) distinct acquisition and transaction timestamps, and (4) a machine-testable meta-assurance applicability rule. The hostile-source invariant is narrowed so validated source data may inform sandboxed search planning without allowing source instructions to become authority.
+v0.5 proposes two candidate first-class assurance targets for falsification/implementation testing: **information ecosystem assurance** and **governance-obligation assurance**. It also incorporates four specification repairs identified during review of v0.4: (1) explicit subordination of graph views to the canonical FARA kernel, (2) separate claim/evidence/inference assessment types, (3) distinct acquisition and transaction timestamps, and (4) a machine-testable meta-assurance applicability rule. The hostile-source invariant is narrowed so validated source data may inform sandboxed search planning without allowing source instructions to become authority.
 
-These repairs do not themselves constitute new capability classes. They remove ambiguity or inconsistency in v0.4. The two new assurance targets are the only capability-class expansion in v0.5.
+These repairs do not themselves constitute new capability classes. They remove ambiguity or inconsistency in v0.4. The two assurance targets are the only proposed capability-class expansion in v0.5; they are not promoted unless the C/D evidence gate is later cleared.
 
 ## Hard invariants
 
@@ -110,8 +110,8 @@ A proof of a formalization establishes properties of that formalization. It does
 | Privacy | restricted evidence, disclosure controls, privacy-preserving/proof-carrying verification |
 | Evaluation | stage-specific benchmarks, adversarial tests, OOD tests, calibration, failure localization |
 | Meta-assurance | explicit assurance case for whether FAR itself performed the audit adequately |
-| Ecosystem assurance | actors, channels/platforms, claim instances, propagation/mutation/exposure events, coordination/dependence, interventions, and observed consequences |
-| Governance assurance | externally defined obligations, authority/jurisdiction/applicability, formal specifications, evidence requirements, satisfaction tests, and compliance status |
+| Ecosystem assurance (candidate; C/D gate pending) | actors, channels/platforms, claim instances, propagation/mutation/exposure events, coordination/dependence, interventions, and observed consequences |
+| Governance assurance (candidate; C/D gate pending) | externally defined obligations, authority/jurisdiction/applicability, formal specifications, evidence requirements, satisfaction tests, and compliance status |
 | Synthesis | graph-grounded explanation, qualification preservation, disagreement representation |
 | Interchange | ClaimReview, AIF-like exports, PROV, JSON-LD, RO-Crate, APIs/MCP |
 | Packaging | reproducible audit bundle containing inputs, hashes, methods, outputs, and validation artifacts |
@@ -1088,7 +1088,7 @@ A complete reference implementation should expose the following logical capabili
 
 ## Implementation extension points
 
-After v0.5, new methods should normally enter through one of these replaceable extension points rather than changing the kernel:
+Within this provisional planning candidate, new methods should normally enter through one of these replaceable extension points rather than motivate another candidate class. This planning preference does not change the FARA kernel or repository change control:
 
 ```text
 ingestion adapter
@@ -1127,11 +1127,11 @@ Models, search providers, proof assistants, databases, and renderers should be r
 
 ## Implementation completion contract
 
-When the user instructs Codex to implement this baseline end-to-end, the following is the intended internally controllable completion target. Implementation means integrating these planning requirements into current repository authority; it does not authorize this document to replace canonical architecture, methodology, operations, governance, or theory.
+When the user instructs Codex to integrate this planning candidate end-to-end, the following is the intended internally controllable completion target. Implementation means integrating these planning requirements into current repository authority; it does not authorize this document to replace canonical architecture, methodology, operations, governance, or theory.
 
 Codex must first inspect current repository authority and existing mechanisms. It must reuse accepted/current machinery where it already satisfies a requirement rather than duplicate it.
 
-A merge-ready implementation is complete only when, for every v0.5 capability class that is internally implementable:
+A merge-ready implementation of this planning candidate is complete only when every established requirement is mapped and each candidate capability is either (a) implemented through existing extension points without promotion or (b) accompanied by concrete C/D evidence supporting a separately governed promotion:
 
 1. the requirement is mapped to an existing implementation or a new task-scoped implementation, and every investigation-facing capability is mapped to the canonical FAR stage/gate and applicable FARO operation contract;
 2. machine-readable schemas/contracts exist where structure must be enforced;
