@@ -45,7 +45,7 @@ No reference set is described as complete. Every set is a bounded search product
 
 ## Panel procedure
 
-Two researchers independently nominate evidence items and proposition links. A third resolves disagreements over inclusion/materiality. The final record preserves all nominations, exclusions, reasons, source identifiers, quotations only where copyright permits, dates, proposition links, and retrieval provenance.
+Two researchers independently nominate evidence items and proposition links. A third resolves disagreements over inclusion, materiality, and item validity. **All validity decisions and the final denominator are locked before any condition output is revealed to reference researchers or adjudicators.** After output exposure, an item cannot be deleted, invalidated, merged, split, or reweighted; a newly discovered reference-set defect is recorded as an integrity deviation and handled by the benchmark missingness/integrity rule. The final record preserves all nominations, exclusions, reasons, source identifiers, quotations only where copyright permits, dates, proposition links, and retrieval provenance.
 
 ## Output
 
