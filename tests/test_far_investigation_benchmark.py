@@ -29,7 +29,7 @@ class BenchmarkManifestTests(unittest.TestCase):
         data["unexpected"] = True
         r = self.run_tool("validate", "--manifest", self.temporary_manifest(data))
         self.assertEqual(r.returncode, 1)
-        self.assertIn("Additional properties", r.stderr)
+        self.assertIn("schema <root>", r.stderr)
 
     def test_nested_schema_violation_fails_closed(self):
         data = json.loads(MANIFEST.read_text())
