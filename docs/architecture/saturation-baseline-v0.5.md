@@ -810,6 +810,13 @@ abstention calibration
 citation correctness
 provenance completeness
 reopening correctness
+ecosystem propagation/mutation/exposure reconstruction accuracy
+ecosystem coordination/dependence false-positive and calibration checks
+ecosystem intervention-effect inference validity
+obligation authority and jurisdiction resolution accuracy
+obligation applicability classification accuracy
+obligation specification-to-evidence traceability
+obligation four-state assessment accuracy/calibration
 meta-assurance correctness
 expert end-to-end agreement
 ```
@@ -838,13 +845,32 @@ malicious instructions embedded in source content
 correct atomic checks after a meaning-changing decomposition
 retraction after downstream adjudication
 translation ambiguity
+copied propagation events mistaken for independent spread
+inferred exposure promoted from mere publication/availability
+shared-source dependence mistaken for actor coordination
+correlated propagation mistaken for intervention effect
+obligation asserted from a non-authoritative source
+wrong jurisdiction or effective-time version applied
+ambiguous applicability promoted to SATISFIED or VIOLATED
+procedural compliance promoted to substantive truth
+substantive truth promoted to procedural compliance
 ```
 
 Benchmark success must not be promoted beyond the benchmark's population, perturbation regime, or evaluation protocol.
 
 ## Meta-assurance case
 
-Every audit that emits an adjudication intended for external reliance must produce a machine-readable or equivalently structured assurance case answering not only whether the target claim/argument passed, but whether FAR adequately performed the audit. Internal exploratory runs that emit no externally relied-upon adjudication may omit the full assurance case but must retain sufficient provenance to prevent later promotion without revalidation.
+Every adjudication carries a fail-closed reliance state:
+
+```text
+EXPLORATORY
+EXTERNAL_RELIANCE_PENDING
+EXTERNAL_RELIANCE_READY
+```
+
+The state defaults to `EXPLORATORY`. An adjudication may enter `EXTERNAL_RELIANCE_READY` only through a recorded promotion transition that identifies the exact adjudication version, validates every applicable assurance capability, generates or regenerates the assurance case from those validation records, and binds the case to the promoted version. Any content change or newly applicable validation after promotion invalidates readiness and returns the affected version to `EXTERNAL_RELIANCE_PENDING`.
+
+External publication, export, API response, package, or downstream reuse that represents an adjudication as FAR-assured must require `EXTERNAL_RELIANCE_READY`. Merely relabeling an exploratory result cannot bypass the transition. Exploratory runs may omit the full assurance case but must retain sufficient provenance to support later revalidation.
 
 The assurance case should make explicit claims about at least:
 
@@ -922,7 +948,7 @@ The change from v0.4 is triggered by *SoK: Formal Methods for Fact-Checking and 
 
 Reference: https://arxiv.org/abs/2609.23239
 
-The paper is evidence for the distinction, not proof that its taxonomy is complete or uniquely correct. The architectural change is proposed here because v0.4 can encode pieces of propagation or compliance as generic graph data but does not give either target a first-class object family, assurance contract, or applicability/validation boundary. Within the planning artifact's own transition test, that satisfies v0.4 criterion C/D for proposing these two assurance targets. Repository-level acceptance or promotion requires the applicable governed lifecycle and is not supplied by this document.
+The paper is evidence for the distinction, not proof that its taxonomy is complete or uniquely correct. The architectural change is proposed here because v0.4 can encode pieces of propagation or compliance as generic graph data but does not give either target a first-class object family, assurance contract, or applicability/validation boundary. This does **not** clear v0.4 criterion C or D. Distinctness in a literature taxonomy is not evidence that v0.4 cannot represent the target, and no implementation execution in this PR demonstrates a missing primitive. The two assurance targets therefore remain proposed capability classes pending either (C) a concrete representation failure under the v0.4 object/relation/validator/extension model or (D) implementation evidence demonstrating a missing first-class primitive. Until then, implementations may prototype them through existing extension points, and repository-level acceptance or promotion is not justified by this document.
 
 The paper's warrant framing also strengthens, rather than changes, the existing proof-carrying-adjudication and meta-assurance invariants: a verification result should carry an independently inspectable statement of what was guaranteed and on what grounds.
 
@@ -1038,16 +1064,17 @@ A complete reference implementation should expose the following logical capabili
 15. ADJUDICATE
     multidimensional state with calibrated abstention
 
-16. META-ASSURE
-    test whether the audit itself met requirements
-
-17. ECOSYSTEM-ASSURE
+16. ECOSYSTEM-ASSURE
     propagation + mutation + exposure + coordination/dependence +
     intervention effects where applicable
 
-18. OBLIGATION-ASSURE
+17. OBLIGATION-ASSURE
     authority + jurisdiction + applicability + specification +
     satisfaction evidence where applicable
+
+18. META-ASSURE
+    run after all applicable assurance capabilities; bind the assurance
+    case to their validation outputs and the exact adjudication version
 
 19. EXPLAIN
     graph-grounded source-linked synthesis
@@ -1116,8 +1143,8 @@ A merge-ready implementation is complete only when, for every v0.5 capability cl
 8. decomposition/recomposition fidelity is tested;
 9. source-dependence handling is tested;
 10. search coverage/stopping records are tested without fabricating coverage estimates;
-11. meta-assurance is generated from validation evidence rather than a self-score;
-12. representative positive, negative, adversarial, and regression fixtures exist;
+11. meta-assurance runs after every applicable assurance capability, is generated from their validation evidence rather than a self-score, and is bound to the exact adjudication version and reliance-state promotion;
+12. representative positive, negative, adversarial, and regression fixtures exist, including ecosystem reconstruction/coordination/intervention failures and obligation authority/jurisdiction/applicability/state failures;
 13. relevant repository validation/CI passes;
 14. documentation states exact implemented scope and nonclaims;
 15. the final diff is audited for duplicate concepts, unsupported claim promotion, generated residue, stale references, and unnecessary dependencies.
