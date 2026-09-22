@@ -42,7 +42,7 @@ Every conforming implementation shall preserve these invariants.
 
 A sixth implementation-level security invariant follows from the source model:
 
-6. **Source content is data, never control.** Untrusted source material cannot authorize tools, alter policy, suppress evidence, change search strategy, or override evaluator instructions.
+6. **Source content is data, never authority.** Untrusted source material cannot directly authorize tools, alter controlling policy, suppress evidence, modify decision thresholds, or override evaluator instructions. Validated facts, citations, entities, hypotheses, and other data extracted from source content may inform a sandboxed planner and thereby change a search plan; quoted or embedded instructions remain non-authoritative.
 
 ## Assurance zones
 
@@ -75,7 +75,7 @@ A proof of a formalization establishes properties of that formalization. It does
 | Provenance | epistemic lineage, computational lineage, entities/activities/agents, attestations |
 | Identity | canonical claims, scoped propositions, entity resolution, claim versions, translations |
 | Semantics | interpretation candidates, quantifier/scope handling, definition tracking, formalization fidelity |
-| Time | valid time, known-at/transaction time, corrections, supersession, historical reconstruction |
+| Time | valid time, acquisition time, transaction/record time, corrections, supersession, historical reconstruction |
 | Decomposition | atomic claims, parent-child relations, decomposition versions, recomposition checks |
 | Typing | empirical/causal/normative/predictive classes; observed/measured/reported/inferred/computed/proven origins |
 | Retrieval | support search, falsification search, alternatives, active search, prior-audit reuse |
@@ -109,7 +109,7 @@ A proof of a formalization establishes properties of that formalization. It does
 
 ## Core object model
 
-The internal representation is a typed, versioned epistemic graph. It is **not** globally required to be a DAG. Only derivation subgraphs that require acyclicity should enforce it.
+For finite, explicit Project FAR implementations, the Accepted FARA kernel remains canonical. A typed, versioned epistemic graph may be exposed only as an operational representation or derived view whose mapping to the FARA identity-bearing many-sorted relational structure preserves registered commitments, disjoint carrier distinctions, occurrence identities, Event/State/Rule separations, and admission constraints required by current repository authority. It is **not** globally required to be a DAG. Only derivation subgraphs that require acyclicity should enforce it.
 
 Minimum object families:
 
@@ -313,15 +313,12 @@ P -> Q: DOES_NOT_ESTABLISH
 
 Likewise, an inference can be conditionally strong while the conclusion lacks sufficient independent evidence.
 
-Minimum claim/evidence adjudication vocabulary should support, where applicable:
+Minimum claim-status vocabulary should support, where applicable:
 
 ```text
 SUPPORTED
 PARTIALLY_SUPPORTED
 CONTRADICTED
-MIXED_EVIDENCE
-INSUFFICIENT_EVIDENCE
-NO_EVIDENCE_FOUND
 UNVERIFIABLE
 INDETERMINATE
 UNRESOLVED
@@ -332,6 +329,20 @@ PREDICTION_PENDING
 NORMATIVE
 ABSTAIN
 ```
+
+Evidence sufficiency/appraisal is a separate typed assessment, not a claim-status enum:
+
+```text
+SUFFICIENT
+PARTIALLY_SUFFICIENT
+MIXED_EVIDENCE
+INSUFFICIENT_EVIDENCE
+NO_EVIDENCE_FOUND
+NOT_APPLICABLE
+INDETERMINATE
+```
+
+Individual evidence items separately preserve relevance, directness, source quality, independence/dependence, applicability, scope/temporal compatibility, and support/contradiction relation state.
 
 Minimum inference assessments should support:
 
@@ -644,8 +655,9 @@ ANNULLED
 The system distinguishes:
 
 ```text
-VALID_TIME  = when a proposition/status applies in the world
-KNOWN_AT    = when FAR obtained or recorded the information
+VALID_TIME       = when a proposition/status applies in the world
+ACQUIRED_AT       = when FAR observed/retrieved/obtained the information
+TRANSACTION_TIME  = when FAR recorded the information/state in its governed record
 ```
 
 Corrections, retractions, superseding versions, and new evidence must not erase earlier states.
@@ -790,7 +802,19 @@ Benchmark success must not be promoted beyond the benchmark's population, pertur
 
 ## Meta-assurance case
 
-Every Deep Audit must be able to produce a machine-readable or equivalently structured assurance case answering not only whether the target claim/argument passed, but whether FAR adequately performed the audit.
+Every adjudication carries a fail-closed reliance state:
+
+```text
+EXPLORATORY
+EXTERNAL_RELIANCE_PENDING
+EXTERNAL_RELIANCE_READY
+```
+
+The state defaults to `EXPLORATORY`. An adjudication may enter `EXTERNAL_RELIANCE_READY` only through a recorded promotion transition that identifies the exact adjudication version, validates every applicable assurance requirement, generates or regenerates the assurance case from those validation records, and binds the case to the promoted version. Any content change or newly applicable validation invalidates readiness and returns the affected version to `EXTERNAL_RELIANCE_PENDING`.
+
+External publication, export, API response, package, or downstream reuse that represents an adjudication as FAR-assured must require `EXTERNAL_RELIANCE_READY`. Exploratory runs may omit the full assurance case but must retain sufficient provenance for later revalidation.
+
+The resulting machine-readable or equivalently structured assurance case must answer not only whether the target claim/argument passed, but whether FAR adequately performed the audit.
 
 The assurance case should make explicit claims about at least:
 
@@ -825,7 +849,7 @@ disagreement
 supporting and contradicting evidence
 unresolved alternatives
 source lineage
-status date / known-at boundary
+status date / valid-time/acquisition-time/transaction-time boundary
 ```
 
 A summary must not strengthen a claim beyond the underlying graph.
