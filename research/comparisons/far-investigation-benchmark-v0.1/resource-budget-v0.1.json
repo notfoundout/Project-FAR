@@ -1,0 +1,24 @@
+{
+  "schema_version": "0.1",
+  "status": "PREPARED_NOT_FROZEN",
+  "matching_unit": "case_x_condition",
+  "budgets": {
+    "model_family": "TO_BE_PINNED",
+    "model_version": "TO_BE_PINNED",
+    "retrieval_tools": ["TO_BE_PINNED"],
+    "source_cutoff": "TO_BE_FROZEN_BEFORE_CASE_DISCOVERY",
+    "wall_clock_seconds": "TO_BE_CALIBRATED_BLIND",
+    "model_output_token_ceiling": "TO_BE_CALIBRATED_BLIND",
+    "retrieval_tool_call_ceiling": "TO_BE_CALIBRATED_BLIND",
+    "retry_rounds": "TO_BE_CALIBRATED_BLIND",
+    "output_size_ceiling": "TO_BE_CALIBRATED_BLIND"
+  },
+  "calibration_rule": "Calibrate only on cases excluded from the benchmark and never inspect comparative condition performance. Freeze one common budget large enough for every condition to complete its required workflow without systematic truncation.",
+  "mismatch_tolerance": {
+    "wall_clock": "TO_BE_FROZEN",
+    "model_tokens": "TO_BE_FROZEN",
+    "tool_calls": "exact same ceiling",
+    "retry_rounds": "exact same ceiling"
+  },
+  "confirmatory_exclusion_rule": "A pair may be excluded for resource mismatch only under the frozen tolerance and only by a blinded integrity check. Report analyses with and without all exclusions."
+}
