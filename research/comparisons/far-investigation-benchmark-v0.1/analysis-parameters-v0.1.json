@@ -12,32 +12,39 @@
   ],
   "m1": {
     "familywise_alpha": 0.05,
-    "multiple_testing": "Holm",
+    "multiple_testing": "Holm step-down across B0/B1/B2",
     "permutation_alternative": "two-sided",
     "monte_carlo_permutations": 100000,
     "seed": 20260922,
     "use_exact_when_feasible": true,
-    "effect_estimator": "Hodges-Lehmann paired median difference, FAR minus baseline",
-    "required_effect_maximum": -0.05,
-    "test_statistic": "arithmetic mean of case-level paired differences (FAR minus baseline)",
+    "test_statistic": "arithmetic mean of case-level paired differences d_i = M1_FAR,i - M1_baseline,i",
     "null_randomization": "paired sign flip; zero differences fixed at zero",
     "exact_when_nonzero_pairs_at_most": 20,
-    "monte_carlo_p_value": "(1 + extreme_draws) / (1 + monte_carlo_permutations)",
+    "exact_p_value": "extreme_sign_assignments / all_sign_assignments, with extreme defined by absolute statistic >= absolute observed statistic",
+    "monte_carlo_sign_rule": "for draw r >= 1 and case_id, sign is +1 when the low-order bit of SHA256(UTF8('20260922|M1|' + baseline + '|' + decimal(r) + '|' + case_id)) is 0, otherwise -1; multiply only nonzero d_i",
+    "monte_carlo_p_value": "(1 + extreme_draws) / (1 + 100000)",
     "extreme_rule": "absolute permuted statistic >= absolute observed statistic",
     "holm_tie_order": [
       "B0",
       "B1",
       "B2"
-    ]
+    ],
+    "direction_requirement_for_survival": "observed mean paired difference < 0 for every baseline",
+    "effect_estimator": "paired Hodges-Lehmann one-sample location estimator: median of all Walsh averages (d_i + d_j) / 2 for i <= j over the complete paired cases; for an even number of Walsh averages, median is the arithmetic mean of the two central sorted values",
+    "required_effect_maximum": -0.05
   },
   "m2": {
     "absolute_noninferiority_margin": 0.05,
     "comparison": "FAR minus each confirmatory baseline",
-    "required_lower_95pct_bound_strictly_greater_than": -0.05,
     "bootstrap_resamples": 10000,
-    "seed": 20260922
+    "seed": 20260922,
+    "bootstrap_unit": "paired case index",
+    "bootstrap_statistic": "arithmetic mean of the resampled case-level paired M2 differences",
+    "bootstrap_index_rule": "for draw r >= 1 and position p from 1..n, index = integer(SHA256(UTF8('20260922|M2|' + baseline + '|' + decimal(r) + '|' + decimal(p))), 16) mod n; use the complete-pair case list sorted by case_id",
+    "quantile_rule": "sort the 10000 bootstrap statistics ascending; one-sided 95% lower bound is element ceil(0.05*N) using 1-based indexing; one-sided 95% upper bound is element ceil(0.95*N) using 1-based indexing; N=10000",
+    "required_lower_95pct_bound_strictly_greater_than": -0.05,
+    "directional_falsification_upper_95pct_bound_strictly_less_than": -0.05
   },
-  "authority": "Numerical parameters copied from the preregistration; changing any value requires a new benchmark version before execution.",
   "missingness": {
     "missing_output_scores": {
       "m1": 1,
@@ -46,11 +53,18 @@
     "nonratable_case_pair_threshold": 3,
     "threshold_denominator": 60,
     "above_threshold_status": "INDETERMINATE",
-    "at_or_below_threshold": "complete-pair analysis plus worst-case sensitivity analysis"
+    "at_or_below_threshold": "complete-pair confirmatory analysis plus frozen best/worst-case sensitivity analysis",
+    "m1_worst_case_for_far": "for each nonratable case set FAR=1 and baseline=0",
+    "m1_best_case_for_far": "for each nonratable case set FAR=0 and baseline=1",
+    "m2_worst_case_for_far": "for each nonratable case set FAR=0 and baseline=1",
+    "m2_best_case_for_far": "for each nonratable case set FAR=1 and baseline=0",
+    "survival_robustness_rule": "SURVIVES requires the complete-pair gates to pass and the worst-case-for-FAR imputation to preserve every M1 and M2 primary gate; if complete-pair gates pass but worst-case sensitivity reverses any gate, status is INDETERMINATE",
+    "sensitivity_cannot_rescue_failure": true
   },
   "falsification": {
-    "m1": "Hodges-Lehmann estimate >= +0.05 with corresponding Holm-adjusted M1 test significant",
-    "m2": "95% bootstrap upper bound for FAR minus baseline < -0.05",
+    "m1": "against at least one baseline: observed mean paired difference > 0, Hodges-Lehmann estimate >= +0.05, and corresponding Holm-adjusted two-sided M1 permutation result significant at family-wise alpha 0.05",
+    "m2": "against at least one baseline: one-sided 95% bootstrap upper bound for FAR minus baseline < -0.05",
     "otherwise_failed_gate": "NOT SUPPORTED AT TESTED SCOPE"
-  }
+  },
+  "authority": "Numerical and algorithmic analysis parameters copied into the preregistration; changing any value or rule requires a new benchmark version before execution."
 }
