@@ -68,6 +68,32 @@ Before the existing checklist, validate the following whenever the investigation
 
 Passing methodological validation does not itself prove factual premises, mathematical theorems, domain adequacy, or independent validation.
 
+## Evidence-Closure Validation Gate — `FAR-EVIDENCE-CLOSURE-1.0`
+
+Validate the post-evidence closure contract defined canonically in `workflow.md` before accepting either `Resolved` or `Provisionally resolved` as a completed FAR investigation.
+
+A decisive atomic verdict is not evidence that the closure gate passed. Claim-level logical disposition and methodological closure must be recorded and validated separately.
+
+Require all of the following:
+
+- **EC-01 — Separate adjudication from closure.** The exact claim form, atomic decomposition, claim-level logical disposition, disposition time/evidence basis, and investigation closure status are distinct and reconstructible.
+- **EC-02 — Bind decisive evidence to the exact proposition.** The decisive evidence states what it establishes or refutes and what nearby stronger, broader, causal, comparative, mechanistic, or frequency proposition it does not establish.
+- **EC-03 — Enumerate evidence/search classes.** Every evidence/search class material to the frozen interpretation is registered. Each is executed or marked `NOT APPLICABLE` with a reason. Direct or mechanism-specific evidence is searched when aggregate evidence cannot identify the claimed mechanism or concrete implementation detail.
+- **EC-04 — Check denominator and directness alignment.** The record tests whether evidence matches the relevant estimand, denominator, conditioning set, population, comparison class, mechanism, and level of directness. Any bridge from proxy/aggregate evidence to the interpreted proposition is explicit.
+- **EC-05 — Check measurement and classification.** Material measurement, coding, classification, provenance, ascertainment, missingness, reporting, and state/version limitations are identified with their possible effect on interpretation, magnitude, or terminal boundary.
+- **EC-06 — Seek both evidentiary directions after the initial disposition.** The record identifies the strongest support and strongest counterevidence still relevant to the frozen scope after the first decisive result.
+- **EC-07 — Test alternative explanations and inference paths.** Material alternative explanations or inference paths are tested where the claim form permits them, including causal, historical, statistical, forensic, semantic, or logical alternatives that could change interpretation or verdict scope.
+- **EC-08 — Preserve surviving propositions.** Narrower, adjacent, conditional, comparative, mechanism-specific, or subgroup propositions that remain live after the main adjudication are explicit; the parent verdict is not mechanically copied to them.
+- **EC-09 — Record residual uncertainty.** Unresolved empirical, formal, interpretive, measurement, classification, source, or generalization questions are explicit. An empty residual-uncertainty record has an explicit basis.
+- **EC-10 — Execute a terminal bounded saturation pass.** The terminal bounded saturation pass rechecks every registered applicable evidence/search class under the current evidence cutoff and search frame and produces no new material evidence, no new material claim decomposition, no new material alternative explanation, and no new residual uncertainty. Any new item invalidates the attempted closure and requires another investigation cycle.
+- **EC-11 — Run the methodology audit.** The current methodology audit executes after EC-01 through EC-10 and explicitly checks for premature stopping caused by decisive evidence and for any newly exposed methodological failure.
+
+The closure record must preserve the evidence cutoff, search frame, applicability decisions, inclusion/exclusion rules, stopping rule, terminal pass result, surviving propositions, residual uncertainty, and methodology-audit result.
+
+Passing `FAR-EVIDENCE-CLOSURE-1.0` establishes bounded methodological closure only. It does not establish open-world source completeness, semantic completeness, universal generalization, factual truth of every premise, or independent replication.
+
+A failed or unexecuted closure gate cannot be relabeled `Provisionally resolved` merely because the atomic verdict is strong. Preserve the atomic verdict at its exact scope and use `Unresolved`, `Suspended`, `Incomplete`, `Invalid`, or another applicable non-closure boundary until the gate is satisfied.
+
 ## Validation Standard
 
 A FAR investigation is methodologically valid only if its required artifacts are explicit enough to support audit, reconstruction, and review.
@@ -75,6 +101,8 @@ A FAR investigation is methodologically valid only if its required artifacts are
 Validation does not imply that the resolution is true, optimal, final, or uniquely correct.
 
 Validation means the investigation was conducted and recorded according to FAR methodology.
+
+For `Resolved` and `Provisionally resolved` investigations, methodological validity additionally requires `FAR-EVIDENCE-CLOSURE-1.0` to pass independently of the claim-level logical disposition.
 
 ---
 
@@ -157,10 +185,12 @@ A completed FAR investigation should satisfy the following checks.
 
 ---
 
-### 9. Resolution or Closure Status Recorded
+### 9. Resolution, Evidence Closure, or Closure Status Recorded
 
-- The resolution is explicitly recorded when one is produced.
-- The resolution is distinguishable from Ω, the resolution rule, and the resolution execution.
+- The claim-level logical disposition is explicitly recorded when one is produced.
+- The claim-level logical disposition is distinguishable from Ω, the resolution rule, the resolution execution, and the investigation closure status.
+- If `Resolved` or `Provisionally resolved` closure is claimed, EC-01 through EC-11 are individually traceable to evidence or an allowed applicability determination.
+- The evidence/search classes, denominator/directness checks, measurement/classification limits, strongest support, strongest counterevidence, alternative explanations, surviving narrower propositions, residual uncertainty, terminal bounded saturation pass, and methodology audit are preserved.
 - If no resolution is produced, the closure status is recorded.
 - When intake produced multiple frozen contracts, the record preserves all per-contract outcomes and the deterministic cross-contract aggregate.
 - Any unresolved frozen assumption that constrains the terminal result remains explicit.
@@ -178,6 +208,8 @@ If the investigation revisits an earlier stage, the record identifies:
 
 Any revision to frozen intake content records the invalidation of the prior freeze and downstream evaluations.
 
+Any terminal evidence-closure pass that discovers a new material item records which search/reasoning work was reopened and whether the earlier atomic disposition remains valid.
+
 ---
 
 ### 11. Reconstructibility Preserved
@@ -185,6 +217,7 @@ Any revision to frozen intake content records the invalidation of the prior free
 - The investigation record contains enough information for another investigator to reconstruct the reasoning process.
 - Missing artifacts are explicitly identified.
 - Limitations and unresolved issues are recorded.
+- For a closed investigation, another investigator can reconstruct why the bounded search stopped without treating the stopping rule itself as proof of open-world completeness.
 
 ---
 
@@ -194,13 +227,13 @@ A FAR investigation may close with one of the following statuses.
 
 ### Resolved
 
-A resolution has been recorded under the stated resolution rule.
+A resolution has been recorded under the stated resolution rule and `FAR-EVIDENCE-CLOSURE-1.0` has passed.
 
 ---
 
 ### Provisionally Resolved
 
-A resolution has been recorded, but limitations, uncertainty, or unresolved issues remain.
+A resolution has been recorded and `FAR-EVIDENCE-CLOSURE-1.0` has passed, but explicit limitations, uncertainty, or unresolved issues remain that constrain interpretation or generalization.
 
 ---
 
@@ -212,13 +245,13 @@ No resolution is currently available under the stated methodology.
 
 ### Suspended
 
-The investigation is paused pending additional representations, interpretations, criteria, evidence, or reasoning.
+The investigation is paused pending additional representations, interpretations, criteria, evidence, reasoning, or closure-gate work.
 
 ---
 
 ### Incomplete
 
-Required methodological artifacts are missing.
+Required methodological artifacts or closure-gate obligations are missing.
 
 ---
 
@@ -229,6 +262,14 @@ The investigation cannot be reconstructed or violates core FAR methodology.
 ---
 
 ## Edge-Case Handling
+
+### Decisive Atomic Verdict Before Evidence Closure
+
+Record the atomic verdict at the moment its support or refutation condition is satisfied. Continue the bounded closure work required by `FAR-EVIDENCE-CLOSURE-1.0`.
+
+If that work cannot be completed, preserve the atomic verdict and use a non-closure investigation status. Do not weaken the atomic verdict merely because closure remains incomplete, and do not upgrade the investigation to `Resolved` merely because the atomic verdict is decisive.
+
+---
 
 ### No Admissible Candidates
 
@@ -260,9 +301,9 @@ If the reasoning calculus changes, the investigation record must identify the ch
 
 ### Open-Ended Investigations
 
-Open-ended investigations may close as suspended or provisionally resolved.
+Open-ended investigations may close as suspended or provisionally resolved only under the rules above.
 
-They should not be recorded as resolved unless a resolution rule has actually produced a resolution.
+They should not be recorded as resolved unless a resolution rule has actually produced a resolution and the evidence-closure gate has passed.
 
 ---
 
@@ -280,13 +321,13 @@ A FAR investigation may be classified as:
 
 ### Valid
 
-All required methodological artifacts are present or explicitly marked not applicable.
+All required methodological artifacts are present or explicitly marked not applicable, and any claimed `Resolved` or `Provisionally resolved` closure satisfies `FAR-EVIDENCE-CLOSURE-1.0`.
 
 ---
 
 ### Provisionally Valid
 
-The investigation is mostly reconstructible, but minor artifacts require clarification.
+The investigation is mostly reconstructible, but minor artifacts require clarification. This label does not waive a missing evidence-closure gate for a claimed closed investigation.
 
 ---
 
@@ -316,4 +357,4 @@ FARO shall not replace these validation requirements with independent criteria.
 
 Validation is structural and methodological.
 
-It does not assert truth, correctness, soundness, or completeness of the investigation's resolution.
+It does not assert truth, correctness, soundness, or open-world completeness of the investigation's resolution.
