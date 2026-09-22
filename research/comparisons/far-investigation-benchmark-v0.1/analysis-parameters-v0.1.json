@@ -5,7 +5,11 @@
   "case_count": 60,
   "domains": 6,
   "cases_per_domain": 10,
-  "confirmatory_baselines": ["B0", "B1", "B2"],
+  "confirmatory_baselines": [
+    "B0",
+    "B1",
+    "B2"
+  ],
   "m1": {
     "familywise_alpha": 0.05,
     "multiple_testing": "Holm",
@@ -14,7 +18,17 @@
     "seed": 20260922,
     "use_exact_when_feasible": true,
     "effect_estimator": "Hodges-Lehmann paired median difference, FAR minus baseline",
-    "required_effect_maximum": -0.05
+    "required_effect_maximum": -0.05,
+    "test_statistic": "arithmetic mean of case-level paired differences (FAR minus baseline)",
+    "null_randomization": "paired sign flip; zero differences fixed at zero",
+    "exact_when_nonzero_pairs_at_most": 20,
+    "monte_carlo_p_value": "(1 + extreme_draws) / (1 + monte_carlo_permutations)",
+    "extreme_rule": "absolute permuted statistic >= absolute observed statistic",
+    "holm_tie_order": [
+      "B0",
+      "B1",
+      "B2"
+    ]
   },
   "m2": {
     "absolute_noninferiority_margin": 0.05,
@@ -23,5 +37,20 @@
     "bootstrap_resamples": 10000,
     "seed": 20260922
   },
-  "authority": "Numerical parameters copied from the preregistration; changing any value requires a new benchmark version before execution."
+  "authority": "Numerical parameters copied from the preregistration; changing any value requires a new benchmark version before execution.",
+  "missingness": {
+    "missing_output_scores": {
+      "m1": 1,
+      "m2": 0
+    },
+    "nonratable_case_pair_threshold": 3,
+    "threshold_denominator": 60,
+    "above_threshold_status": "INDETERMINATE",
+    "at_or_below_threshold": "complete-pair analysis plus worst-case sensitivity analysis"
+  },
+  "falsification": {
+    "m1": "Hodges-Lehmann estimate >= +0.05 with corresponding Holm-adjusted M1 test significant",
+    "m2": "95% bootstrap upper bound for FAR minus baseline < -0.05",
+    "otherwise_failed_gate": "NOT SUPPORTED AT TESTED SCOPE"
+  }
 }
