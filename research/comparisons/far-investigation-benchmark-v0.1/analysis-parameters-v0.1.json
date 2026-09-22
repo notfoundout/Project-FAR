@@ -41,9 +41,17 @@
     "bootstrap_unit": "paired case index",
     "bootstrap_statistic": "arithmetic mean of the resampled case-level paired M2 differences",
     "bootstrap_index_rule": "for draw r >= 1 and position p from 1..n, index = integer(SHA256(UTF8('20260922|M2|' + baseline + '|' + decimal(r) + '|' + decimal(p))), 16) mod n; use the complete-pair case list sorted by case_id",
-    "quantile_rule": "sort the 10000 bootstrap statistics ascending; one-sided 95% lower bound is element ceil(0.05*N) using 1-based indexing; one-sided 95% upper bound is element ceil(0.95*N) using 1-based indexing; N=10000",
+    "quantile_rule": "sort the 10000 bootstrap statistics ascending; one-sided 95% lower bound uses zero-based index ceil(0.05*N)-1 = 499; ordinary one-sided 95% upper descriptive bound uses ceil(0.95*N)-1 = 9499; Bonferroni familywise directional-falsification upper bound uses ceil((1-0.05/3)*N)-1 = 9833; N=10000",
     "required_lower_95pct_bound_strictly_greater_than": -0.05,
-    "directional_falsification_upper_95pct_bound_strictly_less_than": -0.05
+    "directional_falsification_familywise": {
+      "method": "Bonferroni across B0/B1/B2",
+      "familywise_alpha": 0.05,
+      "one_sided_upper_confidence": 0.9833333333333333,
+      "zero_based_index_n10000": 9833,
+      "strictly_less_than": -0.05
+    },
+    "survival_multiplicity": "intersection-union gate: every baseline lower 95% bound must exceed -0.05; no additional multiplicity correction is required for the global pass gate",
+    "design_threshold_note": "The absolute 0.05 margin/effect threshold is preregistered for this benchmark and is not asserted to be an externally validated practical-utility threshold."
   },
   "missingness": {
     "missing_output_scores": {
@@ -59,12 +67,13 @@
     "m2_worst_case_for_far": "for each nonratable case set FAR=0 and baseline=1",
     "m2_best_case_for_far": "for each nonratable case set FAR=1 and baseline=0",
     "survival_robustness_rule": "SURVIVES requires the complete-pair gates to pass and the worst-case-for-FAR imputation to preserve every M1 and M2 primary gate; if complete-pair gates pass but worst-case sensitivity reverses any gate, status is INDETERMINATE",
-    "sensitivity_cannot_rescue_failure": true
+    "sensitivity_cannot_rescue_failure": true,
+    "ceiling_hit_rule": "reaching a frozen resource ceiling is an observed run outcome and is not an exclusion; only exogenous infrastructure/configuration failure may make the entire four-condition case nonratable"
   },
   "falsification": {
     "m1": "against at least one baseline: observed mean paired difference > 0, Hodges-Lehmann estimate >= +0.05, and corresponding Holm-adjusted two-sided M1 permutation result significant at family-wise alpha 0.05",
-    "m2": "against at least one baseline: one-sided 95% bootstrap upper bound for FAR minus baseline < -0.05",
+    "m2": "against at least one baseline: Bonferroni familywise one-sided upper bootstrap bound at confidence 1-0.05/3 for FAR minus baseline < -0.05",
     "otherwise_failed_gate": "NOT SUPPORTED AT TESTED SCOPE"
   },
-  "authority": "Numerical and algorithmic analysis parameters copied into the preregistration; changing any value or rule requires a new benchmark version before execution."
+  "authority": "Numerical and algorithmic analysis parameters copied into the preregistration and hardening amendment; changing any value or rule requires a new benchmark version before execution."
 }
