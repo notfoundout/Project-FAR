@@ -123,7 +123,7 @@ Score per case:
 
 Lower is better.
 
-Primary gate: FAR must show a lower paired median rate than every confirmatory baseline. The confirmatory M1 family uses Holm-adjusted two-sided paired permutation tests with family-wise α = 0.05. In addition, the Hodges-Lehmann paired median-difference estimate (FAR minus baseline) must be ≤ -0.05 for every confirmatory baseline. Lower values favor FAR on this metric.
+Primary gate: for every confirmatory baseline, FAR must have a negative observed mean paired difference in case-level M1 rate; the Holm-adjusted two-sided paired sign-flip permutation test on the **mean paired difference** must reject at family-wise α = 0.05; and the Hodges-Lehmann paired location-shift estimate (FAR minus baseline) must be ≤ -0.05. Lower values favor FAR on this metric.
 
 ### M2 — Evidence coverage
 
@@ -195,13 +195,14 @@ Detection of these mutations is evaluated separately from natural-case performan
 - Comparisons: paired by case.
 - Confirmatory baselines: B0, B1, B2.
 - Primary family: M1 comparisons plus the M2 non-inferiority gate.
-- M1 confirmatory p-values use two-sided paired permutation tests with Holm correction across B0, B1, and B2 at family-wise α = 0.05.
-- Exact permutation is used when computationally feasible; otherwise use 100,000 Monte Carlo permutations with seed 20260922.
+- M1 statistic is the arithmetic mean of the 60 case-level paired differences \`d_i = M1_FAR,i - M1_baseline,i\` for each baseline. Under the paired sign-flip null, independently multiply every nonzero \`d_i\` by +1 or -1; zero differences remain zero. The two-sided p-value is the proportion of permuted statistics whose absolute value is at least the absolute observed statistic.
+- Enumerate all sign assignments when the number of nonzero pairs is ≤ 20. Otherwise draw 100,000 sign vectors from the seeded generator (seed 20260922) and calculate the Monte Carlo p-value as \`(1 + extreme_draws) / (1 + 100000)\`.
+- Apply Holm's step-down correction to the three M1 baseline p-values at family-wise α = 0.05; ties in raw p-values are ordered B0, then B1, then B2 for deterministic reporting, without changing Holm thresholds.
 - M1 effect-size floor: Hodges-Lehmann paired median-difference estimate ≤ -0.05 for every confirmatory baseline.
 - M2 non-inferiority margin: absolute evidence-coverage difference Δ = 0.05; use 10,000 paired bootstrap resamples with seed 20260922 and require the 95% lower confidence bound for FAR minus each baseline to exceed -0.05.
 - Report paired mean and median differences, percentile bootstrap confidence intervals, and raw per-case values in addition to confirmatory decisions.
 - All exclusions are reported both before and after exclusion.
-- Missing output is scored as failure on completion-dependent metrics and remains visible.
+- A wholly missing condition output receives M1 = 1 and M2 = 0 for that case. A packet corruption or inaccessible evidence event that prevents valid scoring for any condition in a case makes the entire case pair non-ratable for that affected primary metric. If more than 3 of 60 cases (5%) are non-ratable for either primary metric, the benchmark is INDETERMINATE. At 3 or fewer, the affected metric comparison uses complete paired cases only and must report both the missingness count and a worst-case sensitivity analysis. No condition-specific deletion is permitted.
 - No post-hoc subgroup becomes confirmatory.
 - These numerical parameters are frozen by this preregistration. The execution manifest must reproduce them byte-for-byte before the first system run.
 
@@ -250,13 +251,17 @@ The primary hypothesis survives this benchmark only if:
 3. no integrity failure invalidates the paired comparison;
 4. adjudication independence is reported at its actual class.
 
+### NOT SUPPORTED AT TESTED SCOPE
+
+If either confirmatory gate is not passed, but the data do not meet a separately preregistered directional inferiority criterion, report the primary hypothesis as **NOT SUPPORTED AT TESTED SCOPE**. Failure to reject or failure to establish non-inferiority is not itself falsification.
+
 ### FALSIFIED AT TESTED SCOPE
 
-If FAR fails the M1 gate or falls outside the M2 non-inferiority margin, the primary hypothesis is falsified at the tested corpus/model/resource scope.
+Reserve **FALSIFIED AT TESTED SCOPE** for a directional result that affirmatively contradicts the hypothesis: FAR has a Hodges-Lehmann M1 location-shift estimate ≥ +0.05 against at least one confirmatory baseline with the corresponding Holm-adjusted two-sided permutation test significant at family-wise α = 0.05, or the 95% bootstrap **upper** confidence bound for M2 (FAR minus a baseline) is < -0.05. Report the exact baseline(s) and tested scope.
 
 ### INDETERMINATE
 
-Use INDETERMINATE when execution or integrity failures prevent the frozen decision rule from being applied. INDETERMINATE must not be rewritten as support.
+Use INDETERMINATE when execution, integrity, or missingness failures prevent the frozen decision rule from being applied, including primary-metric non-ratability above 5% of cases. INDETERMINATE must not be rewritten as support or falsification.
 
 ## 15. Prohibited promotions
 
