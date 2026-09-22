@@ -16,7 +16,7 @@ This benchmark does **not** test whether FAR is universally superior, whether FA
 
 For a preregistered corpus of real-world disputed claims, FAR will reduce unsupported inference while preserving or improving evidence coverage relative to matched baseline workflows.
 
-The primary endpoint is the paired difference in unsupported-inference rate. Evidence coverage is a co-primary endpoint. No overall "winner" is declared unless both co-primary gates pass.
+The primary endpoint is the paired difference in unsupported-inference rate. Evidence coverage is a co-primary endpoint. The preregistered hypothesis survives only if both co-primary gates pass; this is not a universal or overall ranking of systems.
 
 ## 3. Systems under comparison
 
@@ -123,7 +123,7 @@ Score per case:
 
 Lower is better.
 
-Primary gate: FAR must show a lower paired median rate than every confirmatory baseline, with a two-sided paired permutation test at the preregistered family-wise threshold and a nonzero effect-size floor frozen before unblinding.
+Primary gate: FAR must show a lower paired median rate than every confirmatory baseline. The confirmatory M1 family uses Holm-adjusted two-sided paired permutation tests with family-wise α = 0.05. In addition, the Hodges-Lehmann paired median-difference estimate (FAR minus baseline) must be ≤ -0.05 for every confirmatory baseline. Lower values favor FAR on this metric.
 
 ### M2 — Evidence coverage
 
@@ -135,7 +135,7 @@ Score per case:
 
 Evidence that is merely cited but attached to the wrong proposition does not count.
 
-Primary gate: FAR must be non-inferior to the strongest baseline under a preregistered margin, and the margin must be frozen before execution.
+Primary gate: FAR must be non-inferior to each confirmatory baseline under an absolute evidence-coverage margin Δ = 0.05. For each paired comparison, the lower bound of the 95% bootstrap confidence interval for mean coverage difference (FAR minus baseline) must be greater than -0.05.
 
 Both M1 and M2 gates are required for the primary hypothesis to survive.
 
@@ -195,11 +195,15 @@ Detection of these mutations is evaluated separately from natural-case performan
 - Comparisons: paired by case.
 - Confirmatory baselines: B0, B1, B2.
 - Primary family: M1 comparisons plus the M2 non-inferiority gate.
-- Exact or Monte Carlo paired permutation procedures are used where appropriate; bootstrap confidence intervals are reported for effect sizes.
+- M1 confirmatory p-values use two-sided paired permutation tests with Holm correction across B0, B1, and B2 at family-wise α = 0.05.
+- Exact permutation is used when computationally feasible; otherwise use 100,000 Monte Carlo permutations with seed 20260922.
+- M1 effect-size floor: Hodges-Lehmann paired median-difference estimate ≤ -0.05 for every confirmatory baseline.
+- M2 non-inferiority margin: absolute evidence-coverage difference Δ = 0.05; use 10,000 paired bootstrap resamples with seed 20260922 and require the 95% lower confidence bound for FAR minus each baseline to exceed -0.05.
+- Report paired mean and median differences, percentile bootstrap confidence intervals, and raw per-case values in addition to confirmatory decisions.
 - All exclusions are reported both before and after exclusion.
 - Missing output is scored as failure on completion-dependent metrics and remains visible.
 - No post-hoc subgroup becomes confirmatory.
-- Exact alpha, non-inferiority margin, effect-size floor, random seed, and permutation count must be frozen in the machine-readable execution manifest before the first system run.
+- These numerical parameters are frozen by this preregistration. The execution manifest must reproduce them byte-for-byte before the first system run.
 
 ## 12. Leakage controls
 
@@ -276,6 +280,6 @@ Formal proof engines, retrieval systems, frontier models, provenance systems, an
 
 ## 17. Execution gate
 
-This document is a Research preregistration. It authorizes no claim promotion. Before first execution, the machine-readable campaign manifest must freeze the unresolved numerical parameters in Section 11 and bind the exact corpus, prompts, model/tool versions, adjudication rubric, and hashes.
+This document is a Research preregistration. It authorizes no claim promotion. Before first execution, the machine-readable campaign manifest must bind the exact corpus, prompts, model/tool versions, adjudication rubric, resource limits, evidence-reference search protocol, and hashes. Section 11's numerical parameters are already frozen here and must be reproduced without alteration.
 
 No benchmark result may be reported as confirmatory if those values were chosen after observing condition outputs.
