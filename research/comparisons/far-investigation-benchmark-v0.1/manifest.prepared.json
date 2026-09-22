@@ -157,6 +157,12 @@
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "role": "resource_budget_pending_freeze_hash",
       "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/analysis-parameters-v0.1.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "frozen_numerical_analysis_parameters_pending_freeze_hash",
+      "verify_current_path": true
     }
   ],
   "times": {
@@ -187,7 +193,7 @@
     "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the harness, corpus, prompts, tool versions, hashes, and environment are frozen and validation passes."
   },
   "limitations": [
-    "Prepared, not frozen: corpus, prompts, resource budgets, tool/model versions, adjudicators, rubric, and evidence-reference search protocol remain unset.",
+    "Prepared, not frozen: corpus, prompts, resource budgets, tool/model versions, execution schedule, adjudicators, rubric, and evidence-reference search protocol remain unset.",
     "Zero SHA-256 placeholders mark prepared-only artifacts and must be replaced with exact hashes after the preregistration text is final and before any condition execution.",
     "No external-independence claim follows from project-authored preparation.",
     "No benchmark result exists at prepared status.",
