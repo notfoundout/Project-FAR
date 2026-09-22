@@ -138,6 +138,8 @@ The resolution rule determines which admissible candidate, or collection of admi
 
 If no resolution rule is applicable, the investigation may close as unresolved, suspended, incomplete, or invalid according to the investigation validation policy.
 
+A resolution rule may yield a decisive claim-level logical disposition before the investigation satisfies its closure obligations. That disposition should be recorded when justified; it must not be silently delayed merely to synchronize it with methodological closure.
+
 ---
 
 ## Stage 9 — Record the Resolution
@@ -148,7 +150,35 @@ The complete investigation should remain explicit, auditable, and reconstructibl
 
 When multiple frozen contracts were required by intake, record every per-contract outcome and the fixed cross-contract aggregate. Do not replace the aggregate with a preferred contract's result. A frozen result-relevant `Unknown` assumption must remain visible in the terminal boundary and prevents invariant promotion.
 
-A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
+A resolution record may state that an atomic claim is proved, refuted, supported, open, blocked, underdetermined, not applicable, or another vocabulary mandated by the target protocol. That claim-level logical disposition is separate from the investigation closure status below.
+
+---
+
+## Evidence-Closure Gate — `FAR-EVIDENCE-CLOSURE-1.0`
+
+A decisive claim-level disposition does not by itself authorize investigation closure.
+
+The purpose of `FAR-EVIDENCE-CLOSURE-1.0` is to prevent an investigation from stopping as soon as it has enough evidence to settle one atomic proposition while leaving the surrounding evidentiary structure materially under-examined. The gate applies before either `Resolved` or `Provisionally resolved` closure.
+
+The gate is bounded. It operates over a declared evidence cutoff, search frame, evidence/search classes, inclusion and exclusion rules, and stopping rule. It does not claim open-world completeness.
+
+The following requirements are mandatory:
+
+1. **EC-01 — Separate adjudication from closure.** Preserve the exact claim form, atomic decomposition, claim-level logical disposition, and time/evidence basis for that disposition separately from the investigation closure status.
+2. **EC-02 — Bind decisive evidence to its exact proposition.** Record the decisive evidence and state exactly what it establishes or refutes and what nearby stronger, broader, causal, comparative, mechanistic, or frequency proposition it does not establish.
+3. **EC-03 — Enumerate evidence/search classes.** Register every evidence/search class material to interpreting the claim at the frozen scope. Execute every applicable class or mark it `NOT APPLICABLE` with an explicit reason. Direct or mechanism-specific evidence must be sought when the claim depends on a mechanism or concrete implementation detail that broader aggregate evidence cannot identify.
+4. **EC-04 — Check denominators and directness.** Test whether the evidence answers the same estimand, denominator, conditioning set, population, comparison class, mechanism, and level of directness as the proposition being interpreted. Do not substitute a population rate for a conditional method distribution, an aggregate category for a specific mechanism, or a proxy for a direct observation without an explicit bridge.
+5. **EC-05 — Check measurement and classification.** Identify material measurement, coding, classification, provenance, ascertainment, missingness, reporting, and state/version limitations. State whether each could change the interpretation, magnitude, or terminal boundary.
+6. **EC-06 — Seek both evidentiary directions after the first decisive result.** Record the strongest support and strongest counterevidence still relevant to the frozen scope. An early falsifier does not excuse failure to inspect evidence that could preserve a narrower version of the claim; an early verifier does not excuse failure to seek a defeating boundary condition.
+7. **EC-07 — Test alternative explanations and inference paths.** Where the claim form permits materially different causal, historical, statistical, forensic, semantic, or logical explanations, test the strongest alternatives that could change the interpretation of the evidence or the scope of the verdict.
+8. **EC-08 — Preserve surviving propositions.** Identify narrower, adjacent, conditional, comparative, mechanism-specific, or subgroup propositions that remain live after the main adjudication. A broad claim's falsification does not automatically falsify its weaker descendants; a broad claim's support does not automatically prove stronger descendants.
+9. **EC-09 — Record residual uncertainty.** State the unresolved empirical, formal, interpretive, measurement, classification, source, or generalization questions that the decisive evidence does not answer. An empty residual-uncertainty record requires an explicit basis rather than omission.
+10. **EC-10 — Execute a terminal bounded saturation pass.** Re-run or recheck every registered applicable evidence/search class under the current search frame. The terminal bounded saturation pass must produce no new material evidence, no new material claim decomposition, no new material alternative explanation, and no new residual uncertainty. If it produces any such item, update the search frame and continue the investigation before attempting closure again.
+11. **EC-11 — Run the methodology audit.** Execute the current [Methodology Audit Protocol](../../methodology/methodology-audit-protocol.md) after EC-01 through EC-10. The methodology audit must explicitly test whether decisive evidence caused premature stopping and whether the closure gate itself exposed a new methodological failure.
+
+Passing EC-01 through EC-11 establishes bounded methodological closure only. It does not convert a bounded search into proof of source completeness, semantic completeness, universal generalization, or external independent validation.
+
+If EC-01 through EC-11 cannot be completed, preserve any atomic verdict that remains justified at its exact scope and use `Unresolved`, `Suspended`, `Incomplete`, `Invalid`, or another target-protocol state that does not falsely imply completion. `Provisionally resolved` is not an escape hatch for an unexecuted closure gate; it is reserved for a completed bounded closure pass whose recorded limitations prevent an unqualified resolution.
 
 ---
 
@@ -175,19 +205,21 @@ Every return to an earlier stage should record:
 
 A revision that changes any frozen intake field invalidates the intake freeze and all downstream evaluations bound to that freeze.
 
+A terminal evidence-closure pass that finds a new material item reopens the affected search/reasoning work. Earlier atomic dispositions remain only to the extent that the new evidence does not defeat their original support/refutation condition.
+
 ---
 
 ## Closure Policy
 
 A FAR investigation may close with one of the following statuses:
 
-- `Resolved` — a resolution has been recorded under the stated resolution rule.
-- `Provisionally resolved` — a resolution has been recorded, but limitations remain.
+- `Resolved` — a resolution has been recorded under the stated resolution rule and `FAR-EVIDENCE-CLOSURE-1.0` has passed.
+- `Provisionally resolved` — a resolution has been recorded and `FAR-EVIDENCE-CLOSURE-1.0` has passed, but explicitly recorded limitations remain that constrain interpretation or generalization.
 - `Unresolved` — no resolution is currently available under the stated method.
-- `Suspended` — the investigation is paused pending additional representations, interpretations, criteria, or reasoning.
-- `Incomplete` — required methodological artifacts are missing.
+- `Suspended` — the investigation is paused pending additional representations, interpretations, criteria, evidence, reasoning, or closure-gate work.
+- `Incomplete` — required methodological artifacts or closure-gate obligations are missing.
 - `Invalid` — the investigation violates core FAR methodology or cannot be reconstructed.
 
 Closure status records the methodological state of the investigation.
 
-It does not assert that the resolution is true, optimal, final, or unique.
+It does not assert that the resolution is true, optimal, final, unique, exhaustive, or open-world complete. Claim-level logical disposition and methodological closure remain separate recorded dimensions.
