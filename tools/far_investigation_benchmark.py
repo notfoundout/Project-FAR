@@ -3,7 +3,6 @@
 
 from __future__ import annotations
 import argparse, hashlib, json, pathlib, sys
-from jsonschema import Draft202012Validator
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "schemas/far-research-campaign-v1.schema.json"
@@ -43,10 +42,42 @@ def contains_unfrozen(value):
 def validate(manifest_path: pathlib.Path):
     m = load(manifest_path)
     errors = []
-    schema = load(SCHEMA)
-    for err in sorted(Draft202012Validator(schema).iter_errors(m), key=lambda e: list(e.path)):
-        loc = ".".join(map(str, err.path)) or "<root>"
-        errors.append(f"schema {loc}: {err.message}")
+    required = {"schema_version","campaign_id","status","target","evaluators","environment","protocol","stages","source_manifest","artifacts","times","final_adjudication","replay","limitations"}
+    if set(m) != required:
+        errors.append(f"schema <root>: fields differ; missing={sorted(required-set(m))}, extra={sorted(set(m)-required)}")
+    if m.get("schema_version") != "1.0":
+        errors.append("schema schema_version: must be 1.0")
+    if m.get("status") not in {"prepared","frozen","unblinded","completed","completed_imported_sealed","blocked"}:
+        errors.append("schema status: invalid")
+    target = m.get("target")
+    if not isinstance(target, dict) or set(target) != {"repository","commit","tree","theory_or_question","hashes"}:
+        errors.append("schema target: invalid fields")
+    evaluators = m.get("evaluators")
+    evaluator_fields = {"id","identity","provider","model","prior_exposure","conflicts","lane"}
+    if not isinstance(evaluators, list) or not evaluators or any(not isinstance(e, dict) or set(e) != evaluator_fields for e in (evaluators if isinstance(evaluators, list) else [])):
+        errors.append("schema evaluators: invalid")
+    stages = m.get("stages")
+    stage_fields = {"id","name","allow","deny","freeze_before_next","unblinding"}
+    if not isinstance(stages, list) or not stages or any(not isinstance(x, dict) or set(x) != stage_fields or not isinstance(x.get("allow"), list) or not isinstance(x.get("deny"), list) or not isinstance(x.get("freeze_before_next"), bool) or not isinstance(x.get("unblinding"), bool) for x in (stages if isinstance(stages, list) else [])):
+        errors.append("schema stages: invalid")
+    if not isinstance(m.get("source_manifest"), list):
+        errors.append("schema source_manifest: array required")
+    artifacts_schema = m.get("artifacts")
+    artifact_fields = {"path","sha256","role","verify_current_path"}
+    if not isinstance(artifacts_schema, list) or not artifacts_schema or any(not isinstance(x, dict) or set(x) != artifact_fields for x in (artifacts_schema if isinstance(artifacts_schema, list) else [])):
+        errors.append("schema artifacts: invalid")
+    times = m.get("times")
+    if not isinstance(times, dict) or set(times) != {"freeze_time","unblinding_time"}:
+        errors.append("schema times: invalid")
+    replay = m.get("replay")
+    if not isinstance(replay, dict) or set(replay) != {"commands","deterministic_claim"} or not isinstance(replay.get("commands") if isinstance(replay, dict) else None, list):
+        errors.append("schema replay: invalid")
+    limitations = m.get("limitations")
+    if not isinstance(limitations, list) or not limitations:
+        errors.append("schema limitations: non-empty array required")
+    protocol_schema = m.get("protocol")
+    if not isinstance(protocol_schema, dict) or set(protocol_schema) != {"id","version","path","sha256"}:
+        errors.append("schema protocol: invalid")
 
     status = m.get("status")
     artifacts = m.get("artifacts", [])
