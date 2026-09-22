@@ -60,6 +60,54 @@ class InvestigationExecutionGateTests(unittest.TestCase):
             step["status"] = "complete"
             step["evidence"] = [{"path": "evidence.md"}]
         payload["upstream_dependencies"] = []
+        evidence = [{"path": "evidence.md"}]
+        payload["evidence_closure"] = {
+            "contract": gate.CLOSURE_CONTRACT,
+            "evidence": evidence,
+            "search_frame": {
+                "evidence_cutoff": "2026-09-22T00:00:00Z",
+                "stopping_rule": "Stop only after the registered classes produce no new material item.",
+                "inclusion_rules": ["Material evidence within the frozen scope."],
+                "exclusion_rules": [],
+            },
+            "claim_disposition_separate": True,
+            "decisive_evidence_scope_recorded": True,
+            "denominator_directness_checked": True,
+            "measurement_classification_checked": True,
+            "strongest_support_recorded": True,
+            "strongest_counterevidence_recorded": True,
+            "alternative_explanations_checked": True,
+            "surviving_propositions_recorded": True,
+            "residual_uncertainty_recorded": True,
+            "measurement_limitations": [],
+            "measurement_limitations_basis": "No material measurement or classification limitation remained in the frozen scope.",
+            "strongest_support": ["Support item S1 recorded in the closure evidence."],
+            "strongest_counterevidence": ["Counterevidence item C1 recorded in the closure evidence."],
+            "alternative_explanations": [],
+            "alternative_explanations_basis": "No material alternative explanation applied to the frozen claim form.",
+            "surviving_propositions": [],
+            "surviving_propositions_basis": "No narrower proposition survived the adjudication within the frozen scope.",
+            "residual_uncertainty": ["Generalization outside the frozen scope remains unresolved."],
+            "evidence_search_classes": [
+                {
+                    "id": "direct_evidence",
+                    "status": "executed",
+                    "evidence": evidence,
+                }
+            ],
+            "terminal_saturation": {
+                "completed": True,
+                "new_material_evidence": False,
+                "new_claim_decomposition": False,
+                "new_alternative_explanation": False,
+                "new_residual_uncertainty": False,
+                "evidence": evidence,
+            },
+            "methodology_audit": {
+                "completed": True,
+                "evidence": evidence,
+            },
+        }
         return payload
 
     def test_vi002_is_explicitly_non_passing(self):

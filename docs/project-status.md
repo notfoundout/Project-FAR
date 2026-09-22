@@ -20,7 +20,7 @@ For a fixed exact contract, sufficiency is equivalent to factorization through t
 
 Assurance: **Accepted internal deductive result; corrected after a non-independent hostile audit; subsequently reviewed under sealed I1 claimed isolation at exact scopes; all 14 governed claims subsequently mechanized under pinned Lean 4.19.0. I2 verified isolation, I3 external replication, novelty, and priority are not established.**
 
-Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, the accepted governed pre-contract discovery/intake correction, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
+Current canonical authority includes the corrected core theory v1.1, machine-readable v1.1 claim ledger, v1.1 acceptance record, W1 independent-review promotion, machine assurance ledger, W2 formalization status, W3 contract-schema status, the accepted governed pre-contract discovery/intake correction, the accepted governed post-evidence closure correction, W4 domain-contract status, W5 approximation-and-cost status, and W6 bounded audit-utility status. Historical v1.0 remains preserved byte-for-byte at SHA-256 `b7cbd28d54686da33773a66edf9af9480044ffaabfeb83cfa4bfc1a12fe862a5`.
 
 ## Historical boundaries
 
@@ -57,6 +57,16 @@ W3 does not establish application correspondence for any external domain and doe
 The correction changes no core-theory claim and does not alter `far-ir/2.0` or `far-ir/2.1`. It does not prove open-world semantic or source completeness, uniquely unbiased contract construction, source authority or factual correctness, external validation, novelty, priority, empirical utility, or commercial value, and it does not close `LIM-038`.
 
 Current authority for this correction is the [Contract Discovery Protocol](../methodology/contract-discovery-protocol.md), [`far-intake/1.0` specification](specification/far-intake-1.0.md), and [acceptance record](governance/far-contract-discovery-acceptance-v1.0.md).
+
+## Governed post-evidence closure disposition
+
+`FAR-EVIDENCE-CLOSURE-1.0` is an **Accepted internal methodology correction** for premature evidentiary closure. It separates claim-level logical disposition from investigation closure. A decisive witness, counterexample, proof, or authoritative record may settle an atomic claim immediately, but `Resolved` or `Provisionally resolved` closure additionally requires bounded coverage of the registered evidence/search classes, denominator/estimand and directness checks, measurement/classification limits, strongest support and counterevidence, material alternative explanations, surviving narrower propositions, residual uncertainty, a zero-new terminal bounded saturation pass, and the methodology audit.
+
+Future execution manifests declaring `result: pass` are fail-closed unless they carry repository-backed `FAR-EVIDENCE-CLOSURE-1.0` evidence. The two pre-correction execution manifests remain preserved without retroactive rewriting and are exempt only at their exact pinned Git blob identities; modifying either historical manifest removes the exemption.
+
+The correction changes no core-theory claim and does not alter `far-ir/2.0`, `far-ir/2.1`, or pre-contract intake semantics. It does not prove open-world evidence completeness, source truth, independent replication, novelty, priority, empirical utility, or commercial value.
+
+Current authority for this correction is the [canonical FAR workflow](../frameworks/FAR/workflow.md), [investigation validation](../frameworks/FAR/investigation-validation.md), [methodology audit protocol](../methodology/methodology-audit-protocol.md), and [acceptance record](governance/far-evidence-closure-acceptance-v1.0.md).
 
 ## W4 domain-contract disposition
 
@@ -115,7 +125,7 @@ No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed succe
 | Framework | Terminal role | Current status |
 |---|---|---|
 | FARA | Selected representation target | Stable; `FARA-FORMAL-KERNEL-001` retained only for finite, explicit, auditable Project FAR v1 records. |
-| FAR | Contract-relative methodology | Stable with governed pre-contract discovery for under-specified inputs, contract freeze, factorization/collision, minimization, and typed-loss conformance. |
+| FAR | Contract-relative methodology | Stable with governed pre-contract discovery for under-specified inputs, contract freeze, factorization/collision, minimization, typed-loss conformance, and governed post-evidence closure saturation. |
 | FARO | Downstream operations | Role defined; implementation, product, external-validation, and deployment readiness not established. |
 | FARE | Mathematical support | Requirement-driven; does not replace the canonical core theory. |
 | FARM | Change coordination | Stable; does not reverse the canonical dependency direction. |
@@ -128,4 +138,4 @@ The core reopens only for a reproducible contradiction to a stated theorem, proo
 
 ## Current authority navigation
 
-For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the governed pre-contract discovery protocol/specification/acceptance when input is under-specified, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Read the non-authoritative [epistemic calibration audit](audits/far-core-epistemic-calibration-v1.0.md) alongside them for what the assurance labels exclude. Historical or generated surfaces do not override that order.
+For state-sensitive work, use the root README, this status, `CANONICAL_MAP.md`, the corrected core theory and acceptance record, the governed pre-contract discovery protocol/specification/acceptance when input is under-specified, the canonical FAR workflow/investigation-validation/methodology-audit/closure-acceptance surfaces when a claim is being adjudicated or closed, the canonical W1–W6 matrix, claim-status matrix and theorem/proof register, framework boundaries and dependency specification, then limitations/open-problems/unresolved-question registers. Read the non-authoritative [epistemic calibration audit](audits/far-core-epistemic-calibration-v1.0.md) alongside them for what the assurance labels exclude. Historical or generated surfaces do not override that order.
