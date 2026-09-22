@@ -31,9 +31,9 @@ For each reference item, adjudicators assign:
 - RECOVERED-CORRECTLY-CONNECTED;
 - RECOVERED-WRONG-CONNECTION;
 - NOT-RECOVERED;
-- REFERENCE-ITEM-INVALID.
+- REFERENCE-ITEM-INVALID is **not** an output-scoring option. Reference-item validity is resolved and frozen by the reference-evidence panel before any condition packet is exposed.
 
-M2 denominator excludes only REFERENCE-ITEM-INVALID items after adjudication with written reason.
+M2 denominator is the frozen set of valid reference items for that case and is identical across conditions.
 M2 numerator includes only RECOVERED-CORRECTLY-CONNECTED.
 
 A citation to a source does not count if the system fails to connect the material evidence to the proposition for which it matters.
@@ -58,7 +58,7 @@ Raw ratings are immutable. Adjudicated ratings are stored separately.
 
 ## Missingness
 
-A missing system output remains a failure on completion-dependent metrics. A corrupt packet or inaccessible reference evidence is NOT-RATABLE and invokes the preregistered integrity rule rather than being silently excluded.
+A wholly missing condition output is assigned M1 = 1 and M2 = 0 for that case. If packet corruption or inaccessible evidence prevents valid scoring for any condition, the affected case is non-ratable for that primary metric across all compared conditions; condition-specific deletion is forbidden. If more than 3 of 60 cases are non-ratable for either primary metric, the terminal benchmark status is INDETERMINATE. At 3 or fewer, use complete paired cases for that metric, report the count/reasons, and report the preregistered worst-case sensitivity analysis. NOT-RATABLE units therefore never disappear from a denominator without a case-level integrity disposition.
 
 ## Prohibitions
 
