@@ -68,11 +68,11 @@ Disposition: `IRRELEVANT_FALSE_POSITIVE`.
 
 Source: Mariano Giaquinta, *Growth conditions and regularity, a counterexample*, *Manuscripta Mathematica* 59 (1987), DOI `10.1007/BF01158049`.
 
-Primary institutional record checked: https://ricerca.sns.it/handle/11384/116
+Primary institutional source record and abstract checked: https://ricerca.sns.it/handle/11384/116
 
-Source result: the paper gives a variational/PDE regularity counterexample showing the necessity, in the paper's sense, of growth conditions for local regularity of minimizers.
+Source result: the institutional abstract states that the paper shows the relevant growth conditions are necessary for local regularity of minimizers; the record identifies the result as a variational/PDE regularity counterexample.
 
-Adversarial FAR reconstruction: the source supplies no FAR observation contract, no exact representation relation, no quotient construction, and no behavior-factorization countermodel. Its regularity result is mathematically unrelated to the exact FAR-CORE premises and conclusions.
+Adversarial FAR reconstruction: the candidate's stated theorem/result is wholly in variational/PDE regularity. The inspected primary material does not instantiate a FAR observation contract, exact representation relation, quotient construction, or behavior-factorization witness. The disposition rests on that subject-and-premise mismatch; it does not assert an exhaustive inventory of uninspected full-text results.
 
 Disposition: `IRRELEVANT_FALSE_POSITIVE`.
 
@@ -92,11 +92,11 @@ Disposition: `IRRELEVANT_FALSE_POSITIVE`.
 
 Source: Patricia Bauman, *Equivalence of the Green's functions for diffusion operators in R^n: a counterexample*, *Proceedings of the American Mathematical Society* 91(1) (1984), DOI `10.1090/S0002-9939-1984-0735565-4`.
 
-Primary publication identified through the DOI and journal record.
+Primary publication identity was cross-checked against the DOI/journal record, and an author-uploaded copy of the article was inspected.
 
 Source result: Bauman constructs a second-order uniformly elliptic diffusion operator with continuous coefficients for which a previously available Green-function equivalence/proportionality result does not extend from divergence-form operators; the example can produce a Green's function locally unbounded away from the pole.
 
-Adversarial FAR reconstruction: `equivalence` here is analytic equivalence/proportionality of Green's functions for elliptic operators. It is not FAR's behavioral observational-equivalence relation induced by a fixed exact contract. The paper supplies no witness satisfying any FAR-CORE theorem's premises while negating its conclusion.
+Adversarial FAR reconstruction: `equivalence` here is analytic equivalence/proportionality of Green's functions for elliptic operators. It is not FAR's behavioral observational-equivalence relation induced by a fixed exact contract. The inspected article supplies no witness satisfying any FAR-CORE theorem's premises while negating its conclusion.
 
 Disposition: `IRRELEVANT_FALSE_POSITIVE`.
 
@@ -104,11 +104,11 @@ Disposition: `IRRELEVANT_FALSE_POSITIVE`.
 
 Source: Gianluca Barbon, *Debugging of Behavioural Models using Counterexample Analysis*, dissertation record DOI `10.70675/b5b35f21z02ffz4568z9d93z2e0068cc54e5`; closely corresponding published work by Barbon, Vincent Leroy, and Gwen Salaün, *IEEE Transactions on Software Engineering* 47(6), DOI `10.1109/TSE.2019.2915303`.
 
-Primary research-group publication/full-text record checked through the CONVECS/Inria publication archive and HAL record `hal-02145610`.
+The exact dissertation identity and research-group full-text listing were checked through the CONVECS/Inria publication archive (PhD thesis, Université Grenoble Alpes, December 2018). The corresponding IEEE/HAL work (`hal-02145610`) was used only as corroboration for the counterexample-analysis method, not as a substitute for the dissertation's identity.
 
 Source result: the work improves model-checking debugging by analysing counterexamples in behavioural models, identifying actions near transitions between erroneous and correct behavior, and abstracting/simplifying counterexamples to expose likely bug sources.
 
-Adversarial FAR reconstruction: the work is adjacent to behavioral modelling, abstraction, and counterexample analysis, but it does not state a general sufficiency theorem or observational-quotient minimality theorem. Its counterexamples are model-checker traces witnessing violation of temporal properties. No source result provides an exact FAR contract in which factorization fails despite sufficiency, a smaller exact representation than the observational quotient, or any countermodel to FAR-CORE-003–014.
+Adversarial FAR reconstruction: the work is adjacent to behavioral modelling, abstraction, and counterexample analysis, but the inspected primary/corroborating material does not state a general sufficiency theorem or observational-quotient minimality theorem. Its counterexamples are model-checker traces witnessing violation of temporal properties. No reviewed result provides an exact FAR contract in which factorization fails despite sufficiency, a smaller exact representation than the observational quotient, or a countermodel to FAR-CORE-003–014.
 
 Disposition: `ADJACENT_NO_CONTRADICTION`.
 
@@ -137,6 +137,8 @@ The replication pass used the following fail-closed witness tests:
 - for `FAR-CORE-003`, require the stated action/test-closure premises together with a failure of action compatibility;
 - for `FAR-CORE-004`, require one representation proved least-informative sufficient across every varying observation contract on the governed nontrivial domain;
 - for `FAR-CORE-005`–`014`, require a witness satisfying the exact registered premises of the attacked claim and negating its exact conclusion.
+
+Where the inspected primary material itself identifies a theorem family that is plainly outside FAR's governed premises (for example, continuity of measure, variational/PDE regularity, or the Hirsch bound), the replicated screen is limited to rejecting the `FAR-RQ-009` candidate relation on that demonstrated premise mismatch. It does not convert a record/abstract-level inspection into a claim of exhaustive full-text analysis.
 
 | Candidate | Replicated premise-match result | Adjudication |
 |---|---|---|
