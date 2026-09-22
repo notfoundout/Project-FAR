@@ -65,9 +65,9 @@ ACCEPTANCE_LIFECYCLE_ANCHORS = (
     "## Observation",
     "## Discovery",
     "## Replication",
+    REPLICATION_PATH.as_posix(),
     "## Acceptance",
     "## Promotion",
-    REPLICATION_PATH.as_posix(),
 )
 
 AUDIT_PASSING_POLARITY = (
