@@ -37,19 +37,24 @@
   "stages": [
     {
       "id": "S0",
-      "name": "prepare_and_freeze",
+      "name": "prepare_reference_and_freeze",
       "allow": [
         "case_selection",
+        "reference_evidence_construction",
+        "reserve_replacement_before_execution",
         "prompt_freeze",
         "resource_freeze",
         "rubric_freeze",
         "reference_search_protocol_freeze",
+        "execution_schedule_freeze",
+        "source_binding",
         "hashing"
       ],
       "deny": [
         "condition_execution",
         "condition_output_inspection",
-        "outcome_adjudication"
+        "outcome_adjudication",
+        "unblinding"
       ],
       "freeze_before_next": true,
       "unblinding": false
@@ -65,21 +70,24 @@
       "deny": [
         "condition_comparison",
         "adjudication",
+        "reference_set_mutation",
         "threshold_changes",
-        "corpus_changes_except_preregistered_integrity_replacement"
+        "corpus_changes"
       ],
       "freeze_before_next": true,
       "unblinding": false
     },
     {
       "id": "S2",
-      "name": "reference_evidence_and_blinded_adjudication",
+      "name": "blinded_adjudication",
       "allow": [
-        "bounded_reference_evidence_construction",
         "blinded_scoring",
-        "third_rater_adjudication"
+        "third_rater_adjudication",
+        "blinding_diagnostics"
       ],
       "deny": [
+        "reference_evidence_construction",
+        "reference_set_mutation",
         "condition_identity_disclosure",
         "threshold_changes",
         "post_hoc_confirmatory_metrics"
@@ -99,6 +107,7 @@
       "deny": [
         "retroactive_exclusions",
         "threshold_changes",
+        "reference_set_mutation",
         "claim_promotion"
       ],
       "freeze_before_next": true,
@@ -126,6 +135,12 @@
       "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "role": "preregistration",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/freeze-contract-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "freeze_contract_pending_freeze_hash",
       "verify_current_path": true
     },
     {
@@ -190,13 +205,13 @@
         "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"
       ]
     ],
-    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the harness, corpus, prompts, tool versions, hashes, and environment are frozen and validation passes."
+    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the complete freeze-contract bundle, source bindings, corpus, reference evidence, prompts, environment, schedule, hashes, and adjudicator declarations are frozen and validation passes."
   },
   "limitations": [
-    "Prepared, not frozen: corpus, prompts, resource budgets, tool/model versions, execution schedule, adjudicators, rubric, and evidence-reference search protocol remain unset.",
-    "Zero SHA-256 placeholders mark prepared-only artifacts and must be replaced with exact hashes after the preregistration text is final and before any condition execution.",
+    "Prepared, not frozen: corpus and reserve frame, reference-evidence sets, prompt bytes, resource budgets, tool/model snapshot, execution schedule, adjudicators, source bindings, mutation configuration, and evidence-search configuration remain unset.",
+    "Zero SHA-256 placeholders mark prepared-only static artifacts and must be replaced with exact hashes before any condition execution.",
+    "The transition to frozen is governed by freeze-contract-v0.1.md and requires generated pre-execution artifacts plus source_manifest bindings; editing status alone cannot authorize execution.",
     "No external-independence claim follows from project-authored preparation.",
-    "No benchmark result exists at prepared status.",
-    "Exact preregistration hashes are intentionally populated only by the later freeze commit, after all merge-review edits are complete and before any benchmark execution."
+    "No benchmark result exists at prepared status."
   ]
 }
