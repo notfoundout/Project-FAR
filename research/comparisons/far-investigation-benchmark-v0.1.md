@@ -36,7 +36,7 @@ A workflow that must preserve, at minimum:
 10. falsification conditions;
 11. replayable investigation record.
 
-The FAR condition must use only currently governed Project FAR mechanisms. This preregistration creates no new theory authority.
+Condition F must execute the canonical Project FAR workflow and its governed contract-discovery/factorization machinery as specified in `condition-contracts-v0.1.md`. This preregistration creates no new theory authority.
 
 ### Baseline B0 — direct answer
 
@@ -54,21 +54,25 @@ The same underlying model receives a conventional fact-checking workflow: identi
 
 For each case and system:
 
-- identical model family and version where technically possible;
+- identical immutable model identifier or provider snapshot where technically available;
 - identical retrieval/tool access;
-- identical source-date cutoff;
+- identical source cutoff and source-version admissibility rule;
 - identical maximum wall-clock budget;
-- identical maximum model-token budget within a preregistered tolerance;
-- identical number of permitted retry/research rounds;
+- identical maximum model-output-token ceiling;
+- identical retrieval/tool-call ceiling;
+- identical retry allowance;
+- identical output-size ceiling;
 - no cross-condition reuse of hidden reasoning or intermediate artifacts.
 
-Any resource mismatch is recorded and the affected pair is excluded from confirmatory analysis unless the preregistered tolerance permits it.
+If the provider exposes only a rolling model alias, that limitation and any available provider fingerprint must be frozen in `environment-lock.json`. A detectable model/tool/configuration drift outside the frozen tolerance is an integrity mismatch rather than an unrecorded substitution.
+
+Any resource mismatch is recorded and handled only under the frozen mismatch rule. No outcome-aware resource exclusion is permitted.
 
 ## 5. Corpus
 
 Target: 60 cases.
 
-The corpus is frozen before system execution and stratified across at least six domains, with 10 cases per domain:
+The final corpus is frozen before system execution and stratified across exactly six domains, with 10 cases per domain:
 
 - public policy / law;
 - health or biomedical claims;
@@ -85,7 +89,8 @@ Each case must:
 - permit more than a trivial single-source lookup;
 - have enough public evidence for a competent investigator to make progress;
 - contain at least one plausible opportunity for evidence omission, interpretation error, or inference error;
-- avoid requiring private or inaccessible evidence for the primary adjudication.
+- avoid requiring private or inaccessible evidence for the primary adjudication;
+- yield at least one valid material reference-evidence item under the frozen reference-search protocol before S1.
 
 ### Exclusion criteria
 
@@ -97,15 +102,15 @@ Exclude cases whose correct resolution depends primarily on:
 - a single arithmetic or dictionary lookup;
 - a claim already present in Project FAR development examples or used to tune the protocol.
 
-The case selector freezes only prompts and admissibility metadata. It does not prepare gold conclusions.
+The case selector records prompts and admissibility metadata but does not prepare gold conclusions. Selection, reserve replacement, case IDs, and exact normalization are governed by `case-selection-protocol-v0.1.md` and `freeze-contract-v0.1.md`.
 
 ## 6. Independence and blinding
 
-Case selection, investigation execution, and adjudication are separated roles.
+Case selection, condition execution, reference-evidence construction, unitization, and adjudication are separated roles to the extent declared by the frozen campaign.
 
-Adjudicators receive normalized, condition-blinded investigation packets. FAR-specific field names and formatting are transformed into a common presentation layer where possible so that raters cannot infer condition merely from labels.
+Reference-evidence construction is completed and locked before any condition output exists. Adjudicators receive normalized, condition-blinded investigation packets. FAR-specific field names and formatting are transformed into a common presentation layer where possible so that raters cannot infer condition merely from labels.
 
-At least two independent adjudicators score every case. Disagreements on primary metrics are resolved by a third adjudicator under the frozen rubric. Raw pre-adjudication scores are retained.
+Two primary raters independently score every packet. Disagreements on primary metrics are resolved by a third adjudicator under the frozen rubric. Raw pre-adjudication scores are retained.
 
 Project-authored adjudication is insufficient for an external-independence claim. Any run lacking externally independent adjudication must be labeled internal.
 
@@ -119,23 +124,23 @@ A material inference is unsupported when the stated conclusion does not follow a
 
 Score per case:
 
-`unsupported material inference steps / all material inference steps`
+`unsupported material inference steps / all ratable material inference steps`
 
-Lower is better.
+Lower is better. A non-missing packet with no ratable material inferential step is a scoring failure handled by the missingness rule; it is not assigned M1 = 0.
 
-Primary gate: for every confirmatory baseline, FAR must have a negative observed mean paired difference in case-level M1 rate; the Holm-adjusted two-sided paired sign-flip permutation test on the **mean paired difference** must reject at family-wise α = 0.05; and the Hodges-Lehmann paired location-shift estimate (FAR minus baseline) must be ≤ -0.05. Lower values favor FAR on this metric.
+Primary gate: for every confirmatory baseline, FAR must have a negative observed mean paired difference in case-level M1 rate; the Holm-adjusted two-sided paired sign-flip permutation test on the **mean paired difference** must reject at family-wise α = 0.05; and the paired Hodges-Lehmann location estimate (FAR minus baseline) must be ≤ -0.05. The exact Hodges-Lehmann, permutation, randomization, and tie rules are frozen in Section 11 and `analysis-parameters-v0.1.json`.
 
 ### M2 — Evidence coverage
 
-Before adjudicators inspect system outputs, an evidence-reference panel constructs a bounded reference set of material evidence items for each case using a separately frozen search protocol.
+Before any condition run, a firewalled evidence-reference panel constructs and locks a bounded reference set of valid material evidence items for every final case using the frozen reference-search protocol. Every final case must have a positive M2 denominator before S1 begins.
 
 Score per case:
 
-`material reference evidence recovered and correctly connected / material reference evidence in bounded reference set`
+`material reference evidence recovered and correctly connected / frozen valid material reference evidence`
 
-Evidence that is merely cited but attached to the wrong proposition does not count.
+Evidence that is merely cited but attached to the wrong proposition does not count. Exact connection rules are frozen in `adjudication-rubric-v0.1.md`.
 
-Primary gate: FAR must be non-inferior to each confirmatory baseline under an absolute evidence-coverage margin Δ = 0.05. For each paired comparison, the lower bound of the 95% bootstrap confidence interval for mean coverage difference (FAR minus baseline) must be greater than -0.05.
+Primary gate: FAR must be non-inferior to each confirmatory baseline under an absolute evidence-coverage margin Δ = 0.05. For each paired comparison, the frozen one-sided 95% bootstrap lower bound for mean coverage difference (FAR minus baseline) must be strictly greater than -0.05.
 
 Both M1 and M2 gates are required for the primary hypothesis to survive.
 
@@ -176,7 +181,7 @@ Each material defect is assigned one primary class:
 
 ## 10. Adversarial controls
 
-The benchmark includes sealed mutations of completed investigation packets. Mutations are generated only after the original corpus is frozen and must not alter the underlying case prompt.
+The benchmark includes sealed mutations of completed investigation packets. The exact mutation configuration and deterministic generation/sealing rule are frozen before S1; the mutations themselves are derived from completed packets only after the relevant originals exist. They must not alter the underlying case prompt.
 
 Mutation families:
 
@@ -194,49 +199,58 @@ Detection of these mutations is evaluated separately from natural-case performan
 - Unit of analysis: case.
 - Comparisons: paired by case.
 - Confirmatory baselines: B0, B1, B2.
-- Primary family: M1 comparisons plus the M2 non-inferiority gate.
-- M1 statistic is the arithmetic mean of the 60 case-level paired differences \`d_i = M1_FAR,i - M1_baseline,i\` for each baseline. Under the paired sign-flip null, independently multiply every nonzero \`d_i\` by +1 or -1; zero differences remain zero. The two-sided p-value is the proportion of permuted statistics whose absolute value is at least the absolute observed statistic.
-- Enumerate all sign assignments when the number of nonzero pairs is ≤ 20. Otherwise draw 100,000 sign vectors from the seeded generator (seed 20260922) and calculate the Monte Carlo p-value as \`(1 + extreme_draws) / (1 + 100000)\`.
-- Apply Holm's step-down correction to the three M1 baseline p-values at family-wise α = 0.05; ties in raw p-values are ordered B0, then B1, then B2 for deterministic reporting, without changing Holm thresholds.
-- M1 effect-size floor: Hodges-Lehmann paired median-difference estimate ≤ -0.05 for every confirmatory baseline.
-- M2 non-inferiority margin: absolute evidence-coverage difference Δ = 0.05; use 10,000 paired bootstrap resamples with seed 20260922 and require the 95% lower confidence bound for FAR minus each baseline to exceed -0.05.
-- Report paired mean and median differences, percentile bootstrap confidence intervals, and raw per-case values in addition to confirmatory decisions.
-- All exclusions are reported both before and after exclusion.
-- A wholly missing condition output receives M1 = 1 and M2 = 0 for that case. A packet corruption or inaccessible evidence event that prevents valid scoring for any condition in a case makes the entire case pair non-ratable for that affected primary metric. If more than 3 of 60 cases (5%) are non-ratable for either primary metric, the benchmark is INDETERMINATE. At 3 or fewer, the affected metric comparison uses complete paired cases only and must report both the missingness count and a worst-case sensitivity analysis. No condition-specific deletion is permitted.
+- Primary M1 family: three FAR-versus-baseline comparisons with Holm family-wise control at α = 0.05. M2 is a required co-primary non-inferiority gate against every confirmatory baseline; all M1 and M2 requirements must pass for SURVIVES.
+- For each baseline, define case-level M1 paired differences `d_i = M1_FAR,i - M1_baseline,i` over the complete paired cases sorted by `case_id`. The M1 test statistic is the arithmetic mean of the `d_i` values.
+- Under the paired sign-flip null, independently multiply each nonzero `d_i` by +1 or -1; zero differences remain zero. Enumerate every sign assignment when the number of nonzero pairs is ≤ 20. Otherwise generate exactly 100,000 deterministic sign vectors. For draw `r >= 1`, case `case_id`, and baseline ID, the sign is +1 when the low-order bit of `SHA256(UTF8("20260922|M1|" + baseline + "|" + decimal(r) + "|" + case_id))` is 0, otherwise -1.
+- The exact two-sided permutation p-value is the fraction of all sign assignments whose absolute statistic is at least the absolute observed statistic. The Monte Carlo p-value is `(1 + extreme_draws) / (1 + 100000)` under the same extreme rule.
+- Apply Holm's step-down correction to the three M1 raw p-values. Raw p-value ties are ordered B0, then B1, then B2 for deterministic reporting; the tie order does not change the Holm thresholds.
+- The paired Hodges-Lehmann estimator is the median of all Walsh averages `(d_i + d_j) / 2` for `i <= j`. If the count of Walsh averages is even, the median is the arithmetic mean of the two central sorted values. The M1 effect-size requirement is Hodges-Lehmann ≤ -0.05 for every baseline, with observed mean `d_i < 0` for every baseline.
+- For M2, define complete-case paired differences `q_i = M2_FAR,i - M2_baseline,i`, sorted by `case_id`. Each bootstrap draw resamples `n` paired case indices with replacement and computes the arithmetic mean. For draw `r >= 1` and sample position `p = 1..n`, use index `integer(SHA256(UTF8("20260922|M2|" + baseline + "|" + decimal(r) + "|" + decimal(p))), 16) mod n` into the sorted complete-pair list. Generate exactly 10,000 bootstrap statistics.
+- Sort the 10,000 M2 bootstrap statistics ascending. The frozen one-sided 95% lower bound is element `ceil(0.05*N)` under 1-based indexing; the frozen one-sided 95% upper bound is element `ceil(0.95*N)`; `N = 10000`. Non-inferiority requires the lower bound > -0.05 for every baseline. Directional M2 falsification requires an upper bound < -0.05 for at least one baseline.
+- Report paired mean and median differences, the frozen Hodges-Lehmann estimate, raw and Holm-adjusted M1 p-values, frozen M2 bounds, raw per-case values, and all exclusions/missingness.
+- A wholly missing condition output receives M1 = 1 and M2 = 0 for that case. Packet corruption, inaccessible evidence, or failure to produce a ratable M1 unit makes the entire case non-ratable for that affected metric across all conditions. Condition-specific deletion is forbidden.
+- If more than 3 of 60 cases are non-ratable for either primary metric, status is INDETERMINATE. At 3 or fewer, run the confirmatory analysis on complete pairs and the frozen sensitivity analysis: for each non-ratable case, M1 worst-case for FAR is FAR=1/baseline=0 and best-case is FAR=0/baseline=1; M2 worst-case is FAR=0/baseline=1 and best-case is FAR=1/baseline=0.
+- SURVIVES requires the complete-pair gates to pass **and** the worst-case-for-FAR sensitivity analysis to preserve every M1 and M2 primary gate. If complete-pair gates pass but worst-case sensitivity reverses any gate, status is INDETERMINATE. Sensitivity analysis cannot rescue a failed complete-pair gate.
 - No post-hoc subgroup becomes confirmatory.
-- These numerical parameters are frozen by this preregistration. The execution manifest must reproduce them byte-for-byte before the first system run.
+- These numerical and algorithmic parameters are frozen by this preregistration and `analysis-parameters-v0.1.json`. Any change requires a new benchmark version before execution.
 
-## 12. Leakage controls
+## 12. Leakage and source-cutoff controls
 
-Before execution:
+Before S1:
 
 - hash every case prompt;
-- hash the complete corpus manifest;
-- record model/version identifiers;
-- record all system prompts;
+- hash the complete corpus and reserve manifests;
+- record immutable model/version identifiers or the strongest available provider fingerprint;
+- record exact system/developer/user prompt bytes;
 - record tool/retrieval configuration;
-- record source cutoff;
+- record source cutoff and source-version admissibility rule;
 - record resource budgets;
-- record adjudication rubric and mutation generator version.
+- record adjudication rubric and mutation generator/configuration;
+- record the complete reference-evidence manifest;
+- record the exact 240-run execution schedule and session-isolation policy.
 
-Cases with demonstrated training/tuning leakage from Project FAR development are removed before unblinding and replaced under the frozen selection protocol.
+Cases with demonstrated Project FAR development/tuning leakage are excluded before final freeze and replaced under the deterministic reserve protocol. After S1 begins, the confirmatory corpus cannot be changed.
 
-## 13. Required artifacts
+For mutable web sources, only content demonstrably existing by the frozen source cutoff is admissible. Materially updated living pages require an archived/versioned snapshot at or before the cutoff.
 
-An executable campaign must produce:
+## 13. Required artifacts and freeze
 
-- `manifest.json`;
-- `cases.jsonl`;
-- `conditions/` frozen prompts/configuration;
-- `runs/` raw outputs and tool traces;
-- `reference-evidence/` bounded evidence sets;
-- `adjudication/` blinded raw ratings and adjudications;
-- `mutations/` sealed adversarial controls;
-- `metrics.csv`;
-- `analysis.json`;
-- `report.md`;
-- `checksums.sha256`;
-- environment and dependency lock information sufficient for replay.
+The normative transition from `prepared` to `frozen` is defined by `research/comparisons/far-investigation-benchmark-v0.1/freeze-contract-v0.1.md` and enforced by `tools/far_investigation_benchmark.py`.
+
+At minimum, the frozen campaign binds:
+
+- the preregistration and all static benchmark protocols/configuration;
+- the complete candidate frame, final 60-case corpus, and ordered reserves;
+- exact condition prompt bytes;
+- the 240-run execution schedule;
+- reference-search configuration and the locked positive-denominator reference-evidence manifest;
+- model/provider/tool/environment lock and resource ceilings;
+- adjudicator/evaluator declarations;
+- mutation configuration;
+- benchmark validator plus canonical FAR workflow/schema source bindings;
+- SHA-256 for every bound artifact and source.
+
+Execution outputs then add `runs/`, blinded adjudication records, mutations, `metrics.csv`, `analysis.json`, `report.md`, checksums, and sufficient environment/dependency information for replay.
 
 Every result row must bind to case hash, condition hash, model identifier, run identifier, evidence cutoff, and output hash.
 
@@ -247,21 +261,22 @@ Every result row must bind to case hash, condition hash, model identifier, run i
 The primary hypothesis survives this benchmark only if:
 
 1. FAR passes the M1 superiority gate against all confirmatory baselines;
-2. FAR passes the M2 evidence-coverage non-inferiority gate;
-3. no integrity failure invalidates the paired comparison;
-4. adjudication independence is reported at its actual class.
+2. FAR passes the M2 evidence-coverage non-inferiority gate against all confirmatory baselines;
+3. the worst-case-for-FAR sensitivity analysis preserves every primary gate when 1–3 cases are non-ratable;
+4. no integrity failure invalidates the paired comparison;
+5. adjudication independence is reported at its actual class.
 
 ### NOT SUPPORTED AT TESTED SCOPE
 
-If either confirmatory gate is not passed, but the data do not meet a separately preregistered directional inferiority criterion, report the primary hypothesis as **NOT SUPPORTED AT TESTED SCOPE**. Failure to reject or failure to establish non-inferiority is not itself falsification.
+If either confirmatory gate is not passed, but the data do not meet a separately preregistered directional falsification criterion, report the primary hypothesis as **NOT SUPPORTED AT TESTED SCOPE**. Failure to reject or failure to establish non-inferiority is not itself falsification.
 
 ### FALSIFIED AT TESTED SCOPE
 
-Reserve **FALSIFIED AT TESTED SCOPE** for a directional result that affirmatively contradicts the hypothesis: FAR has a Hodges-Lehmann M1 location-shift estimate ≥ +0.05 against at least one confirmatory baseline with the corresponding Holm-adjusted two-sided permutation test significant at family-wise α = 0.05, or the 95% bootstrap **upper** confidence bound for M2 (FAR minus a baseline) is < -0.05. Report the exact baseline(s) and tested scope.
+Reserve **FALSIFIED AT TESTED SCOPE** for an affirmative directional contradiction: against at least one confirmatory baseline, the observed M1 mean paired difference is > 0, the frozen Hodges-Lehmann estimate is ≥ +0.05, and the corresponding Holm-adjusted two-sided M1 test is significant at family-wise α = 0.05; or the frozen one-sided 95% M2 upper bound for FAR minus that baseline is < -0.05. Report the exact baseline(s) and tested scope.
 
 ### INDETERMINATE
 
-Use INDETERMINATE when execution, integrity, or missingness failures prevent the frozen decision rule from being applied, including primary-metric non-ratability above 5% of cases. INDETERMINATE must not be rewritten as support or falsification.
+Use INDETERMINATE when execution, integrity, or missingness prevents the frozen rule from supporting or contradicting the hypothesis, including primary-metric non-ratability above 3/60 or a complete-pair SURVIVES result that fails the frozen worst-case sensitivity requirement. INDETERMINATE must not be rewritten as support or falsification.
 
 ## 15. Prohibited promotions
 
@@ -285,6 +300,6 @@ Formal proof engines, retrieval systems, frontier models, provenance systems, an
 
 ## 17. Execution gate
 
-This document is a Research preregistration. It authorizes no claim promotion. Before first execution, the machine-readable campaign manifest must bind the exact corpus, prompts, model/tool versions, adjudication rubric, resource limits, evidence-reference search protocol, and hashes. Section 11's numerical parameters are already frozen here and must be reproduced without alteration.
+This document is a Research preregistration. It authorizes no claim promotion. Before the first condition run, the campaign must satisfy `freeze-contract-v0.1.md` and pass the fail-closed validator as `status = frozen`. That requires the exact final corpus and reserves, locked reference evidence, prompt bytes, model/tool/environment snapshot, resource limits, execution schedule, adjudicator declarations, mutation configuration, source bindings, and all required hashes.
 
-No benchmark result may be reported as confirmatory if those values were chosen after observing condition outputs.
+A status edit without the complete validated freeze bundle does not authorize execution. No benchmark result may be reported as confirmatory if any confirmatory parameter or required freeze artifact was chosen or altered after condition outputs existed.
