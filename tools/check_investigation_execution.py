@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 from pathlib import Path
 
@@ -12,6 +13,31 @@ ROOT = Path(__file__).resolve().parents[1]
 EXECUTIONS = ROOT / "research/validation/executions"
 PASS_RESULTS = {"pass", "passed"}
 COMPLETE_STATES = {"complete", "completed"}
+COVERAGE_STATES = {"covered", "not_applicable"}
+MANDATORY_CLOSURE_EVIDENCE_CLASSES = (
+    "direct_primary_evidence",
+    "opposing_disconfirming_evidence",
+    "measurement_data_quality",
+    "denominator_directness_construct_alignment",
+    "alternative_explanations",
+    "surviving_narrower_propositions",
+    "residual_uncertainty",
+)
+MANDATORY_CLOSURE_INVENTORIES = (
+    "strongest_opposing_evidence",
+    "measurement_and_classification_limits",
+    "alternative_explanations",
+    "surviving_narrower_propositions",
+    "residual_uncertainty",
+)
+
+# These PASS records predate FAR-POST-EVIDENCE-CLOSURE-1.0. The exemption is
+# bound to the exact historical Git blob; changing one byte activates the new
+# closure contract rather than inheriting a mutable legacy bypass.
+LEGACY_PASS_BLOBS = {
+    "research/validation/executions/VI-001.execution.yaml":
+        "8da94d4caa38170303b319769d36b0c4ced731e0",
+}
 
 
 def execution_paths(root: Path = ROOT) -> list[Path]:
@@ -68,6 +94,182 @@ def resolve_repository_artifact(root: Path, declared_path: object) -> tuple[Path
     except ValueError:
         return None, declared_path
     return artifact, None
+
+
+def git_blob_sha(path: Path) -> str:
+    raw = path.read_bytes()
+    header = f"blob {len(raw)}\0".encode("ascii")
+    return hashlib.sha1(header + raw).hexdigest()
+
+
+def is_legacy_pass_manifest(path: Path, root: Path = ROOT) -> bool:
+    try:
+        relative = path.resolve().relative_to(root.resolve()).as_posix()
+    except ValueError:
+        return False
+    expected = LEGACY_PASS_BLOBS.get(relative)
+    return expected is not None and git_blob_sha(path) == expected
+
+
+def _nonempty_text(value: object) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def _validate_evidence_refs(
+    investigation: str,
+    label: str,
+    evidence: object,
+    root: Path,
+    errors: list[str],
+) -> None:
+    if not isinstance(evidence, list) or not evidence:
+        errors.append(f"{investigation}: {label} requires a non-empty evidence list")
+        return
+    for item in evidence:
+        if not isinstance(item, dict):
+            errors.append(f"{investigation}: {label} evidence entry must be a mapping")
+            continue
+        declared_path = item.get("path")
+        artifact, invalid_path = resolve_repository_artifact(root, declared_path)
+        if invalid_path is not None:
+            errors.append(
+                f"{investigation}: {label} evidence artifact must remain within repository root: {invalid_path}"
+            )
+        elif artifact is not None and not artifact.is_file():
+            errors.append(f"{investigation}: {label} missing evidence artifact {declared_path}")
+        if not _nonempty_text(item.get("locator")):
+            errors.append(f"{investigation}: {label} evidence requires a non-empty locator")
+
+
+def _validate_inventory(
+    investigation: str,
+    name: str,
+    value: object,
+    errors: list[str],
+) -> None:
+    if not isinstance(value, dict):
+        errors.append(f"{investigation}: closure.{name} must be a mapping")
+        return
+    findings = value.get("findings")
+    if not isinstance(findings, list):
+        errors.append(f"{investigation}: closure.{name}.findings must be a list")
+        return
+    if not findings and not _nonempty_text(value.get("none_found_basis")):
+        errors.append(
+            f"{investigation}: closure.{name} is empty without a non-empty none_found_basis"
+        )
+    for finding in findings:
+        if not _nonempty_text(finding):
+            errors.append(f"{investigation}: closure.{name}.findings entries must be non-empty strings")
+
+
+def validate_closure_contract(
+    data: dict,
+    path: Path,
+    root: Path = ROOT,
+) -> list[str]:
+    """Require bounded post-evidence closure before a non-legacy PASS may be declared."""
+    investigation = str(data.get("investigation", path.stem)).strip() or path.stem
+    errors: list[str] = []
+    closure = data.get("closure")
+    if not isinstance(closure, dict):
+        return [f"{investigation}: PASS requires a closure mapping under FAR-POST-EVIDENCE-CLOSURE-1.0"]
+
+    if str(closure.get("status", "")).strip().lower() != "resolved":
+        errors.append(f"{investigation}: PASS requires closure.status resolved")
+
+    logical = closure.get("logical_disposition")
+    if not isinstance(logical, dict):
+        errors.append(f"{investigation}: closure.logical_disposition must be a mapping")
+    else:
+        if not _nonempty_text(logical.get("outcome")):
+            errors.append(f"{investigation}: closure.logical_disposition.outcome is required")
+        _validate_evidence_refs(
+            investigation,
+            "closure.logical_disposition",
+            logical.get("evidence"),
+            root,
+            errors,
+        )
+
+    search_frame = closure.get("search_frame")
+    if not isinstance(search_frame, dict):
+        errors.append(f"{investigation}: closure.search_frame must be a mapping")
+    else:
+        for field in ("scope", "stopping_rule", "evidence_cutoff"):
+            if not _nonempty_text(search_frame.get(field)):
+                errors.append(f"{investigation}: closure.search_frame.{field} is required")
+        spaces = search_frame.get("sources_or_spaces")
+        if not isinstance(spaces, list) or not spaces or any(not _nonempty_text(item) for item in spaces):
+            errors.append(
+                f"{investigation}: closure.search_frame.sources_or_spaces must be a non-empty list of strings"
+            )
+
+    evidence_classes = closure.get("evidence_classes")
+    if not isinstance(evidence_classes, dict):
+        errors.append(f"{investigation}: closure.evidence_classes must be a mapping")
+    else:
+        for class_id in MANDATORY_CLOSURE_EVIDENCE_CLASSES:
+            entry = evidence_classes.get(class_id)
+            if not isinstance(entry, dict):
+                errors.append(f"{investigation}: closure.evidence_classes.{class_id} is required")
+                continue
+            state = str(entry.get("status", "")).strip().lower()
+            if state not in COVERAGE_STATES:
+                errors.append(
+                    f"{investigation}: closure.evidence_classes.{class_id}.status must be covered or not_applicable"
+                )
+                continue
+            if state == "covered":
+                _validate_evidence_refs(
+                    investigation,
+                    f"closure.evidence_classes.{class_id}",
+                    entry.get("evidence"),
+                    root,
+                    errors,
+                )
+            elif not _nonempty_text(entry.get("reason")):
+                errors.append(
+                    f"{investigation}: closure.evidence_classes.{class_id} not_applicable requires a reason"
+                )
+
+    for inventory in MANDATORY_CLOSURE_INVENTORIES:
+        _validate_inventory(investigation, inventory, closure.get(inventory), errors)
+
+    interpretive = closure.get("interpretive_closure")
+    if not isinstance(interpretive, dict):
+        errors.append(f"{investigation}: closure.interpretive_closure must be a mapping")
+    else:
+        if str(interpretive.get("status", "")).strip().lower() != "complete":
+            errors.append(f"{investigation}: closure.interpretive_closure.status must be complete")
+        _validate_evidence_refs(
+            investigation,
+            "closure.interpretive_closure",
+            interpretive.get("evidence"),
+            root,
+            errors,
+        )
+
+    saturation = closure.get("terminal_saturation")
+    if not isinstance(saturation, dict):
+        errors.append(f"{investigation}: closure.terminal_saturation must be a mapping")
+    else:
+        if str(saturation.get("status", "")).strip().lower() != "complete":
+            errors.append(f"{investigation}: closure.terminal_saturation.status must be complete")
+        new_findings = saturation.get("new_material_findings")
+        if isinstance(new_findings, bool) or not isinstance(new_findings, int) or new_findings != 0:
+            errors.append(
+                f"{investigation}: closure.terminal_saturation.new_material_findings must be integer 0"
+            )
+        _validate_evidence_refs(
+            investigation,
+            "closure.terminal_saturation",
+            saturation.get("evidence"),
+            root,
+            errors,
+        )
+
+    return errors
 
 
 def validate_manifest(
@@ -167,6 +369,9 @@ def validate_manifest(
             errors.append(
                 f"{investigation}: PASS with unresolved upstream dependencies: {', '.join(unresolved)}"
             )
+
+        if not is_legacy_pass_manifest(path, root):
+            errors.extend(validate_closure_contract(data, path, root))
     return errors
 
 
