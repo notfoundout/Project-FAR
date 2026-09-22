@@ -371,7 +371,7 @@ CLAIM IS FALSE
 
 ## Search completeness and stopping
 
-A deep audit must preserve the search process, not only the citations ultimately selected.
+Any audit that performs evidence retrieval must preserve the search process, not only the citations ultimately selected.
 
 `SEARCH_COVERAGE` must be able to record:
 
