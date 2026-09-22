@@ -148,21 +148,44 @@ The complete investigation should remain explicit, auditable, and reconstructibl
 
 When multiple frozen contracts were required by intake, record every per-contract outcome and the fixed cross-contract aggregate. Do not replace the aggregate with a preferred contract's result. A frozen result-relevant `Unknown` assumption must remain visible in the terminal boundary and prevents invariant promotion.
 
-A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid.
+Recording a decisive logical disposition does **not** establish that the investigation is ready to close as `Resolved`. A proposition may be settled before the surrounding evidence search, interpretation checks, and uncertainty analysis are saturated.
+
+A resolution record may state that the investigation is resolved, provisionally resolved, unresolved, suspended, incomplete, or invalid only after applying the closure policy below.
+
+---
+
+## Post-Evidence Closure Gate
+
+After Stage 9, every investigation seeking `Resolved` status must execute the [FAR Post-Evidence Closure Protocol v1.0](../../methodology/post-evidence-closure-protocol.md).
+
+The gate separates four dimensions that may not be collapsed:
+
+1. **Logical disposition** — the outcome for the exact frozen proposition and the evidence licensing it.
+2. **Evidence saturation** — bounded coverage of the required evidence classes under a declared search frame, cutoff, and stopping rule.
+3. **Interpretive closure** — testing of material alternative formulations, mechanisms, explanations, comparison classes, and narrower surviving propositions.
+4. **Residual uncertainty** — explicit recording of remaining limitations and unresolved propositions, followed by a terminal bounded saturation pass.
+
+A decisive proof, counterexample, supporting result, or refutation may settle the first dimension immediately. It does not waive the other three.
+
+Full `Resolved` closure requires coverage, or explicit reasoned non-applicability, for direct/primary evidence; strongest opposing evidence; measurement/classification/data-quality limits; denominator/base-rate/directness/construct alignment when applicable; alternative explanations; surviving narrower propositions; and residual uncertainty.
+
+The final saturation pass must be executed over the declared search frame and produce zero new material findings. Any new material source, interpretation, alternative, limitation, or surviving proposition reopens the closure analysis and requires another terminal pass after incorporation.
+
+This is bounded procedural saturation, not an open-world completeness claim. `Not found` does not become `does not exist` without a separate exhaustive or formal-completeness argument.
 
 ---
 
 ## Optional Stage Policy
 
-A workflow stage may be marked `Not applicable` only when the investigation record explicitly states why the stage is not applicable.
+A workflow stage or post-evidence evidence class may be marked `Not applicable` only when the investigation record explicitly states why it is not applicable.
 
-A stage shall not be silently omitted.
+A required stage or closure obligation shall not be silently omitted.
 
 ---
 
 ## Iteration
 
-An investigation may return to any previous stage whenever new representations, revised interpretations, modified criteria, or additional reasoning require further analysis.
+An investigation may return to any previous stage whenever new representations, revised interpretations, modified criteria, additional evidence, or additional reasoning require further analysis.
 
 The workflow therefore supports iterative refinement rather than requiring a strictly linear process.
 
@@ -175,19 +198,21 @@ Every return to an earlier stage should record:
 
 A revision that changes any frozen intake field invalidates the intake freeze and all downstream evaluations bound to that freeze.
 
+A terminal saturation pass that yields any new material finding also invalidates full closure until that finding is incorporated and the closure gate is rerun.
+
 ---
 
 ## Closure Policy
 
 A FAR investigation may close with one of the following statuses:
 
-- `Resolved` — a resolution has been recorded under the stated resolution rule.
-- `Provisionally resolved` — a resolution has been recorded, but limitations remain.
+- `Resolved` — a logical disposition has been recorded under the stated resolution rule **and** the post-evidence closure gate has passed, including a zero-new-material-finding terminal saturation pass.
+- `Provisionally resolved` — a defensible logical disposition has been recorded, but one or more post-evidence closure dimensions remain incomplete, constrained, or unsaturated. The unfinished dimensions must be explicit, and this status must not be represented as closure-complete.
 - `Unresolved` — no resolution is currently available under the stated method.
-- `Suspended` — the investigation is paused pending additional representations, interpretations, criteria, or reasoning.
-- `Incomplete` — required methodological artifacts are missing.
+- `Suspended` — the investigation is paused pending additional representations, interpretations, criteria, evidence, or reasoning.
+- `Incomplete` — required methodological artifacts or closure obligations are missing.
 - `Invalid` — the investigation violates core FAR methodology or cannot be reconstructed.
 
 Closure status records the methodological state of the investigation.
 
-It does not assert that the resolution is true, optimal, final, or unique.
+It does not assert that the resolution is true, optimal, final, unique, or complete outside the declared bounded search frame.
