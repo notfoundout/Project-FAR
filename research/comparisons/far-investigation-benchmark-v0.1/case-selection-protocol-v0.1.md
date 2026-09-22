@@ -32,14 +32,19 @@ For each stratum:
 2. Capture the first 50 unique candidate claims in retrieval order after mechanical deduplication.
 3. Record discovery URL/source identity, retrieval rank, publication date, verbatim claim text, and discovery-query ID.
 4. Apply eligibility rules without researching the truth of the claim.
-5. Assign each eligible candidate a deterministic selection key:
-   `SHA256(corpus_seed || stratum_id || normalized_claim || source_identity)`.
+5. Assign each eligible candidate a deterministic selection key using the exact encoding below.
 6. Sort eligible candidates lexicographically by selection key.
 7. Accept the first 10.
 8. Retain the next 10 eligible candidates as ordered replacements.
 9. If fewer than 20 are eligible, execute the next preregistered discovery-query batch; never hand-pick replacements.
 
 `corpus_seed = 20260922`.
+
+### Selection-key encoding
+
+Normalize \`claim_text\` and \`source_identity\` identically: Unicode NFC; replace CRLF and CR with LF; trim leading/trailing Unicode whitespace; collapse every maximal internal Unicode-whitespace run to one ASCII space; preserve case and punctuation. \`stratum_id\` is the fixed ASCII identifier \`S1\` through \`S6\`. Encode every field as UTF-8.
+
+Construct the byte string by length-prefixing each field in decimal ASCII: \`len(seed):seed|len(stratum):stratum|len(claim):claim|len(source):source\`, where each \`len\` is the number of UTF-8 bytes and \`|\` is literal byte 0x7C. The selection key is the lowercase hexadecimal SHA-256 digest of that byte string. Mechanical deduplication uses the pair \`(normalized_claim, normalized_source_identity)\` exactly. The freeze configuration must contain a test vector generated from this rule before discovery begins.
 
 ## Eligibility screen
 
