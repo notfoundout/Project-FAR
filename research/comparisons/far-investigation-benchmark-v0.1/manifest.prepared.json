@@ -6,7 +6,8 @@
     "repository": "notfoundout/Project-FAR",
     "commit": "83e753cf058b6fff8f8f3302781fd02efc1dc108",
     "theory_or_question": "FAR-RQ-005 / UQ-T35: Does use of the contract/factorization audit improve real investigations?",
-    "hashes": {}
+    "hashes": {},
+    "tree": "691d9a798663829b6dd627a2cb9827517e1eb129"
   },
   "evaluators": [
     {
@@ -126,6 +127,36 @@
       "sha256": "TO_BE_COMPUTED_FROM_FINAL_PREREGISTRATION_BEFORE_FREEZE",
       "role": "preregistration",
       "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/case-selection-protocol-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "case_selection_protocol_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/adjudication-rubric-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "adjudication_rubric_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/reference-evidence-protocol-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "reference_evidence_protocol_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/condition-contracts-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "condition_contract_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/resource-budget-v0.1.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "resource_budget_pending_freeze_hash",
+      "verify_current_path": true
     }
   ],
   "times": {
@@ -161,34 +192,5 @@
     "No external-independence claim follows from project-authored preparation.",
     "No benchmark result exists at prepared status.",
     "Exact preregistration hashes are intentionally populated only by the later freeze commit, after all merge-review edits are complete and before any benchmark execution."
-  ],
-  "benchmark_parameters": {
-    "case_count": 60,
-    "domains": 6,
-    "cases_per_domain": 10,
-    "confirmatory_baselines": [
-      "B0",
-      "B1",
-      "B2"
-    ],
-    "m1_familywise_alpha": 0.05,
-    "m1_multiple_testing": "Holm",
-    "m1_permutation": {
-      "alternative": "two-sided",
-      "monte_carlo_permutations": 100000,
-      "seed": 20260922,
-      "use_exact_when_feasible": true
-    },
-    "m1_effect_size": {
-      "estimator": "Hodges-Lehmann paired median difference, FAR minus baseline",
-      "required_maximum": -0.05
-    },
-    "m2_noninferiority": {
-      "absolute_margin": 0.05,
-      "comparison": "FAR minus each confirmatory baseline",
-      "required_lower_95pct_bound": -0.05,
-      "bootstrap_resamples": 10000,
-      "seed": 20260922
-    }
-  }
+  ]
 }
