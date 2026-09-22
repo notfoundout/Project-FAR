@@ -131,9 +131,9 @@ def _validate_evidence_entries(
     if require_nonempty and not evidence:
         errors.append(f"{investigation}: {label} requires evidence")
         return
-    for item in evidence:
+    for index, item in enumerate(evidence, start=1):
         if not isinstance(item, dict):
-            errors.append(f"{investigation}: {label} evidence entry must be a mapping")
+            errors.append(f"{investigation}: {label} evidence entry {index} must be a mapping")
             continue
         declared_path = item.get("path")
         artifact, invalid_path = resolve_repository_artifact(root, declared_path)
@@ -145,12 +145,26 @@ def _validate_evidence_entries(
             errors.append(f"{investigation}: missing evidence artifact {declared_path}")
 
 
+def _validate_string_list(
+    *, investigation: str, label: str, value: object, errors: list[str]
+) -> None:
+    if not isinstance(value, list):
+        errors.append(f"{investigation}: {label} must be a list")
+        return
+    for index, item in enumerate(value, start=1):
+        if not isinstance(item, str) or not item.strip():
+            errors.append(f"{investigation}: {label}[{index}] must be a non-empty string")
+
+
 def _validate_recorded_list(
+    *,
     closure: dict,
     field: str,
     investigation: str,
+    root: Path,
     errors: list[str],
 ) -> None:
+    """Require substantive typed records, not list cardinality or placeholder values."""
     value = closure.get(field)
     if not isinstance(value, list):
         errors.append(f"{investigation}: evidence_closure.{field} must be a list")
@@ -160,6 +174,44 @@ def _validate_recorded_list(
         if not isinstance(basis, str) or not basis.strip():
             errors.append(
                 f"{investigation}: empty evidence_closure.{field} requires {field}_basis"
+            )
+        return
+
+    seen_ids: set[str] = set()
+    for index, record in enumerate(value, start=1):
+        label = f"evidence_closure.{field}[{index}]"
+        if not isinstance(record, dict):
+            errors.append(f"{investigation}: {label} must be a mapping")
+            continue
+
+        raw_id = record.get("id")
+        if not isinstance(raw_id, str) or not raw_id.strip():
+            errors.append(f"{investigation}: {label}.id must be a non-empty string")
+        else:
+            record_id = raw_id.strip()
+            if record_id in seen_ids:
+                errors.append(f"{investigation}: duplicate {field} record id: {record_id}")
+            seen_ids.add(record_id)
+
+        statement = record.get("statement")
+        if not isinstance(statement, str) or not statement.strip():
+            errors.append(f"{investigation}: {label}.statement must be a non-empty string")
+
+        basis = record.get("basis")
+        evidence = record.get("evidence")
+        has_basis = isinstance(basis, str) and bool(basis.strip())
+        has_evidence = isinstance(evidence, list) and bool(evidence)
+        if not has_basis and not has_evidence:
+            errors.append(
+                f"{investigation}: {label} requires a non-empty basis or evidence"
+            )
+        if evidence is not None:
+            _validate_evidence_entries(
+                investigation=investigation,
+                label=label,
+                evidence=evidence,
+                root=root,
+                errors=errors,
             )
 
 
@@ -173,9 +225,7 @@ def validate_evidence_closure(data: dict, root: Path, investigation: str) -> lis
     errors: list[str] = []
     closure = data.get("evidence_closure")
     if not isinstance(closure, dict):
-        return [
-            f"{investigation}: PASS requires evidence_closure contract {CLOSURE_CONTRACT}"
-        ]
+        return [f"{investigation}: PASS requires evidence_closure contract {CLOSURE_CONTRACT}"]
 
     if closure.get("contract") != CLOSURE_CONTRACT:
         errors.append(
@@ -201,19 +251,28 @@ def validate_evidence_closure(data: dict, root: Path, investigation: str) -> lis
                     f"{investigation}: evidence_closure.search_frame.{field} must be a non-empty string"
                 )
         for field in ("inclusion_rules", "exclusion_rules"):
-            if not isinstance(search_frame.get(field), list):
-                errors.append(
-                    f"{investigation}: evidence_closure.search_frame.{field} must be a list"
-                )
+            _validate_string_list(
+                investigation=investigation,
+                label=f"evidence_closure.search_frame.{field}",
+                value=search_frame.get(field),
+                errors=errors,
+            )
 
     for field in CLOSURE_TRUE_FIELDS:
         if closure.get(field) is not True:
             errors.append(f"{investigation}: evidence_closure.{field} must be true")
 
     for field in CLOSURE_RECORDED_LISTS:
-        _validate_recorded_list(closure, field, investigation, errors)
+        _validate_recorded_list(
+            closure=closure,
+            field=field,
+            investigation=investigation,
+            root=root,
+            errors=errors,
+        )
 
     search_classes = closure.get("evidence_search_classes")
+    executed_class_ids: set[str] = set()
     if not isinstance(search_classes, list) or not search_classes:
         errors.append(
             f"{investigation}: evidence_closure.evidence_search_classes must be a non-empty list"
@@ -226,22 +285,25 @@ def validate_evidence_closure(data: dict, root: Path, investigation: str) -> lis
                 errors.append(f"{investigation}: {label} must be a mapping")
                 continue
             raw_class_id = search_class.get("id")
+            class_id: str | None = None
             if not isinstance(raw_class_id, str) or not raw_class_id.strip():
                 errors.append(f"{investigation}: {label}.id must be a non-empty string")
-                class_id = f"<class-{index}>"
             else:
                 class_id = raw_class_id.strip()
                 if class_id in seen_class_ids:
                     errors.append(
                         f"{investigation}: duplicate evidence/search class id: {class_id}"
                     )
-                seen_class_ids.add(class_id)
+                else:
+                    seen_class_ids.add(class_id)
 
             state = str(search_class.get("status", "")).lower()
             if state == "executed":
+                if class_id is not None and class_id in seen_class_ids:
+                    executed_class_ids.add(class_id)
                 _validate_evidence_entries(
                     investigation=investigation,
-                    label=f"evidence/search class {class_id}",
+                    label=f"evidence/search class {class_id or '<invalid-id>'}",
                     evidence=search_class.get("evidence"),
                     root=root,
                     errors=errors,
@@ -250,11 +312,11 @@ def validate_evidence_closure(data: dict, root: Path, investigation: str) -> lis
                 reason = search_class.get("reason")
                 if not isinstance(reason, str) or not reason.strip():
                     errors.append(
-                        f"{investigation}: evidence/search class {class_id} NOT_APPLICABLE requires a reason"
+                        f"{investigation}: evidence/search class {class_id or '<invalid-id>'} NOT_APPLICABLE requires a reason"
                     )
             else:
                 errors.append(
-                    f"{investigation}: evidence/search class {class_id} status must be executed or not_applicable"
+                    f"{investigation}: evidence/search class {class_id or '<invalid-id>'} status must be executed or not_applicable"
                 )
 
     terminal = closure.get("terminal_saturation")
@@ -277,6 +339,56 @@ def validate_evidence_closure(data: dict, root: Path, investigation: str) -> lis
             root=root,
             errors=errors,
         )
+
+        class_results = terminal.get("class_results")
+        terminal_class_ids: set[str] = set()
+        duplicate_terminal_ids: set[str] = set()
+        if not isinstance(class_results, list):
+            errors.append(
+                f"{investigation}: evidence_closure.terminal_saturation.class_results must be a list"
+            )
+        else:
+            for index, result in enumerate(class_results, start=1):
+                label = f"evidence_closure.terminal_saturation.class_results[{index}]"
+                if not isinstance(result, dict):
+                    errors.append(f"{investigation}: {label} must be a mapping")
+                    continue
+                raw_class_id = result.get("class_id")
+                if not isinstance(raw_class_id, str) or not raw_class_id.strip():
+                    errors.append(f"{investigation}: {label}.class_id must be a non-empty string")
+                    class_id = None
+                else:
+                    class_id = raw_class_id.strip()
+                    if class_id in terminal_class_ids:
+                        duplicate_terminal_ids.add(class_id)
+                    terminal_class_ids.add(class_id)
+                if result.get("rechecked") is not True:
+                    errors.append(f"{investigation}: {label}.rechecked must be true")
+                for field in TERMINAL_ZERO_NEW_FIELDS:
+                    if result.get(field) is not False:
+                        errors.append(f"{investigation}: {label}.{field} must be false")
+                _validate_evidence_entries(
+                    investigation=investigation,
+                    label=label,
+                    evidence=result.get("evidence"),
+                    root=root,
+                    errors=errors,
+                )
+
+        for class_id in sorted(duplicate_terminal_ids):
+            errors.append(
+                f"{investigation}: duplicate terminal saturation class result: {class_id}"
+            )
+        missing_classes = sorted(executed_class_ids - terminal_class_ids)
+        unexpected_classes = sorted(terminal_class_ids - executed_class_ids)
+        if missing_classes:
+            errors.append(
+                f"{investigation}: terminal saturation missing executed classes: {', '.join(missing_classes)}"
+            )
+        if unexpected_classes:
+            errors.append(
+                f"{investigation}: terminal saturation contains non-executed classes: {', '.join(unexpected_classes)}"
+            )
 
     methodology_audit = closure.get("methodology_audit")
     if not isinstance(methodology_audit, dict):
