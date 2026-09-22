@@ -1,0 +1,27 @@
+{
+  "schema_version": "0.1",
+  "campaign_id": "FAR-INVESTIGATION-BENCHMARK-0.1",
+  "status": "FROZEN_NUMERICAL_PARAMETERS",
+  "case_count": 60,
+  "domains": 6,
+  "cases_per_domain": 10,
+  "confirmatory_baselines": ["B0", "B1", "B2"],
+  "m1": {
+    "familywise_alpha": 0.05,
+    "multiple_testing": "Holm",
+    "permutation_alternative": "two-sided",
+    "monte_carlo_permutations": 100000,
+    "seed": 20260922,
+    "use_exact_when_feasible": true,
+    "effect_estimator": "Hodges-Lehmann paired median difference, FAR minus baseline",
+    "required_effect_maximum": -0.05
+  },
+  "m2": {
+    "absolute_noninferiority_margin": 0.05,
+    "comparison": "FAR minus each confirmatory baseline",
+    "required_lower_95pct_bound_strictly_greater_than": -0.05,
+    "bootstrap_resamples": 10000,
+    "seed": 20260922
+  },
+  "authority": "Numerical parameters copied from the preregistration; changing any value requires a new benchmark version before execution."
+}
