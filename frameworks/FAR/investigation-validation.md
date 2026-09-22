@@ -68,6 +68,32 @@ Before the existing checklist, validate the following whenever the investigation
 
 Passing methodological validation does not itself prove factual premises, mathematical theorems, domain adequacy, or independent validation.
 
+## Post-Evidence Closure Validation
+
+Logical disposition and investigation closure are separate validation targets. A proof, counterexample, supported result, or other decisive atomic outcome may settle the frozen proposition without satisfying the conditions for a fully `Resolved` investigation.
+
+Any investigation claiming `Resolved` must satisfy the [FAR Post-Evidence Closure Protocol v1.0](../../methodology/post-evidence-closure-protocol.md) and record all of the following:
+
+- the exact logical disposition and evidence licensing it;
+- a bounded search frame with scope, searched sources/spaces, stopping rule, and evidence cutoff;
+- coverage of direct/primary evidence;
+- coverage of strongest opposing/disconfirming evidence;
+- coverage of measurement, classification, source-quality, or data-quality limits;
+- denominator/base-rate/directness/construct-alignment analysis when applicable, or an explicit reason it is not applicable;
+- material alternative explanations or rival hypotheses;
+- narrower propositions that survive the atomic disposition;
+- residual uncertainty;
+- evidence that materially plausible interpretations and alternatives were tested; and
+- a terminal saturation pass over the declared search frame that yielded zero new material findings.
+
+Every mandatory evidence class must be either `covered` with traceable evidence or `not_applicable` with a reason. Empty findings inventories require an explicit basis for the none-found result. Labels such as `complete`, `checked`, `exhaustive`, `saturated`, or `none found` do not certify themselves.
+
+If the terminal pass finds a new material source, interpretation, alternative, limitation, or surviving proposition, the investigation is not closure-complete. The finding must be incorporated and the closure analysis repeated before another terminal pass.
+
+`Provisionally resolved` is valid when a defensible logical disposition exists but one or more closure dimensions remain incomplete, constrained, or unsaturated. The unfinished dimensions must be explicit. `Provisionally resolved` must not be used as evidence of full closure and does not satisfy a machine execution `PASS` governed by the closure protocol.
+
+Passing this gate establishes bounded procedural saturation only. It does not establish open-world completeness, factual truth, external independence, or that no future evidence exists.
+
 ## Validation Standard
 
 A FAR investigation is methodologically valid only if its required artifacts are explicit enough to support audit, reconstruction, and review.
@@ -80,11 +106,11 @@ Validation means the investigation was conducted and recorded according to FAR m
 
 ## Optional Stage Policy
 
-A workflow stage may be marked `Not applicable` only when the investigation record states why the stage is not applicable.
+A workflow stage or post-evidence evidence class may be marked `Not applicable` only when the investigation record states why it is not applicable.
 
-No stage shall be silently omitted.
+No required stage or closure obligation shall be silently omitted.
 
-If a stage is skipped without justification, the investigation is incomplete.
+If a required stage or closure obligation is skipped without justification, the investigation is incomplete.
 
 ---
 
@@ -157,17 +183,32 @@ A completed FAR investigation should satisfy the following checks.
 
 ---
 
-### 9. Resolution or Closure Status Recorded
+### 9. Resolution or Logical Disposition Recorded
 
-- The resolution is explicitly recorded when one is produced.
-- The resolution is distinguishable from Ω, the resolution rule, and the resolution execution.
+- The resolution or atomic logical disposition is explicitly recorded when one is produced.
+- The disposition is distinguishable from Ω, the resolution rule, resolution execution, and full investigation closure.
 - If no resolution is produced, the closure status is recorded.
 - When intake produced multiple frozen contracts, the record preserves all per-contract outcomes and the deterministic cross-contract aggregate.
 - Any unresolved frozen assumption that constrains the terminal result remains explicit.
 
 ---
 
-### 10. Revision Records Preserved
+### 10. Post-Evidence Closure Recorded When `Resolved`
+
+- The logical disposition carries evidence.
+- The bounded search frame and stopping rule are explicit.
+- Every mandatory evidence class is covered or explicitly not applicable with a reason.
+- Strongest opposing evidence and material alternatives are recorded.
+- Measurement/classification limits and applicable denominator/directness/construct issues are recorded.
+- Surviving narrower propositions and residual uncertainty are recorded.
+- Interpretive closure has evidence.
+- The terminal saturation pass is evidenced and records zero new material findings.
+
+A decisive Stage 9 result without these checks is not enough for `Resolved`.
+
+---
+
+### 11. Revision Records Preserved
 
 If the investigation revisits an earlier stage, the record identifies:
 
@@ -176,11 +217,11 @@ If the investigation revisits an earlier stage, the record identifies:
 - the artifact changed;
 - the effect on later stages.
 
-Any revision to frozen intake content records the invalidation of the prior freeze and downstream evaluations.
+Any revision to frozen intake content records the invalidation of the prior freeze and downstream evaluations. Any new material finding during terminal saturation invalidates full closure until incorporated and rechecked.
 
 ---
 
-### 11. Reconstructibility Preserved
+### 12. Reconstructibility Preserved
 
 - The investigation record contains enough information for another investigator to reconstruct the reasoning process.
 - Missing artifacts are explicitly identified.
@@ -194,13 +235,13 @@ A FAR investigation may close with one of the following statuses.
 
 ### Resolved
 
-A resolution has been recorded under the stated resolution rule.
+A logical disposition has been recorded under the stated resolution rule and the mandatory post-evidence closure gate has passed, including a zero-new-material-finding terminal saturation pass.
 
 ---
 
 ### Provisionally Resolved
 
-A resolution has been recorded, but limitations, uncertainty, or unresolved issues remain.
+A defensible logical disposition has been recorded, but one or more post-evidence closure dimensions remain incomplete, constrained, or unsaturated. Those dimensions must be named explicitly.
 
 ---
 
@@ -218,7 +259,7 @@ The investigation is paused pending additional representations, interpretations,
 
 ### Incomplete
 
-Required methodological artifacts are missing.
+Required methodological artifacts or closure obligations are missing.
 
 ---
 
@@ -262,7 +303,7 @@ If the reasoning calculus changes, the investigation record must identify the ch
 
 Open-ended investigations may close as suspended or provisionally resolved.
 
-They should not be recorded as resolved unless a resolution rule has actually produced a resolution.
+They should not be recorded as resolved unless both a resolution rule has produced a disposition and the post-evidence closure gate has passed.
 
 ---
 
@@ -280,7 +321,7 @@ A FAR investigation may be classified as:
 
 ### Valid
 
-All required methodological artifacts are present or explicitly marked not applicable.
+All required methodological artifacts and applicable closure obligations are present or explicitly marked not applicable with reasons.
 
 ---
 
@@ -292,7 +333,7 @@ The investigation is mostly reconstructible, but minor artifacts require clarifi
 
 ### Incomplete
 
-Required methodological artifacts are missing.
+Required methodological artifacts or closure obligations are missing.
 
 ---
 
@@ -316,4 +357,4 @@ FARO shall not replace these validation requirements with independent criteria.
 
 Validation is structural and methodological.
 
-It does not assert truth, correctness, soundness, or completeness of the investigation's resolution.
+It does not assert truth, correctness, soundness, open-world completeness, or finality of the investigation's resolution.
