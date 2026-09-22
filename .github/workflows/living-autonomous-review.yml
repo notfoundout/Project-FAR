@@ -1,0 +1,312 @@
+name: Living Autonomous Review
+
+on:
+  schedule:
+    - cron: '13 */2 * * *'
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-autonomous-review.yml'
+      - 'tools/run_living_autonomous_review.py'
+      - 'tests/test_living_autonomous_review.py'
+      - 'research/living/autonomous-review-policy-v1.0.json'
+      - 'research/living/PROMOTION.md'
+      - 'research/living/IMPLEMENTATION.md'
+      - 'research/living/promotion-policy-v1.0.json'
+      - 'research/living/implementation-policy-v1.0.json'
+      - 'research/living/project-change-policy-v1.0.json'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Validate autonomous review contract
+        run: |
+          python -m unittest tests.test_living_autonomous_review -v
+          python -m unittest \
+            tests.test_living_research_promotion \
+            tests.test_living_project_change_obligations \
+            tests.test_living_implementation_contract -v
+          python tools/check_research_gates.py
+          python tools/repo_health_check.py --fast
+
+  review:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    concurrency:
+      group: living-research-writer
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    env:
+      SOURCE_BRANCH: automation/living-research-inbox
+      REVIEW_PREFIX: automation/living-autonomous-review-
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install canonical repository dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Require configured model access
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          test -n "$GEMINI_API_KEY" || {
+            echo "GEMINI_API_KEY is required for Living Autonomous Review." >&2
+            exit 1
+          }
+
+      - name: Freeze current main and permanent living inbox
+        id: freeze
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin \
+            '+refs/heads/main:refs/remotes/origin/main' \
+            "+refs/heads/$SOURCE_BRANCH:refs/remotes/origin/$SOURCE_BRANCH"
+          base_sha="$(git rev-parse 'origin/main^{commit}')"
+          source_sha="$(git rev-parse "origin/$SOURCE_BRANCH^{commit}")"
+          pr_json="$(gh pr view 490 --repo "$GITHUB_REPOSITORY" --json state,isDraft,baseRefName,headRefName,headRefOid)"
+          PR_JSON="$pr_json" SOURCE_SHA="$source_sha" python - <<'PY'
+          import json, os
+          value=json.loads(os.environ['PR_JSON'])
+          expected={'state':'OPEN','isDraft':True,'baseRefName':'main','headRefName':'automation/living-research-inbox'}
+          for key,wanted in expected.items():
+              if value.get(key)!=wanted:
+                  raise SystemExit(f'PR #490 identity drift: {key}={value.get(key)!r}')
+          if value.get('headRefOid')!=os.environ['SOURCE_SHA']:
+              raise SystemExit('PR #490 head differs from fetched source branch')
+          PY
+          echo "base_sha=$base_sha" >> "$GITHUB_OUTPUT"
+          echo "source_sha=$source_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Reconcile any existing autonomous review PR
+        id: open_review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing="$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --state open --limit 100 \
+            --json number,headRefName --jq '[.[] | select(.headRefName | startswith("automation/living-autonomous-review-"))][0] // empty')"
+          if [[ -z "$existing" ]]; then
+            echo "continue=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          number="$(jq -r '.number' <<<"$existing")"
+          head="$(jq -r '.headRefName' <<<"$existing")"
+          cid="$(grep -oE 'FAR-LIT-[0-9A-F]{16}' <<<"$head" | head -1 || true)"
+          if [[ -z "$cid" ]]; then
+            echo "Open autonomous review PR #$number has an unparseable branch; leaving it untouched." >&2
+            echo "continue=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git fetch --no-tags origin "+refs/heads/$head:refs/remotes/origin/$head"
+          source_path="research/living/inbox/candidates/$cid.json"
+          if ! git cat-file -e "origin/$SOURCE_BRANCH:$source_path" 2>/dev/null || \
+             ! git cat-file -e "origin/$head:$source_path" 2>/dev/null; then
+            echo "Autonomous review PR #$number lost its candidate binding; closing stale review."
+            gh pr close "$number" --repo "$GITHUB_REPOSITORY" \
+              --comment "Closed automatically because the exact reviewed candidate binding is no longer present. A later run may regenerate the review from the current living inbox."
+            echo "continue=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          source_hash="$(git show "origin/$SOURCE_BRANCH:$source_path" | sha256sum | awk '{print $1}')"
+          review_hash="$(git show "origin/$head:$source_path" | sha256sum | awk '{print $1}')"
+          if [[ "$source_hash" == "$review_hash" ]]; then
+            echo "Autonomous review PR #$number is still bound to the current candidate; awaiting human merge."
+            echo "continue=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          gh pr close "$number" --repo "$GITHUB_REPOSITORY" \
+            --comment "Closed automatically because PR #490 changed the exact candidate bytes after this review was prepared. A later run will re-review the current bytes."
+          echo "continue=true" >> "$GITHUB_OUTPUT"
+
+      - name: Extract frozen living inbox
+        if: steps.open_review.outputs.continue == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf "$RUNNER_TEMP/living-source" "$RUNNER_TEMP/living-package"
+          mkdir -p "$RUNNER_TEMP/living-source" "$RUNNER_TEMP/living-package"
+          git archive "${{ steps.freeze.outputs.source_sha }}" | tar -x -C "$RUNNER_TEMP/living-source"
+
+      - name: Execute bounded autonomous review
+        if: steps.open_review.outputs.continue == 'true'
+        id: review
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/run_living_autonomous_review.py \
+            --source-root "$RUNNER_TEMP/living-source" \
+            --out-root "$RUNNER_TEMP/living-package"
+          status="$(jq -r '.status' "$RUNNER_TEMP/living-package/manifest.json")"
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          if [[ "$status" == "review_ready" ]]; then
+            echo "candidate_id=$(jq -r '.candidate_id' "$RUNNER_TEMP/living-package/manifest.json")" >> "$GITHUB_OUTPUT"
+            echo "candidate_sha256=$(jq -r '.candidate_sha256' "$RUNNER_TEMP/living-package/manifest.json")" >> "$GITHUB_OUTPUT"
+            echo "disposition=$(jq -r '.disposition' "$RUNNER_TEMP/living-package/manifest.json")" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild permanent inbox with generated proposal data
+        if: steps.open_review.outputs.continue == 'true' && steps.review.outputs.status != 'no_candidate'
+        id: source_update
+        shell: bash
+        run: |
+          set -euo pipefail
+          old_source="${{ steps.freeze.outputs.source_sha }}"
+          git switch -C "$SOURCE_BRANCH" "${{ steps.freeze.outputs.base_sha }}"
+          for path in research/living/inbox research/living/runs \
+                      research/living/state-v1.0.json research/living/repository-state-v1.0.json; do
+            if [[ -e "$RUNNER_TEMP/living-source/$path" ]]; then
+              mkdir -p "$(dirname "$path")"
+              rm -rf "$path"
+              cp -a "$RUNNER_TEMP/living-source/$path" "$path"
+            fi
+          done
+          if [[ -d "$RUNNER_TEMP/living-package/inbox" ]]; then
+            cp -a "$RUNNER_TEMP/living-package/inbox/." .
+          fi
+          python tools/reconcile_living_repo.py
+          python tools/check_living_research.py
+          python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_living_autonomous_review -v
+          python tools/check_research_gates.py
+          python tools/repo_health_check.py --fast
+          git config user.name "project-far-research-bot"
+          git config user.email "project-far-research-bot@users.noreply.github.com"
+          git add research/living docs/research/living-research-status.md docs/research/living-repository-status.md
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "research: prepare autonomous living review data"
+            test "$(git rev-parse HEAD^)" = "${{ steps.freeze.outputs.base_sha }}"
+            git push --force-with-lease="$SOURCE_BRANCH:$old_source" origin "HEAD:$SOURCE_BRANCH"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+          new_source="$(git rev-parse HEAD)"
+          if [[ "$(git rev-parse HEAD^)" != "${{ steps.freeze.outputs.base_sha }}" && "${{ steps.source_update.outputs.changed }}" == "true" ]]; then
+            echo "source branch is not one commit on frozen main" >&2
+            exit 1
+          fi
+          echo "source_sha=$new_source" >> "$GITHUB_OUTPUT"
+
+      - name: Refresh exact source after inbox mutation
+        if: steps.open_review.outputs.continue == 'true' && steps.review.outputs.status == 'review_ready'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin "+refs/heads/$SOURCE_BRANCH:refs/remotes/origin/$SOURCE_BRANCH"
+          cid="${{ steps.review.outputs.candidate_id }}"
+          expected="${{ steps.review.outputs.candidate_sha256 }}"
+          actual="$(git show "origin/$SOURCE_BRANCH:research/living/inbox/candidates/$cid.json" | sha256sum | awk '{print $1}')"
+          [[ "$actual" == "$expected" ]] || {
+            echo "Candidate bytes moved during autonomous review; refusing review PR." >&2
+            exit 1
+          }
+
+      - name: Materialize protected review branch
+        if: steps.open_review.outputs.continue == 'true' && steps.review.outputs.status == 'review_ready'
+        id: review_branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          cid="${{ steps.review.outputs.candidate_id }}"
+          tag="$(cut -c1-12 <<<"${{ steps.review.outputs.candidate_sha256 }}")"
+          branch="$REVIEW_PREFIX$cid-$tag"
+          git switch -C "$branch" "${{ steps.freeze.outputs.base_sha }}"
+          cp -a "$RUNNER_TEMP/living-package/review/." .
+          git config user.name "project-far-research-bot"
+          git config user.email "project-far-research-bot@users.noreply.github.com"
+          python -m unittest tests.test_living_autonomous_review -v
+          python -m unittest \
+            tests.test_living_research_promotion \
+            tests.test_living_project_change_obligations \
+            tests.test_living_implementation_contract -v
+          source_after="$RUNNER_TEMP/living-source-after"
+          rm -rf "$source_after" && mkdir -p "$source_after"
+          git archive "origin/$SOURCE_BRANCH" | tar -x -C "$source_after"
+          if [[ "${{ steps.review.outputs.disposition }}" == "PROJECT_CHANGE_REQUIRED" ]]; then
+            python tools/check_living_project_change_obligations.py --source-ref "origin/$SOURCE_BRANCH"
+            python -m tools.living_implementation_contract \
+              --source-root "$source_after" \
+              --source-sha "$(git rev-parse "origin/$SOURCE_BRANCH")" \
+              --base-sha "${{ steps.freeze.outputs.base_sha }}" \
+              --output "$RUNNER_TEMP/living-implementation-plan.json"
+          fi
+          python tools/reconcile_living_repo.py
+          python tools/check_living_research.py
+          python tools/check_research_gates.py
+          python tools/repo_health_check.py --fast
+          git add research/living docs/audits docs/research/living-repository-status.md
+          git diff --cached --check
+          git commit -m "Research: autonomous living review $cid"
+          test "$(git rev-parse HEAD^)" = "${{ steps.freeze.outputs.base_sha }}"
+          git push origin "HEAD:$branch"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Open human-merge autonomous review PR
+        if: steps.open_review.outputs.continue == 'true' && steps.review.outputs.status == 'review_ready'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cid="${{ steps.review.outputs.candidate_id }}"
+          disposition="${{ steps.review.outputs.disposition }}"
+          branch="${{ steps.review_branch.outputs.branch }}"
+          source_sha="$(git rev-parse "origin/$SOURCE_BRANCH")"
+          cat > "$RUNNER_TEMP/autonomous-review-pr.md" <<EOF
+          ## Result
+
+          Autonomous governed review of \`$cid\` from permanent living-research PR #490.
+
+          - proposed disposition: \`$disposition\`
+          - exact reviewed candidate SHA-256: \`${{ steps.review.outputs.candidate_sha256 }}\`
+          - frozen source branch head: \`$source_sha\`
+          - frozen protected-main base: \`${{ steps.freeze.outputs.base_sha }}\`
+          - review head: \`${{ steps.review_branch.outputs.head_sha }}\`
+
+          ## Authority boundary
+
+          The model-generated findings in this PR have **no protected scientific authority before merge**. This PR contains the exact review record, provenance, candidate snapshot, and bounded authorization bytes for inspection. The automation does not merge this PR.
+
+          If this PR is merged, the existing protected living-research promotion/implementation machinery may construct separate exact correction PRs. Those PRs also remain human-merge only.
+
+          The screening, attack, replication, and adjudication roles are internal same-provider checks and do not count as external independence or external review.
+          EOF
+          gh pr create \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --head "$branch" \
+            --title "Research: autonomous living review $cid — $disposition" \
+            --body-file "$RUNNER_TEMP/autonomous-review-pr.md"
