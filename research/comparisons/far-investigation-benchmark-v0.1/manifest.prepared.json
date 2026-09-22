@@ -32,7 +32,7 @@
     "id": "FAR-INVESTIGATION-BENCHMARK-PREREG-0.1",
     "version": "0.1",
     "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
-    "sha256": "TO_BE_COMPUTED_FROM_FINAL_PREREGISTRATION_BEFORE_FREEZE"
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
   },
   "stages": [
     {
@@ -124,7 +124,7 @@
   "artifacts": [
     {
       "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
-      "sha256": "TO_BE_COMPUTED_FROM_FINAL_PREREGISTRATION_BEFORE_FREEZE",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "role": "preregistration",
       "verify_current_path": true
     },
@@ -188,7 +188,7 @@
   },
   "limitations": [
     "Prepared, not frozen: corpus, prompts, resource budgets, tool/model versions, adjudicators, rubric, and evidence-reference search protocol remain unset.",
-    "The preregistration SHA-256 placeholders must be replaced after the preregistration text is final and before any condition execution.",
+    "Zero SHA-256 placeholders mark prepared-only artifacts and must be replaced with exact hashes after the preregistration text is final and before any condition execution.",
     "No external-independence claim follows from project-authored preparation.",
     "No benchmark result exists at prepared status.",
     "Exact preregistration hashes are intentionally populated only by the later freeze commit, after all merge-review edits are complete and before any benchmark execution."
