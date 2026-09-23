@@ -63,7 +63,11 @@ The purpose is provenance for why the question was asked. It does not predetermi
 
 ## Event chronology
 
-Every question and response event uses a parseable timezone-aware date-time. A response may not predate the question it references. This chronology rule establishes only that the recorded dialogue order is internally possible; it does not prove wall-clock accuracy beyond the provenance of the underlying transcript or event source.
+Every question and response event uses a parseable timezone-aware date-time. A response may not predate the question it references.
+
+A response event used to revise or withdraw a commitment may not predate the response event that originally sourced the commitment being changed. This prevents an internally impossible lifecycle history in which a commitment is revised or withdrawn before it exists.
+
+These chronology rules establish only that the recorded dialogue order is internally possible. They do not prove wall-clock accuracy, external event truth, or causal order beyond the provenance of the underlying transcript or event source.
 
 ## Elicited-record traceability
 
@@ -83,11 +87,12 @@ A revision must:
 - retain the superseded commitment with status `REVISED`;
 - identify the response event that authorized the revision;
 - use that same response event as the source event of the replacement commitment;
+- occur no earlier than the source response of the superseded commitment;
 - state why the revision occurred.
 
 Each `REVISED` commitment must be the source of exactly one revision event. A revision source may not fork silently into multiple replacement commitments, and one replacement commitment may not be reused as the target of multiple revision events.
 
-A withdrawal must retain the withdrawn commitment with status `WITHDRAWN`, identify the response event and reason, and occur exactly once for that commitment. Every commitment marked `WITHDRAWN` must have a corresponding withdrawal event.
+A withdrawal must retain the withdrawn commitment with status `WITHDRAWN`, identify the response event and reason, occur exactly once for that commitment, and occur no earlier than the response event that sourced the commitment. Every commitment marked `WITHDRAWN` must have a corresponding withdrawal event.
 
 No revision or withdrawal deletes history.
 
@@ -129,7 +134,7 @@ The accepted internal interchange contract is `socratic-epistemic-extensions/1.0
 - `schemas/socratic-epistemic-extensions-v1.schema.json`;
 - `mechanization/far_mechanization/socratic_epistemic.py`.
 
-The validator checks event references, timezone-aware event timestamps and response chronology, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, and contradiction references. It does not infer semantic contradiction from natural language.
+The validator checks event references, timezone-aware event timestamps, response-to-question chronology, lifecycle-event chronology relative to the commitments they modify, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, and contradiction references. It does not infer semantic contradiction from natural language.
 
 ## Failure conditions
 
@@ -138,6 +143,8 @@ The protocol fails if:
 - a material respondent statement is replaced by an analyst paraphrase without preserving the original;
 - a question or response timestamp is not a parseable timezone-aware date-time;
 - a response predates the question it references;
+- a revision response predates the response that sourced the superseded commitment;
+- a withdrawal response predates the response that sourced the withdrawn commitment;
 - a response is not linked to the question that elicited it;
 - a material definition, assumption, warrant, or tension is stored without typed content and commitment provenance;
 - an elicited record references a nonexistent commitment;

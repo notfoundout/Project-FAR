@@ -102,11 +102,12 @@ The governed loop is:
 8. present the conflict or missing premise when further clarification is material;
 9. preserve revisions and withdrawals as new events and never overwrite history;
 10. require every `REVISED` or `WITHDRAWN` commitment status to be backed by its corresponding event;
-11. repeat until sufficient explicitness, respondent refusal/inability, the declared stopping rule, or no further material question.
+11. require every revision or withdrawal response event to occur no earlier than the response event that sourced the commitment it modifies;
+12. repeat until sufficient explicitness, respondent refusal/inability, the declared stopping rule, or no further material question.
 
 Question purposes are `DEFINE_TERM`, `FIX_SCOPE`, `EXPOSE_ASSUMPTION`, `TEST_WARRANT`, `TEST_CONSEQUENCE`, `TEST_CONSISTENCY`, `SEEK_COUNTEREXAMPLE`, `DISTINGUISH_INTERPRETATIONS`, and `CLARIFY_REVISION`.
 
-A revision has exactly one source commitment and one replacement commitment. The superseded commitment remains `REVISED`, the replacement has a greater version, the revision response event is the replacement commitment's source event, a revision source may not fork into multiple targets, and one target may not be reused by multiple revisions. A withdrawal occurs at most once for a commitment and every commitment marked `WITHDRAWN` has a corresponding withdrawal event.
+A revision has exactly one source commitment and one replacement commitment. The superseded commitment remains `REVISED`, the replacement has a greater version, the revision response event is the replacement commitment's source event, a revision source may not fork into multiple targets, one target may not be reused by multiple revisions, and the revision response may not predate the response that sourced the superseded commitment. A withdrawal occurs at most once for a commitment, every commitment marked `WITHDRAWN` has a corresponding withdrawal event, and the withdrawal response may not predate the response that sourced the withdrawn commitment.
 
 Elenchus produces evidence about the respondent's commitments and their relations. It does not establish external factual truth unless the parent investigation separately supplies the evidence and evaluation required for that claim.
 
@@ -150,9 +151,12 @@ The validator fails closed on decidable defects including:
 - revision that overwrites the old commitment rather than creating a new one;
 - non-increasing revision versions;
 - `REVISED` or `WITHDRAWN` commitment statuses with no corresponding event;
-- revision-source forks, revision-target reuse, repeated withdrawals, or a revision response event that does not source the replacement commitment.
+- revision-source forks, revision-target reuse, repeated withdrawals, or a revision response event that does not source the replacement commitment;
+- revision or withdrawal response events that predate the response event that sourced the commitment they modify;
+- malformed, timezone-naive, or inverted expertise validity intervals;
+- malformed or timezone-naive elenchus event timestamps, or a response that predates its linked question.
 
-Natural-language expertise, truth, entailment, contradiction, or completeness are outside the validator's decidable scope.
+Natural-language expertise, truth, entailment, contradiction, or completeness are outside the validator's decidable scope. Lifecycle chronology establishes only internally possible recorded ordering; it does not prove wall-clock accuracy or external causality.
 
 ## 7. Failure conditions
 
@@ -169,6 +173,7 @@ A conforming implementation fails this specification if it:
 - overwrites an earlier respondent commitment after revision;
 - permits a `REVISED` or `WITHDRAWN` status without the corresponding event;
 - permits a revision source to fork, a target to be reused, a withdrawal to be duplicated, or a replacement commitment to cite a different source event from its revision;
+- permits a revision or withdrawal lifecycle response to predate the response that sourced the commitment it modifies;
 - labels commitments contradictory without recording the comparison interpretation, calculus, and basis;
 - silently strengthens a respondent's wording;
 - treats an elenchus response as external factual verification without separate evidence;
@@ -176,6 +181,6 @@ A conforming implementation fails this specification if it:
 
 ## 8. Assurance boundary
 
-The research record provides the elimination/reduction analysis. The implementation is tested by positive fixtures, adversarial mutations, and a separately coded internal reference oracle for the central expertise-scope, boundary-exclusivity/closure-linkage, and elenchus-provenance/history invariants.
+The research record provides the elimination/reduction analysis. The implementation is tested by positive fixtures, adversarial mutations, and separately coded internal reference oracles for the central expertise-scope, boundary-exclusivity/closure-linkage, elenchus-provenance/history, and lifecycle-chronology invariants.
 
 That is internal implementation assurance. It does not establish external investigator independence, empirical utility, product readiness, novelty, priority, or commercial value.

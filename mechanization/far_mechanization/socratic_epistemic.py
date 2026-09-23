@@ -259,10 +259,10 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
     _check_unique_ids(record["tensions"], "tensions", errors)
     _check_unique_ids(record["contradictions"], "contradictions", errors)
 
-    questions = {str(item["id"]): item for item in record["question_events"]}
     responses = {str(item["id"]): item for item in record["response_events"]}
     commitments = {str(item["id"]): item for item in record["commitments"]}
     question_times: dict[str, datetime] = {}
+    response_times: dict[str, datetime] = {}
 
     for index, question in enumerate(record["question_events"]):
         question_id = str(question["id"])
@@ -279,6 +279,7 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
             question_times[question_id] = parsed
 
     for index, response in enumerate(record["response_events"]):
+        response_id = str(response["id"])
         question_id = str(response["question_id"])
         if question_id not in question_ids:
             errors.append(
@@ -298,14 +299,16 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "response_events", index, "timestamp"),
                 )
             )
-        elif question_id in question_times and response_time < question_times[question_id]:
-            errors.append(
-                SocraticDiagnostic(
-                    "ELENCHUS_RESPONSE_PREDATES_QUESTION",
-                    f"response {response['id']} predates its question {question_id}",
-                    ("record", "response_events", index, "timestamp"),
+        else:
+            response_times[response_id] = response_time
+            if question_id in question_times and response_time < question_times[question_id]:
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_RESPONSE_PREDATES_QUESTION",
+                        f"response {response_id} predates its question {question_id}",
+                        ("record", "response_events", index, "timestamp"),
+                    )
                 )
-            )
 
     for index, commitment in enumerate(record["commitments"]):
         if str(commitment["source_event_id"]) not in response_ids:
@@ -428,14 +431,28 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "revisions", index, "response_event_id"),
                 )
             )
-        elif str(target["source_event_id"]) != response_id:
-            errors.append(
-                SocraticDiagnostic(
-                    "ELENCHUS_REVISION_TARGET_SOURCE_MISMATCH",
-                    "the revision response event must be the source event of the replacement commitment",
-                    ("record", "revisions", index, "response_event_id"),
+        else:
+            if str(target["source_event_id"]) != response_id:
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_REVISION_TARGET_SOURCE_MISMATCH",
+                        "the revision response event must be the source event of the replacement commitment",
+                        ("record", "revisions", index, "response_event_id"),
+                    )
                 )
-            )
+            source_response_id = str(source["source_event_id"])
+            if (
+                response_id in response_times
+                and source_response_id in response_times
+                and response_times[response_id] < response_times[source_response_id]
+            ):
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_REVISION_PREDATES_SOURCE_COMMITMENT",
+                        "the revision response event predates the response event that sourced the superseded commitment",
+                        ("record", "revisions", index, "response_event_id"),
+                    )
+                )
 
     withdrawal_commitments: set[str] = set()
     for index, withdrawal in enumerate(record["withdrawals"]):
@@ -459,14 +476,29 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "withdrawals", index, "commitment_id"),
                 )
             )
-        elif commitments[commitment_id]["status"] != "WITHDRAWN":
-            errors.append(
-                SocraticDiagnostic(
-                    "ELENCHUS_WITHDRAWAL_STATUS",
-                    "a withdrawn commitment must remain recorded with status WITHDRAWN",
-                    ("record", "withdrawals", index, "commitment_id"),
+        else:
+            commitment = commitments[commitment_id]
+            if commitment["status"] != "WITHDRAWN":
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_WITHDRAWAL_STATUS",
+                        "a withdrawn commitment must remain recorded with status WITHDRAWN",
+                        ("record", "withdrawals", index, "commitment_id"),
+                    )
                 )
-            )
+            source_response_id = str(commitment["source_event_id"])
+            if (
+                response_id in response_times
+                and source_response_id in response_times
+                and response_times[response_id] < response_times[source_response_id]
+            ):
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_WITHDRAWAL_PREDATES_COMMITMENT",
+                        "the withdrawal response event predates the response event that sourced the withdrawn commitment",
+                        ("record", "withdrawals", index, "response_event_id"),
+                    )
+                )
         if response_id not in responses:
             errors.append(
                 SocraticDiagnostic(
