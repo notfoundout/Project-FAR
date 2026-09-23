@@ -17,6 +17,7 @@ Project-level documentation lives here. This directory provides orientation, gov
 ## Core documentation
 
 - `ARCHITECTURE.md` — repository architecture and structural decisions.
+- [`architecture/far-subagent-execution.md`](architecture/far-subagent-execution.md) — provisional provider-neutral subagent execution architecture; no claim-promotion authority.
 - `ROADMAP.md` — gated future work.
 - `CHANGELOG.md` — chronological change history.
 - `DECISION_LOG.md` — canonical project decision log.
