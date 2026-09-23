@@ -1,7 +1,7 @@
 """Semantic validation for Project FAR Socratic epistemic extension records.
 
-The JSON Schema checks structural shape.  This module checks only relationships that
-can be decided from one explicit record.  It does not infer expertise, factual truth,
+The JSON Schema checks structural shape. This module checks only relationships that
+can be decided from one explicit record. It does not infer expertise, factual truth,
 semantic completeness, or contradiction from natural-language content.
 """
 from __future__ import annotations
@@ -44,7 +44,10 @@ def _schema_errors(document: object) -> list[SocraticDiagnostic]:
     validator = Draft202012Validator(schema)
     return [
         SocraticDiagnostic("SCHEMA_CONSTRAINT_VIOLATION", error.message, tuple(error.path))
-        for error in sorted(validator.iter_errors(document), key=lambda e: (tuple(e.path), e.message))
+        for error in sorted(
+            validator.iter_errors(document),
+            key=lambda e: (tuple(str(part) for part in e.path), e.message),
+        )
     ]
 
 
@@ -131,25 +134,12 @@ def _check_expertise_applicability(record: Mapping[str, Any], errors: list[Socra
         if status not in {"MATCH", "NOT_APPLICABLE"}:
             nonmatching.append(dimension)
 
-    overall = record["status"]
-    if overall == "SUPPORTED" and nonmatching:
+    if record["status"] == "SUPPORTED" and nonmatching:
         errors.append(
             SocraticDiagnostic(
                 "EXPERTISE_SCOPE_OVERREACH",
                 "SUPPORTED expertise applicability requires every material dimension to match; "
                 f"nonmatching={nonmatching}",
-                ("record", "status"),
-            )
-        )
-    if overall == "SUPPORTED":
-        for dimension, assessment in dimensions.items():
-            if assessment["status"] == "MATCH" and _scope_value(expertise_scope, dimension) != _scope_value(claim_scope, dimension) and not assessment.get("bridge"):
-                return
-    elif not nonmatching and overall in {"PARTIALLY_SUPPORTED", "INSUFFICIENT_EVIDENCE", "INDETERMINATE", "CONTRADICTED"}:
-        errors.append(
-            SocraticDiagnostic(
-                "EXPERTISE_STATUS_INCONSISTENT",
-                f"{overall} is inconsistent with an applicability record whose dimensions all match",
                 ("record", "status"),
             )
         )
