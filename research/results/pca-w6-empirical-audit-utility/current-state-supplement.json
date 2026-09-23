@@ -16,16 +16,16 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "dbf4827adb689b2863b6d33a1f864bb84de022c055170e22055e6a62d1049695",
+      "current_sha256": "76a7e2800fc18018b957813fa84f9b9e7e7ba9838e4e8e482be4c5a597464aa7",
       "class": "documentation_surface",
-      "reason": "Linked the non-authoritative epistemic calibration audit, which was previously unreachable from any top-level navigation surface. No claim status changed."
+      "reason": "Linked the non-authoritative epistemic calibration audit, which was previously unreachable from any top-level navigation surface. No claim status changed. Registered the provisional single-module FAR subagent execution protocol and its navigation; no campaign input or result changed."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "d1f0e93da27911c2e46bc77f08b2cf6d0524f24ca5fd1792e9c6d02ce3469fcf",
+      "current_sha256": "309bba1cd82fd02f9387d7ee8bad3abcb210e72a3385a5706359715cbcbfaec8",
       "class": "documentation_surface",
-      "reason": "Registered the evidence-closure contract and its repaired lifecycle/acceptance authority in the canonical map, in addition to the previously registered epistemic calibration, EFR-R2 amendment, and contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the evidence-closure contract and its repaired lifecycle/acceptance authority in the canonical map, in addition to the previously registered epistemic calibration, EFR-R2 amendment, and contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed. Registered the provisional single-module FAR subagent execution protocol and its navigation; no campaign input or result changed."
     },
     {
       "path": "docs/governance/limitations-register.md",
