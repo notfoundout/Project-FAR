@@ -1,0 +1,5 @@
+- Add semantic validator
+- Add executable fixtures
+- Add tests
+- Integrate FAR workflow and FARO reporting
+- Run repository validation
