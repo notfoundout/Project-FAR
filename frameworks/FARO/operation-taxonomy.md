@@ -44,7 +44,9 @@ Disagreement analysis traces causes and propagation of disagreement without assi
 
 ### Reporting
 
-Operations that produce structured summaries, audit records, comparison records, disagreement reports, or evaluation reports.
+Operations that produce structured summaries, audit records, comparison records, disagreement reports, evaluation reports, or derived views over already-governed investigation artifacts.
+
+`FARO-EPISTEMIC-BOUNDARY-1.0` is a Reporting operation: it materializes the recorded boundary of justification from canonical FAR closure artifacts without changing their semantics.
 
 ---
 

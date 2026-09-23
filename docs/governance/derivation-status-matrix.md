@@ -5,6 +5,8 @@ Status: **Accepted**
 | Item | Owner | Current status | Basis |
 |---|---|---|---|
 | governed pre-contract discovery | FAR | compatible independent methodology | Required to prevent silent completion when supplied input leaves result-determining contract parameters open; exact source-search, provenance, exclusion, freeze, and aggregation procedure is methodological rather than a theorem of FARA. |
+| expertise applicability | FAR | compatible independent methodology | Prevents competence evidence from transferring silently across materially different claim scopes. Scope dimensions, appraisal statuses, and bridge rules are selected evidence-appraisal controls rather than consequences of FARA or the core theory. |
+| elenchus / commitment elicitation | FAR | compatible independent methodology | Provides an auditable interactive clarification procedure over existing representations, relations, reasoning, and provenance. The question purposes, revision rules, and contradiction discipline are selected methodology, not a primitive or theorem. |
 | freeze claim and target class | FAR | theory-constrained method | Needed to make quantifiers and finite-panel boundaries explicit; exact field design is methodological. |
 | freeze comparison contract | FAR | theory-constrained method | Sufficiency/minimality are not well formed without cases, tests, typed outcomes, and semantics. |
 | totalize typed outcomes | FAR | theory-constrained method | `FAR-CORE-012` forbids collapsing distinctions observed by the contract; concrete types remain selected. |
@@ -20,6 +22,7 @@ Status: **Accepted**
 | staged workflow and optional-stage policy | FAR | compatible independent methodology | One auditable implementation of the derived obligations, not uniquely forced. |
 | evaluator independence, competence, and calibration | governance/methodology | independent experimental-design choices | Assurance controls, not FARA consequences. |
 | fail/Unknown reports | FARO | governance-required output | Justified by Project FAR's audit objective, not metaphysical necessity. |
+| epistemic-boundary materialization | FARO | derived downstream view | Consolidates already-recorded FAR scope, closure, nonclaim, uncertainty, limitation, and falsifier information. It does not create new truth semantics and FAR does not depend on the view. |
 | operational audit/comparison/reporting | FARO | compatible downstream operations | No necessity theorem. |
 
 The dependency direction remains foundations → shared theory → FARA → FAR → FARO.

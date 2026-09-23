@@ -2,97 +2,91 @@
 
 Version: 1.0
 
-Status: Provisional implementation contract
+Status: Provisional application contract
 
 Namespace: `far-epistemic/1.0`
 
-## Scope and architectural boundary
+## Boundary and authority
 
-This specification defines an **additive application record layer** around a FAR investigation. It does not add a FAR Core primitive, alter `PROJECT-FAR-CORE-THEORY-1.1`, or change the canonical FAR workflow. A document identifies the compatible `far-ir/1.0`, `far-ir/2.0`, or `far-ir/2.1` surface and connects to existing claims, evidence, reasoning steps, proof obligations, and certificates only through provenance references and immutable hashes.
+This is an additive application interchange around governed FAR investigations. It does not add a FAR Core primitive, alter `PROJECT-FAR-CORE-THEORY-1.1`, replace evidence closure or proof obligations, change the FAR workflow, or reinterpret any `far-ir/2.1` approximation, loss, provenance, construction, or product-cost coordinate. Probability, utility, expected utility, opportunity cost, expected value of perfect information (EVPI), tail risk, scores, and regret are distinct typed quantities in this namespace.
 
-Probability, confidence, utility, expected utility, opportunity cost, value of information, tail risk, and regret are typed epistemic/decision quantities in this namespace. They are not `far-ir/2.1` approximation loss, provenance cost, construction cost, or a comparison-contract cost coordinate. Implementations must reject attempts to put those cost fields into these records. Conversely, this layer cannot be used to scalarize or rank a FAR comparison cost order.
+Interactive dialectic is not independently redefined here. Every embedded dialogue must be an exact, successfully validated `FAR-ELENCHUS-1.0` `ELENCHUS_SESSION` from the canonical [Socratic Epistemic Extensions specification](socratic-epistemic-extensions-v1.0.md). The epistemic document may reference those session identifiers from record provenance. This strict composition preserves the elenchus contract's typed question/response events, commitments, definitions, assumptions, warrants, implications, tensions, contradictions, revisions, withdrawals, chronology, provenance, and FAR Intake obligations. There is one elenchus architecture, not a parallel `DialecticRecord`.
 
-The JSON Schema is [`schemas/far-epistemic-v1.schema.json`](../../schemas/far-epistemic-v1.schema.json). The executable API is `mechanization.far_mechanization.epistemic`. Schema validation supplies structural validation; the API additionally checks cross-record, arithmetic, temporal, graph, and scoring invariants.
+The structural contract is [`schemas/far-epistemic-v1.schema.json`](../../schemas/far-epistemic-v1.schema.json). `EpistemicDocument.from_dict()` always executes that schema before semantic checks. The executable contract is `mechanization.far_mechanization.epistemic`; an object is conforming only if both structural and semantic validation succeed.
 
-## Record contracts
+## Deterministic data and commitment semantics
 
-Every record has a unique `id`, one closed `kind`, and provenance containing a source, content hash, and zero or more FAR identifiers. Evidence references point to the existing evidence graph rather than copying or silently adjudicating evidence.
+Semantic probabilities and utilities are JSON strings, never binary JSON numbers:
+
+- probabilities have exactly six fractional decimal places and lie in `[0,1]`;
+- scored prediction probabilities lie strictly inside `(0,1)`;
+- utilities have exactly six fractional decimal places;
+- Brier and log scores have exactly twelve fractional decimal places;
+- booleans, binary floats, `NaN`, and infinities are rejected in numeric positions.
+
+Arithmetic uses local decimal context, precision 50, and `ROUND_HALF_EVEN`; it does not inherit the caller's ambient Decimal context. Natural-log loss uses `Decimal.ln()` and is quantized to twelve places. Brier score is `(p-o)^2`, also quantized to twelve places. Lower scores are better.
+
+`FAR-CJ/1` canonicalization is UTF-8 JSON with exact unnormalized strings, keys ordered by Unicode code point, no insignificant whitespace, no duplicate keys, no non-finite values, and no surrogate replacement. Snapshot `sha256` is the lowercase SHA-256 digest of the `FAR-CJ/1` object after removing only its `sha256` member. Evidence commitments hash the exact UTF-8 bytes of the recorded evidence statement, and the `byte_target` declares that target. Other provenance artifact digests are declared external byte commitments: validation enforces real lowercase SHA-256 syntax but does not claim to retrieve an external URI.
+
+## Records and lifecycle
+
+### Evidence and snapshots
+
+Evidence has a stable ID, observation time, statement, source URI, exact byte target, and verified statement digest. Every evidence ID used by a belief revision, causal assumption, outcome, or record provenance must exist. A belief revision's evidence must also occur in that belief's provenance.
+
+A snapshot commits to one belief revision, its exact probability distribution, and its exact evidence reference set. The digest, revision identity, values, and chronology are recomputed. Predictions and decisions cannot substitute another snapshot.
 
 ### BeliefRecord / HypothesisSet
 
-A `belief` contains at least two competing hypotheses. Each hypothesis declares a prior probability, current confidence, base/reference classes, falsifiers, and typed uncertainty. Both prior and current distributions are explicit. Every evidence update identifies an evidence reference, timestamp, update rule, and complete posterior over exactly the hypothesis set. The current distribution must equal the final posterior. Revision history is chronological and append-oriented.
+A belief contains at least two hypotheses with explicit priors, base/reference classes, falsifiers, and typed uncertainty. Its first revision equals the priors and supersedes nothing. Later revisions are strictly chronological, supersede exactly the immediately preceding revision, cite evidence, declare their update rule and rationale, and provide a complete distribution summing exactly to `1.000000`. `current_revision_ref` is the final revision.
 
-The record does not claim that the declared update rule is correct. FAR evidence closure and proof obligations remain separate from numeric belief bookkeeping.
+The contract records a declared update; it does not establish that an update rule is rational, externally calibrated, or evidentially sufficient.
 
 ### PredictionRecord
 
-A `prediction` freezes its proposition, timestamp, strict interior probability, resolution window, objective criterion, and evidence-snapshot hash. The snapshot hash must equal its provenance commitment. Resolution is binary. Unresolved records cannot carry scores; resolved records carry a resolution time and recomputed Brier score `(p-o)^2` and natural-log loss `-log(p)` or `-log(1-p)`. Lower scores are better.
-
-`calibration()` groups resolved predictions into deterministic equal-width bins and reports count, mean probability, observed frequency, and overall mean Brier score. Comparable reference classes and selection rules remain the caller's declared methodological responsibility.
+A prediction references an existing belief and a cryptographically verified belief snapshot. Its hypothesis and probability must equal that snapshot. It freezes its proposition, creation time, resolution window, objective criterion, and explicit calibration reference class. Creation cannot predate the snapshot or follow the start of the resolution window.
 
 ### DecisionRecord
 
-A `decision` declares mutually named uncertain states whose probabilities sum to one, available actions, a complete state-contingent utility table, expected utility, worst (`downside_utility`) outcome, a textual tail-risk account, value of information, selected action, rationale, and opportunity cost. Expected utility and opportunity cost are recomputed. When an actual state is known, the outcome and counterfactual action regret are recorded and regret is recomputed.
+A decision references the same belief snapshot and prediction, and occurs after prediction creation but before resolution begins. Every uncertain state maps to one snapshot hypothesis with the identical probability. Every action supplies a complete state-utility table, expected utility, downside utility, and typed tail-risk threshold/probability. The validator recomputes all four quantities, chosen-action opportunity cost, and **expected value of perfect information**:
 
-Utility is necessarily decision-context specific. It neither certifies a moral objective nor inherits any FAR representation-cost meaning. Value of information is a separately declared non-negative decision quantity; the schema does not invent an information-acquisition model.
+`EVPI = sum_s p(s) max_a U(a,s) - max_a sum_s p(s) U(a,s)`.
 
-### DialecticRecord
+This is deliberately named EVPI, not generic value of information. No information-acquisition/test model is represented.
 
-A `dialectic` preserves the clarified claim, definitions, commitments, assumptions, strongest opposing case, burdens of proof, counterexamples, contradictions, disagreement cruxes, falsifiers, evidence that would change the positions, and revision/result. Required non-empty fields prevent an apparent dialogue record from omitting the opposing case or change conditions.
+### OutcomeRecord
+
+An outcome binds one linked prediction and decision, objective evidence, resolution time, binary resolution, realized state, deterministic scores, and realized regret. The validator checks lifecycle consistency, evidence provenance, resolution chronology, scores, state identity, and regret.
+
+### ErrorRecord and RetestRecord
+
+An error binds the prediction, decision, and outcome. Recurrence uses normalized `failure_mode_code` plus stable corrective-rule ID, never root-cause prose. A corrective rule declares which codes it applies to.
+
+`retest_ref` may be null. Any asserted retest is a separate `RetestRecord` that must reference the error, a later non-empty set of resolved outcomes, one shared prediction reference class, the baseline outcome score, the deterministic comparison mean Brier score, and an evaluation time after the baseline. `IMPROVED`, `UNCHANGED`, or `WORSE` is derived from those numbers. Even a valid `IMPROVED` record means only lower score on its exact declared comparison set; it does not establish general learning effectiveness, causal effectiveness of the rule, or external calibration.
 
 ### CausalModelRecord
 
-A `causal_model` is a first-class, provenance-bound directed acyclic graph with mechanisms, interventions, confounders, counterfactuals, assumptions, and identification limits. Node references and acyclicity are checked. A graph is a declared causal model, not proof that causal effects are identified; identification limitations cannot be omitted.
+A causal model contains typed variables/domains; mechanism-bearing directed edges; typed interventions with targets and assigned values; explicit confounder relations; counterfactual queries tied to interventions and outcome variables; identified assumptions with evidence references; and an identification object with estimand, treatment, outcome, status, adjustment set, assumptions, and limits. References, provenance, and DAG acyclicity are checked. `IDENTIFIED`, `PARTIALLY_IDENTIFIED`, and `NOT_IDENTIFIED` remain declared bounded statuses; conformance does not prove causal identification or model truth.
 
-### ErrorRecord
+## Calibration
 
-An `error` links beliefs, predictions, decisions, reasoning/evidence references, and outcomes. It records classifications, root cause, corrective rule, recurring prior failure identifiers, a prospective retest criterion, and one of `improved`, `unchanged`, `worse`, `inconclusive`, or unresolved `null`. Corrective-rule success therefore requires later comparable evidence and cannot be inferred from writing the rule.
+`calibration()` accepts only resolved outcomes selected by the caller under one identical explicit reference class and explicit strictly increasing bin edges from zero to one. Empty sets, mixed classes, invalid outcomes, probabilities outside the bins, and duplicate/inverted edges fail. Bins are left-closed/right-open except the final right endpoint. Results report the declared class and edges, counts, mean probability, observed frequency, and overall mean Brier score. Selection, censoring, exchangeability, and population generalization remain external methodological assumptions and must not be inferred from a successful aggregate.
 
-`recurring_failure_modes()` deterministically groups two or more ErrorRecords only when their declared root cause and classification set match. It reports the contributing identifiers and never infers an undeclared causal diagnosis.
-
-## Lifecycle and replay
-
-The supported lifecycle is:
-
-```text
-BeliefRecord (competing hypotheses and priors)
-  -> evidence update and current confidence
-  -> PredictionRecord (frozen evidence snapshot)
-  -> DecisionRecord (separate probabilities and utilities)
-  -> objective outcome / resolution
-  -> scoring and longitudinal calibration
-  -> ErrorRecord / recurring-mode linkage / prospective retest
-  -> BeliefRecord revision history and later posterior
-```
-
-`EpistemicDocument` canonicalizes JSON for stable SHA-256 commitments, performs defensive serialization round trips, and emits a deterministic `far_epistemic_validation` audit event. That event can be stored beside existing replay/certificate artifacts; it is a content commitment and validation result, not a FAR theorem or signed certificate by itself.
-
-## API and CLI
+## API, CLI, replay, and versioning
 
 ```python
-from mechanization.far_mechanization.epistemic import EpistemicDocument, calibration
+from mechanization.far_mechanization.epistemic import EpistemicDocument
 
 document = EpistemicDocument.load("loop.json")
 print(document.digest)
 print(document.audit_event())
 ```
 
-CLI hooks are:
-
 ```text
 far epistemic validate FILE
-far epistemic calibration FILE --bins 10
-far epistemic migrate FILE
+far epistemic calibration FILE --bin-edges 0,0.5,1
 ```
 
-All output is deterministic JSON. Validation failures return a nonzero status with stable path-addressed errors.
+CLI failures produce deterministic JSON and nonzero status. The audit event is a deterministic content commitment suitable for adjacent replay/certificate storage; it is not itself a FAR proof or signed certificate. There is no historical `far-epistemic/0.9`, so 1.0 defines no synthetic predecessor migration. Future versions must introduce migrations only from real, frozen predecessor contracts and fixtures.
 
-## Versioning and migration
-
-`far-epistemic/1.0` is independent of FAR IR versioning. The loss-explicit `0.9` migration renames a legacy `resolution_date` to a point resolution window and adds `far-ir/1.0` only when the compatibility field was absent. It does not manufacture provenance, uncertainty, hypotheses, utilities, causal assumptions, or scoring. The migrated record must pass every 1.0 invariant or migration fails.
-
-## Example and nonclaims
-
-[`examples/epistemic/complete-learning-loop.json`](../../examples/epistemic/complete-learning-loop.json) executes the complete loop, including an explicit no-error/calibration observation so a correct prediction is not relabeled as a failure in hindsight.
-
-Conformance establishes only that a record obeys this interchange contract. It does not establish truth, rationality of priors, causal identification, utility validity, decision optimality outside the declared table, external calibration, learning effectiveness, or any strengthening of FAR Core.
+The complete fixture is [`examples/epistemic/complete-learning-loop.json`](../../examples/epistemic/complete-learning-loop.json). It includes the canonical elenchus session, typed causal model, two belief snapshots, two predictions/decisions/outcomes, deterministic scoring, a normalized error/corrective rule, a later comparable retest, and explicit nonclaims preventing a bounded lower score from being reported as general learning.

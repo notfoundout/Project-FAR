@@ -19,7 +19,7 @@ They do not extend or modify the framework.
 - `scientific-investigation.md` — Demonstrates empirical investigation.
 - `historical-analysis.md` — Demonstrates evidential reasoning.
 - `disagreement-analysis.md` — Demonstrates comparison and disagreement analysis using FARO.
-- `epistemic/complete-learning-loop.json` — Executable belief, prediction, decision, outcome, scoring, error-review, and revision fixture for the additive `far-epistemic/1.0` layer.
+- `epistemic/complete-learning-loop.json` — Executable belief, canonical elenchus, typed causal model, prediction, decision, outcome, scoring, error/retest, and revision fixture for the additive `far-epistemic/1.0` layer.
 
 ---
 

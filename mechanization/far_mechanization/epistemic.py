@@ -1,463 +1,563 @@
-"""Typed, additive epistemic-learning records for Project FAR.
+"""Executable far-epistemic/1.0 learning contract.
 
-This module deliberately does not extend or reinterpret ``far-ir/1.0`` or the
-``far-ir/2.1`` approximation/cost order.  Epistemic probabilities, utilities,
-and decision costs live in the separate ``far-epistemic/1.0`` namespace.
+The namespace is additive.  Probabilities and utilities are fixed-scale decimal
+strings and never reuse FAR approximation, provenance, or construction costs.
+Interactive dialectic is represented only by the canonical FAR-ELENCHUS-1.0
+contract and is embedded here by reference to its exact validated document.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, ROUND_HALF_EVEN, localcontext
 import hashlib
 import json
-import math
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any, Iterable, Mapping, Sequence
 
+from jsonschema import Draft202012Validator
+from .socratic_epistemic import validate_socratic_record
 
 FORMAT_VERSION = "far-epistemic/1.0"
-LEGACY_VERSION = "far-epistemic/0.9"
-RECORD_KINDS = {
-    "belief", "prediction", "decision", "dialectic", "causal_model", "error"
+SCHEMA_PATH = Path(__file__).resolve().parents[2] / "schemas" / "far-epistemic-v1.schema.json"
+PROB_SCALE = Decimal("0.000001")
+SCORE_SCALE = Decimal("0.000000000001")
+RECORD_KINDS = frozenset({"belief", "prediction", "decision", "outcome", "error", "retest", "causal_model"})
+REFERENCE_KINDS = {
+    "belief_ref": "belief", "prediction_ref": "prediction", "decision_ref": "decision",
+    "outcome_ref": "outcome", "error_ref": "error", "causal_model_ref": "causal_model",
 }
 
 
 class EpistemicValidationError(ValueError):
-    """A deterministic collection of invalid epistemic record paths."""
+    """Stable, sorted path-addressed contract violations."""
 
     def __init__(self, errors: Iterable[str]):
         self.errors = tuple(sorted(set(errors)))
         super().__init__("; ".join(self.errors))
 
 
-def _decimal(value: Any, path: str, errors: list[str]) -> Decimal | None:
-    if isinstance(value, bool):
-        errors.append(f"{path}: must be a number, not boolean")
-        return None
-    try:
-        result = Decimal(str(value))
-    except (InvalidOperation, ValueError):
-        errors.append(f"{path}: must be a finite number")
-        return None
-    if not result.is_finite():
-        errors.append(f"{path}: must be finite")
-        return None
+def _path(parts: Iterable[object]) -> str:
+    result = "$"
+    for part in parts:
+        result += f"[{part}]" if isinstance(part, int) else f".{part}"
     return result
 
 
-def _prob(value: Any, path: str, errors: list[str], *, open_interval: bool = False) -> Decimal | None:
-    result = _decimal(value, path, errors)
-    if result is not None and not ((0 < result < 1) if open_interval else (0 <= result <= 1)):
-        errors.append(f"{path}: probability must be {'strictly ' if open_interval else ''}between 0 and 1")
-    return result
+def _reject_non_json(value: Any, path: str, errors: list[str]) -> None:
+    if value is None or isinstance(value, (str, bool, int)):
+        return
+    if isinstance(value, float):
+        errors.append(f"{path}: binary floating-point and non-finite values are forbidden; use fixed-scale decimal strings")
+        return
+    if isinstance(value, list):
+        for index, item in enumerate(value):
+            _reject_non_json(item, f"{path}[{index}]", errors)
+        return
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            if not isinstance(key, str):
+                errors.append(f"{path}: object keys must be strings")
+            else:
+                _reject_non_json(item, f"{path}.{key}", errors)
+        return
+    errors.append(f"{path}: value is not JSON-compatible")
 
 
-def _required_text(obj: Mapping[str, Any], name: str, path: str, errors: list[str]) -> None:
-    if not isinstance(obj.get(name), str) or not obj[name].strip():
-        errors.append(f"{path}.{name}: non-empty string required")
+def _load_schema() -> Mapping[str, Any]:
+    return json.loads(SCHEMA_PATH.read_text(encoding="utf-8"), parse_constant=lambda token: (_ for _ in ()).throw(ValueError(token)))
 
 
-def _list(obj: Mapping[str, Any], name: str, path: str, errors: list[str], *, nonempty: bool = False) -> list[Any]:
-    value = obj.get(name)
-    if not isinstance(value, list) or (nonempty and not value):
-        errors.append(f"{path}.{name}: {'non-empty ' if nonempty else ''}array required")
-        return []
-    return value
+def _schema_errors(data: object) -> list[str]:
+    schema = _load_schema()
+    Draft202012Validator.check_schema(schema)
+    validator = Draft202012Validator(schema)
+    return [f"{_path(error.path)}: {error.message}" for error in sorted(
+        validator.iter_errors(data), key=lambda error: (tuple(str(x) for x in error.path), error.message)
+    )]
 
 
-def _text_list(obj: Mapping[str, Any], name: str, path: str, errors: list[str], *, nonempty: bool = False) -> list[str]:
-    value = _list(obj, name, path, errors, nonempty=nonempty)
-    if not all(isinstance(item, str) and item.strip() for item in value):
-        errors.append(f"{path}.{name}: every item must be a non-empty string")
-    return value
-
-
-def _timestamp(value: Any, path: str, errors: list[str]) -> datetime | None:
-    if not isinstance(value, str):
-        errors.append(f"{path}: RFC 3339 timestamp required")
-        return None
-    try:
-        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except ValueError:
-        errors.append(f"{path}: invalid RFC 3339 timestamp")
-        return None
-    if parsed.tzinfo is None:
-        errors.append(f"{path}: timestamp must include an offset")
-        return None
+def _parse_time(value: str) -> datetime:
+    parsed = datetime.fromisoformat(value[:-1] + "+00:00" if value.endswith("Z") else value)
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ValueError("timezone required")
     return parsed.astimezone(timezone.utc)
 
 
-def _ids(items: list[Any], path: str, errors: list[str]) -> dict[str, Mapping[str, Any]]:
-    result: dict[str, Mapping[str, Any]] = {}
-    for index, item in enumerate(items):
-        p = f"{path}[{index}]"
-        if not isinstance(item, Mapping):
-            errors.append(f"{p}: object required")
-            continue
-        _required_text(item, "id", p, errors)
-        identifier = item.get("id")
-        if isinstance(identifier, str):
-            if identifier in result:
-                errors.append(f"{p}.id: duplicate id {identifier}")
-            result[identifier] = item
+def _decimal(value: str) -> Decimal:
+    result = Decimal(value)
+    if result == 0 and value.startswith("-"):
+        raise ValueError("negative zero is not canonical")
     return result
 
 
-def _provenance(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    provenance = record.get("provenance")
-    if not isinstance(provenance, Mapping):
-        errors.append(f"{path}.provenance: object required")
-        return
-    _required_text(provenance, "source", f"{path}.provenance", errors)
-    _required_text(provenance, "content_hash", f"{path}.provenance", errors)
-    refs = provenance.get("far_refs", [])
-    if not isinstance(refs, list) or not all(isinstance(x, str) and x for x in refs):
-        errors.append(f"{path}.provenance.far_refs: string array required")
+def canonical_bytes(value: object) -> bytes:
+    """FAR-CJ/1: UTF-8, NFC-free exact strings, code-point key order, no whitespace.
+
+    The schema excludes JSON numbers for semantic numeric fields; validation also
+    rejects every binary float.  This leaves integers only for discrete versions.
+    Surrogates are rejected by ``encode`` rather than normalized or replaced.
+    """
+    return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(",", ":")).encode("utf-8", "strict")
 
 
-def _validate_belief(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    hypotheses = _list(record, "hypotheses", path, errors, nonempty=True)
-    if len(hypotheses) < 2: errors.append(f"{path}.hypotheses: at least two competing hypotheses required")
-    by_id = _ids(hypotheses, f"{path}.hypotheses", errors)
-    total = Decimal(0)
-    prior_total = Decimal(0)
-    for hid, item in by_id.items():
-        hp = f"{path}.hypotheses[{hid}]"
-        _required_text(item, "statement", hp, errors)
-        prior = _prob(item.get("prior_probability"), f"{hp}.prior_probability", errors)
-        if prior is not None: prior_total += prior
-        p = _prob(item.get("confidence"), f"{hp}.confidence", errors)
-        if p is not None:
-            total += p
-        _text_list(item, "falsifiers", hp, errors, nonempty=True)
-        _text_list(item, "base_reference_classes", hp, errors, nonempty=True)
-        uncertainty = item.get("uncertainty")
-        if not isinstance(uncertainty, Mapping):
-            errors.append(f"{hp}.uncertainty: object required")
-        else:
-            _required_text(uncertainty, "kind", f"{hp}.uncertainty", errors)
-            _required_text(uncertainty, "description", f"{hp}.uncertainty", errors)
-    if by_id and total != Decimal(1):
-        errors.append(f"{path}.hypotheses: confidences must sum exactly to 1 (got {total})")
-    if by_id and prior_total != Decimal(1):
-        errors.append(f"{path}.hypotheses: priors must sum exactly to 1 (got {prior_total})")
-    updates = _list(record, "evidence_updates", path, errors)
-    previous: dict[str, Decimal] | None = None
-    for index, update in enumerate(updates):
-        up = f"{path}.evidence_updates[{index}]"
-        if not isinstance(update, Mapping):
-            errors.append(f"{up}: object required"); continue
-        _timestamp(update.get("timestamp"), f"{up}.timestamp", errors)
-        _required_text(update, "evidence_ref", up, errors)
-        posterior = update.get("posterior")
-        if not isinstance(posterior, Mapping) or set(posterior) != set(by_id):
-            errors.append(f"{up}.posterior: must contain exactly all hypothesis ids")
-        else:
-            vals = {k: _prob(v, f"{up}.posterior.{k}", errors) for k, v in posterior.items()}
-            if all(v is not None for v in vals.values()) and sum(vals.values(), Decimal(0)) != Decimal(1):
-                errors.append(f"{up}.posterior: probabilities must sum exactly to 1")
-            previous = {k: v for k, v in vals.items() if v is not None}
-    if previous is not None:
-        current = {k: Decimal(str(v["confidence"])) for k, v in by_id.items() if "confidence" in v}
-        if current != previous:
-            errors.append(f"{path}.hypotheses: current confidence must equal final evidence posterior")
-    revisions = _list(record, "revision_history", path, errors, nonempty=True)
-    last_revision: datetime | None = None
-    for index, revision in enumerate(revisions):
-        rp = f"{path}.revision_history[{index}]"
-        if not isinstance(revision, Mapping): errors.append(f"{rp}: object required"); continue
-        timestamp = _timestamp(revision.get("timestamp"), f"{rp}.timestamp", errors)
-        if timestamp and last_revision and timestamp < last_revision:
-            errors.append(f"{rp}.timestamp: revision history must be chronological")
-        if timestamp: last_revision = timestamp
-        _required_text(revision, "reason", rp, errors)
+def sha256_commitment(value: object) -> str:
+    return "sha256:" + hashlib.sha256(canonical_bytes(value)).hexdigest()
 
 
-def _validate_prediction(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    made = _timestamp(record.get("made_at"), f"{path}.made_at", errors)
-    start = _timestamp(record.get("resolution_window_start"), f"{path}.resolution_window_start", errors)
-    end = _timestamp(record.get("resolution_window_end"), f"{path}.resolution_window_end", errors)
-    if made and start and made > start: errors.append(f"{path}: prediction must precede resolution window")
-    if start and end and start > end: errors.append(f"{path}: resolution window start must not exceed end")
-    _prob(record.get("probability"), f"{path}.probability", errors, open_interval=True)
-    _required_text(record, "proposition", path, errors)
-    _required_text(record, "objective_resolution_criteria", path, errors)
-    _required_text(record, "evidence_snapshot_hash", path, errors)
-    provenance = record.get("provenance", {})
-    if isinstance(provenance, Mapping) and provenance.get("content_hash") != record.get("evidence_snapshot_hash"):
-        errors.append(f"{path}.evidence_snapshot_hash: must equal provenance content_hash")
-    outcome = record.get("outcome")
-    scores = record.get("scores")
-    if outcome is None:
-        if scores is not None: errors.append(f"{path}.scores: unresolved prediction cannot have scores")
-    elif outcome not in (0, 1, False, True):
-        errors.append(f"{path}.outcome: binary 0 or 1 required")
-    else:
-        resolved = _timestamp(record.get("resolved_at"), f"{path}.resolved_at", errors)
-        if resolved and end and resolved < start: errors.append(f"{path}.resolved_at: cannot precede resolution window")
-        if not isinstance(scores, Mapping): errors.append(f"{path}.scores: resolved prediction requires scores")
-        else:
-            expected = score_binary(record["probability"], int(outcome))
-            for key in ("brier", "log"):
-                value = _decimal(scores.get(key), f"{path}.scores.{key}", errors)
-                if value is not None and abs(value - expected[key]) > Decimal("0.000000000001"):
-                    errors.append(f"{path}.scores.{key}: does not match computed score")
+def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate object key {key}")
+        result[key] = value
+    return result
 
 
-def _validate_decision(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    actions = _list(record, "actions", path, errors, nonempty=True)
-    if len(actions) < 2: errors.append(f"{path}.actions: at least two available actions required")
-    states = _list(record, "states", path, errors, nonempty=True)
-    action_ids = _ids(actions, f"{path}.actions", errors)
-    state_ids = _ids(states, f"{path}.states", errors)
-    state_total = Decimal(0)
-    for sid, state in state_ids.items():
-        p = _prob(state.get("probability"), f"{path}.states[{sid}].probability", errors)
-        if p is not None: state_total += p
-    if state_ids and state_total != Decimal(1): errors.append(f"{path}.states: probabilities must sum exactly to 1")
-    computed: dict[str, Decimal] = {}
-    for aid, action in action_ids.items():
-        utilities = action.get("utilities")
-        if not isinstance(utilities, Mapping) or set(utilities) != set(state_ids):
-            errors.append(f"{path}.actions[{aid}].utilities: must contain exactly all state ids"); continue
-        ev = Decimal(0)
-        for sid, state in state_ids.items():
-            utility = _decimal(utilities[sid], f"{path}.actions[{aid}].utilities.{sid}", errors)
-            if utility is not None: ev += Decimal(str(state["probability"])) * utility
-        declared = _decimal(action.get("expected_utility"), f"{path}.actions[{aid}].expected_utility", errors)
-        if declared is not None and declared != ev: errors.append(f"{path}.actions[{aid}].expected_utility: expected {ev}")
-        _required_text(action, "tail_risk", f"{path}.actions[{aid}]", errors)
-        downside = _decimal(action.get("downside_utility"), f"{path}.actions[{aid}].downside_utility", errors)
-        if downside is not None and utilities and downside != min(Decimal(str(x)) for x in utilities.values()):
-            errors.append(f"{path}.actions[{aid}].downside_utility: must equal worst utility")
-        computed[aid] = ev
-    chosen = record.get("chosen_action")
-    if chosen not in action_ids: errors.append(f"{path}.chosen_action: must reference an action")
-    _required_text(record, "rationale", path, errors)
-    if computed and chosen in computed:
-        opportunity = max(computed.values()) - computed[chosen]
-        declared = _decimal(record.get("opportunity_cost"), f"{path}.opportunity_cost", errors)
-        if declared is not None and declared != opportunity: errors.append(f"{path}.opportunity_cost: expected {opportunity}")
-    voi = _decimal(record.get("value_of_information"), f"{path}.value_of_information", errors)
-    if voi is not None and voi < 0: errors.append(f"{path}.value_of_information: must be non-negative")
-    if len(computed) == len(action_ids) and state_ids and voi is not None:
-        perfect = sum((Decimal(str(state["probability"])) * max(Decimal(str(action["utilities"][sid])) for action in action_ids.values()) for sid, state in state_ids.items()), Decimal(0))
-        expected_voi = perfect - max(computed.values())
-        if voi != expected_voi: errors.append(f"{path}.value_of_information: expected {expected_voi}")
-    if record.get("actual_state") is not None:
-        actual = record.get("actual_state")
-        if actual not in state_ids: errors.append(f"{path}.actual_state: must reference a state")
-        if actual in state_ids and chosen in action_ids:
-            achieved = Decimal(str(action_ids[chosen]["utilities"][actual]))
-            regret = max(Decimal(str(a["utilities"][actual])) for a in action_ids.values()) - achieved
-            declared = _decimal(record.get("regret"), f"{path}.regret", errors)
-            if declared is not None and declared != regret: errors.append(f"{path}.regret: expected {regret}")
+def snapshot_payload(snapshot: Mapping[str, Any]) -> dict[str, Any]:
+    return {key: value for key, value in snapshot.items() if key != "sha256"}
 
 
-def _validate_dialectic(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    for field in ("claim", "clarification", "steelman", "burden_of_proof", "revision_result"):
-        _required_text(record, field, path, errors)
-    for field in ("definitions", "commitments", "assumptions", "counterexamples", "contradictions", "cruxes", "falsifiers", "change_evidence"):
-        _text_list(record, field, path, errors, nonempty=True)
+def _validate_elenchus(data: Mapping[str, Any], errors: list[str]) -> dict[str, Mapping[str, Any]]:
+    sessions: dict[str, Mapping[str, Any]] = {}
+    for index, document in enumerate(data["elenchus_sessions"]):
+        result = validate_socratic_record(document)
+        prefix = f"$.elenchus_sessions[{index}]"
+        for diagnostic in result.diagnostics:
+            errors.append(f"{prefix}{_path(diagnostic.path)[1:]}: {diagnostic.code}: {diagnostic.message}")
+        if document.get("record_type") != "ELENCHUS_SESSION":
+            errors.append(f"{prefix}.record_type: only canonical FAR-ELENCHUS-1.0 sessions are permitted")
+            continue
+        record = document.get("record", {})
+        session_id = record.get("session_id")
+        if isinstance(session_id, str):
+            if session_id in sessions:
+                errors.append(f"{prefix}.record.session_id: duplicate id {session_id}")
+            sessions[session_id] = document
+    return sessions
 
 
-def _validate_causal(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    nodes = _list(record, "nodes", path, errors, nonempty=True)
-    node_ids = set(x for x in nodes if isinstance(x, str) and x)
-    if len(node_ids) != len(nodes): errors.append(f"{path}.nodes: unique non-empty strings required")
-    edges = _list(record, "edges", path, errors)
-    adjacency = {x: [] for x in node_ids}
-    for i, edge in enumerate(edges):
-        if not isinstance(edge, Mapping) or edge.get("cause") not in node_ids or edge.get("effect") not in node_ids:
-            errors.append(f"{path}.edges[{i}]: cause and effect must reference nodes"); continue
-        adjacency[edge["cause"]].append(edge["effect"])
-    visiting: set[str] = set(); visited: set[str] = set()
-    def visit(node: str) -> bool:
-        if node in visiting: return True
-        if node in visited: return False
-        visiting.add(node)
-        if any(visit(n) for n in adjacency[node]): return True
-        visiting.remove(node); visited.add(node); return False
-    if any(visit(n) for n in node_ids): errors.append(f"{path}.edges: causal graph must be acyclic")
-    for field in ("interventions", "confounders", "counterfactuals", "assumptions", "identification_limits"):
-        _text_list(record, field, path, errors, nonempty=True)
+def _index(items: Sequence[Mapping[str, Any]], path: str, errors: list[str]) -> dict[str, Mapping[str, Any]]:
+    result: dict[str, Mapping[str, Any]] = {}
+    for index, item in enumerate(items):
+        identifier = item["id"]
+        if identifier in result:
+            errors.append(f"{path}[{index}].id: duplicate id {identifier}")
+        result[identifier] = item
+    return result
 
 
-def _validate_error(record: Mapping[str, Any], path: str, errors: list[str]) -> None:
-    for field in ("root_cause", "corrective_rule", "retest_criterion"):
-        _required_text(record, field, path, errors)
-    _text_list(record, "linked_record_ids", path, errors, nonempty=True)
-    _text_list(record, "classifications", path, errors, nonempty=True)
-    recurrences = record.get("recurring_failure_ids")
-    if not isinstance(recurrences, list): errors.append(f"{path}.recurring_failure_ids: array required")
-    result = record.get("retest_result")
-    if result is not None and result not in {"improved", "unchanged", "worse", "inconclusive"}:
-        errors.append(f"{path}.retest_result: invalid result")
-
-
-VALIDATORS = {
-    "belief": _validate_belief, "prediction": _validate_prediction,
-    "decision": _validate_decision, "dialectic": _validate_dialectic,
-    "causal_model": _validate_causal, "error": _validate_error,
-}
-
-COMMON_FIELDS = {"id", "kind", "provenance", "belief_ref", "prediction_ref", "decision_ref", "dialectic_ref", "causal_model_ref", "error_ref"}
-KIND_FIELDS = {
-    "belief": {"hypotheses", "evidence_updates", "revision_history"},
-    "prediction": {"proposition", "probability", "made_at", "resolution_window_start", "resolution_window_end", "objective_resolution_criteria", "evidence_snapshot_hash", "outcome", "resolved_at", "scores"},
-    "decision": {"actions", "states", "chosen_action", "rationale", "opportunity_cost", "value_of_information", "actual_state", "eventual_outcome", "regret"},
-    "dialectic": {"claim", "clarification", "definitions", "commitments", "assumptions", "steelman", "burden_of_proof", "counterexamples", "contradictions", "cruxes", "falsifiers", "change_evidence", "revision_result"},
-    "causal_model": {"nodes", "edges", "interventions", "confounders", "counterfactuals", "assumptions", "identification_limits"},
-    "error": {"linked_record_ids", "classifications", "root_cause", "corrective_rule", "recurring_failure_ids", "retest_criterion", "retest_result"},
-}
-
-
-def validate_document(data: Mapping[str, Any]) -> tuple[str, ...]:
-    """Return stable path-addressed validation errors without mutating input."""
+def _validate_semantics(data: Mapping[str, Any]) -> list[str]:
     errors: list[str] = []
-    unknown_document_fields = set(data) - {"format_version", "id", "far_ir_version", "records", "metadata"}
-    for field in unknown_document_fields: errors.append(f"$.{field}: unknown field")
-    if data.get("format_version") != FORMAT_VERSION:
-        errors.append(f"format_version: expected {FORMAT_VERSION}")
-    _required_text(data, "id", "$", errors)
-    _required_text(data, "far_ir_version", "$", errors)
-    if data.get("far_ir_version") not in {"far-ir/1.0", "far-ir/2.0", "far-ir/2.1"}:
-        errors.append("$.far_ir_version: unsupported FAR IR version")
-    records = _list(data, "records", "$", errors, nonempty=True)
-    by_id = _ids(records, "$.records", errors)
-    for index, record in enumerate(records):
-        if not isinstance(record, Mapping): continue
-        path = f"$.records[{index}]"
-        kind = record.get("kind")
-        if kind not in RECORD_KINDS:
-            errors.append(f"{path}.kind: unsupported record kind")
+    evidence = _index(data["evidence"], "$.evidence", errors)
+    snapshots = _index(data["snapshots"], "$.snapshots", errors)
+    records = _index(data["records"], "$.records", errors)
+    sessions = _validate_elenchus(data, errors)
+
+    for eid, item in evidence.items():
+        if item["provenance"]["evidence_id"] != eid:
+            errors.append(f"$.evidence[{eid}].provenance.evidence_id: must equal evidence id")
+        expected_evidence_hash = "sha256:" + hashlib.sha256(item["statement"].encode("utf-8", "strict")).hexdigest()
+        if item["provenance"]["byte_target"] != "UTF-8 bytes of statement" or item["provenance"]["artifact_sha256"] != expected_evidence_hash:
+            errors.append(f"$.evidence[{eid}].provenance: artifact_sha256 must commit to UTF-8 statement bytes")
+
+    for rid, record in records.items():
+        if record["kind"] not in RECORD_KINDS:
+            errors.append(f"$.records[{rid}].kind: unsupported kind")
+        for field, expected_kind in REFERENCE_KINDS.items():
+            if field in record:
+                target = records.get(record[field])
+                if target is None:
+                    errors.append(f"$.records[{rid}].{field}: unknown record id {record[field]}")
+                elif target["kind"] != expected_kind:
+                    errors.append(f"$.records[{rid}].{field}: expected {expected_kind}, got {target['kind']}")
+        provenance = record["provenance"]
+        for evidence_ref in provenance["evidence_refs"]:
+            if evidence_ref not in evidence:
+                errors.append(f"$.records[{rid}].provenance.evidence_refs: unknown evidence id {evidence_ref}")
+        for session_ref in provenance["elenchus_session_refs"]:
+            if session_ref not in sessions:
+                errors.append(f"$.records[{rid}].provenance.elenchus_session_refs: unknown FAR-ELENCHUS-1.0 session {session_ref}")
+
+    beliefs = {rid: r for rid, r in records.items() if r["kind"] == "belief"}
+    for rid, belief in beliefs.items():
+        hypotheses = _index(belief["hypotheses"], f"$.records[{rid}].hypotheses", errors)
+        revisions = belief["revisions"]
+        revision_ids: set[str] = set()
+        last_time: datetime | None = None
+        previous: Mapping[str, Any] | None = None
+        for index, revision in enumerate(revisions):
+            path = f"$.records[{rid}].revisions[{index}]"
+            if revision["id"] in revision_ids:
+                errors.append(f"{path}.id: duplicate revision id {revision['id']}")
+            revision_ids.add(revision["id"])
+            timestamp = _parse_time(revision["timestamp"])
+            if last_time is not None and timestamp <= last_time:
+                errors.append(f"{path}.timestamp: revisions must be strictly chronological")
+            last_time = timestamp
+            if set(revision["probabilities"]) != set(hypotheses):
+                errors.append(f"{path}.probabilities: must contain exactly all hypothesis ids")
+            elif sum((_decimal(x) for x in revision["probabilities"].values()), Decimal(0)) != Decimal(1):
+                errors.append(f"{path}.probabilities: must sum exactly to 1.000000")
+            for evidence_ref in revision["evidence_refs"]:
+                if evidence_ref not in evidence:
+                    errors.append(f"{path}.evidence_refs: unknown evidence id {evidence_ref}")
+                if evidence_ref not in belief["provenance"]["evidence_refs"]:
+                    errors.append(f"{path}.evidence_refs: evidence {evidence_ref} is absent from belief provenance")
+                if evidence_ref in evidence and _parse_time(evidence[evidence_ref]["observed_at"]) > timestamp:
+                    errors.append(f"{path}.evidence_refs: evidence {evidence_ref} was observed after the revision")
+            if index == 0:
+                priors = {hid: hypothesis["prior_probability"] for hid, hypothesis in hypotheses.items()}
+                if revision["probabilities"] != priors or revision["supersedes"] is not None:
+                    errors.append(f"{path}: initial revision must equal priors and supersede null")
+                if revision["trigger_outcome_ref"] is not None:
+                    errors.append(f"{path}.trigger_outcome_ref: initial revision cannot be outcome-triggered")
+            else:
+                assert previous is not None
+                if revision["supersedes"] != previous["id"]:
+                    errors.append(f"{path}.supersedes: must reference immediately preceding revision {previous['id']}")
+                if not revision["evidence_refs"]:
+                    errors.append(f"{path}.evidence_refs: a belief change requires evidence")
+            previous = revision
+        if belief["current_revision_ref"] != revisions[-1]["id"]:
+            errors.append(f"$.records[{rid}].current_revision_ref: must reference final revision")
+
+    for sid, snapshot in snapshots.items():
+        if snapshot["sha256"] != sha256_commitment(snapshot_payload(snapshot)):
+            errors.append(f"$.snapshots[{sid}].sha256: digest does not match FAR-CJ/1 snapshot payload")
+        belief = records.get(snapshot["belief_ref"])
+        if belief is None or belief["kind"] != "belief":
+            errors.append(f"$.snapshots[{sid}].belief_ref: must reference a belief")
+            continue
+        revisions = {x["id"]: x for x in belief["revisions"]}
+        revision = revisions.get(snapshot["belief_revision_ref"])
+        if revision is None:
+            errors.append(f"$.snapshots[{sid}].belief_revision_ref: unknown revision")
+            continue
+        if snapshot["hypothesis_probabilities"] != revision["probabilities"]:
+            errors.append(f"$.snapshots[{sid}].hypothesis_probabilities: must equal referenced belief revision")
+        if snapshot["evidence_refs"] != revision["evidence_refs"]:
+            errors.append(f"$.snapshots[{sid}].evidence_refs: must equal referenced belief revision")
+        if _parse_time(snapshot["captured_at"]) < _parse_time(revision["timestamp"]):
+            errors.append(f"$.snapshots[{sid}].captured_at: cannot predate belief revision")
+        for evidence_ref in snapshot["evidence_refs"]:
+            if evidence_ref not in evidence:
+                errors.append(f"$.snapshots[{sid}].evidence_refs: unknown evidence id {evidence_ref}")
+
+    predictions = {rid: r for rid, r in records.items() if r["kind"] == "prediction"}
+    for rid, prediction in predictions.items():
+        snapshot = snapshots.get(prediction["belief_snapshot_ref"])
+        if snapshot is None:
+            errors.append(f"$.records[{rid}].belief_snapshot_ref: unknown snapshot")
+            continue
+        if prediction["belief_ref"] != snapshot["belief_ref"]:
+            errors.append(f"$.records[{rid}].belief_ref: must equal snapshot belief_ref")
+        if prediction["provenance"]["evidence_refs"] != snapshot["evidence_refs"]:
+            errors.append(f"$.records[{rid}].provenance.evidence_refs: must equal snapshot evidence_refs")
+        expected = snapshot["hypothesis_probabilities"].get(prediction["hypothesis_ref"])
+        if expected is None:
+            errors.append(f"$.records[{rid}].hypothesis_ref: absent from snapshot")
+        elif prediction["probability"] != expected:
+            errors.append(f"$.records[{rid}].probability: must equal snapshot hypothesis probability {expected}")
+        made = _parse_time(prediction["made_at"])
+        if made < _parse_time(snapshot["captured_at"]):
+            errors.append(f"$.records[{rid}].made_at: cannot predate snapshot")
+        if made > _parse_time(prediction["resolution_window_start"]):
+            errors.append(f"$.records[{rid}].made_at: must precede resolution window")
+        if _parse_time(prediction["resolution_window_start"]) > _parse_time(prediction["resolution_window_end"]):
+            errors.append(f"$.records[{rid}]: invalid resolution window")
+
+    decisions = {rid: r for rid, r in records.items() if r["kind"] == "decision"}
+    for rid, decision in decisions.items():
+        prediction = records.get(decision["prediction_ref"])
+        snapshot = snapshots.get(decision["belief_snapshot_ref"])
+        if prediction is None or prediction["kind"] != "prediction" or snapshot is None:
+            continue
+        if decision["belief_snapshot_ref"] != prediction["belief_snapshot_ref"] or decision["belief_ref"] != prediction["belief_ref"]:
+            errors.append(f"$.records[{rid}]: decision must use prediction's frozen belief snapshot")
+        if decision["provenance"]["evidence_refs"] != snapshot["evidence_refs"]:
+            errors.append(f"$.records[{rid}].provenance.evidence_refs: must equal snapshot evidence_refs")
+        decided = _parse_time(decision["decided_at"])
+        if decided < _parse_time(prediction["made_at"]) or decided > _parse_time(prediction["resolution_window_start"]):
+            errors.append(f"$.records[{rid}].decided_at: must follow prediction and precede resolution window")
+        states = _index(decision["states"], f"$.records[{rid}].states", errors)
+        if sum((_decimal(x["probability"]) for x in states.values()), Decimal(0)) != Decimal(1):
+            errors.append(f"$.records[{rid}].states: probabilities must sum exactly to 1.000000")
+        for state_id, state in states.items():
+            expected = snapshot["hypothesis_probabilities"].get(state["hypothesis_ref"])
+            if expected != state["probability"]:
+                errors.append(f"$.records[{rid}].states[{state_id}].probability: must equal snapshot probability")
+        if {state["hypothesis_ref"] for state in states.values()} != set(snapshot["hypothesis_probabilities"]):
+            errors.append(f"$.records[{rid}].states: must map exactly once to every snapshot hypothesis")
+        actions = _index(decision["actions"], f"$.records[{rid}].actions", errors)
+        evs: dict[str, Decimal] = {}
+        for aid, action in actions.items():
+            if set(action["utilities"]) != set(states):
+                errors.append(f"$.records[{rid}].actions[{aid}].utilities: must contain exactly all state ids")
+                continue
+            ev = sum((_decimal(states[s]["probability"]) * _decimal(action["utilities"][s]) for s in states), Decimal(0))
+            ev = ev.quantize(PROB_SCALE, rounding=ROUND_HALF_EVEN)
+            evs[aid] = ev
+            if _decimal(action["expected_utility"]) != ev:
+                errors.append(f"$.records[{rid}].actions[{aid}].expected_utility: expected {ev:.6f}")
+            if _decimal(action["downside_utility"]) != min(_decimal(x) for x in action["utilities"].values()):
+                errors.append(f"$.records[{rid}].actions[{aid}].downside_utility: must equal worst utility")
+            threshold = _decimal(action["tail_risk"]["threshold_utility"])
+            tail_probability = sum((_decimal(states[s]["probability"]) for s, value in action["utilities"].items() if _decimal(value) <= threshold), Decimal(0))
+            if _decimal(action["tail_risk"]["probability_at_or_below"]) != tail_probability:
+                errors.append(f"$.records[{rid}].actions[{aid}].tail_risk.probability_at_or_below: expected {tail_probability:.6f}")
+        if decision["chosen_action"] not in actions:
+            errors.append(f"$.records[{rid}].chosen_action: unknown action")
+        elif decision["chosen_action"] in evs:
+            opportunity = max(evs.values()) - evs[decision["chosen_action"]]
+            if _decimal(decision["opportunity_cost"]) != opportunity:
+                errors.append(f"$.records[{rid}].opportunity_cost: expected {opportunity:.6f}")
+        if len(evs) == len(actions):
+            perfect = sum((_decimal(state["probability"]) * max(_decimal(action["utilities"][sid]) for action in actions.values()) for sid, state in states.items()), Decimal(0))
+            evpi = (perfect - max(evs.values())).quantize(PROB_SCALE, rounding=ROUND_HALF_EVEN)
+            if _decimal(decision["expected_value_of_perfect_information"]) != evpi:
+                errors.append(f"$.records[{rid}].expected_value_of_perfect_information: expected {evpi:.6f}")
+
+    outcomes = {rid: r for rid, r in records.items() if r["kind"] == "outcome"}
+    for rid, outcome in outcomes.items():
+        prediction = records.get(outcome["prediction_ref"])
+        decision = records.get(outcome["decision_ref"])
+        if prediction is None or prediction["kind"] != "prediction" or decision is None or decision["kind"] != "decision":
+            continue
+        if decision["prediction_ref"] != prediction["id"]:
+            errors.append(f"$.records[{rid}]: outcome prediction and decision are not linked")
+        if outcome["evidence_ref"] not in evidence or outcome["evidence_ref"] not in outcome["provenance"]["evidence_refs"]:
+            errors.append(f"$.records[{rid}].evidence_ref: must exist and be bound by outcome provenance")
+        resolved = _parse_time(outcome["resolved_at"])
+        if resolved < _parse_time(prediction["resolution_window_start"]):
+            errors.append(f"$.records[{rid}].resolved_at: cannot precede resolution window")
+        states = {x["id"]: x for x in decision["states"]}; actions = {x["id"]: x for x in decision["actions"]}
+        if outcome["realized_state"] not in states:
+            errors.append(f"$.records[{rid}].realized_state: unknown decision state")
         else:
-            for field in set(record) - COMMON_FIELDS - KIND_FIELDS[kind]:
-                errors.append(f"{path}.{field}: field is not valid for {kind} records")
-            _provenance(record, path, errors)
-            VALIDATORS[kind](record, path, errors)
-    for rid, record in by_id.items():
-        for field in ("belief_ref", "prediction_ref", "decision_ref", "dialectic_ref", "causal_model_ref", "error_ref"):
-            if field in record and record[field] not in by_id:
-                errors.append(f"$.records[{rid}].{field}: unknown record id")
-        for field in ("linked_record_ids", "recurring_failure_ids"):
-            for target in record.get(field, []):
-                if target not in by_id:
-                    errors.append(f"$.records[{rid}].{field}: unknown record id {target}")
+            achieved = _decimal(actions[decision["chosen_action"]]["utilities"][outcome["realized_state"]])
+            regret = max(_decimal(a["utilities"][outcome["realized_state"]]) for a in actions.values()) - achieved
+            if _decimal(outcome["regret"]) != regret:
+                errors.append(f"$.records[{rid}].regret: expected {regret:.6f}")
+        expected_scores = score_binary(prediction["probability"], outcome["binary_outcome"])
+        if outcome["scores"] != expected_scores:
+            errors.append(f"$.records[{rid}].scores: must equal deterministic prediction scores {expected_scores}")
+
+    for belief_id, belief in beliefs.items():
+        for revision in belief["revisions"]:
+            trigger = revision["trigger_outcome_ref"]
+            if trigger is None:
+                continue
+            outcome = outcomes.get(trigger)
+            path = f"$.records[{belief_id}].revisions[{revision['id']}].trigger_outcome_ref"
+            if outcome is None:
+                errors.append(f"{path}: must reference an outcome")
+            else:
+                if outcome["evidence_ref"] not in revision["evidence_refs"]:
+                    errors.append(f"{path}: triggering outcome evidence must be included in revision")
+                if _parse_time(revision["timestamp"]) <= _parse_time(outcome["resolved_at"]):
+                    errors.append(f"{path}: belief revision must occur after outcome resolution")
+
+    for rid, error in ((rid, r) for rid, r in records.items() if r["kind"] == "error"):
+        outcome = records.get(error["outcome_ref"])
+        if outcome is not None and outcome["kind"] == "outcome":
+            if error["prediction_ref"] != outcome["prediction_ref"] or error["decision_ref"] != outcome["decision_ref"]:
+                errors.append(f"$.records[{rid}]: error must preserve outcome lifecycle references")
+        belief = records.get(error["belief_ref"])
+        if belief is None or belief["kind"] != "belief" or error["belief_revision_ref"] not in {x["id"] for x in belief.get("revisions", [])}:
+            errors.append(f"$.records[{rid}].belief_revision_ref: must reference a revision of belief_ref")
+        else:
+            revision = next(x for x in belief["revisions"] if x["id"] == error["belief_revision_ref"])
+            if revision["trigger_outcome_ref"] != error["outcome_ref"]:
+                errors.append(f"$.records[{rid}].belief_revision_ref: revision must be triggered by error outcome")
+        if error["retest_ref"] is not None:
+            retest = records.get(error["retest_ref"])
+            if retest is None or retest["kind"] != "retest" or retest["error_ref"] != rid:
+                errors.append(f"$.records[{rid}].retest_ref: must reference its retest record")
+        if error["failure_mode_code"] not in error["corrective_rule"]["applies_to_failure_mode_codes"]:
+            errors.append(f"$.records[{rid}].corrective_rule: must apply to recorded failure_mode_code")
+
+    for rid, retest in ((rid, r) for rid, r in records.items() if r["kind"] == "retest"):
+        error = records.get(retest["error_ref"])
+        if error is None or error["kind"] != "error":
+            continue
+        baseline_outcome = records.get(error["outcome_ref"])
+        if baseline_outcome is None or baseline_outcome["kind"] != "outcome":
+            errors.append(f"$.records[{rid}]: linked error must reference a valid baseline outcome")
+            continue
+        comparison_outcomes = [records.get(x) for x in retest["comparison_outcome_refs"]]
+        if any(x is None or x["kind"] != "outcome" for x in comparison_outcomes):
+            errors.append(f"$.records[{rid}].comparison_outcome_refs: every reference must target an outcome")
+            continue
+        if _parse_time(retest["evaluated_at"]) <= _parse_time(baseline_outcome["resolved_at"]):
+            errors.append(f"$.records[{rid}].evaluated_at: retest must follow baseline outcome")
+        if any(_parse_time(x["resolved_at"]) <= _parse_time(baseline_outcome["resolved_at"]) for x in comparison_outcomes):
+            errors.append(f"$.records[{rid}].comparison_outcome_refs: comparisons must be later outcomes")
+        baseline = _decimal(retest["baseline_mean_brier"])
+        actual_baseline = _decimal(baseline_outcome["scores"]["brier"])
+        if baseline != actual_baseline:
+            errors.append(f"$.records[{rid}].baseline_mean_brier: must equal linked baseline outcome score")
+        baseline_prediction = records[baseline_outcome["prediction_ref"]]
+        comparison_predictions = [records[x["prediction_ref"]] for x in comparison_outcomes]
+        if baseline_prediction["reference_class"] != retest["reference_class"] or any(x["reference_class"] != retest["reference_class"] for x in comparison_predictions):
+            errors.append(f"$.records[{rid}].reference_class: must equal every compared prediction reference class")
+        comparison = sum((_decimal(x["scores"]["brier"]) for x in comparison_outcomes), Decimal(0)) / Decimal(len(comparison_outcomes))
+        comparison = comparison.quantize(SCORE_SCALE, rounding=ROUND_HALF_EVEN)
+        if _decimal(retest["comparison_mean_brier"]) != comparison:
+            errors.append(f"$.records[{rid}].comparison_mean_brier: expected {comparison:.12f}")
+        derived = "IMPROVED" if comparison < baseline else "WORSE" if comparison > baseline else "UNCHANGED"
+        if retest["result"] != derived:
+            errors.append(f"$.records[{rid}].result: expected {derived}")
+
+    for rid, causal in ((rid, r) for rid, r in records.items() if r["kind"] == "causal_model"):
+        variables = _index(causal["variables"], f"$.records[{rid}].variables", errors)
+        assumptions = _index(causal["assumptions"], f"$.records[{rid}].assumptions", errors)
+        interventions = _index(causal["interventions"], f"$.records[{rid}].interventions", errors)
+        for assumption_id, assumption in assumptions.items():
+            for evidence_ref in assumption["evidence_refs"]:
+                if evidence_ref not in evidence or evidence_ref not in causal["provenance"]["evidence_refs"]:
+                    errors.append(f"$.records[{rid}].assumptions[{assumption_id}].evidence_refs: evidence must exist and be provenance-bound")
+        adjacency = {x: [] for x in variables}
+        for index, edge in enumerate(causal["edges"]):
+            if edge["cause"] not in variables or edge["effect"] not in variables:
+                errors.append(f"$.records[{rid}].edges[{index}]: endpoints must reference variables")
+            else: adjacency[edge["cause"]].append(edge["effect"])
+            for ref in edge["assumption_refs"]:
+                if ref not in assumptions: errors.append(f"$.records[{rid}].edges[{index}].assumption_refs: unknown assumption")
+        visiting: set[str] = set(); visited: set[str] = set()
+        def visit(node: str) -> bool:
+            if node in visiting: return True
+            if node in visited: return False
+            visiting.add(node)
+            if any(visit(child) for child in adjacency[node]): return True
+            visiting.remove(node); visited.add(node); return False
+        if any(visit(node) for node in variables): errors.append(f"$.records[{rid}].edges: causal graph must be acyclic")
+        for collection in ("interventions", "confounders", "counterfactuals"):
+            for index, item in enumerate(causal[collection]):
+                for field in ("variable_ref", "target_ref", "cause_ref", "effect_ref", "outcome_variable_ref"):
+                    if field in item and item[field] not in variables:
+                        errors.append(f"$.records[{rid}].{collection}[{index}].{field}: unknown variable")
+                if collection == "counterfactuals":
+                    for ref in item["intervention_refs"]:
+                        if ref not in interventions: errors.append(f"$.records[{rid}].counterfactuals[{index}].intervention_refs: unknown intervention")
+        for ref in causal["identification"]["assumption_refs"]:
+            if ref not in assumptions: errors.append(f"$.records[{rid}].identification.assumption_refs: unknown assumption")
+        for ref in causal["identification"]["adjustment_set"]:
+            if ref not in variables: errors.append(f"$.records[{rid}].identification.adjustment_set: unknown variable")
+
+    return errors
+
+
+def validate_document(data: object) -> tuple[str, ...]:
+    errors: list[str] = []
+    _reject_non_json(data, "$", errors)
+    if errors: return tuple(sorted(set(errors)))
+    try:
+        errors.extend(_schema_errors(data))
+    except (OSError, ValueError, TypeError, UnicodeError) as exc:
+        return (f"$: schema validation failed: {exc}",)
+    if errors or not isinstance(data, Mapping): return tuple(sorted(set(errors)))
+    try:
+        errors.extend(_validate_semantics(data))
+    except (KeyError, TypeError, ValueError, ArithmeticError, UnicodeError) as exc:
+        errors.append(f"$: semantic validation failed closed: {type(exc).__name__}: {exc}")
     return tuple(sorted(set(errors)))
 
 
 @dataclass(frozen=True, slots=True)
 class EpistemicDocument:
-    """Validated immutable facade; ``to_dict`` returns a defensive copy."""
-    _canonical_json: str
+    _canonical: bytes
 
     @classmethod
-    def from_dict(cls, data: Mapping[str, Any]) -> "EpistemicDocument":
-        if not isinstance(data, Mapping): raise EpistemicValidationError(("$: object required",))
+    def from_dict(cls, data: object) -> "EpistemicDocument":
         errors = validate_document(data)
         if errors: raise EpistemicValidationError(errors)
-        return cls(json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False))
+        try:
+            return cls(canonical_bytes(data))
+        except (TypeError, ValueError, UnicodeError) as exc:
+            raise EpistemicValidationError((f"$: canonicalization failed: {exc}",)) from exc
 
     @classmethod
     def loads(cls, text: str) -> "EpistemicDocument":
-        try: data = json.loads(text)
-        except json.JSONDecodeError as exc: raise EpistemicValidationError((f"$: invalid JSON: {exc.msg}",)) from exc
+        try:
+            data = json.loads(text, object_pairs_hook=_unique_object,
+                              parse_constant=lambda token: (_ for _ in ()).throw(ValueError(f"non-finite {token}")))
+        except (json.JSONDecodeError, ValueError, UnicodeError) as exc:
+            raise EpistemicValidationError((f"$: invalid strict JSON: {exc}",)) from exc
         return cls.from_dict(data)
 
     @classmethod
     def load(cls, path: str | Path) -> "EpistemicDocument":
-        return cls.loads(Path(path).read_text(encoding="utf-8"))
+        try: return cls.loads(Path(path).read_text(encoding="utf-8"))
+        except OSError as exc: raise EpistemicValidationError((f"$: unreadable document: {exc}",)) from exc
 
-    def to_dict(self) -> dict[str, Any]:
-        return json.loads(self._canonical_json)
-
-    def dumps(self, *, indent: int | None = 2) -> str:
-        return json.dumps(self.to_dict(), sort_keys=True, indent=indent, ensure_ascii=False) + ("\n" if indent else "")
-
+    def to_dict(self) -> dict[str, Any]: return json.loads(self._canonical)
+    def dumps(self) -> str: return self._canonical.decode("utf-8") + "\n"
     @property
-    def digest(self) -> str:
-        return "sha256:" + hashlib.sha256(self._canonical_json.encode()).hexdigest()
-
+    def digest(self) -> str: return "sha256:" + hashlib.sha256(self._canonical).hexdigest()
     def audit_event(self) -> dict[str, Any]:
-        """Replay/certificate-compatible deterministic content commitment."""
         data = self.to_dict()
         return {"event": "far_epistemic_validation", "format_version": FORMAT_VERSION,
                 "document_id": data["id"], "content_hash": self.digest,
-                "record_ids": [r["id"] for r in data["records"]], "valid": True}
+                "record_ids": [x["id"] for x in data["records"]], "valid": True}
 
 
-def score_binary(probability: Any, outcome: int) -> dict[str, Decimal]:
-    """Compute negatively oriented Brier and natural-log loss (lower is better)."""
-    errors: list[str] = []
-    p = _prob(probability, "probability", errors, open_interval=True)
-    if outcome not in (0, 1): errors.append("outcome: binary 0 or 1 required")
-    if errors: raise EpistemicValidationError(errors)
-    assert p is not None
-    actual = Decimal(outcome)
-    brier = (p - actual) ** 2
-    log_loss = Decimal(str(-math.log(float(p if outcome else Decimal(1) - p))))
-    return {"brier": brier, "log": log_loss}
+def score_binary(probability: str, outcome: int) -> dict[str, str]:
+    if not isinstance(probability, str) or not isinstance(outcome, int) or isinstance(outcome, bool) or outcome not in (0, 1):
+        raise EpistemicValidationError(("$: fixed-scale probability string and binary integer outcome required",))
+    try: p = Decimal(probability)
+    except Exception as exc: raise EpistemicValidationError(("$.probability: invalid decimal",)) from exc
+    if not p.is_finite() or not (Decimal(0) < p < Decimal(1)) or p.as_tuple().exponent != -6:
+        raise EpistemicValidationError(("$.probability: strict interior probability with exactly six decimals required",))
+    with localcontext() as context:
+        context.prec = 50
+        context.rounding = ROUND_HALF_EVEN
+        brier = ((p - Decimal(outcome)) ** 2).quantize(SCORE_SCALE)
+        likelihood = p if outcome else Decimal(1) - p
+        log_loss = (-likelihood.ln()).quantize(SCORE_SCALE)
+    return {"brier": f"{brier:.12f}", "log": f"{log_loss:.12f}"}
 
 
-def calibration(predictions: Iterable[Mapping[str, Any]], *, bins: int = 10) -> dict[str, Any]:
-    """Return deterministic equal-width longitudinal calibration aggregates."""
-    if not isinstance(bins, int) or isinstance(bins, bool) or bins < 1:
-        raise EpistemicValidationError(("bins: positive integer required",))
-    grouped: list[list[tuple[Decimal, int]]] = [[] for _ in range(bins)]
-    for index, record in enumerate(predictions):
-        errors: list[str] = []
-        p = _prob(record.get("probability"), f"predictions[{index}].probability", errors)
-        outcome = record.get("outcome")
-        if outcome not in (0, 1, False, True): errors.append(f"predictions[{index}].outcome: resolved binary outcome required")
-        if errors: raise EpistemicValidationError(errors)
-        assert p is not None
-        bucket = min(int(p * bins), bins - 1)
-        grouped[bucket].append((p, int(outcome)))
-    output = []
-    all_items = [x for group in grouped for x in group]
-    for index, group in enumerate(grouped):
-        if group:
-            count = Decimal(len(group))
-            output.append({"bin": index, "count": len(group),
-                           "mean_probability": str(sum((p for p, _ in group), Decimal(0)) / count),
-                           "observed_frequency": str(sum((Decimal(o) for _, o in group), Decimal(0)) / count)})
-    mean_brier = sum(((p - Decimal(o)) ** 2 for p, o in all_items), Decimal(0)) / Decimal(len(all_items)) if all_items else None
-    return {"bins": output, "resolved_count": len(all_items), "mean_brier": None if mean_brier is None else str(mean_brier)}
+def calibration(outcomes: Iterable[Mapping[str, Any]], *, bin_edges: Sequence[str]) -> dict[str, Any]:
+    """Aggregate explicitly selected comparable outcomes under declared fixed bins."""
+    try: edges = [Decimal(x) for x in bin_edges]
+    except Exception as exc: raise EpistemicValidationError(("$.bin_edges: decimal strings required",)) from exc
+    if len(edges) < 2 or edges[0] != 0 or edges[-1] != 1 or any(a >= b for a, b in zip(edges, edges[1:])):
+        raise EpistemicValidationError(("$.bin_edges: strictly increasing edges from 0 to 1 required",))
+    rows = list(outcomes)
+    if not rows: raise EpistemicValidationError(("$.outcomes: at least one resolved comparable outcome required",))
+    reference_classes = {row.get("reference_class") for row in rows}
+    if len(reference_classes) != 1 or None in reference_classes:
+        raise EpistemicValidationError(("$.outcomes: one explicit comparable reference_class required",))
+    buckets: list[list[tuple[Decimal, int]]] = [[] for _ in range(len(edges) - 1)]
+    for index, row in enumerate(rows):
+        try: p = Decimal(row["probability"]); outcome = row["binary_outcome"]
+        except Exception as exc: raise EpistemicValidationError((f"$.outcomes[{index}]: probability and outcome required",)) from exc
+        if outcome not in (0, 1) or isinstance(outcome, bool) or not (0 < p < 1):
+            raise EpistemicValidationError((f"$.outcomes[{index}]: strict probability and binary integer outcome required",))
+        bucket = next((i for i, (a, b) in enumerate(zip(edges, edges[1:])) if a <= p < b or (i == len(edges)-2 and p == b)), None)
+        if bucket is None: raise EpistemicValidationError((f"$.outcomes[{index}]: probability outside bins",))
+        buckets[bucket].append((p, outcome))
+    result = []
+    all_rows = [x for bucket in buckets for x in bucket]
+    for index, bucket in enumerate(buckets):
+        if bucket:
+            count = Decimal(len(bucket))
+            mean = (sum((p for p, _ in bucket), Decimal(0))/count).quantize(PROB_SCALE, rounding=ROUND_HALF_EVEN)
+            observed = (sum((Decimal(o) for _, o in bucket), Decimal(0))/count).quantize(PROB_SCALE, rounding=ROUND_HALF_EVEN)
+            result.append({"lower": str(bin_edges[index]), "upper": str(bin_edges[index+1]), "count": len(bucket), "mean_probability": f"{mean:.6f}", "observed_frequency": f"{observed:.6f}"})
+    brier = (sum(((p-Decimal(o))**2 for p,o in all_rows),Decimal(0))/Decimal(len(all_rows))).quantize(SCORE_SCALE,rounding=ROUND_HALF_EVEN)
+    return {"reference_class": next(iter(reference_classes)), "bin_edges": list(bin_edges), "resolved_count": len(all_rows), "bins": result, "mean_brier": f"{brier:.12f}"}
 
 
 def recurring_failure_modes(error_records: Iterable[Mapping[str, Any]], *, minimum: int = 2) -> list[dict[str, Any]]:
-    """Detect repeated root-cause/classification signatures without semantic guessing."""
     if not isinstance(minimum, int) or isinstance(minimum, bool) or minimum < 2:
-        raise EpistemicValidationError(("minimum: integer of at least 2 required",))
-    groups: dict[tuple[str, tuple[str, ...]], list[str]] = {}
+        raise EpistemicValidationError(("$.minimum: integer at least 2 required",))
+    groups: dict[tuple[str, str], list[str]] = {}
     for index, record in enumerate(error_records):
-        if record.get("kind") != "error" or not isinstance(record.get("id"), str):
-            raise EpistemicValidationError((f"error_records[{index}]: ErrorRecord required",))
-        root = record.get("root_cause")
-        classifications = record.get("classifications")
-        if not isinstance(root, str) or not root or not isinstance(classifications, list) or not all(isinstance(x, str) and x for x in classifications):
-            raise EpistemicValidationError((f"error_records[{index}]: root cause and classifications required",))
-        key = (root, tuple(sorted(set(classifications))))
-        groups.setdefault(key, []).append(record["id"])
-    return [{"root_cause": key[0], "classifications": list(key[1]), "count": len(ids), "record_ids": sorted(ids)}
-            for key, ids in sorted(groups.items()) if len(ids) >= minimum]
-
-
-def migrate(data: Mapping[str, Any]) -> dict[str, Any]:
-    """Migrate the only predecessor format without guessing missing semantics."""
-    if data.get("format_version") == FORMAT_VERSION:
-        return json.loads(json.dumps(data))
-    if data.get("format_version") != LEGACY_VERSION:
-        raise EpistemicValidationError(("format_version: unsupported migration source",))
-    result = json.loads(json.dumps(data))
-    result["format_version"] = FORMAT_VERSION
-    result.setdefault("far_ir_version", "far-ir/1.0")
-    for record in result.get("records", []):
-        if record.get("kind") == "prediction" and "resolution_date" in record:
-            date = record.pop("resolution_date")
-            record.setdefault("resolution_window_start", date)
-            record.setdefault("resolution_window_end", date)
-    # Validation is intentional: migration never fabricates provenance, uncertainty, or utilities.
-    return EpistemicDocument.from_dict(result).to_dict()
+        if record.get("kind") != "error" or not all(isinstance(record.get(x), str) for x in ("id", "failure_mode_code")) or not isinstance(record.get("corrective_rule"), Mapping):
+            raise EpistemicValidationError((f"$.error_records[{index}]: normalized ErrorRecord required",))
+        rule_id = record["corrective_rule"].get("id")
+        if not isinstance(rule_id, str): raise EpistemicValidationError((f"$.error_records[{index}].corrective_rule.id: required",))
+        groups.setdefault((record["failure_mode_code"], rule_id), []).append(record["id"])
+    return [{"failure_mode_code": key[0], "corrective_rule_id": key[1], "count": len(ids), "record_ids": sorted(ids)} for key, ids in sorted(groups.items()) if len(ids) >= minimum]

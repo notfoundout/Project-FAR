@@ -17,9 +17,9 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "22883162a3a4fb9745fe24677d6fbc821b7a8e46fbbfbadcca8945514846d9e2",
+      "current_sha256": "c53fd7ba7107daf2cc0277a0eaf971379c369c3fd5c31de1cd5327313b1a9d5a",
       "class": "documentation_surface",
-      "reason": "Registered the provisional additive far-epistemic/1.0 application interchange and its strict separation from FAR Core and approximation/cost semantics. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Registered the hardened far-epistemic/1.0 application contract and its composition with the single canonical FAR-ELENCHUS-1.0 architecture. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/CANONICAL_MAP.md",

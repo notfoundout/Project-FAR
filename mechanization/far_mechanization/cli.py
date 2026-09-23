@@ -15,7 +15,7 @@ from .conformance import run_conformance
 from .parser import ParseResult, parse_document, parse_file
 from .serialization import serialize_json, serialize_yaml, external_to_data
 from .normalization import normalize_ir_document
-from .epistemic import EpistemicDocument, EpistemicValidationError, calibration, migrate
+from .epistemic import EpistemicDocument, EpistemicValidationError, calibration
 
 CLI_VERSION = "0.6.0"
 FOUNDATION_VERSION = "v1.0"
@@ -224,19 +224,23 @@ def _conformance(args: argparse.Namespace) -> tuple[int, str, str]:
     return (0 if result.success else 1), out, ""
 
 def _epistemic(args: argparse.Namespace) -> tuple[int, str, str]:
-    """Validate, normalize, summarize calibration, or migrate an epistemic loop."""
+    """Validate or summarize a validated epistemic loop."""
     try:
         raw = json.loads(Path(args.file).read_text(encoding="utf-8"))
-        if args.epistemic_command == "migrate":
-            document = EpistemicDocument.from_dict(migrate(raw))
-        else:
-            document = EpistemicDocument.from_dict(raw)
+        document = EpistemicDocument.from_dict(raw)
         if args.epistemic_command == "validate":
             payload = {"valid": True, "content_hash": document.digest,
                        "audit_event": document.audit_event()}
         elif args.epistemic_command == "calibration":
-            records = [r for r in document.to_dict()["records"] if r["kind"] == "prediction" and r.get("outcome") is not None]
-            payload = calibration(records, bins=args.bins)
+            records = document.to_dict()["records"]
+            by_id = {record["id"]: record for record in records}
+            outcomes = [
+                {"probability": by_id[record["prediction_ref"]]["probability"],
+                 "binary_outcome": record["binary_outcome"],
+                 "reference_class": by_id[record["prediction_ref"]]["reference_class"]}
+                for record in records if record["kind"] == "outcome"
+            ]
+            payload = calibration(outcomes, bin_edges=args.bin_edges.split(","))
         else:
             payload = document.to_dict()
     except (OSError, json.JSONDecodeError, EpistemicValidationError) as exc:
@@ -267,9 +271,8 @@ def build_parser() -> argparse.ArgumentParser:
     c=add_common(sub.add_parser("conformance", help="run far-ir/1.0 conformance suite")); c.add_argument("--manifest"); c.set_defaults(func=_conformance)
     ep = sub.add_parser("epistemic", help="operate on additive far-epistemic/1.0 records")
     eps = ep.add_subparsers(dest="epistemic_command", required=True)
-    for name in ("validate", "migrate"):
-        cmd = eps.add_parser(name); cmd.add_argument("file"); cmd.set_defaults(func=_epistemic)
-    cal = eps.add_parser("calibration"); cal.add_argument("file"); cal.add_argument("--bins", type=int, default=10); cal.set_defaults(func=_epistemic)
+    cmd = eps.add_parser("validate"); cmd.add_argument("file"); cmd.set_defaults(func=_epistemic)
+    cal = eps.add_parser("calibration"); cal.add_argument("file"); cal.add_argument("--bin-edges", default="0,0.5,1"); cal.set_defaults(func=_epistemic)
     add_common(sub.add_parser("version", help="show versions")).set_defaults(func=_version)
     sub.add_parser("help", help="show help").set_defaults(func=lambda args: (0, p.format_help(), ""))
     return p

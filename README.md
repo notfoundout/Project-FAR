@@ -37,7 +37,7 @@ These are separate assurance dimensions. Independent review does not imply novel
 
 For what these labels do and do not mean across claims, read the [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md). It is a non-authoritative Research calibration that changes no claim status, and it records that much of the core mathematics instantiates standard patterns (Blackwell comparison, minimal sufficient statistics, Myhill-Nerode, coalgebraic minimization, abstract interpretation), that `14/14 FORMALIZED` is a mechanization-status label rather than fourteen deep or novel results, and that foundational mathematical novelty, external independence, empirical utility, and commercial value are all unestablished.
 
-Project FAR also provides an additive [`far-epistemic/1.0` learning interchange](docs/specification/far-epistemic-learning-v1.md) for provenance-bound beliefs, predictions, decisions, dialectics, causal models, outcomes, scoring, and error-driven revision. It is an application-layer contract and does not alter FAR Core or reuse approximation/provenance cost as probability or utility.
+Project FAR also provides an additive [`far-epistemic/1.0` learning interchange](docs/specification/far-epistemic-learning-v1.md) for provenance-bound beliefs, predictions, decisions, canonical FAR-ELENCHUS-1.0 sessions, typed causal models, outcomes, deterministic scoring, and evidence-linked error-driven revision. It is an application-layer contract and does not alter FAR Core or reuse approximation/provenance cost as probability or utility.
 
 Canonical links:
 
