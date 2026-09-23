@@ -1,0 +1,288 @@
+{
+  "format_version": "far-epistemic/1.0",
+  "id": "learning-loop-example",
+  "far_ir_version": "far-ir/1.0",
+  "metadata": {
+    "description": "Deterministic end-to-end epistemic learning loop"
+  },
+  "records": [
+    {
+      "id": "belief.weather.1",
+      "kind": "belief",
+      "provenance": {
+        "source": "example-observation-log",
+        "content_hash": "sha256:evidence-snapshot-2",
+        "far_refs": [
+          "claim.weather",
+          "evidence.forecast"
+        ],
+        "evidence_refs": [
+          "evidence.forecast"
+        ]
+      },
+      "hypotheses": [
+        {
+          "id": "h.rain",
+          "statement": "It will rain",
+          "prior_probability": 0.5,
+          "confidence": 0.1,
+          "base_reference_classes": [
+            "historical same-season days"
+          ],
+          "falsifiers": [
+            "no measurable precipitation in window"
+          ],
+          "uncertainty": {
+            "kind": "mixed",
+            "description": "weather variability and model uncertainty"
+          }
+        },
+        {
+          "id": "h.dry",
+          "statement": "It will remain dry",
+          "prior_probability": 0.5,
+          "confidence": 0.9,
+          "base_reference_classes": [
+            "historical same-season days"
+          ],
+          "falsifiers": [
+            "measurable precipitation in window"
+          ],
+          "uncertainty": {
+            "kind": "mixed",
+            "description": "weather variability and model uncertainty"
+          }
+        }
+      ],
+      "evidence_updates": [
+        {
+          "timestamp": "2026-01-01T09:00:00Z",
+          "evidence_ref": "evidence.forecast",
+          "posterior": {
+            "h.rain": 0.3,
+            "h.dry": 0.7
+          },
+          "update_rule": "declared likelihood-ratio update from priors 0.5/0.5"
+        },
+        {
+          "timestamp": "2026-01-03T00:30:00Z",
+          "evidence_ref": "evidence.outcome",
+          "posterior": {
+            "h.rain": 0.1,
+            "h.dry": 0.9
+          },
+          "update_rule": "outcome-conditioned revision after prediction scoring; prediction snapshot remains frozen"
+        }
+      ],
+      "revision_history": [
+        {
+          "timestamp": "2026-01-01T08:00:00Z",
+          "reason": "initial equal-prior hypothesis set",
+          "supersedes": null
+        },
+        {
+          "timestamp": "2026-01-01T09:00:00Z",
+          "reason": "forecast evidence reduced rain confidence",
+          "supersedes": "initial"
+        },
+        {
+          "timestamp": "2026-01-03T00:30:00Z",
+          "reason": "resolved dry outcome and error review revised current belief",
+          "supersedes": "forecast posterior"
+        }
+      ]
+    },
+    {
+      "id": "causal.weather.1",
+      "kind": "causal_model",
+      "provenance": {
+        "source": "declared example SCM",
+        "content_hash": "sha256:causal-1",
+        "far_refs": [
+          "reasoning_step.weather"
+        ]
+      },
+      "nodes": [
+        "front",
+        "rain",
+        "umbrella"
+      ],
+      "edges": [
+        {
+          "cause": "front",
+          "effect": "rain",
+          "mechanism": "front raises precipitation propensity"
+        },
+        {
+          "cause": "rain",
+          "effect": "umbrella",
+          "mechanism": "rain motivates umbrella use"
+        }
+      ],
+      "interventions": [
+        "do(umbrella=1) does not alter rain"
+      ],
+      "confounders": [
+        "season affects front and rain"
+      ],
+      "counterfactuals": [
+        "had the front been absent, rain may not have occurred"
+      ],
+      "assumptions": [
+        "acyclic model",
+        "no unrecorded common cause after season adjustment"
+      ],
+      "identification_limits": [
+        "observational association alone does not identify front effect"
+      ]
+    },
+    {
+      "id": "dialectic.weather.1",
+      "kind": "dialectic",
+      "belief_ref": "belief.weather.1",
+      "provenance": {
+        "source": "recorded dialogue",
+        "content_hash": "sha256:dialogue-1",
+        "far_refs": [
+          "claim.weather"
+        ]
+      },
+      "claim": "Rain is likely",
+      "clarification": "Likely means probability above 0.5 in the stated window",
+      "definitions": [
+        "rain means measurable precipitation"
+      ],
+      "commitments": [
+        "use the frozen forecast snapshot"
+      ],
+      "assumptions": [
+        "forecast station is representative"
+      ],
+      "steelman": "The opposing dry case has both base-rate and forecast support",
+      "burden_of_proof": "rain proponent must show probability above 0.5",
+      "counterexamples": [
+        "similar forecasts have missed local showers"
+      ],
+      "contradictions": [
+        "rain-likely conflicts with the declared 0.3 probability"
+      ],
+      "cruxes": [
+        "local calibration of the forecast"
+      ],
+      "falsifiers": [
+        "no precipitation in the window"
+      ],
+      "change_evidence": [
+        "new radar evidence would change both positions"
+      ],
+      "revision_result": "revise claim to rain is possible but not likely"
+    },
+    {
+      "id": "prediction.rain.1",
+      "kind": "prediction",
+      "belief_ref": "belief.weather.1",
+      "provenance": {
+        "source": "belief.weather.1",
+        "content_hash": "sha256:evidence-snapshot-2",
+        "far_refs": [
+          "claim.weather",
+          "evidence.forecast"
+        ]
+      },
+      "proposition": "Measurable precipitation occurs at station A",
+      "probability": 0.3,
+      "made_at": "2026-01-01T09:00:00Z",
+      "resolution_window_start": "2026-01-02T00:00:00Z",
+      "resolution_window_end": "2026-01-02T23:59:59Z",
+      "objective_resolution_criteria": "station A reports precipitation greater than zero",
+      "evidence_snapshot_hash": "sha256:evidence-snapshot-2",
+      "outcome": 0,
+      "resolved_at": "2026-01-03T00:00:00Z",
+      "scores": {
+        "brier": 0.09,
+        "log": 0.35667494393873245
+      }
+    },
+    {
+      "id": "decision.umbrella.1",
+      "kind": "decision",
+      "belief_ref": "belief.weather.1",
+      "prediction_ref": "prediction.rain.1",
+      "provenance": {
+        "source": "decision worksheet",
+        "content_hash": "sha256:decision-1",
+        "far_refs": [
+          "reasoning_step.weather"
+        ]
+      },
+      "states": [
+        {
+          "id": "rain",
+          "probability": 0.3
+        },
+        {
+          "id": "dry",
+          "probability": 0.7
+        }
+      ],
+      "actions": [
+        {
+          "id": "carry",
+          "utilities": {
+            "rain": 10,
+            "dry": -4
+          },
+          "expected_utility": 0.2,
+          "downside_utility": -4,
+          "tail_risk": "0.7 probability of inconvenience utility -4"
+        },
+        {
+          "id": "leave",
+          "utilities": {
+            "rain": 2,
+            "dry": 1
+          },
+          "expected_utility": 1.3,
+          "downside_utility": 1,
+          "tail_risk": "0.3 probability of wet-weather utility 2"
+        }
+      ],
+      "chosen_action": "leave",
+      "rationale": "highest expected utility under declared states and utility scale",
+      "opportunity_cost": 0,
+      "value_of_information": 2.4,
+      "actual_state": "dry",
+      "eventual_outcome": "remained dry",
+      "regret": 0
+    },
+    {
+      "id": "error.weather.1",
+      "kind": "error",
+      "belief_ref": "belief.weather.1",
+      "prediction_ref": "prediction.rain.1",
+      "decision_ref": "decision.umbrella.1",
+      "provenance": {
+        "source": "post-resolution review",
+        "content_hash": "sha256:error-1",
+        "far_refs": [
+          "reasoning_step.weather",
+          "evidence.outcome"
+        ]
+      },
+      "linked_record_ids": [
+        "belief.weather.1",
+        "prediction.rain.1",
+        "decision.umbrella.1"
+      ],
+      "classifications": [
+        "no decision error",
+        "calibration observation"
+      ],
+      "root_cause": "No realized error; preserve the case as a calibration observation rather than hindsight relabeling",
+      "corrective_rule": "Aggregate resolved predictions before changing the forecast update rule",
+      "recurring_failure_ids": [],
+      "retest_criterion": "later predictions have lower mean Brier score on a preregistered comparable class",
+      "retest_result": "inconclusive"
+    }
+  ]
+}

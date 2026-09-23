@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-epistemic-v1.schema.json",
+  "title": "FAR additive epistemic learning document",
+  "type": "object", "additionalProperties": false,
+  "required": ["format_version", "id", "far_ir_version", "records"],
+  "properties": {
+    "format_version": {"const": "far-epistemic/1.0"},
+    "id": {"$ref": "#/$defs/id"},
+    "far_ir_version": {"enum": ["far-ir/1.0", "far-ir/2.0", "far-ir/2.1"]},
+    "records": {"type": "array", "minItems": 1, "items": {"oneOf": [
+      {"$ref": "#/$defs/belief"}, {"$ref": "#/$defs/prediction"}, {"$ref": "#/$defs/decision"},
+      {"$ref": "#/$defs/dialectic"}, {"$ref": "#/$defs/causal"}, {"$ref": "#/$defs/error"}
+    ]}},
+    "metadata": {"type": "object"}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"},
+    "timestamp": {"type": "string", "format": "date-time"},
+    "probability": {"type": "number", "minimum": 0, "maximum": 1},
+    "number": {"type": "number"},
+    "strings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "nonempty_strings": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "provenance": {"type": "object", "additionalProperties": false, "required": ["source", "content_hash", "far_refs"], "properties": {
+      "source": {"type": "string", "minLength": 1}, "content_hash": {"type": "string", "minLength": 1},
+      "far_refs": {"$ref": "#/$defs/strings"}, "evidence_refs": {"$ref": "#/$defs/strings"}
+    }},
+    "common": {"type": "object", "required": ["id", "kind", "provenance"], "properties": {
+      "id": {"$ref": "#/$defs/id"}, "kind": {"type": "string"}, "provenance": {"$ref": "#/$defs/provenance"},
+      "belief_ref": {"$ref": "#/$defs/id"}, "prediction_ref": {"$ref": "#/$defs/id"}, "decision_ref": {"$ref": "#/$defs/id"},
+      "dialectic_ref": {"$ref": "#/$defs/id"}, "causal_model_ref": {"$ref": "#/$defs/id"}, "error_ref": {"$ref": "#/$defs/id"}
+    }},
+    "hypothesis": {"type": "object", "additionalProperties": false, "required": ["id", "statement", "prior_probability", "confidence", "base_reference_classes", "falsifiers", "uncertainty"], "properties": {
+      "id": {"$ref": "#/$defs/id"}, "statement": {"type": "string", "minLength": 1}, "prior_probability": {"$ref": "#/$defs/probability"}, "confidence": {"$ref": "#/$defs/probability"},
+      "base_reference_classes": {"$ref": "#/$defs/nonempty_strings"}, "falsifiers": {"$ref": "#/$defs/nonempty_strings"},
+      "uncertainty": {"type": "object", "additionalProperties": false, "required": ["kind", "description"], "properties": {"kind": {"enum": ["aleatory", "epistemic", "mixed", "unknown"]}, "description": {"type": "string", "minLength": 1}}}
+    }},
+    "belief": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "hypotheses", "evidence_updates", "revision_history"], "properties": {
+      "id": {"$ref": "#/$defs/id"}, "kind": {"const": "belief"}, "provenance": {"$ref": "#/$defs/provenance"},
+      "hypotheses": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/hypothesis"}},
+      "evidence_updates": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["timestamp", "evidence_ref", "posterior", "update_rule"], "properties": {"timestamp": {"$ref": "#/$defs/timestamp"}, "evidence_ref": {"type": "string", "minLength": 1}, "posterior": {"type": "object", "additionalProperties": {"$ref": "#/$defs/probability"}}, "update_rule": {"type": "string", "minLength": 1}}}},
+      "revision_history": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["timestamp", "reason"], "properties": {"timestamp": {"$ref": "#/$defs/timestamp"}, "reason": {"type": "string", "minLength": 1}, "supersedes": {"type": ["string", "null"]}}}}
+    }}]},
+    "prediction": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "belief_ref", "proposition", "probability", "made_at", "resolution_window_start", "resolution_window_end", "objective_resolution_criteria", "evidence_snapshot_hash", "outcome", "scores"], "properties": {
+      "id": {"$ref": "#/$defs/id"}, "kind": {"const": "prediction"}, "provenance": {"$ref": "#/$defs/provenance"}, "belief_ref": {"$ref": "#/$defs/id"}, "proposition": {"type": "string", "minLength": 1}, "probability": {"type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1}, "made_at": {"$ref": "#/$defs/timestamp"}, "resolution_window_start": {"$ref": "#/$defs/timestamp"}, "resolution_window_end": {"$ref": "#/$defs/timestamp"}, "objective_resolution_criteria": {"type": "string", "minLength": 1}, "evidence_snapshot_hash": {"type": "string", "minLength": 1}, "outcome": {"type": ["integer", "null"], "minimum": 0, "maximum": 1}, "resolved_at": {"$ref": "#/$defs/timestamp"}, "scores": {"type": ["object", "null"], "properties": {"brier": {"$ref": "#/$defs/number"}, "log": {"$ref": "#/$defs/number"}}, "required": ["brier", "log"], "additionalProperties": false}
+    }}]},
+    "decision": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "belief_ref", "actions", "states", "chosen_action", "rationale", "opportunity_cost", "value_of_information"], "properties": {
+      "id": {"$ref": "#/$defs/id"}, "kind": {"const": "decision"}, "provenance": {"$ref": "#/$defs/provenance"}, "belief_ref": {"$ref": "#/$defs/id"}, "prediction_ref": {"$ref": "#/$defs/id"}, "actions": {"type": "array", "minItems": 2, "items": {"type": "object", "additionalProperties": false, "required": ["id", "utilities", "expected_utility", "downside_utility", "tail_risk"], "properties": {"id": {"$ref": "#/$defs/id"}, "utilities": {"type": "object", "additionalProperties": {"$ref": "#/$defs/number"}}, "expected_utility": {"$ref": "#/$defs/number"}, "downside_utility": {"$ref": "#/$defs/number"}, "tail_risk": {"type": "string", "minLength": 1}}}}, "states": {"type": "array", "minItems": 1, "items": {"type": "object", "additionalProperties": false, "required": ["id", "probability"], "properties": {"id": {"$ref": "#/$defs/id"}, "probability": {"$ref": "#/$defs/probability"}}}}, "chosen_action": {"$ref": "#/$defs/id"}, "rationale": {"type": "string", "minLength": 1}, "opportunity_cost": {"$ref": "#/$defs/number"}, "value_of_information": {"$ref": "#/$defs/number"}, "actual_state": {"$ref": "#/$defs/id"}, "eventual_outcome": {"type": "string"}, "regret": {"$ref": "#/$defs/number"}
+    }}]},
+    "dialectic": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "claim", "clarification", "definitions", "commitments", "assumptions", "steelman", "burden_of_proof", "counterexamples", "contradictions", "cruxes", "falsifiers", "change_evidence", "revision_result"], "properties": {"id": {"$ref": "#/$defs/id"}, "kind": {"const": "dialectic"}, "provenance": {"$ref": "#/$defs/provenance"}, "belief_ref": {"$ref": "#/$defs/id"}, "claim": {"type": "string"}, "clarification": {"type": "string"}, "definitions": {"$ref": "#/$defs/nonempty_strings"}, "commitments": {"$ref": "#/$defs/nonempty_strings"}, "assumptions": {"$ref": "#/$defs/nonempty_strings"}, "steelman": {"type": "string"}, "burden_of_proof": {"type": "string"}, "counterexamples": {"$ref": "#/$defs/nonempty_strings"}, "contradictions": {"$ref": "#/$defs/nonempty_strings"}, "cruxes": {"$ref": "#/$defs/nonempty_strings"}, "falsifiers": {"$ref": "#/$defs/nonempty_strings"}, "change_evidence": {"$ref": "#/$defs/nonempty_strings"}, "revision_result": {"type": "string"}}}]},
+    "causal": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "nodes", "edges", "interventions", "confounders", "counterfactuals", "assumptions", "identification_limits"], "properties": {"id": {"$ref": "#/$defs/id"}, "kind": {"const": "causal_model"}, "provenance": {"$ref": "#/$defs/provenance"}, "nodes": {"$ref": "#/$defs/nonempty_strings"}, "edges": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["cause", "effect", "mechanism"], "properties": {"cause": {"type": "string"}, "effect": {"type": "string"}, "mechanism": {"type": "string"}}}}, "interventions": {"$ref": "#/$defs/nonempty_strings"}, "confounders": {"$ref": "#/$defs/nonempty_strings"}, "counterfactuals": {"$ref": "#/$defs/nonempty_strings"}, "assumptions": {"$ref": "#/$defs/nonempty_strings"}, "identification_limits": {"$ref": "#/$defs/nonempty_strings"}}}]},
+    "error": {"allOf": [{"$ref": "#/$defs/common"}, {"type": "object", "additionalProperties": false, "required": ["id", "kind", "provenance", "linked_record_ids", "classifications", "root_cause", "corrective_rule", "recurring_failure_ids", "retest_criterion", "retest_result"], "properties": {"id": {"$ref": "#/$defs/id"}, "kind": {"const": "error"}, "provenance": {"$ref": "#/$defs/provenance"}, "belief_ref": {"$ref": "#/$defs/id"}, "prediction_ref": {"$ref": "#/$defs/id"}, "decision_ref": {"$ref": "#/$defs/id"}, "linked_record_ids": {"$ref": "#/$defs/nonempty_strings"}, "classifications": {"$ref": "#/$defs/nonempty_strings"}, "root_cause": {"type": "string", "minLength": 1}, "corrective_rule": {"type": "string", "minLength": 1}, "recurring_failure_ids": {"$ref": "#/$defs/strings"}, "retest_criterion": {"type": "string", "minLength": 1}, "retest_result": {"enum": ["improved", "unchanged", "worse", "inconclusive", null]}}}]}
+  }
+}

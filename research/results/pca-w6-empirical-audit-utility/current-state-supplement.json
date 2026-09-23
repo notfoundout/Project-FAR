@@ -16,16 +16,23 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "dbf4827adb689b2863b6d33a1f864bb84de022c055170e22055e6a62d1049695",
+      "current_sha256": "22883162a3a4fb9745fe24677d6fbc821b7a8e46fbbfbadcca8945514846d9e2",
       "class": "documentation_surface",
-      "reason": "Linked the non-authoritative epistemic calibration audit, which was previously unreachable from any top-level navigation surface. No claim status changed."
+      "reason": "Registered the provisional additive far-epistemic/1.0 application interchange and its strict separation from FAR Core and approximation/cost semantics. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "0f53be3a05e0e862dd942be49d541fe8062270575fc9482e1f582952effd2d28",
+      "current_sha256": "67c9c9b02d8684983f4d90bae5c53ee9a6671744e52f43d0258b124455f4cf31",
       "class": "documentation_surface",
-      "reason": "Registered the epistemic calibration audit, the EFR-R2 input-specification amendment, and the accepted governed contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the provisional additive far-epistemic/1.0 application interchange and its strict separation from FAR Core and approximation/cost semantics. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "executed_sha256": "6e47889b5652ae78c32cddca61ba9f7bc2df87ea24cb8fe247d53026449d680e",
+      "current_sha256": "cf1ea63ebe79c697ab401c1af6018b40662fd97ecd48b902fd521f1939b3f64b",
+      "class": "documentation_surface",
+      "reason": "Registered the provisional additive far-epistemic/1.0 application interchange and its strict separation from FAR Core and approximation/cost semantics. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/governance/limitations-register.md",

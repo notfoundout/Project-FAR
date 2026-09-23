@@ -97,6 +97,7 @@ Each concept should have one canonical source. Other documents should link to th
 | FAR Methodology | [`../frameworks/FAR/methodology.md`](../frameworks/FAR/methodology.md) | Defines methodological principles. |
 | FAR Contract Discovery Protocol | [`../methodology/contract-discovery-protocol.md`](../methodology/contract-discovery-protocol.md) | Governs the transition from under-specified input to a frozen bounded family of candidate comparison contracts. |
 | FAR Intake 1.0 Specification | [`specification/far-intake-1.0.md`](specification/far-intake-1.0.md) | Defines the machine-readable governed pre-contract intake format and validation boundary. |
+| FAR Epistemic Learning Interchange 1.0 | [`specification/far-epistemic-learning-v1.md`](specification/far-epistemic-learning-v1.md) | Defines the provisional additive belief, prediction, decision, dialectic, causal-model, outcome, scoring, error, and revision interchange; it does not modify FAR Core or FAR approximation/cost semantics. |
 | FAR Contract-Discovery Acceptance | [`governance/far-contract-discovery-acceptance-v1.0.md`](governance/far-contract-discovery-acceptance-v1.0.md) | Records the accepted internal methodology correction, exact scope, promotion, and permanent limits. |
 | FAR Application | [`../frameworks/FAR/application.md`](../frameworks/FAR/application.md) | Describes application across domains. |
 | FAR Dependency Graph | [`../frameworks/FAR/dependency-graph.md`](../frameworks/FAR/dependency-graph.md) | Records FAR dependency order. |
