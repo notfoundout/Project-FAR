@@ -32,7 +32,7 @@ The declaration authority is `FAR_IR_2_0_STRICT_DIAGNOSTIC_CODES` in [`diagnosti
 
 ## Current versus historical use
 
-Every current surface uses the current verifier: the `far-ir/2.0` conformance runner, v1→v2 migration, the `PCA-W4` recomputation checker, the commercial semantic audit, and any campaign registered after this rule, including `EFR-002`.
+Every current surface uses the current verifier: the `far-ir/2.0` conformance runner, v1→v2 migration, the `PCA-W4` recomputation checker, the commercial semantic audit, and any campaign or test registered after this rule, including the `EFR-001` v2.0 comparator amendment (`EFR-HD2`, `EFR-U2`, and the H1/A1 execution binding).
 
 Direct use of the baseline is limited to reproducing records whose provenance names it: the `PCA-W6` protocol, the `EFR-001` v1.0 frozen baseline command, baseline regression tests, and diagnostic-vocabulary publication. The registry in [`verifier_authority.py`](../../mechanization/far_mechanization/verifier_authority.py) lists each permitted baseline consumer with its reason, and `tests/test_contract_v2_verifier_authority.py` fails if any other tracked file imports or invokes the baseline.
 

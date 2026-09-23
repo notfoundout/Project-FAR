@@ -37,5 +37,6 @@ HISTORICAL_BASELINE_CONSUMERS: dict[str, str] = {
     "tests/test_efr_u1_projection.py": "historical_efr_001_v1_0",
     "tests/test_far_contract_v2.py": "baseline_regression_test",
     "tests/test_far_contract_v2_strict.py": "baseline_regression_test",
+    "tests/test_efr_comparator_amendment.py": "baseline_regression_test",
     "tests/test_far_contract_diagnostic_codes.py": "vocabulary_publication",
 }

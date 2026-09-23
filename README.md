@@ -56,7 +56,7 @@ Canonical links:
 - [Epistemic assurance acceptance](docs/governance/far-epistemic-assurance-promotion-acceptance-v1.0.md), [specification](docs/specification/far-epistemic-assurance-1.0.md), and [hostile-source boundary](methodology/hostile-source-boundary.md)
 - [Canonical W1–W6 claim/evidence matrix](docs/governance/w1-w6-claim-evidence-matrix-v1.0.md)
 - [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md) (non-authoritative Research calibration)
-- [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md)
+- [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md) and its [comparator amendment v2.0](docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md)
 - [W6 execution and results](docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md)
 - [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)
 - [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
@@ -77,7 +77,7 @@ Canonical links:
 - `PCA-W5-APPROXIMATION-AND-COST`: complete at its finite-explicit operational scope.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at its bounded internal controlled-artifact scope.
 
-No W7 is registered by `POST-CLOSURE-001`. The separate successor `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` is now preregistered, with every test `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open until its external/human evidence is actually collected and passes the frozen criteria.
+No W7 is registered by `POST-CLOSURE-001`. The separate successor `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` is now preregistered, with no test executed. Its [comparator amendment v2.0](docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md) replaces the confounded human-disagreement, field-utility, and cost tests with three-arm versions whose primary contrast is FAR against a generic table-consistency checker; OP-28 remains open until its external/human evidence is actually collected and passes the frozen criteria.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
