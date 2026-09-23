@@ -1,6 +1,7 @@
 from __future__ import annotations
 import hashlib, json, os, subprocess, tempfile, unittest
 from pathlib import Path
+from unittest import mock
 from tools import promote_living_research as p
 from tools import check_living_promotion_head as integrity
 
@@ -110,6 +111,22 @@ class PromotionTests(unittest.TestCase):
             else: os.environ["GITHUB_HEAD_REF"]=old_head
             if old_ref is None: os.environ.pop("GITHUB_REF_NAME",None)
             else: os.environ["GITHUB_REF_NAME"]=old_ref
+    def test_generated_reconciliation_replays_base_plus_planned_state(self):
+        (self.root/"planned.txt").write_text("old\n"); (self.root/"generated.txt").write_text("previous\n")
+        subprocess.run(["git","add","planned.txt","generated.txt"],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","generated-base"],cwd=self.root,check=True)
+        base=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip()
+        (self.root/"planned.txt").write_text("new\n"); (self.root/"generated.txt").write_text("changed\n")
+        subprocess.run(["git","add","planned.txt","generated.txt"],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","generated-head"],cwd=self.root,check=True)
+        head=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip()
+        def fake_reconcile(root):
+            prior=(root/"generated.txt").read_text(); planned=(root/"planned.txt").read_text()
+            (root/"generated.txt").write_text("changed\n" if prior=="previous\n" and planned=="new\n" else "replayed\n")
+        with mock.patch("tools.reconcile_living_repo.reconcile",side_effect=fake_reconcile):
+            integrity._verify_generated_outputs(self.root,base,head,{"planned.txt"},{"generated.txt"})
+        (self.root/"generated.txt").write_text("tampered\n"); subprocess.run(["git","add","generated.txt"],cwd=self.root,check=True); subprocess.run(["git","commit","--amend","-qm","generated-head"],cwd=self.root,check=True)
+        tampered=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip()
+        with mock.patch("tools.reconcile_living_repo.reconcile",side_effect=fake_reconcile):
+            with self.assertRaises(integrity.IntegrityError): integrity._verify_generated_outputs(self.root,base,tampered,{"planned.txt"},{"generated.txt"})
     def test_checked_out_repository_head_is_integrity_valid(self):
         repo=Path(__file__).resolve().parents[1]
         self.assertEqual([],integrity.verify(repo))
