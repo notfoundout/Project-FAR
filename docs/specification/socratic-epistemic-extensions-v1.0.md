@@ -1,6 +1,6 @@
 # Socratic Epistemic Extensions v1.0
 
-Status: **Provisional implementation specification — pending internal acceptance**  
+Status: **Accepted — bounded internal implementation specification**  
 Research basis: `FAR-EPISTEMIC-EXTENSIONS-001`
 
 This specification defines three additive capabilities for Project FAR: proposition-relative expertise applicability, a consolidated epistemic-boundary view, and an interactive elenchus protocol. The “Socratic” label records the motivating analogy only; no historical derivation claim is made.
