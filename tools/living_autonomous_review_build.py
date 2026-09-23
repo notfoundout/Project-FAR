@@ -36,6 +36,16 @@ def require_full_claim_coverage(record: dict[str, Any], claim_ids: set[str], lab
 
     affected = set(validate_claim_ids(record.get("affected_claim_ids"), claim_ids, f"{label} affected_claim_ids"))
     if label == "screening":
+        inconsistent = sorted(
+            row["claim_id"]
+            for row in assessments
+            if (row.get("premise_match") is True or row.get("scope_match") is True)
+            and row.get("relevant") is not True
+        )
+        if inconsistent:
+            raise CandidateReviewError(
+                "screening: premise/scope match requires per-claim relevance: " + ", ".join(inconsistent)
+            )
         expected_affected = {row["claim_id"] for row in assessments if row.get("relevant") is True}
         if affected != expected_affected:
             raise CandidateReviewError("screening: affected_claim_ids disagree with per-claim relevance")
@@ -76,6 +86,20 @@ def require_full_claim_coverage(record: dict[str, Any], claim_ids: set[str], lab
         reproduced = any(row.get("attack_reproduced") is True for row in assessments)
         if record.get("attack_reproduced") is not reproduced:
             raise CandidateReviewError("replication: aggregate attack_reproduced disagrees with per-claim findings")
+
+
+def require_candidate_source_binding(record: dict[str, Any], candidate_urls: list[str], label: str) -> None:
+    allowed = {normalize_url(url) for url in candidate_urls if isinstance(url, str) and url.strip()}
+    if not allowed:
+        raise CandidateReviewError(f"{label}: frozen candidate source URL set is empty")
+    used = record_sources(record)
+    if not used:
+        raise CandidateReviewError(f"{label}: source_urls_used is empty after normalization")
+    unrelated = sorted(used - allowed)
+    if unrelated:
+        raise CandidateReviewError(
+            f"{label}: source evidence is outside the frozen candidate source set: {', '.join(unrelated)}"
+        )
 
 
 def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None = None):
@@ -144,6 +168,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             return source_block(cid, "screening did not verify a primary source", now)
         try:
             validate_source_binding(screening, screen_meta, "screening")
+            require_candidate_source_binding(screening, urls, "screening")
         except CandidateReviewError as exc:
             return source_block(cid, str(exc), now)
 
@@ -156,6 +181,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         require_full_claim_coverage(attack, claim_ids, "attack")
         try:
             validate_source_binding(attack, attack_meta, "attack")
+            require_candidate_source_binding(attack, urls, "attack")
         except CandidateReviewError as exc:
             return source_block(cid, str(exc), now)
 
@@ -168,12 +194,18 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         require_full_claim_coverage(replication, claim_ids, "replication")
         try:
             validate_source_binding(replication, replication_meta, "replication")
+            require_candidate_source_binding(replication, urls, "replication")
         except CandidateReviewError as exc:
             return source_block(cid, str(exc), now)
 
-        common_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
+        common_sources = (
+            record_sources(screening)
+            & record_sources(attack)
+            & record_sources(replication)
+            & {normalize_url(url) for url in urls}
+        )
         if not common_sources:
-            return source_block(cid, "review roles lack one common retrieved primary source", now)
+            return source_block(cid, "review roles lack one common retrieved frozen candidate source", now)
 
         decision, decision_meta = model.generate(
             role="adjudication",
