@@ -48,6 +48,7 @@ REVIEW_ROOT = Path("research/living/autonomous-review")
 AUDIT_ROOT = Path("docs/audits/living-autonomous-review")
 
 CID_RE = re.compile(r"FAR-LIT-[0-9A-F]{16}")
+FALLBACK_KEY_RE = re.compile(r"^(crossref|openalex|open-library)-fallback:[0-9a-f]{64}$")
 ALLOWED = {
     "IRRELEVANT_FALSE_POSITIVE",
     "ADJACENT_NO_CONTRADICTION",
@@ -212,23 +213,81 @@ def select_candidate(root: Path, source_root: Path, now: datetime) -> str | None
     return min(ranked)[2] if ranked else None
 
 
+def normalize_candidate_doi(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    doi = value.strip().lower()
+    for prefix in ("https://doi.org/", "http://doi.org/", "doi:"):
+        if doi.startswith(prefix):
+            doi = doi[len(prefix):]
+    return doi or None
+
+
+def identity_bound_urls(source_key: str, sources: list[Any]) -> list[str]:
+    """Return only canonical URLs whose source record proves the frozen identity."""
+    if source_key.startswith("doi:"):
+        wanted = normalize_candidate_doi(source_key)
+        if wanted is None:
+            return []
+        if any(
+            isinstance(source, dict) and normalize_candidate_doi(source.get("doi")) == wanted
+            for source in sources
+        ):
+            return [f"https://doi.org/{wanted}"]
+        return []
+
+    if source_key.startswith("openalex:"):
+        wanted = source_key.removeprefix("openalex:").lower()
+        if not wanted:
+            return []
+        if any(
+            isinstance(source, dict)
+            and source.get("provider") == "OpenAlex"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].rstrip("/").rsplit("/", 1)[-1].lower() == wanted
+            for source in sources
+        ):
+            return [f"https://openalex.org/{wanted}"]
+        return []
+
+    if source_key.startswith("openlibrary:"):
+        wanted = source_key.removeprefix("openlibrary:").lower()
+        if not wanted:
+            return []
+        if any(
+            isinstance(source, dict)
+            and source.get("provider") == "Open Library"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].lower() == wanted
+            for source in sources
+        ):
+            suffix = wanted if wanted.startswith("/") else "/" + wanted
+            return ["https://openlibrary.org" + suffix]
+        return []
+
+    # Fallback keys are hashes of discovery metadata. The exact normalized preimage is not
+    # retained as an identity field, so provider-name agreement is not source proof.
+    if FALLBACK_KEY_RE.fullmatch(source_key):
+        return []
+    return []
+
+
+def candidate_identity_valid(candidate: dict[str, Any]) -> bool:
+    cid = candidate.get("candidate_id")
+    source_key = candidate.get("source_key")
+    sources = candidate.get("sources")
+    if not isinstance(cid, str) or not isinstance(source_key, str) or not source_key or not isinstance(sources, list):
+        return False
+    expected = "FAR-LIT-" + digest(source_key.encode("utf-8"))[:16].upper()
+    if cid != expected:
+        return False
+    return bool(identity_bound_urls(source_key, sources))
+
+
 def candidate_urls(candidate: dict[str, Any], limit: int) -> list[str]:
-    out: list[str] = []
-    for source in candidate.get("sources", []):
-        if not isinstance(source, dict):
-            continue
-        for key in ("url", "doi"):
-            value = source.get(key)
-            if not isinstance(value, str) or not value.strip():
-                continue
-            value = value.strip()
-            if key == "doi" and not value.startswith("http"):
-                value = "https://doi.org/" + value.removeprefix("doi:")
-            if value.startswith(("https://", "http://")) and value not in out:
-                out.append(value)
-                if len(out) >= limit:
-                    return out
-    return out
+    if not candidate_identity_valid(candidate):
+        return []
+    return identity_bound_urls(candidate["source_key"], candidate["sources"])[:limit]
 
 
 def claim_subset(root: Path, ids: list[str]) -> list[dict[str, Any]]:
@@ -240,18 +299,56 @@ def claim_subset(root: Path, ids: list[str]) -> list[dict[str, Any]]:
 
 
 def object_schema(properties: dict[str, Any], required: list[str]) -> dict[str, Any]:
-    return {"type": "object", "properties": properties, "required": required}
+    return {
+        "type": "object",
+        "properties": properties,
+        "required": required,
+        "additionalProperties": False,
+    }
 
 
 STR = {"type": "string"}
 BOOL = {"type": "boolean"}
 STRS = {"type": "array", "items": STR}
 STRENGTH = {"type": "string", "enum": list(PRIOR_ART_STRENGTH)}
+SCREEN_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "relevant": BOOL,
+        "premise_match": BOOL,
+        "scope_match": BOOL,
+        "reason": STR,
+    },
+    ["claim_id", "relevant", "premise_match", "scope_match", "reason"],
+)
+ATTACK_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "contradiction_found": BOOL,
+        "prior_art_found": BOOL,
+        "prior_art_strength": STRENGTH,
+        "reason": STR,
+    },
+    ["claim_id", "contradiction_found", "prior_art_found", "prior_art_strength", "reason"],
+)
+REPLICATION_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "contradiction_found": BOOL,
+        "prior_art_found": BOOL,
+        "prior_art_strength": STRENGTH,
+        "attack_reproduced": BOOL,
+        "reason": STR,
+    },
+    ["claim_id", "contradiction_found", "prior_art_found", "prior_art_strength", "attack_reproduced", "reason"],
+)
 SCREEN_SCHEMA = object_schema(
     {
         "primary_source_verified": BOOL,
         "relevant": BOOL,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": SCREEN_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "premise_match": BOOL,
         "scope_match": BOOL,
@@ -260,8 +357,8 @@ SCREEN_SCHEMA = object_schema(
         "limits": STRS,
     },
     [
-        "primary_source_verified", "relevant", "source_urls_used", "affected_claim_ids",
-        "premise_match", "scope_match", "summary", "evidence_locations", "limits",
+        "primary_source_verified", "relevant", "source_urls_used", "evaluated_claim_ids", "claim_assessments",
+        "affected_claim_ids", "premise_match", "scope_match", "summary", "evidence_locations", "limits",
     ],
 )
 ATTACK_SCHEMA = object_schema(
@@ -270,6 +367,8 @@ ATTACK_SCHEMA = object_schema(
         "prior_art_found": BOOL,
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": ATTACK_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "exact_reason": STR,
         "reproducible_attack": STR,
@@ -278,7 +377,8 @@ ATTACK_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "affected_claim_ids", "exact_reason", "reproducible_attack", "source_locations", "limits",
+        "evaluated_claim_ids", "claim_assessments", "affected_claim_ids", "exact_reason", "reproducible_attack",
+        "source_locations", "limits",
     ],
 )
 REPLICATION_SCHEMA = object_schema(
@@ -287,6 +387,8 @@ REPLICATION_SCHEMA = object_schema(
         "prior_art_found": BOOL,
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": REPLICATION_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "independent_reason": STR,
         "attack_reproduced": BOOL,
@@ -295,7 +397,8 @@ REPLICATION_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "affected_claim_ids", "independent_reason", "attack_reproduced", "source_locations", "limits",
+        "evaluated_claim_ids", "claim_assessments", "affected_claim_ids", "independent_reason", "attack_reproduced",
+        "source_locations", "limits",
     ],
 )
 ADJUDICATION_SCHEMA = object_schema(
