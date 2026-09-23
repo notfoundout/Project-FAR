@@ -16,9 +16,9 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "029f5da09012af1683b81fc4a16ab31f1ff2ef0044d5948449a1238b68aa518a",
+      "current_sha256": "31e790b12bfc9a147cf7a03173d6db877bab66e402c9f5a3717eceb86c67dcb5",
       "class": "documentation_surface",
-      "reason": "Registered the hardened far-epistemic/1.0 application contract and the accepted additive epistemic-assurance contracts. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Added presentation boundaries from the 2026-09-23 repository red-team audit: a pointer to the calibration audit beside the terminal verdict, the W1 reviewer's identity (LIM-035), and the W6 mutation/verifier-scope boundary (LIM-047). No campaign claim, boundary, input, computation, or recorded result changes; no status is promoted."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
@@ -37,9 +37,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "5f1e8d70dd5bd98080deef8c555607e6550902117ff70a1400b127f32a7761f3",
+      "current_sha256": "2475f9bcb2f1109d4f4a7d5550477e63274225986de6e452d800f488c895edec",
       "class": "governance_register",
-      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. Registers are living surfaces; no W6 input, computation, recorded result, claim boundary, or assurance dimension changed."
+      "reason": "Recorded LIM-047 (baseline far-ir/2.0 success under DECLARED_UNCHECKED evidence), LIM-048 (EFR-HD1/U1 lack an active comparator) and LIM-049 (protected CI installer and signing-key exposure) from the 2026-09-23 repository red-team audit. Registers are living surfaces; no campaign input, computation, or recorded result changes."
     },
     {
       "path": "docs/project-status.md",
