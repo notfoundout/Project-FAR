@@ -9,6 +9,7 @@ from tools import living_implementation_contract as implementation
 from tools import promote_living_research as promoter
 from tools.living_autonomous_review_core import *
 from tools.living_autonomous_review_model import *
+from tools.living_autonomous_review_witness import validate_exact_claim_witnesses
 
 
 def strength_at_least(value: Any, minimum: str) -> bool:
@@ -123,6 +124,15 @@ def validate_decision(
     replication_prior = replication.get("prior_art_found") is True
     if attack_prior != replication_prior and disposition != "PROJECT_CHANGE_REQUIRED":
         raise CandidateReviewError("attack/replication prior-art disagreement")
+
+    validate_exact_claim_witnesses(
+        decision,
+        policy,
+        claim_ids,
+        screening,
+        attack,
+        replication,
+    )
 
     reproduced_contradiction = attack_contradiction and replication_contradiction and attack_reproduced
     if reproduced_contradiction:
