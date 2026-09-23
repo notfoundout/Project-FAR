@@ -64,6 +64,14 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
         document["record"]["dimensions"]["method"]["claim_value"] = "survey analysis"
         self.assertIn("EXPERTISE_DIMENSION_VALUE_MISMATCH", codes(document))
 
+    def test_empty_expertise_bridge_is_not_a_valid_bridge(self) -> None:
+        document = load("valid-expertise-applicability.json")
+        document["record"]["claim_scope"]["domain"] = "economics"
+        assessment = document["record"]["dimensions"]["domain"]
+        assessment["claim_value"] = "economics"
+        assessment["bridge"] = ""
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+
     def test_epistemic_boundary_requires_reason_for_unknown(self) -> None:
         document = load("valid-epistemic-boundary.json")
         del document["record"]["unknown"][0]["reason"]
@@ -91,6 +99,23 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
         document["record"]["response_events"][0]["question_id"] = "missing-question"
         self.assertIn("ELENCHUS_RESPONSE_UNKNOWN_QUESTION", codes(document))
 
+    def test_elenchus_definition_assumption_warrant_records_are_typed(self) -> None:
+        for field in ("definitions", "assumptions", "warrants"):
+            with self.subTest(field=field):
+                document = load("valid-elenchus-session.json")
+                document["record"][field] = [{}]
+                self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+
+    def test_elenchus_definition_references_recorded_commitment(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["definitions"][0]["commitment_refs"] = ["missing"]
+        self.assertIn("ELENCHUS_DEFINITION_UNKNOWN_COMMITMENT", codes(document))
+
+    def test_elenchus_tension_references_recorded_commitments(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["tensions"][0]["commitment_refs"] = ["c1", "missing"]
+        self.assertIn("ELENCHUS_TENSION_UNKNOWN_COMMITMENT", codes(document))
+
     def test_elenchus_revision_cannot_overwrite_commitment(self) -> None:
         document = load("valid-elenchus-session.json")
         revision = document["record"]["revisions"][0]
@@ -101,6 +126,39 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
         document = load("valid-elenchus-session.json")
         document["record"]["commitments"][2]["version"] = 1
         self.assertIn("ELENCHUS_REVISION_VERSION_ORDER", codes(document))
+
+    def test_elenchus_revised_status_requires_revision_event(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["revisions"] = []
+        self.assertIn("ELENCHUS_REVISED_COMMITMENT_WITHOUT_REVISION", codes(document))
+
+    def test_elenchus_withdrawn_status_requires_withdrawal_event(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["commitments"][1]["status"] = "WITHDRAWN"
+        self.assertIn("ELENCHUS_WITHDRAWN_COMMITMENT_WITHOUT_WITHDRAWAL", codes(document))
+
+    def test_elenchus_revision_source_cannot_fork(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["commitments"].append({
+            "id": "c4",
+            "statement": "Alternative replacement definition.",
+            "version": 3,
+            "status": "ACTIVE",
+            "source_event_id": "r3",
+            "context": "definition of reliable testimony",
+        })
+        document["record"]["revisions"].append({
+            "from_commitment_id": "c1",
+            "to_commitment_id": "c4",
+            "response_event_id": "r3",
+            "reason": "Artificial fork mutation.",
+        })
+        self.assertIn("ELENCHUS_REVISION_SOURCE_REUSED", codes(document))
+
+    def test_elenchus_revision_response_sources_replacement_commitment(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["revisions"][0]["response_event_id"] = "r2"
+        self.assertIn("ELENCHUS_REVISION_TARGET_SOURCE_MISMATCH", codes(document))
 
     def test_elenchus_contradiction_requires_explicit_basis_and_calculus(self) -> None:
         document = load("valid-elenchus-session.json")

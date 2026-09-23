@@ -22,7 +22,7 @@
       {"id": "c3", "statement": "Reliable testimony includes direct observation or independently verified records.", "version": 2, "status": "ACTIVE", "source_event_id": "r3", "context": "definition of reliable testimony"}
     ],
     "definitions": [
-      {"term": "reliable testimony", "commitment_ref": "c3"}
+      {"id": "d1", "term": "reliable testimony", "statement": "Reliable testimony includes direct observation or independently verified records.", "commitment_refs": ["c3"], "context": "definition of reliable testimony"}
     ],
     "assumptions": [],
     "warrants": [],
@@ -30,7 +30,7 @@
       {"id": "i1", "premise_refs": ["c1", "c2"], "statement": "The original definition excluded something the respondent accepts as reliable testimony.", "calculus": "explicit commitment comparison", "rule": "definition-membership consistency"}
     ],
     "tensions": [
-      {"id": "t1", "commitment_refs": ["c1", "c2"], "basis": "The original definition and later accepted instance require clarification."}
+      {"id": "t1", "commitment_refs": ["c1", "c2"], "basis": "The original definition and later accepted instance require clarification.", "unresolved_dimensions": ["definition scope"]}
     ],
     "contradictions": [],
     "revisions": [

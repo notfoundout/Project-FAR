@@ -44,6 +44,12 @@
   "additionalProperties": false,
   "$defs": {
     "nonEmptyString": {"type": "string", "minLength": 1},
+    "nullableNonEmptyString": {
+      "oneOf": [
+        {"$ref": "#/$defs/nonEmptyString"},
+        {"type": "null"}
+      ]
+    },
     "stringArray": {
       "type": "array",
       "items": {"$ref": "#/$defs/nonEmptyString"},
@@ -71,7 +77,7 @@
       "required": ["domain", "claim_type", "population", "geography", "time", "method"],
       "properties": {
         "domain": {"$ref": "#/$defs/nonEmptyString"},
-        "subdomain": {"type": ["string", "null"]},
+        "subdomain": {"$ref": "#/$defs/nullableNonEmptyString"},
         "claim_type": {"$ref": "#/$defs/nonEmptyString"},
         "population": {"$ref": "#/$defs/nonEmptyString"},
         "geography": {"$ref": "#/$defs/nonEmptyString"},
@@ -97,7 +103,7 @@
         "uncertainty": {"$ref": "#/$defs/nonEmptyString"},
         "limitations": {"$ref": "#/$defs/stringArray"},
         "valid_from": {"$ref": "#/$defs/nonEmptyString"},
-        "valid_until": {"type": ["string", "null"]},
+        "valid_until": {"$ref": "#/$defs/nullableNonEmptyString"},
         "assessor": {"$ref": "#/$defs/nonEmptyString"},
         "assessment_method": {"$ref": "#/$defs/nonEmptyString"},
         "version": {"$ref": "#/$defs/nonEmptyString"}
@@ -116,7 +122,7 @@
         "claim_value": {"type": ["string", "null"]},
         "basis_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
         "rationale": {"$ref": "#/$defs/nonEmptyString"},
-        "bridge": {"type": ["string", "null"]}
+        "bridge": {"$ref": "#/$defs/nullableNonEmptyString"}
       },
       "additionalProperties": false
     },
@@ -245,6 +251,56 @@
       },
       "additionalProperties": false
     },
+    "definitionRecord": {
+      "type": "object",
+      "required": ["id", "term", "statement", "commitment_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/nonEmptyString"},
+        "term": {"$ref": "#/$defs/nonEmptyString"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "commitment_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "context": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "assumptionRecord": {
+      "type": "object",
+      "required": ["id", "statement", "commitment_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/nonEmptyString"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "commitment_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "context": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "warrantRecord": {
+      "type": "object",
+      "required": ["id", "statement", "commitment_refs"],
+      "properties": {
+        "id": {"$ref": "#/$defs/nonEmptyString"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "commitment_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "context": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "tensionRecord": {
+      "type": "object",
+      "required": ["id", "commitment_refs", "basis"],
+      "properties": {
+        "id": {"$ref": "#/$defs/nonEmptyString"},
+        "commitment_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"},
+          "minItems": 2,
+          "uniqueItems": true
+        },
+        "basis": {"$ref": "#/$defs/nonEmptyString"},
+        "unresolved_dimensions": {"$ref": "#/$defs/stringArray"}
+      },
+      "additionalProperties": false
+    },
     "revision": {
       "type": "object",
       "required": ["from_commitment_id", "to_commitment_id", "response_event_id", "reason"],
@@ -311,11 +367,11 @@
         "question_events": {"type": "array", "items": {"$ref": "#/$defs/questionEvent"}},
         "response_events": {"type": "array", "items": {"$ref": "#/$defs/responseEvent"}},
         "commitments": {"type": "array", "items": {"$ref": "#/$defs/commitment"}},
-        "definitions": {"type": "array", "items": {"type": "object"}},
-        "assumptions": {"type": "array", "items": {"type": "object"}},
-        "warrants": {"type": "array", "items": {"type": "object"}},
+        "definitions": {"type": "array", "items": {"$ref": "#/$defs/definitionRecord"}},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/assumptionRecord"}},
+        "warrants": {"type": "array", "items": {"$ref": "#/$defs/warrantRecord"}},
         "derived_implications": {"type": "array", "items": {"$ref": "#/$defs/derivedImplication"}},
-        "tensions": {"type": "array", "items": {"type": "object"}},
+        "tensions": {"type": "array", "items": {"$ref": "#/$defs/tensionRecord"}},
         "contradictions": {"type": "array", "items": {"$ref": "#/$defs/contradiction"}},
         "revisions": {"type": "array", "items": {"$ref": "#/$defs/revision"}},
         "withdrawals": {"type": "array", "items": {"$ref": "#/$defs/withdrawal"}},

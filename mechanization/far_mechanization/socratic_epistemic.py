@@ -181,11 +181,34 @@ def _check_epistemic_boundary(record: Mapping[str, Any], errors: list[SocraticDi
         )
 
 
+def _check_commitment_refs(
+    entries: Sequence[Mapping[str, Any]],
+    label: str,
+    code: str,
+    commitment_ids: set[str],
+    errors: list[SocraticDiagnostic],
+) -> None:
+    for index, entry in enumerate(entries):
+        missing = [str(ref) for ref in entry["commitment_refs"] if str(ref) not in commitment_ids]
+        if missing:
+            errors.append(
+                SocraticDiagnostic(
+                    code,
+                    f"{label} references unknown commitments {missing}",
+                    ("record", label, index, "commitment_refs"),
+                )
+            )
+
+
 def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
     question_ids = _check_unique_ids(record["question_events"], "question_events", errors)
     response_ids = _check_unique_ids(record["response_events"], "response_events", errors)
     commitment_ids = _check_unique_ids(record["commitments"], "commitments", errors)
+    _check_unique_ids(record["definitions"], "definitions", errors)
+    _check_unique_ids(record["assumptions"], "assumptions", errors)
+    _check_unique_ids(record["warrants"], "warrants", errors)
     _check_unique_ids(record["derived_implications"], "derived_implications", errors)
+    _check_unique_ids(record["tensions"], "tensions", errors)
     _check_unique_ids(record["contradictions"], "contradictions", errors)
 
     responses = {str(item["id"]): item for item in record["response_events"]}
@@ -211,8 +234,37 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                 )
             )
 
+    _check_commitment_refs(
+        record["definitions"],
+        "definitions",
+        "ELENCHUS_DEFINITION_UNKNOWN_COMMITMENT",
+        commitment_ids,
+        errors,
+    )
+    _check_commitment_refs(
+        record["assumptions"],
+        "assumptions",
+        "ELENCHUS_ASSUMPTION_UNKNOWN_COMMITMENT",
+        commitment_ids,
+        errors,
+    )
+    _check_commitment_refs(
+        record["warrants"],
+        "warrants",
+        "ELENCHUS_WARRANT_UNKNOWN_COMMITMENT",
+        commitment_ids,
+        errors,
+    )
+    _check_commitment_refs(
+        record["tensions"],
+        "tensions",
+        "ELENCHUS_TENSION_UNKNOWN_COMMITMENT",
+        commitment_ids,
+        errors,
+    )
+
     for index, implication in enumerate(record["derived_implications"]):
-        missing = [ref for ref in implication["premise_refs"] if ref not in commitment_ids]
+        missing = [str(ref) for ref in implication["premise_refs"] if str(ref) not in commitment_ids]
         if missing:
             errors.append(
                 SocraticDiagnostic(
@@ -222,11 +274,33 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                 )
             )
 
+    revision_sources: set[str] = set()
     revision_targets: set[str] = set()
     for index, revision in enumerate(record["revisions"]):
         source_id = str(revision["from_commitment_id"])
         target_id = str(revision["to_commitment_id"])
         response_id = str(revision["response_event_id"])
+
+        if source_id in revision_sources:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_REVISION_SOURCE_REUSED",
+                    f"commitment {source_id} is the source of more than one revision",
+                    ("record", "revisions", index, "from_commitment_id"),
+                )
+            )
+        revision_sources.add(source_id)
+
+        if target_id in revision_targets:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_REVISION_TARGET_REUSED",
+                    f"commitment {target_id} is the target of more than one revision",
+                    ("record", "revisions", index, "to_commitment_id"),
+                )
+            )
+        revision_targets.add(target_id)
+
         if source_id not in commitments or target_id not in commitments:
             errors.append(
                 SocraticDiagnostic(
@@ -244,6 +318,7 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "revisions", index),
                 )
             )
+
         source = commitments[source_id]
         target = commitments[target_id]
         if source["status"] != "REVISED":
@@ -270,19 +345,29 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "revisions", index, "response_event_id"),
                 )
             )
-        if target_id in revision_targets:
+        elif str(target["source_event_id"]) != response_id:
             errors.append(
                 SocraticDiagnostic(
-                    "ELENCHUS_REVISION_TARGET_REUSED",
-                    f"commitment {target_id} is the target of more than one revision",
-                    ("record", "revisions", index, "to_commitment_id"),
+                    "ELENCHUS_REVISION_TARGET_SOURCE_MISMATCH",
+                    "the revision response event must be the source event of the replacement commitment",
+                    ("record", "revisions", index, "response_event_id"),
                 )
             )
-        revision_targets.add(target_id)
 
+    withdrawal_commitments: set[str] = set()
     for index, withdrawal in enumerate(record["withdrawals"]):
         commitment_id = str(withdrawal["commitment_id"])
         response_id = str(withdrawal["response_event_id"])
+        if commitment_id in withdrawal_commitments:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_WITHDRAWAL_REPEATED",
+                    f"commitment {commitment_id} has more than one withdrawal event",
+                    ("record", "withdrawals", index, "commitment_id"),
+                )
+            )
+        withdrawal_commitments.add(commitment_id)
+
         if commitment_id not in commitments:
             errors.append(
                 SocraticDiagnostic(
@@ -308,8 +393,27 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                 )
             )
 
+    for index, commitment in enumerate(record["commitments"]):
+        commitment_id = str(commitment["id"])
+        if commitment["status"] == "REVISED" and commitment_id not in revision_sources:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_REVISED_COMMITMENT_WITHOUT_REVISION",
+                    f"commitment {commitment_id} is marked REVISED without a revision event",
+                    ("record", "commitments", index, "status"),
+                )
+            )
+        if commitment["status"] == "WITHDRAWN" and commitment_id not in withdrawal_commitments:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_WITHDRAWN_COMMITMENT_WITHOUT_WITHDRAWAL",
+                    f"commitment {commitment_id} is marked WITHDRAWN without a withdrawal event",
+                    ("record", "commitments", index, "status"),
+                )
+            )
+
     for index, contradiction in enumerate(record["contradictions"]):
-        missing = [ref for ref in contradiction["commitment_refs"] if ref not in commitments]
+        missing = [str(ref) for ref in contradiction["commitment_refs"] if str(ref) not in commitments]
         if missing:
             errors.append(
                 SocraticDiagnostic(

@@ -30,7 +30,7 @@ An expertise assertion never establishes the truth of a substantive claim.
 
 For every material source-to-claim use, an `EXPERTISE_APPLICABILITY` record binds the expertise assertion to one exact claim. It preserves both `expertise_scope` and `claim_scope` and assesses domain, subdomain, claim type, population, geography, time, and method separately as `MATCH`, `PARTIAL`, `MISMATCH`, `UNKNOWN`, or `NOT_APPLICABLE`.
 
-A dimension marked `MATCH` despite different recorded values requires an explicit bridge. Mere adjacency of domains is not a bridge. Overall `SUPPORTED` applicability is invalid if any material dimension is partial, mismatched, or unknown.
+A dimension marked `MATCH` despite different recorded values requires an explicit non-empty bridge. Mere adjacency of domains is not a bridge. Overall `SUPPORTED` applicability is invalid if any material dimension is partial, mismatched, or unknown.
 
 Expertise applicability remains distinct from source reliability, evidence quality, evidence relevance, claim status, and inference validity.
 
@@ -81,9 +81,9 @@ Each `ELENCHUS_SESSION` records:
 - purpose-typed question events;
 - response events linked to the questions that elicited them;
 - versioned commitments with exact wording and context;
-- definitions, assumptions, and warrants;
+- typed definitions, assumptions, and warrants, each with stable IDs, exact statements, and commitment references;
 - derived implications with explicit premise references, calculus, and rule;
-- tensions;
+- typed tensions with at least two commitment references and an explicit basis;
 - demonstrated contradictions;
 - revisions and withdrawals;
 - unresolved questions;
@@ -95,14 +95,18 @@ The governed loop is:
 1. elicit the exact proposition or definition under examination;
 2. record the respondent's commitment without silently strengthening or normalizing it;
 3. ask a purpose-typed question directed at scope, definition, assumption, warrant, consequence, consistency, counterexample, interpretation, or revision;
-4. derive implications only through an explicitly named calculus or inferential rule;
-5. compare the implications with recorded commitments at compatible contexts;
-6. record `TENSION` when incompatibility remains uncertain and `CONTRADICTION` only when incompatibility is demonstrated under an explicit interpretation and calculus;
-7. present the conflict or missing premise when further clarification is material;
-8. preserve revisions and withdrawals as new events and never overwrite history;
-9. repeat until sufficient explicitness, respondent refusal/inability, the declared stopping rule, or no further material question.
+4. materialize result-relevant definitions, assumptions, warrants, and tensions with commitment provenance rather than as free-form annotations;
+5. derive implications only through an explicitly named calculus or inferential rule;
+6. compare the implications with recorded commitments at compatible contexts;
+7. record `TENSION` when incompatibility remains uncertain and `CONTRADICTION` only when incompatibility is demonstrated under an explicit interpretation and calculus;
+8. present the conflict or missing premise when further clarification is material;
+9. preserve revisions and withdrawals as new events and never overwrite history;
+10. require every `REVISED` or `WITHDRAWN` commitment status to be backed by its corresponding event;
+11. repeat until sufficient explicitness, respondent refusal/inability, the declared stopping rule, or no further material question.
 
 Question purposes are `DEFINE_TERM`, `FIX_SCOPE`, `EXPOSE_ASSUMPTION`, `TEST_WARRANT`, `TEST_CONSEQUENCE`, `TEST_CONSISTENCY`, `SEEK_COUNTEREXAMPLE`, `DISTINGUISH_INTERPRETATIONS`, and `CLARIFY_REVISION`.
+
+A revision has exactly one source commitment and one replacement commitment. The superseded commitment remains `REVISED`, the replacement has a greater version, the revision response event is the replacement commitment's source event, a revision source may not fork into multiple targets, and one target may not be reused by multiple revisions. A withdrawal occurs at most once for a commitment and every commitment marked `WITHDRAWN` has a corresponding withdrawal event.
 
 Elenchus produces evidence about the respondent's commitments and their relations. It does not establish external factual truth unless the parent investigation separately supplies the evidence and evaluation required for that claim.
 
@@ -140,9 +144,12 @@ The validator fails closed on decidable defects including:
 - an unbridged `MATCH` across different expertise and claim values;
 - fully `SUPPORTED` expertise applicability with a material partial/mismatched/unknown dimension;
 - one identical scoped boundary statement placed in incompatible terminal categories;
-- response, commitment, implication, revision, withdrawal, or contradiction references to missing objects;
+- response, commitment, elicited-record, implication, revision, withdrawal, or contradiction references to missing objects;
+- free-form elenchus definition/assumption/warrant/tension objects that omit their required typed content and provenance links;
 - revision that overwrites the old commitment rather than creating a new one;
-- non-increasing revision versions.
+- non-increasing revision versions;
+- `REVISED` or `WITHDRAWN` commitment statuses with no corresponding event;
+- revision-source forks, revision-target reuse, repeated withdrawals, or a revision response event that does not source the replacement commitment.
 
 Natural-language expertise, truth, entailment, contradiction, or completeness are outside the validator's decidable scope.
 
@@ -156,7 +163,10 @@ A conforming implementation fails this specification if it:
 - treats `not_investigated` as evidence of absence;
 - treats non-identifiability as falsity;
 - allows the derived boundary view to replace canonical FAR closure artifacts;
+- stores result-relevant definitions, assumptions, warrants, or tensions without explicit commitment provenance;
 - overwrites an earlier respondent commitment after revision;
+- permits a `REVISED` or `WITHDRAWN` status without the corresponding event;
+- permits a revision source to fork, a target to be reused, a withdrawal to be duplicated, or a replacement commitment to cite a different source event from its revision;
 - labels commitments contradictory without recording the comparison interpretation, calculus, and basis;
 - silently strengthens a respondent's wording;
 - treats an elenchus response as external factual verification without separate evidence;
@@ -164,6 +174,6 @@ A conforming implementation fails this specification if it:
 
 ## 8. Assurance boundary
 
-The research record provides the elimination/reduction analysis. The implementation is tested by positive fixtures, adversarial mutations, and an independently coded internal reference oracle for the three central invariants.
+The research record provides the elimination/reduction analysis. The implementation is tested by positive fixtures, adversarial mutations, and a separately coded internal reference oracle for the central expertise-scope, boundary-exclusivity/closure-linkage, and elenchus-provenance/history invariants.
 
 That is internal implementation assurance. It does not establish external investigator independence, empirical utility, product readiness, novelty, priority, or commercial value.
