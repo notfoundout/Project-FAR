@@ -1,0 +1,1466 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-epistemic-v1.schema.json",
+  "title": "FAR epistemic learning document",
+  "type": "object",
+  "required": [
+    "format_version",
+    "id",
+    "far_ir_version",
+    "evidence",
+    "elenchus_sessions",
+    "snapshots",
+    "records",
+    "metadata"
+  ],
+  "properties": {
+    "format_version": {
+      "const": "far-epistemic/1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+    },
+    "far_ir_version": {
+      "enum": [
+        "far-ir/1.0",
+        "far-ir/2.0",
+        "far-ir/2.1"
+      ]
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "observed_at",
+          "statement",
+          "provenance"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+          },
+          "statement": {
+            "type": "string",
+            "minLength": 1
+          },
+          "provenance": {
+            "type": "object",
+            "required": [
+              "evidence_id",
+              "source_uri",
+              "artifact_sha256",
+              "byte_target"
+            ],
+            "properties": {
+              "evidence_id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "source_uri": {
+                "type": "string",
+                "minLength": 1
+              },
+              "artifact_sha256": {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              "byte_target": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "elenchus_sessions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "snapshots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "captured_at",
+          "belief_ref",
+          "belief_revision_ref",
+          "evidence_refs",
+          "hypothesis_probabilities",
+          "canonicalization",
+          "sha256"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+          },
+          "captured_at": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+          },
+          "belief_ref": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+          },
+          "belief_revision_ref": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+            },
+            "uniqueItems": true
+          },
+          "hypothesis_probabilities": {
+            "type": "object",
+            "propertyNames": {
+              "type": "string",
+              "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^(0\\.[0-9]{6}|1\\.000000)$"
+            },
+            "minProperties": 2
+          },
+          "canonicalization": {
+            "const": "FAR-CJ/1"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "hypotheses",
+              "revisions",
+              "current_revision_ref"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "belief"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "hypotheses": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "statement",
+                    "prior_probability",
+                    "base_reference_classes",
+                    "falsifiers",
+                    "uncertainty"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "prior_probability": {
+                      "type": "string",
+                      "pattern": "^(0\\.[0-9]{6}|1\\.000000)$"
+                    },
+                    "base_reference_classes": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    },
+                    "falsifiers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    },
+                    "uncertainty": {
+                      "type": "object",
+                      "required": [
+                        "kind",
+                        "description"
+                      ],
+                      "properties": {
+                        "kind": {
+                          "enum": [
+                            "ALEATORY",
+                            "EPISTEMIC",
+                            "MIXED",
+                            "UNKNOWN"
+                          ]
+                        },
+                        "description": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 2
+              },
+              "revisions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "timestamp",
+                    "supersedes",
+                    "trigger_outcome_ref",
+                    "probabilities",
+                    "evidence_refs",
+                    "update_rule",
+                    "rationale"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+                    },
+                    "supersedes": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "trigger_outcome_ref": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "probabilities": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "string",
+                        "pattern": "^(0\\.[0-9]{6}|1\\.000000)$"
+                      },
+                      "minProperties": 2
+                    },
+                    "evidence_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "uniqueItems": true
+                    },
+                    "update_rule": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "rationale": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "current_revision_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "causal_model_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "belief_ref",
+              "belief_snapshot_ref",
+              "hypothesis_ref",
+              "proposition",
+              "probability",
+              "made_at",
+              "resolution_window_start",
+              "resolution_window_end",
+              "objective_resolution_criteria",
+              "reference_class"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "prediction"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "belief_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "belief_snapshot_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "hypothesis_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "proposition": {
+                "type": "string",
+                "minLength": 1
+              },
+              "probability": {
+                "type": "string",
+                "pattern": "^0\\.(?!000000)[0-9]{6}$"
+              },
+              "made_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "resolution_window_start": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "resolution_window_end": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "objective_resolution_criteria": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reference_class": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "belief_ref",
+              "prediction_ref",
+              "belief_snapshot_ref",
+              "decided_at",
+              "states",
+              "actions",
+              "chosen_action",
+              "rationale",
+              "opportunity_cost",
+              "expected_value_of_perfect_information"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "decision"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "belief_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "prediction_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "belief_snapshot_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "decided_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "states": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "hypothesis_ref",
+                    "probability"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "hypothesis_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "probability": {
+                      "type": "string",
+                      "pattern": "^(0\\.[0-9]{6}|1\\.000000)$"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 2
+              },
+              "actions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "utilities",
+                    "expected_utility",
+                    "downside_utility",
+                    "tail_risk"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "utilities": {
+                      "type": "object",
+                      "propertyNames": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "additionalProperties": {
+                        "type": "string",
+                        "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+                      },
+                      "minProperties": 1
+                    },
+                    "expected_utility": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+                    },
+                    "downside_utility": {
+                      "type": "string",
+                      "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+                    },
+                    "tail_risk": {
+                      "type": "object",
+                      "required": [
+                        "threshold_utility",
+                        "probability_at_or_below",
+                        "description"
+                      ],
+                      "properties": {
+                        "threshold_utility": {
+                          "type": "string",
+                          "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+                        },
+                        "probability_at_or_below": {
+                          "type": "string",
+                          "pattern": "^(0\\.[0-9]{6}|1\\.000000)$"
+                        },
+                        "description": {
+                          "type": "string",
+                          "minLength": 1
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 2
+              },
+              "chosen_action": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "rationale": {
+                "type": "string",
+                "minLength": 1
+              },
+              "opportunity_cost": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+              },
+              "expected_value_of_perfect_information": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "prediction_ref",
+              "decision_ref",
+              "resolved_at",
+              "binary_outcome",
+              "realized_state",
+              "evidence_ref",
+              "scores",
+              "regret"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "outcome"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "prediction_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "decision_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "resolved_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "binary_outcome": {
+                "type": "integer",
+                "enum": [
+                  0,
+                  1
+                ]
+              },
+              "realized_state": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "evidence_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "scores": {
+                "type": "object",
+                "required": [
+                  "brier",
+                  "log"
+                ],
+                "properties": {
+                  "brier": {
+                    "type": "string",
+                    "pattern": "^[0-9]+\\.[0-9]{12}$"
+                  },
+                  "log": {
+                    "type": "string",
+                    "pattern": "^[0-9]+\\.[0-9]{12}$"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "regret": {
+                "type": "string",
+                "pattern": "^-?(0|[1-9][0-9]*)\\.[0-9]{6}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "prediction_ref",
+              "decision_ref",
+              "outcome_ref",
+              "belief_ref",
+              "belief_revision_ref",
+              "failure_mode_code",
+              "classifications",
+              "root_cause",
+              "corrective_rule",
+              "retest_ref"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "error"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "prediction_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "decision_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "outcome_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "belief_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "belief_revision_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "failure_mode_code": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "classifications": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "root_cause": {
+                "type": "string",
+                "minLength": 1
+              },
+              "corrective_rule": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "description",
+                  "applies_to_failure_mode_codes"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "applies_to_failure_mode_codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "retest_ref": {
+                "oneOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "error_ref",
+              "evaluated_at",
+              "reference_class",
+              "metric",
+              "baseline_mean_brier",
+              "comparison_outcome_refs",
+              "comparison_mean_brier",
+              "result"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "retest"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "error_ref": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "evaluated_at": {
+                "type": "string",
+                "format": "date-time",
+                "pattern": "(Z|[+-][0-9]{2}:[0-9]{2})$"
+              },
+              "reference_class": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "metric": {
+                "const": "MEAN_BRIER"
+              },
+              "baseline_mean_brier": {
+                "type": "string",
+                "pattern": "^[0-9]+\\.[0-9]{12}$"
+              },
+              "comparison_outcome_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "comparison_mean_brier": {
+                "type": "string",
+                "pattern": "^[0-9]+\\.[0-9]{12}$"
+              },
+              "result": {
+                "enum": [
+                  "IMPROVED",
+                  "UNCHANGED",
+                  "WORSE"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "provenance",
+              "variables",
+              "edges",
+              "interventions",
+              "confounders",
+              "counterfactuals",
+              "assumptions",
+              "identification"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+              },
+              "kind": {
+                "const": "causal_model"
+              },
+              "provenance": {
+                "type": "object",
+                "required": [
+                  "source_uri",
+                  "artifact_sha256",
+                  "far_refs",
+                  "evidence_refs",
+                  "elenchus_session_refs"
+                ],
+                "properties": {
+                  "source_uri": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "artifact_sha256": {
+                    "type": "string",
+                    "pattern": "^sha256:[0-9a-f]{64}$"
+                  },
+                  "far_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "evidence_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "elenchus_session_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              },
+              "variables": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "kind",
+                    "domain",
+                    "description"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "kind": {
+                      "enum": [
+                        "BINARY",
+                        "CATEGORICAL",
+                        "INTEGER",
+                        "REAL"
+                      ]
+                    },
+                    "domain": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 2
+              },
+              "edges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "cause",
+                    "effect",
+                    "mechanism",
+                    "assumption_refs"
+                  ],
+                  "properties": {
+                    "cause": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "effect": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "mechanism": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assumption_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "interventions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "target_ref",
+                    "assigned_value",
+                    "admissibility_assumption_refs"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "target_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "assigned_value": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "admissibility_assumption_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "confounders": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "variable_ref",
+                    "cause_ref",
+                    "effect_ref",
+                    "evidence_refs"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "variable_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "cause_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "effect_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "evidence_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "counterfactuals": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "intervention_refs",
+                    "outcome_variable_ref",
+                    "query",
+                    "assumption_refs"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "intervention_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "minItems": 1,
+                      "uniqueItems": true
+                    },
+                    "outcome_variable_ref": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "query": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "assumption_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "assumptions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "statement",
+                    "evidence_refs"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "statement": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "evidence_refs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                      },
+                      "uniqueItems": true
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "minItems": 1
+              },
+              "identification": {
+                "type": "object",
+                "required": [
+                  "estimand",
+                  "treatment_ref",
+                  "outcome_ref",
+                  "status",
+                  "adjustment_set",
+                  "assumption_refs",
+                  "limits"
+                ],
+                "properties": {
+                  "estimand": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "treatment_ref": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                  },
+                  "outcome_ref": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                  },
+                  "status": {
+                    "enum": [
+                      "IDENTIFIED",
+                      "PARTIALLY_IDENTIFIED",
+                      "NOT_IDENTIFIED"
+                    ]
+                  },
+                  "adjustment_set": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "assumption_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_.:-]*$"
+                    },
+                    "uniqueItems": true
+                  },
+                  "limits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "minItems": 1
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "status",
+        "nonclaims"
+      ],
+      "properties": {
+        "status": {
+          "const": "PROVISIONAL_APPLICATION_RECORD"
+        },
+        "nonclaims": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

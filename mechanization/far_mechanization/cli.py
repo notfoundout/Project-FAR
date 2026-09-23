@@ -15,6 +15,7 @@ from .conformance import run_conformance
 from .parser import ParseResult, parse_document, parse_file
 from .serialization import serialize_json, serialize_yaml, external_to_data
 from .normalization import normalize_ir_document
+from .epistemic import EpistemicDocument, EpistemicValidationError, calibration
 
 CLI_VERSION = "0.6.0"
 FOUNDATION_VERSION = "v1.0"
@@ -222,6 +223,30 @@ def _conformance(args: argparse.Namespace) -> tuple[int, str, str]:
         out = "\n".join(lines) + "\n"
     return (0 if result.success else 1), out, ""
 
+def _epistemic(args: argparse.Namespace) -> tuple[int, str, str]:
+    """Validate or summarize a validated epistemic loop."""
+    try:
+        document = EpistemicDocument.load(args.file)
+        if args.epistemic_command == "validate":
+            payload = {"valid": True, "content_hash": document.digest,
+                       "audit_event": document.audit_event()}
+        elif args.epistemic_command == "calibration":
+            records = document.to_dict()["records"]
+            by_id = {record["id"]: record for record in records}
+            outcomes = [
+                {"probability": by_id[record["prediction_ref"]]["probability"],
+                 "binary_outcome": record["binary_outcome"],
+                 "reference_class": by_id[record["prediction_ref"]]["reference_class"]}
+                for record in records if record["kind"] == "outcome"
+            ]
+            payload = calibration(outcomes, bin_edges=args.bin_edges.split(","))
+        else:
+            payload = document.to_dict()
+    except (OSError, json.JSONDecodeError, EpistemicValidationError) as exc:
+        details = list(exc.errors) if isinstance(exc, EpistemicValidationError) else [str(exc)]
+        return 1, json.dumps({"valid": False, "errors": details}, indent=2, sort_keys=True) + "\n", ""
+    return 0, json.dumps(payload, indent=2, sort_keys=True) + "\n", ""
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="far", description="Project FAR mechanization CLI")
     p.add_argument("--config"); p.add_argument("--output", choices=["text","json","yaml"], default=None); p.add_argument("--quiet", action="store_true"); p.add_argument("--verbose", action="store_true"); p.add_argument("--color", choices=["auto","always","never"], default=None)
@@ -243,6 +268,10 @@ def build_parser() -> argparse.ArgumentParser:
     e=add_file(sub.add_parser("export", help="export normalized document or graph")); e.add_argument("--kind", choices=["json","yaml","graph-json"], default="json"); e.add_argument("--output-file"); e.set_defaults(func=_export)
     i=add_file(sub.add_parser("inspect", help="inspect an identifier")); i.add_argument("identifier"); i.set_defaults(func=_inspect)
     c=add_common(sub.add_parser("conformance", help="run far-ir/1.0 conformance suite")); c.add_argument("--manifest"); c.set_defaults(func=_conformance)
+    ep = sub.add_parser("epistemic", help="operate on additive far-epistemic/1.0 records")
+    eps = ep.add_subparsers(dest="epistemic_command", required=True)
+    cmd = eps.add_parser("validate"); cmd.add_argument("file"); cmd.set_defaults(func=_epistemic)
+    cal = eps.add_parser("calibration"); cal.add_argument("file"); cal.add_argument("--bin-edges", default="0,0.5,1"); cal.set_defaults(func=_epistemic)
     add_common(sub.add_parser("version", help="show versions")).set_defaults(func=_version)
     sub.add_parser("help", help="show help").set_defaults(func=lambda args: (0, p.format_help(), ""))
     return p
