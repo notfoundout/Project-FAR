@@ -49,13 +49,14 @@ jobs:
     - name: Resolve comparison base
       id: base
       shell: bash
-      run: "set -euo pipefail\ncase \"$FAR_ASSURANCE_EVENT\" in\n  pull_request) base=\"$FAR_ASSURANCE_PR_BASE\" ;;\n  push) base=\"$FAR_ASSURANCE_PUSH_BASE\" ;;\n  workflow_dispatch)\n    base=\"$FAR_ASSURANCE_DISPATCH_BASE\"\n    [[ \"$FAR_ASSURANCE_DISPATCH_HEAD\" =~ ^[0-9a-f]{40}$ ]]\n    [[ \"$(git rev-parse HEAD^{commit})\" == \"$FAR_ASSURANCE_DISPATCH_HEAD\" ]] || { echo \"dispatched exact-head checkout mismatch\" >&2; exit 1; }\n    ;;\n  *) echo \"unsupported assurance event\" >&2; exit 1 ;;\nesac\n[[ \"$base\" =~ ^[0-9a-f]{40}$ && \"$base\" != 0000000000000000000000000000000000000000 ]]\ngit cat-file -e \"${base}^{commit}\"\ngit merge-base --is-ancestor \"$base\" HEAD\necho \"sha=$base\" >> \"$GITHUB_OUTPUT\"\n"
+      run: "set -euo pipefail\ncase \"$FAR_ASSURANCE_EVENT\" in\n  pull_request) base=\"$FAR_ASSURANCE_PR_BASE\" ;;\n  push) base=\"$FAR_ASSURANCE_PUSH_BASE\" ;;\n  workflow_dispatch)\n    base=\"$FAR_ASSURANCE_DISPATCH_BASE\"\n    [[ \"$FAR_ASSURANCE_DISPATCH_HEAD\" =~ ^[0-9a-f]{40}$ ]]\n    [[ \"$(git rev-parse HEAD^{commit})\" == \"$FAR_ASSURANCE_DISPATCH_HEAD\" ]] || { echo \"dispatched exact-head checkout mismatch\" >&2; exit 1; }\n    [[ \"$base\" == \"$FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA\" ]] || { echo \"dispatched exact-head base differs from trusted main workflow ref\" >&2; exit 1; }\n    [[ \"$(git rev-parse HEAD^1)\" == \"$base\" ]] || { echo \"dispatched exact-head review head is not a direct child of frozen main\" >&2; exit 1; }\n    ;;\n  *) echo \"unsupported assurance event\" >&2; exit 1 ;;\nesac\n[[ \"$base\" =~ ^[0-9a-f]{40}$ && \"$base\" != 0000000000000000000000000000000000000000 ]]\ngit cat-file -e \"${base}^{commit}\"\ngit merge-base --is-ancestor \"$base\" HEAD\necho \"sha=$base\" >> \"$GITHUB_OUTPUT\"\n"
       env:
         FAR_ASSURANCE_EVENT: ${{ github.event_name }}
         FAR_ASSURANCE_PR_BASE: ${{ github.event.pull_request.base.sha }}
         FAR_ASSURANCE_PUSH_BASE: ${{ github.event.before }}
         FAR_ASSURANCE_DISPATCH_BASE: ${{ inputs.base_sha }}
         FAR_ASSURANCE_DISPATCH_HEAD: ${{ inputs.head_sha }}
+        FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA: ${{ github.sha }}
     - name: Verify independent bootstrap
       run: python validation_bootstrap/verify.py
     - name: Run validator assurance tests
