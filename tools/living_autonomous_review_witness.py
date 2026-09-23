@@ -59,6 +59,46 @@ def validate_exact_claim_witnesses(
     attacked = _assessment_map(attack, claim_ids, "attack")
     replicated = _assessment_map(replication, claim_ids, "replication")
 
+    contradiction_disagreements = sorted(
+        claim_id
+        for claim_id in claim_ids
+        if (attacked[claim_id].get("contradiction_found") is True)
+        != (replicated[claim_id].get("contradiction_found") is True)
+    )
+    if contradiction_disagreements:
+        raise CandidateReviewError(
+            "attack/replication contradiction disagreement for frozen claims: "
+            + ", ".join(contradiction_disagreements)
+        )
+
+    invalid_reproductions = sorted(
+        claim_id
+        for claim_id in claim_ids
+        if replicated[claim_id].get("attack_reproduced") is True
+        and not (
+            attacked[claim_id].get("contradiction_found") is True
+            and replicated[claim_id].get("contradiction_found") is True
+        )
+    )
+    if invalid_reproductions:
+        raise CandidateReviewError(
+            "replication marks a per-claim attack reproduced without a jointly claimed contradiction: "
+            + ", ".join(invalid_reproductions)
+        )
+
+    unreproduced_joint_contradictions = sorted(
+        claim_id
+        for claim_id in claim_ids
+        if attacked[claim_id].get("contradiction_found") is True
+        and replicated[claim_id].get("contradiction_found") is True
+        and replicated[claim_id].get("attack_reproduced") is not True
+    )
+    if unreproduced_joint_contradictions:
+        raise CandidateReviewError(
+            "replication did not reproduce jointly claimed per-claim contradictions: "
+            + ", ".join(unreproduced_joint_contradictions)
+        )
+
     contradiction_witnesses = {
         claim_id
         for claim_id in claim_ids
