@@ -1,157 +1,169 @@
 # Socratic Epistemic Extensions v1.0
 
-Status: Research candidate for governed promotion
+Status: **Provisional implementation specification — pending internal acceptance**  
+Research basis: `FAR-EPISTEMIC-EXTENSIONS-001`
 
-This specification defines three additive capabilities for Project FAR: domain-bounded expertise, a consolidated epistemic-boundary object, and an interactive elenchus protocol. It does not alter `PROJECT-FAR-CORE-THEORY-1.1`, FARA's accepted formal kernel, `far-ir/2.0`, `far-ir/2.1`, or the canonical FAR stage sequence. The capabilities are designed to map into existing FAR/FARA/FARO authority rather than create an independent workflow.
+This specification defines three additive capabilities for Project FAR: proposition-relative expertise applicability, a consolidated epistemic-boundary view, and an interactive elenchus protocol. The “Socratic” label records the motivating analogy only; no historical derivation claim is made.
+
+The additions do not alter `PROJECT-FAR-CORE-THEORY-1.1`, FARA's accepted formal kernel, `far-ir/2.0`, `far-ir/2.1`, or the canonical FAR stage sequence. Elimination and reduction found that all three can be represented using existing FAR/FARA/FARO roles.
 
 ## 1. Domain-bounded expertise
 
-A source's competence is proposition-relative and scope-bounded. Evidence that a source is competent in one domain does not transfer automatically to another domain, population, time period, method, or claim type.
+Contract: `FAR-EXPERTISE-APPLICABILITY-1.0`.
 
-A conforming expertise assessment records:
+A source's competence is proposition-relative and scope-bounded. Evidence that a source is competent in one domain does not transfer automatically to another domain, subdomain, claim type, population, geography, time period, or method.
 
-- `source_id`
-- `expertise_assertion_id`
-- `domain`
-- optional `subdomain`
-- `claim_types`
-- `population_scope`
-- `geographic_scope`
-- `temporal_scope`
-- `method_scope`
-- `competence_basis`
-- `basis_provenance`
-- `assessment_status`
-- `uncertainty`
-- `limitations`
-- `valid_from`
-- optional `valid_until`
-- `assessor`
-- `assessment_method`
-- `version`
+An `EXPERTISE_ASSERTION` records:
 
-Allowed assessment statuses are `SUPPORTED`, `PARTIALLY_SUPPORTED`, `INSUFFICIENT_EVIDENCE`, `CONTRADICTED`, `INDETERMINATE`, and `NOT_APPLICABLE`.
+- `source_id`;
+- `expertise_assertion_id`;
+- a `scope` containing `domain`, optional `subdomain`, `claim_type`, `population`, `geography`, `time`, and `method`;
+- `competence_basis` and `basis_provenance`;
+- `assessment_status`;
+- `uncertainty` and `limitations`;
+- validity interval;
+- assessor, assessment method, and version.
 
-An expertise assertion never establishes the truth of a substantive claim. It is evidence about whether a source is qualified to contribute on the proposition under evaluation. Applicability must be recomputed for each claim. A system must not infer `expertise(source, Y)` from `expertise(source, X)` merely because X and Y are adjacent domains.
+Allowed expertise statuses are `SUPPORTED`, `PARTIALLY_SUPPORTED`, `INSUFFICIENT_EVIDENCE`, `CONTRADICTED`, `INDETERMINATE`, and `NOT_APPLICABLE`.
 
-For each source-to-claim use, FAR must create an `EXPERTISE_APPLICABILITY` assessment that states whether the recorded expertise actually covers the claim's domain, scope, method, population, geography, time, and claim type. Missing coverage is `INDETERMINATE` or `INSUFFICIENT_EVIDENCE`, not silent transfer.
+An expertise assertion never establishes the truth of a substantive claim.
 
-## 2. Epistemic-boundary object
+For every material source-to-claim use, an `EXPERTISE_APPLICABILITY` record binds the expertise assertion to one exact claim. It preserves both `expertise_scope` and `claim_scope` and assesses domain, subdomain, claim type, population, geography, time, and method separately as `MATCH`, `PARTIAL`, `MISMATCH`, `UNKNOWN`, or `NOT_APPLICABLE`.
 
-FAR already requires scope, nonclaims, `Unknown`, falsifiers, residual uncertainty, limitations, surviving propositions, evidence cutoff, search frame, and closure status. This specification consolidates those existing obligations into one machine-readable terminal object without changing their semantics.
+A dimension marked `MATCH` despite different recorded values requires an explicit bridge. Mere adjacency of domains is not a bridge. Overall `SUPPORTED` applicability is invalid if any material dimension is partial, mismatched, or unknown.
 
-An `EPISTEMIC_BOUNDARY` records:
+Expertise applicability remains distinct from source reliability, evidence quality, evidence relevance, claim status, and inference validity.
 
-- `investigation_id`
-- `claim_id`
-- `claim_version`
-- `evidence_cutoff`
-- `search_frame`
-- `established`
-- `conditionally_established`
-- `supported_not_established`
-- `unknown`
-- `not_investigated`
-- `not_identifiable_from_current_evidence`
-- `explicit_nonclaims`
-- `falsifiers`
-- `surviving_propositions`
-- `residual_uncertainty`
-- `limitations`
-- `assumptions`
-- `closure_status`
-- `provenance`
-- `boundary_version`
+## 2. Epistemic-boundary view
 
-Every non-empty `conditionally_established` entry must identify the assumption or condition on which it depends. Every `unknown` entry must state why it is unknown. `not_investigated` is reserved for matters outside the frozen search contract. `not_identifiable_from_current_evidence` is reserved for questions for which the frozen evidence cannot discriminate among materially distinct states.
+Contract: `FARO-EPISTEMIC-BOUNDARY-1.0`.
 
-The boundary object is a reporting and audit artifact. It does not create new truth semantics or collapse typed claim/evidence/inference assessments into one score.
+FAR already requires scope, nonclaims, typed `Unknown`, falsifiers, residual uncertainty, limitations, surviving propositions, evidence cutoff, search frame, assumptions, and closure status. No new epistemic primitive is justified.
 
-A closed FAR investigation must be reconstructible from the boundary object plus its referenced underlying artifacts. The boundary object may summarize but may not replace the canonical evidence-closure records.
+`EPISTEMIC_BOUNDARY` is therefore a derived FARO reporting view over those existing records. It contains:
+
+- `investigation_id`;
+- `claim_id` and `claim_version`;
+- `evidence_cutoff`;
+- `search_frame`;
+- `closure_record_refs` linking the canonical FAR closure artifacts;
+- `established`;
+- `conditionally_established`;
+- `supported_not_established`;
+- `unknown`;
+- `not_investigated`;
+- `not_identifiable_from_current_evidence`;
+- `explicit_nonclaims`;
+- `falsifiers`;
+- `surviving_propositions`;
+- `residual_uncertainty`;
+- `limitations`;
+- `assumptions`;
+- `closure_status`;
+- provenance and boundary version.
+
+Every conditional entry identifies its condition references. Every unknown, not-investigated, and non-identifiable entry states why it occupies that category. The same scoped statement may not silently occupy incompatible terminal categories.
+
+The boundary view may summarize canonical FAR records but cannot replace or reinterpret them. FAR closure does not depend on FARO materialization; the dependency direction remains FAR → FARO.
 
 ## 3. Interactive elenchus protocol
 
-The elenchus protocol governs adaptive questioning of a claimant, source author, reviewer, model, or other respondent when the investigation needs to elicit definitions, commitments, assumptions, or inferential warrants.
+Contract: `FAR-ELENCHUS-1.0`.
 
-The protocol is an operation invoked from the canonical FAR workflow. It is not a replacement stage sequence.
+The elenchus protocol governs adaptive questioning of a claimant, source author, reviewer, model, or other respondent when an investigation needs to elicit definitions, commitments, assumptions, or inferential warrants.
 
-Each elenchus session records:
+The protocol is invoked from the canonical FAR workflow when applicable. It is not a replacement stage sequence.
 
-- `session_id`
-- `investigation_id`
-- `respondent_id`
-- `initial_claims`
-- `question_events`
-- `response_events`
-- `commitments`
-- `definitions`
-- `assumptions`
-- `warrants`
-- `derived_implications`
-- `tensions`
-- `contradictions`
-- `revisions`
-- `withdrawals`
-- `unresolved_questions`
-- `termination_reason`
-- `provenance`
-- `session_version`
+Each `ELENCHUS_SESSION` records:
 
-The protocol follows this loop when applicable:
+- session, investigation, and respondent identity;
+- initial claims;
+- purpose-typed question events;
+- response events linked to the questions that elicited them;
+- versioned commitments with exact wording and context;
+- definitions, assumptions, and warrants;
+- derived implications with explicit premise references, calculus, and rule;
+- tensions;
+- demonstrated contradictions;
+- revisions and withdrawals;
+- unresolved questions;
+- termination reason;
+- provenance and session version.
 
-1. Elicit the exact proposition or definition under examination.
-2. Record the respondent's commitment without silently strengthening or normalizing it.
-3. Ask consequence-bearing questions that test scope, definitions, assumptions, and warrants.
-4. Derive implications only through an explicit stated calculus or inferential rule.
-5. Compare derived implications with the respondent's other recorded commitments.
-6. Record a `TENSION` when compatibility is uncertain and a `CONTRADICTION` only when incompatibility is demonstrated under the stated interpretation and calculus.
-7. Present the conflict or missing premise to the respondent and record the response.
-8. Preserve revisions and withdrawals as new versioned commitments; do not overwrite history.
-9. Repeat until the relevant commitments are sufficiently explicit for the parent FAR investigation, the respondent declines or cannot answer, the session reaches its declared stopping rule, or further questioning is non-material.
+The governed loop is:
 
-A question must have a recorded purpose such as `DEFINE_TERM`, `FIX_SCOPE`, `EXPOSE_ASSUMPTION`, `TEST_WARRANT`, `TEST_CONSEQUENCE`, `TEST_CONSISTENCY`, `SEEK_COUNTEREXAMPLE`, `DISTINGUISH_INTERPRETATIONS`, or `CLARIFY_REVISION`.
+1. elicit the exact proposition or definition under examination;
+2. record the respondent's commitment without silently strengthening or normalizing it;
+3. ask a purpose-typed question directed at scope, definition, assumption, warrant, consequence, consistency, counterexample, interpretation, or revision;
+4. derive implications only through an explicitly named calculus or inferential rule;
+5. compare the implications with recorded commitments at compatible contexts;
+6. record `TENSION` when incompatibility remains uncertain and `CONTRADICTION` only when incompatibility is demonstrated under an explicit interpretation and calculus;
+7. present the conflict or missing premise when further clarification is material;
+8. preserve revisions and withdrawals as new events and never overwrite history;
+9. repeat until sufficient explicitness, respondent refusal/inability, the declared stopping rule, or no further material question.
 
-The system must not manufacture a contradiction by substituting a stronger claim, changing the respondent's terminology without provenance, or combining commitments made under materially different contexts without an explicit bridge.
+Question purposes are `DEFINE_TERM`, `FIX_SCOPE`, `EXPOSE_ASSUMPTION`, `TEST_WARRANT`, `TEST_CONSEQUENCE`, `TEST_CONSISTENCY`, `SEEK_COUNTEREXAMPLE`, `DISTINGUISH_INTERPRETATIONS`, and `CLARIFY_REVISION`.
 
-Elenchus produces evidence about the respondent's commitments and the structure among them. It does not establish external factual truth unless the parent investigation separately supplies the required evidence and evaluation.
+Elenchus produces evidence about the respondent's commitments and their relations. It does not establish external factual truth unless the parent investigation separately supplies the evidence and evaluation required for that claim.
 
 ## 4. Shared invariants
 
-All three capabilities obey the following rules:
+All three capabilities obey these rules:
 
-1. No capability receives epistemic privilege from being generated by FAR.
-2. Every material assessment carries provenance, version, scope, and uncertainty.
+1. FAR-generated assessments receive no epistemic privilege.
+2. Every material assessment carries provenance, version, and scope.
 3. Missing information remains explicit rather than being completed from model prior or convention.
-4. Distinct claim, evidence, inference, expertise-applicability, and closure statuses remain separate.
+4. Claim, evidence, inference, expertise-applicability, and closure statuses remain distinct.
 5. Revisions preserve history and invalidate dependent conclusions when the changed artifact was result-relevant.
-6. A machine-readable schema establishes structural conformance only; it does not establish factual correctness or domain adequacy.
+6. Schema conformance establishes structural consistency only; semantic validation establishes only the explicit cross-field invariants it checks.
+7. Neither layer establishes factual correctness, domain adequacy, source truth, semantic completeness, or external validation.
 
 ## 5. Integration requirements
 
-- Contract Discovery may invoke elenchus to resolve or preserve material ambiguities before freeze.
-- Stage 3 interpretation may reference elicited definitions and commitments with session provenance.
-- Stage 6 reasoning may use elenchus outputs as explicit premises only at their recorded scope.
-- Evidence appraisal may use domain-bounded expertise as one typed input, never as a substitute for direct evidence.
-- Evidence Closure must emit or reference one `EPISTEMIC_BOUNDARY` for each terminal claim disposition.
-- FARO reporting should expose the epistemic boundary as the compact terminal view while preserving links to the full underlying audit record.
-- FARO disagreement analysis may compare expertise-applicability decisions, commitment versions, or epistemic-boundary entries when locating the earliest material divergence.
+- Contract Discovery may use elenchus evidence when an interactive respondent can clarify a material ambiguity. Surviving materially distinct interpretations remain governed by the existing intake protocol.
+- Stage 3 may reference elicited definitions and interpretations with elenchus provenance.
+- Stage 6 may use elicited commitments as premises only at their recorded scope and context.
+- Evidence appraisal may use expertise applicability as one typed input; it never substitutes for direct evidence or repairs an invalid inference.
+- After a FAR closure record exists, FARO reporting may materialize an `EPISTEMIC_BOUNDARY` as a derived view. FAR itself does not depend on that downstream view.
+- FARO disagreement analysis may compare expertise-applicability decisions, commitment versions, or epistemic-boundary entries when locating a material divergence.
 
-## 6. Failure conditions
+## 6. Machine validation
+
+Machine-readable records use format `socratic-epistemic-extensions/1.0` under:
+
+- `schemas/socratic-epistemic-extensions-v1.schema.json`;
+- `mechanization/far_mechanization/socratic_epistemic.py`.
+
+The validator fails closed on decidable defects including:
+
+- scope values that do not match their applicability assessments;
+- an unbridged `MATCH` across different expertise and claim values;
+- fully `SUPPORTED` expertise applicability with a material partial/mismatched/unknown dimension;
+- one identical scoped boundary statement placed in incompatible terminal categories;
+- response, commitment, implication, revision, withdrawal, or contradiction references to missing objects;
+- revision that overwrites the old commitment rather than creating a new one;
+- non-increasing revision versions.
+
+Natural-language expertise, truth, entailment, contradiction, or completeness are outside the validator's decidable scope.
+
+## 7. Failure conditions
 
 A conforming implementation fails this specification if it:
 
-- transfers expertise across domains or scopes without an explicit applicability assessment;
+- transfers expertise across a material scope difference without an explicit applicability assessment;
 - treats expertise as proof of the source's substantive claim;
-- emits a determinate expertise-applicability status with no provenance or basis;
-- omits required terminal uncertainty by leaving an epistemic-boundary category empty without reference to the canonical closure record;
-- treats `not investigated` as evidence of absence;
+- fabricates an applicability bridge;
+- treats `not_investigated` as evidence of absence;
 - treats non-identifiability as falsity;
+- allows the derived boundary view to replace canonical FAR closure artifacts;
 - overwrites an earlier respondent commitment after revision;
-- labels two commitments contradictory without recording the interpretation and inferential basis that make them incompatible;
-- silently strengthens a respondent's wording during elenchus;
-- uses an elenchus response as external factual verification without separate evidence;
-- allows any of the three capabilities to bypass the canonical FAR intake, reasoning, evidence-closure, or validation requirements.
+- labels commitments contradictory without recording the comparison interpretation, calculus, and basis;
+- silently strengthens a respondent's wording;
+- treats an elenchus response as external factual verification without separate evidence;
+- creates a parallel workflow or reverses the FAR → FARO dependency direction.
 
-## 7. Promotion boundary
+## 8. Assurance boundary
 
-This file defines an additive candidate specification. Canonical promotion requires schema/validator conformance, adversarial fixtures, repository health checks, and a governance record showing that the additions preserve the current FAR/FARA/FARO dependency direction and do not silently change core-theory semantics.
+The research record provides the elimination/reduction analysis. The implementation is tested by positive fixtures, adversarial mutations, and an independently coded internal reference oracle for the three central invariants.
+
+That is internal implementation assurance. It does not establish external investigator independence, empirical utility, product readiness, novelty, priority, or commercial value.
