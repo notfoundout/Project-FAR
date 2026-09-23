@@ -2,7 +2,15 @@ from __future__ import annotations
 
 import unittest
 
-from tests.test_living_autonomous_review import FakeModel, NOW, ROOT, URL, meta, source_fixture
+from tests.test_living_autonomous_review import (
+    FakeModel,
+    NOW,
+    ROOT,
+    URL,
+    decision_record,
+    meta,
+    source_fixture,
+)
 from tools import run_living_autonomous_review as ar
 
 
@@ -63,6 +71,201 @@ class NegativeEvidenceBindingTests(unittest.TestCase):
         )
         self.assertEqual("source_blocked", plan["status"])
         self.assertFalse(plan["review_files"])
+
+
+class ExactClaimWitnessTests(unittest.TestCase):
+    CLAIMS = {"FAR-CORE-001", "FAR-CORE-002"}
+
+    @staticmethod
+    def screening():
+        return {
+            "primary_source_verified": True,
+            "relevant": True,
+            "source_urls_used": [URL],
+            "evaluated_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "claim_assessments": [
+                {
+                    "claim_id": "FAR-CORE-001",
+                    "relevant": True,
+                    "premise_match": True,
+                    "scope_match": False,
+                    "reason": "premise only",
+                },
+                {
+                    "claim_id": "FAR-CORE-002",
+                    "relevant": True,
+                    "premise_match": False,
+                    "scope_match": True,
+                    "reason": "scope only",
+                },
+            ],
+            "affected_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "premise_match": True,
+            "scope_match": True,
+            "summary": "split screening witness",
+            "evidence_locations": ["source"],
+            "limits": [],
+        }
+
+    @staticmethod
+    def split_contradiction_attack():
+        return {
+            "contradiction_found": True,
+            "prior_art_found": False,
+            "prior_art_strength": "NONE",
+            "source_urls_used": [URL],
+            "evaluated_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "claim_assessments": [
+                {
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": True,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "reason": "attack on first claim",
+                },
+                {
+                    "claim_id": "FAR-CORE-002",
+                    "contradiction_found": False,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "reason": "no attack on second claim",
+                },
+            ],
+            "affected_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "exact_reason": "aggregate contradiction",
+            "reproducible_attack": "bounded counterexample",
+            "source_locations": ["source"],
+            "limits": [],
+        }
+
+    @staticmethod
+    def split_contradiction_replication():
+        return {
+            "contradiction_found": True,
+            "prior_art_found": False,
+            "prior_art_strength": "NONE",
+            "source_urls_used": [URL],
+            "evaluated_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "claim_assessments": [
+                {
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": False,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "attack_reproduced": False,
+                    "reason": "did not reproduce first claim",
+                },
+                {
+                    "claim_id": "FAR-CORE-002",
+                    "contradiction_found": True,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "attack_reproduced": True,
+                    "reason": "different claim contradicted",
+                },
+            ],
+            "affected_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "independent_reason": "aggregate reproduction",
+            "attack_reproduced": True,
+            "source_locations": ["source"],
+            "limits": [],
+        }
+
+    @staticmethod
+    def split_prior_attack():
+        return {
+            "contradiction_found": False,
+            "prior_art_found": True,
+            "prior_art_strength": "DIRECT",
+            "source_urls_used": [URL],
+            "evaluated_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "claim_assessments": [
+                {
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": False,
+                    "prior_art_found": True,
+                    "prior_art_strength": "DIRECT",
+                    "reason": "direct prior art for first claim",
+                },
+                {
+                    "claim_id": "FAR-CORE-002",
+                    "contradiction_found": False,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "reason": "no prior art for second claim",
+                },
+            ],
+            "affected_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "exact_reason": "aggregate direct prior art",
+            "reproducible_attack": "",
+            "source_locations": ["source"],
+            "limits": [],
+        }
+
+    @staticmethod
+    def split_prior_replication():
+        return {
+            "contradiction_found": False,
+            "prior_art_found": True,
+            "prior_art_strength": "DIRECT",
+            "source_urls_used": [URL],
+            "evaluated_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "claim_assessments": [
+                {
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": False,
+                    "prior_art_found": False,
+                    "prior_art_strength": "NONE",
+                    "attack_reproduced": False,
+                    "reason": "no prior art for first claim",
+                },
+                {
+                    "claim_id": "FAR-CORE-002",
+                    "contradiction_found": False,
+                    "prior_art_found": True,
+                    "prior_art_strength": "DIRECT",
+                    "attack_reproduced": False,
+                    "reason": "direct prior art for second claim",
+                },
+            ],
+            "affected_claim_ids": ["FAR-CORE-001", "FAR-CORE-002"],
+            "independent_reason": "aggregate direct prior art",
+            "attack_reproduced": False,
+            "source_locations": ["source"],
+            "limits": [],
+        }
+
+    def test_project_change_cannot_compose_witness_across_claims(self):
+        policy = ar.load_json(ROOT / ar.POLICY)
+        with self.assertRaisesRegex(ar.CandidateReviewError, "single exact claim|complete exact per-claim"):
+            ar.validate_decision(
+                decision_record("PROJECT_CHANGE_REQUIRED"),
+                policy,
+                ROOT,
+                self.CLAIMS,
+                self.screening(),
+                self.split_contradiction_attack(),
+                self.split_contradiction_replication(),
+                meta(),
+                meta(),
+                meta(),
+            )
+
+    def test_prior_art_lead_cannot_compose_witness_across_claims(self):
+        policy = ar.load_json(ROOT / ar.POLICY)
+        with self.assertRaisesRegex(ar.CandidateReviewError, "single exact claim|complete exact per-claim"):
+            ar.validate_decision(
+                decision_record("N1_PRIOR_ART_LEAD"),
+                policy,
+                ROOT,
+                self.CLAIMS,
+                self.screening(),
+                self.split_prior_attack(),
+                self.split_prior_replication(),
+                meta(),
+                meta(),
+                meta(),
+            )
 
 
 if __name__ == "__main__":
