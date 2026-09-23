@@ -10,7 +10,7 @@ from unittest import mock
 from tools import run_living_autonomous_review as ar
 
 ROOT = Path(__file__).resolve().parents[1]
-CID = "FAR-LIT-FFFFFFFF00000001"
+CID = "FAR-LIT-55DC0543A2C4B8A2"
 URL = "https://doi.org/10.0000/far-test"
 NOW = datetime(2026, 9, 22, 20, 0, tzinfo=timezone.utc)
 
@@ -304,6 +304,30 @@ class AutonomousLivingReviewTests(unittest.TestCase):
     def test_duplicate_affected_claim_ids_are_rejected(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "duplicates"):
             ar.validate_claim_ids(["FAR-CORE-001", "FAR-CORE-001"], {"FAR-CORE-001"}, "attack")
+
+    def test_candidate_identity_binds_id_source_key_and_source_record(self):
+        candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
+        candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+        self.assertTrue(ar.candidate_identity_valid(candidate))
+
+        tampered_key = dict(candidate)
+        tampered_key["source_key"] = "doi:10.9999/tampered"
+        self.assertFalse(ar.candidate_identity_valid(tampered_key))
+
+        rebound = dict(candidate)
+        rebound["source_key"] = "doi:10.9999/tampered"
+        rebound["candidate_id"] = "FAR-LIT-" + ar.digest(rebound["source_key"].encode("utf-8"))[:16].upper()
+        self.assertFalse(ar.candidate_identity_valid(rebound))
+
+    def test_tampered_candidate_identity_is_blocked_before_model_use(self):
+        candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
+        candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+        candidate["source_key"] = "doi:10.9999/tampered"
+        candidate_path.write_text(json.dumps(candidate, sort_keys=True) + "\n", encoding="utf-8")
+        model = FakeModel("ADJACENT_NO_CONTRADICTION")
+        plan = ar.build_plan(ROOT, self.source, model, NOW)
+        self.assertEqual("source_blocked", plan["status"])
+        self.assertEqual([], model.calls)
 
     def test_source_verification_failure_records_retry_only(self):
         plan = ar.build_plan(ROOT, self.source, FakeModel("ADJACENT_NO_CONTRADICTION", verified=False), NOW)
