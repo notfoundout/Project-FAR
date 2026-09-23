@@ -12,6 +12,19 @@ from tools.living_autonomous_review_model import *
 from tools.living_autonomous_review_plan import *
 
 
+def require_full_claim_coverage(record: dict[str, Any], claim_ids: set[str], label: str) -> None:
+    covered = set(validate_claim_ids(record.get("evaluated_claim_ids"), claim_ids, f"{label} evaluated_claim_ids"))
+    if covered != claim_ids:
+        missing = sorted(claim_ids - covered)
+        extra = sorted(covered - claim_ids)
+        detail = []
+        if missing:
+            detail.append("missing=" + ",".join(missing))
+        if extra:
+            detail.append("extra=" + ",".join(extra))
+        raise CandidateReviewError(f"{label}: incomplete frozen claim coverage ({'; '.join(detail)})")
+
+
 def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None = None):
     now = now or datetime.now(timezone.utc)
     policy = load_json(root / POLICY)
@@ -73,7 +86,8 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             schema=SCREEN_SCHEMA,
             urls=urls,
         )
-        validate_claim_ids(screening.get("affected_claim_ids"), claim_ids, "screening")
+        require_full_claim_coverage(screening, claim_ids, "screening")
+        validate_claim_ids(screening.get("affected_claim_ids"), claim_ids, "screening affected_claim_ids")
         if not screening.get("primary_source_verified"):
             return source_block(cid, "screening did not verify a primary source", now)
         try:
@@ -87,7 +101,8 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             schema=ATTACK_SCHEMA,
             urls=urls,
         )
-        validate_claim_ids(attack.get("affected_claim_ids"), claim_ids, "attack")
+        require_full_claim_coverage(attack, claim_ids, "attack")
+        validate_claim_ids(attack.get("affected_claim_ids"), claim_ids, "attack affected_claim_ids")
         try:
             validate_source_binding(attack, attack_meta, "attack")
         except CandidateReviewError as exc:
@@ -99,17 +114,14 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             schema=REPLICATION_SCHEMA,
             urls=urls,
         )
-        validate_claim_ids(replication.get("affected_claim_ids"), claim_ids, "replication")
+        require_full_claim_coverage(replication, claim_ids, "replication")
+        validate_claim_ids(replication.get("affected_claim_ids"), claim_ids, "replication affected_claim_ids")
         try:
             validate_source_binding(replication, replication_meta, "replication")
         except CandidateReviewError as exc:
             return source_block(cid, str(exc), now)
 
-        common_sources = (
-            record_sources(screening)
-            & record_sources(attack)
-            & record_sources(replication)
-        )
+        common_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
         if not common_sources:
             return source_block(cid, "review roles lack one common retrieved primary source", now)
 
@@ -138,18 +150,8 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         )
 
         review_files, provenance, audit_rel = review_artifacts(
-            cid,
-            candidate,
-            claims,
-            screening,
-            screen_meta,
-            attack,
-            attack_meta,
-            replication,
-            replication_meta,
-            decision,
-            decision_meta,
-            now,
+            cid, candidate, claims, screening, screen_meta, attack, attack_meta,
+            replication, replication_meta, decision, decision_meta, now,
         )
         candidate_hash = digest(candidate_raw)
         freeze_tag = candidate_hash[:12].upper()
@@ -170,8 +172,6 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         scientific_replacements: dict[str, bytes] = {}
         implementation_replacements: dict[str, bytes] = {}
 
-        # Important lifecycle boundary: proposed correction bytes are part of the
-        # human-review PR, never written to the unprotected rolling inbox first.
         if disposition == "PROJECT_CHANGE_REQUIRED":
             scientific_replacements = generate_replacements(
                 model,
@@ -221,9 +221,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
                     max_bytes=policy["max_total_replacement_bytes"],
                 )
                 enforce_total_replacement_bytes(
-                    policy["max_total_replacement_bytes"],
-                    scientific_replacements,
-                    implementation_replacements,
+                    policy["max_total_replacement_bytes"], scientific_replacements, implementation_replacements
                 )
                 for target, raw in implementation_replacements.items():
                     source_path = (IMPLEMENTATION_PAYLOADS / impl_id / target).as_posix()
@@ -300,8 +298,6 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
                 }, "proposal_id")
                 review_files[IMPLEMENTATION_AUTHS.as_posix()] = pretty_bytes(auths)
 
-        # Freeze exact candidate bytes in the human-review PR so later source
-        # branch motion cannot change what the reviewer is accepting.
         review_files[(CANDIDATES / f"{cid}.json").as_posix()] = candidate_raw
         return {
             "status": "review_ready",
