@@ -257,6 +257,7 @@ SCREEN_SCHEMA = object_schema(
         "primary_source_verified": BOOL,
         "relevant": BOOL,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
         "affected_claim_ids": STRS,
         "premise_match": BOOL,
         "scope_match": BOOL,
@@ -265,8 +266,8 @@ SCREEN_SCHEMA = object_schema(
         "limits": STRS,
     },
     [
-        "primary_source_verified", "relevant", "source_urls_used", "affected_claim_ids",
-        "premise_match", "scope_match", "summary", "evidence_locations", "limits",
+        "primary_source_verified", "relevant", "source_urls_used", "evaluated_claim_ids",
+        "affected_claim_ids", "premise_match", "scope_match", "summary", "evidence_locations", "limits",
     ],
 )
 ATTACK_SCHEMA = object_schema(
@@ -275,6 +276,7 @@ ATTACK_SCHEMA = object_schema(
         "prior_art_found": BOOL,
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
         "affected_claim_ids": STRS,
         "exact_reason": STR,
         "reproducible_attack": STR,
@@ -283,7 +285,8 @@ ATTACK_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "affected_claim_ids", "exact_reason", "reproducible_attack", "source_locations", "limits",
+        "evaluated_claim_ids", "affected_claim_ids", "exact_reason", "reproducible_attack",
+        "source_locations", "limits",
     ],
 )
 REPLICATION_SCHEMA = object_schema(
@@ -292,6 +295,7 @@ REPLICATION_SCHEMA = object_schema(
         "prior_art_found": BOOL,
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
+        "evaluated_claim_ids": STRS,
         "affected_claim_ids": STRS,
         "independent_reason": STR,
         "attack_reproduced": BOOL,
@@ -300,7 +304,8 @@ REPLICATION_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "affected_claim_ids", "independent_reason", "attack_reproduced", "source_locations", "limits",
+        "evaluated_claim_ids", "affected_claim_ids", "independent_reason", "attack_reproduced",
+        "source_locations", "limits",
     ],
 )
 ADJUDICATION_SCHEMA = object_schema(
