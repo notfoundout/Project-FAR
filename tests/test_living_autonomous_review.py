@@ -238,6 +238,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
 
     def test_generate_content_uses_documented_structured_output_shape(self):
         schema = ar.object_schema({"ok": ar.BOOL}, ["ok"])
+        self.assertIs(False, schema["additionalProperties"])
         config = ar.generation_config(schema)
         self.assertEqual("application/json", config["responseMimeType"])
         self.assertEqual(schema, config["responseSchema"])
