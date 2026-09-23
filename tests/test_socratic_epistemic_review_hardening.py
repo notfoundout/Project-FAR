@@ -31,6 +31,16 @@ class SocraticEpistemicReviewHardeningTests(unittest.TestCase):
             "scope": copy.deepcopy(record["claim_scope"]),
         }
 
+    def test_expertise_applicability_requires_assertion_version(self) -> None:
+        applicability = load("valid-expertise-applicability.json")
+        del applicability["record"]["expertise_assertion_version"]
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(applicability))
+
+    def test_expertise_applicability_requires_claim_version(self) -> None:
+        applicability = load("valid-expertise-applicability.json")
+        del applicability["record"]["claim_version"]
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(applicability))
+
     def test_expertise_applicability_binds_exact_source_revisions(self) -> None:
         applicability = load("valid-expertise-applicability.json")
         assertion = load("valid-expertise-assertion.json")
@@ -52,6 +62,20 @@ class SocraticEpistemicReviewHardeningTests(unittest.TestCase):
         )
         self.assertIn(
             "EXPERTISE_ASSERTION_VERSION_MISMATCH",
+            {item.code for item in result.diagnostics},
+        )
+
+    def test_expertise_binding_rejects_resolved_assertion_scope_drift(self) -> None:
+        applicability = load("valid-expertise-applicability.json")
+        assertion = load("valid-expertise-assertion.json")
+        assertion["record"]["scope"]["method"] = "general medicine"
+        result = validate_expertise_applicability_binding(
+            applicability,
+            assertion,
+            self.claim_snapshot(applicability),
+        )
+        self.assertIn(
+            "EXPERTISE_ASSERTION_SCOPE_MISMATCH",
             {item.code for item in result.diagnostics},
         )
 
