@@ -36,7 +36,9 @@ The frozen execution validator was then reconstructed from its exact source. For
 
 The frozen validator contained no `evidence_closure` field, no evidence/search-class enumeration, no denominator/directness check, no measurement/classification ledger, no strongest-opposing-evidence requirement, no surviving-proposition or residual-uncertainty record, and no terminal per-class saturation pass.
 
-A generic synthetic manifest can therefore satisfy every pre-correction PASS condition using one completed step, one repository-backed evidence artifact, and no upstream dependency while omitting every post-evidence closure obligation later defined by `FAR-EVIDENCE-CLOSURE-1.0`. Nothing in the frozen validator rejects that manifest for those omissions.
+The executable replication is `tests/test_far_evidence_closure_replication.py`. It fails closed unless Git resolves `4e258fd3b7c5a80b6f7263ad6f2e085f913b1d2a:tools/check_investigation_execution.py` to exact blob `4d21937a471f55f3336d809a5378660e2a294c0c`. It then loads and executes those frozen validator bytes against a generic synthetic PASS manifest containing one completed required step, one repository-backed evidence artifact, no upstream dependency, and no `evidence_closure` field.
+
+The frozen validator returns no validation errors for that manifest. The same manifest is then passed to the current validator, which rejects it because `FAR-EVIDENCE-CLOSURE-1.0` is absent. This directly executes both sides of the correction boundary rather than inferring the old behavior from source inspection alone.
 
 ## Observation
 
@@ -44,20 +46,21 @@ The defect reproduces at the frozen target:
 
 - claim/execution success and methodological closure were not machine-separated;
 - the workflow authorized `Resolved` after a recorded resolution;
-- the execution validator authorized `pass` after completed registered steps/evidence/dependencies;
-- neither surface required a bounded post-evidence saturation gate.
+- the exact frozen execution validator accepts the generic synthetic `pass` manifest without an evidence-closure record;
+- the current validator rejects the same manifest for lacking `FAR-EVIDENCE-CLOSURE-1.0`;
+- neither pre-correction controlling surface required a bounded post-evidence saturation gate.
 
-This is sufficient to reproduce the structural early-closure path without depending on any particular application, dataset, claim, or prior conversation.
+This reproduces the structural early-closure path without depending on any particular application, dataset, claim, or prior conversation.
 
 ## Falsification check
 
-The replication would fail if either frozen artifact already required a distinct post-evidence closure record or if a generic manifest satisfying the stated PASS conditions were rejected specifically for lacking such a record. Direct inspection of the frozen artifacts establishes neither condition.
+The replication fails if the frozen path resolves to any blob other than the pinned validator blob, if the exact frozen validator rejects the generic manifest, or if the current validator accepts the same manifest without `FAR-EVIDENCE-CLOSURE-1.0`. The executable regression enforces all three conditions.
 
-The corrected repository adds the missing distinction and dedicated negative regressions. Those regressions are implementation evidence for the repair; they are not substituted for the frozen-target replication above.
+The corrected repository adds the missing distinction and dedicated negative regressions. Those regressions are implementation evidence for the repair; they do not replace execution of the exact frozen validator above.
 
 ## Replication result
 
-**REPRODUCED.** At commit `4e258fd3b7c5a80b6f7263ad6f2e085f913b1d2a`, a generic investigation could satisfy the repository's PASS prerequisites and the workflow's `Resolved` rule without a separate post-evidence closure contract.
+**REPRODUCED.** At commit `4e258fd3b7c5a80b6f7263ad6f2e085f913b1d2a`, the exact frozen validator accepts a generic investigation satisfying its PASS prerequisites without a separate post-evidence closure contract, while the corrected validator rejects the same manifest.
 
 ## Scope and nonclaims
 
