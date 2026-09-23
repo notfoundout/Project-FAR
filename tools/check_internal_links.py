@@ -19,7 +19,10 @@ FROZEN_EVIDENCE_ROOTS = {
 def slugify(text: str) -> str:
     text = re.sub(r'[`*_~\[\]()]+', '', text.strip().lower())
     text = re.sub(r'[^a-z0-9 -]', '', text)
-    return re.sub(r'\s+', '-', text).strip('-')
+    # Match GitHub heading anchors: punctuation is removed first, then every
+    # remaining ASCII space becomes one hyphen. Do not collapse adjacent spaces;
+    # punctuation such as an em dash can leave two spaces and therefore two hyphens.
+    return text.replace(' ', '-').strip('-')
 
 def anchors_for(path: Path):
     anchors=set()
@@ -61,8 +64,8 @@ for path in iter_files({'.md','.yaml','.yml'}):
             if re.fullmatch(r'L\d+', anchor):
                 line_no=int(anchor[1:])
                 total=len(resolved.read_text(encoding='utf-8', errors='replace').splitlines())
+                item=(path,line,target,f'line anchor outside 1..{total}')
                 if line_no < 1 or line_no > total:
-                    item=(path,line,target,f'line anchor outside 1..{total}')
                     if path.resolve() in ADVISORY_LINE_ANCHOR_SOURCES:
                         # The research-gap report is a generated advisory snapshot. Its
                         # observed line number is provenance, not a stable document
