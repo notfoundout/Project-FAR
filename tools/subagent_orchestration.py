@@ -19,6 +19,7 @@ import hashlib
 import json
 import re
 from collections.abc import Callable, Mapping, Sequence
+from pathlib import Path, PurePosixPath
 from typing import Protocol
 
 from tools.adversarial_research_harness import ReasonerLane, redact_outbound
@@ -34,6 +35,10 @@ def canonical_json(value: object) -> str:
 
 def sha256_text(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def sha256_bytes(raw: bytes) -> str:
+    return hashlib.sha256(raw).hexdigest()
 
 
 class AgentKind(str, enum.Enum):
@@ -130,6 +135,7 @@ class AgentReport:
 class AgentSpec:
     agent_id: str
     skill_path: str
+    skill_sha256: str
     role: str
     kind: AgentKind = AgentKind.SPECIALIST
     dependencies: tuple[str, ...] = ()
@@ -139,10 +145,16 @@ class AgentSpec:
 
     def __post_init__(self) -> None:
         _validate_id(self.agent_id, "agent_id")
-        if not self.skill_path.startswith(".claude/skills/") or not self.skill_path.endswith(
-            "/SKILL.md"
+        skill_parts = PurePosixPath(self.skill_path).parts
+        if (
+            len(skill_parts) != 4
+            or skill_parts[:2] != (".claude", "skills")
+            or skill_parts[-1] != "SKILL.md"
+            or skill_parts[2] in {"", ".", ".."}
         ):
-            raise ValueError(f"{self.agent_id}: skill_path must reference a FAR skill")
+            raise ValueError(f"{self.agent_id}: skill_path must reference one FAR skill")
+        if not _HEX64.fullmatch(self.skill_sha256):
+            raise ValueError(f"{self.agent_id}: skill_sha256 must be lowercase hex")
         if not self.role.strip():
             raise ValueError(f"{self.agent_id}: role is required")
         if len(self.dependencies) != len(set(self.dependencies)):
@@ -173,12 +185,15 @@ class OrchestrationPlan:
 class RuntimeCapabilities:
     sandbox_id: str
     isolation_verified: bool
+    instruction_sha256: str
     repository_tools_enabled: bool = False
     shared_state_with: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.sandbox_id.strip():
             raise ValueError("sandbox_id is required")
+        if not _HEX64.fullmatch(self.instruction_sha256):
+            raise ValueError("instruction_sha256 must be lowercase hex")
         if len(self.shared_state_with) != len(set(self.shared_state_with)):
             raise ValueError("shared_state_with must be unique")
 
@@ -190,6 +205,7 @@ class AgentTask:
     address: str
     agent_id: str
     skill_path: str
+    skill_sha256: str
     objective: str
     input_sha256: str
     context: tuple[ContextArtifact, ...]
@@ -271,8 +287,17 @@ class ReasonerLaneRuntime:
     orchestrator before any lane is invoked.
     """
 
-    def __init__(self, lanes: Mapping[str, ReasonerLane]) -> None:
+    def __init__(
+        self,
+        lanes: Mapping[str, ReasonerLane],
+        *,
+        root: Path | str = Path("."),
+        skill_texts: Mapping[str, str] | None = None,
+    ) -> None:
         self._lanes = dict(lanes)
+        self._root = Path(root).resolve()
+        self._skill_texts = dict(skill_texts or {})
+        self._skill_cache: dict[tuple[str, str], tuple[str, str]] = {}
 
     def capabilities(self, agent: AgentSpec) -> RuntimeCapabilities:
         try:
@@ -285,20 +310,58 @@ class ReasonerLaneRuntime:
             )
         if not lane.model_identity.strip():
             raise ValueError(f"{agent.agent_id}: model identity is required")
+        _text, digest = self._load_skill(agent)
         return RuntimeCapabilities(
             sandbox_id=lane.sandbox_id,
             isolation_verified=lane.isolation_verified,
+            instruction_sha256=digest,
             repository_tools_enabled=lane.repository_tools_enabled,
             shared_state_with=tuple(lane.shared_state_with),
         )
 
     def invoke(self, agent: AgentSpec, task: AgentTask) -> AgentReport:
         lane = self._lanes[agent.agent_id]
-        prompt = canonical_json(_redacted_task_payload(agent, task))
+        skill_text, _digest = self._load_skill(agent)
+        prompt = canonical_json(_redacted_task_payload(agent, task, skill_text))
         raw = lane.reasoner(prompt, task.task_id)
         if not isinstance(raw, str):
             raise TypeError("reasoner output must be text")
         return parse_agent_report(raw)
+
+    def _load_skill(self, agent: AgentSpec) -> tuple[str, str]:
+        cache_key = (agent.skill_path, agent.skill_sha256)
+        cached = self._skill_cache.get(cache_key)
+        if cached is not None:
+            return cached
+        if agent.skill_path in self._skill_texts:
+            text = self._skill_texts[agent.skill_path]
+            raw = text.encode("utf-8")
+        else:
+            candidate = (self._root / agent.skill_path).resolve()
+            skills_root = (self._root / ".claude" / "skills").resolve()
+            if not candidate.is_relative_to(skills_root):
+                raise ValueError(f"{agent.agent_id}: skill path escapes skills root")
+            try:
+                raw = candidate.read_bytes()
+            except OSError as exc:
+                raise ValueError(
+                    f"{agent.agent_id}: cannot read skill {agent.skill_path}: {exc}"
+                ) from exc
+            try:
+                text = raw.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise ValueError(
+                    f"{agent.agent_id}: skill is not valid UTF-8"
+                ) from exc
+        digest = sha256_bytes(raw)
+        if digest != agent.skill_sha256:
+            raise ValueError(
+                f"{agent.agent_id}: skill hash mismatch: expected "
+                f"{agent.skill_sha256}, got {digest}"
+            )
+        result = (text, digest)
+        self._skill_cache[cache_key] = result
+        return result
 
 
 def parse_agent_report(raw: str) -> AgentReport:
@@ -575,46 +638,59 @@ def orchestrate(
     )
 
 
-def far_research_plan() -> OrchestrationPlan:
-    """Return a conservative default graph using existing FAR specialist skills.
+def far_research_plan(root: Path | str = Path(".")) -> OrchestrationPlan:
+    """Return a skill-byte-bound graph using existing FAR specialist skills.
 
     This plan does not claim to satisfy a clean-room or external-independence stage.
     Those stages require their separately governed frozen-input/isolation protocols.
     """
+    root_path = Path(root).resolve()
+
+    def bound(agent_id: str, skill_name: str, role: str, **kwargs) -> AgentSpec:
+        skill_path = f".claude/skills/{skill_name}/SKILL.md"
+        raw = (root_path / skill_path).read_bytes()
+        return AgentSpec(
+            agent_id=agent_id,
+            skill_path=skill_path,
+            skill_sha256=sha256_bytes(raw),
+            role=role,
+            **kwargs,
+        )
+
     specialists = (
-        AgentSpec(
-            agent_id="discovery",
-            skill_path=".claude/skills/far-discovery-engine/SKILL.md",
-            role="Map current evidence, alternatives, and unresolved questions.",
+        bound(
+            "discovery",
+            "far-discovery-engine",
+            "Map current evidence, alternatives, and unresolved questions.",
         ),
-        AgentSpec(
-            agent_id="formalizer",
-            skill_path=".claude/skills/far-formalizer/SKILL.md",
-            role="Formalize exact claims, assumptions, scope, and falsifiers.",
+        bound(
+            "formalizer",
+            "far-formalizer",
+            "Formalize exact claims, assumptions, scope, and falsifiers.",
             dependencies=("discovery",),
         ),
-        AgentSpec(
-            agent_id="prior-art",
-            skill_path=".claude/skills/far-prior-art-adversary/SKILL.md",
-            role="Search for prior art and competing explanations without novelty inflation.",
+        bound(
+            "prior-art",
+            "far-prior-art-adversary",
+            "Search for prior art and competing explanations without novelty inflation.",
             dependencies=("discovery",),
         ),
-        AgentSpec(
-            agent_id="counterexample",
-            skill_path=".claude/skills/far-counterexample-hunter/SKILL.md",
-            role="Attack the formalized claim with counterexamples and boundary cases.",
+        bound(
+            "counterexample",
+            "far-counterexample-hunter",
+            "Attack the formalized claim with counterexamples and boundary cases.",
             dependencies=("formalizer",),
         ),
-        AgentSpec(
-            agent_id="theory-audit",
-            skill_path=".claude/skills/far-theory-auditor/SKILL.md",
-            role="Audit logical validity, hidden assumptions, and scope transfer.",
+        bound(
+            "theory-audit",
+            "far-theory-auditor",
+            "Audit logical validity, hidden assumptions, and scope transfer.",
             dependencies=("formalizer",),
         ),
-        AgentSpec(
-            agent_id="quality-gate",
-            skill_path=".claude/skills/far-research-quality-gate/SKILL.md",
-            role="Check evidence discipline, unresolved conflicts, and claim boundaries.",
+        bound(
+            "quality-gate",
+            "far-research-quality-gate",
+            "Check evidence discipline, unresolved conflicts, and claim boundaries.",
             dependencies=(
                 "discovery",
                 "formalizer",
@@ -625,10 +701,10 @@ def far_research_plan() -> OrchestrationPlan:
         ),
     )
     specialist_ids = tuple(agent.agent_id for agent in specialists)
-    coordinator = AgentSpec(
-        agent_id="coordinator",
-        skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-        role="Integrate completed specialist reports without averaging away conflicts.",
+    coordinator = bound(
+        "coordinator",
+        "far-research-orchestrator",
+        "Integrate completed specialist reports without averaging away conflicts.",
         kind=AgentKind.COORDINATOR,
         dependencies=specialist_ids,
     )
@@ -644,10 +720,19 @@ def _validate_runtime(plan: OrchestrationPlan, runtime: AgentRuntime) -> None:
     plan_ids = set(plan.by_id)
     for agent in plan.agents:
         capabilities = runtime.capabilities(agent)
+        if capabilities.instruction_sha256 != agent.skill_sha256:
+            raise ValueError(
+                f"{agent.agent_id}: runtime instruction hash does not match bound skill"
+            )
         if agent.requires_isolation and not capabilities.isolation_verified:
             raise ValueError(f"{agent.agent_id}: required isolation is not verified")
         if capabilities.repository_tools_enabled and not agent.repository_tools_allowed:
             raise ValueError(f"{agent.agent_id}: repository tools are not authorized")
+        if agent.requires_isolation and capabilities.shared_state_with:
+            raise ValueError(
+                f"{agent.agent_id}: hidden shared state is prohibited under isolation: "
+                f"{sorted(capabilities.shared_state_with)}"
+            )
         shared = sorted(plan_ids.intersection(capabilities.shared_state_with))
         if shared:
             raise ValueError(
@@ -676,6 +761,7 @@ def _build_task(
         "run_id": run_id,
         "agent_id": agent.agent_id,
         "skill_path": agent.skill_path,
+        "skill_sha256": agent.skill_sha256,
         "objective": objective,
         "context": [_artifact_payload(item) for item in context],
         "dependency_reports": [_report_payload(item) for item in dependency_reports],
@@ -688,6 +774,7 @@ def _build_task(
         address=f"far/{plan.plan_id}/{run_id}/{agent.agent_id}",
         agent_id=agent.agent_id,
         skill_path=agent.skill_path,
+        skill_sha256=agent.skill_sha256,
         objective=objective,
         input_sha256=input_sha,
         context=context,
@@ -791,6 +878,7 @@ def _plan_payload(plan: OrchestrationPlan) -> dict:
             {
                 "agent_id": item.agent_id,
                 "skill_path": item.skill_path,
+                "skill_sha256": item.skill_sha256,
                 "role": item.role,
                 "kind": item.kind.value,
                 "dependencies": list(item.dependencies),
@@ -833,7 +921,9 @@ def _report_payload(report: AgentReport) -> dict:
     }
 
 
-def _redacted_task_payload(agent: AgentSpec, task: AgentTask) -> dict:
+def _redacted_task_payload(
+    agent: AgentSpec, task: AgentTask, skill_text: str
+) -> dict:
     def redact(value):
         if isinstance(value, str):
             return redact_outbound(value)
@@ -851,6 +941,8 @@ def _redacted_task_payload(agent: AgentSpec, task: AgentTask) -> dict:
                 "agent_id": agent.agent_id,
                 "role": agent.role,
                 "skill_path": agent.skill_path,
+                "skill_sha256": agent.skill_sha256,
+                "instructions": skill_text,
             },
             "task": {
                 "run_id": task.run_id,
