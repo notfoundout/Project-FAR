@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.example/schemas/socratic-epistemic-extensions-v1.schema.json",
+  "title": "Project FAR Socratic Epistemic Extensions v1",
+  "type": "object",
+  "required": ["schema_version", "record_type", "record"],
+  "properties": {
+    "schema_version": {"const": "socratic-epistemic-extensions/1.0"},
+    "record_type": {
+      "enum": ["EXPERTISE_ASSERTION", "EXPERTISE_APPLICABILITY", "EPISTEMIC_BOUNDARY", "ELENCHUS_SESSION"]
+    },
+    "record": {"type": "object"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"record_type": {"const": "EXPERTISE_ASSERTION"}}},
+      "then": {"properties": {"record": {"$ref": "#/$defs/expertiseAssertion"}}}
+    },
+    {
+      "if": {"properties": {"record_type": {"const": "EXPERTISE_APPLICABILITY"}}},
+      "then": {"properties": {"record": {"$ref": "#/$defs/expertiseApplicability"}}}
+    },
+    {
+      "if": {"properties": {"record_type": {"const": "EPISTEMIC_BOUNDARY"}}},
+      "then": {"properties": {"record": {"$ref": "#/$defs/epistemicBoundary"}}}
+    },
+    {
+      "if": {"properties": {"record_type": {"const": "ELENCHUS_SESSION"}}},
+      "then": {"properties": {"record": {"$ref": "#/$defs/elenchusSession"}}}
+    }
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "stringArray": {"type": "array", "items": {"$ref": "#/$defs/nonEmptyString"}, "uniqueItems": true},
+    "provenance": {
+      "type": "object",
+      "required": ["source_refs", "method", "assessor", "version"],
+      "properties": {
+        "source_refs": {"$ref": "#/$defs/stringArray"},
+        "method": {"$ref": "#/$defs/nonEmptyString"},
+        "assessor": {"$ref": "#/$defs/nonEmptyString"},
+        "version": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": true
+    },
+    "expertiseAssertion": {
+      "type": "object",
+      "required": ["source_id", "expertise_assertion_id", "domain", "claim_types", "population_scope", "geographic_scope", "temporal_scope", "method_scope", "competence_basis", "basis_provenance", "assessment_status", "uncertainty", "limitations", "valid_from", "assessor", "assessment_method", "version"],
+      "properties": {
+        "source_id": {"$ref": "#/$defs/nonEmptyString"},
+        "expertise_assertion_id": {"$ref": "#/$defs/nonEmptyString"},
+        "domain": {"$ref": "#/$defs/nonEmptyString"},
+        "subdomain": {"type": ["string", "null"]},
+        "claim_types": {"$ref": "#/$defs/stringArray"},
+        "population_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "geographic_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "temporal_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "method_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "competence_basis": {"$ref": "#/$defs/nonEmptyString"},
+        "basis_provenance": {"$ref": "#/$defs/provenance"},
+        "assessment_status": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "INSUFFICIENT_EVIDENCE", "CONTRADICTED", "INDETERMINATE", "NOT_APPLICABLE"]},
+        "uncertainty": {"$ref": "#/$defs/nonEmptyString"},
+        "limitations": {"$ref": "#/$defs/stringArray"},
+        "valid_from": {"$ref": "#/$defs/nonEmptyString"},
+        "valid_until": {"type": ["string", "null"]},
+        "assessor": {"$ref": "#/$defs/nonEmptyString"},
+        "assessment_method": {"$ref": "#/$defs/nonEmptyString"},
+        "version": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "expertiseApplicability": {
+      "type": "object",
+      "required": ["applicability_id", "expertise_assertion_id", "claim_id", "dimensions_checked", "status", "basis", "provenance", "version"],
+      "properties": {
+        "applicability_id": {"$ref": "#/$defs/nonEmptyString"},
+        "expertise_assertion_id": {"$ref": "#/$defs/nonEmptyString"},
+        "claim_id": {"$ref": "#/$defs/nonEmptyString"},
+        "dimensions_checked": {
+          "type": "object",
+          "required": ["domain", "scope", "method", "population", "geography", "time", "claim_type"],
+          "properties": {
+            "domain": {"type": "boolean"}, "scope": {"type": "boolean"}, "method": {"type": "boolean"}, "population": {"type": "boolean"}, "geography": {"type": "boolean"}, "time": {"type": "boolean"}, "claim_type": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "status": {"enum": ["SUPPORTED", "PARTIALLY_SUPPORTED", "INSUFFICIENT_EVIDENCE", "CONTRADICTED", "INDETERMINATE", "NOT_APPLICABLE"]},
+        "basis": {"$ref": "#/$defs/nonEmptyString"},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "version": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "boundaryEntry": {
+      "type": "object",
+      "required": ["statement", "basis_refs"],
+      "properties": {
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "basis_refs": {"$ref": "#/$defs/stringArray"},
+        "condition_refs": {"$ref": "#/$defs/stringArray"},
+        "reason": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "epistemicBoundary": {
+      "type": "object",
+      "required": ["investigation_id", "claim_id", "claim_version", "evidence_cutoff", "search_frame", "established", "conditionally_established", "supported_not_established", "unknown", "not_investigated", "not_identifiable_from_current_evidence", "explicit_nonclaims", "falsifiers", "surviving_propositions", "residual_uncertainty", "limitations", "assumptions", "closure_status", "provenance", "boundary_version"],
+      "properties": {
+        "investigation_id": {"$ref": "#/$defs/nonEmptyString"},
+        "claim_id": {"$ref": "#/$defs/nonEmptyString"},
+        "claim_version": {"$ref": "#/$defs/nonEmptyString"},
+        "evidence_cutoff": {"$ref": "#/$defs/nonEmptyString"},
+        "search_frame": {"$ref": "#/$defs/nonEmptyString"},
+        "established": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
+        "conditionally_established": {"type": "array", "items": {"allOf": [{"$ref": "#/$defs/boundaryEntry"}, {"required": ["condition_refs"]}]}},
+        "supported_not_established": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
+        "unknown": {"type": "array", "items": {"allOf": [{"$ref": "#/$defs/boundaryEntry"}, {"required": ["reason"]}]}},
+        "not_investigated": {"type": "array", "items": {"allOf": [{"$ref": "#/$defs/boundaryEntry"}, {"required": ["reason"]}]}},
+        "not_identifiable_from_current_evidence": {"type": "array", "items": {"allOf": [{"$ref": "#/$defs/boundaryEntry"}, {"required": ["reason"]}]}},
+        "explicit_nonclaims": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
+        "falsifiers": {"$ref": "#/$defs/stringArray"},
+        "surviving_propositions": {"$ref": "#/$defs/stringArray"},
+        "residual_uncertainty": {"$ref": "#/$defs/stringArray"},
+        "limitations": {"$ref": "#/$defs/stringArray"},
+        "assumptions": {"$ref": "#/$defs/stringArray"},
+        "closure_status": {"enum": ["Resolved", "Provisionally resolved", "Unresolved", "Suspended", "Incomplete", "Invalid"]},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "boundary_version": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
+    "elenchusSession": {
+      "type": "object",
+      "required": ["session_id", "investigation_id", "respondent_id", "initial_claims", "question_events", "response_events", "commitments", "definitions", "assumptions", "warrants", "derived_implications", "tensions", "contradictions", "revisions", "withdrawals", "unresolved_questions", "termination_reason", "provenance", "session_version"],
+      "properties": {
+        "session_id": {"$ref": "#/$defs/nonEmptyString"},
+        "investigation_id": {"$ref": "#/$defs/nonEmptyString"},
+        "respondent_id": {"$ref": "#/$defs/nonEmptyString"},
+        "initial_claims": {"$ref": "#/$defs/stringArray"},
+        "question_events": {"type": "array", "items": {"type": "object", "required": ["id", "text", "purpose", "timestamp"], "properties": {"id": {"$ref": "#/$defs/nonEmptyString"}, "text": {"$ref": "#/$defs/nonEmptyString"}, "purpose": {"enum": ["DEFINE_TERM", "FIX_SCOPE", "EXPOSE_ASSUMPTION", "TEST_WARRANT", "TEST_CONSEQUENCE", "TEST_CONSISTENCY", "SEEK_COUNTEREXAMPLE", "DISTINGUISH_INTERPRETATIONS", "CLARIFY_REVISION"]}, "timestamp": {"$ref": "#/$defs/nonEmptyString"}}, "additionalProperties": true}},
+        "response_events": {"type": "array", "items": {"type": "object", "required": ["id", "question_id", "text", "timestamp"], "properties": {"id": {"$ref": "#/$defs/nonEmptyString"}, "question_id": {"$ref": "#/$defs/nonEmptyString"}, "text": {"$ref": "#/$defs/nonEmptyString"}, "timestamp": {"$ref": "#/$defs/nonEmptyString"}}, "additionalProperties": true}},
+        "commitments": {"type": "array", "items": {"type": "object", "required": ["id", "statement", "version", "status", "source_event_id"], "properties": {"id": {"$ref": "#/$defs/nonEmptyString"}, "statement": {"$ref": "#/$defs/nonEmptyString"}, "version": {"$ref": "#/$defs/nonEmptyString"}, "status": {"enum": ["ACTIVE", "REVISED", "WITHDRAWN"]}, "source_event_id": {"$ref": "#/$defs/nonEmptyString"}}, "additionalProperties": true}},
+        "definitions": {"type": "array", "items": {"type": "object"}},
+        "assumptions": {"type": "array", "items": {"type": "object"}},
+        "warrants": {"type": "array", "items": {"type": "object"}},
+        "derived_implications": {"type": "array", "items": {"type": "object"}},
+        "tensions": {"type": "array", "items": {"type": "object"}},
+        "contradictions": {"type": "array", "items": {"type": "object", "required": ["id", "commitment_refs", "interpretation", "calculus", "basis"], "properties": {"id": {"$ref": "#/$defs/nonEmptyString"}, "commitment_refs": {"$ref": "#/$defs/stringArray"}, "interpretation": {"$ref": "#/$defs/nonEmptyString"}, "calculus": {"$ref": "#/$defs/nonEmptyString"}, "basis": {"$ref": "#/$defs/nonEmptyString"}}, "additionalProperties": true}},
+        "revisions": {"type": "array", "items": {"type": "object"}},
+        "withdrawals": {"type": "array", "items": {"type": "object"}},
+        "unresolved_questions": {"$ref": "#/$defs/stringArray"},
+        "termination_reason": {"enum": ["SUFFICIENT_EXPLICITNESS", "RESPONDENT_DECLINED", "RESPONDENT_UNABLE", "STOPPING_RULE", "NO_FURTHER_MATERIAL_QUESTIONS"]},
+        "provenance": {"$ref": "#/$defs/provenance"},
+        "session_version": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
