@@ -67,7 +67,7 @@ def validate_exact_claim_witnesses(
     )
     if contradiction_disagreements:
         raise CandidateReviewError(
-            "attack/replication contradiction disagreement for frozen claims: "
+            "complete exact per-claim contradiction agreement failed; attack/replication disagreement for: "
             + ", ".join(contradiction_disagreements)
         )
 
@@ -82,8 +82,8 @@ def validate_exact_claim_witnesses(
     )
     if invalid_reproductions:
         raise CandidateReviewError(
-            "replication marks a per-claim attack reproduced without a jointly claimed contradiction: "
-            + ", ".join(invalid_reproductions)
+            "complete exact per-claim reproduction agreement failed; replication marks an attack reproduced "
+            "without a jointly claimed contradiction for: " + ", ".join(invalid_reproductions)
         )
 
     unreproduced_joint_contradictions = sorted(
@@ -95,8 +95,8 @@ def validate_exact_claim_witnesses(
     )
     if unreproduced_joint_contradictions:
         raise CandidateReviewError(
-            "replication did not reproduce jointly claimed per-claim contradictions: "
-            + ", ".join(unreproduced_joint_contradictions)
+            "complete exact per-claim reproduction agreement failed; jointly claimed contradictions were not "
+            "reproduced for: " + ", ".join(unreproduced_joint_contradictions)
         )
 
     contradiction_witnesses = {
