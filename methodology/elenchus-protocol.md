@@ -106,6 +106,8 @@ If those dimensions are unresolved, preserve `TENSION` or `Unknown` rather than 
 
 When an interactive respondent is available, Contract Discovery may use elenchus evidence to clarify a material parse or interpretation before freeze.
 
+When elenchus materially affects pre-freeze discovery, the exact session or transcript artifact must enter the governed intake as a hash-bound `far-intake/1.0` source with its locator, retrieval time, scope, and appropriate source type. Any parse, interpretation, materiality decision, assumption, or exclusion derived from that dialogue remains subject to the ordinary intake provenance rules, and the registered source remains subject to the terminal query/source saturation recheck before freeze. Elenchus is not a bypass around Contract Discovery search coverage, exclusion discipline, or freeze binding.
+
 Elenchus does not authorize silent selection of one interpretation. If materially distinct interpretations survive questioning, the Contract Discovery Protocol still requires them to remain in the active family unless an explicit exclusion is justified.
 
 ## Relationship to FAR reasoning
@@ -133,6 +135,7 @@ The protocol fails if:
 - a response is not linked to the question that elicited it;
 - a material definition, assumption, warrant, or tension is stored without typed content and commitment provenance;
 - an elicited record references a nonexistent commitment;
+- pre-freeze elenchus evidence affects contract discovery without entering the governed intake as hash-bound source provenance and remaining subject to the existing search/saturation/freeze rules;
 - an implication lacks explicit premises, calculus, or rule;
 - a contradiction is asserted without an explicit interpretation and calculus;
 - a revision overwrites the prior commitment;

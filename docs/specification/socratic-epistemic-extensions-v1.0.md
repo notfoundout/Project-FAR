@@ -125,6 +125,7 @@ All three capabilities obey these rules:
 ## 5. Integration requirements
 
 - Contract Discovery may use elenchus evidence when an interactive respondent can clarify a material ambiguity. Surviving materially distinct interpretations remain governed by the existing intake protocol.
+- If elenchus materially affects pre-freeze Contract Discovery, the exact session or transcript artifact must be registered as a hash-bound `far-intake/1.0` source and any affected parse, interpretation, materiality decision, assumption, or exclusion must use the existing intake provenance rules. The dialogue remains subject to registered search coverage, the terminal source/query saturation recheck, and freeze binding; it is not an intake bypass.
 - Stage 3 may reference elicited definitions and interpretations with elenchus provenance.
 - Stage 6 may use elicited commitments as premises only at their recorded scope and context.
 - Evidence appraisal may use expertise applicability as one typed input; it never substitutes for direct evidence or repairs an invalid inference.
@@ -163,6 +164,7 @@ A conforming implementation fails this specification if it:
 - treats `not_investigated` as evidence of absence;
 - treats non-identifiability as falsity;
 - allows the derived boundary view to replace canonical FAR closure artifacts;
+- uses result-relevant pre-freeze elenchus evidence without registering the exact dialogue artifact and its downstream effects through governed intake provenance;
 - stores result-relevant definitions, assumptions, warrants, or tensions without explicit commitment provenance;
 - overwrites an earlier respondent commitment after revision;
 - permits a `REVISED` or `WITHDRAWN` status without the corresponding event;
