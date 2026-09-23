@@ -18,6 +18,7 @@ name: Exact Head Assurance
         type: string
 permissions:
   contents: read
+  checks: write
 concurrency:
   group: exact-head-assurance-${{ inputs.head_sha || github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -115,3 +116,28 @@ jobs:
         path: artifacts/validation
         if-no-files-found: error
         retention-days: 30
+    - name: Publish dispatched assurance on reviewed head
+      if: always() && github.event_name == 'workflow_dispatch'
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+        FAR_ASSURANCE_DISPATCH_HEAD: ${{ inputs.head_sha }}
+        FAR_ASSURANCE_JOB_STATUS: ${{ job.status }}
+      run: |
+        set -euo pipefail
+        case "$FAR_ASSURANCE_JOB_STATUS" in
+          success) conclusion=success ;;
+          cancelled) conclusion=cancelled ;;
+          *) conclusion=failure ;;
+        esac
+        details_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+        jq -n \
+          --arg name exact-head-assurance \
+          --arg head_sha "$FAR_ASSURANCE_DISPATCH_HEAD" \
+          --arg conclusion "$conclusion" \
+          --arg details_url "$details_url" \
+          --arg title "Trusted main exact-head assurance" \
+          --arg summary "Trusted workflow run $GITHUB_RUN_ID validated the dispatched review head." \
+          '{name:$name,head_sha:$head_sha,status:"completed",conclusion:$conclusion,details_url:$details_url,output:{title:$title,summary:$summary}}' \
+          | gh api --method POST -H 'Accept: application/vnd.github+json' \
+              "/repos/$GITHUB_REPOSITORY/check-runs" --input -
