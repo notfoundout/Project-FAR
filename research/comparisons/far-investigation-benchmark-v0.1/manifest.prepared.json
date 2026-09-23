@@ -1,0 +1,224 @@
+{
+  "schema_version": "1.0",
+  "campaign_id": "FAR-INVESTIGATION-BENCHMARK-0.1",
+  "status": "prepared",
+  "target": {
+    "repository": "notfoundout/Project-FAR",
+    "commit": "83e753cf058b6fff8f8f3302781fd02efc1dc108",
+    "theory_or_question": "FAR-RQ-005 / UQ-T35: Does use of the contract/factorization audit improve real investigations?",
+    "hashes": {},
+    "tree": "691d9a798663829b6dd627a2cb9827517e1eb129"
+  },
+  "evaluators": [
+    {
+      "id": "ADJUDICATOR-PLACEHOLDER-1",
+      "identity": "UNASSIGNED",
+      "provider": "external-human-or-qualified-independent-evaluator",
+      "model": "NOT_APPLICABLE_OR_TO_BE_RECORDED",
+      "prior_exposure": "TO_BE_DECLARED_BEFORE_FREEZE",
+      "conflicts": "TO_BE_DECLARED_BEFORE_FREEZE",
+      "lane": "primary_adjudication"
+    }
+  ],
+  "environment": {
+    "recorded_at": "2026-09-22",
+    "tools": {
+      "execution_harness": "TO_BE_PINNED_BEFORE_FREEZE",
+      "retrieval": "TO_BE_PINNED_BEFORE_FREEZE",
+      "analysis": "TO_BE_PINNED_BEFORE_FREEZE"
+    }
+  },
+  "protocol": {
+    "id": "FAR-INVESTIGATION-BENCHMARK-PREREG-0.1",
+    "version": "0.1",
+    "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "stages": [
+    {
+      "id": "S0",
+      "name": "prepare_reference_and_freeze",
+      "allow": [
+        "case_selection",
+        "reference_evidence_construction",
+        "reserve_replacement_before_execution",
+        "prompt_freeze",
+        "resource_freeze",
+        "rubric_freeze",
+        "reference_search_protocol_freeze",
+        "execution_schedule_freeze",
+        "adjudication_schedule_freeze",
+        "source_binding",
+        "hashing"
+      ],
+      "deny": [
+        "condition_execution",
+        "condition_output_inspection",
+        "outcome_adjudication",
+        "unblinding"
+      ],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S1",
+      "name": "execute_conditions_blind",
+      "allow": [
+        "condition_execution",
+        "raw_trace_capture",
+        "integrity_checks"
+      ],
+      "deny": [
+        "condition_comparison",
+        "adjudication",
+        "reference_set_mutation",
+        "threshold_changes",
+        "corpus_changes"
+      ],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S2",
+      "name": "blinded_adjudication",
+      "allow": [
+        "blinded_scoring",
+        "third_rater_adjudication",
+        "blinding_diagnostics"
+      ],
+      "deny": [
+        "reference_evidence_construction",
+        "reference_set_mutation",
+        "condition_identity_disclosure",
+        "threshold_changes",
+        "post_hoc_confirmatory_metrics"
+      ],
+      "freeze_before_next": true,
+      "unblinding": false
+    },
+    {
+      "id": "S3",
+      "name": "locked_analysis_and_unblinding",
+      "allow": [
+        "frozen_metric_computation",
+        "frozen_statistical_tests",
+        "integrity_reporting",
+        "unblinding_after_scores_lock"
+      ],
+      "deny": [
+        "retroactive_exclusions",
+        "threshold_changes",
+        "reference_set_mutation",
+        "claim_promotion"
+      ],
+      "freeze_before_next": true,
+      "unblinding": true
+    },
+    {
+      "id": "S4",
+      "name": "replication_and_governed_disposition",
+      "allow": [
+        "independent_replication",
+        "deviation_reporting",
+        "governed_status_proposal"
+      ],
+      "deny": [
+        "silent_promotion",
+        "universalization"
+      ],
+      "freeze_before_next": false,
+      "unblinding": true
+    }
+  ],
+  "source_manifest": [],
+  "artifacts": [
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "preregistration",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/freeze-contract-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "freeze_contract_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/case-selection-protocol-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "case_selection_protocol_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/adjudication-rubric-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "adjudication_rubric_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/reference-evidence-protocol-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "reference_evidence_protocol_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/condition-contracts-v0.1.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "condition_contract_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/resource-budget-v0.1.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "resource_budget_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/analysis-parameters-v0.1.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "frozen_numerical_analysis_parameters_pending_freeze_hash",
+      "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/adjudication-schedule.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "generated_adjudication_schedule_pending_freeze",
+      "verify_current_path": false
+    }
+  ],
+  "times": {
+    "freeze_time": null,
+    "unblinding_time": null
+  },
+  "final_adjudication": {
+    "status": "NOT_EXECUTED",
+    "artifact": "research/comparisons/far-investigation-benchmark-v0.1/report.md"
+  },
+  "replay": {
+    "commands": [
+      [
+        "python",
+        "tools/far_investigation_benchmark.py",
+        "validate",
+        "--manifest",
+        "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"
+      ],
+      [
+        "python",
+        "tools/far_investigation_benchmark.py",
+        "analyze",
+        "--manifest",
+        "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"
+      ]
+    ],
+    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the complete freeze-contract bundle, source bindings, corpus, reference evidence, prompts, environment, execution and adjudication schedules, hashes, and adjudicator declarations are frozen and validation passes."
+  },
+  "limitations": [
+    "Prepared, not frozen: corpus and reserve frame, reference-evidence sets, prompt bytes, resource budgets, tool/model snapshot, execution schedule, adjudication schedule, adjudicators, source bindings, mutation configuration, and evidence-search configuration remain unset.",
+    "Zero SHA-256 placeholders mark prepared-only static/generated artifacts and must be replaced with exact hashes before any condition execution.",
+    "The transition to frozen is governed by freeze-contract-v0.1.md and requires generated pre-execution artifacts plus source_manifest bindings; editing status alone cannot authorize execution.",
+    "No external-independence claim follows from project-authored preparation.",
+    "No benchmark result exists at prepared status."
+  ]
+}
