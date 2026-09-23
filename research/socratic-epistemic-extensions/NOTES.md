@@ -1,1 +1,0 @@
-The architectural target is additive: existing canonical scope/nonclaim/Unknown/limitation semantics remain authoritative; the epistemic-boundary object consolidates them. Expertise is proposition-relative and does not transfer by adjacency. Elenchus records commitments and revisions but does not independently establish external truth.
