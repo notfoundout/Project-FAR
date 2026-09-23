@@ -44,7 +44,12 @@ class WheelRelocationTests(unittest.TestCase):
 
             def run(*args, expected=0):
                 result = subprocess.run(
-                    [str(cli), *args], cwd=root, env=env, text=True,
+                    # Invoke the installed entry-point file through the venv's
+                    # pinned interpreter. This still exercises the generated
+                    # console script while keeping exact-head tracing bound to
+                    # the declared Python executable rather than a random
+                    # temporary-path executable identity.
+                    [str(python), str(cli), *args], cwd=root, env=env, text=True,
                     capture_output=True, timeout=10,
                 )
                 self.assertEqual(result.returncode, expected, result.stdout + result.stderr)

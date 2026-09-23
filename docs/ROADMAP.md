@@ -48,6 +48,10 @@ The v1.1 correction must preserve two permanent boundaries:
 
 Do not reopen the settled core for another primitive search, operator count, finite heterogeneous panel, or UPP repair. Reopening requires a reproducible contradiction to a stated core premise, proof step, theorem, or derivation.
 
+## Additive epistemic application layer
+
+`far-epistemic/1.0` is implemented as a provisional, versioned application interchange with executable validation and an end-to-end fixture. It is not a new core workstream or a reopening of the settled primitive search; empirical effectiveness and external calibration remain unestablished.
+
 ## Framework maintenance
 
 FARA remains a finite explicit auditable representation target. FAR implements contract-relative audit methodology. FARO names downstream execution and reporting responsibilities; implementation, product, external-validation, and deployment readiness are not established. No role label is evidence of universality or global minimality.

@@ -8,6 +8,7 @@ from .external_models import *
 from .normalization import *
 from .graph_engine import *
 from .ir import *
+from .epistemic import EpistemicDocument, EpistemicValidationError, calibration, recurring_failure_modes, score_binary
 
 # The parser/serializer convenience exports require PyYAML.  Keep package import
 # dependency-light so independent submodules such as ``intake_v1`` remain usable
