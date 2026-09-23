@@ -1,0 +1,757 @@
+{
+  "format_version": "far-epistemic/1.0",
+  "id": "learning-loop-example",
+  "far_ir_version": "far-ir/1.0",
+  "evidence": [
+    {
+      "id": "e.base",
+      "observed_at": "2026-01-01T08:00:00Z",
+      "statement": "Historical same-season rain frequency is one half.",
+      "provenance": {
+        "evidence_id": "e.base",
+        "source_uri": "urn:far-example:e.base",
+        "artifact_sha256": "sha256:a59b98d043eb5ad943658fee13437f2eb857eeb3647b2fdd4eb2aa42027b56e9",
+        "byte_target": "UTF-8 bytes of statement"
+      }
+    },
+    {
+      "id": "e.forecast",
+      "observed_at": "2026-01-01T09:00:00Z",
+      "statement": "Forecast evidence supports rain probability 0.300000.",
+      "provenance": {
+        "evidence_id": "e.forecast",
+        "source_uri": "urn:far-example:e.forecast",
+        "artifact_sha256": "sha256:61571e0406f9959b389255a315b4af2c4355d1e581420122698f077ddf7441bb",
+        "byte_target": "UTF-8 bytes of statement"
+      }
+    },
+    {
+      "id": "e.outcome.1",
+      "observed_at": "2026-01-03T00:00:00Z",
+      "statement": "No measurable precipitation occurred in the first window.",
+      "provenance": {
+        "evidence_id": "e.outcome.1",
+        "source_uri": "urn:far-example:e.outcome.1",
+        "artifact_sha256": "sha256:9a16eab9d1e78b74e7502458b1d4d900c5a8186e49ffcc2be083a956bcaade0b",
+        "byte_target": "UTF-8 bytes of statement"
+      }
+    },
+    {
+      "id": "e.outcome.2",
+      "observed_at": "2026-01-06T00:00:00Z",
+      "statement": "No measurable precipitation occurred in the second window.",
+      "provenance": {
+        "evidence_id": "e.outcome.2",
+        "source_uri": "urn:far-example:e.outcome.2",
+        "artifact_sha256": "sha256:8d2bc6c42123246e4a542642dfe5f445f717a978e1ee3e301e9288bdd8384ae6",
+        "byte_target": "UTF-8 bytes of statement"
+      }
+    }
+  ],
+  "elenchus_sessions": [
+    {
+      "schema_version": "socratic-epistemic-extensions/1.0",
+      "record_type": "ELENCHUS_SESSION",
+      "record": {
+        "session_id": "elenchus.example.1",
+        "investigation_id": "investigation.example.1",
+        "respondent_id": "respondent.example.1",
+        "initial_claims": [
+          "All reliable testimony is direct observation."
+        ],
+        "question_events": [
+          {
+            "id": "q1",
+            "text": "What do you mean by reliable testimony?",
+            "purpose": "DEFINE_TERM",
+            "timestamp": "2026-09-23T00:00:01Z"
+          },
+          {
+            "id": "q2",
+            "text": "Does your definition include independently verified records?",
+            "purpose": "TEST_CONSEQUENCE",
+            "timestamp": "2026-09-23T00:00:03Z"
+          },
+          {
+            "id": "q3",
+            "text": "Do you still endorse the original definition?",
+            "purpose": "CLARIFY_REVISION",
+            "timestamp": "2026-09-23T00:00:05Z"
+          }
+        ],
+        "response_events": [
+          {
+            "id": "r1",
+            "question_id": "q1",
+            "text": "Reliable testimony means direct observation.",
+            "timestamp": "2026-09-23T00:00:02Z"
+          },
+          {
+            "id": "r2",
+            "question_id": "q2",
+            "text": "Yes, independently verified records can also be reliable.",
+            "timestamp": "2026-09-23T00:00:04Z"
+          },
+          {
+            "id": "r3",
+            "question_id": "q3",
+            "text": "No. I revise it to include direct observation or independently verified records.",
+            "timestamp": "2026-09-23T00:00:06Z"
+          }
+        ],
+        "commitments": [
+          {
+            "id": "c1",
+            "statement": "Reliable testimony means direct observation.",
+            "version": 1,
+            "status": "REVISED",
+            "source_event_id": "r1",
+            "context": "definition of reliable testimony"
+          },
+          {
+            "id": "c2",
+            "statement": "Independently verified records can be reliable testimony.",
+            "version": 1,
+            "status": "ACTIVE",
+            "source_event_id": "r2",
+            "context": "definition of reliable testimony"
+          },
+          {
+            "id": "c3",
+            "statement": "Reliable testimony includes direct observation or independently verified records.",
+            "version": 2,
+            "status": "ACTIVE",
+            "source_event_id": "r3",
+            "context": "definition of reliable testimony"
+          }
+        ],
+        "definitions": [
+          {
+            "id": "d1",
+            "term": "reliable testimony",
+            "statement": "Reliable testimony includes direct observation or independently verified records.",
+            "commitment_refs": [
+              "c3"
+            ],
+            "context": "definition of reliable testimony"
+          }
+        ],
+        "assumptions": [],
+        "warrants": [],
+        "derived_implications": [
+          {
+            "id": "i1",
+            "premise_refs": [
+              "c1",
+              "c2"
+            ],
+            "statement": "The original definition excluded something the respondent accepts as reliable testimony.",
+            "calculus": "explicit commitment comparison",
+            "rule": "definition-membership consistency",
+            "context": "definition of reliable testimony",
+            "context_bridges": []
+          }
+        ],
+        "tensions": [
+          {
+            "id": "t1",
+            "commitment_refs": [
+              "c1",
+              "c2"
+            ],
+            "basis": "The original definition and later accepted instance require clarification.",
+            "unresolved_dimensions": [
+              "definition scope"
+            ]
+          }
+        ],
+        "contradictions": [],
+        "revisions": [
+          {
+            "from_commitment_id": "c1",
+            "to_commitment_id": "c3",
+            "response_event_id": "r3",
+            "reason": "Respondent explicitly broadened the definition."
+          }
+        ],
+        "withdrawals": [],
+        "unresolved_questions": [],
+        "termination_reason": "SUFFICIENT_EXPLICITNESS",
+        "provenance": {
+          "source_refs": [
+            "transcript.example.1"
+          ],
+          "method": "interactive elenchus record",
+          "assessor": "far.test",
+          "version": "1.0"
+        },
+        "session_version": "1.0"
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "snapshot.forecast",
+      "captured_at": "2026-01-01T09:01:00Z",
+      "belief_ref": "belief.weather",
+      "belief_revision_ref": "rev.forecast",
+      "evidence_refs": [
+        "e.forecast"
+      ],
+      "hypothesis_probabilities": {
+        "h.rain": "0.300000",
+        "h.dry": "0.700000"
+      },
+      "canonicalization": "FAR-CJ/1",
+      "sha256": "sha256:62ec0c7f79551c2e89a30235e6c02b2c387636be7448d6b0e407035e8d6e9a91"
+    },
+    {
+      "id": "snapshot.revised",
+      "captured_at": "2026-01-03T00:31:00Z",
+      "belief_ref": "belief.weather",
+      "belief_revision_ref": "rev.outcome.1",
+      "evidence_refs": [
+        "e.outcome.1"
+      ],
+      "hypothesis_probabilities": {
+        "h.rain": "0.100000",
+        "h.dry": "0.900000"
+      },
+      "canonicalization": "FAR-CJ/1",
+      "sha256": "sha256:776907a47c54c94810063254deacad6d8e769d9f567a60d625cd701a95054bb7"
+    }
+  ],
+  "records": [
+    {
+      "id": "belief.weather",
+      "kind": "belief",
+      "provenance": {
+        "source_uri": "urn:far-example:belief",
+        "artifact_sha256": "sha256:c5e51253d4aa597b068b23150684301ca9e3d46fc6171cb69f40c4d3ea3ea138",
+        "far_refs": [
+          "claim.weather"
+        ],
+        "evidence_refs": [
+          "e.base",
+          "e.forecast",
+          "e.outcome.1"
+        ],
+        "elenchus_session_refs": [
+          "elenchus.example.1"
+        ]
+      },
+      "hypotheses": [
+        {
+          "id": "h.rain",
+          "statement": "Measurable precipitation occurs",
+          "prior_probability": "0.500000",
+          "base_reference_classes": [
+            "same-season station days"
+          ],
+          "falsifiers": [
+            "no measurable precipitation in the window"
+          ],
+          "uncertainty": {
+            "kind": "MIXED",
+            "description": "weather variability and forecast model uncertainty"
+          }
+        },
+        {
+          "id": "h.dry",
+          "statement": "No measurable precipitation occurs",
+          "prior_probability": "0.500000",
+          "base_reference_classes": [
+            "same-season station days"
+          ],
+          "falsifiers": [
+            "measurable precipitation in the window"
+          ],
+          "uncertainty": {
+            "kind": "MIXED",
+            "description": "weather variability and forecast model uncertainty"
+          }
+        }
+      ],
+      "revisions": [
+        {
+          "id": "rev.initial",
+          "timestamp": "2026-01-01T08:00:00Z",
+          "supersedes": null,
+          "trigger_outcome_ref": null,
+          "probabilities": {
+            "h.rain": "0.500000",
+            "h.dry": "0.500000"
+          },
+          "evidence_refs": [],
+          "update_rule": "INITIAL_PRIOR",
+          "rationale": "declared equal prior"
+        },
+        {
+          "id": "rev.forecast",
+          "timestamp": "2026-01-01T09:00:00Z",
+          "supersedes": "rev.initial",
+          "trigger_outcome_ref": null,
+          "probabilities": {
+            "h.rain": "0.300000",
+            "h.dry": "0.700000"
+          },
+          "evidence_refs": [
+            "e.forecast"
+          ],
+          "update_rule": "DECLARED_LIKELIHOOD_UPDATE",
+          "rationale": "forecast evidence"
+        },
+        {
+          "id": "rev.outcome.1",
+          "timestamp": "2026-01-03T00:30:00Z",
+          "supersedes": "rev.forecast",
+          "trigger_outcome_ref": "outcome.weather.1",
+          "probabilities": {
+            "h.rain": "0.100000",
+            "h.dry": "0.900000"
+          },
+          "evidence_refs": [
+            "e.outcome.1"
+          ],
+          "update_rule": "OUTCOME_CONDITIONED_REVISION",
+          "rationale": "resolved dry outcome"
+        }
+      ],
+      "current_revision_ref": "rev.outcome.1",
+      "causal_model_ref": "causal.weather"
+    },
+    {
+      "id": "causal.weather",
+      "kind": "causal_model",
+      "provenance": {
+        "source_uri": "urn:far-example:causal",
+        "artifact_sha256": "sha256:41eee92070068b462c2e9aa128711b9ba308a6df033b18de0ccafb1f82b75c05",
+        "far_refs": [
+          "reasoning_step.weather"
+        ],
+        "evidence_refs": [
+          "e.forecast"
+        ],
+        "elenchus_session_refs": []
+      },
+      "variables": [
+        {
+          "id": "front",
+          "kind": "BINARY",
+          "domain": [
+            "absent",
+            "present"
+          ],
+          "description": "weather front"
+        },
+        {
+          "id": "rain",
+          "kind": "BINARY",
+          "domain": [
+            "dry",
+            "rain"
+          ],
+          "description": "measurable precipitation"
+        },
+        {
+          "id": "season",
+          "kind": "CATEGORICAL",
+          "domain": [
+            "winter",
+            "summer"
+          ],
+          "description": "season"
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "a.acyclic",
+          "statement": "model is acyclic",
+          "evidence_refs": []
+        },
+        {
+          "id": "a.exchange",
+          "statement": "season adjustment suffices for the declared estimand",
+          "evidence_refs": [
+            "e.forecast"
+          ]
+        }
+      ],
+      "edges": [
+        {
+          "cause": "season",
+          "effect": "front",
+          "mechanism": "season changes front frequency",
+          "assumption_refs": [
+            "a.acyclic"
+          ]
+        },
+        {
+          "cause": "season",
+          "effect": "rain",
+          "mechanism": "season changes rain frequency",
+          "assumption_refs": [
+            "a.acyclic"
+          ]
+        },
+        {
+          "cause": "front",
+          "effect": "rain",
+          "mechanism": "front changes precipitation propensity",
+          "assumption_refs": [
+            "a.acyclic",
+            "a.exchange"
+          ]
+        }
+      ],
+      "interventions": [
+        {
+          "id": "do.front.present",
+          "target_ref": "front",
+          "assigned_value": "present",
+          "admissibility_assumption_refs": [
+            "a.exchange"
+          ]
+        }
+      ],
+      "confounders": [
+        {
+          "id": "conf.season",
+          "variable_ref": "season",
+          "cause_ref": "front",
+          "effect_ref": "rain",
+          "evidence_refs": [
+            "e.forecast"
+          ]
+        }
+      ],
+      "counterfactuals": [
+        {
+          "id": "cf.no.front",
+          "intervention_refs": [
+            "do.front.present"
+          ],
+          "outcome_variable_ref": "rain",
+          "query": "What would rain have been under the declared front intervention?",
+          "assumption_refs": [
+            "a.exchange"
+          ]
+        }
+      ],
+      "identification": {
+        "estimand": "P(rain=rain|do(front=present))",
+        "treatment_ref": "front",
+        "outcome_ref": "rain",
+        "status": "PARTIALLY_IDENTIFIED",
+        "adjustment_set": [
+          "season"
+        ],
+        "assumption_refs": [
+          "a.exchange"
+        ],
+        "limits": [
+          "No experimental intervention evidence is present."
+        ]
+      }
+    },
+    {
+      "id": "prediction.rain.1",
+      "kind": "prediction",
+      "provenance": {
+        "source_uri": "urn:far-example:prediction.rain.1",
+        "artifact_sha256": "sha256:53bde6d7fabd274adfb2afaf3ae26efd1b08ecfb71f0605360a5e444fd22d99d",
+        "far_refs": [
+          "claim.weather"
+        ],
+        "evidence_refs": [
+          "e.forecast"
+        ],
+        "elenchus_session_refs": []
+      },
+      "belief_ref": "belief.weather",
+      "belief_snapshot_ref": "snapshot.forecast",
+      "hypothesis_ref": "h.rain",
+      "proposition": "Measurable precipitation occurs at station A",
+      "probability": "0.300000",
+      "made_at": "2026-01-01T09:02:00Z",
+      "resolution_window_start": "2026-01-02T00:00:00Z",
+      "resolution_window_end": "2026-01-02T23:59:59Z",
+      "objective_resolution_criteria": "station A reports precipitation greater than zero",
+      "reference_class": "station-a.same-season.daily"
+    },
+    {
+      "id": "decision.umbrella.1",
+      "kind": "decision",
+      "provenance": {
+        "source_uri": "urn:far-example:decision.umbrella.1",
+        "artifact_sha256": "sha256:aef4d7c912306b2f7d9259e1f1adb577ba5ee2a59d8d4ab7fe5cde6ef1d4fccd",
+        "far_refs": [
+          "reasoning_step.weather"
+        ],
+        "evidence_refs": [
+          "e.forecast"
+        ],
+        "elenchus_session_refs": []
+      },
+      "belief_ref": "belief.weather",
+      "prediction_ref": "prediction.rain.1",
+      "belief_snapshot_ref": "snapshot.forecast",
+      "decided_at": "2026-01-01T09:03:00Z",
+      "states": [
+        {
+          "id": "rain",
+          "hypothesis_ref": "h.rain",
+          "probability": "0.300000"
+        },
+        {
+          "id": "dry",
+          "hypothesis_ref": "h.dry",
+          "probability": "0.700000"
+        }
+      ],
+      "actions": [
+        {
+          "id": "carry",
+          "utilities": {
+            "rain": "10.000000",
+            "dry": "-4.000000"
+          },
+          "expected_utility": "0.200000",
+          "downside_utility": "-4.000000",
+          "tail_risk": {
+            "threshold_utility": "-4.000000",
+            "probability_at_or_below": "0.700000",
+            "description": "inconvenience in dry state"
+          }
+        },
+        {
+          "id": "leave",
+          "utilities": {
+            "rain": "2.000000",
+            "dry": "1.000000"
+          },
+          "expected_utility": "1.300000",
+          "downside_utility": "1.000000",
+          "tail_risk": {
+            "threshold_utility": "1.000000",
+            "probability_at_or_below": "0.700000",
+            "description": "utility at or below one in dry state"
+          }
+        }
+      ],
+      "chosen_action": "leave",
+      "rationale": "highest expected utility in declared table",
+      "opportunity_cost": "0.000000",
+      "expected_value_of_perfect_information": "2.400000"
+    },
+    {
+      "id": "outcome.weather.1",
+      "kind": "outcome",
+      "provenance": {
+        "source_uri": "urn:far-example:outcome.weather.1",
+        "artifact_sha256": "sha256:e972adcca1c6b608a7f9ad281cdb34b3496c8b6795db7f828d7e74df14a9308a",
+        "far_refs": [
+          "evidence.outcome"
+        ],
+        "evidence_refs": [
+          "e.outcome.1"
+        ],
+        "elenchus_session_refs": []
+      },
+      "prediction_ref": "prediction.rain.1",
+      "decision_ref": "decision.umbrella.1",
+      "resolved_at": "2026-01-03T00:00:00Z",
+      "binary_outcome": 0,
+      "realized_state": "dry",
+      "evidence_ref": "e.outcome.1",
+      "scores": {
+        "brier": "0.090000000000",
+        "log": "0.356674943939"
+      },
+      "regret": "0.000000"
+    },
+    {
+      "id": "error.weather.1",
+      "kind": "error",
+      "provenance": {
+        "source_uri": "urn:far-example:error",
+        "artifact_sha256": "sha256:b4705207acde700e00c37d2862e6c78494e94105235b1251c92dbca66df3e07e",
+        "far_refs": [
+          "reasoning_step.weather"
+        ],
+        "evidence_refs": [
+          "e.outcome.1"
+        ],
+        "elenchus_session_refs": []
+      },
+      "prediction_ref": "prediction.rain.1",
+      "decision_ref": "decision.umbrella.1",
+      "outcome_ref": "outcome.weather.1",
+      "belief_ref": "belief.weather",
+      "belief_revision_ref": "rev.outcome.1",
+      "failure_mode_code": "NO_ERROR_CALIBRATION_OBSERVATION",
+      "classifications": [
+        "CALIBRATION_OBSERVATION"
+      ],
+      "root_cause": "No realized error; preserve without hindsight relabeling.",
+      "corrective_rule": {
+        "id": "rule.aggregate-before-change",
+        "description": "Aggregate comparable resolved predictions before changing update rule.",
+        "applies_to_failure_mode_codes": [
+          "NO_ERROR_CALIBRATION_OBSERVATION"
+        ]
+      },
+      "retest_ref": "retest.weather.1"
+    },
+    {
+      "id": "prediction.rain.2",
+      "kind": "prediction",
+      "provenance": {
+        "source_uri": "urn:far-example:prediction.rain.2",
+        "artifact_sha256": "sha256:23a4b29454450f26a6c854e46b49dbf56349aa696ec2eb2a16d403ca4366812d",
+        "far_refs": [
+          "claim.weather"
+        ],
+        "evidence_refs": [
+          "e.outcome.1"
+        ],
+        "elenchus_session_refs": []
+      },
+      "belief_ref": "belief.weather",
+      "belief_snapshot_ref": "snapshot.revised",
+      "hypothesis_ref": "h.rain",
+      "proposition": "Measurable precipitation occurs at station A",
+      "probability": "0.100000",
+      "made_at": "2026-01-03T01:00:00Z",
+      "resolution_window_start": "2026-01-05T00:00:00Z",
+      "resolution_window_end": "2026-01-05T23:59:59Z",
+      "objective_resolution_criteria": "station A reports precipitation greater than zero",
+      "reference_class": "station-a.same-season.daily"
+    },
+    {
+      "id": "decision.umbrella.2",
+      "kind": "decision",
+      "provenance": {
+        "source_uri": "urn:far-example:decision.umbrella.2",
+        "artifact_sha256": "sha256:1f339aa9236e2eeb965fb23975133c110840d948fbb56694cf2f512223fef2e7",
+        "far_refs": [
+          "reasoning_step.weather"
+        ],
+        "evidence_refs": [
+          "e.outcome.1"
+        ],
+        "elenchus_session_refs": []
+      },
+      "belief_ref": "belief.weather",
+      "prediction_ref": "prediction.rain.2",
+      "belief_snapshot_ref": "snapshot.revised",
+      "decided_at": "2026-01-03T01:01:00Z",
+      "states": [
+        {
+          "id": "rain",
+          "hypothesis_ref": "h.rain",
+          "probability": "0.100000"
+        },
+        {
+          "id": "dry",
+          "hypothesis_ref": "h.dry",
+          "probability": "0.900000"
+        }
+      ],
+      "actions": [
+        {
+          "id": "carry",
+          "utilities": {
+            "rain": "10.000000",
+            "dry": "-4.000000"
+          },
+          "expected_utility": "-2.600000",
+          "downside_utility": "-4.000000",
+          "tail_risk": {
+            "threshold_utility": "-4.000000",
+            "probability_at_or_below": "0.900000",
+            "description": "inconvenience in dry state"
+          }
+        },
+        {
+          "id": "leave",
+          "utilities": {
+            "rain": "2.000000",
+            "dry": "1.000000"
+          },
+          "expected_utility": "1.100000",
+          "downside_utility": "1.000000",
+          "tail_risk": {
+            "threshold_utility": "1.000000",
+            "probability_at_or_below": "0.900000",
+            "description": "utility at or below one in dry state"
+          }
+        }
+      ],
+      "chosen_action": "leave",
+      "rationale": "highest expected utility in declared table",
+      "opportunity_cost": "0.000000",
+      "expected_value_of_perfect_information": "0.800000"
+    },
+    {
+      "id": "outcome.weather.2",
+      "kind": "outcome",
+      "provenance": {
+        "source_uri": "urn:far-example:outcome.weather.2",
+        "artifact_sha256": "sha256:0c5e605ef934b5d7386b3cc5c68c74ad8f670091d2adeb0b69033b78c6e7de19",
+        "far_refs": [
+          "evidence.outcome"
+        ],
+        "evidence_refs": [
+          "e.outcome.2"
+        ],
+        "elenchus_session_refs": []
+      },
+      "prediction_ref": "prediction.rain.2",
+      "decision_ref": "decision.umbrella.2",
+      "resolved_at": "2026-01-06T00:00:00Z",
+      "binary_outcome": 0,
+      "realized_state": "dry",
+      "evidence_ref": "e.outcome.2",
+      "scores": {
+        "brier": "0.010000000000",
+        "log": "0.105360515658"
+      },
+      "regret": "0.000000"
+    },
+    {
+      "id": "retest.weather.1",
+      "kind": "retest",
+      "provenance": {
+        "source_uri": "urn:far-example:retest",
+        "artifact_sha256": "sha256:e339321523e34563ac16e03c1df2ae8e4de72740cff2881e97ff67f485a254c6",
+        "far_refs": [
+          "reasoning_step.weather"
+        ],
+        "evidence_refs": [
+          "e.outcome.1",
+          "e.outcome.2"
+        ],
+        "elenchus_session_refs": []
+      },
+      "error_ref": "error.weather.1",
+      "evaluated_at": "2026-01-06T01:00:00Z",
+      "reference_class": "station-a.same-season.daily",
+      "metric": "MEAN_BRIER",
+      "baseline_mean_brier": "0.090000000000",
+      "comparison_outcome_refs": [
+        "outcome.weather.2"
+      ],
+      "comparison_mean_brier": "0.010000000000",
+      "result": "IMPROVED"
+    }
+  ],
+  "metadata": {
+    "status": "PROVISIONAL_APPLICATION_RECORD",
+    "nonclaims": [
+      "A lower later score does not establish general learning effectiveness.",
+      "The causal model does not establish identification beyond its declared status.",
+      "The embedded elenchus records commitments, not external truth."
+    ]
+  }
+}

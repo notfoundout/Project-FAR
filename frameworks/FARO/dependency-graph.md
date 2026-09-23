@@ -19,6 +19,7 @@ theory/definitions/definitions.md
   -> frameworks/FARO/operation-taxonomy.md
   -> frameworks/FARO/operation-interface-standard.md
   -> frameworks/FARO/{execution,auditing,comparison,disagreement-analysis,reporting,operational-evaluation}.md
+  -> frameworks/FARO/epistemic-boundary.md (derived FAR evidence-closure reporting view)
   -> frameworks/FARO/FARO-v1.0-criteria.md
 ```
 
@@ -53,6 +54,10 @@ Defines the required structure for individual operation specifications.
 ### Operation Category Documents
 
 Define execution, auditing, comparison, disagreement analysis, reporting, and operational evaluation.
+
+### Epistemic Boundary Operation
+
+`epistemic-boundary.md` depends on the FAR workflow, investigation validation, `FAR-EVIDENCE-CLOSURE-1.0`, the FARO operation interface, and FARO reporting. Recheck the derived view and its binding validator when any of those inputs changes. FAR closure does not depend on FARO materialization.
 
 ### FARO v1.0 Criteria
 
