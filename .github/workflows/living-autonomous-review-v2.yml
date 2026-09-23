@@ -15,9 +15,11 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/living-autonomous-review-v2.yml'
+      - '.github/workflows/exact-head-assurance.yml'
       - 'tools/run_living_autonomous_review.py'
       - 'tools/living_autonomous_review_*.py'
       - 'tests/test_living_autonomous_review.py'
+      - 'tests/test_living_autonomous_review_*.py'
       - 'research/living/autonomous-review-policy-v1.0.json'
       - 'research/living/promotion-policy-v1.0.json'
       - 'research/living/implementation-policy-v1.0.json'
@@ -51,7 +53,10 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Validate autonomous review contract
         run: |
-          python -m unittest tests.test_living_autonomous_review -v
+          python -m unittest \
+            tests.test_living_autonomous_review \
+            tests.test_living_autonomous_review_source_binding \
+            tests.test_living_autonomous_review_exact_head_dispatch -v
           python -m unittest \
             tests.test_living_research_promotion \
             tests.test_living_project_change_obligations \
@@ -258,6 +263,7 @@ jobs:
           disposition="${{ steps.review.outputs.disposition }}"
           branch="${{ steps.review_branch.outputs.branch }}"
           head_sha="${{ steps.review_branch.outputs.head_sha }}"
+          base_sha="${{ steps.freeze.outputs.base_sha }}"
           cat > "$RUNNER_TEMP/review-pr.md" <<EOF
           ## Autonomous governed review
 
@@ -265,7 +271,7 @@ jobs:
           - proposed disposition: \`$disposition\`
           - exact reviewed candidate SHA-256: \`${{ steps.review.outputs.candidate_sha256 }}\`
           - frozen source head: \`${{ steps.freeze.outputs.source_sha }}\`
-          - frozen protected-main base: \`${{ steps.freeze.outputs.base_sha }}\`
+          - frozen protected-main base: \`$base_sha\`
           - exact review head: \`$head_sha\`
 
           These bytes have no protected scientific authority before human merge. Project-changing proposal/payload bytes, if present, exist only on this human-review branch before merge; they were never written to the unprotected rolling PR #490. Automation never merges this PR or downstream promotion/implementation PRs.
@@ -278,3 +284,5 @@ jobs:
           gh workflow run living-autonomous-review-v2.yml --repo "$GITHUB_REPOSITORY" --ref "$branch" -f mode=validate
           gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$branch" -f mode=validate
           gh workflow run validator-assurance.yml --repo "$GITHUB_REPOSITORY" --ref "$branch"
+          gh workflow run exact-head-assurance.yml --repo "$GITHUB_REPOSITORY" --ref main \
+            -f head_sha="$head_sha" -f base_sha="$base_sha"
