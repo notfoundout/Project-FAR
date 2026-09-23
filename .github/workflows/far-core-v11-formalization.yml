@@ -30,23 +30,6 @@ jobs:
           echo "$elan_sha256  $RUNNER_TEMP/elan-init.sh" | sha256sum -c -
           sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: TEMPORARY measure Lean release asset digests (non-enforcing)
-        continue-on-error: true
-        shell: bash
-        run: |
-          set -uo pipefail
-          tmp="$RUNNER_TEMP/lean-measure"; mkdir -p "$tmp"
-          for url in \
-            https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst \
-            https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.zip; do
-            name="$(basename "$url")"
-            if curl -sSfL "$url" -o "$tmp/$name"; then
-              echo "MEASURE $name sha256=$(sha256sum "$tmp/$name" | cut -d' ' -f1) bytes=$(stat -c%s "$tmp/$name")"
-            else
-              echo "MEASURE $name unavailable"
-            fi
-          done
-          mkdir -p "$tmp/x" && tar --use-compress-program=unzstd -xf "$tmp/lean-4.19.0-linux.tar.zst" -C "$tmp/x" && ls "$tmp/x" && "$tmp/x"/lean-4.19.0-linux/bin/lean --version
       - name: Compile governed FAR-CORE v1.1 formalization
         shell: bash
         run: |
