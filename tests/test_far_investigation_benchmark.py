@@ -232,8 +232,11 @@ class FrozenSemanticTests(unittest.TestCase):
         for evaluator_id, lane in eligible:
             ordered_cases = sorted(
                 case_ids,
-                key=lambda case_id: BENCH.sha256_text(
-                    f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"
+                key=lambda case_id: (
+                    BENCH.sha256_text(
+                        f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"
+                    ),
+                    case_id,
                 ),
             )
             assignments = []
