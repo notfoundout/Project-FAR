@@ -43,7 +43,8 @@
     "env",
     "uname",
     "dirname",
-    "basename"
+    "basename",
+    "far-intake"
   ],
   "skip_checks": []
 }
