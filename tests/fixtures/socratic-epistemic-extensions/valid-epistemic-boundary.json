@@ -1,0 +1,46 @@
+{
+  "schema_version": "socratic-epistemic-extensions/1.0",
+  "record_type": "EPISTEMIC_BOUNDARY",
+  "record": {
+    "investigation_id": "investigation.example.1",
+    "claim_id": "claim.example.1",
+    "claim_version": "1.0",
+    "evidence_cutoff": "2026-09-23T00:00:00Z",
+    "search_frame": "Registered evidence classes and sources for the bounded example investigation.",
+    "closure_record_refs": ["closure.example.1"],
+    "established": [
+      {"statement": "The registered observation occurred in the frozen case.", "basis_refs": ["evidence.example.1"]}
+    ],
+    "conditionally_established": [
+      {"statement": "The observation has the recorded interpretation if assumption A holds.", "basis_refs": ["evidence.example.1"], "condition_refs": ["assumption.A"]}
+    ],
+    "supported_not_established": [
+      {"statement": "A broader mechanism is compatible with the evidence but not demonstrated.", "basis_refs": ["evidence.example.2"]}
+    ],
+    "unknown": [
+      {"statement": "Whether the mechanism generalizes outside the frozen case.", "basis_refs": ["closure.example.1"], "reason": "No external cases were in the frozen search frame."}
+    ],
+    "not_investigated": [
+      {"statement": "Long-term downstream effects.", "basis_refs": ["scope.example.1"], "reason": "Outside the frozen investigation objective."}
+    ],
+    "not_identifiable_from_current_evidence": [
+      {"statement": "Which of two observationally equivalent mechanisms generated the event.", "basis_refs": ["evidence.example.1"], "reason": "The frozen evidence has identical predictions under both mechanisms."}
+    ],
+    "explicit_nonclaims": [
+      {"statement": "The result is not a population estimate.", "basis_refs": ["scope.example.1"]}
+    ],
+    "falsifiers": ["A source-valid observation showing the registered event did not occur."],
+    "surviving_propositions": ["A narrower case-specific proposition remains supported."],
+    "residual_uncertainty": ["External generalization remains unresolved."],
+    "limitations": ["Bounded evidence frame."],
+    "assumptions": ["assumption.A"],
+    "closure_status": "Provisionally resolved",
+    "provenance": {
+      "source_refs": ["closure.example.1", "scope.example.1"],
+      "method": "derived FARO boundary materialization",
+      "assessor": "far.test",
+      "version": "1.0"
+    },
+    "boundary_version": "1.0"
+  }
+}
