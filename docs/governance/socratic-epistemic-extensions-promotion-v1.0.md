@@ -1,19 +1,96 @@
-# Socratic Epistemic Extensions Promotion Record v1.0
+# Epistemic Extensions Acceptance and Promotion Record v1.0
 
-Status: Research candidate — pending conformance and acceptance
+Status: **Accepted internal methodology/operation extension — pending ordinary PR merge authority**  
+Program: `FAR-EPISTEMIC-EXTENSIONS-001`  
+Accepted contracts: `FAR-EXPERTISE-APPLICABILITY-1.0`, `FAR-ELENCHUS-1.0`, `FARO-EPISTEMIC-BOUNDARY-1.0`
 
-This record tracks promotion of three additive Project FAR capabilities: domain-bounded expertise, a consolidated epistemic-boundary object, and an interactive elenchus protocol.
+## Decision
 
-Promotion is blocked until all of the following are satisfied:
+Project FAR accepts three additive capabilities at bounded internal scope:
 
-- schema validation passes for positive fixtures;
-- semantic validation rejects cross-domain expertise transfer and unsupported determinate applicability;
-- semantic validation rejects malformed epistemic-boundary records that erase unknown, non-investigated, or non-identifiable states;
-- semantic validation rejects elenchus contradiction records without explicit interpretation and calculus basis;
-- commitment revision preserves history rather than overwriting prior versions;
-- FAR workflow integration is explicit and does not create a second stage sequence;
-- FARO reporting and disagreement analysis integration is explicit;
-- repository health checks pass;
-- the change is audited against the current authority map and limitations register.
+1. proposition-relative expertise assertions and applicability assessments;
+2. an interactive elenchus protocol for versioned commitments, definitions, assumptions, warrants, implications, tensions, contradictions, revisions, and withdrawals;
+3. a derived FARO epistemic-boundary view over already-governed FAR closure artifacts.
 
-No core-theory theorem, novelty claim, external-validation status, empirical-utility status, or product-readiness status changes merely because this candidate exists.
+The accepted change does not alter `PROJECT-FAR-CORE-THEORY-1.1`, the Accepted FARA formal kernel, the canonical FAR stage sequence, `far-ir/2.0`, or `far-ir/2.1`.
+
+## Reduction result
+
+The research pass rejected expansion to three new primitives.
+
+- Expertise applicability is selected evidence-appraisal methodology over existing identities, scopes, relations, provenance, and status records.
+- Elenchus is selected interactive methodology over existing representations, reasoning, transitions, revision, and provenance.
+- The epistemic boundary is a downstream FARO materialized view over existing FAR scope, nonclaim, uncertainty, assumption, falsifier, limitation, surviving-proposition, and closure information.
+
+The dependency direction remains `foundations → shared theory → FARA → FAR → FARO`.
+
+## Acceptance evidence
+
+The implementation package contains:
+
+- the research reduction at `research/socratic-epistemic-extensions/README.md`;
+- `docs/specification/socratic-epistemic-extensions-v1.0.md`;
+- `schemas/socratic-epistemic-extensions-v1.schema.json`;
+- `mechanization/far_mechanization/socratic_epistemic.py`;
+- positive fixtures under `tests/fixtures/socratic-epistemic-extensions/`;
+- adversarial regression tests in `tests/test_socratic_epistemic_extensions.py`;
+- a separately coded internal reference oracle in `tests/test_socratic_epistemic_extensions_replication.py`;
+- the FAR expertise and elenchus methodology protocols;
+- the FARO epistemic-boundary operation contract and reporting integration.
+
+Repository Health run `35823890725` passed on implementation/integration head `3ffb530de13b6786b6b06f2d5ede05d1bcfed5a1` after the record-type schema dispatcher was replaced with an explicit discriminated `oneOf`. That run includes the canonical fast test suite, the new positive/adversarial tests, and the independent project-authored reference-oracle tests.
+
+Ordinary PR exact-head CI and merge-authority checks remain required before this branch can enter protected `main`; this acceptance record does not bypass repository merge governance.
+
+## Required behavior
+
+### Expertise
+
+A competence claim must remain bounded to its recorded domain, optional subdomain, claim type, population, geography, time, and method. Every material use against a proposition requires an explicit applicability record. A different recorded scope cannot be marked `MATCH` without an explicit bridge. Fully `SUPPORTED` applicability cannot hide a partial, mismatched, or unknown material dimension.
+
+Expertise applicability is never substantive proof of the source's claim.
+
+### Epistemic boundary
+
+The boundary object consolidates established, conditionally established, supported-but-unestablished, unknown, not-investigated, non-identifiable, and explicit-nonclaim entries with their bases. Conditional entries preserve conditions; unknown/out-of-scope/non-identifiable entries preserve reasons; closed views reference the canonical FAR closure record.
+
+The view is downstream reporting. It cannot replace or modify FAR closure semantics.
+
+### Elenchus
+
+Questions and responses are event-linked. Commitments preserve exact wording and context. Derived implications identify premises, calculus, and rule. A contradiction identifies the compared commitments, interpretation, calculus, and basis. Revisions create new commitment versions and retain prior history; withdrawals do not delete the prior commitment.
+
+Elenchus establishes facts about the recorded commitment structure only. External factual claims still require the parent FAR investigation's evidence.
+
+## Failure conditions preserved by tests
+
+The implementation fails closed on, among other cases:
+
+- cross-domain or cross-scope expertise marked fully applicable without a bridge;
+- dimension values inconsistent with their recorded scopes;
+- the same scoped boundary statement silently occupying incompatible categories;
+- closed boundary views without closure-record linkage;
+- unknown/conditional records missing required reasons or conditions;
+- responses or commitments referencing nonexistent events;
+- implications referencing nonexistent premises;
+- revisions overwriting prior commitments or using non-increasing versions;
+- contradictions lacking explicit structure or referencing missing commitments.
+
+## Assurance boundary
+
+This is internal methodology and implementation assurance. The reference oracle is independently coded inside Project FAR but is still project-authored.
+
+The acceptance does **not** establish:
+
+- that expertise guarantees truth;
+- a universal ontology of expertise domains or valid cross-domain bridges;
+- that the boundary object enumerates all possible unknowns or proves open-world completeness;
+- that natural-language contradiction detection is solved by the structural validator;
+- that conversational consistency establishes factual truth;
+- historical derivation of Project FAR from Socrates;
+- external investigator independence;
+- empirical utility, comparative superiority, product readiness, novelty, priority, or commercial value.
+
+## Reopening
+
+Reopen or restrict this acceptance if a reproducible counterexample shows that the accepted record formats silently permit one of the prohibited collapses above, or if a later canonical FAR/FARA/FARO change invalidates the recorded dependency mapping.
