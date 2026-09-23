@@ -16,7 +16,7 @@ from typing import Any, Mapping, Sequence
 
 from jsonschema import Draft202012Validator
 
-from .contract_v2 import REPO_ROOT, validate_contract
+from .contract_v2_strict import REPO_ROOT, validate_contract
 
 V1_SCHEMA_PATH = REPO_ROOT / "schemas" / "far-document.schema.json"
 

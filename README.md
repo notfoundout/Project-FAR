@@ -141,11 +141,12 @@ python tools/check_far_core_v11_formalization.py
 python -m unittest tests.test_far_core_v11_formalization
 ```
 
-W3 contract-schema conformance:
+W3 contract-schema conformance and current `far-ir/2.0` verification ([current verification rule](docs/specification/far-ir-2.0-current-verification.md): `PROVED`/`REFUTED` require checked evidence):
 
 ```bash
 python -m mechanization.far_mechanization.contract_conformance
-python -m unittest tests.test_far_contract_v2
+python -m mechanization.far_mechanization.contract_conformance --manifest conformance/far-ir-2.0-current/manifest.json
+python -m unittest tests.test_far_contract_v2 tests.test_far_contract_v2_strict tests.test_contract_v2_verifier_authority
 ```
 
 W4 domain-contract recomputation:

@@ -17,16 +17,16 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "31e790b12bfc9a147cf7a03173d6db877bab66e402c9f5a3717eceb86c67dcb5",
+      "current_sha256": "f4906f712d83fb839701a1a0592c725f7051e596c8b7e25478ec1446b7455cdd",
       "class": "documentation_surface",
-      "reason": "Added presentation boundaries from the 2026-09-23 repository red-team audit: a pointer to the calibration audit beside the terminal verdict, the W1 reviewer's identity (LIM-035), and the W6 mutation/verifier-scope boundary (LIM-047). No campaign claim, boundary, input, computation, or recorded result changes; no status is promoted."
+      "reason": "Red-team remediation (PR #538): presentation boundaries (calibration pointer, W1 reviewer identity, W6 scope via LIM-047) and the current far-ir/2.0 verification commands. No campaign input, computation, result, or status changes."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "704c6d6b73986c7d3c1a0c290f9e644d1e1a1a6e60b2c0595c73c5e0619dcfaa",
+      "current_sha256": "19e32fa8086fdf044ad3d5d021f60b67fd99f6c910c5bbccb8eefff89388047e",
       "class": "documentation_surface",
-      "reason": "Registered the additive far-epistemic/1.0 application interchange, accepted evidence-closure authority, and accepted epistemic-assurance authority. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Red-team remediation (PR #538): registered the far-ir/2.0 current verification rule as the authoritative current verification surface. No campaign input, computation, or result changes."
     },
     {
       "path": "docs/ROADMAP.md",
@@ -38,9 +38,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "2475f9bcb2f1109d4f4a7d5550477e63274225986de6e452d800f488c895edec",
+      "current_sha256": "989f2ae83e9c5392aeebd629badf60b5da616de9879a8d16899209287aeed436",
       "class": "governance_register",
-      "reason": "Recorded LIM-047 (baseline far-ir/2.0 success under DECLARED_UNCHECKED evidence), LIM-048 (EFR-HD1/U1 lack an active comparator) and LIM-049 (protected CI installer and signing-key exposure) from the 2026-09-23 repository red-team audit. Registers are living surfaces; no campaign input, computation, or recorded result changes."
+      "reason": "Red-team remediation (PR #538): recorded LIM-047 (baseline far-ir/2.0 success is not verification; current surfaces use contract_v2_strict), LIM-048 (EFR-001 v1.0 HD1/U1 comparator gap) and LIM-049 (validation signing-key and installer trust). Registers are living surfaces; no campaign input, computation, or result changes."
     },
     {
       "path": "docs/project-status.md",
@@ -52,16 +52,16 @@
     {
       "path": "tests/test_pca_w4_domain_contracts.py",
       "executed_sha256": "47d2e95a19822824a46927a2ef8a5aa2c4ee71f549552e3890c4867c3cde2efe",
-      "current_sha256": "c4f97f11510e86a65944e7e94689285d2cb421c4c61a590bc2408e9e8766c76c",
+      "current_sha256": "634f044b9abd734b4d77bfccb52a66362b7030fb69cbc6e2615a310ccb74c8dd",
       "class": "verification_tooling",
-      "reason": "Migrated manifest-integrity tests to the supplement contract, retained the historical terminal-W6 drift regression identity, added manifest-membership/runtime-orphan controls, and pins that validate_campaign resolves the supplement beneath its caller-supplied repository root. Tests stronger fail-closed properties."
+      "reason": "Red-team remediation (PR #538): imports contract_sha256 from the current strict verifier module, which re-exports the identical baseline function. No W4 input, computation, or recorded result changes."
     },
     {
       "path": "tools/check_pca_w4_domain_contracts.py",
       "executed_sha256": "59dc9da1736832ce9eb96fa08f8b2e32b1520e18797b16e880c45323ef1765a2",
-      "current_sha256": "eeb59c02ebdcdf5b48f73771418f5e048197a25ad882c361d6a48a9289f97095",
+      "current_sha256": "dd30a316995a70ccb6bdff4452f2cd4cfe9452a5e809a2d574fe1c1342e8ad5a",
       "class": "verification_tooling",
-      "reason": "Removed W6_MUTABLE_SUPPORT_PATHS, delegated general comparison to tools/campaign_current_state.py, retained explicit W4-local frozen/protected preflight checks, passes the full protected set so orphaned protection fails closed, resolves supplements under the requested repository root, and excludes campaign metadata from the CLI record count. No W4 input, computation, or recorded result changed."
+      "reason": "Red-team remediation (PR #538): the W4 recomputation checker now calls the current strict far-ir/2.0 verifier (contract_v2_strict). Every frozen W4 record declares CHECKED_FINITE_EXPLICIT evidence, so strict and baseline diagnostics are identical for them; no W4 input, computation, or recorded result changes."
     }
   ]
 }

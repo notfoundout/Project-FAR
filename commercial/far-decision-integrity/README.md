@@ -13,7 +13,7 @@ This package validates explicit decision packages and deterministically classifi
 
 A 0.2 package may bind governed FAR IR records to declared decision nodes. Each entry in `semantic_contracts` names a `binding_id`, `target_node_id`, purpose, and FAR IR `record`. This binding layer is deliberate: an unrelated valid FAR IR record cannot silently authorize a decision.
 
-The commercial package does **not** reimplement FAR IR semantics. It locates the canonical Project FAR repository, invokes the governed `far-ir/2.0` or `far-ir/2.1` verifier, and records SHA-256 identities for the exact verifier and schema used.
+The commercial package does **not** reimplement FAR IR semantics. It locates the canonical Project FAR repository, invokes the governed `far-ir/2.0` or `far-ir/2.1` verifier, and records SHA-256 identities for the exact verifier and schema used. `far-ir/2.0` records go through the current strict verifier (`contract_v2_strict`), which rejects a `PROVED` or `REFUTED` outcome unless its evidence is `CHECKED_FINITE_EXPLICIT`; the frozen baseline `contract_v2.py` it wraps is bound as a shared artifact.
 
 Supported purposes are:
 
