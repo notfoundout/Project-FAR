@@ -1,9 +1,8 @@
-"""Provider-neutral subagent orchestration for Project FAR.
+"""Deterministic, provider-neutral subagent orchestration for Project FAR.
 
-FAR-SUBAGENT-1.0 turns existing FAR specialist skills into a deterministic,
-isolated task graph. It mechanizes execution discipline only: it does not
-ratify theory, establish external independence, or turn model agreement into
-evidence.
+FAR-SUBAGENT-1.0 mechanizes execution boundaries around existing FAR research
+skills. It does not amend FAR theory, establish external independence, or turn
+model agreement into evidence.
 """
 
 from __future__ import annotations
@@ -17,10 +16,19 @@ from enum import Enum
 from hashlib import sha256
 from typing import Any, Mapping, Protocol, Sequence
 
-from tools.adversarial_research_harness import (
-    assert_distinct_lane_sandboxes,
-    lane_sandbox_id,
-)
+try:
+    from tools.adversarial_research_harness import (
+        assert_distinct_lane_sandboxes,
+        lane_sandbox_id,
+    )
+except ModuleNotFoundError as exc:
+    # Direct execution sets sys.path[0] to tools/, so "tools." is unavailable.
+    if not (exc.name == "tools" or str(exc.name).startswith("tools.")):
+        raise
+    from adversarial_research_harness import (  # type: ignore[no-redef]
+        assert_distinct_lane_sandboxes,
+        lane_sandbox_id,
+    )
 
 
 class EvidenceClass(str, Enum):
@@ -100,12 +108,15 @@ class ClaimFinding:
     uncertainty: str = ""
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "provenance", tuple(self.provenance))
         if not self.claim_id.strip() or not self.claim.strip():
             raise ValueError("claim_id and claim must be non-empty")
         if not self.rationale.strip():
             raise ValueError("rationale must be non-empty")
-        if self.evidence_class in {EvidenceClass.P, EvidenceClass.C} and not self.provenance:
-            raise ValueError("P/C findings require provenance")
+        if self.evidence_class in {EvidenceClass.P, EvidenceClass.C} and (
+            not self.provenance or any(not item.strip() for item in self.provenance)
+        ):
+            raise ValueError("P/C findings require non-empty provenance")
 
 
 @dataclass(frozen=True)
@@ -116,8 +127,13 @@ class ConflictResolution:
     provenance: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
+        object.__setattr__(self, "provenance", tuple(self.provenance))
         if not self.claim_id.strip() or not self.rationale.strip():
             raise ValueError("resolution claim_id and rationale must be non-empty")
+        if self.disposition is not Disposition.UNCERTAIN and (
+            not self.provenance or any(not item.strip() for item in self.provenance)
+        ):
+            raise ValueError("decisive conflict resolutions require provenance")
 
 
 @dataclass(frozen=True)
@@ -133,11 +149,9 @@ class SubagentTask:
     exclusions: tuple[str, ...] = ()
     read_only: bool = True
 
-    @property
-    def skill(self) -> str:
-        return ROLE_SKILLS[self.role]
-
     def __post_init__(self) -> None:
+        for field in ("context_keys", "dependencies", "done_criteria", "exclusions"):
+            object.__setattr__(self, field, tuple(getattr(self, field)))
         if not self.task_id.strip() or not self.objective.strip():
             raise ValueError("task_id and objective must be non-empty")
         if len(set(self.dependencies)) != len(self.dependencies):
@@ -162,6 +176,10 @@ class SubagentTask:
                     f"{self.task_id}: clean-room task exposes forbidden context {sorted(leaked)}"
                 )
 
+    @property
+    def skill(self) -> str:
+        return ROLE_SKILLS[self.role]
+
 
 @dataclass(frozen=True)
 class SubagentReport:
@@ -177,14 +195,16 @@ class SubagentReport:
     errors: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
+        for field in ("findings", "resolutions", "errors"):
+            object.__setattr__(self, field, tuple(getattr(self, field)))
         if not self.task_id.strip() or not self.sandbox_id.strip() or not self.context_digest.strip():
             raise ValueError("report task_id, sandbox_id, and context_digest must be non-empty")
         if self.status is AgentStatus.COMPLETED and not self.summary.strip():
             raise ValueError("completed reports require a summary")
         if self.status is AgentStatus.FAILED and not self.errors:
             raise ValueError("failed reports require an error")
-        ids = [finding.claim_id for finding in self.findings]
-        if len(ids) != len(set(ids)):
+        claim_ids = [finding.claim_id for finding in self.findings]
+        if len(claim_ids) != len(set(claim_ids)):
             raise ValueError(f"{self.task_id}: duplicate finding claim_id values")
 
 
@@ -240,7 +260,7 @@ class OrchestrationResult:
                     "resolver_task_id": conflict.resolver_task_id,
                     "resolution": (
                         _resolution_to_dict(conflict.resolution)
-                        if conflict.resolution
+                        if conflict.resolution is not None
                         else None
                     ),
                 }
@@ -281,6 +301,7 @@ class SubagentCoordinator:
     def run(self, *, parallel: bool = True) -> OrchestrationResult:
         pending = set(self._task_by_id)
         reports: dict[str, SubagentReport] = {}
+
         while pending:
             ready = [
                 self._task_by_id[task_id]
@@ -290,24 +311,23 @@ class SubagentCoordinator:
             if not ready:
                 raise RuntimeError("subagent DAG made no progress")
 
-            blocked: list[SubagentTask] = []
             runnable: list[SubagentTask] = []
             for task in ready:
-                bad = [
+                bad_dependencies = [
                     dep
                     for dep in task.dependencies
                     if reports[dep].status is not AgentStatus.COMPLETED
                 ]
-                if bad:
-                    blocked.append(task)
-                    reports[task.task_id] = self._blocked_report(task, bad, reports)
+                if bad_dependencies:
+                    reports[task.task_id] = self._blocked_report(
+                        task, bad_dependencies, reports
+                    )
                 else:
                     runnable.append(task)
 
             if runnable:
                 reports.update(self._run_batch(runnable, reports, parallel=parallel))
-            for task in blocked + runnable:
-                pending.remove(task.task_id)
+            pending.difference_update(task.task_id for task in ready)
 
         ordered = tuple(reports[task.task_id] for task in self.tasks)
         conflicts = _detect_conflicts(ordered)
@@ -316,7 +336,16 @@ class SubagentCoordinator:
             conflicts,
             require_quality_gate=self.require_quality_gate,
         )
-        return OrchestrationResult(ordered, conflicts, issues, not issues)
+        return OrchestrationResult(
+            ordered,
+            conflicts,
+            issues,
+            _promotion_allowed(
+                ordered,
+                issues,
+                require_quality_gate=self.require_quality_gate,
+            ),
+        )
 
     def _run_batch(
         self,
@@ -327,6 +356,7 @@ class SubagentCoordinator:
     ) -> dict[str, SubagentReport]:
         if not parallel or len(tasks) == 1:
             return {task.task_id: self._execute_task(task, reports) for task in tasks}
+
         completed: dict[str, SubagentReport] = {}
         with ThreadPoolExecutor(max_workers=min(self.max_workers, len(tasks))) as pool:
             futures = {
@@ -436,107 +466,112 @@ def default_far_subagent_plan(
             f"lane: {sorted(leaked)}"
         )
 
-    return (
-        SubagentTask(
+    claim = SubagentTask(
+        "claim-registry",
+        AgentRole.CLAIM_REGISTRY,
+        f"Decompose and register the atomic claims for: {objective}",
+        keys,
+        done_criteria=(
+            "Each material claim has a stable claim_id and exact wording.",
+            "Scope and assumptions are explicit.",
+        ),
+    )
+
+    claims_only = (("claim-registry",), DependencyView.CLAIMS_ONLY)
+    discovery = SubagentTask(
+        "discovery",
+        AgentRole.DISCOVERY,
+        "Search broadly for material evidence and competing explanations.",
+        keys,
+        *claims_only,
+        done_criteria=("Material candidate evidence and alternatives are surfaced.",),
+    )
+    evidence = SubagentTask(
+        "evidence",
+        AgentRole.EVIDENCE,
+        "Build provenance-bearing evidence for and against each atomic claim.",
+        keys,
+        *claims_only,
+        done_criteria=(
+            "P/C evidence has source provenance.",
+            "Support and counterevidence are separated.",
+        ),
+    )
+    counterexamples = SubagentTask(
+        "counterexamples",
+        AgentRole.COUNTEREXAMPLE,
+        "Actively seek counterexamples and scope-breaking cases.",
+        keys,
+        *claims_only,
+        done_criteria=("Strongest discovered falsifiers are recorded.",),
+    )
+    formalizer = SubagentTask(
+        "formalizer",
+        AgentRole.FORMALIZER,
+        "Formalize inferential structure and expose hidden assumptions.",
+        keys,
+        *claims_only,
+        done_criteria=(
+            "Premises, conclusion, assumptions, and failure conditions are explicit.",
+        ),
+    )
+    clean_room = SubagentTask(
+        "clean-room",
+        AgentRole.CLEAN_ROOM,
+        "Independently evaluate the frozen target claims without prior verdicts.",
+        keys,
+        *claims_only,
+        clean_room=True,
+        exclusions=(
+            "Prior FAR verdicts",
+            "Preferred conclusion",
+            "Construction-session synthesis",
+        ),
+        done_criteria=(
+            "The first-pass verdict is recorded before exposure to prior conclusions.",
+        ),
+    )
+    contradictions = SubagentTask(
+        "contradictions",
+        AgentRole.CONTRADICTION,
+        "Compare specialist outputs and adjudicate explicit contradictions.",
+        keys,
+        ("discovery", "evidence", "counterexamples", "formalizer", "clean-room"),
+        DependencyView.FULL,
+        done_criteria=(
+            "Every support/contradiction collision is preserved or explicitly resolved.",
+        ),
+    )
+    quality_gate = SubagentTask(
+        "quality-gate",
+        AgentRole.QUALITY_GATE,
+        "Apply FAR acceptance and closure gates to the frozen specialist packet.",
+        keys,
+        (
             "claim-registry",
-            AgentRole.CLAIM_REGISTRY,
-            f"Decompose and register the atomic claims for: {objective}",
-            keys,
-            done_criteria=(
-                "Each material claim has a stable claim_id and exact wording.",
-                "Scope and assumptions are explicit.",
-            ),
-        ),
-        SubagentTask(
             "discovery",
-            AgentRole.DISCOVERY,
-            "Search broadly for material evidence and competing explanations.",
-            keys,
-            ("claim-registry",),
-            DependencyView.CLAIMS_ONLY,
-            done_criteria=("Material candidate evidence and alternatives are surfaced.",),
-        ),
-        SubagentTask(
             "evidence",
-            AgentRole.EVIDENCE,
-            "Build provenance-bearing evidence for and against each atomic claim.",
-            keys,
-            ("claim-registry",),
-            DependencyView.CLAIMS_ONLY,
-            done_criteria=(
-                "P/C evidence has source provenance.",
-                "Support and counterevidence are separated.",
-            ),
-        ),
-        SubagentTask(
             "counterexamples",
-            AgentRole.COUNTEREXAMPLE,
-            "Actively seek counterexamples and scope-breaking cases.",
-            keys,
-            ("claim-registry",),
-            DependencyView.CLAIMS_ONLY,
-            done_criteria=("Strongest discovered falsifiers are recorded.",),
-        ),
-        SubagentTask(
             "formalizer",
-            AgentRole.FORMALIZER,
-            "Formalize inferential structure and expose hidden assumptions.",
-            keys,
-            ("claim-registry",),
-            DependencyView.CLAIMS_ONLY,
-            done_criteria=(
-                "Premises, conclusion, assumptions, and failure conditions are explicit.",
-            ),
-        ),
-        SubagentTask(
             "clean-room",
-            AgentRole.CLEAN_ROOM,
-            "Independently evaluate the frozen target claims without prior verdicts.",
-            keys,
-            ("claim-registry",),
-            DependencyView.CLAIMS_ONLY,
-            clean_room=True,
-            exclusions=(
-                "Prior FAR verdicts",
-                "Preferred conclusion",
-                "Construction-session synthesis",
-            ),
-            done_criteria=(
-                "The first-pass verdict is recorded before exposure to prior conclusions.",
-            ),
-        ),
-        SubagentTask(
             "contradictions",
-            AgentRole.CONTRADICTION,
-            "Compare specialist outputs and adjudicate explicit contradictions.",
-            keys,
-            ("discovery", "evidence", "counterexamples", "formalizer", "clean-room"),
-            DependencyView.FULL,
-            done_criteria=(
-                "Every support/contradiction collision is preserved or explicitly resolved.",
-            ),
         ),
-        SubagentTask(
-            "quality-gate",
-            AgentRole.QUALITY_GATE,
-            "Apply FAR acceptance and closure gates to the frozen specialist packet.",
-            keys,
-            (
-                "claim-registry",
-                "discovery",
-                "evidence",
-                "counterexamples",
-                "formalizer",
-                "clean-room",
-                "contradictions",
-            ),
-            DependencyView.FULL,
-            done_criteria=(
-                "Evidence classes and provenance are valid.",
-                "Unresolved contradictions block promotion.",
-                "I-class material is not used to validate FAR.",
-            ),
+        DependencyView.FULL,
+        done_criteria=(
+            "Evidence classes and provenance are valid.",
+            "Unresolved contradictions block promotion.",
+            "I-class material is not used to validate FAR.",
         ),
+    )
+    return (
+        claim,
+        discovery,
+        evidence,
+        counterexamples,
+        formalizer,
+        clean_room,
+        contradictions,
+        quality_gate,
     )
 
 
@@ -632,6 +667,8 @@ def _validate_report_binding(
         errors.append("sandbox_id mismatch")
     if report.context_digest != context_digest:
         errors.append("context_digest mismatch")
+    if report.resolutions and task.role is not AgentRole.CONTRADICTION:
+        errors.append("only contradiction tasks may emit conflict resolutions")
     if errors:
         raise ValueError(
             f"{task.task_id}: runner returned report bound to wrong execution: "
@@ -649,13 +686,15 @@ def _detect_conflicts(reports: Sequence[SubagentReport]) -> tuple[FindingConflic
         for finding in report.findings:
             if finding.disposition not in {Disposition.SUPPORTS, Disposition.CONTRADICTS}:
                 continue
-            slots = by_claim.setdefault(
+            bucket = by_claim.setdefault(
                 finding.claim_id,
                 {Disposition.SUPPORTS: set(), Disposition.CONTRADICTS: set()},
             )
-            slots[finding.disposition].add(report.task_id)
+            bucket[finding.disposition].add(report.task_id)
         for resolution in report.resolutions:
-            resolutions.setdefault(resolution.claim_id, []).append((report.task_id, resolution))
+            resolutions.setdefault(resolution.claim_id, []).append(
+                (report.task_id, resolution)
+            )
 
     conflicts: list[FindingConflict] = []
     for claim_id in sorted(by_claim):
@@ -671,7 +710,8 @@ def _detect_conflicts(reports: Sequence[SubagentReport]) -> tuple[FindingConflic
             resolver, resolution = candidates[0]
         elif len(candidates) > 1:
             decisive = [
-                item for item in candidates if item[1].disposition is not Disposition.UNCERTAIN
+                item for item in candidates
+                if item[1].disposition is not Disposition.UNCERTAIN
             ]
             dispositions = {item[1].disposition for item in decisive}
             if len(dispositions) == 1 and decisive:
@@ -696,16 +736,6 @@ def _gate_issues(
         elif report.status is AgentStatus.BLOCKED:
             issues.append(f"{report.task_id}: blocked")
 
-        if report.recommendation is Recommendation.ACCEPT:
-            supports = [
-                finding
-                for finding in report.findings
-                if finding.disposition is Disposition.SUPPORTS
-                and finding.evidence_class is not EvidenceClass.I
-            ]
-            if not supports:
-                issues.append(f"{report.task_id}: acceptance lacks non-I supporting evidence")
-
     for conflict in conflicts:
         if not conflict.resolved:
             issues.append(f"{conflict.claim_id}: unresolved cross-agent conflict")
@@ -716,7 +746,36 @@ def _gate_issues(
             issues.append("quality-gate: required task missing")
         elif any(report.status is not AgentStatus.COMPLETED for report in quality):
             issues.append("quality-gate: did not complete")
+        elif any(report.recommendation is Recommendation.ACCEPT for report in quality):
+            qualifying_support = any(
+                finding.disposition is Disposition.SUPPORTS
+                and finding.evidence_class is not EvidenceClass.I
+                for report in reports
+                if report.status is AgentStatus.COMPLETED
+                for finding in report.findings
+            )
+            if not qualifying_support:
+                issues.append("quality-gate: acceptance lacks non-I supporting evidence")
+
     return tuple(dict.fromkeys(issues))
+
+
+def _promotion_allowed(
+    reports: Sequence[SubagentReport],
+    issues: Sequence[str],
+    *,
+    require_quality_gate: bool,
+) -> bool:
+    if issues:
+        return False
+    if not require_quality_gate:
+        return True
+    return any(
+        report.role is AgentRole.QUALITY_GATE
+        and report.status is AgentStatus.COMPLETED
+        and report.recommendation is Recommendation.ACCEPT
+        for report in reports
+    )
 
 
 def _context_digest(context: Mapping[str, Any]) -> str:
@@ -725,13 +784,14 @@ def _context_digest(context: Mapping[str, Any]) -> str:
         sort_keys=True,
         separators=(",", ":"),
         ensure_ascii=False,
+        allow_nan=False,
     ).encode("utf-8")
     return sha256(encoded).hexdigest()
 
 
 def _assert_json_compatible(value: Any, label: str) -> None:
     try:
-        json.dumps(value, sort_keys=True, ensure_ascii=False)
+        json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False)
     except (TypeError, ValueError) as exc:
         raise ValueError(f"{label} must be JSON-compatible: {exc}") from exc
 
