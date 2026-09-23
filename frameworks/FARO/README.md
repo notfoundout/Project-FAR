@@ -49,6 +49,7 @@ It defines execution, audit, comparison, disagreement analysis, reporting, and o
 - [`comparison.md`](comparison.md) — Defines comparison operations.
 - [`disagreement-analysis.md`](disagreement-analysis.md) — Defines disagreement analysis operations.
 - [`reporting.md`](reporting.md) — Defines reporting operations.
+- [`epistemic-boundary.md`](epistemic-boundary.md) — Defines the derived epistemic-boundary reporting/materialization operation over canonical FAR closure artifacts.
 - [`operational-evaluation.md`](operational-evaluation.md) — Defines operational evaluation.
 - [`FARO-v1.0-criteria.md`](FARO-v1.0-criteria.md) — Defines criteria required before FARO v1.0 Stable.
 
@@ -90,7 +91,7 @@ FARO may expose mathematical needs, but it does not expand FARE without a review
 
 ## Next Steps
 
-Use FARO to materialize contracts and Ω views, run decoder/collision checks, compare profiles, expose machinery cost, and produce typed reports.
+Use FARO to materialize contracts and Ω views, run decoder/collision checks, compare profiles, expose machinery cost, materialize epistemic-boundary views from completed FAR closure records, and produce typed reports.
 
 ---
 
@@ -109,4 +110,4 @@ FARO is downstream of FAR and FARA, but its operational interfaces and decision/
 
 ## Core-theory boundary
 
-FARO may execute a factorization or collision check but does not make the contract objective and does not turn schema conformance or successful encoding into mathematical proof. Ω is a materialized view, not an independent cause.
+FARO may execute a factorization or collision check but does not make the contract objective and does not turn schema conformance or successful encoding into mathematical proof. Ω and the epistemic-boundary object are materialized views, not independent causes.
