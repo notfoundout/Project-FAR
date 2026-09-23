@@ -71,6 +71,33 @@ def _verification_ref(root:Path)->tuple[str,str,bool]:
             raise IntegrityError(f"promotion PR head is unavailable locally: {head_ref}")
     return "HEAD",name,promotion
 
+def _verify_generated_outputs(root:Path,base:str,head:str,planned:set[str],generated:set[str])->None:
+    """Rebuild trusted generated outputs from the same pre-reconciliation state as promotion.
+
+    Promotion reconciliation runs after authorized planned files are materialized on the frozen
+    base and before generated outputs or the promotion manifest are committed. Replaying the
+    reconciler from the finished promotion head is not equivalent because reconciliation state
+    intentionally records what changed since the previous reconciliation.
+    """
+    archive=subprocess.run(["git","archive","--format=tar",base],cwd=root,capture_output=True)
+    if archive.returncode: raise IntegrityError("cannot archive exact promotion base for generated-output verification")
+    with tempfile.TemporaryDirectory(prefix="far-promotion-reconcile-") as td:
+        temp=Path(td)
+        with tarfile.open(fileobj=io.BytesIO(archive.stdout),mode="r:") as tar: tar.extractall(temp,filter="data")
+        for path in sorted(planned):
+            raw=blob(root,head,path)
+            if raw is None: raise IntegrityError(f"planned promotion output is unavailable at HEAD: {path}")
+            target=temp/path
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(raw)
+        from tools.reconcile_living_repo import reconcile
+        reconcile(temp)
+        for path in sorted(generated):
+            expected=temp/path
+            actual=blob(root,head,path)
+            expected_raw=expected.read_bytes() if expected.is_file() else None
+            if actual!=expected_raw: raise IntegrityError(f"trusted generated output is not canonical reconciliation output: {path}")
+
 def verify(root:Path)->list[str]:
     root=root.resolve()
     try:
@@ -163,23 +190,11 @@ def verify(root:Path)->list[str]:
                 if path in seen or path in planned: raise IntegrityError(f"duplicate/colliding proposal target: {path}")
                 seen.add(path); planned.add(path); before=blob(root,base,path); pre="ABSENT" if before is None else sha(before)
                 if path not in sealed or sealed[path]["kind"]!="planned" or sealed[path]["sha256"]!=operation.get("result_sha256") or pre!=operation.get("expected_main_sha256"): raise IntegrityError(f"proposal seal/preimage mismatch: {path}")
-        generated=set(policy.get("trusted_generated_paths",[])); unexpected=set(sealed)-planned-generated
+        generated={safe(x) for x in policy.get("trusted_generated_paths",[])}; unexpected=set(sealed)-planned-generated
         if unexpected: raise IntegrityError("sealed paths lack authority: "+", ".join(sorted(unexpected)))
         for path,row in sealed.items():
             if row["kind"]!=("planned" if path in planned else "trusted_generated"): raise IntegrityError(f"sealed kind mismatch: {path}")
-        changed_generated=generated & set(sealed)
-        if changed_generated:
-            archive=subprocess.run(["git","archive","--format=tar",head],cwd=root,capture_output=True)
-            if archive.returncode: raise IntegrityError("cannot archive exact promotion head for generated-output verification")
-            with tempfile.TemporaryDirectory(prefix="far-promotion-reconcile-") as td:
-                temp=Path(td)
-                with tarfile.open(fileobj=io.BytesIO(archive.stdout),mode="r:") as tar: tar.extractall(temp,filter="data")
-                from tools.reconcile_living_repo import reconcile
-                reconcile(temp)
-                for path in sorted(changed_generated):
-                    expected=temp/path
-                    actual=blob(root,head,path)
-                    if not expected.is_file() or actual!=expected.read_bytes(): raise IntegrityError(f"trusted generated output is not canonical reconciliation output: {path}")
+        _verify_generated_outputs(root,base,head,planned,generated)
         return []
     except (IntegrityError,KeyError,TypeError,ValueError) as exc:
         return [str(exc)]
