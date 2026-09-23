@@ -23,9 +23,9 @@
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "0f53be3a05e0e862dd942be49d541fe8062270575fc9482e1f582952effd2d28",
+      "current_sha256": "d1f0e93da27911c2e46bc77f08b2cf6d0524f24ca5fd1792e9c6d02ce3469fcf",
       "class": "documentation_surface",
-      "reason": "Registered the epistemic calibration audit, the EFR-R2 input-specification amendment, and the accepted governed contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the evidence-closure contract and its repaired lifecycle/acceptance authority in the canonical map, in addition to the previously registered epistemic calibration, EFR-R2 amendment, and contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed."
     },
     {
       "path": "docs/governance/limitations-register.md",

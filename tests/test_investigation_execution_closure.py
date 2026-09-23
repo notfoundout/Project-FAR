@@ -35,6 +35,24 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
         }
         return manifest, evidence_path
 
+    def _record(self, record_id: str, statement: str, evidence_path: str) -> dict:
+        return {
+            "id": record_id,
+            "statement": statement,
+            "evidence": [{"path": evidence_path, "locator": record_id}],
+        }
+
+    def _terminal_class_result(self, class_id: str, evidence_path: str) -> dict:
+        return {
+            "class_id": class_id,
+            "rechecked": True,
+            "new_material_evidence": False,
+            "new_claim_decomposition": False,
+            "new_alternative_explanation": False,
+            "new_residual_uncertainty": False,
+            "evidence": [{"path": evidence_path, "locator": f"terminal:{class_id}"}],
+        }
+
     def _complete_closure(self, evidence_path: str) -> dict:
         evidence = [{"path": evidence_path, "locator": "Evidence closure"}]
         return {
@@ -57,13 +75,23 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
             "residual_uncertainty_recorded": True,
             "measurement_limitations": [],
             "measurement_limitations_basis": "No material measurement or classification limitation remained in the frozen scope.",
-            "strongest_support": ["Support item S1 recorded in the closure evidence."],
-            "strongest_counterevidence": ["Counterevidence item C1 recorded in the closure evidence."],
+            "strongest_support": [
+                self._record("SUP-1", "Strongest in-scope support was recorded.", evidence_path)
+            ],
+            "strongest_counterevidence": [
+                self._record("CTR-1", "Strongest in-scope counterevidence was recorded.", evidence_path)
+            ],
             "alternative_explanations": [],
             "alternative_explanations_basis": "No material alternative explanation applied to the frozen claim form.",
             "surviving_propositions": [],
             "surviving_propositions_basis": "No narrower proposition survived the adjudication within the frozen scope.",
-            "residual_uncertainty": ["Generalization outside the frozen scope remains unresolved."],
+            "residual_uncertainty": [
+                self._record(
+                    "UNC-1",
+                    "Generalization outside the frozen scope remains unresolved.",
+                    evidence_path,
+                )
+            ],
             "evidence_search_classes": [
                 {
                     "id": "direct_evidence",
@@ -83,6 +111,9 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
                 "new_alternative_explanation": False,
                 "new_residual_uncertainty": False,
                 "evidence": evidence,
+                "class_results": [
+                    self._terminal_class_result("direct_evidence", evidence_path)
+                ],
             },
             "methodology_audit": {
                 "completed": True,
@@ -135,6 +166,36 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
             path = self._write_fixture(root, manifest, evidence_path)
             self.assertEqual(validate_manifest(path, root, manifest_results={}), [])
 
+    def test_placeholder_record_entries_fail_closed(self) -> None:
+        for placeholder in (None, "", "placeholder", {}, {"id": "X", "statement": ""}):
+            with self.subTest(placeholder=placeholder), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                manifest, evidence_path = self._fixture()
+                closure = self._complete_closure(evidence_path)
+                closure["strongest_support"] = [placeholder]
+                manifest["evidence_closure"] = closure
+                path = self._write_fixture(root, manifest, evidence_path)
+                errors = validate_manifest(path, root, manifest_results={})
+                self.assertTrue(
+                    any("evidence_closure.strongest_support[1]" in error for error in errors),
+                    errors,
+                )
+
+    def test_nonempty_record_requires_basis_or_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest, evidence_path = self._fixture()
+            closure = self._complete_closure(evidence_path)
+            closure["residual_uncertainty"] = [
+                {"id": "UNC-1", "statement": "A residual question remains."}
+            ]
+            manifest["evidence_closure"] = closure
+            path = self._write_fixture(root, manifest, evidence_path)
+            self.assertIn(
+                "VI-900: evidence_closure.residual_uncertainty[1] requires a non-empty basis or evidence",
+                validate_manifest(path, root, manifest_results={}),
+            )
+
     def test_terminal_saturation_with_new_material_item_fails(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -145,6 +206,53 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
             path = self._write_fixture(root, manifest, evidence_path)
             self.assertIn(
                 "VI-900: evidence_closure.terminal_saturation.new_material_evidence must be false",
+                validate_manifest(path, root, manifest_results={}),
+            )
+
+    def test_terminal_saturation_must_cover_every_executed_class(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest, evidence_path = self._fixture()
+            closure = self._complete_closure(evidence_path)
+            closure["evidence_search_classes"].append(
+                {
+                    "id": "opposing_evidence",
+                    "status": "executed",
+                    "evidence": [{"path": evidence_path, "locator": "opposition"}],
+                }
+            )
+            manifest["evidence_closure"] = closure
+            path = self._write_fixture(root, manifest, evidence_path)
+            self.assertIn(
+                "VI-900: terminal saturation missing executed classes: opposing_evidence",
+                validate_manifest(path, root, manifest_results={}),
+            )
+
+    def test_terminal_saturation_rejects_nonexecuted_class_result(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest, evidence_path = self._fixture()
+            closure = self._complete_closure(evidence_path)
+            closure["terminal_saturation"]["class_results"].append(
+                self._terminal_class_result("never_executed", evidence_path)
+            )
+            manifest["evidence_closure"] = closure
+            path = self._write_fixture(root, manifest, evidence_path)
+            self.assertIn(
+                "VI-900: terminal saturation contains non-executed classes: never_executed",
+                validate_manifest(path, root, manifest_results={}),
+            )
+
+    def test_terminal_class_result_must_itself_report_zero_new_items(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest, evidence_path = self._fixture()
+            closure = self._complete_closure(evidence_path)
+            closure["terminal_saturation"]["class_results"][0]["new_residual_uncertainty"] = True
+            manifest["evidence_closure"] = closure
+            path = self._write_fixture(root, manifest, evidence_path)
+            self.assertIn(
+                "VI-900: evidence_closure.terminal_saturation.class_results[1].new_residual_uncertainty must be false",
                 validate_manifest(path, root, manifest_results={}),
             )
 
