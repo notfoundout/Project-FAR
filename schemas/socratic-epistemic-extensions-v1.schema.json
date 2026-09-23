@@ -11,22 +11,34 @@
     },
     "record": {"type": "object"}
   },
-  "allOf": [
+  "oneOf": [
     {
-      "if": {"properties": {"record_type": {"const": "EXPERTISE_ASSERTION"}}, "required": ["record_type"]},
-      "then": {"properties": {"record": {"$ref": "#/$defs/expertiseAssertion"}}}
+      "properties": {
+        "record_type": {"const": "EXPERTISE_ASSERTION"},
+        "record": {"$ref": "#/$defs/expertiseAssertion"}
+      },
+      "required": ["record_type", "record"]
     },
     {
-      "if": {"properties": {"record_type": {"const": "EXPERTISE_APPLICABILITY"}}, "required": ["record_type"]},
-      "then": {"properties": {"record": {"$ref": "#/$defs/expertiseApplicability"}}}
+      "properties": {
+        "record_type": {"const": "EXPERTISE_APPLICABILITY"},
+        "record": {"$ref": "#/$defs/expertiseApplicability"}
+      },
+      "required": ["record_type", "record"]
     },
     {
-      "if": {"properties": {"record_type": {"const": "EPISTEMIC_BOUNDARY"}}, "required": ["record_type"]},
-      "then": {"properties": {"record": {"$ref": "#/$defs/epistemicBoundary"}}}
+      "properties": {
+        "record_type": {"const": "EPISTEMIC_BOUNDARY"},
+        "record": {"$ref": "#/$defs/epistemicBoundary"}
+      },
+      "required": ["record_type", "record"]
     },
     {
-      "if": {"properties": {"record_type": {"const": "ELENCHUS_SESSION"}}, "required": ["record_type"]},
-      "then": {"properties": {"record": {"$ref": "#/$defs/elenchusSession"}}}
+      "properties": {
+        "record_type": {"const": "ELENCHUS_SESSION"},
+        "record": {"$ref": "#/$defs/elenchusSession"}
+      },
+      "required": ["record_type", "record"]
     }
   ],
   "additionalProperties": false,
