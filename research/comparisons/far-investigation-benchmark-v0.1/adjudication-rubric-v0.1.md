@@ -25,6 +25,8 @@ For each of those four evaluators independently:
 3. Present four rounds. In round `r = 0..3`, traverse the same 60-case base order and present the run whose condition is `conditions[(r + rotation) mod 4]` for that case.
 4. Concatenate the four rounds to obtain exactly 240 packet assignments with `presentation_index = 1..240`.
 
+The file is exactly `{"status":"FROZEN","schedules":[...]}`. `schedules` contains exactly one record for each of the two frozen `unitizer` and two frozen `primary_scorer` evaluator IDs; adjudicators are excluded. Each schedule record has exactly `evaluator_id`, `lane`, and `assignments`. Each assignment has exactly `presentation_index`, `round` (one-based), `round_position` (one-based within its 60-packet round), `case_id`, `condition`, `run_id`, `condition_label_visible`, `fresh_context`, `other_case_versions_visible`, and `other_evaluator_outputs_visible`. The `run_id` must equal the unique binding for that case-condition in `execution-schedule.json`. The four Boolean fields are fixed respectively to `false`, `true`, `false`, and `false`.
+
 This construction gives every evaluator exactly 60 packets from each condition, exactly 15 packets from each condition in every 60-packet round, and places the four versions of any one case exactly 60 presentation positions apart. The validator must reproduce this schedule exactly; arbitrary reordering is invalid.
 
 Each evaluator receives one normalized packet at a time in a fresh scoring context with no condition label, no other condition packet for the same case, and no access to another evaluator's scores. Packet presentation order may not be altered after any scoring output exists.

@@ -47,6 +47,7 @@
         "rubric_freeze",
         "reference_search_protocol_freeze",
         "execution_schedule_freeze",
+        "adjudication_schedule_freeze",
         "source_binding",
         "hashing"
       ],
@@ -178,6 +179,12 @@
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "role": "frozen_numerical_analysis_parameters_pending_freeze_hash",
       "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/adjudication-schedule.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "adjudication_schedule_pending_freeze_hash",
+      "verify_current_path": false
     }
   ],
   "times": {
