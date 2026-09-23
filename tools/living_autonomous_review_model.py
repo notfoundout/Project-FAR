@@ -7,14 +7,15 @@ from typing import Any
 
 from tools.living_autonomous_review_core import *
 
+
 def generation_config(schema: dict[str, Any], *, legacy: bool = False) -> dict[str, Any]:
     base: dict[str, Any] = {"thinkingConfig": {"thinkingLevel": "medium"}}
     if legacy:
         base["responseMimeType"] = "application/json"
         base["responseSchema"] = schema
     else:
-        # Gemini 3 generateContent currently supports responseFormat; the legacy
-        # fields remain a fallback for endpoint compatibility.
+        # Gemini 3 generateContent supports responseFormat; the legacy fields
+        # remain a fallback for endpoint compatibility.
         base["responseFormat"] = {"text": {"mimeType": "application/json", "schema": schema}}
     return base
 
@@ -59,7 +60,11 @@ class GeminiModel:
             "contents": [{"role": "user", "parts": [{"text": prompt}]}],
         }
         if urls:
-            base["tools"] = [{"url_context": {}}, {"google_search": {}}]
+            # Screening is the primary-source identity gate. Do not let broad search
+            # substitute a secondary page for the candidate source at this stage.
+            base["tools"] = [{"url_context": {}}]
+            if role in {"attack", "replication"}:
+                base["tools"].append({"google_search": {}})
 
         payload: dict[str, Any] | None = None
         mode = "responseFormat"
@@ -85,6 +90,11 @@ class GeminiModel:
         first = candidates[0]
         if not isinstance(first, dict):
             raise CandidateReviewError(f"Gemini {role} returned malformed candidate")
+        finish_reason = first.get("finishReason")
+        if finish_reason != "STOP":
+            raise CandidateReviewError(
+                f"Gemini {role} did not complete normally: finishReason={finish_reason!r}"
+            )
         parts = first.get("content", {}).get("parts", [])
         text = "".join(x.get("text", "") for x in parts if isinstance(x, dict))
         try:
@@ -95,7 +105,10 @@ class GeminiModel:
             raise CandidateReviewError(f"Gemini {role} returned non-object JSON")
         metadata = {
             "model": self.model,
-            "finish_reason": first.get("finishReason"),
+            "model_version": payload.get("modelVersion"),
+            "response_id": payload.get("responseId"),
+            "finish_reason": finish_reason,
+            "safety_ratings": first.get("safetyRatings", []),
             "structured_output_mode": mode,
             "url_context_metadata": first.get("urlContextMetadata", {}),
             "grounding_metadata": first.get("groundingMetadata", {}),
@@ -161,25 +174,28 @@ def validate_claim_ids(ids: Any, allowed: set[str], label: str) -> list[str]:
 def prompt_for(role: str, candidate: dict[str, Any], claims: list[dict[str, Any]], urls: list[str], prior=None) -> str:
     instructions = {
         "screening": (
-            "Verify a primary source through URL context. Decide whether it bears directly on the exact "
-            "canonical claims. Distinguish premise/scope match from thematic similarity. In source_urls_used, "
-            "list only exact URLs that URL Context successfully retrieved."
+            "Verify the supplied candidate primary source through URL context only. Decide whether it bears "
+            "directly on the exact canonical claims. Distinguish premise/scope match from thematic similarity. "
+            "In source_urls_used, list only exact URLs that URL Context successfully retrieved."
         ),
         "attack": (
             "Treat the source as potentially damaging. Construct the strongest exact contradiction or "
             "strong-prior-art case actually supported. Give a reproducible attack; do not stretch scope. "
-            "In source_urls_used, list only exact URLs that URL Context successfully retrieved."
+            "Broad search may locate corroborating or counterevidence, but source_urls_used must include the "
+            "retrieved primary source that materially supports the attack."
         ),
         "replication": (
             "Independently re-read the source and canonical claims. Reproduce or reject the strongest "
-            "attack without treating another role's conclusion as authority. In source_urls_used, list only "
-            "exact URLs that URL Context successfully retrieved."
+            "attack without treating another role's conclusion as authority. Broad search may locate "
+            "corroborating or counterevidence, but source_urls_used must include the retrieved primary source "
+            "that materially supports the replicated finding."
         ),
         "adjudication": (
             "Adjudicate the records. PROJECT_CHANGE_REQUIRED requires verified primary-source support, "
-            "exact premise/scope match, both attack roles explicitly finding a contradiction, a reproducible "
-            "attack, and internal replication. N1_PRIOR_ART_LEAD requires both attack roles to report direct "
-            "or stronger prior art on a common exact claim. Select only minimal necessary targets."
+            "exact premise/scope and claim binding, both attack roles explicitly finding the same contradiction, "
+            "a reproducible attack, and internal replication. N1_PRIOR_ART_LEAD requires both attack roles to "
+            "report direct or stronger prior art on a common exact claim. Do not downgrade a reproduced "
+            "contradiction or agreed direct prior-art result. Select only minimal necessary targets."
         ),
     }
     value: dict[str, Any] = {
