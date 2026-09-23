@@ -1,6 +1,6 @@
 # Elenchus Protocol
 
-Status: **Provisional — candidate internal methodology extension**  
+Status: **Accepted — bounded internal methodology extension**  
 Contract: `FAR-ELENCHUS-1.0`
 
 ## Purpose
@@ -106,7 +106,7 @@ A later revision that changes a result-relevant commitment invalidates dependent
 
 ## Machine-readable record
 
-The candidate interchange contract is `socratic-epistemic-extensions/1.0` with record type `ELENCHUS_SESSION`, governed by:
+The accepted internal interchange contract is `socratic-epistemic-extensions/1.0` with record type `ELENCHUS_SESSION`, governed by:
 
 - `schemas/socratic-epistemic-extensions-v1.schema.json`;
 - `mechanization/far_mechanization/socratic_epistemic.py`.
