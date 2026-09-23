@@ -1,0 +1,10 @@
+{
+  "status": "PREPARED_NOT_FROZEN",
+  "presentation_isolation": {
+    "fresh_context": true,
+    "condition_label_hidden": true,
+    "same_case_alternate_packet_hidden": true,
+    "other_evaluator_scores_hidden": true
+  },
+  "schedules": []
+}

@@ -95,7 +95,7 @@ Every run has a unique stable `run_id`. If `environment-lock.json` uses the `non
 
 `adjudication-schedule.json` is generated only after the final 60 case IDs, complete execution schedule, and evaluator identities are frozen, but before any scoring output exists.
 
-It must contain exactly one 240-run presentation list for each of the two `unitizer` evaluators and two `primary_scorer` evaluators. The list for an evaluator is reproduced exactly from `adjudication-rubric-v0.1.md`: evaluator-specific SHA-256 base case order, four 60-packet rounds, and condition rotation by base position modulo four. Every evaluator therefore sees each condition exactly 60 times, 15 times per round, and each case's four versions exactly 60 presentation positions apart.
+It must contain exactly one 240-run presentation list for each of the two `unitizer` evaluators and two `primary_scorer` evaluators. The list for an evaluator is reproduced exactly from `adjudication-rubric-v0.1.md`: evaluator-specific SHA-256 base case order, four 60-packet rounds, condition rotation by base position modulo four, exact presentation indices, and exact run-ID linkage to `execution-schedule.json`. Every evaluator therefore sees each condition exactly 60 times, 15 times per round, and each case's four versions exactly 60 presentation positions apart. The four presentation-isolation flags specified by the rubric must all be frozen as `true`; missing or additional fields, evaluators, or assignments are invalid.
 
 The schedule is condition-blinded at presentation time and cannot be changed after any unitization or scoring output exists.
 

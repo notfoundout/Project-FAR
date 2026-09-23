@@ -87,6 +87,7 @@ REQUIRED_FROZEN_ARTIFACTS = {
     f"{BENCHMARK_DIR}/case-selection-declarations.json",
     f"{BENCHMARK_DIR}/condition-prompts.json",
     f"{BENCHMARK_DIR}/execution-schedule.json",
+    f"{BENCHMARK_DIR}/adjudication-schedule.json",
     f"{BENCHMARK_DIR}/reference-search-config.json",
     f"{BENCHMARK_DIR}/reference-evidence-manifest.json",
     f"{BENCHMARK_DIR}/environment-lock.json",
@@ -121,6 +122,7 @@ FROZEN_CONFIG_JSON = {
     f"{BENCHMARK_DIR}/case-selection-declarations.json",
     f"{BENCHMARK_DIR}/condition-prompts.json",
     f"{BENCHMARK_DIR}/execution-schedule.json",
+    f"{BENCHMARK_DIR}/adjudication-schedule.json",
     f"{BENCHMARK_DIR}/reference-search-config.json",
     f"{BENCHMARK_DIR}/reference-evidence-manifest.json",
     f"{BENCHMARK_DIR}/environment-lock.json",
@@ -654,6 +656,90 @@ def _validate_schedule(data, case_ids, errors):
             break
 
 
+def _validate_adjudication_schedule(data, case_ids, evaluators, execution_schedule, errors):
+    """Reproduce the frozen packet order for every packet-facing evaluator."""
+    if not isinstance(data, dict) or set(data) != {"status", "presentation_isolation", "schedules"}:
+        errors.append("adjudication-schedule.json must contain exactly status, presentation_isolation, and schedules")
+        return
+    if data.get("status") != "FROZEN":
+        errors.append("adjudication-schedule.json status must be FROZEN")
+
+    required_isolation = {
+        "fresh_context": True,
+        "condition_label_hidden": True,
+        "same_case_alternate_packet_hidden": True,
+        "other_evaluator_scores_hidden": True,
+    }
+    if data.get("presentation_isolation") != required_isolation:
+        errors.append("adjudication schedule presentation isolation flags must exactly match the frozen requirements")
+
+    eligible = {
+        e.get("id"): e.get("lane")
+        for e in evaluators or []
+        if isinstance(e, dict) and e.get("lane") in {"unitizer", "primary_scorer"}
+    }
+    schedules = data.get("schedules")
+    if not isinstance(schedules, list):
+        errors.append("adjudication schedule schedules must be an array")
+        return
+    by_evaluator = {}
+    for schedule in schedules:
+        if not isinstance(schedule, dict) or set(schedule) != {"evaluator_id", "lane", "assignments"}:
+            errors.append("each adjudication evaluator schedule must contain exactly evaluator_id, lane, and assignments")
+            continue
+        evaluator_id = schedule.get("evaluator_id")
+        if evaluator_id in by_evaluator:
+            errors.append(f"duplicate adjudication schedule evaluator: {evaluator_id}")
+        by_evaluator[evaluator_id] = schedule
+    if set(by_evaluator) != set(eligible):
+        errors.append("adjudication schedules must exactly cover the two unitizers and two primary scorers")
+
+    run_by_pair = {}
+    if isinstance(execution_schedule, dict):
+        for run in execution_schedule.get("runs", []):
+            if isinstance(run, dict):
+                run_by_pair[(run.get("case_id"), run.get("condition"))] = run.get("run_id")
+
+    for evaluator_id, lane in eligible.items():
+        schedule = by_evaluator.get(evaluator_id)
+        if not isinstance(schedule, dict):
+            continue
+        if schedule.get("lane") != lane:
+            errors.append(f"adjudication schedule lane mismatch for evaluator {evaluator_id}")
+        assignments = schedule.get("assignments")
+        if not isinstance(assignments, list) or len(assignments) != 240:
+            errors.append(f"adjudication schedule for {evaluator_id} must contain exactly 240 assignments")
+            continue
+        ordered_cases = sorted(
+            case_ids,
+            key=lambda case_id: sha256_text(
+                f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"
+            ),
+        )
+        expected = []
+        for round_index in range(4):
+            for j, case_id in enumerate(ordered_cases):
+                condition = CONDITIONS[(round_index + (j % 4)) % 4]
+                expected.append(
+                    {
+                        "presentation_index": len(expected) + 1,
+                        "round": round_index + 1,
+                        "case_id": case_id,
+                        "condition": condition,
+                        "run_id": run_by_pair.get((case_id, condition)),
+                    }
+                )
+        for index, (actual, wanted) in enumerate(zip(assignments, expected), 1):
+            if not isinstance(actual, dict) or set(actual) != set(wanted):
+                errors.append(
+                    f"adjudication assignment {index} for {evaluator_id} must contain exactly "
+                    "presentation_index, round, case_id, condition, and run_id"
+                )
+                continue
+            if actual != wanted:
+                errors.append(f"adjudication assignment {index} mismatch for evaluator {evaluator_id}")
+
+
 def _validate_reference_manifest(data, case_ids, errors):
     if not isinstance(data, dict) or data.get("status") != "FROZEN":
         errors.append("reference-evidence-manifest.json must be a FROZEN object")
@@ -790,7 +876,7 @@ def _validate_case_selection_config(data, errors):
             errors.append(f"case-selection-config requires {key}")
 
 
-def _validate_frozen_semantics(errors):
+def _validate_frozen_semantics(evaluators, errors):
     paths = {p: _load_required_json(p, errors) for p in sorted(FROZEN_CONFIG_JSON)}
     for path, data in paths.items():
         if data is not None:
@@ -815,7 +901,15 @@ def _validate_frozen_semantics(errors):
         _validate_case_bundle(candidates, cases, reserves, errors)
     case_ids = {r.get("case_id") for r in cases or [] if isinstance(r.get("case_id"), str)}
     if len(case_ids) == 60:
-        _validate_schedule(paths.get(f"{BENCHMARK_DIR}/execution-schedule.json"), case_ids, errors)
+        execution_schedule = paths.get(f"{BENCHMARK_DIR}/execution-schedule.json")
+        _validate_schedule(execution_schedule, case_ids, errors)
+        _validate_adjudication_schedule(
+            paths.get(f"{BENCHMARK_DIR}/adjudication-schedule.json"),
+            case_ids,
+            evaluators,
+            execution_schedule,
+            errors,
+        )
         _validate_reference_manifest(paths.get(f"{BENCHMARK_DIR}/reference-evidence-manifest.json"), case_ids, errors)
 
     ref_cfg = paths.get(f"{BENCHMARK_DIR}/reference-search-config.json")
@@ -971,7 +1065,7 @@ def validate(manifest_path: pathlib.Path):
         _require_verified_paths(artifact_map, REQUIRED_FROZEN_ARTIFACTS, "artifact", errors)
         _require_verified_paths(source_map, REQUIRED_SOURCE_PATHS, "source binding", errors)
         _validate_evaluators(m.get("evaluators", []), errors)
-        _validate_frozen_semantics(errors)
+        _validate_frozen_semantics(m.get("evaluators", []), errors)
 
         if status == "frozen":
             illegal = sorted(PREUNBLIND_OUTPUTS & set(artifact_map))
