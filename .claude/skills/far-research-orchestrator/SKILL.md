@@ -5,6 +5,24 @@ description: "Coordinates Project FAR research by selecting the highest-value un
 
 Coordinate Project FAR research as an adversarial discovery program.
 
+## Subagent execution
+
+When the runtime supplies separate agent contexts for bounded research lanes, use
+`tools/subagent_orchestration.py` and
+`docs/architecture/far-subagent-execution.md` for a frozen, content-addressed
+plan. The coordinator owns the graph, context routing, conflict disposition,
+final synthesis, and repository writes; specialists return typed reports and
+do not mutate shared repository state.
+
+Give each specialist only its declared context artifacts and dependency view.
+For a clean-room lane, freeze its input packet, declare an explicit context
+allowlist and claims-only dependency view, and require runtime verification of
+isolation. Do not forward a prior FAR verdict or construction-session synthesis.
+Neither distinct task names nor the clean-room flag establish independent
+I2 evidence; apply the isolation doctrine's separate controls and record the
+class actually supported. Preserve conflicting findings, and do not treat a
+completed orchestration run as claim acceptance or promotion.
+
 For each major question, use this sequence when applicable:
 
 1. Precisely formulate the research question.

@@ -110,6 +110,8 @@ Historical bounded-program status remains historical only. PR #453 remains a non
 
 ## Certification and architecture navigation
 
+- [FAR subagent execution architecture](docs/architecture/far-subagent-execution.md)
+
 - [Repository certification governance](docs/governance/repository-certification-standard.md)
 - [Repository certification inventory baseline](docs/audits/repository-certification-inventory-audit.md)
 - [Semantic certification baseline](docs/audits/semantic-certification-report.md)

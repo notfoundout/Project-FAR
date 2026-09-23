@@ -8,34 +8,26 @@ from pathlib import Path
 
 from tools import subagent_orchestration as sub
 
-TEST_SKILL_TEXT = "test skill instructions\n"
-TEST_SKILL_SHA = sub.sha256_text(TEST_SKILL_TEXT)
-DEFAULT_SKILLS = (
-    "far-discovery-engine",
-    "far-formalizer",
-    "far-prior-art-adversary",
-    "far-counterexample-hunter",
-    "far-theory-auditor",
-    "far-research-quality-gate",
-    "far-research-orchestrator",
-)
 
-def write_default_skills(root: Path) -> None:
-    for name in DEFAULT_SKILLS:
-        path = root / ".claude" / "skills" / name / "SKILL.md"
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(f"{name} instructions\n", encoding="utf-8")
+ROOT = Path(__file__).resolve().parents[1]
 
-def cap(agent_id: str, **overrides) -> sub.RuntimeCapabilities:
+
+def spec(*, skill_path: str, **kwargs) -> sub.AgentSpec:
+    digest = sub.sha256_bytes((ROOT / skill_path).read_bytes())
+    return sub.AgentSpec(skill_path=skill_path, skill_sha256=digest, **kwargs)
+
+
+def cap(agent: sub.AgentSpec, **overrides) -> sub.RuntimeCapabilities:
     values = {
-        "sandbox_id": f"sandbox:{agent_id}",
+        "sandbox_id": f"sandbox:{agent.agent_id}",
         "isolation_verified": True,
-        "instruction_sha256": TEST_SKILL_SHA,
+        "instruction_sha256": agent.skill_sha256,
         "repository_tools_enabled": False,
         "shared_state_with": (),
     }
     values.update(overrides)
     return sub.RuntimeCapabilities(**values)
+
 
 def completed(task: sub.AgentTask, *findings: sub.Finding) -> sub.AgentReport:
     return sub.AgentReport(
@@ -46,46 +38,45 @@ def completed(task: sub.AgentTask, *findings: sub.Finding) -> sub.AgentReport:
         findings=tuple(findings),
     )
 
+
 class PlanTests(unittest.TestCase):
-    def test_default_plan_is_deterministic_and_skill_bytes_are_bound(self):
+    def test_default_plan_is_deterministic_and_coordinator_is_terminal(self):
+        left = sub.far_research_plan()
+        right = sub.far_research_plan()
+        self.assertEqual(left.sha256, right.sha256)
+        order = sub.topological_order(left)
+        self.assertEqual(order[-1], "coordinator")
+        self.assertEqual(set(left.by_id["coordinator"].dependencies), set(order[:-1]))
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            write_default_skills(root)
-            left = sub.far_research_plan(root)
-            right = sub.far_research_plan(root)
-            self.assertEqual(left.sha256, right.sha256)
-            order = sub.topological_order(left)
-            self.assertEqual(order[-1], "coordinator")
-            self.assertEqual(set(left.by_id["coordinator"].dependencies), set(order[:-1]))
-
-            discovery = root / ".claude/skills/far-discovery-engine/SKILL.md"
-            discovery.write_text("changed instructions\n", encoding="utf-8")
+            for agent in left.agents:
+                skill = root / agent.skill_path
+                skill.parent.mkdir(parents=True, exist_ok=True)
+                skill.write_bytes((ROOT / agent.skill_path).read_bytes())
+            frozen = sub.far_research_plan(root)
+            skill = root / frozen.by_id["discovery"].skill_path
+            skill.write_text("changed instructions\n", encoding="utf-8")
             changed = sub.far_research_plan(root)
-            self.assertNotEqual(left.sha256, changed.sha256)
-            self.assertNotEqual(
-                left.by_id["discovery"].skill_sha256,
-                changed.by_id["discovery"].skill_sha256,
-            )
+            self.assertNotEqual(frozen.sha256, changed.sha256)
+            self.assertNotEqual(frozen.by_id["discovery"].skill_sha256,
+                                changed.by_id["discovery"].skill_sha256)
 
     def test_cycle_and_incomplete_coordinator_dependency_fail_closed(self):
-        specialist = sub.AgentSpec(
+        specialist = spec(
             agent_id="a",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="a",
             dependencies=("b",),
         )
-        other = sub.AgentSpec(
+        other = spec(
             agent_id="b",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="b",
             dependencies=("a",),
         )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -117,27 +108,25 @@ class PlanTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "content hash mismatch"):
             sub.ContextArtifact("source-1", "0" * 64, "exact bytes")
 
+
 class OrchestrationTests(unittest.TestCase):
     @staticmethod
     def simple_plan(*, sequencing_only=False) -> sub.OrchestrationPlan:
-        a = sub.AgentSpec(
+        a = spec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
-        b = sub.AgentSpec(
+        b = spec(
             agent_id="b",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="b",
             dependencies=("a",),
             receives_dependency_reports=not sequencing_only,
         )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinator",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -160,7 +149,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -185,7 +174,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -196,21 +185,76 @@ class OrchestrationTests(unittest.TestCase):
         self.assertEqual(result.status, sub.RunStatus.COMPLETED)
         self.assertEqual(seen_b, [])
 
+    def test_clean_room_receives_only_frozen_context_and_claim_ids(self):
+        original = self.simple_plan()
+        clean = dataclasses.replace(
+            original.by_id["b"],
+            context_ids=("frozen_claims",),
+            dependency_view=sub.DependencyView.CLAIMS_ONLY,
+            clean_room=True,
+        )
+        plan = sub.OrchestrationPlan(
+            plan_id="clean-room-plan", coordinator_id="coordinator",
+            agents=(original.by_id["a"], clean, original.by_id["coordinator"]),
+        )
+        seen = {}
+
+        def callback(agent, task):
+            seen[agent.agent_id] = task
+            if agent.agent_id == "a":
+                return completed(task, sub.Finding(
+                    finding_id="F-1", claim_id="CLAIM-1",
+                    disposition=sub.FindingDisposition.SUPPORTS,
+                    statement="prior FAR verdict leaked if forwarded",
+                    evidence_refs=("construction",),
+                ))
+            return completed(task)
+
+        context = (
+            sub.ContextArtifact.from_text("frozen_claims", "CLAIM-1 exact frozen packet"),
+            sub.ContextArtifact.from_text("construction", "prior FAR verdict: accept"),
+        )
+        capabilities = {name: cap(plan.by_id[name]) for name in plan.by_id}
+        capabilities["b"] = cap(clean, clean_room_verified=True)
+        result = sub.orchestrate(plan=plan, objective="Assess CLAIM-1", context=context,
+                                 runtime=sub.CallableRuntime({name: callback for name in plan.by_id}, capabilities))
+        self.assertEqual(result.status, sub.RunStatus.COMPLETED)
+        self.assertEqual([item.artifact_id for item in seen["b"].context], ["frozen_claims"])
+        projected = seen["b"].dependency_reports[0]
+        self.assertEqual(projected.claim_ids, ("CLAIM-1",))
+        self.assertEqual(projected.findings, ())
+        self.assertNotIn("prior FAR verdict", sub.canonical_json(sub._dependency_payload(projected)))
+
+        capabilities["b"] = cap(clean)
+        with self.assertRaisesRegex(ValueError, "clean-room isolation is not verified"):
+            sub.orchestrate(plan=plan, objective="Assess CLAIM-1", context=context,
+                            runtime=sub.CallableRuntime({name: callback for name in plan.by_id}, capabilities))
+        with self.assertRaisesRegex(ValueError, "missing context artifacts"):
+            sub.orchestrate(plan=plan, objective="Assess CLAIM-1", context=context[1:],
+                            runtime=sub.CallableRuntime({name: callback for name in plan.by_id}, capabilities))
+
+    def test_clean_room_metadata_rejects_conclusion_context_and_full_reports(self):
+        base = self.simple_plan().by_id["b"]
+        with self.assertRaisesRegex(ValueError, "claims-only"):
+            dataclasses.replace(base, clean_room=True, context_ids=("frozen_claims",))
+        with self.assertRaisesRegex(ValueError, "forbidden clean-room context"):
+            dataclasses.replace(base, clean_room=True,
+                                context_ids=("preferred_conclusion",),
+                                dependency_view=sub.DependencyView.CLAIMS_ONLY)
+
     def test_support_contradiction_blocks_coordinator_even_under_majority(self):
         agents = []
         for name in ("a", "b", "c", "d"):
             agents.append(
-                sub.AgentSpec(
+                spec(
                     agent_id=name,
                     skill_path=".claude/skills/far-theory-auditor/SKILL.md",
-                    skill_sha256=TEST_SKILL_SHA,
                     role=name,
                 )
             )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=tuple(item.agent_id for item in agents),
@@ -242,7 +286,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -271,7 +315,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -302,7 +346,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -330,7 +374,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -343,23 +387,20 @@ class OrchestrationTests(unittest.TestCase):
 
     def test_cross_agent_duplicate_finding_id_is_rejected(self):
         agents = (
-            sub.AgentSpec(
+            spec(
                 agent_id="a",
                 skill_path=".claude/skills/far-discovery-engine/SKILL.md",
-                skill_sha256=TEST_SKILL_SHA,
                 role="a",
             ),
-            sub.AgentSpec(
+            spec(
                 agent_id="b",
                 skill_path=".claude/skills/far-formalizer/SKILL.md",
-                skill_sha256=TEST_SKILL_SHA,
                 role="b",
             ),
         )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -385,7 +426,7 @@ class OrchestrationTests(unittest.TestCase):
 
         runtime = sub.CallableRuntime(
             {name: callback for name in plan.by_id},
-            {name: cap(name) for name in plan.by_id},
+            {name: cap(plan.by_id[name]) for name in plan.by_id},
         )
         result = sub.orchestrate(
             plan=plan,
@@ -407,34 +448,34 @@ class OrchestrationTests(unittest.TestCase):
 
         cases = [
             {
-                "a": cap("a", isolation_verified=False),
-                "b": cap("b"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], isolation_verified=False),
+                "b": cap(plan.by_id["b"]),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
             {
-                "a": cap("a", sandbox_id="same"),
-                "b": cap("b", sandbox_id="same"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], sandbox_id="same"),
+                "b": cap(plan.by_id["b"], sandbox_id="same"),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
             {
-                "a": cap("a", shared_state_with=("b",)),
-                "b": cap("b"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], shared_state_with=("b",)),
+                "b": cap(plan.by_id["b"]),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
             {
-                "a": cap("a", shared_state_with=("external-hidden",)),
-                "b": cap("b"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], shared_state_with=("external-hidden",)),
+                "b": cap(plan.by_id["b"]),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
             {
-                "a": cap("a", instruction_sha256="1" * 64),
-                "b": cap("b"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], instruction_sha256="1" * 64),
+                "b": cap(plan.by_id["b"]),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
             {
-                "a": cap("a", repository_tools_enabled=True),
-                "b": cap("b"),
-                "coordinator": cap("coordinator"),
+                "a": cap(plan.by_id["a"], repository_tools_enabled=True),
+                "b": cap(plan.by_id["b"]),
+                "coordinator": cap(plan.by_id["coordinator"]),
             },
         ]
         for capabilities in cases:
@@ -458,7 +499,7 @@ class OrchestrationTests(unittest.TestCase):
         def execute():
             runtime = sub.CallableRuntime(
                 {name: callback for name in plan.by_id},
-                {name: cap(name) for name in plan.by_id},
+                {name: cap(plan.by_id[name]) for name in plan.by_id},
             )
             return sub.orchestrate(
                 plan=plan,
@@ -474,6 +515,7 @@ class OrchestrationTests(unittest.TestCase):
             [report.task_id for report in two.reports],
         )
         self.assertEqual(one.result_sha256, two.result_sha256)
+
 
 class ReasonerLaneAdapterTests(unittest.TestCase):
     def test_adapter_redacts_secrets_and_strictly_parses_report(self):
@@ -495,16 +537,14 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
                 }
             )
 
-        a = sub.AgentSpec(
+        a = spec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a",),
@@ -550,20 +590,15 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
             plan=plan,
             objective="token=github_pat_abcdefghijklmnopqrstuvwxyz0123456789",
             context=(),
-            runtime=sub.ReasonerLaneRuntime(
-                lanes,
-                skill_texts={
-                    a.skill_path: TEST_SKILL_TEXT,
-                    coordinator.skill_path: TEST_SKILL_TEXT,
-                },
-            ),
+            runtime=sub.ReasonerLaneRuntime(lanes),
         )
         self.assertEqual(result.status, sub.RunStatus.COMPLETED)
         self.assertIn("[REDACTED]", captured[0])
         self.assertNotIn("github_pat_", captured[0])
         payload = json.loads(captured[0])
-        self.assertEqual(payload["agent"]["instructions"], TEST_SKILL_TEXT)
-        self.assertEqual(payload["agent"]["skill_sha256"], TEST_SKILL_SHA)
+        self.assertEqual(payload["agent"]["instructions"],
+                         (ROOT / a.skill_path).read_text(encoding="utf-8"))
+        self.assertEqual(payload["agent"]["skill_sha256"], a.skill_sha256)
 
     def test_adapter_rejects_lane_provider_identity_mismatch_before_call(self):
         called = False
@@ -573,16 +608,14 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
             called = True
             return "{}"
 
-        a = sub.AgentSpec(
+        a = spec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
-        coordinator = sub.AgentSpec(
+        coordinator = spec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
-            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a",),
@@ -613,13 +646,7 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
                 plan=plan,
                 objective="identity",
                 context=(),
-                runtime=sub.ReasonerLaneRuntime(
-                    lanes,
-                    skill_texts={
-                        a.skill_path: TEST_SKILL_TEXT,
-                        coordinator.skill_path: TEST_SKILL_TEXT,
-                    },
-                ),
+                runtime=sub.ReasonerLaneRuntime(lanes),
             )
         self.assertFalse(called)
 
@@ -651,6 +678,10 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ValueError, "invalid disposition"):
             sub.parse_agent_report(json.dumps(bad))
+        with self.assertRaisesRegex(ValueError, "duplicate report key"):
+            sub.parse_agent_report(json.dumps(base).replace('"agent_id": "a"',
+                                       '"agent_id": "a", "agent_id": "b"'))
+
 
 if __name__ == "__main__":
     unittest.main()

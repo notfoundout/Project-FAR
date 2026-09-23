@@ -27,6 +27,10 @@ from tools.adversarial_research_harness import ReasonerLane, redact_outbound
 
 _HEX64 = re.compile(r"^[0-9a-f]{64}$")
 _ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
+_FORBIDDEN_CLEAN_ROOM_CONTEXT = frozenset({
+    "accepted_answer", "preferred_conclusion", "prior_far_verdict",
+    "prior_target_conclusion", "synthesis", "target_conclusion",
+})
 
 
 def canonical_json(value: object) -> str:
@@ -44,6 +48,12 @@ def sha256_bytes(raw: bytes) -> str:
 class AgentKind(str, enum.Enum):
     SPECIALIST = "specialist"
     COORDINATOR = "coordinator"
+
+
+class DependencyView(str, enum.Enum):
+    FULL = "full"
+    FINDINGS = "findings"
+    CLAIMS_ONLY = "claims-only"
 
 
 class FindingDisposition(str, enum.Enum):
@@ -142,9 +152,14 @@ class AgentSpec:
     receives_dependency_reports: bool = True
     requires_isolation: bool = True
     repository_tools_allowed: bool = False
+    context_ids: tuple[str, ...] | None = None
+    dependency_view: DependencyView = DependencyView.FULL
+    clean_room: bool = False
 
     def __post_init__(self) -> None:
         _validate_id(self.agent_id, "agent_id")
+        if not isinstance(self.kind, AgentKind) or not isinstance(self.dependency_view, DependencyView):
+            raise ValueError(f"{self.agent_id}: invalid agent kind or dependency view")
         skill_parts = PurePosixPath(self.skill_path).parts
         if (
             len(skill_parts) != 4
@@ -159,6 +174,21 @@ class AgentSpec:
             raise ValueError(f"{self.agent_id}: role is required")
         if len(self.dependencies) != len(set(self.dependencies)):
             raise ValueError(f"{self.agent_id}: dependencies must be unique")
+        if self.context_ids is not None:
+            if len(self.context_ids) != len(set(self.context_ids)):
+                raise ValueError(f"{self.agent_id}: context_ids must be unique")
+            for artifact_id in self.context_ids:
+                _validate_id(artifact_id, "context_id")
+        if self.clean_room:
+            if self.context_ids is None:
+                raise ValueError(f"{self.agent_id}: clean-room context must have an explicit allowlist")
+            if self.dependency_view is not DependencyView.CLAIMS_ONLY:
+                raise ValueError(f"{self.agent_id}: clean-room dependencies require claims-only view")
+            forbidden = _FORBIDDEN_CLEAN_ROOM_CONTEXT.intersection(self.context_ids)
+            if forbidden:
+                raise ValueError(f"{self.agent_id}: forbidden clean-room context {sorted(forbidden)}")
+            if not self.requires_isolation or self.repository_tools_allowed:
+                raise ValueError(f"{self.agent_id}: clean-room task requires isolation without repository tools")
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -188,6 +218,7 @@ class RuntimeCapabilities:
     instruction_sha256: str
     repository_tools_enabled: bool = False
     shared_state_with: tuple[str, ...] = ()
+    clean_room_verified: bool = False
 
     def __post_init__(self) -> None:
         if not self.sandbox_id.strip():
@@ -209,7 +240,17 @@ class AgentTask:
     objective: str
     input_sha256: str
     context: tuple[ContextArtifact, ...]
-    dependency_reports: tuple[AgentReport, ...]
+    dependency_reports: tuple[VisibleDependency, ...]
+
+
+@dataclasses.dataclass(frozen=True, slots=True)
+class VisibleDependency:
+    agent_id: str
+    task_id: str
+    view: DependencyView
+    claim_ids: tuple[str, ...] = ()
+    findings: tuple[Finding, ...] = ()
+    limitations: tuple[str, ...] = ()
 
 
 @dataclasses.dataclass(frozen=True, slots=True)
@@ -365,8 +406,19 @@ class ReasonerLaneRuntime:
 
 
 def parse_agent_report(raw: str) -> AgentReport:
+    def unique_pairs(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate report key: {key}")
+            result[key] = value
+        return result
+
     try:
-        data = json.loads(raw)
+        data = json.loads(
+            raw, object_pairs_hook=unique_pairs,
+            parse_constant=lambda value: (_ for _ in ()).throw(ValueError(f"non-finite {value}")),
+        )
     except json.JSONDecodeError as exc:
         raise ValueError(f"agent report is not valid JSON: {exc.msg}") from exc
     if not isinstance(data, dict):
@@ -449,6 +501,8 @@ def validate_plan(plan: OrchestrationPlan) -> None:
         raise ValueError("coordinator must depend on every specialist exactly once")
     if not coordinator.receives_dependency_reports:
         raise ValueError("coordinator must receive dependency reports")
+    if coordinator.dependency_view is not DependencyView.FULL:
+        raise ValueError("coordinator requires full specialist reports")
 
     for agent in plan.agents:
         for dependency in agent.dependencies:
@@ -541,9 +595,17 @@ def orchestrate(
     if not objective.strip():
         raise ValueError("objective is required")
     context_tuple = tuple(context)
+    if not all(isinstance(item, ContextArtifact) for item in context_tuple):
+        raise TypeError("context must contain ContextArtifact values")
     artifact_ids = [item.artifact_id for item in context_tuple]
     if len(artifact_ids) != len(set(artifact_ids)):
         raise ValueError("context artifact_id values must be unique")
+    available_context = set(artifact_ids)
+    for agent in plan.agents:
+        if agent.context_ids is not None:
+            missing = set(agent.context_ids) - available_context
+            if missing:
+                raise ValueError(f"{agent.agent_id}: missing context artifacts {sorted(missing)}")
 
     actual_run_id = run_id or _default_run_id(plan, objective, context_tuple)
     _validate_id(actual_run_id, "run_id")
@@ -584,16 +646,20 @@ def orchestrate(
                 )
 
         dependency_reports = (
-            tuple(reports[item] for item in agent.dependencies)
+            tuple(_project_dependency(reports[item], agent.dependency_view) for item in agent.dependencies)
             if agent.receives_dependency_reports
             else ()
+        )
+        visible_context = (
+            context_tuple if agent.context_ids is None else
+            tuple(item for item in context_tuple if item.artifact_id in agent.context_ids)
         )
         task = _build_task(
             plan=plan,
             run_id=actual_run_id,
             agent=agent,
             objective=objective,
-            context=context_tuple,
+            context=visible_context,
             dependency_reports=dependency_reports,
         )
         try:
@@ -726,6 +792,8 @@ def _validate_runtime(plan: OrchestrationPlan, runtime: AgentRuntime) -> None:
             )
         if agent.requires_isolation and not capabilities.isolation_verified:
             raise ValueError(f"{agent.agent_id}: required isolation is not verified")
+        if agent.clean_room and not capabilities.clean_room_verified:
+            raise ValueError(f"{agent.agent_id}: clean-room isolation is not verified")
         if capabilities.repository_tools_enabled and not agent.repository_tools_allowed:
             raise ValueError(f"{agent.agent_id}: repository tools are not authorized")
         if agent.requires_isolation and capabilities.shared_state_with:
@@ -753,7 +821,7 @@ def _build_task(
     agent: AgentSpec,
     objective: str,
     context: tuple[ContextArtifact, ...],
-    dependency_reports: tuple[AgentReport, ...],
+    dependency_reports: tuple[VisibleDependency, ...],
 ) -> AgentTask:
     payload = {
         "contract": "far-subagent-task/1.0",
@@ -764,7 +832,7 @@ def _build_task(
         "skill_sha256": agent.skill_sha256,
         "objective": objective,
         "context": [_artifact_payload(item) for item in context],
-        "dependency_reports": [_report_payload(item) for item in dependency_reports],
+        "dependency_reports": [_dependency_payload(item) for item in dependency_reports],
     }
     input_sha = sha256_text(canonical_json(payload))
     task_id = f"TASK-{sha256_text(run_id + chr(0) + agent.agent_id + chr(0) + input_sha)[:24]}"
@@ -885,6 +953,9 @@ def _plan_payload(plan: OrchestrationPlan) -> dict:
                 "receives_dependency_reports": item.receives_dependency_reports,
                 "requires_isolation": item.requires_isolation,
                 "repository_tools_allowed": item.repository_tools_allowed,
+                "context_ids": list(item.context_ids) if item.context_ids is not None else None,
+                "dependency_view": item.dependency_view.value,
+                "clean_room": item.clean_room,
             }
             for item in plan.agents
         ],
@@ -921,6 +992,28 @@ def _report_payload(report: AgentReport) -> dict:
     }
 
 
+def _project_dependency(report: AgentReport, view: DependencyView) -> VisibleDependency:
+    return VisibleDependency(
+        agent_id=report.agent_id,
+        task_id=report.task_id,
+        view=view,
+        claim_ids=tuple(sorted({item.claim_id for item in report.findings})),
+        findings=report.findings if view is not DependencyView.CLAIMS_ONLY else (),
+        limitations=report.limitations if view is DependencyView.FULL else (),
+    )
+
+
+def _dependency_payload(report: VisibleDependency) -> dict:
+    payload = {"agent_id": report.agent_id, "task_id": report.task_id, "view": report.view.value}
+    if report.view is DependencyView.CLAIMS_ONLY:
+        payload["claim_ids"] = list(report.claim_ids)
+    else:
+        payload["findings"] = [_finding_payload(item) for item in report.findings]
+        if report.view is DependencyView.FULL:
+            payload["limitations"] = list(report.limitations)
+    return payload
+
+
 def _redacted_task_payload(
     agent: AgentSpec, task: AgentTask, skill_text: str
 ) -> dict:
@@ -952,7 +1045,7 @@ def _redacted_task_payload(
                 "input_sha256": task.input_sha256,
                 "context": [_artifact_payload(item) for item in task.context],
                 "dependency_reports": [
-                    _report_payload(item) for item in task.dependency_reports
+                    _dependency_payload(item) for item in task.dependency_reports
                 ],
             },
             "rules": [
