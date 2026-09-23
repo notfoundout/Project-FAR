@@ -71,7 +71,8 @@ class FakeModel:
                 "primary_source_verified": self.verified,
                 "relevant": self.screening_relevant,
                 "source_urls_used": [URL],
-                "affected_claim_ids": ["FAR-CORE-001"],
+                "evaluated_claim_ids": ["FAR-CORE-001"],
+                "affected_claim_ids": ["FAR-CORE-001"] if self.screening_relevant else [],
                 "premise_match": self.screening_relevant,
                 "scope_match": self.screening_relevant,
                 "summary": "Direct source review.",
@@ -88,6 +89,7 @@ class FakeModel:
                 "prior_art_found": prior_found,
                 "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
                 "source_urls_used": [URL],
+                "evaluated_claim_ids": ["FAR-CORE-001"],
                 "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "exact_reason": "bounded attack",
                 "reproducible_attack": "construct the bound counterexample" if contradiction else "",
@@ -104,6 +106,7 @@ class FakeModel:
                 "prior_art_found": prior_found,
                 "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
                 "source_urls_used": [URL],
+                "evaluated_claim_ids": ["FAR-CORE-001"],
                 "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "independent_reason": "independent bounded check",
                 "attack_reproduced": contradiction,
@@ -162,7 +165,8 @@ def screening_record(*, relevant: bool = True, claim: str = "FAR-CORE-001", sour
         "primary_source_verified": True,
         "relevant": relevant,
         "source_urls_used": [source],
-        "affected_claim_ids": [claim],
+        "evaluated_claim_ids": [claim],
+        "affected_claim_ids": [claim] if relevant else [],
         "premise_match": relevant,
         "scope_match": relevant,
         "summary": "direct",
@@ -184,6 +188,7 @@ def attack_record(
         "prior_art_found": prior,
         "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
         "source_urls_used": [source],
+        "evaluated_claim_ids": [claim],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "exact_reason": "attack",
         "reproducible_attack": "repro" if contradiction else "",
@@ -206,6 +211,7 @@ def replication_record(
         "prior_art_found": prior,
         "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
         "source_urls_used": [source],
+        "evaluated_claim_ids": [claim],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "independent_reason": "replication",
         "attack_reproduced": reproduced,
@@ -285,13 +291,15 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         payload = {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}}]}
         model = ar.GeminiModel("gemini-3.8-flash", "key")
         with mock.patch.object(model, "_call", return_value=payload) as call:
-            model.generate(
-                role="screening",
-                prompt=f"source {URL}",
-                schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
-                urls=[URL],
-            )
+            model.generate(role="screening", prompt=f"source {URL}", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]), urls=[URL])
         self.assertEqual([{"url_context": {}}], call.call_args.args[0]["tools"])
+
+    def test_successful_retrieval_status_requires_exact_enum(self):
+        suspicious = {"url_context_metadata": {"urlMetadata": [{
+            "retrievedUrl": URL,
+            "urlRetrievalStatus": "URL_RETRIEVAL_STATUS_NOT_SUCCESS",
+        }]}}
+        self.assertEqual(set(), ar.successful_retrieval_urls(suspicious))
 
     def test_duplicate_affected_claim_ids_are_rejected(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "duplicates"):
@@ -304,12 +312,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertTrue(any("autonomous-review-attempts" in p for p in plan["inbox_files"]))
 
     def test_source_url_claim_must_match_successful_retrieval(self):
-        plan = ar.build_plan(
-            ROOT,
-            self.source,
-            FakeModel("ADJACENT_NO_CONTRADICTION", retrieved_url="https://example.invalid/not-source"),
-            NOW,
-        )
+        plan = ar.build_plan(ROOT, self.source, FakeModel("ADJACENT_NO_CONTRADICTION", retrieved_url="https://example.invalid/not-source"), NOW)
         self.assertEqual("source_blocked", plan["status"])
         record = json.loads(next(iter(plan["inbox_files"].values())))
         self.assertIn("not successfully retrieved", record["reason"])
@@ -333,6 +336,20 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual("review_retry_blocked", plan["status"])
         self.assertEqual([], model.calls)
 
+    def test_candidate_level_disposition_requires_every_frozen_claim_evaluated(self):
+        candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
+        candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+        candidate["potential_claim_ids"] = ["FAR-CORE-001", "FAR-CORE-002"]
+        candidate_path.write_text(json.dumps(candidate, sort_keys=True) + "\n", encoding="utf-8")
+        state_path = self.source / ar.STATE
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+        state["core_claim_review_queue"][0]["claim_ids"] = ["FAR-CORE-001", "FAR-CORE-002"]
+        state_path.write_text(json.dumps(state, sort_keys=True) + "\n", encoding="utf-8")
+        plan = ar.build_plan(ROOT, self.source, FakeModel("ADJACENT_NO_CONTRADICTION"), NOW)
+        self.assertEqual("review_retry_blocked", plan["status"])
+        record = json.loads(next(iter(plan["inbox_files"].values())))
+        self.assertIn("incomplete frozen claim coverage", record["reason"])
+
     def test_adjacent_review_prepares_snapshot_authority(self):
         model = FakeModel("ADJACENT_NO_CONTRADICTION")
         plan = ar.build_plan(ROOT, self.source, model, NOW)
@@ -349,26 +366,16 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         plan = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE"), NOW)
         self.assertEqual("review_ready", plan["status"])
         self.assertNotIn(ar.SNAPSHOT_AUTHS.as_posix(), plan["review_files"])
-        bad = ar.build_plan(
-            ROOT,
-            self.source,
-            FakeModel("IRRELEVANT_FALSE_POSITIVE", screening_relevant=True),
-            NOW,
-        )
+        bad = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE", screening_relevant=True), NOW)
         self.assertEqual("review_retry_blocked", bad["status"])
 
     def test_adjacent_disposition_cannot_override_irrelevant_screen(self):
         policy = ar.load_json(ROOT / ar.POLICY)
         with self.assertRaisesRegex(ar.CandidateReviewError, "requires screening relevance"):
             ar.validate_decision(
-                decision_record("ADJACENT_NO_CONTRADICTION"),
-                policy,
-                ROOT,
-                {"FAR-CORE-001"},
-                screening_record(relevant=False),
-                attack_record(contradiction=False),
-                replication_record(contradiction=False, reproduced=False),
-                meta(), meta(), meta(),
+                decision_record("ADJACENT_NO_CONTRADICTION"), policy, ROOT, {"FAR-CORE-001"},
+                screening_record(relevant=False), attack_record(contradiction=False),
+                replication_record(contradiction=False, reproduced=False), meta(), meta(), meta(),
             )
 
     def test_project_change_requires_explicit_contradiction_flags(self):
@@ -383,8 +390,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
             ar.validate_decision(
                 decision_record("ADJACENT_NO_CONTRADICTION"), policy, ROOT, {"FAR-CORE-001"},
                 screening_record(), attack_record(contradiction=True),
-                replication_record(contradiction=False, reproduced=False),
-                meta(), meta(), meta(),
+                replication_record(contradiction=False, reproduced=False), meta(), meta(), meta(),
             )
 
     def test_reproduced_contradiction_cannot_be_downgraded(self):
@@ -393,8 +399,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
             ar.validate_decision(
                 decision_record("ADJACENT_NO_CONTRADICTION"), policy, ROOT, {"FAR-CORE-001"},
                 screening_record(), attack_record(contradiction=True),
-                replication_record(contradiction=True, reproduced=True),
-                meta(), meta(), meta(),
+                replication_record(contradiction=True, reproduced=True), meta(), meta(), meta(),
             )
 
     def test_project_change_requires_screening_attack_replication_same_claim(self):
@@ -402,10 +407,8 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ar.CandidateReviewError, "common exact claim|exact screening"):
             ar.validate_decision(
                 decision_record("PROJECT_CHANGE_REQUIRED"), policy, ROOT, {"FAR-CORE-001", "FAR-CORE-002"},
-                screening_record(claim="FAR-CORE-001"),
-                attack_record(contradiction=True, claim="FAR-CORE-002"),
-                replication_record(contradiction=True, reproduced=True, claim="FAR-CORE-002"),
-                meta(), meta(), meta(),
+                screening_record(claim="FAR-CORE-001"), attack_record(contradiction=True, claim="FAR-CORE-002"),
+                replication_record(contradiction=True, reproduced=True, claim="FAR-CORE-002"), meta(), meta(), meta(),
             )
 
     def test_project_change_requires_common_primary_source_across_roles(self):
@@ -414,8 +417,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ar.CandidateReviewError, "common retrieved primary source"):
             ar.validate_decision(
                 decision_record("PROJECT_CHANGE_REQUIRED"), policy, ROOT, {"FAR-CORE-001"},
-                screening_record(source=URL),
-                attack_record(contradiction=True, source=other),
+                screening_record(source=URL), attack_record(contradiction=True, source=other),
                 replication_record(contradiction=True, reproduced=True, source=other),
                 meta(retrieved_url=URL), meta(retrieved_url=other), meta(retrieved_url=other),
             )
@@ -424,14 +426,9 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         policy = ar.load_json(ROOT / ar.POLICY)
         with self.assertRaisesRegex(ar.CandidateReviewError, "non-project-change.*implementation"):
             ar.validate_decision(
-                decision_record("ADJACENT_NO_CONTRADICTION", implementation_required=True),
-                policy,
-                ROOT,
-                {"FAR-CORE-001"},
-                screening_record(),
-                attack_record(contradiction=False),
-                replication_record(contradiction=False, reproduced=False),
-                meta(), meta(), meta(),
+                decision_record("ADJACENT_NO_CONTRADICTION", implementation_required=True), policy, ROOT,
+                {"FAR-CORE-001"}, screening_record(), attack_record(contradiction=False),
+                replication_record(contradiction=False, reproduced=False), meta(), meta(), meta(),
             )
 
     def test_prior_art_lead_requires_both_roles_and_direct_strength(self):
@@ -443,10 +440,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
     def test_prior_art_flag_and_strength_must_be_consistent(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "must be NONE"):
             ar.validate_finding_record(
-                "attack",
-                attack_record(contradiction=False, prior=False, strength="DIRECT"),
-                meta(),
-                attack_record=True,
+                "attack", attack_record(contradiction=False, prior=False, strength="DIRECT"), meta(), attack_record=True,
             )
 
     def test_all_noop_scientific_correction_is_rejected_even_for_absent_empty_file(self):
@@ -458,11 +452,8 @@ class AutonomousLivingReviewTests(unittest.TestCase):
     def test_partial_noop_replacement_set_is_rejected(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "no-op targets: a"):
             ar.validate_replacement_set(
-                kind="scientific",
-                targets=["a", "b"],
-                current_raw={"a": b"same", "b": b"old"},
-                out={"a": b"same", "b": b"new"},
-                max_bytes=100,
+                kind="scientific", targets=["a", "b"], current_raw={"a": b"same", "b": b"old"},
+                out={"a": b"same", "b": b"new"}, max_bytes=100,
             )
 
     def test_combined_replacement_bound_applies_across_scientific_and_implementation(self):
