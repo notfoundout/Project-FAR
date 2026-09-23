@@ -18,7 +18,6 @@ name: Exact Head Assurance
         type: string
 permissions:
   contents: read
-  checks: write
 concurrency:
   group: exact-head-assurance-${{ inputs.head_sha || github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
@@ -116,16 +115,22 @@ jobs:
         path: artifacts/validation
         if-no-files-found: error
         retention-days: 30
+  publish-dispatched-assurance:
+    if: always() && github.event_name == 'workflow_dispatch'
+    needs: exact-head-assurance
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    steps:
     - name: Publish dispatched assurance on reviewed head
-      if: always() && github.event_name == 'workflow_dispatch'
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
         FAR_ASSURANCE_DISPATCH_HEAD: ${{ inputs.head_sha }}
-        FAR_ASSURANCE_JOB_STATUS: ${{ job.status }}
+        FAR_ASSURANCE_JOB_RESULT: ${{ needs.exact-head-assurance.result }}
       run: |
         set -euo pipefail
-        case "$FAR_ASSURANCE_JOB_STATUS" in
+        case "$FAR_ASSURANCE_JOB_RESULT" in
           success) conclusion=success ;;
           cancelled) conclusion=cancelled ;;
           *) conclusion=failure ;;
