@@ -9,10 +9,11 @@ from tools.living_autonomous_review_core import *
 
 
 def generation_config(schema: dict[str, Any]) -> dict[str, Any]:
-    # This module calls the Gemini generateContent endpoint. Google documents
-    # structured output for generateContent through responseMimeType and
-    # responseSchema inside generationConfig. The newer response_format shape
-    # belongs to the Interactions API and must not be sent here.
+    # The generateContent API currently documents both the legacy
+    # responseMimeType/responseSchema fields and, for Gemini 3.8 structured
+    # output, responseFormat. This integration deliberately keeps the simpler
+    # documented legacy-compatible shape because the schema used here does not
+    # need responseFormat-only features.
     return {
         "thinkingConfig": {"thinkingLevel": "medium"},
         "responseMimeType": "application/json",
