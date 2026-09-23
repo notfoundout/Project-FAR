@@ -9,11 +9,10 @@ from tools.living_autonomous_review_core import *
 
 
 def generation_config(schema: dict[str, Any]) -> dict[str, Any]:
-    # The generateContent API currently documents both the legacy
-    # responseMimeType/responseSchema fields and, for Gemini 3.8 structured
-    # output, responseFormat. This integration deliberately keeps the simpler
-    # documented legacy-compatible shape because the schema used here does not
-    # need responseFormat-only features.
+    # This module calls the Gemini generateContent endpoint. The raw REST
+    # generationConfig contract supports responseMimeType/responseSchema; keep
+    # the request on that documented surface rather than probing another API's
+    # response-format shape.
     return {
         "thinkingConfig": {"thinkingLevel": "medium"},
         "responseMimeType": "application/json",
@@ -132,7 +131,7 @@ def successful_retrieval_urls(metadata: dict[str, Any]) -> set[str]:
             continue
         status = str(row.get("urlRetrievalStatus", row.get("url_retrieval_status", ""))).upper()
         retrieved = row.get("retrievedUrl", row.get("retrieved_url"))
-        if "SUCCESS" in status and isinstance(retrieved, str) and retrieved.strip():
+        if status == "URL_RETRIEVAL_STATUS_SUCCESS" and isinstance(retrieved, str) and retrieved.strip():
             out.add(normalize_url(retrieved))
     return out
 
