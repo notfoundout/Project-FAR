@@ -19,7 +19,10 @@ FROZEN_EVIDENCE_ROOTS = {
 def slugify(text: str) -> str:
     text = re.sub(r'[`*_~\[\]()]+', '', text.strip().lower())
     text = re.sub(r'[^a-z0-9 -]', '', text)
-    return re.sub(r'\s+', '-', text).strip('-')
+    # Match GitHub heading anchors: punctuation is removed first, then every
+    # remaining ASCII space becomes one hyphen. Do not collapse adjacent spaces;
+    # punctuation such as an em dash can leave two spaces and therefore two hyphens.
+    return text.replace(' ', '-').strip('-')
 
 def anchors_for(path: Path):
     anchors=set()
