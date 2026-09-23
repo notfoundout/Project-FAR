@@ -44,6 +44,21 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
                 result = validate_socratic_record(load(name))
                 self.assertTrue(result.success, result.diagnostics)
 
+    def test_expertise_assertion_requires_parseable_valid_from(self) -> None:
+        document = load("valid-expertise-assertion.json")
+        document["record"]["valid_from"] = "not-a-date"
+        self.assertIn("EXPERTISE_INVALID_VALID_FROM", codes(document))
+
+    def test_expertise_assertion_requires_timezone_aware_valid_from(self) -> None:
+        document = load("valid-expertise-assertion.json")
+        document["record"]["valid_from"] = "2026-09-23T00:00:00"
+        self.assertIn("EXPERTISE_INVALID_VALID_FROM", codes(document))
+
+    def test_expertise_assertion_rejects_inverted_validity_interval(self) -> None:
+        document = load("valid-expertise-assertion.json")
+        document["record"]["valid_until"] = "2026-09-22T23:59:59Z"
+        self.assertIn("EXPERTISE_INVERTED_VALIDITY_INTERVAL", codes(document))
+
     def test_expertise_cannot_transfer_domains_by_assertion(self) -> None:
         document = load("valid-expertise-applicability.json")
         document["record"]["claim_scope"]["domain"] = "economics"
@@ -98,6 +113,21 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
         document = load("valid-elenchus-session.json")
         document["record"]["response_events"][0]["question_id"] = "missing-question"
         self.assertIn("ELENCHUS_RESPONSE_UNKNOWN_QUESTION", codes(document))
+
+    def test_elenchus_question_timestamp_must_be_timezone_aware(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["question_events"][0]["timestamp"] = "2026-09-23T00:00:01"
+        self.assertIn("ELENCHUS_INVALID_QUESTION_TIMESTAMP", codes(document))
+
+    def test_elenchus_response_timestamp_must_be_parseable(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["response_events"][0]["timestamp"] = "not-a-date"
+        self.assertIn("ELENCHUS_INVALID_RESPONSE_TIMESTAMP", codes(document))
+
+    def test_elenchus_response_cannot_predate_question(self) -> None:
+        document = load("valid-elenchus-session.json")
+        document["record"]["response_events"][0]["timestamp"] = "2026-09-23T00:00:00Z"
+        self.assertIn("ELENCHUS_RESPONSE_PREDATES_QUESTION", codes(document))
 
     def test_elenchus_definition_assumption_warrant_records_are_typed(self) -> None:
         for field in ("definitions", "assumptions", "warrants"):

@@ -50,6 +50,13 @@
         {"type": "null"}
       ]
     },
+    "dateTime": {"type": "string", "minLength": 1, "format": "date-time"},
+    "nullableDateTime": {
+      "oneOf": [
+        {"$ref": "#/$defs/dateTime"},
+        {"type": "null"}
+      ]
+    },
     "stringArray": {
       "type": "array",
       "items": {"$ref": "#/$defs/nonEmptyString"},
@@ -102,8 +109,8 @@
         "assessment_status": {"$ref": "#/$defs/expertiseStatus"},
         "uncertainty": {"$ref": "#/$defs/nonEmptyString"},
         "limitations": {"$ref": "#/$defs/stringArray"},
-        "valid_from": {"$ref": "#/$defs/nonEmptyString"},
-        "valid_until": {"$ref": "#/$defs/nullableNonEmptyString"},
+        "valid_from": {"$ref": "#/$defs/dateTime"},
+        "valid_until": {"$ref": "#/$defs/nullableDateTime"},
         "assessor": {"$ref": "#/$defs/nonEmptyString"},
         "assessment_method": {"$ref": "#/$defs/nonEmptyString"},
         "version": {"$ref": "#/$defs/nonEmptyString"}
@@ -223,7 +230,7 @@
         "id": {"$ref": "#/$defs/nonEmptyString"},
         "text": {"$ref": "#/$defs/nonEmptyString"},
         "purpose": {"enum": ["DEFINE_TERM", "FIX_SCOPE", "EXPOSE_ASSUMPTION", "TEST_WARRANT", "TEST_CONSEQUENCE", "TEST_CONSISTENCY", "SEEK_COUNTEREXAMPLE", "DISTINGUISH_INTERPRETATIONS", "CLARIFY_REVISION"]},
-        "timestamp": {"$ref": "#/$defs/nonEmptyString"}
+        "timestamp": {"$ref": "#/$defs/dateTime"}
       },
       "additionalProperties": false
     },
@@ -234,7 +241,7 @@
         "id": {"$ref": "#/$defs/nonEmptyString"},
         "question_id": {"$ref": "#/$defs/nonEmptyString"},
         "text": {"$ref": "#/$defs/nonEmptyString"},
-        "timestamp": {"$ref": "#/$defs/nonEmptyString"}
+        "timestamp": {"$ref": "#/$defs/dateTime"}
       },
       "additionalProperties": false
     },

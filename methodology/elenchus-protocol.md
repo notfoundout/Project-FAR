@@ -61,6 +61,10 @@ The purpose is provenance for why the question was asked. It does not predetermi
 11. Record revisions and withdrawals as new events. Preserve the earlier commitment and link the replacement; never overwrite history.
 12. Repeat until the parent FAR investigation has sufficient explicitness, the respondent declines or cannot answer, the declared stopping rule is reached, or further questioning is non-material.
 
+## Event chronology
+
+Every question and response event uses a parseable timezone-aware date-time. A response may not predate the question it references. This chronology rule establishes only that the recorded dialogue order is internally possible; it does not prove wall-clock accuracy beyond the provenance of the underlying transcript or event source.
+
 ## Elicited-record traceability
 
 Definitions, assumptions, warrants, and tensions are not free-form annotation buckets.
@@ -125,13 +129,15 @@ The accepted internal interchange contract is `socratic-epistemic-extensions/1.0
 - `schemas/socratic-epistemic-extensions-v1.schema.json`;
 - `mechanization/far_mechanization/socratic_epistemic.py`.
 
-The validator checks event references, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, and contradiction references. It does not infer semantic contradiction from natural language.
+The validator checks event references, timezone-aware event timestamps and response chronology, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, and contradiction references. It does not infer semantic contradiction from natural language.
 
 ## Failure conditions
 
 The protocol fails if:
 
 - a material respondent statement is replaced by an analyst paraphrase without preserving the original;
+- a question or response timestamp is not a parseable timezone-aware date-time;
+- a response predates the question it references;
 - a response is not linked to the question that elicited it;
 - a material definition, assumption, warrant, or tension is stored without typed content and commitment provenance;
 - an elicited record references a nonexistent commitment;

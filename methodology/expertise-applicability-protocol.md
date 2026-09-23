@@ -52,6 +52,8 @@ An expertise assertion records at least:
 - validity interval;
 - assessor, method, and version.
 
+`valid_from` and any non-null `valid_until` must be parseable timezone-aware date-times. `valid_until` may not precede `valid_from`. The validity interval bounds the expertise assessment itself; proposition-relative temporal applicability remains a separate comparison dimension and is not inferred from the interval.
+
 Allowed assertion statuses are:
 
 - `SUPPORTED`;
@@ -104,7 +106,7 @@ It may not:
 
 ## Revision
 
-A material change in credentials, domain, method, claim scope, population, geography, time, or other applicability dimension requires a new version or new applicability record.
+A material change in credentials, domain, method, claim scope, population, geography, time, validity interval, or other applicability dimension requires a new version or new applicability record.
 
 Earlier records remain reconstructible. A later broader expertise assessment does not retroactively validate an earlier use unless that relation is explicitly re-evaluated.
 
@@ -113,12 +115,14 @@ Earlier records remain reconstructible. A later broader expertise assessment doe
 The protocol fails if:
 
 - an expertise claim lacks a bounded scope;
+- `valid_from` or non-null `valid_until` is not a parseable timezone-aware date-time;
+- `valid_until` precedes `valid_from`;
 - competence is transferred to a materially different scope without an explicit applicability assessment;
 - a `MATCH` is asserted across different scope values without an explicit bridge;
 - an overall `SUPPORTED` applicability hides a `PARTIAL`, `MISMATCH`, or `UNKNOWN` material dimension;
 - expertise applicability is treated as substantive truth;
 - provenance for the competence basis or applicability judgment is missing;
-- a changed scope silently reuses an earlier applicability result.
+- a changed scope or validity interval silently reuses an earlier applicability result.
 
 ## Machine-readable record
 

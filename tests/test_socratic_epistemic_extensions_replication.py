@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import json
 import unittest
+from datetime import datetime
 from pathlib import Path
 
 from mechanization.far_mechanization.socratic_epistemic import validate_socratic_record
@@ -13,6 +14,31 @@ FIXTURES = ROOT / "tests" / "fixtures" / "socratic-epistemic-extensions"
 
 def load(name: str) -> dict:
     return json.loads((FIXTURES / name).read_text(encoding="utf-8"))
+
+
+def parse_aware(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    text = f"{value[:-1]}+00:00" if value.endswith(("Z", "z")) else value
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed
+
+
+def reference_expertise_assertion_accepts(document: dict) -> bool:
+    record = document["record"]
+    start = parse_aware(record["valid_from"])
+    if start is None:
+        return False
+    end_value = record.get("valid_until")
+    if end_value is None:
+        return True
+    end = parse_aware(end_value)
+    return end is not None and end >= start
 
 
 def reference_expertise_accepts(document: dict) -> bool:
@@ -90,13 +116,26 @@ def reference_elenchus_accepts(document: dict) -> bool:
     if any(not _unique_ids(entries) for entries in id_lists):
         return False
 
-    questions = {item["id"] for item in record["question_events"]}
+    questions = {item["id"]: item for item in record["question_events"]}
     responses = {item["id"]: item for item in record["response_events"]}
     commitments = {item["id"]: item for item in record["commitments"]}
     commitment_ids = set(commitments)
 
-    if any(item["question_id"] not in questions for item in responses.values()):
-        return False
+    question_times: dict[str, datetime] = {}
+    for question_id, question in questions.items():
+        parsed = parse_aware(question["timestamp"])
+        if parsed is None:
+            return False
+        question_times[question_id] = parsed
+
+    for response in responses.values():
+        question_id = response["question_id"]
+        if question_id not in questions:
+            return False
+        response_time = parse_aware(response["timestamp"])
+        if response_time is None or response_time < question_times[question_id]:
+            return False
+
     if any(item["source_event_id"] not in responses for item in commitments.values()):
         return False
     if not _refs_exist(record["definitions"], "commitment_refs", commitment_ids):
@@ -166,6 +205,30 @@ class SocraticEpistemicReplicationTests(unittest.TestCase):
         observed = result.success
         self.assertEqual(observed, expected, result.diagnostics)
 
+    def test_expertise_assertion_mutation_matrix(self) -> None:
+        base = load("valid-expertise-assertion.json")
+        cases = [base]
+
+        malformed = copy.deepcopy(base)
+        malformed["record"]["valid_from"] = "not-a-date"
+        cases.append(malformed)
+
+        naive = copy.deepcopy(base)
+        naive["record"]["valid_from"] = "2026-09-23T00:00:00"
+        cases.append(naive)
+
+        inverted = copy.deepcopy(base)
+        inverted["record"]["valid_until"] = "2026-09-22T23:59:59Z"
+        cases.append(inverted)
+
+        bounded = copy.deepcopy(base)
+        bounded["record"]["valid_until"] = "2026-10-23T00:00:00Z"
+        cases.append(bounded)
+
+        for index, document in enumerate(cases):
+            with self.subTest(case=index):
+                self.assert_agreement(document, reference_expertise_assertion_accepts)
+
     def test_expertise_mutation_matrix(self) -> None:
         base = load("valid-expertise-applicability.json")
         cases = [base]
@@ -216,6 +279,14 @@ class SocraticEpistemicReplicationTests(unittest.TestCase):
         unknown_question = copy.deepcopy(base)
         unknown_question["record"]["response_events"][0]["question_id"] = "missing"
         cases.append(unknown_question)
+
+        invalid_question_time = copy.deepcopy(base)
+        invalid_question_time["record"]["question_events"][0]["timestamp"] = "not-a-date"
+        cases.append(invalid_question_time)
+
+        response_predates_question = copy.deepcopy(base)
+        response_predates_question["record"]["response_events"][0]["timestamp"] = "2026-09-23T00:00:00Z"
+        cases.append(response_predates_question)
 
         unknown_definition_ref = copy.deepcopy(base)
         unknown_definition_ref["record"]["definitions"][0]["commitment_refs"] = ["missing"]

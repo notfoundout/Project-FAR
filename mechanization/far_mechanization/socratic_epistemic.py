@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -51,6 +52,19 @@ def _schema_errors(document: object) -> list[SocraticDiagnostic]:
     ]
 
 
+def _parse_aware_datetime(value: object) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    normalized = f"{value[:-1]}+00:00" if value.endswith(("Z", "z")) else value
+    try:
+        parsed = datetime.fromisoformat(normalized)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return None
+    return parsed
+
+
 def _check_unique_ids(
     entries: Sequence[Mapping[str, Any]],
     label: str,
@@ -75,6 +89,40 @@ def _scope_value(scope: Mapping[str, Any], dimension: str) -> object:
     if dimension == "subdomain":
         return scope.get("subdomain")
     return scope[dimension]
+
+
+def _check_expertise_assertion(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
+    valid_from = _parse_aware_datetime(record["valid_from"])
+    if valid_from is None:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_INVALID_VALID_FROM",
+                "valid_from must be a parseable timezone-aware date-time",
+                ("record", "valid_from"),
+            )
+        )
+
+    valid_until_value = record.get("valid_until")
+    valid_until: datetime | None = None
+    if valid_until_value is not None:
+        valid_until = _parse_aware_datetime(valid_until_value)
+        if valid_until is None:
+            errors.append(
+                SocraticDiagnostic(
+                    "EXPERTISE_INVALID_VALID_UNTIL",
+                    "valid_until must be null or a parseable timezone-aware date-time",
+                    ("record", "valid_until"),
+                )
+            )
+
+    if valid_from is not None and valid_until is not None and valid_until < valid_from:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_INVERTED_VALIDITY_INTERVAL",
+                "valid_until must not precede valid_from",
+                ("record", "valid_until"),
+            )
+        )
 
 
 def _check_expertise_applicability(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
@@ -211,16 +259,51 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
     _check_unique_ids(record["tensions"], "tensions", errors)
     _check_unique_ids(record["contradictions"], "contradictions", errors)
 
+    questions = {str(item["id"]): item for item in record["question_events"]}
     responses = {str(item["id"]): item for item in record["response_events"]}
     commitments = {str(item["id"]): item for item in record["commitments"]}
+    question_times: dict[str, datetime] = {}
+
+    for index, question in enumerate(record["question_events"]):
+        question_id = str(question["id"])
+        parsed = _parse_aware_datetime(question["timestamp"])
+        if parsed is None:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_INVALID_QUESTION_TIMESTAMP",
+                    "question timestamp must be a parseable timezone-aware date-time",
+                    ("record", "question_events", index, "timestamp"),
+                )
+            )
+        else:
+            question_times[question_id] = parsed
 
     for index, response in enumerate(record["response_events"]):
-        if str(response["question_id"]) not in question_ids:
+        question_id = str(response["question_id"])
+        if question_id not in question_ids:
             errors.append(
                 SocraticDiagnostic(
                     "ELENCHUS_RESPONSE_UNKNOWN_QUESTION",
-                    f"response references unknown question {response['question_id']}",
+                    f"response references unknown question {question_id}",
                     ("record", "response_events", index, "question_id"),
+                )
+            )
+
+        response_time = _parse_aware_datetime(response["timestamp"])
+        if response_time is None:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_INVALID_RESPONSE_TIMESTAMP",
+                    "response timestamp must be a parseable timezone-aware date-time",
+                    ("record", "response_events", index, "timestamp"),
+                )
+            )
+        elif question_id in question_times and response_time < question_times[question_id]:
+            errors.append(
+                SocraticDiagnostic(
+                    "ELENCHUS_RESPONSE_PREDATES_QUESTION",
+                    f"response {response['id']} predates its question {question_id}",
+                    ("record", "response_events", index, "timestamp"),
                 )
             )
 
@@ -431,7 +514,9 @@ def validate_socratic_record(document: object) -> SocraticValidationResult:
 
     record_type = document["record_type"]
     record = document["record"]
-    if record_type == "EXPERTISE_APPLICABILITY":
+    if record_type == "EXPERTISE_ASSERTION":
+        _check_expertise_assertion(record, errors)
+    elif record_type == "EXPERTISE_APPLICABILITY":
         _check_expertise_applicability(record, errors)
     elif record_type == "EPISTEMIC_BOUNDARY":
         _check_epistemic_boundary(record, errors)
