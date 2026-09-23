@@ -224,14 +224,7 @@ def normalize_candidate_doi(value: Any) -> str | None:
 
 
 def identity_bound_urls(source_key: str, sources: list[Any]) -> list[str]:
-    """Return only URLs derived from a source record that proves the frozen identity.
-
-    The rolling inbox is noncanonical. A candidate may therefore contain additional source
-    rows, but those rows must never broaden what the autonomous reviewer is allowed to
-    retrieve. Resolvable discovery identities are reconstructed into canonical provider
-    URLs; metadata-hash fallback identities fail closed because their exact preimage is not
-    retained in the candidate record and cannot be independently reconstructed here.
-    """
+    """Return only canonical URLs whose source record proves the frozen identity."""
     if source_key.startswith("doi:"):
         wanted = normalize_candidate_doi(source_key)
         if wanted is None:
@@ -273,7 +266,7 @@ def identity_bound_urls(source_key: str, sources: list[Any]) -> list[str]:
         return []
 
     # Fallback keys are hashes of discovery metadata. The exact normalized preimage is not
-    # preserved as an identity field, so provider-name agreement is insufficient proof.
+    # retained as an identity field, so provider-name agreement is not source proof.
     if FALLBACK_KEY_RE.fullmatch(source_key):
         return []
     return []
@@ -294,9 +287,7 @@ def candidate_identity_valid(candidate: dict[str, Any]) -> bool:
 def candidate_urls(candidate: dict[str, Any], limit: int) -> list[str]:
     if not candidate_identity_valid(candidate):
         return []
-    source_key = candidate["source_key"]
-    sources = candidate["sources"]
-    return identity_bound_urls(source_key, sources)[:limit]
+    return identity_bound_urls(candidate["source_key"], candidate["sources"])[:limit]
 
 
 def claim_subset(root: Path, ids: list[str]) -> list[dict[str, Any]]:
@@ -320,12 +311,44 @@ STR = {"type": "string"}
 BOOL = {"type": "boolean"}
 STRS = {"type": "array", "items": STR}
 STRENGTH = {"type": "string", "enum": list(PRIOR_ART_STRENGTH)}
+SCREEN_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "relevant": BOOL,
+        "premise_match": BOOL,
+        "scope_match": BOOL,
+        "reason": STR,
+    },
+    ["claim_id", "relevant", "premise_match", "scope_match", "reason"],
+)
+ATTACK_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "contradiction_found": BOOL,
+        "prior_art_found": BOOL,
+        "prior_art_strength": STRENGTH,
+        "reason": STR,
+    },
+    ["claim_id", "contradiction_found", "prior_art_found", "prior_art_strength", "reason"],
+)
+REPLICATION_CLAIM_ASSESSMENT = object_schema(
+    {
+        "claim_id": STR,
+        "contradiction_found": BOOL,
+        "prior_art_found": BOOL,
+        "prior_art_strength": STRENGTH,
+        "attack_reproduced": BOOL,
+        "reason": STR,
+    },
+    ["claim_id", "contradiction_found", "prior_art_found", "prior_art_strength", "attack_reproduced", "reason"],
+)
 SCREEN_SCHEMA = object_schema(
     {
         "primary_source_verified": BOOL,
         "relevant": BOOL,
         "source_urls_used": STRS,
         "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": SCREEN_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "premise_match": BOOL,
         "scope_match": BOOL,
@@ -334,7 +357,7 @@ SCREEN_SCHEMA = object_schema(
         "limits": STRS,
     },
     [
-        "primary_source_verified", "relevant", "source_urls_used", "evaluated_claim_ids",
+        "primary_source_verified", "relevant", "source_urls_used", "evaluated_claim_ids", "claim_assessments",
         "affected_claim_ids", "premise_match", "scope_match", "summary", "evidence_locations", "limits",
     ],
 )
@@ -345,6 +368,7 @@ ATTACK_SCHEMA = object_schema(
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
         "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": ATTACK_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "exact_reason": STR,
         "reproducible_attack": STR,
@@ -353,7 +377,7 @@ ATTACK_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "evaluated_claim_ids", "affected_claim_ids", "exact_reason", "reproducible_attack",
+        "evaluated_claim_ids", "claim_assessments", "affected_claim_ids", "exact_reason", "reproducible_attack",
         "source_locations", "limits",
     ],
 )
@@ -364,6 +388,7 @@ REPLICATION_SCHEMA = object_schema(
         "prior_art_strength": STRENGTH,
         "source_urls_used": STRS,
         "evaluated_claim_ids": STRS,
+        "claim_assessments": {"type": "array", "items": REPLICATION_CLAIM_ASSESSMENT},
         "affected_claim_ids": STRS,
         "independent_reason": STR,
         "attack_reproduced": BOOL,
@@ -372,7 +397,7 @@ REPLICATION_SCHEMA = object_schema(
     },
     [
         "contradiction_found", "prior_art_found", "prior_art_strength", "source_urls_used",
-        "evaluated_claim_ids", "affected_claim_ids", "independent_reason", "attack_reproduced",
+        "evaluated_claim_ids", "claim_assessments", "affected_claim_ids", "independent_reason", "attack_reproduced",
         "source_locations", "limits",
     ],
 )
