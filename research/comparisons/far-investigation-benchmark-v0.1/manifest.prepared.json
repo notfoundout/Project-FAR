@@ -47,6 +47,7 @@
         "rubric_freeze",
         "reference_search_protocol_freeze",
         "execution_schedule_freeze",
+        "adjudication_schedule_freeze",
         "source_binding",
         "hashing"
       ],
@@ -178,6 +179,12 @@
       "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
       "role": "frozen_numerical_analysis_parameters_pending_freeze_hash",
       "verify_current_path": true
+    },
+    {
+      "path": "research/comparisons/far-investigation-benchmark-v0.1/adjudication-schedule.json",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "role": "generated_adjudication_schedule_pending_freeze",
+      "verify_current_path": false
     }
   ],
   "times": {
@@ -205,11 +212,11 @@
         "research/comparisons/far-investigation-benchmark-v0.1/manifest.json"
       ]
     ],
-    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the complete freeze-contract bundle, source bindings, corpus, reference evidence, prompts, environment, schedule, hashes, and adjudicator declarations are frozen and validation passes."
+    "deterministic_claim": "Prepared manifest only. Deterministic replay is not claimed until the complete freeze-contract bundle, source bindings, corpus, reference evidence, prompts, environment, execution and adjudication schedules, hashes, and adjudicator declarations are frozen and validation passes."
   },
   "limitations": [
-    "Prepared, not frozen: corpus and reserve frame, reference-evidence sets, prompt bytes, resource budgets, tool/model snapshot, execution schedule, adjudicators, source bindings, mutation configuration, and evidence-search configuration remain unset.",
-    "Zero SHA-256 placeholders mark prepared-only static artifacts and must be replaced with exact hashes before any condition execution.",
+    "Prepared, not frozen: corpus and reserve frame, reference-evidence sets, prompt bytes, resource budgets, tool/model snapshot, execution schedule, adjudication schedule, adjudicators, source bindings, mutation configuration, and evidence-search configuration remain unset.",
+    "Zero SHA-256 placeholders mark prepared-only static/generated artifacts and must be replaced with exact hashes before any condition execution.",
     "The transition to frozen is governed by freeze-contract-v0.1.md and requires generated pre-execution artifacts plus source_manifest bindings; editing status alone cannot authorize execution.",
     "No external-independence claim follows from project-authored preparation.",
     "No benchmark result exists at prepared status."
