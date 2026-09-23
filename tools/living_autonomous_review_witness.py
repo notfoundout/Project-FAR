@@ -12,7 +12,7 @@ def _assessment_map(
 ) -> dict[str, dict[str, Any]]:
     rows = record.get("claim_assessments")
     if not isinstance(rows, list) or len(rows) != len(claim_ids):
-        raise CandidateReviewError(f"{label}: exact per-claim witness coverage is incomplete")
+        raise CandidateReviewError(f"{label}: exact {label} per-claim witness coverage is incomplete")
     out: dict[str, dict[str, Any]] = {}
     for row in rows:
         if not isinstance(row, dict):
