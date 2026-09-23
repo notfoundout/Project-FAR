@@ -43,6 +43,7 @@ class FakeModel:
         fail_role: str | None = None,
         no_op_scientific: bool = False,
         no_op_implementation: bool = False,
+        screening_relevant: bool | None = None,
     ):
         self.disposition = disposition
         self.verified = verified
@@ -54,6 +55,11 @@ class FakeModel:
         self.fail_role = fail_role
         self.no_op_scientific = no_op_scientific
         self.no_op_implementation = no_op_implementation
+        self.screening_relevant = (
+            disposition != "IRRELEVANT_FALSE_POSITIVE"
+            if screening_relevant is None
+            else screening_relevant
+        )
         self.calls: list[str] = []
 
     def generate(self, *, role, prompt, schema, urls=None):
@@ -63,11 +69,11 @@ class FakeModel:
         if role == "screening":
             return {
                 "primary_source_verified": self.verified,
-                "relevant": True,
+                "relevant": self.screening_relevant,
                 "source_urls_used": [URL],
                 "affected_claim_ids": ["FAR-CORE-001"],
-                "premise_match": True,
-                "scope_match": True,
+                "premise_match": self.screening_relevant,
+                "scope_match": self.screening_relevant,
                 "summary": "Direct source review.",
                 "evidence_locations": ["primary source"],
                 "limits": [],
@@ -75,28 +81,32 @@ class FakeModel:
         if role == "attack":
             change = self.disposition == "PROJECT_CHANGE_REQUIRED"
             prior = self.disposition == "N1_PRIOR_ART_LEAD"
+            contradiction = change and self.contradiction_flags
+            prior_found = prior and self.prior_art_flags
             return {
-                "contradiction_found": change and self.contradiction_flags,
-                "prior_art_found": prior and self.prior_art_flags,
-                "prior_art_strength": self.prior_art_strength if prior else "NONE",
+                "contradiction_found": contradiction,
+                "prior_art_found": prior_found,
+                "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
                 "source_urls_used": [URL],
-                "affected_claim_ids": ["FAR-CORE-001"] if (change or prior) else [],
+                "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "exact_reason": "bounded attack",
-                "reproducible_attack": "construct the bound counterexample" if change else "",
+                "reproducible_attack": "construct the bound counterexample" if contradiction else "",
                 "source_locations": ["primary source"],
                 "limits": [],
             }, meta(True, self.retrieved_url)
         if role == "replication":
             change = self.disposition == "PROJECT_CHANGE_REQUIRED"
             prior = self.disposition == "N1_PRIOR_ART_LEAD"
+            contradiction = change and self.contradiction_flags
+            prior_found = prior and self.prior_art_flags
             return {
-                "contradiction_found": change and self.contradiction_flags,
-                "prior_art_found": prior and self.prior_art_flags,
-                "prior_art_strength": self.prior_art_strength if prior else "NONE",
+                "contradiction_found": contradiction,
+                "prior_art_found": prior_found,
+                "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
                 "source_urls_used": [URL],
-                "affected_claim_ids": ["FAR-CORE-001"] if (change or prior) else [],
+                "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "independent_reason": "independent bounded check",
-                "attack_reproduced": change,
+                "attack_reproduced": contradiction,
                 "source_locations": ["primary source"],
                 "limits": [],
             }, meta(True, self.retrieved_url)
@@ -110,7 +120,7 @@ class FakeModel:
                 "implementation_targets": ["tools/living-autonomous-test.py"] if (change and self.implementation) else [],
                 "rationale": "test adjudication",
                 "limits": [],
-            }, {"model": "fake-adjudicator"}
+            }, {"model": "fake-adjudicator", "finish_reason": "STOP"}
         if role == "scientific_change_generator":
             content = "" if self.no_op_scientific else "# corrected\n"
             return {"files": [{"path": "docs/research/living-autonomous-test.md", "content": content}]}, {}
@@ -147,25 +157,32 @@ def source_fixture(root: Path):
     p.write_text(json.dumps(state, sort_keys=True) + "\n", encoding="utf-8")
 
 
-def screening_record(claim: str = "FAR-CORE-001", source: str = URL):
+def screening_record(*, relevant: bool = True, claim: str = "FAR-CORE-001", source: str = URL):
     return {
         "primary_source_verified": True,
-        "relevant": True,
+        "relevant": relevant,
         "source_urls_used": [source],
         "affected_claim_ids": [claim],
-        "premise_match": True,
-        "scope_match": True,
+        "premise_match": relevant,
+        "scope_match": relevant,
         "summary": "direct",
         "evidence_locations": ["source"],
         "limits": [],
     }
 
 
-def attack_record(*, contradiction: bool, claim: str = "FAR-CORE-001", source: str = URL, prior: bool = False):
+def attack_record(
+    *,
+    contradiction: bool,
+    claim: str = "FAR-CORE-001",
+    source: str = URL,
+    prior: bool = False,
+    strength: str | None = None,
+):
     return {
         "contradiction_found": contradiction,
         "prior_art_found": prior,
-        "prior_art_strength": "DIRECT" if prior else "NONE",
+        "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
         "source_urls_used": [source],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "exact_reason": "attack",
@@ -175,11 +192,19 @@ def attack_record(*, contradiction: bool, claim: str = "FAR-CORE-001", source: s
     }
 
 
-def replication_record(*, contradiction: bool, reproduced: bool, claim: str = "FAR-CORE-001", source: str = URL, prior: bool = False):
+def replication_record(
+    *,
+    contradiction: bool,
+    reproduced: bool,
+    claim: str = "FAR-CORE-001",
+    source: str = URL,
+    prior: bool = False,
+    strength: str | None = None,
+):
     return {
         "contradiction_found": contradiction,
         "prior_art_found": prior,
-        "prior_art_strength": "DIRECT" if prior else "NONE",
+        "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
         "source_urls_used": [source],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "independent_reason": "replication",
@@ -211,23 +236,32 @@ class AutonomousLivingReviewTests(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
-    def test_structured_output_primary_and_legacy_shapes(self):
+    def test_generate_content_uses_documented_structured_output_shape(self):
         schema = ar.object_schema({"ok": ar.BOOL}, ["ok"])
-        current = ar.generation_config(schema)
-        self.assertEqual("application/json", current["responseFormat"]["text"]["mimeType"])
-        self.assertEqual(schema, current["responseFormat"]["text"]["schema"])
-        legacy = ar.generation_config(schema, legacy=True)
-        self.assertEqual("application/json", legacy["responseMimeType"])
-        self.assertEqual(schema, legacy["responseSchema"])
+        config = ar.generation_config(schema)
+        self.assertEqual("application/json", config["responseMimeType"])
+        self.assertEqual(schema, config["responseSchema"])
+        self.assertNotIn("responseFormat", config)
 
-    def test_http_400_retries_legacy_structured_output(self):
-        payload = {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}}]}
+    def test_model_uses_single_generate_content_request_without_400_probe(self):
+        payload = {
+            "modelVersion": "gemini-test",
+            "responseId": "response-1",
+            "candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}}],
+        }
         model = ar.GeminiModel("gemini-3.8-flash", "key")
-        with mock.patch.object(model, "_call", side_effect=[ar.ModelRequestError("Gemini HTTP 400: bad shape"), payload]) as call:
-            result, metadata = model.generate(role="test", prompt="x", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]))
+        with mock.patch.object(model, "_call", return_value=payload) as call:
+            result, metadata = model.generate(
+                role="test",
+                prompt="x",
+                schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
+            )
         self.assertEqual({"ok": True}, result)
-        self.assertEqual(2, call.call_count)
-        self.assertEqual("legacy_responseSchema", metadata["structured_output_mode"])
+        self.assertEqual(1, call.call_count)
+        body = call.call_args.args[0]
+        self.assertEqual("application/json", body["generationConfig"]["responseMimeType"])
+        self.assertNotIn("responseFormat", body["generationConfig"])
+        self.assertEqual("generateContent.responseSchema", metadata["structured_output_mode"])
 
     def test_non_stop_model_output_is_rejected(self):
         payload = {"candidates": [{"finishReason": "MAX_TOKENS", "content": {"parts": [{"text": '{"ok": true}'}]}}]}
@@ -236,13 +270,31 @@ class AutonomousLivingReviewTests(unittest.TestCase):
             with self.assertRaisesRegex(ar.CandidateReviewError, "did not complete normally"):
                 model.generate(role="test", prompt="x", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]))
 
+    def test_multiple_model_candidates_are_rejected(self):
+        payload = {"candidates": [
+            {"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}},
+            {"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}},
+        ]}
+        model = ar.GeminiModel("gemini-3.8-flash", "key")
+        with mock.patch.object(model, "_call", return_value=payload):
+            with self.assertRaisesRegex(ar.CandidateReviewError, "candidate count"):
+                model.generate(role="test", prompt="x", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]))
+
     def test_screening_uses_url_context_without_broad_search(self):
         payload = {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": '{"ok": true}'}]}}]}
         model = ar.GeminiModel("gemini-3.8-flash", "key")
         with mock.patch.object(model, "_call", return_value=payload) as call:
-            model.generate(role="screening", prompt=f"source {URL}", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]), urls=[URL])
-        tools = call.call_args.args[0]["tools"]
-        self.assertEqual([{"url_context": {}}], tools)
+            model.generate(
+                role="screening",
+                prompt=f"source {URL}",
+                schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
+                urls=[URL],
+            )
+        self.assertEqual([{"url_context": {}}], call.call_args.args[0]["tools"])
+
+    def test_duplicate_affected_claim_ids_are_rejected(self):
+        with self.assertRaisesRegex(ar.CandidateReviewError, "duplicates"):
+            ar.validate_claim_ids(["FAR-CORE-001", "FAR-CORE-001"], {"FAR-CORE-001"}, "attack")
 
     def test_source_verification_failure_records_retry_only(self):
         plan = ar.build_plan(ROOT, self.source, FakeModel("ADJACENT_NO_CONTRADICTION", verified=False), NOW)
@@ -251,7 +303,12 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertTrue(any("autonomous-review-attempts" in p for p in plan["inbox_files"]))
 
     def test_source_url_claim_must_match_successful_retrieval(self):
-        plan = ar.build_plan(ROOT, self.source, FakeModel("ADJACENT_NO_CONTRADICTION", retrieved_url="https://example.invalid/not-source"), NOW)
+        plan = ar.build_plan(
+            ROOT,
+            self.source,
+            FakeModel("ADJACENT_NO_CONTRADICTION", retrieved_url="https://example.invalid/not-source"),
+            NOW,
+        )
         self.assertEqual("source_blocked", plan["status"])
         record = json.loads(next(iter(plan["inbox_files"].values())))
         self.assertIn("not successfully retrieved", record["reason"])
@@ -287,10 +344,31 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         execution = json.loads(plan["review_files"][execution_path])
         self.assertIn("adjudication", execution["model_metadata"])
 
-    def test_irrelevant_false_positive_has_no_snapshot_authorization(self):
+    def test_irrelevant_false_positive_requires_irrelevant_screen_and_has_no_snapshot_authorization(self):
         plan = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE"), NOW)
         self.assertEqual("review_ready", plan["status"])
         self.assertNotIn(ar.SNAPSHOT_AUTHS.as_posix(), plan["review_files"])
+        bad = ar.build_plan(
+            ROOT,
+            self.source,
+            FakeModel("IRRELEVANT_FALSE_POSITIVE", screening_relevant=True),
+            NOW,
+        )
+        self.assertEqual("review_retry_blocked", bad["status"])
+
+    def test_adjacent_disposition_cannot_override_irrelevant_screen(self):
+        policy = ar.load_json(ROOT / ar.POLICY)
+        with self.assertRaisesRegex(ar.CandidateReviewError, "requires screening relevance"):
+            ar.validate_decision(
+                decision_record("ADJACENT_NO_CONTRADICTION"),
+                policy,
+                ROOT,
+                {"FAR-CORE-001"},
+                screening_record(relevant=False),
+                attack_record(contradiction=False),
+                replication_record(contradiction=False, reproduced=False),
+                meta(), meta(), meta(),
+            )
 
     def test_project_change_requires_explicit_contradiction_flags(self):
         plan = ar.build_plan(ROOT, self.source, FakeModel("PROJECT_CHANGE_REQUIRED", contradiction_flags=False), NOW)
@@ -323,7 +401,8 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ar.CandidateReviewError, "common exact claim|exact screening"):
             ar.validate_decision(
                 decision_record("PROJECT_CHANGE_REQUIRED"), policy, ROOT, {"FAR-CORE-001", "FAR-CORE-002"},
-                screening_record("FAR-CORE-001"), attack_record(contradiction=True, claim="FAR-CORE-002"),
+                screening_record(claim="FAR-CORE-001"),
+                attack_record(contradiction=True, claim="FAR-CORE-002"),
                 replication_record(contradiction=True, reproduced=True, claim="FAR-CORE-002"),
                 meta(), meta(), meta(),
             )
@@ -334,7 +413,8 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ar.CandidateReviewError, "common retrieved primary source"):
             ar.validate_decision(
                 decision_record("PROJECT_CHANGE_REQUIRED"), policy, ROOT, {"FAR-CORE-001"},
-                screening_record(source=URL), attack_record(contradiction=True, source=other),
+                screening_record(source=URL),
+                attack_record(contradiction=True, source=other),
                 replication_record(contradiction=True, reproduced=True, source=other),
                 meta(retrieved_url=URL), meta(retrieved_url=other), meta(retrieved_url=other),
             )
@@ -359,10 +439,20 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         plan = ar.build_plan(ROOT, self.source, FakeModel("N1_PRIOR_ART_LEAD", prior_art_strength="ADJACENT"), NOW)
         self.assertEqual("review_retry_blocked", plan["status"])
 
-    def test_all_noop_scientific_correction_is_rejected(self):
+    def test_prior_art_flag_and_strength_must_be_consistent(self):
+        with self.assertRaisesRegex(ar.CandidateReviewError, "must be NONE"):
+            ar.validate_finding_record(
+                "attack",
+                attack_record(contradiction=False, prior=False, strength="DIRECT"),
+                meta(),
+                attack_record=True,
+            )
+
+    def test_all_noop_scientific_correction_is_rejected_even_for_absent_empty_file(self):
         plan = ar.build_plan(ROOT, self.source, FakeModel("PROJECT_CHANGE_REQUIRED", no_op_scientific=True), NOW)
-        # The target is absent in the repository; creating an empty file is still a byte-level repository change.
-        self.assertEqual("review_ready", plan["status"])
+        self.assertEqual("review_retry_blocked", plan["status"])
+        record = json.loads(next(iter(plan["inbox_files"].values())))
+        self.assertIn("no-op", record["reason"])
 
     def test_partial_noop_replacement_set_is_rejected(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "no-op targets: a"):
@@ -396,16 +486,20 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertTrue((out / "review" / ar.REVIEWS).is_file())
         self.assertFalse((out / "inbox" / ar.REVIEWS).exists())
 
-    def test_workflow_contains_race_serialization_and_explicit_dispatch_guards(self):
+    def test_workflow_contains_race_serialization_retry_validation_and_explicit_dispatch_guards(self):
         workflow = (ROOT / ".github/workflows/living-autonomous-review-v2.yml").read_text(encoding="utf-8")
         self.assertIn("headRepositoryOwner", workflow)
         self.assertIn("$GITHUB_RUN_ATTEMPT", workflow)
         self.assertIn("main advanced during autonomous review", workflow)
         self.assertIn("living inbox advanced during autonomous review", workflow)
+        self.assertIn("retry-only inbox push head mismatch", workflow)
         self.assertIn("gh workflow run validator-assurance.yml", workflow)
         self.assertIn("gh workflow run living-research.yml", workflow)
         self.assertIn("gh workflow run living-autonomous-review-v2.yml", workflow)
-        self.assertIn('gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$SOURCE_BRANCH" -f mode=validate', workflow)
+        self.assertIn(
+            'gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$SOURCE_BRANCH" -f mode=validate',
+            workflow,
+        )
         self.assertNotIn("Persist generated inbox data transactionally", workflow)
 
 
