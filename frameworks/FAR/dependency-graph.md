@@ -20,6 +20,8 @@ theory/definitions/definitions.md
   -> frameworks/FARA/
   -> methodology/contract-discovery-protocol.md
   -> frameworks/FAR/workflow.md
+       -> methodology/expertise-applicability-protocol.md
+       -> methodology/elenchus-protocol.md
   -> frameworks/FAR/methodology.md
   -> frameworks/FAR/application.md
 ```
@@ -28,7 +30,7 @@ This order is a document-maintenance order.
 
 It does not assert philosophical priority, conceptual fundamentality, or chronological rigidity.
 
-`contract-discovery-protocol.md` governs the pre-contract boundary only when supplied input leaves result-determining contract parameters open. `workflow.md` remains the canonical source for the FAR stage sequence. `methodology.md` governs the principles for using that workflow.
+`contract-discovery-protocol.md` governs the pre-contract boundary only when supplied input leaves result-determining contract parameters open. `workflow.md` remains the canonical source for the FAR stage sequence. `expertise-applicability-protocol.md` and `elenchus-protocol.md` are supporting methods invoked only when their triggers apply; neither creates a second stage sequence. `methodology.md` governs the principles for using the workflow and those supporting methods.
 
 Navigation and maintenance documents depend on the whole FAR set:
 
@@ -83,6 +85,8 @@ It preserves raw input, material ambiguities, provenance, exclusions, assumption
 
 It does not define application-domain truth and does not replace the downstream contract semantics.
 
+Pre-freeze elenchus that materially changes interpretation remains subordinate to these intake provenance, search, saturation, and freeze rules.
+
 ---
 
 ### Workflow
@@ -97,13 +101,23 @@ Stage 7 materializes calculus-produced classifications and provenance through th
 
 ---
 
+### Supporting evidence and interrogation protocols
+
+`methodology/expertise-applicability-protocol.md` governs proposition-relative use of competence evidence. It depends on the canonical workflow for where evidence appraisal occurs and does not establish claim truth.
+
+`methodology/elenchus-protocol.md` governs interactive commitment elicitation and testing. It depends on the canonical workflow for stage placement and on Contract Discovery when pre-freeze dialogue affects the active interpretation family.
+
+Both protocols are additive methodology over existing representations and provenance. Neither introduces a FARA primitive or changes the FAR stage sequence.
+
+---
+
 ### Methodology
 
 `methodology.md` defines the principles governing use of the FAR workflow.
 
 It explains how investigations should remain explicit, auditable, reconstructible, neutral, and reproducible.
 
-It depends on `workflow.md` for the canonical stage sequence and on the contract-discovery protocol for the governed pre-contract boundary when applicable.
+It depends on `workflow.md` for the canonical stage sequence, on the contract-discovery protocol for the governed pre-contract boundary when applicable, and on the accepted expertise-applicability and elenchus protocols when their triggers are invoked.
 
 ---
 
@@ -143,6 +157,8 @@ Raw Input
   -> Investigation
 ```
 
+Expertise appraisal and elenchus are conditional supporting methods, not mandatory new nodes in either universal flow. When used, their outputs enter the existing evidence, interpretation, reasoning, and provenance roles at the scope defined by their contracts.
+
 These flows describe methodological dependence, not strict chronological irreversibility.
 
 Candidate generation is included within reasoning activity rather than elevated to a separate universal stage. Pre-contract interpretation discovery is distinct from Stage 6 candidate generation.
@@ -163,6 +179,8 @@ The following constraints must be preserved:
 - FAR shall not collapse transition signatures with transformation executions.
 - FAR shall not collapse admissibility with the Admissibility Structure (Ω).
 - FAR shall not collapse resolution rules, resolution executions, and resolutions.
+- expertise applicability shall not be collapsed into substantive claim truth.
+- elenchus shall not bypass Contract Discovery or be treated as external factual verification.
 - FARO shall not be developed as an operational layer until FAR is stable.
 
 ---
