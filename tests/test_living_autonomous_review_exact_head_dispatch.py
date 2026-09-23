@@ -21,24 +21,42 @@ class AutonomousReviewExactHeadDispatchTests(unittest.TestCase):
         self.assertIn("dispatched exact-head base differs from trusted main workflow ref", workflow)
         self.assertIn("dispatched exact-head review head is not a direct child of frozen main", workflow)
         self.assertIn("git merge-base --is-ancestor", workflow)
-        self.assertIn("checks: write", workflow)
         self.assertIn("Publish dispatched assurance on reviewed head", workflow)
         self.assertIn("/check-runs", workflow)
         self.assertIn("--arg head_sha \"$FAR_ASSURANCE_DISPATCH_HEAD\"", workflow)
         self.assertIn("--arg name exact-head-assurance", workflow)
 
-        preflight = workflow.index("- name: Validate dispatched identity before checkout")
-        checkout = workflow.index("- uses: actions/checkout@v4")
-        lineage = workflow.index("- name: Verify dispatched checkout lineage before repository code runs")
-        setup = workflow.index("- uses: actions/setup-python@v5")
-        install = workflow.index("- name: Install dependencies and trace backend")
-        publish = workflow.index("- name: Publish dispatched assurance on reviewed head")
-        upload = workflow.index("- name: Upload assurance evidence")
+        # Untrusted review code executes only in the read-only validation job. The
+        # checks:write capability is isolated in a publisher job that never checks
+        # out or executes repository-controlled code.
+        permissions = workflow.index("permissions:\n  contents: read")
+        jobs = workflow.index("jobs:")
+        validation_job = workflow.index("  exact-head-assurance:", jobs)
+        publisher_job = workflow.index("  publish-dispatched-assurance:", validation_job)
+        publisher = workflow[publisher_job:]
+        validation = workflow[validation_job:publisher_job]
+        self.assertLess(permissions, jobs)
+        self.assertNotIn("checks: write", validation)
+        self.assertIn("permissions:\n      checks: write", publisher)
+        self.assertIn("needs: exact-head-assurance", publisher)
+        self.assertIn("if: always() && github.event_name == 'workflow_dispatch'", publisher)
+        self.assertNotIn("actions/checkout", publisher)
+        self.assertNotIn("actions/setup-python", publisher)
+        self.assertNotIn("Install dependencies", publisher)
+
+        preflight = validation.index("- name: Validate dispatched identity before checkout")
+        checkout = validation.index("- uses: actions/checkout@v4")
+        lineage = validation.index("- name: Verify dispatched checkout lineage before repository code runs")
+        setup = validation.index("- uses: actions/setup-python@v5")
+        install = validation.index("- name: Install dependencies and trace backend")
+        upload = validation.index("- name: Upload assurance evidence")
+        publish = publisher.index("- name: Publish dispatched assurance on reviewed head")
         self.assertLess(preflight, checkout)
         self.assertLess(checkout, lineage)
         self.assertLess(lineage, setup)
         self.assertLess(setup, install)
-        self.assertLess(upload, publish)
+        self.assertGreater(upload, install)
+        self.assertGreaterEqual(publish, 0)
 
     def test_autonomous_review_dispatches_trusted_main_and_publishes_on_head(self):
         workflow = (ROOT / ".github/workflows/living-autonomous-review-v2.yml").read_text(encoding="utf-8")
