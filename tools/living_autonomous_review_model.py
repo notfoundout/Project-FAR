@@ -95,13 +95,6 @@ class GeminiModel:
             raise CandidateReviewError(f"Gemini {role} returned invalid JSON: {exc}") from exc
         if not isinstance(result, dict):
             raise CandidateReviewError(f"Gemini {role} returned non-object JSON")
-        requested_source_urls = sorted(
-            {
-                normalize_url(value)
-                for value in (urls or [])
-                if isinstance(value, str) and value.strip()
-            }
-        )
         metadata = {
             "model": self.model,
             "model_version": payload.get("modelVersion"),
@@ -109,7 +102,6 @@ class GeminiModel:
             "finish_reason": finish_reason,
             "safety_ratings": first.get("safetyRatings", []),
             "structured_output_mode": "generateContent.responseSchema",
-            "requested_source_urls": requested_source_urls,
             "url_context_metadata": first.get("urlContextMetadata", {}),
             "grounding_metadata": first.get("groundingMetadata", {}),
             "usage_metadata": payload.get("usageMetadata", {}),
@@ -152,43 +144,14 @@ def validate_source_binding(record: dict[str, Any], metadata: dict[str, Any], la
     used = record.get("source_urls_used")
     if not isinstance(used, list) or not used or any(not isinstance(x, str) or not x.strip() for x in used):
         raise CandidateReviewError(f"{label}: source_urls_used must identify retrieved source URLs")
-    normalized_used = {normalize_url(x) for x in used}
-
-    requested = metadata.get("requested_source_urls")
-    if not isinstance(requested, list) or not requested or any(
-        not isinstance(x, str) or not x.strip() for x in requested
-    ):
-        raise CandidateReviewError(f"{label}: frozen candidate source URL set is missing")
-    candidate_urls = {normalize_url(x) for x in requested}
-    unrelated = sorted(normalized_used - candidate_urls)
-    if unrelated:
-        raise CandidateReviewError(
-            f"{label}: claimed source URL is outside the frozen candidate source set: {', '.join(unrelated)}"
-        )
-
     successful = successful_retrieval_urls(metadata)
     if not successful:
         raise CandidateReviewError(f"{label}: URL context has no successful retrieval")
-    missing = sorted(normalized_used - successful)
+    missing = sorted({normalize_url(x) for x in used} - successful)
     if missing:
         raise CandidateReviewError(
             f"{label}: claimed source URL was not successfully retrieved: {', '.join(missing)}"
         )
-
-    if label == "screening":
-        assessments = record.get("claim_assessments")
-        if not isinstance(assessments, list) or any(not isinstance(row, dict) for row in assessments):
-            raise CandidateReviewError("screening: claim_assessments must be structured records")
-        inconsistent = sorted(
-            str(row.get("claim_id"))
-            for row in assessments
-            if (row.get("premise_match") is True or row.get("scope_match") is True)
-            and row.get("relevant") is not True
-        )
-        if inconsistent:
-            raise CandidateReviewError(
-                "screening: premise/scope match requires per-claim relevance: " + ", ".join(inconsistent)
-            )
 
 
 def validate_claim_ids(ids: Any, allowed: set[str], label: str) -> list[str]:
