@@ -7,6 +7,7 @@
     "expertise_assertion_version": "1.0",
     "claim_id": "claim.cardio.1",
     "claim_version": "1.0",
+    "evaluated_at": "2026-09-23T00:00:00Z",
     "expertise_scope": {
       "domain": "cardiology",
       "subdomain": "pericardial disease",

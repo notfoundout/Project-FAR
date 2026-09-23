@@ -43,7 +43,7 @@
   ],
   "additionalProperties": false,
   "$defs": {
-    "nonEmptyString": {"type": "string", "minLength": 1},
+    "nonEmptyString": {"type": "string", "minLength": 1, "pattern": "\\S"},
     "nullableNonEmptyString": {
       "oneOf": [
         {"$ref": "#/$defs/nonEmptyString"},
@@ -137,7 +137,7 @@
       "type": "object",
       "required": [
         "applicability_id", "expertise_assertion_id", "expertise_assertion_version",
-        "claim_id", "claim_version", "expertise_scope", "claim_scope", "dimensions",
+        "claim_id", "claim_version", "evaluated_at", "expertise_scope", "claim_scope", "dimensions",
         "status", "basis", "provenance", "version"
       ],
       "properties": {
@@ -146,6 +146,7 @@
         "expertise_assertion_version": {"$ref": "#/$defs/nonEmptyString"},
         "claim_id": {"$ref": "#/$defs/nonEmptyString"},
         "claim_version": {"$ref": "#/$defs/nonEmptyString"},
+        "evaluated_at": {"$ref": "#/$defs/dateTime"},
         "expertise_scope": {"$ref": "#/$defs/scopeDescriptor"},
         "claim_scope": {"$ref": "#/$defs/scopeDescriptor"},
         "dimensions": {
@@ -189,11 +190,23 @@
       },
       "additionalProperties": false
     },
+    "claimDisposition": {
+      "type": "object",
+      "required": ["vocabulary_id", "status", "decided_at", "evidence_basis_refs"],
+      "properties": {
+        "vocabulary_id": {"$ref": "#/$defs/nonEmptyString"},
+        "status": {"enum": ["PROVED", "REFUTED", "SUPPORTED", "OPEN", "BLOCKED", "UNDERDETERMINED", "NOT_APPLICABLE", "OTHER"]},
+        "target_status": {"$ref": "#/$defs/nonEmptyString"},
+        "decided_at": {"$ref": "#/$defs/dateTime"},
+        "evidence_basis_refs": {"$ref": "#/$defs/nonEmptyStringArray"}
+      },
+      "additionalProperties": false
+    },
     "epistemicBoundary": {
       "type": "object",
       "required": [
         "investigation_id", "claim_id", "claim_version", "evidence_cutoff", "search_frame",
-        "closure_record_refs", "established", "conditionally_established", "supported_not_established",
+        "closure_record_refs", "claim_disposition", "established", "conditionally_established", "supported_not_established",
         "unknown", "not_investigated", "not_identifiable_from_current_evidence",
         "explicit_nonclaims", "falsifiers", "surviving_propositions", "residual_uncertainty",
         "limitations", "assumptions", "closure_status", "provenance", "boundary_version"
@@ -205,6 +218,7 @@
         "evidence_cutoff": {"$ref": "#/$defs/nonEmptyString"},
         "search_frame": {"$ref": "#/$defs/nonEmptyString"},
         "closure_record_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "claim_disposition": {"$ref": "#/$defs/claimDisposition"},
         "established": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
         "conditionally_established": {
           "type": "array",

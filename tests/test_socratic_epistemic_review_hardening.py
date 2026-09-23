@@ -7,6 +7,7 @@ from pathlib import Path
 
 from mechanization.far_mechanization.socratic_epistemic import (
     validate_expertise_applicability_binding,
+    validate_epistemic_boundary_binding,
     validate_socratic_record,
 )
 
@@ -23,6 +24,76 @@ def codes(document: dict) -> set[str]:
 
 
 class SocraticEpistemicReviewHardeningTests(unittest.TestCase):
+    def test_whitespace_only_required_strings_and_bridges_are_rejected(self) -> None:
+        for field in ("applicability_id", "basis"):
+            document = load("valid-expertise-applicability.json")
+            document["record"][field] = " \t "
+            with self.subTest(field=field):
+                self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+        document = load("valid-expertise-applicability.json")
+        document["record"]["claim_scope"]["domain"] = "economics"
+        dimension = document["record"]["dimensions"]["domain"]
+        dimension["claim_value"] = "economics"
+        dimension["bridge"] = " \t "
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+        document = load("valid-elenchus-session.json")
+        document["record"]["commitments"][1]["context"] = "another context"
+        document["record"]["derived_implications"][0]["context_bridges"] = [{
+            "premise_ref": "c2", "bridge": " \t ",
+        }]
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+
+    def test_expertise_binding_rejects_expired_or_premature_evaluation(self) -> None:
+        applicability = load("valid-expertise-applicability.json")
+        assertion = load("valid-expertise-assertion.json")
+        assertion["record"]["valid_until"] = "2026-09-23T00:00:00Z"
+        for evaluated_at in ("2026-09-22T23:59:59Z", "2026-09-23T00:00:01Z"):
+            with self.subTest(evaluated_at=evaluated_at):
+                applicability["record"]["evaluated_at"] = evaluated_at
+                result = validate_expertise_applicability_binding(
+                    applicability, assertion, self.claim_snapshot(applicability),
+                )
+                self.assertIn("EXPERTISE_EVALUATION_OUTSIDE_VALIDITY", {d.code for d in result.diagnostics})
+        applicability["record"]["evaluated_at"] = "2026-09-23T00:00:00Z"
+        self.assertTrue(validate_expertise_applicability_binding(
+            applicability, assertion, self.claim_snapshot(applicability),
+        ).success)
+
+    def test_boundary_binds_entire_view_and_disposition_to_resolved_closure(self) -> None:
+        boundary = load("valid-epistemic-boundary.json")
+        snapshot = copy.deepcopy(boundary["record"])
+        del snapshot["provenance"]
+        del snapshot["boundary_version"]
+        self.assertTrue(validate_epistemic_boundary_binding(boundary, snapshot).success)
+        for field, value in (
+            ("claim_version", "2.0"),
+            ("evidence_cutoff", "2026-09-24T00:00:00Z"),
+            ("search_frame", "different search frame"),
+            ("closure_status", "Resolved"),
+            ("established", []),
+            ("closure_record_refs", ["unrelated.closure"]),
+        ):
+            with self.subTest(field=field):
+                forged = copy.deepcopy(boundary)
+                forged["record"][field] = value
+                result = validate_epistemic_boundary_binding(forged, snapshot)
+                self.assertIn("BOUNDARY_CLOSURE_MISMATCH", {d.code for d in result.diagnostics})
+        forged = copy.deepcopy(boundary)
+        forged["record"]["claim_disposition"]["status"] = "REFUTED"
+        result = validate_epistemic_boundary_binding(forged, snapshot)
+        self.assertIn("BOUNDARY_CLOSURE_MISMATCH", {d.code for d in result.diagnostics})
+
+    def test_boundary_disposition_is_required_and_time_bound(self) -> None:
+        document = load("valid-epistemic-boundary.json")
+        del document["record"]["claim_disposition"]
+        self.assertIn("SCHEMA_CONSTRAINT_VIOLATION", codes(document))
+        document = load("valid-epistemic-boundary.json")
+        document["record"]["claim_disposition"]["decided_at"] = "yesterday"
+        self.assertIn("BOUNDARY_INVALID_DISPOSITION_TIME", codes(document))
+        document = load("valid-epistemic-boundary.json")
+        document["record"]["claim_disposition"]["status"] = "OTHER"
+        self.assertIn("BOUNDARY_INVALID_TARGET_STATUS", codes(document))
+
     def claim_snapshot(self, applicability: dict) -> dict:
         record = applicability["record"]
         return {

@@ -8,6 +8,12 @@
     "evidence_cutoff": "2026-09-23T00:00:00Z",
     "search_frame": "Registered evidence classes and sources for the bounded example investigation.",
     "closure_record_refs": ["closure.example.1"],
+    "claim_disposition": {
+      "vocabulary_id": "example-investigation/1.0",
+      "status": "PROVED",
+      "decided_at": "2026-09-23T00:00:00Z",
+      "evidence_basis_refs": ["evidence.example.1"]
+    },
     "established": [
       {"statement": "The registered observation occurred in the frozen case.", "basis_refs": ["evidence.example.1"]}
     ],

@@ -1,8 +1,8 @@
 """Semantic validation for Project FAR Socratic epistemic extension records.
 
 The JSON Schema checks structural shape. This module checks relationships that can
-be decided from one explicit record and exposes one resolver-assisted binding check
-for expertise applicability. It does not infer expertise, factual truth, semantic
+be decided from one explicit record and exposes resolver-assisted binding checks
+for expertise applicability and epistemic-boundary views. It does not infer expertise, factual truth, semantic
 completeness, or contradiction from natural-language content.
 """
 from __future__ import annotations
@@ -127,6 +127,12 @@ def _check_expertise_assertion(record: Mapping[str, Any], errors: list[SocraticD
 
 
 def _check_expertise_applicability(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
+    if _parse_aware_datetime(record["evaluated_at"]) is None:
+        errors.append(SocraticDiagnostic(
+            "EXPERTISE_INVALID_EVALUATION_TIME",
+            "evaluated_at must be a parseable timezone-aware date-time",
+            ("record", "evaluated_at"),
+        ))
     expertise_scope = record["expertise_scope"]
     claim_scope = record["claim_scope"]
     dimensions = record["dimensions"]
@@ -155,7 +161,7 @@ def _check_expertise_applicability(record: Mapping[str, Any], errors: list[Socra
             )
 
         status = assessment["status"]
-        if status == "MATCH" and expertise_value != claim_value and not assessment.get("bridge"):
+        if status == "MATCH" and expertise_value != claim_value and not (assessment.get("bridge") or "").strip():
             errors.append(
                 SocraticDiagnostic(
                     "UNJUSTIFIED_EXPERTISE_MATCH",
@@ -262,6 +268,18 @@ def validate_expertise_applicability_binding(
             )
         )
 
+    evaluated_at = _parse_aware_datetime(applicability["evaluated_at"])
+    valid_from = _parse_aware_datetime(assertion["valid_from"])
+    valid_until = _parse_aware_datetime(assertion.get("valid_until"))
+    if evaluated_at is not None and valid_from is not None and (
+        evaluated_at < valid_from or (valid_until is not None and evaluated_at > valid_until)
+    ):
+        errors.append(SocraticDiagnostic(
+            "EXPERTISE_EVALUATION_OUTSIDE_VALIDITY",
+            "expertise assertion is not valid at the applicability evaluation time",
+            ("record", "evaluated_at"),
+        ))
+
     required_claim_keys = ("claim_id", "claim_version", "scope")
     missing_claim_keys = [key for key in required_claim_keys if key not in claim_snapshot]
     if missing_claim_keys:
@@ -302,6 +320,19 @@ def validate_expertise_applicability_binding(
 
 
 def _check_epistemic_boundary(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
+    disposition = record["claim_disposition"]
+    if _parse_aware_datetime(disposition["decided_at"]) is None:
+        errors.append(SocraticDiagnostic(
+            "BOUNDARY_INVALID_DISPOSITION_TIME",
+            "claim disposition decided_at must be a parseable timezone-aware date-time",
+            ("record", "claim_disposition", "decided_at"),
+        ))
+    if (disposition["status"] == "OTHER") != ("target_status" in disposition):
+        errors.append(SocraticDiagnostic(
+            "BOUNDARY_INVALID_TARGET_STATUS",
+            "target_status is required exactly when the protocol uses OTHER",
+            ("record", "claim_disposition", "target_status"),
+        ))
     categories = (
         "established",
         "conditionally_established",
@@ -335,6 +366,37 @@ def _check_epistemic_boundary(record: Mapping[str, Any], errors: list[SocraticDi
                 ("record", "closure_record_refs"),
             )
         )
+
+
+def validate_epistemic_boundary_binding(
+    boundary_document: Mapping[str, Any],
+    closure_snapshot: Mapping[str, Any],
+) -> SocraticValidationResult:
+    """Bind a derived boundary view to a resolved FAR closure snapshot.
+
+    The caller resolves *all* closure_record_refs and constructs the snapshot from
+    canonical closure and resolution records. The snapshot contains the same named
+    fields as the boundary record, except its provenance and boundary_version.
+    This comparison does not determine whether the canonical records are true.
+    """
+    result = validate_socratic_record(boundary_document)
+    if not result.success:
+        return result
+    if boundary_document.get("record_type") != "EPISTEMIC_BOUNDARY":
+        return SocraticValidationResult((SocraticDiagnostic(
+            "BOUNDARY_BINDING_WRONG_TYPE", "binding requires an EPISTEMIC_BOUNDARY record",
+        ),))
+    boundary = boundary_document["record"]
+    fields = tuple(key for key in boundary if key not in {"provenance", "boundary_version"})
+    errors = []
+    for field in fields:
+        if field not in closure_snapshot or closure_snapshot[field] != boundary[field]:
+            errors.append(SocraticDiagnostic(
+                "BOUNDARY_CLOSURE_MISMATCH",
+                f"resolved closure snapshot does not match boundary {field}",
+                ("record", field),
+            ))
+    return SocraticValidationResult(tuple(errors))
 
 
 def _check_commitment_refs(

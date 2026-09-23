@@ -53,6 +53,26 @@ class InvestigationExecutionGateTests(unittest.TestCase):
                 )
             return gate.validate_manifest(path, root)
 
+    @staticmethod
+    def _record(record_id, statement):
+        return {
+            "id": record_id,
+            "statement": statement,
+            "evidence": [{"path": "evidence.md"}],
+        }
+
+    @staticmethod
+    def _terminal_class_result(class_id):
+        return {
+            "class_id": class_id,
+            "rechecked": True,
+            "new_material_evidence": False,
+            "new_claim_decomposition": False,
+            "new_alternative_explanation": False,
+            "new_residual_uncertainty": False,
+            "evidence": [{"path": "evidence.md"}],
+        }
+
     def passing_payload(self):
         payload = copy.deepcopy(self.source)
         payload["result"] = "pass"
@@ -81,13 +101,19 @@ class InvestigationExecutionGateTests(unittest.TestCase):
             "residual_uncertainty_recorded": True,
             "measurement_limitations": [],
             "measurement_limitations_basis": "No material measurement or classification limitation remained in the frozen scope.",
-            "strongest_support": ["Support item S1 recorded in the closure evidence."],
-            "strongest_counterevidence": ["Counterevidence item C1 recorded in the closure evidence."],
+            "strongest_support": [
+                self._record("SUP-1", "Strongest in-scope support recorded.")
+            ],
+            "strongest_counterevidence": [
+                self._record("CTR-1", "Strongest in-scope counterevidence recorded.")
+            ],
             "alternative_explanations": [],
             "alternative_explanations_basis": "No material alternative explanation applied to the frozen claim form.",
             "surviving_propositions": [],
             "surviving_propositions_basis": "No narrower proposition survived the adjudication within the frozen scope.",
-            "residual_uncertainty": ["Generalization outside the frozen scope remains unresolved."],
+            "residual_uncertainty": [
+                self._record("UNC-1", "Generalization outside the frozen scope remains unresolved.")
+            ],
             "evidence_search_classes": [
                 {
                     "id": "direct_evidence",
@@ -102,6 +128,7 @@ class InvestigationExecutionGateTests(unittest.TestCase):
                 "new_alternative_explanation": False,
                 "new_residual_uncertainty": False,
                 "evidence": evidence,
+                "class_results": [self._terminal_class_result("direct_evidence")],
             },
             "methodology_audit": {
                 "completed": True,

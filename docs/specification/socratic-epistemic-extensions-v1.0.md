@@ -28,11 +28,11 @@ Allowed expertise statuses are `SUPPORTED`, `PARTIALLY_SUPPORTED`, `INSUFFICIENT
 
 An expertise assertion never establishes the truth of a substantive claim.
 
-For every material source-to-claim use, an `EXPERTISE_APPLICABILITY` record binds one exact expertise-assertion revision to one exact claim revision. It records `expertise_assertion_id`, `expertise_assertion_version`, `claim_id`, and `claim_version`; preserves both `expertise_scope` and `claim_scope`; and assesses domain, subdomain, claim type, population, geography, time, and method separately as `MATCH`, `PARTIAL`, `MISMATCH`, `UNKNOWN`, or `NOT_APPLICABLE`.
+For every material source-to-claim use, an `EXPERTISE_APPLICABILITY` record binds one exact expertise-assertion revision to one exact claim revision. It records `expertise_assertion_id`, `expertise_assertion_version`, `claim_id`, `claim_version`, and a timezone-aware `evaluated_at`; preserves both `expertise_scope` and `claim_scope`; and assesses domain, subdomain, claim type, population, geography, time, and method separately as `MATCH`, `PARTIAL`, `MISMATCH`, `UNKNOWN`, or `NOT_APPLICABLE`.
 
 A dimension marked `MATCH` despite different recorded values requires an explicit non-empty bridge. Mere adjacency of domains is not a bridge. Overall `SUPPORTED` applicability is invalid if any material dimension is partial, mismatched, or unknown.
 
-Before an applicability result is used, the parent investigation resolves the referenced expertise assertion and claim revisions and verifies that their IDs, versions, and scopes equal those recorded by the applicability object. Standalone schema/semantic validation cannot establish this cross-record binding. The implementation exposes `validate_expertise_applicability_binding(...)` for a resolver-assisted binding check over already-resolved source records.
+Before an applicability result is used, the parent investigation resolves the referenced expertise assertion and claim revisions and verifies that their IDs, versions, and scopes equal those recorded by the applicability object. It also checks that `evaluated_at` falls inside the assertion validity interval, inclusively. Standalone schema/semantic validation cannot establish this cross-record binding. The implementation exposes `validate_expertise_applicability_binding(...)` for a resolver-assisted binding check over already-resolved source records.
 
 Expertise applicability remains distinct from source reliability, evidence quality, evidence relevance, claim status, and inference validity.
 
@@ -49,6 +49,7 @@ FAR already requires scope, nonclaims, typed `Unknown`, falsifiers, residual unc
 - `evidence_cutoff`;
 - `search_frame`;
 - `closure_record_refs` linking the canonical FAR closure artifacts;
+- `claim_disposition` recording the atomic result separately from investigation closure, with protocol vocabulary, typed status, decision time, and evidence-basis references;
 - `established`;
 - `conditionally_established`;
 - `supported_not_established`;
@@ -66,7 +67,7 @@ FAR already requires scope, nonclaims, typed `Unknown`, falsifiers, residual unc
 
 Every terminal category entry carries basis references. Every conditional entry identifies its condition references. Every unknown, not-investigated, and non-identifiable entry states why it occupies that category. Every falsifier, surviving proposition, residual-uncertainty item, limitation, and assumption is a statement-plus-`basis_refs` entry so its underlying FAR artifact remains individually traceable. Record-level provenance supplements rather than replaces these item-level references. The same scoped statement may not silently occupy incompatible terminal categories.
 
-The boundary view may summarize canonical FAR records but cannot replace or reinterpret them. FAR closure does not depend on FARO materialization; the dependency direction remains FAR → FARO.
+The boundary view may summarize canonical FAR records but cannot replace or reinterpret them. Before use, the parent investigation resolves every `closure_record_ref` and supplies the exact derived snapshot of the referenced closure and resolution records to `validate_epistemic_boundary_binding(...)`. The check compares claim identity/version, cutoff, frame, atomic disposition, closure status, and all summarized categories and details; its success does not prove the resolved records are true. FAR closure does not depend on FARO materialization; the dependency direction remains FAR → FARO.
 
 ## 3. Interactive elenchus protocol
 

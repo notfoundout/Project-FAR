@@ -32,7 +32,7 @@ The operation consolidates existing FAR closure information. It does not create 
 - evidence cutoff;
 - search frame;
 - canonical closure-record references;
-- claim-level logical disposition and its basis;
+- the exact claim-level logical disposition, protocol vocabulary, decision time, and evidence basis;
 - conditional results and their assumptions where present;
 - supported but unestablished propositions where present;
 - explicit `Unknown` items and reasons;
@@ -66,6 +66,7 @@ These optional inputs may explain the boundary but do not change the underlying 
 ## Procedure
 
 1. Bind the investigation, claim version, evidence cutoff, search frame, and closure-record references.
+   Bind the exact atomic claim disposition separately from investigation closure, with its decision time and evidence basis.
 2. Materialize exactly what the underlying investigation establishes at the recorded scope.
 3. Materialize conditional results together with the assumptions or conditions on which they depend.
 4. Materialize propositions supported by evidence but not established at a stronger status.
@@ -75,7 +76,7 @@ These optional inputs may explain the boundary but do not change the underlying 
 8. Preserve explicit nonclaims with their bases.
 9. Preserve each falsifier, surviving proposition, residual-uncertainty item, limitation, and assumption as its own statement-plus-`basis_refs` entry. Record-level provenance is supplementary and does not substitute for this item-level traceability.
 10. Record the FAR investigation closure status unchanged.
-11. Validate the resulting object and preserve provenance back to the underlying closure artifacts.
+11. Validate the resulting object and compare all derived fields against a parent-FAR resolver snapshot of the referenced closure and resolution records. Standalone shape validation does not establish that binding.
 
 ## Outputs
 
@@ -103,6 +104,7 @@ Falsifiers, surviving propositions, residual uncertainty, limitations, and assum
 - unknown, not-investigated, and non-identifiable entries state why they occupy that category;
 - the same scoped statement is not silently placed in incompatible categories;
 - the object points to the canonical closure record rather than masquerading as one.
+- the resolver-assisted binding check matches the exact referenced records and every summarized field, including atomic disposition and closure status.
 
 ## Failure Modes
 
