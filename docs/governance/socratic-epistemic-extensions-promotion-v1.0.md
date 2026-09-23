@@ -1,6 +1,6 @@
 # Epistemic Extensions Acceptance and Promotion Record v1.0
 
-Status: **Accepted internal methodology/operation extension — pending ordinary PR merge authority**  
+Status: **Accepted internal methodology/operation extension**  
 Program: `FAR-EPISTEMIC-EXTENSIONS-001`  
 Accepted contracts: `FAR-EXPERTISE-APPLICABILITY-1.0`, `FAR-ELENCHUS-1.0`, `FARO-EPISTEMIC-BOUNDARY-1.0`
 
@@ -38,7 +38,7 @@ The implementation package contains:
 - the FAR expertise and elenchus methodology protocols;
 - the FARO epistemic-boundary operation contract and reporting integration.
 
-Repository Health run `35823890725` passed on implementation/integration head `3ffb530de13b6786b6b06f2d5ede05d1bcfed5a1` after the record-type schema dispatcher was replaced with an explicit discriminated `oneOf`. Subsequent exact-head CI also passed before the final provenance hardening. Ordinary PR exact-head CI and merge-authority checks remain required on the final branch head before this branch can enter protected `main`; this acceptance record does not bypass repository merge governance.
+Repository Health run `35823890725` passed on implementation/integration head `3ffb530de13b6786b6b06f2d5ede05d1bcfed5a1` after the record-type schema dispatcher was replaced with an explicit discriminated `oneOf`. Subsequent exact-head CI also passed before the final provenance hardening. Promotion into protected `main` remains subject to the repository's ordinary exact-head CI, merge-authority, branch-protection, and human merge-authorization controls; this acceptance record does not bypass those controls.
 
 ## Required behavior
 
