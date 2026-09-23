@@ -24,6 +24,59 @@ def require_full_claim_coverage(record: dict[str, Any], claim_ids: set[str], lab
             detail.append("extra=" + ",".join(extra))
         raise CandidateReviewError(f"{label}: incomplete frozen claim coverage ({'; '.join(detail)})")
 
+    assessments = record.get("claim_assessments")
+    if not isinstance(assessments, list) or not assessments or any(not isinstance(row, dict) for row in assessments):
+        raise CandidateReviewError(f"{label}: claim_assessments must contain one structured record per frozen claim")
+    assessment_ids = [row.get("claim_id") for row in assessments]
+    assessed = set(validate_claim_ids(assessment_ids, claim_ids, f"{label} claim_assessments"))
+    if assessed != claim_ids or len(assessments) != len(claim_ids):
+        raise CandidateReviewError(f"{label}: incomplete per-claim assessment coverage")
+    if assessed != covered:
+        raise CandidateReviewError(f"{label}: evaluated_claim_ids and claim_assessments disagree")
+
+    affected = set(validate_claim_ids(record.get("affected_claim_ids"), claim_ids, f"{label} affected_claim_ids"))
+    if label == "screening":
+        expected_affected = {row["claim_id"] for row in assessments if row.get("relevant") is True}
+        if affected != expected_affected:
+            raise CandidateReviewError("screening: affected_claim_ids disagree with per-claim relevance")
+        if record.get("relevant") is not bool(expected_affected):
+            raise CandidateReviewError("screening: aggregate relevance disagrees with per-claim assessments")
+        if record.get("premise_match") is not any(row.get("premise_match") is True for row in assessments):
+            raise CandidateReviewError("screening: aggregate premise_match disagrees with per-claim assessments")
+        if record.get("scope_match") is not any(row.get("scope_match") is True for row in assessments):
+            raise CandidateReviewError("screening: aggregate scope_match disagrees with per-claim assessments")
+        return
+
+    for row in assessments:
+        prior_found = row.get("prior_art_found")
+        strength = row.get("prior_art_strength")
+        if prior_found is True and strength not in PRIOR_ART_STRENGTH - {"NONE"}:
+            raise CandidateReviewError(f"{label}: per-claim prior-art finding requires non-NONE strength")
+        if prior_found is False and strength != "NONE":
+            raise CandidateReviewError(f"{label}: per-claim prior-art strength must be NONE when absent")
+
+    expected_affected = {
+        row["claim_id"]
+        for row in assessments
+        if row.get("contradiction_found") is True or row.get("prior_art_found") is True
+    }
+    if affected != expected_affected:
+        raise CandidateReviewError(f"{label}: affected_claim_ids disagree with per-claim findings")
+    if record.get("contradiction_found") is not any(row.get("contradiction_found") is True for row in assessments):
+        raise CandidateReviewError(f"{label}: aggregate contradiction disagrees with per-claim findings")
+    if record.get("prior_art_found") is not any(row.get("prior_art_found") is True for row in assessments):
+        raise CandidateReviewError(f"{label}: aggregate prior-art flag disagrees with per-claim findings")
+    expected_strength = max(
+        (row.get("prior_art_strength", "NONE") for row in assessments),
+        key=lambda value: PRIOR_ART_STRENGTH.get(value, -1),
+    )
+    if record.get("prior_art_strength") != expected_strength:
+        raise CandidateReviewError(f"{label}: aggregate prior-art strength disagrees with per-claim findings")
+    if label == "replication":
+        reproduced = any(row.get("attack_reproduced") is True for row in assessments)
+        if record.get("attack_reproduced") is not reproduced:
+            raise CandidateReviewError("replication: aggregate attack_reproduced disagrees with per-claim findings")
+
 
 def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None = None):
     now = now or datetime.now(timezone.utc)
@@ -87,7 +140,6 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             urls=urls,
         )
         require_full_claim_coverage(screening, claim_ids, "screening")
-        validate_claim_ids(screening.get("affected_claim_ids"), claim_ids, "screening affected_claim_ids")
         if not screening.get("primary_source_verified"):
             return source_block(cid, "screening did not verify a primary source", now)
         try:
@@ -102,7 +154,6 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             urls=urls,
         )
         require_full_claim_coverage(attack, claim_ids, "attack")
-        validate_claim_ids(attack.get("affected_claim_ids"), claim_ids, "attack affected_claim_ids")
         try:
             validate_source_binding(attack, attack_meta, "attack")
         except CandidateReviewError as exc:
@@ -115,7 +166,6 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             urls=urls,
         )
         require_full_claim_coverage(replication, claim_ids, "replication")
-        validate_claim_ids(replication.get("affected_claim_ids"), claim_ids, "replication affected_claim_ids")
         try:
             validate_source_binding(replication, replication_meta, "replication")
         except CandidateReviewError as exc:
