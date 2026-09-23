@@ -43,8 +43,13 @@ class WheelRelocationTests(unittest.TestCase):
             cli = scripts / ("far-intake.exe" if os.name == "nt" else "far-intake")
 
             def run(*args, expected=0):
+                # On POSIX, execute the generated console-script source through the
+                # isolated environment's Python interpreter. This still validates
+                # the installed entrypoint bytes and isolated imports without
+                # broadening the validation tracer's executable trust allowlist.
+                command = [str(cli), *args] if os.name == "nt" else [str(python), str(cli), *args]
                 result = subprocess.run(
-                    [str(cli), *args], cwd=root, env=env, text=True,
+                    command, cwd=root, env=env, text=True,
                     capture_output=True, timeout=10,
                 )
                 self.assertEqual(result.returncode, expected, result.stdout + result.stderr)
