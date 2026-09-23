@@ -50,7 +50,7 @@ def require_full_claim_coverage(record: dict[str, Any], claim_ids: set[str], lab
     for row in assessments:
         prior_found = row.get("prior_art_found")
         strength = row.get("prior_art_strength")
-        if prior_found is True and strength not in PRIOR_ART_STRENGTH - {"NONE"}:
+        if prior_found is True and strength not in {"ADJACENT", "DIRECT", "STRONG"}:
             raise CandidateReviewError(f"{label}: per-claim prior-art finding requires non-NONE strength")
         if prior_found is False and strength != "NONE":
             raise CandidateReviewError(f"{label}: per-claim prior-art strength must be NONE when absent")
