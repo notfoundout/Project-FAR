@@ -1,6 +1,6 @@
 # Expertise Applicability Protocol
 
-Status: **Provisional — candidate internal methodology extension**  
+Status: **Accepted — bounded internal methodology extension**  
 Contract: `FAR-EXPERTISE-APPLICABILITY-1.0`
 
 ## Purpose
@@ -122,7 +122,7 @@ The protocol fails if:
 
 ## Machine-readable record
 
-The candidate interchange contract is `socratic-epistemic-extensions/1.0` with record types `EXPERTISE_ASSERTION` and `EXPERTISE_APPLICABILITY`, governed by:
+The accepted internal interchange contract is `socratic-epistemic-extensions/1.0` with record types `EXPERTISE_ASSERTION` and `EXPERTISE_APPLICABILITY`, governed by:
 
 - `schemas/socratic-epistemic-extensions-v1.schema.json`;
 - `mechanization/far_mechanization/socratic_epistemic.py`.
