@@ -5,6 +5,20 @@ description: "Coordinates Project FAR research by selecting the highest-value un
 
 Coordinate Project FAR research as an adversarial discovery program.
 
+## Multi-agent execution
+
+When the runtime exposes true subagent contexts and the investigation contains bounded independent lanes, execute those lanes under `FAR-SUBAGENT-1.0` in `docs/architecture/far-subagent-execution.md` and `tools/far_subagent_orchestrator.py`.
+
+- The root `far-research-orchestrator` owns the frozen DAG, context routing, conflict handling, final synthesis, and repository mutation.
+- Specialist subagents are read-only and use the existing FAR skills named by the protocol role map.
+- Pass each specialist only its declared context packet. Do not forward the full construction conversation by default.
+- Clean-room specialists receive target claims through the claims-only dependency view. Do not expose prior FAR verdicts, preferred conclusions, target conclusions, accepted answers, or construction-session synthesis.
+- Require typed specialist reports bound to the expected task ID, role, sandbox ID, and context digest.
+- Preserve conflicting findings. Failed or blocked lanes and unresolved contradictions block promotion.
+- Never use I-class material by itself to justify acceptance.
+- If the runtime lacks true subagents, the protocol may be executed serially for functional work, but do not describe same-context role-play as independent or clean-room evidence.
+- Do not parallelize tightly dependent steps or allow multiple agents to mutate the same repository state.
+
 For each major question, use this sequence when applicable:
 
 1. Precisely formulate the research question.
