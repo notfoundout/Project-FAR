@@ -10,8 +10,19 @@ from tools import promote_living_research as promoter
 from tools.living_autonomous_review_core import *
 from tools.living_autonomous_review_model import *
 
+
 def strength_at_least(value: Any, minimum: str) -> bool:
     return isinstance(value, str) and value in PRIOR_ART_STRENGTH and PRIOR_ART_STRENGTH[value] >= PRIOR_ART_STRENGTH[minimum]
+
+
+def record_claims(record: dict[str, Any]) -> set[str]:
+    values = record.get("affected_claim_ids")
+    return {x for x in values if isinstance(x, str)} if isinstance(values, list) else set()
+
+
+def record_sources(record: dict[str, Any]) -> set[str]:
+    values = record.get("source_urls_used")
+    return {normalize_url(x) for x in values if isinstance(x, str) and x.strip()} if isinstance(values, list) else set()
 
 
 def validate_decision(
@@ -22,6 +33,7 @@ def validate_decision(
     screening: dict[str, Any],
     attack: dict[str, Any],
     replication: dict[str, Any],
+    screen_meta: dict[str, Any],
     attack_meta: dict[str, Any],
     replication_meta: dict[str, Any],
 ) -> None:
@@ -40,10 +52,74 @@ def validate_decision(
         raise CandidateReviewError("scientific_targets malformed")
     if not isinstance(impl_targets, list) or any(not isinstance(x, str) for x in impl_targets):
         raise CandidateReviewError("implementation_targets malformed")
+    if len(scientific) != len(set(scientific)):
+        raise CandidateReviewError("scientific_targets contains duplicates")
+    if len(impl_targets) != len(set(impl_targets)):
+        raise CandidateReviewError("implementation_targets contains duplicates")
     if len(scientific) > policy["max_scientific_targets"] or len(impl_targets) > policy["max_implementation_targets"]:
         raise CandidateReviewError("adjudication target bound exceeded")
     if not project and scientific:
         raise CandidateReviewError("non-project-change disposition may not carry scientific targets")
+    if not project and (impl_required or impl_targets):
+        raise CandidateReviewError("non-project-change disposition may not carry implementation work")
+
+    screen_claims = record_claims(screening)
+    attack_claims = record_claims(attack)
+    replication_claims = record_claims(replication)
+    shared_claims = screen_claims & attack_claims & replication_claims
+
+    attack_contradiction = attack.get("contradiction_found") is True
+    replication_contradiction = replication.get("contradiction_found") is True
+    attack_reproduced = replication.get("attack_reproduced") is True
+    if attack_contradiction != replication_contradiction:
+        raise CandidateReviewError("attack/replication contradiction disagreement")
+    if attack_reproduced and not (attack_contradiction and replication_contradiction):
+        raise CandidateReviewError("replication marks an attack reproduced without an explicit contradiction")
+    if attack_contradiction and replication_contradiction and not attack_reproduced:
+        raise CandidateReviewError("replication did not reproduce the jointly claimed contradiction")
+    if attack_contradiction and not attack.get("reproducible_attack"):
+        raise CandidateReviewError("attack claims a contradiction without a reproducible attack")
+
+    attack_prior = attack.get("prior_art_found") is True
+    replication_prior = replication.get("prior_art_found") is True
+    if attack_prior != replication_prior and disposition != "PROJECT_CHANGE_REQUIRED":
+        raise CandidateReviewError("attack/replication prior-art disagreement")
+
+    reproduced_contradiction = attack_contradiction and replication_contradiction and attack_reproduced
+    if reproduced_contradiction:
+        validate_source_binding(screening, screen_meta, "screening")
+        validate_source_binding(attack, attack_meta, "attack")
+        validate_source_binding(replication, replication_meta, "replication")
+        shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
+        if not shared_sources:
+            raise CandidateReviewError("reproduced contradiction is not bound to one common retrieved primary source")
+        if not shared_claims:
+            raise CandidateReviewError("reproduced contradiction is not bound to one common exact claim")
+        if screening.get("relevant") is not True or screening.get("premise_match") is not True or screening.get("scope_match") is not True:
+            raise CandidateReviewError("reproduced contradiction conflicts with screening relevance/premise/scope")
+        if disposition != "PROJECT_CHANGE_REQUIRED":
+            raise CandidateReviewError("adjudication downgraded a reproduced exact contradiction")
+
+    prior_gate = policy["prior_art_gate"]
+    direct_prior_consensus = (
+        attack_prior
+        and replication_prior
+        and strength_at_least(attack.get("prior_art_strength"), prior_gate["minimum_strength"])
+        and strength_at_least(replication.get("prior_art_strength"), prior_gate["minimum_strength"])
+    )
+    if direct_prior_consensus:
+        validate_source_binding(screening, screen_meta, "screening")
+        validate_source_binding(attack, attack_meta, "attack")
+        validate_source_binding(replication, replication_meta, "replication")
+        shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
+        if not shared_sources:
+            raise CandidateReviewError("agreed prior art is not bound to one common retrieved primary source")
+        if not shared_claims:
+            raise CandidateReviewError("agreed prior art is not bound to one common exact claim")
+        if screening.get("relevant") is not True:
+            raise CandidateReviewError("agreed prior art conflicts with screening relevance")
+        if disposition not in {"N1_PRIOR_ART_LEAD", "PROJECT_CHANGE_REQUIRED"}:
+            raise CandidateReviewError("adjudication downgraded agreed direct prior art")
 
     if project:
         gate = policy["project_change_gate"]
@@ -51,6 +127,8 @@ def validate_decision(
             raise CandidateReviewError("PROJECT_CHANGE_REQUIRED requires scientific targets")
         if gate["require_verified_primary_source"] and not screening.get("primary_source_verified"):
             raise CandidateReviewError("project change lacks primary-source verification")
+        if screening.get("relevant") is not True:
+            raise CandidateReviewError("project change lacks screening relevance")
         if gate["require_premise_match"] and not screening.get("premise_match"):
             raise CandidateReviewError("project change lacks premise match")
         if gate["require_scope_match"] and not screening.get("scope_match"):
@@ -63,16 +141,23 @@ def validate_decision(
             raise CandidateReviewError("project change lacks replication")
         if gate["require_replication_contradiction"] and replication.get("contradiction_found") is not True:
             raise CandidateReviewError("project change lacks explicit replication contradiction")
+        validate_source_binding(screening, screen_meta, "screening")
         validate_source_binding(attack, attack_meta, "attack")
         validate_source_binding(replication, replication_meta, "replication")
-        shared = set(attack.get("affected_claim_ids", [])) & set(replication.get("affected_claim_ids", []))
-        if gate["require_matching_claim_id"] and not shared:
+        shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
+        if not shared_sources:
+            raise CandidateReviewError("project change lacks a common retrieved primary source across roles")
+        if gate["require_exact_claim_binding"] and not shared_claims:
+            raise CandidateReviewError("project change lacks exact screening/attack/replication claim binding")
+        if gate["require_matching_claim_id"] and not shared_claims:
             raise CandidateReviewError("attack and replication disagree on affected claim")
-        if not shared <= claim_ids:
+        if not shared_claims <= claim_ids:
             raise CandidateReviewError("project change references claim outside selected canonical set")
 
     if disposition == "N1_PRIOR_ART_LEAD":
         gate = policy["prior_art_gate"]
+        if screening.get("relevant") is not True:
+            raise CandidateReviewError("prior-art lead lacks screening relevance")
         if gate["require_attack_prior_art"] and attack.get("prior_art_found") is not True:
             raise CandidateReviewError("prior-art lead lacks attack-role prior art")
         if gate["require_replication_prior_art"] and replication.get("prior_art_found") is not True:
@@ -82,12 +167,15 @@ def validate_decision(
             raise CandidateReviewError("attack prior art is below configured strength")
         if not strength_at_least(replication.get("prior_art_strength"), minimum):
             raise CandidateReviewError("replication prior art is below configured strength")
+        validate_source_binding(screening, screen_meta, "screening")
         validate_source_binding(attack, attack_meta, "attack")
         validate_source_binding(replication, replication_meta, "replication")
-        shared = set(attack.get("affected_claim_ids", [])) & set(replication.get("affected_claim_ids", []))
-        if gate["require_matching_claim_id"] and not shared:
+        shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
+        if not shared_sources:
+            raise CandidateReviewError("prior-art lead lacks a common retrieved primary source across roles")
+        if gate["require_matching_claim_id"] and not shared_claims:
             raise CandidateReviewError("prior-art roles disagree on affected claim")
-        if not shared <= claim_ids:
+        if not shared_claims <= claim_ids:
             raise CandidateReviewError("prior-art lead references claim outside selected canonical set")
 
     if impl_required != bool(impl_targets):
@@ -113,13 +201,41 @@ def validate_decision(
             raise CandidateReviewError(f"invalid implementation target {target}: {exc}") from exc
 
 
-def current_text(root: Path, target: str) -> str:
+def current_file(root: Path, target: str) -> tuple[str, bytes | None]:
     path = root / promoter.safe(target)
     if not path.exists():
-        return ""
+        return "", None
     if not path.is_file() or path.is_symlink():
         raise ReviewError(f"non-regular target: {target}")
-    return path.read_text(encoding="utf-8")
+    raw = path.read_bytes()
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise ReviewError(f"target is not UTF-8 text: {target}") from exc
+    return text, raw
+
+
+def validate_replacement_set(
+    *,
+    kind: str,
+    targets: list[str],
+    current_raw: dict[str, bytes | None],
+    out: dict[str, bytes],
+    max_bytes: int,
+) -> None:
+    if set(out) != set(targets):
+        raise CandidateReviewError(f"{kind} generator omitted targets")
+    if sum(len(raw) for raw in out.values()) > max_bytes:
+        raise CandidateReviewError(f"{kind} replacement byte bound exceeded")
+    noops = sorted(path for path in targets if current_raw[path] is not None and out[path] == current_raw[path])
+    if noops:
+        raise CandidateReviewError(f"{kind} correction contains no-op targets: {', '.join(noops)}")
+
+
+def enforce_total_replacement_bytes(limit: int, *groups: dict[str, bytes]) -> None:
+    total = sum(len(raw) for group in groups for raw in group.values())
+    if total > limit:
+        raise CandidateReviewError(f"combined replacement byte bound exceeded: {total} > {limit}")
 
 
 def generate_replacements(
@@ -133,13 +249,19 @@ def generate_replacements(
 ) -> dict[str, bytes]:
     if not targets:
         return {}
-    current = {path: current_text(root, path) for path in targets}
+    current: dict[str, str] = {}
+    current_raw: dict[str, bytes | None] = {}
+    for path in targets:
+        text, raw = current_file(root, path)
+        current[path] = text
+        current_raw[path] = raw
     result, _ = model.generate(
         role=f"{kind}_change_generator",
         prompt=(
             f"Generate the minimal exact {kind} replacements required by the adjudication. Return every "
-            "requested target exactly once and no other target. Preserve unrelated content. JSON targets "
-            "must be complete valid JSON.\n\n"
+            "requested target exactly once and no other target. Every requested target must materially change; "
+            "do not return unchanged content for any target. Preserve unrelated content. JSON targets must be "
+            "complete valid JSON.\n\n"
             + json.dumps({"targets": targets, "current_files": current, "adjudication": context}, ensure_ascii=False)
         ),
         schema=REPLACEMENTS_SCHEMA,
@@ -160,12 +282,7 @@ def generate_replacements(
             except Exception as exc:
                 raise CandidateReviewError(f"generated JSON invalid for {path}: {exc}") from exc
         out[path] = content.encode("utf-8")
-    if set(out) != set(targets):
-        raise CandidateReviewError(f"{kind} generator omitted targets")
-    if sum(len(raw) for raw in out.values()) > max_bytes:
-        raise CandidateReviewError(f"{kind} replacement byte bound exceeded")
-    if all(out[path] == current[path].encode("utf-8") for path in targets):
-        raise CandidateReviewError(f"{kind} correction is an all-no-op replacement set")
+    validate_replacement_set(kind=kind, targets=targets, current_raw=current_raw, out=out, max_bytes=max_bytes)
     return out
 
 
@@ -180,6 +297,7 @@ def review_artifacts(
     replication: dict[str, Any],
     replication_meta: dict[str, Any],
     decision: dict[str, Any],
+    decision_meta: dict[str, Any],
     now: datetime,
 ):
     fingerprint = digest(canonical_bytes({
@@ -197,7 +315,12 @@ def review_artifacts(
             "program_id": "FAR-LIVING-AUTONOMOUS-REVIEW-001",
             "executed_utc": iso(now),
             "roles": ["screening", "attack", "replication", "adjudication"],
-            "model_metadata": {"screening": screen_meta, "attack": attack_meta, "replication": replication_meta},
+            "model_metadata": {
+                "screening": screen_meta,
+                "attack": attack_meta,
+                "replication": replication_meta,
+                "adjudication": decision_meta,
+            },
         },
         "observation": {"screening": screening, "attack": attack},
         "discovery": {
