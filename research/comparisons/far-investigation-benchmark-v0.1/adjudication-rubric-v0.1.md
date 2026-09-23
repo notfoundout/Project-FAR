@@ -20,12 +20,14 @@ Before S1, `adjudication-schedule.json` is generated from the frozen 60-case cor
 
 For each of those four evaluators independently:
 
-1. Sort the 60 final `case_id` values by lowercase hexadecimal `SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id))`. This is the evaluator's fixed base case order.
+1. Sort the 60 final `case_id` values by lowercase hexadecimal `SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id))`, breaking a hash tie by ascending Unicode-code-point order of `case_id`. This is the evaluator's fixed base case order.
 2. Number the base positions `j = 0..59`. Let `rotation = j mod 4` and let the condition vector be exactly `[F, B0, B1, B2]`.
 3. Present four rounds. In round `r = 0..3`, traverse the same 60-case base order and present the run whose condition is `conditions[(r + rotation) mod 4]` for that case.
 4. Concatenate the four rounds to obtain exactly 240 packet assignments with `presentation_index = 1..240`.
 
 This construction gives every evaluator exactly 60 packets from each condition, exactly 15 packets from each condition in every 60-packet round, and places the four versions of any one case exactly 60 presentation positions apart. The validator must reproduce this schedule exactly; arbitrary reordering is invalid.
+
+The artifact is exactly `{"status":"FROZEN","schedules":[...]}`. Each schedule has exactly `evaluator_id`, `lane`, and `packets`; it names one frozen `unitizer` or `primary_scorer`. Each packet has exactly `presentation_index`, `round`, `round_position`, `case_id`, `run_id`, `fresh_context`, `condition_label_visible`, `same_case_packet_visible`, and `other_evaluator_scores_visible`. Indices are one-based. `run_id` must equal the unique frozen execution-schedule run for the derived case-condition pair. The four isolation fields must respectively be `true`, `false`, `false`, and `false`; they are normative execution constraints, not descriptive metadata.
 
 Each evaluator receives one normalized packet at a time in a fresh scoring context with no condition label, no other condition packet for the same case, and no access to another evaluator's scores. Packet presentation order may not be altered after any scoring output exists.
 

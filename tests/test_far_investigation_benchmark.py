@@ -194,6 +194,61 @@ class FrozenSemanticTests(unittest.TestCase):
             row["execution_index"] = i
         return {"status": "FROZEN", "runs": rows}
 
+    def valid_evaluators(self):
+        lanes = [
+            "primary_scorer", "primary_scorer", "scoring_adjudicator",
+            "unitizer", "unitizer", "unitization_adjudicator",
+        ]
+        return [
+            {
+                "id": f"E{i}",
+                "identity": f"person-{i}",
+                "provider": f"external-provider-{i}",
+                "model": "none",
+                "prior_exposure": "none",
+                "conflicts": "none",
+                "lane": lane,
+            }
+            for i, lane in enumerate(lanes)
+        ]
+
+    def valid_adjudication_schedule(self, cases, execution_schedule, evaluators):
+        run_by_pair = {
+            (run["case_id"], run["condition"]): run["run_id"]
+            for run in execution_schedule["runs"]
+        }
+        schedules = []
+        for evaluator in evaluators:
+            if evaluator["lane"] not in {"unitizer", "primary_scorer"}:
+                continue
+            evaluator_id = evaluator["id"]
+            case_order = sorted(
+                (case["case_id"] for case in cases),
+                key=lambda case_id: (
+                    BENCH.sha256_text(f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"),
+                    case_id,
+                ),
+            )
+            packets = []
+            for round_index in range(4):
+                for base_position, case_id in enumerate(case_order):
+                    condition = BENCH.CONDITIONS[(round_index + base_position % 4) % 4]
+                    packets.append(
+                        {
+                            "presentation_index": len(packets) + 1,
+                            "round": round_index + 1,
+                            "round_position": base_position + 1,
+                            "case_id": case_id,
+                            "run_id": run_by_pair[(case_id, condition)],
+                            "fresh_context": True,
+                            "condition_label_visible": False,
+                            "same_case_packet_visible": False,
+                            "other_evaluator_scores_visible": False,
+                        }
+                    )
+            schedules.append({"evaluator_id": evaluator_id, "lane": evaluator["lane"], "packets": packets})
+        return {"status": "FROZEN", "schedules": schedules}
+
     def test_empty_case_corpus_rejected(self):
         errors = []
         BENCH._validate_case_bundle([], [], [], errors)
@@ -230,6 +285,72 @@ class FrozenSemanticTests(unittest.TestCase):
         BENCH._validate_schedule(schedule, {c["case_id"] for c in cases}, errors)
         self.assertTrue(any("cache nonce mismatch" in e for e in errors), errors)
 
+    def test_adjudication_schedule_reproduces_all_four_evaluator_orders(self):
+        _, cases, _ = self.valid_case_bundle()
+        execution = self.valid_schedule(cases)
+        evaluators = self.valid_evaluators()
+        schedule = self.valid_adjudication_schedule(cases, execution, evaluators)
+        errors = []
+        BENCH._validate_adjudication_schedule(
+            schedule, {case["case_id"] for case in cases}, execution, evaluators, errors
+        )
+        self.assertEqual(errors, [])
+
+    def test_adjudication_schedule_rejects_missing_evaluator_and_order_drift(self):
+        _, cases, _ = self.valid_case_bundle()
+        execution = self.valid_schedule(cases)
+        evaluators = self.valid_evaluators()
+        schedule = self.valid_adjudication_schedule(cases, execution, evaluators)
+        schedule["schedules"].pop()
+        errors = []
+        BENCH._validate_adjudication_schedule(
+            schedule, {case["case_id"] for case in cases}, execution, evaluators, errors
+        )
+        self.assertTrue(any("exactly four" in error for error in errors), errors)
+
+        schedule = self.valid_adjudication_schedule(cases, execution, evaluators)
+        schedule["schedules"][0]["packets"][0], schedule["schedules"][0]["packets"][1] = (
+            schedule["schedules"][0]["packets"][1], schedule["schedules"][0]["packets"][0]
+        )
+        errors = []
+        BENCH._validate_adjudication_schedule(
+            schedule, {case["case_id"] for case in cases}, execution, evaluators, errors
+        )
+        self.assertTrue(any("order/run linkage mismatch" in error for error in errors), errors)
+
+    def test_adjudication_schedule_rejects_run_link_and_isolation_deviations(self):
+        _, cases, _ = self.valid_case_bundle()
+        execution = self.valid_schedule(cases)
+        evaluators = self.valid_evaluators()
+        schedule = self.valid_adjudication_schedule(cases, execution, evaluators)
+        packet = schedule["schedules"][0]["packets"][0]
+        packet["run_id"] = "wrong-run"
+        packet["fresh_context"] = False
+        packet["other_evaluator_scores_visible"] = True
+        packet["undeclared"] = True
+        errors = []
+        BENCH._validate_adjudication_schedule(
+            schedule, {case["case_id"] for case in cases}, execution, evaluators, errors
+        )
+        self.assertTrue(any("missing or undeclared" in error for error in errors), errors)
+        # Field-shape rejection is fail-closed; separately exercise the isolation values.
+        del packet["undeclared"]
+        errors = []
+        BENCH._validate_adjudication_schedule(
+            schedule, {case["case_id"] for case in cases}, execution, evaluators, errors
+        )
+        self.assertTrue(any("order/run linkage mismatch" in error for error in errors), errors)
+        self.assertTrue(any("fresh context" in error for error in errors), errors)
+        self.assertTrue(any("presentation isolation" in error for error in errors), errors)
+
+    def test_adjudication_schedule_is_a_required_frozen_artifact(self):
+        self.assertIn(BENCH.ADJUDICATION_SCHEDULE, BENCH.REQUIRED_FROZEN_ARTIFACTS)
+        self.assertIn(BENCH.ADJUDICATION_SCHEDULE, BENCH.FROZEN_CONFIG_JSON)
+        manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        records = {record["path"]: record for record in manifest["artifacts"]}
+        self.assertIn(BENCH.ADJUDICATION_SCHEDULE, records)
+        self.assertEqual(records[BENCH.ADJUDICATION_SCHEDULE]["sha256"], BENCH.ZERO64)
+
     def test_resource_budget_rejects_infinity(self):
         data = {
             "status": "FROZEN",
@@ -251,27 +372,7 @@ class FrozenSemanticTests(unittest.TestCase):
         self.assertTrue(any("finite positive" in e for e in errors), errors)
 
     def test_evaluator_lane_counts_are_exact(self):
-        evaluators = []
-        lanes = [
-            "primary_scorer",
-            "primary_scorer",
-            "scoring_adjudicator",
-            "unitizer",
-            "unitizer",
-            "unitization_adjudicator",
-        ]
-        for i, lane in enumerate(lanes):
-            evaluators.append(
-                {
-                    "id": f"E{i}",
-                    "identity": f"person-{i}",
-                    "provider": f"external-provider-{i}",
-                    "model": "none",
-                    "prior_exposure": "none",
-                    "conflicts": "none",
-                    "lane": lane,
-                }
-            )
+        evaluators = self.valid_evaluators()
         errors = []
         BENCH._validate_evaluators(evaluators, errors)
         self.assertEqual(errors, [])
