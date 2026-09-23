@@ -147,7 +147,9 @@
             ],
             "statement": "The original definition excluded something the respondent accepts as reliable testimony.",
             "calculus": "explicit commitment comparison",
-            "rule": "definition-membership consistency"
+            "rule": "definition-membership consistency",
+            "context": "definition of reliable testimony",
+            "context_bridges": []
           }
         ],
         "tensions": [

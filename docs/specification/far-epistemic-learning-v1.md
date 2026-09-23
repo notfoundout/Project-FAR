@@ -48,7 +48,7 @@ A prediction references an existing belief and a cryptographically verified beli
 
 ### DecisionRecord
 
-A decision references the same belief snapshot and prediction, and occurs after prediction creation but before resolution begins. Every uncertain state maps to one snapshot hypothesis with the identical probability. Every action supplies a complete state-utility table, expected utility, downside utility, and typed tail-risk threshold/probability. The validator recomputes all four quantities, chosen-action opportunity cost, and **expected value of perfect information**:
+A decision references the same belief snapshot and prediction, and occurs after prediction creation but before resolution begins. Every uncertain state maps to exactly one snapshot hypothesis with the identical probability, and each hypothesis has exactly one state, including zero-weight hypotheses. Every action supplies a complete state-utility table, expected utility, downside utility, and typed tail-risk threshold/probability. The validator recomputes all four quantities, chosen-action opportunity cost, and **expected value of perfect information**:
 
 `EVPI = sum_s p(s) max_a U(a,s) - max_a sum_s p(s) U(a,s)`.
 
@@ -56,13 +56,13 @@ This is deliberately named EVPI, not generic value of information. No informatio
 
 ### OutcomeRecord
 
-An outcome binds one linked prediction and decision, objective evidence, resolution time, binary resolution, realized state, deterministic scores, and realized regret. The validator checks lifecycle consistency, evidence provenance, resolution chronology, scores, state identity, and regret.
+An outcome binds one linked prediction and decision, objective evidence, resolution time, binary resolution, realized state, deterministic scores, and realized regret. The binary result must be one exactly when the realized state's hypothesis equals the predicted hypothesis. The validator checks lifecycle consistency, evidence provenance and observation time, resolution chronology, scores, state identity, and regret.
 
 ### ErrorRecord and RetestRecord
 
 An error binds the prediction, decision, and outcome. Recurrence uses normalized `failure_mode_code` plus stable corrective-rule ID, never root-cause prose. A corrective rule declares which codes it applies to.
 
-`retest_ref` may be null. Any asserted retest is a separate `RetestRecord` that must reference the error, a later non-empty set of resolved outcomes, one shared prediction reference class, the baseline outcome score, the deterministic comparison mean Brier score, and an evaluation time after the baseline. `IMPROVED`, `UNCHANGED`, or `WORSE` is derived from those numbers. Even a valid `IMPROVED` record means only lower score on its exact declared comparison set; it does not establish general learning effectiveness, causal effectiveness of the rule, or external calibration.
+`retest_ref` may be null. Any asserted retest is a separate `RetestRecord` that must reference the error, a later non-empty set of resolved outcomes, one shared prediction reference class, the baseline outcome score, the deterministic comparison mean Brier score, and an evaluation time after the baseline and all comparison outcomes. `IMPROVED`, `UNCHANGED`, or `WORSE` is derived from those numbers. Even a valid `IMPROVED` record means only lower score on its exact declared comparison set; it does not establish general learning effectiveness, causal effectiveness of the rule, or external calibration.
 
 ### CausalModelRecord
 
@@ -70,7 +70,7 @@ A causal model contains typed variables/domains; mechanism-bearing directed edge
 
 ## Calibration
 
-`calibration()` accepts only resolved outcomes selected by the caller under one identical explicit reference class and explicit strictly increasing bin edges from zero to one. Empty sets, mixed classes, invalid outcomes, probabilities outside the bins, and duplicate/inverted edges fail. Bins are left-closed/right-open except the final right endpoint. Results report the declared class and edges, counts, mean probability, observed frequency, and overall mean Brier score. Selection, censoring, exchangeability, and population generalization remain external methodological assumptions and must not be inferred from a successful aggregate.
+`calibration()` accepts only resolved outcomes selected by the caller under one identical explicit reference class and explicit strictly increasing bin edges from zero to one. Outcome probabilities are strict interior six-place decimal strings. Empty sets, mixed classes, invalid outcomes, probabilities outside the bins, nonfinite numbers, and duplicate/inverted edges fail. Bins are left-closed/right-open except the final right endpoint. Results report the declared class and edges, counts, mean probability, observed frequency, and overall mean Brier score. Selection, censoring, exchangeability, and population generalization remain external methodological assumptions and must not be inferred from a successful aggregate.
 
 ## API, CLI, replay, and versioning
 

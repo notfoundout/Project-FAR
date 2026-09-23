@@ -43,7 +43,7 @@
   ],
   "additionalProperties": false,
   "$defs": {
-    "nonEmptyString": {"type": "string", "minLength": 1},
+    "nonEmptyString": {"type": "string", "minLength": 1, "pattern": "\\S"},
     "nullableNonEmptyString": {
       "oneOf": [
         {"$ref": "#/$defs/nonEmptyString"},
@@ -136,13 +136,17 @@
     "expertiseApplicability": {
       "type": "object",
       "required": [
-        "applicability_id", "expertise_assertion_id", "claim_id", "expertise_scope",
-        "claim_scope", "dimensions", "status", "basis", "provenance", "version"
+        "applicability_id", "expertise_assertion_id", "expertise_assertion_version",
+        "claim_id", "claim_version", "evaluated_at", "expertise_scope", "claim_scope", "dimensions",
+        "status", "basis", "provenance", "version"
       ],
       "properties": {
         "applicability_id": {"$ref": "#/$defs/nonEmptyString"},
         "expertise_assertion_id": {"$ref": "#/$defs/nonEmptyString"},
+        "expertise_assertion_version": {"$ref": "#/$defs/nonEmptyString"},
         "claim_id": {"$ref": "#/$defs/nonEmptyString"},
+        "claim_version": {"$ref": "#/$defs/nonEmptyString"},
+        "evaluated_at": {"$ref": "#/$defs/dateTime"},
         "expertise_scope": {"$ref": "#/$defs/scopeDescriptor"},
         "claim_scope": {"$ref": "#/$defs/scopeDescriptor"},
         "dimensions": {
@@ -177,11 +181,32 @@
       },
       "additionalProperties": false
     },
+    "boundaryDetail": {
+      "type": "object",
+      "required": ["statement", "basis_refs"],
+      "properties": {
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "basis_refs": {"$ref": "#/$defs/nonEmptyStringArray"}
+      },
+      "additionalProperties": false
+    },
+    "claimDisposition": {
+      "type": "object",
+      "required": ["vocabulary_id", "status", "decided_at", "evidence_basis_refs"],
+      "properties": {
+        "vocabulary_id": {"$ref": "#/$defs/nonEmptyString"},
+        "status": {"enum": ["PROVED", "REFUTED", "SUPPORTED", "OPEN", "BLOCKED", "UNDERDETERMINED", "NOT_APPLICABLE", "OTHER"]},
+        "target_status": {"$ref": "#/$defs/nonEmptyString"},
+        "decided_at": {"$ref": "#/$defs/dateTime"},
+        "evidence_basis_refs": {"$ref": "#/$defs/nonEmptyStringArray"}
+      },
+      "additionalProperties": false
+    },
     "epistemicBoundary": {
       "type": "object",
       "required": [
         "investigation_id", "claim_id", "claim_version", "evidence_cutoff", "search_frame",
-        "closure_record_refs", "established", "conditionally_established", "supported_not_established",
+        "closure_record_refs", "claim_disposition", "established", "conditionally_established", "supported_not_established",
         "unknown", "not_investigated", "not_identifiable_from_current_evidence",
         "explicit_nonclaims", "falsifiers", "surviving_propositions", "residual_uncertainty",
         "limitations", "assumptions", "closure_status", "provenance", "boundary_version"
@@ -193,6 +218,7 @@
         "evidence_cutoff": {"$ref": "#/$defs/nonEmptyString"},
         "search_frame": {"$ref": "#/$defs/nonEmptyString"},
         "closure_record_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
+        "claim_disposition": {"$ref": "#/$defs/claimDisposition"},
         "established": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
         "conditionally_established": {
           "type": "array",
@@ -212,11 +238,11 @@
           "items": {"allOf": [{"$ref": "#/$defs/boundaryEntry"}, {"required": ["reason"]}]}
         },
         "explicit_nonclaims": {"type": "array", "items": {"$ref": "#/$defs/boundaryEntry"}},
-        "falsifiers": {"$ref": "#/$defs/stringArray"},
-        "surviving_propositions": {"$ref": "#/$defs/stringArray"},
-        "residual_uncertainty": {"$ref": "#/$defs/stringArray"},
-        "limitations": {"$ref": "#/$defs/stringArray"},
-        "assumptions": {"$ref": "#/$defs/stringArray"},
+        "falsifiers": {"type": "array", "items": {"$ref": "#/$defs/boundaryDetail"}},
+        "surviving_propositions": {"type": "array", "items": {"$ref": "#/$defs/boundaryDetail"}},
+        "residual_uncertainty": {"type": "array", "items": {"$ref": "#/$defs/boundaryDetail"}},
+        "limitations": {"type": "array", "items": {"$ref": "#/$defs/boundaryDetail"}},
+        "assumptions": {"type": "array", "items": {"$ref": "#/$defs/boundaryDetail"}},
         "closure_status": {"enum": ["Resolved", "Provisionally resolved", "Unresolved", "Suspended", "Incomplete", "Invalid"]},
         "provenance": {"$ref": "#/$defs/provenance"},
         "boundary_version": {"$ref": "#/$defs/nonEmptyString"}
@@ -329,15 +355,29 @@
       },
       "additionalProperties": false
     },
+    "contextBridge": {
+      "type": "object",
+      "required": ["premise_ref", "bridge"],
+      "properties": {
+        "premise_ref": {"$ref": "#/$defs/nonEmptyString"},
+        "bridge": {"$ref": "#/$defs/nonEmptyString"}
+      },
+      "additionalProperties": false
+    },
     "derivedImplication": {
       "type": "object",
-      "required": ["id", "premise_refs", "statement", "calculus", "rule"],
+      "required": ["id", "premise_refs", "statement", "calculus", "rule", "context", "context_bridges"],
       "properties": {
         "id": {"$ref": "#/$defs/nonEmptyString"},
         "premise_refs": {"$ref": "#/$defs/nonEmptyStringArray"},
         "statement": {"$ref": "#/$defs/nonEmptyString"},
         "calculus": {"$ref": "#/$defs/nonEmptyString"},
-        "rule": {"$ref": "#/$defs/nonEmptyString"}
+        "rule": {"$ref": "#/$defs/nonEmptyString"},
+        "context": {"$ref": "#/$defs/nonEmptyString"},
+        "context_bridges": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/contextBridge"}
+        }
       },
       "additionalProperties": false
     },

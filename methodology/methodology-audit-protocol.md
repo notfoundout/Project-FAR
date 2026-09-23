@@ -21,7 +21,7 @@ An investigation may fail because:
 
 These possibilities shall remain distinct.
 
-A correct claim-level logical disposition does not establish that the surrounding investigation was complete. The methodology audit must therefore test whether decisive evidence caused premature stopping, whether the registered evidence/search classes were actually saturated at the bounded scope, and whether surviving propositions and uncertainty were preserved.
+A correct claim-level logical disposition does not establish that the surrounding investigation was complete. The methodology audit must therefore test whether the investigation continued beyond decisive evidence until closure obligations were satisfied, whether the registered evidence/search classes were actually saturated at the bounded scope, and whether surviving propositions and uncertainty were preserved.
 
 ## Required Audit
 
@@ -32,7 +32,7 @@ Every foundational investigation shall conclude with a Methodology Audit answeri
 3. Did it prevent premature conclusions?
 4. Were any required tests inapplicable or insufficient?
 5. Did a new class of methodological failure emerge?
-6. Did a decisive witness, counterexample, proof, or authoritative record cause the investigation to stop before the `FAR-EVIDENCE-CLOSURE-1.0` gate was satisfied?
+6. After any decisive witness, counterexample, proof, or authoritative record, did the investigation continue until `FAR-EVIDENCE-CLOSURE-1.0` was satisfied or a non-closure status was explicitly recorded?
 7. Were all registered applicable evidence/search classes rechecked in the terminal bounded saturation pass, and were any `NOT APPLICABLE` classifications justified?
 8. Were denominator, estimand, comparison-class, mechanism/directness, measurement, classification, provenance, and ascertainment issues tested where material?
 9. Were the strongest support, strongest counterevidence, and material alternative explanations considered after the initial claim-level disposition?
@@ -41,7 +41,7 @@ Every foundational investigation shall conclude with a Methodology Audit answeri
 12. Does the doctrine require revision?
 13. If revised, which previous investigations require re-evaluation?
 
-A negative answer to any applicable closure question prevents the investigation from treating `Resolved` or `Provisionally resolved` as methodologically complete under `FAR-EVIDENCE-CLOSURE-1.0`.
+For closure questions whose compliant state is affirmative, including questions 6 through 11, a negative answer prevents the investigation from treating `Resolved` or `Provisionally resolved` as methodologically complete under `FAR-EVIDENCE-CLOSURE-1.0`. Questions 4, 5, 12, and 13 are diagnostic and are not interpreted by that blanket polarity rule; their recorded answers instead determine whether remediation, revision, or re-evaluation is required.
 
 ## Outcomes
 

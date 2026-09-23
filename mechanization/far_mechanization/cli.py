@@ -226,8 +226,7 @@ def _conformance(args: argparse.Namespace) -> tuple[int, str, str]:
 def _epistemic(args: argparse.Namespace) -> tuple[int, str, str]:
     """Validate or summarize a validated epistemic loop."""
     try:
-        raw = json.loads(Path(args.file).read_text(encoding="utf-8"))
-        document = EpistemicDocument.from_dict(raw)
+        document = EpistemicDocument.load(args.file)
         if args.epistemic_command == "validate":
             payload = {"valid": True, "content_hash": document.digest,
                        "audit_event": document.audit_event()}

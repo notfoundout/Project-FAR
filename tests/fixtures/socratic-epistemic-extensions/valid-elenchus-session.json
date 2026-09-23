@@ -27,7 +27,15 @@
     "assumptions": [],
     "warrants": [],
     "derived_implications": [
-      {"id": "i1", "premise_refs": ["c1", "c2"], "statement": "The original definition excluded something the respondent accepts as reliable testimony.", "calculus": "explicit commitment comparison", "rule": "definition-membership consistency"}
+      {
+        "id": "i1",
+        "premise_refs": ["c1", "c2"],
+        "statement": "The original definition excluded something the respondent accepts as reliable testimony.",
+        "calculus": "explicit commitment comparison",
+        "rule": "definition-membership consistency",
+        "context": "definition of reliable testimony",
+        "context_bridges": []
+      }
     ],
     "tensions": [
       {"id": "t1", "commitment_refs": ["c1", "c2"], "basis": "The original definition and later accepted instance require clarification.", "unresolved_dimensions": ["definition scope"]}

@@ -8,6 +8,12 @@
     "evidence_cutoff": "2026-09-23T00:00:00Z",
     "search_frame": "Registered evidence classes and sources for the bounded example investigation.",
     "closure_record_refs": ["closure.example.1"],
+    "claim_disposition": {
+      "vocabulary_id": "example-investigation/1.0",
+      "status": "PROVED",
+      "decided_at": "2026-09-23T00:00:00Z",
+      "evidence_basis_refs": ["evidence.example.1"]
+    },
     "established": [
       {"statement": "The registered observation occurred in the frozen case.", "basis_refs": ["evidence.example.1"]}
     ],
@@ -29,11 +35,21 @@
     "explicit_nonclaims": [
       {"statement": "The result is not a population estimate.", "basis_refs": ["scope.example.1"]}
     ],
-    "falsifiers": ["A source-valid observation showing the registered event did not occur."],
-    "surviving_propositions": ["A narrower case-specific proposition remains supported."],
-    "residual_uncertainty": ["External generalization remains unresolved."],
-    "limitations": ["Bounded evidence frame."],
-    "assumptions": ["assumption.A"],
+    "falsifiers": [
+      {"statement": "A source-valid observation showing the registered event did not occur.", "basis_refs": ["closure.example.1"]}
+    ],
+    "surviving_propositions": [
+      {"statement": "A narrower case-specific proposition remains supported.", "basis_refs": ["closure.example.1"]}
+    ],
+    "residual_uncertainty": [
+      {"statement": "External generalization remains unresolved.", "basis_refs": ["closure.example.1"]}
+    ],
+    "limitations": [
+      {"statement": "Bounded evidence frame.", "basis_refs": ["scope.example.1"]}
+    ],
+    "assumptions": [
+      {"statement": "assumption.A", "basis_refs": ["assumption.A"]}
+    ],
     "closure_status": "Provisionally resolved",
     "provenance": {
       "source_refs": ["closure.example.1", "scope.example.1"],

@@ -78,13 +78,14 @@ def reference_boundary_accepts(document: dict) -> bool:
         "not_identifiable_from_current_evidence",
         "explicit_nonclaims",
     )
-    seen: set[str] = set()
+    seen: dict[str, str] = {}
     for category in categories:
         for entry in record[category]:
             statement = entry["statement"]
-            if statement in seen:
+            previous = seen.get(statement)
+            if previous is not None and previous != category:
                 return False
-            seen.add(statement)
+            seen[statement] = category
     if record["closure_status"] in {"Resolved", "Provisionally resolved"} and not record["closure_record_refs"]:
         return False
     return True
@@ -128,13 +129,15 @@ def reference_elenchus_accepts(document: dict) -> bool:
             return False
         question_times[question_id] = parsed
 
-    for response in responses.values():
+    response_times: dict[str, datetime] = {}
+    for response_id, response in responses.items():
         question_id = response["question_id"]
         if question_id not in questions:
             return False
         response_time = parse_aware(response["timestamp"])
         if response_time is None or response_time < question_times[question_id]:
             return False
+        response_times[response_id] = response_time
 
     if any(item["source_event_id"] not in responses for item in commitments.values()):
         return False
@@ -148,8 +151,20 @@ def reference_elenchus_accepts(document: dict) -> bool:
         return False
     if not _refs_exist(record["contradictions"], "commitment_refs", commitment_ids):
         return False
-    if any(any(ref not in commitment_ids for ref in item["premise_refs"]) for item in record["derived_implications"]):
-        return False
+
+    for implication in record["derived_implications"]:
+        premise_refs = implication["premise_refs"]
+        if any(ref not in commitment_ids for ref in premise_refs):
+            return False
+        bridges: dict[str, str] = {}
+        for bridge in implication["context_bridges"]:
+            premise_ref = bridge["premise_ref"]
+            if premise_ref not in premise_refs or premise_ref in bridges:
+                return False
+            bridges[premise_ref] = bridge["bridge"]
+        for premise_ref in premise_refs:
+            if commitments[premise_ref]["context"] != implication["context"] and premise_ref not in bridges:
+                return False
 
     revision_sources: set[str] = set()
     revision_targets: set[str] = set()
@@ -169,6 +184,9 @@ def reference_elenchus_accepts(document: dict) -> bool:
             return False
         if response_id not in responses or target["source_event_id"] != response_id:
             return False
+        source_response_id = source["source_event_id"]
+        if response_times[response_id] < response_times[source_response_id]:
+            return False
 
     withdrawal_ids: set[str] = set()
     for withdrawal in record["withdrawals"]:
@@ -182,6 +200,9 @@ def reference_elenchus_accepts(document: dict) -> bool:
         if commitments[commitment_id]["status"] != "WITHDRAWN":
             return False
         if response_id not in responses:
+            return False
+        source_response_id = commitments[commitment_id]["source_event_id"]
+        if response_times[response_id] < response_times[source_response_id]:
             return False
 
     for commitment_id, commitment in commitments.items():
@@ -264,6 +285,12 @@ class SocraticEpistemicReplicationTests(unittest.TestCase):
         })
         cases.append(collision)
 
+        same_category_duplicate = copy.deepcopy(base)
+        same_category_duplicate["record"]["established"].append(
+            copy.deepcopy(base["record"]["established"][0])
+        )
+        cases.append(same_category_duplicate)
+
         no_closure = copy.deepcopy(base)
         no_closure["record"]["closure_record_refs"] = []
         cases.append(no_closure)
@@ -295,6 +322,17 @@ class SocraticEpistemicReplicationTests(unittest.TestCase):
         unknown_tension_ref = copy.deepcopy(base)
         unknown_tension_ref["record"]["tensions"][0]["commitment_refs"] = ["c1", "missing"]
         cases.append(unknown_tension_ref)
+
+        context_collapse = copy.deepcopy(base)
+        context_collapse["record"]["commitments"][1]["context"] = "unrelated context"
+        cases.append(context_collapse)
+
+        context_bridge = copy.deepcopy(context_collapse)
+        context_bridge["record"]["derived_implications"][0]["context_bridges"] = [{
+            "premise_ref": "c2",
+            "bridge": "Explicit test bridge.",
+        }]
+        cases.append(context_bridge)
 
         overwritten_revision = copy.deepcopy(base)
         overwritten_revision["record"]["revisions"][0]["to_commitment_id"] = "c1"

@@ -123,6 +123,49 @@ class EpistemicLearningTests(unittest.TestCase):
         for probability in ("0.000000", "1.000000", "0.3", "NaN", 0.3):
             with self.assertRaises(EpistemicValidationError): score_binary(probability, 0)
 
+    def test_document_and_calibration_do_not_inherit_decimal_precision(self) -> None:
+        rows = [{"probability":"0.300000","binary_outcome":0,"reference_class":"daily"},
+                {"probability":"0.700000","binary_outcome":1,"reference_class":"daily"}]
+        expected_digest = EpistemicDocument.from_dict(self.data).digest
+        expected_calibration = calibration(rows, bin_edges=["0", "0.5", "1"])
+        previous = getcontext().prec
+        try:
+            getcontext().prec = 4
+            self.assertEqual(expected_digest, EpistemicDocument.from_dict(self.data).digest)
+            self.assertEqual(expected_calibration, calibration(rows, bin_edges=["0", "0.5", "1"]))
+        finally:
+            getcontext().prec = previous
+
+    def test_outcome_scores_cannot_reverse_the_realized_hypothesis(self) -> None:
+        def flip_outcome(data):
+            outcome = next(x for x in data["records"] if x["kind"] == "outcome")
+            prediction = next(x for x in data["records"] if x["id"] == outcome["prediction_ref"])
+            outcome["binary_outcome"] = 1 - outcome["binary_outcome"]
+            outcome["scores"] = score_binary(prediction["probability"], outcome["binary_outcome"])
+        self.assert_invalid(flip_outcome, "must agree with the realized state and predicted hypothesis")
+
+    def test_outcome_cannot_use_evidence_observed_after_resolution(self) -> None:
+        def backdate(data):
+            outcome = next(x for x in data["records"] if x["kind"] == "outcome")
+            item = next(x for x in data["evidence"] if x["id"] == outcome["evidence_ref"])
+            item["observed_at"] = "2099-01-01T00:00:00Z"
+        self.assert_invalid(backdate, "resolution cannot predate its outcome evidence")
+
+    def test_retest_cannot_evaluate_future_comparison_outcomes(self) -> None:
+        def early_evaluation(data):
+            retest = next(x for x in data["records"] if x["kind"] == "retest")
+            retest["evaluated_at"] = "2026-01-05T12:00:00Z"
+        self.assert_invalid(early_evaluation, "cannot predate a comparison outcome")
+
+    def test_zero_weight_duplicate_state_does_not_masquerade_as_bijection(self) -> None:
+        def duplicate(data):
+            decision = next(x for x in data["records"] if x["kind"] == "decision")
+            extra = deepcopy(decision["states"][0]); extra["id"] = "duplicate.zero"; extra["probability"] = "0.000000"
+            decision["states"].append(extra)
+            for action in decision["actions"]:
+                action["utilities"][extra["id"]] = action["utilities"][decision["states"][0]["id"]]
+        self.assert_invalid(duplicate, "duplicate hypothesis mapping is forbidden")
+
     def test_calibration_requires_declared_bins_and_comparable_class(self) -> None:
         rows = [{"probability":"0.300000","binary_outcome":0,"reference_class":"daily"},{"probability":"0.700000","binary_outcome":1,"reference_class":"daily"}]
         result = calibration(rows, bin_edges=["0","0.5","1"])
@@ -132,6 +175,13 @@ class EpistemicLearningTests(unittest.TestCase):
         bad = deepcopy(rows); bad[1]["reference_class"] = "other"
         with self.assertRaises(EpistemicValidationError): calibration(bad, bin_edges=["0","1"])
         with self.assertRaises(EpistemicValidationError): calibration(rows, bin_edges=["0","0.5","0.5","1"])
+        for invalid in ("NaN", "Infinity", 0.3, "0.3"):
+            malformed = deepcopy(rows); malformed[0]["probability"] = invalid
+            with self.subTest(probability=invalid), self.assertRaises(EpistemicValidationError):
+                calibration(malformed, bin_edges=["0", "0.5", "1"])
+        for invalid_edges in (["0", "NaN", "1"], [0, "1"]):
+            with self.subTest(edges=invalid_edges), self.assertRaises(EpistemicValidationError):
+                calibration(rows, bin_edges=invalid_edges)
 
     def test_evpi_tail_risk_and_regret_are_recomputed(self) -> None:
         self.assert_invalid(lambda d: self._mutate_kind(d, "decision", "expected_value_of_perfect_information", "3.000000"), "expected 2.400000")
@@ -167,6 +217,19 @@ class EpistemicLearningTests(unittest.TestCase):
             malformed.write_text('{"probability": NaN}',encoding="utf-8")
             failed=subprocess.run(base+["validate",str(malformed)],cwd=ROOT,text=True,capture_output=True)
             self.assertNotEqual(0,failed.returncode); self.assertFalse(json.loads(failed.stdout)["valid"])
+            duplicate=Path(directory)/"duplicate-keys.json"
+            duplicate.write_text(FIXTURE.read_text(encoding="utf-8").replace(
+                '"format_version": "far-epistemic/1.0"',
+                '"format_version": "far-epistemic/1.0", "format_version": "far-epistemic/1.0"', 1,
+            ), encoding="utf-8")
+            failed=subprocess.run(base+["validate",str(duplicate)],cwd=ROOT,text=True,capture_output=True)
+            self.assertNotEqual(0,failed.returncode)
+            self.assertIn("duplicate object key", failed.stdout)
+            invalid_bytes=Path(directory)/"invalid-utf8.json"
+            invalid_bytes.write_bytes(b"\xff")
+            failed=subprocess.run(base+["validate",str(invalid_bytes)],cwd=ROOT,text=True,capture_output=True)
+            self.assertNotEqual(0,failed.returncode)
+            self.assertFalse(json.loads(failed.stdout)["valid"])
 
 
 if __name__ == "__main__": unittest.main()

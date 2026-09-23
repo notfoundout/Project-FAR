@@ -30,7 +30,21 @@ A decisive witness, counterexample, proof, or authoritative record may settle an
 
 The correction is represented by closure contract `FAR-EVIDENCE-CLOSURE-1.0` in the canonical FAR workflow.
 
-## Accepted requirements
+## Replication
+
+The discovery was reproduced against exact pre-correction commit `4e258fd3b7c5a80b6f7263ad6f2e085f913b1d2a` using only generic investigation structure.
+
+The replication record is:
+
+- [`../../research/validation/evidence/far-evidence-closure-replication-v1.0.md`](../../research/validation/evidence/far-evidence-closure-replication-v1.0.md).
+
+That record pins the pre-correction workflow and execution-validator Git blobs, reconstructs their actual closure/PASS requirements, and demonstrates that a generic manifest could satisfy every machine PASS prerequisite while carrying no distinct post-evidence closure record. The replication therefore reproduces the structural premature-closure path independently of any application-specific claim or dataset.
+
+The original promotion in PR #517 occurred before this Replication stage had been recorded. That sequencing did not satisfy the Research Execution Charter's mandatory discovery lifecycle. This record does not retroactively claim that the skipped stage occurred. The follow-up governance repair explicitly records Replication before re-asserting Acceptance and Promotion.
+
+## Acceptance
+
+Following the reproduced defect, the correction is accepted at the bounded internal-methodology scope below.
 
 Before `Resolved` or `Provisionally resolved` closure under the corrected workflow, the investigation must:
 
@@ -43,7 +57,7 @@ Before `Resolved` or `Provisionally resolved` closure under the corrected workfl
 7. test material alternative explanations or inference paths where the claim form makes them relevant;
 8. identify narrower, adjacent, conditional, or comparative propositions that survive even when a broader proposition has been adjudicated;
 9. state residual uncertainty explicitly, including unresolved empirical questions that the decisive evidence does not answer;
-10. execute a terminal bounded saturation pass over the registered applicable evidence/search classes, with no new material evidence, claim decomposition, alternative explanation, or residual-uncertainty item appearing in that terminal pass;
+10. execute a terminal bounded saturation pass over every registered applicable evidence/search class, with an explicit per-class result and no new material evidence, claim decomposition, alternative explanation, or residual-uncertainty item appearing in that terminal pass;
 11. run the methodology audit before methodological closure.
 
 If the terminal pass finds a new material item, the investigation remains open and the search frame must be updated before another closure attempt.
@@ -60,13 +74,15 @@ A decisive claim-level verdict may be recorded before the closure gate completes
 
 For execution manifests created after this correction, `result: pass` is rejected unless the manifest carries an `evidence_closure` record bound to `FAR-EVIDENCE-CLOSURE-1.0`.
 
-That record must include repository-backed closure evidence, the bounded search frame and stopping rule, applicable evidence/search classes, denominator/directness and measurement/classification checks, strongest support and counterevidence, alternative explanations, surviving propositions, residual uncertainty, terminal saturation evidence, and methodology-audit evidence. Empty substantive lists require an explicit basis. An executed evidence/search class requires evidence; a `NOT_APPLICABLE` class requires a reason. Terminal saturation fails closed if any new material evidence, claim decomposition, alternative explanation, or residual-uncertainty item is reported.
+That record must include repository-backed closure evidence, the bounded search frame and stopping rule, applicable evidence/search classes, denominator/directness and measurement/classification checks, strongest support and counterevidence, alternative explanations, surviving propositions, residual uncertainty, terminal saturation evidence, and methodology-audit evidence.
+
+Non-empty substantive records are typed mappings rather than placeholder list entries: each requires a stable ID, a non-empty statement, and an explicit basis or repository-backed evidence. Empty substantive lists require an explicit basis. Executed evidence/search classes require evidence; `NOT_APPLICABLE` classes require reasons. Terminal saturation requires an exact per-class recheck record for every executed class and fails closed if any class is missing, duplicated, not actually rechecked, or reports a new material item.
 
 The execution validator preserves the two execution manifests that predate this correction without rewriting their historical records. The compatibility boundary is pinned to the exact existing Git blob identities for `VI-001` and `VI-002`; changing either historical manifest invalidates the exemption, and future manifests cannot self-declare legacy status or reuse it under a new ID.
 
 ## Promotion
 
-The correction is promoted through:
+After Replication and Acceptance, the correction is promoted through:
 
 - `frameworks/FAR/workflow.md` as the canonical closure contract and stage-sequence authority;
 - `frameworks/FAR/methodology.md` as the governing closure-discipline principle;
@@ -78,7 +94,10 @@ The correction is promoted through:
 - `.claude/skills/far-research-quality-gate/SKILL.md`;
 - `tools/check_investigation_execution.py` as the fail-closed execution-manifest boundary for future PASS declarations;
 - `tools/check_far_evidence_closure.py` as cross-surface drift protection;
-- `tests/test_investigation_execution_closure.py` and `tests/test_far_evidence_closure.py` as regression coverage.
+- `tests/test_investigation_execution_closure.py`, `tests/test_investigation_execution_gates.py`, and `tests/test_far_evidence_closure.py` as regression coverage;
+- `docs/CANONICAL_MAP.md` as the repository-wide authority-routing surface.
+
+The protected follow-up merge is the Repository Change stage for this lifecycle/provenance repair. It does not rewrite the historical fact that PR #517 was merged before Replication was recorded.
 
 ## Re-evaluation rule
 

@@ -53,8 +53,8 @@ The purpose is provenance for why the question was asked. It does not predetermi
 3. Record the response as a separate event linked to that question.
 4. Materialize any resulting commitment with exact wording, context, version, and source event.
 5. Materialize any definition, assumption, warrant, or tension that affects the investigation as its own identified record linked to the commitments that support it.
-6. Derive implications only through an explicitly named calculus or inferential rule.
-7. Compare derived implications and recorded commitments at compatible contexts.
+6. Derive implications only through an explicitly named calculus or inferential rule, and record the context in which the implication is asserted.
+7. Compare derived implications and recorded commitments only at compatible contexts. If a premise commitment has a different recorded context from the implication, record an explicit bridge for that premise before using it in the derivation.
 8. Record `TENSION` when incompatibility is suspected or context-sensitive but not demonstrated.
 9. Record `CONTRADICTION` only when an explicit interpretation and calculus show that the referenced commitments cannot jointly hold under the recorded context.
 10. Present the missing premise, tension, or demonstrated contradiction for clarification when doing so is material to the investigation.
@@ -76,6 +76,21 @@ Definitions, assumptions, warrants, and tensions are not free-form annotation bu
 Every such record must have a stable identifier and explicit content. Definitions record the term and the definition statement. Assumptions and warrants record the exact statement. Tensions identify at least two commitments and state the basis for unresolved incompatibility. Every record names the commitment IDs from which it was elicited or against which it is evaluated.
 
 A reference to an unknown commitment invalidates the session record. An empty object is not a valid elicited record.
+
+## Implication context discipline
+
+Every derived implication records:
+
+- its premise commitment IDs;
+- the resulting statement;
+- the calculus;
+- the rule;
+- the implication context;
+- zero or more per-premise context bridges.
+
+A premise whose commitment context equals the implication context requires no bridge. A premise with a different context requires one explicit non-empty bridge tied to that premise ID. A bridge for a commitment that is not a premise is invalid, as is more than one bridge for the same premise.
+
+A context bridge records the analyst's explicit justification for transporting that premise into the implication context. It does not itself prove that the transport is substantively sound; that justification remains auditable under the parent investigation.
 
 ## Commitment versioning
 
@@ -123,7 +138,7 @@ Elenchus does not authorize silent selection of one interpretation. If materiall
 
 Stage 3 may use elicited definitions or interpretations with session provenance.
 
-Stage 6 may use elicited commitments as premises only at their recorded scope and context. Any derived implication must identify its premises, calculus, and rule.
+Stage 6 may use elicited commitments as premises only at their recorded scope and context. Any derived implication must identify its premises, calculus, rule, and implication context. A premise from a different recorded context requires an explicit per-premise bridge before it is used.
 
 A later revision that changes a result-relevant commitment invalidates dependent reasoning to the extent required by the canonical FAR revision rules.
 
@@ -134,7 +149,7 @@ The accepted internal interchange contract is `socratic-epistemic-extensions/1.0
 - `schemas/socratic-epistemic-extensions-v1.schema.json`;
 - `mechanization/far_mechanization/socratic_epistemic.py`.
 
-The validator checks event references, timezone-aware event timestamps, response-to-question chronology, lifecycle-event chronology relative to the commitments they modify, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, and contradiction references. It does not infer semantic contradiction from natural language.
+The validator checks event references, timezone-aware event timestamps, response-to-question chronology, lifecycle-event chronology relative to the commitments they modify, elicited-record commitment references, revision and withdrawal completeness, revision source/target uniqueness, revision response provenance, version ordering, implication-premise references, implication-context compatibility and per-premise bridges, and contradiction references. It does not infer semantic contradiction from natural language or prove that a recorded context bridge is substantively valid.
 
 ## Failure conditions
 
@@ -149,7 +164,9 @@ The protocol fails if:
 - a material definition, assumption, warrant, or tension is stored without typed content and commitment provenance;
 - an elicited record references a nonexistent commitment;
 - pre-freeze elenchus evidence affects contract discovery without entering the governed intake as hash-bound source provenance and remaining subject to the existing search/saturation/freeze rules;
-- an implication lacks explicit premises, calculus, or rule;
+- an implication lacks explicit premises, calculus, rule, or context;
+- an implication uses a premise from a different recorded context without an explicit bridge tied to that premise;
+- an implication supplies a context bridge for a non-premise or duplicates a bridge for one premise;
 - a contradiction is asserted without an explicit interpretation and calculus;
 - a revision overwrites the prior commitment;
 - a commitment is marked `REVISED` without a corresponding revision event;

@@ -289,6 +289,8 @@ def _validate_semantics(data: Mapping[str, Any]) -> list[str]:
                 errors.append(f"$.records[{rid}].states[{state_id}].probability: must equal snapshot probability")
         if {state["hypothesis_ref"] for state in states.values()} != set(snapshot["hypothesis_probabilities"]):
             errors.append(f"$.records[{rid}].states: must map exactly once to every snapshot hypothesis")
+        if len(states) != len(snapshot["hypothesis_probabilities"]):
+            errors.append(f"$.records[{rid}].states: duplicate hypothesis mapping is forbidden")
         actions = _index(decision["actions"], f"$.records[{rid}].actions", errors)
         evs: dict[str, Decimal] = {}
         for aid, action in actions.items():
@@ -329,12 +331,17 @@ def _validate_semantics(data: Mapping[str, Any]) -> list[str]:
         if outcome["evidence_ref"] not in evidence or outcome["evidence_ref"] not in outcome["provenance"]["evidence_refs"]:
             errors.append(f"$.records[{rid}].evidence_ref: must exist and be bound by outcome provenance")
         resolved = _parse_time(outcome["resolved_at"])
+        if outcome["evidence_ref"] in evidence and _parse_time(evidence[outcome["evidence_ref"]]["observed_at"]) > resolved:
+            errors.append(f"$.records[{rid}].evidence_ref: resolution cannot predate its outcome evidence")
         if resolved < _parse_time(prediction["resolution_window_start"]):
             errors.append(f"$.records[{rid}].resolved_at: cannot precede resolution window")
         states = {x["id"]: x for x in decision["states"]}; actions = {x["id"]: x for x in decision["actions"]}
         if outcome["realized_state"] not in states:
             errors.append(f"$.records[{rid}].realized_state: unknown decision state")
         else:
+            expected_binary = int(states[outcome["realized_state"]]["hypothesis_ref"] == prediction["hypothesis_ref"])
+            if outcome["binary_outcome"] != expected_binary:
+                errors.append(f"$.records[{rid}].binary_outcome: must agree with the realized state and predicted hypothesis")
             achieved = _decimal(actions[decision["chosen_action"]]["utilities"][outcome["realized_state"]])
             regret = max(_decimal(a["utilities"][outcome["realized_state"]]) for a in actions.values()) - achieved
             if _decimal(outcome["regret"]) != regret:
@@ -393,6 +400,8 @@ def _validate_semantics(data: Mapping[str, Any]) -> list[str]:
             errors.append(f"$.records[{rid}].evaluated_at: retest must follow baseline outcome")
         if any(_parse_time(x["resolved_at"]) <= _parse_time(baseline_outcome["resolved_at"]) for x in comparison_outcomes):
             errors.append(f"$.records[{rid}].comparison_outcome_refs: comparisons must be later outcomes")
+        if any(_parse_time(x["resolved_at"]) > _parse_time(retest["evaluated_at"]) for x in comparison_outcomes):
+            errors.append(f"$.records[{rid}].evaluated_at: cannot predate a comparison outcome")
         baseline = _decimal(retest["baseline_mean_brier"])
         actual_baseline = _decimal(baseline_outcome["scores"]["brier"])
         if baseline != actual_baseline:
@@ -458,7 +467,10 @@ def validate_document(data: object) -> tuple[str, ...]:
         return (f"$: schema validation failed: {exc}",)
     if errors or not isinstance(data, Mapping): return tuple(sorted(set(errors)))
     try:
-        errors.extend(_validate_semantics(data))
+        with localcontext() as context:
+            context.prec = 50
+            context.rounding = ROUND_HALF_EVEN
+            errors.extend(_validate_semantics(data))
     except (KeyError, TypeError, ValueError, ArithmeticError, UnicodeError) as exc:
         errors.append(f"$: semantic validation failed closed: {type(exc).__name__}: {exc}")
     return tuple(sorted(set(errors)))
@@ -489,7 +501,7 @@ class EpistemicDocument:
     @classmethod
     def load(cls, path: str | Path) -> "EpistemicDocument":
         try: return cls.loads(Path(path).read_text(encoding="utf-8"))
-        except OSError as exc: raise EpistemicValidationError((f"$: unreadable document: {exc}",)) from exc
+        except (OSError, UnicodeError) as exc: raise EpistemicValidationError((f"$: unreadable document: {exc}",)) from exc
 
     def to_dict(self) -> dict[str, Any]: return json.loads(self._canonical)
     def dumps(self) -> str: return self._canonical.decode("utf-8") + "\n"
@@ -520,20 +532,31 @@ def score_binary(probability: str, outcome: int) -> dict[str, str]:
 
 def calibration(outcomes: Iterable[Mapping[str, Any]], *, bin_edges: Sequence[str]) -> dict[str, Any]:
     """Aggregate explicitly selected comparable outcomes under declared fixed bins."""
+    with localcontext() as context:
+        context.prec = 50
+        context.rounding = ROUND_HALF_EVEN
+        return _calibration(outcomes, bin_edges=bin_edges)
+
+
+def _calibration(outcomes: Iterable[Mapping[str, Any]], *, bin_edges: Sequence[str]) -> dict[str, Any]:
+    if not all(isinstance(edge, str) for edge in bin_edges):
+        raise EpistemicValidationError(("$.bin_edges: decimal strings required",))
     try: edges = [Decimal(x) for x in bin_edges]
     except Exception as exc: raise EpistemicValidationError(("$.bin_edges: decimal strings required",)) from exc
-    if len(edges) < 2 or edges[0] != 0 or edges[-1] != 1 or any(a >= b for a, b in zip(edges, edges[1:])):
+    if len(edges) < 2 or not all(edge.is_finite() for edge in edges) or edges[0] != 0 or edges[-1] != 1 or any(a >= b for a, b in zip(edges, edges[1:])):
         raise EpistemicValidationError(("$.bin_edges: strictly increasing edges from 0 to 1 required",))
     rows = list(outcomes)
     if not rows: raise EpistemicValidationError(("$.outcomes: at least one resolved comparable outcome required",))
     reference_classes = {row.get("reference_class") for row in rows}
-    if len(reference_classes) != 1 or None in reference_classes:
+    if len(reference_classes) != 1 or None in reference_classes or not all(isinstance(x, str) and x.strip() for x in reference_classes):
         raise EpistemicValidationError(("$.outcomes: one explicit comparable reference_class required",))
     buckets: list[list[tuple[Decimal, int]]] = [[] for _ in range(len(edges) - 1)]
     for index, row in enumerate(rows):
+        if not isinstance(row.get("probability"), str):
+            raise EpistemicValidationError((f"$.outcomes[{index}]: fixed-scale probability string required",))
         try: p = Decimal(row["probability"]); outcome = row["binary_outcome"]
         except Exception as exc: raise EpistemicValidationError((f"$.outcomes[{index}]: probability and outcome required",)) from exc
-        if outcome not in (0, 1) or isinstance(outcome, bool) or not (0 < p < 1):
+        if not p.is_finite() or p.as_tuple().exponent != -6 or outcome not in (0, 1) or isinstance(outcome, bool) or not (0 < p < 1):
             raise EpistemicValidationError((f"$.outcomes[{index}]: strict probability and binary integer outcome required",))
         bucket = next((i for i, (a, b) in enumerate(zip(edges, edges[1:])) if a <= p < b or (i == len(edges)-2 and p == b)), None)
         if bucket is None: raise EpistemicValidationError((f"$.outcomes[{index}]: probability outside bins",))

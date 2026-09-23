@@ -1,8 +1,9 @@
 """Semantic validation for Project FAR Socratic epistemic extension records.
 
-The JSON Schema checks structural shape. This module checks only relationships that
-can be decided from one explicit record. It does not infer expertise, factual truth,
-semantic completeness, or contradiction from natural-language content.
+The JSON Schema checks structural shape. This module checks relationships that can
+be decided from one explicit record and exposes resolver-assisted binding checks
+for expertise applicability and epistemic-boundary views. It does not infer expertise, factual truth, semantic
+completeness, or contradiction from natural-language content.
 """
 from __future__ import annotations
 
@@ -126,6 +127,12 @@ def _check_expertise_assertion(record: Mapping[str, Any], errors: list[SocraticD
 
 
 def _check_expertise_applicability(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
+    if _parse_aware_datetime(record["evaluated_at"]) is None:
+        errors.append(SocraticDiagnostic(
+            "EXPERTISE_INVALID_EVALUATION_TIME",
+            "evaluated_at must be a parseable timezone-aware date-time",
+            ("record", "evaluated_at"),
+        ))
     expertise_scope = record["expertise_scope"]
     claim_scope = record["claim_scope"]
     dimensions = record["dimensions"]
@@ -154,7 +161,7 @@ def _check_expertise_applicability(record: Mapping[str, Any], errors: list[Socra
             )
 
         status = assessment["status"]
-        if status == "MATCH" and expertise_value != claim_value and not assessment.get("bridge"):
+        if status == "MATCH" and expertise_value != claim_value and not (assessment.get("bridge") or "").strip():
             errors.append(
                 SocraticDiagnostic(
                     "UNJUSTIFIED_EXPERTISE_MATCH",
@@ -193,7 +200,139 @@ def _check_expertise_applicability(record: Mapping[str, Any], errors: list[Socra
         )
 
 
+def validate_expertise_applicability_binding(
+    applicability_document: Mapping[str, Any],
+    expertise_assertion_document: Mapping[str, Any],
+    claim_snapshot: Mapping[str, Any],
+) -> SocraticValidationResult:
+    """Validate an applicability record against resolved source revisions.
+
+    ``claim_snapshot`` is a parent-FAR resolver product with exact ``claim_id``,
+    ``claim_version``, and ``scope`` keys. The helper deliberately does not fetch or
+    infer those records itself; resolution remains the caller's provenance duty.
+    """
+    errors: list[SocraticDiagnostic] = []
+
+    applicability_result = validate_socratic_record(applicability_document)
+    if not applicability_result.success:
+        errors.extend(applicability_result.diagnostics)
+        return SocraticValidationResult(tuple(errors))
+
+    assertion_result = validate_socratic_record(expertise_assertion_document)
+    if not assertion_result.success:
+        errors.extend(assertion_result.diagnostics)
+        return SocraticValidationResult(tuple(errors))
+
+    if applicability_document.get("record_type") != "EXPERTISE_APPLICABILITY":
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_BINDING_WRONG_APPLICABILITY_TYPE",
+                "binding check requires an EXPERTISE_APPLICABILITY record",
+            )
+        )
+        return SocraticValidationResult(tuple(errors))
+    if expertise_assertion_document.get("record_type") != "EXPERTISE_ASSERTION":
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_BINDING_WRONG_ASSERTION_TYPE",
+                "binding check requires an EXPERTISE_ASSERTION source record",
+            )
+        )
+        return SocraticValidationResult(tuple(errors))
+
+    applicability = applicability_document["record"]
+    assertion = expertise_assertion_document["record"]
+
+    if applicability["expertise_assertion_id"] != assertion["expertise_assertion_id"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_ASSERTION_ID_MISMATCH",
+                "applicability record does not reference the resolved expertise assertion id",
+                ("record", "expertise_assertion_id"),
+            )
+        )
+    if applicability["expertise_assertion_version"] != assertion["version"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_ASSERTION_VERSION_MISMATCH",
+                "applicability record does not reference the resolved expertise assertion version",
+                ("record", "expertise_assertion_version"),
+            )
+        )
+    if applicability["expertise_scope"] != assertion["scope"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_ASSERTION_SCOPE_MISMATCH",
+                "applicability expertise_scope does not match the resolved expertise assertion",
+                ("record", "expertise_scope"),
+            )
+        )
+
+    evaluated_at = _parse_aware_datetime(applicability["evaluated_at"])
+    valid_from = _parse_aware_datetime(assertion["valid_from"])
+    valid_until = _parse_aware_datetime(assertion.get("valid_until"))
+    if evaluated_at is not None and valid_from is not None and (
+        evaluated_at < valid_from or (valid_until is not None and evaluated_at > valid_until)
+    ):
+        errors.append(SocraticDiagnostic(
+            "EXPERTISE_EVALUATION_OUTSIDE_VALIDITY",
+            "expertise assertion is not valid at the applicability evaluation time",
+            ("record", "evaluated_at"),
+        ))
+
+    required_claim_keys = ("claim_id", "claim_version", "scope")
+    missing_claim_keys = [key for key in required_claim_keys if key not in claim_snapshot]
+    if missing_claim_keys:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_CLAIM_SNAPSHOT_INCOMPLETE",
+                f"resolved claim snapshot is missing {missing_claim_keys}",
+            )
+        )
+        return SocraticValidationResult(tuple(errors))
+
+    if applicability["claim_id"] != claim_snapshot["claim_id"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_CLAIM_ID_MISMATCH",
+                "applicability record does not reference the resolved claim id",
+                ("record", "claim_id"),
+            )
+        )
+    if applicability["claim_version"] != claim_snapshot["claim_version"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_CLAIM_VERSION_MISMATCH",
+                "applicability record does not reference the resolved claim version",
+                ("record", "claim_version"),
+            )
+        )
+    if applicability["claim_scope"] != claim_snapshot["scope"]:
+        errors.append(
+            SocraticDiagnostic(
+                "EXPERTISE_CLAIM_SCOPE_MISMATCH",
+                "applicability claim_scope does not match the resolved claim revision",
+                ("record", "claim_scope"),
+            )
+        )
+
+    return SocraticValidationResult(tuple(errors))
+
+
 def _check_epistemic_boundary(record: Mapping[str, Any], errors: list[SocraticDiagnostic]) -> None:
+    disposition = record["claim_disposition"]
+    if _parse_aware_datetime(disposition["decided_at"]) is None:
+        errors.append(SocraticDiagnostic(
+            "BOUNDARY_INVALID_DISPOSITION_TIME",
+            "claim disposition decided_at must be a parseable timezone-aware date-time",
+            ("record", "claim_disposition", "decided_at"),
+        ))
+    if (disposition["status"] == "OTHER") != ("target_status" in disposition):
+        errors.append(SocraticDiagnostic(
+            "BOUNDARY_INVALID_TARGET_STATUS",
+            "target_status is required exactly when the protocol uses OTHER",
+            ("record", "claim_disposition", "target_status"),
+        ))
     categories = (
         "established",
         "conditionally_established",
@@ -227,6 +366,37 @@ def _check_epistemic_boundary(record: Mapping[str, Any], errors: list[SocraticDi
                 ("record", "closure_record_refs"),
             )
         )
+
+
+def validate_epistemic_boundary_binding(
+    boundary_document: Mapping[str, Any],
+    closure_snapshot: Mapping[str, Any],
+) -> SocraticValidationResult:
+    """Bind a derived boundary view to a resolved FAR closure snapshot.
+
+    The caller resolves *all* closure_record_refs and constructs the snapshot from
+    canonical closure and resolution records. The snapshot contains the same named
+    fields as the boundary record, except its provenance and boundary_version.
+    This comparison does not determine whether the canonical records are true.
+    """
+    result = validate_socratic_record(boundary_document)
+    if not result.success:
+        return result
+    if boundary_document.get("record_type") != "EPISTEMIC_BOUNDARY":
+        return SocraticValidationResult((SocraticDiagnostic(
+            "BOUNDARY_BINDING_WRONG_TYPE", "binding requires an EPISTEMIC_BOUNDARY record",
+        ),))
+    boundary = boundary_document["record"]
+    fields = tuple(key for key in boundary if key not in {"provenance", "boundary_version"})
+    errors = []
+    for field in fields:
+        if field not in closure_snapshot or closure_snapshot[field] != boundary[field]:
+            errors.append(SocraticDiagnostic(
+                "BOUNDARY_CLOSURE_MISMATCH",
+                f"resolved closure snapshot does not match boundary {field}",
+                ("record", field),
+            ))
+    return SocraticValidationResult(tuple(errors))
 
 
 def _check_commitment_refs(
@@ -350,7 +520,8 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
     )
 
     for index, implication in enumerate(record["derived_implications"]):
-        missing = [str(ref) for ref in implication["premise_refs"] if str(ref) not in commitment_ids]
+        premise_refs = [str(ref) for ref in implication["premise_refs"]]
+        missing = [ref for ref in premise_refs if ref not in commitment_ids]
         if missing:
             errors.append(
                 SocraticDiagnostic(
@@ -359,6 +530,42 @@ def _check_elenchus(record: Mapping[str, Any], errors: list[SocraticDiagnostic])
                     ("record", "derived_implications", index, "premise_refs"),
                 )
             )
+
+        bridge_by_premise: dict[str, str] = {}
+        for bridge_index, bridge in enumerate(implication["context_bridges"]):
+            premise_ref = str(bridge["premise_ref"])
+            if premise_ref not in premise_refs:
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_IMPLICATION_BRIDGE_UNKNOWN_PREMISE",
+                        f"context bridge references non-premise commitment {premise_ref}",
+                        ("record", "derived_implications", index, "context_bridges", bridge_index, "premise_ref"),
+                    )
+                )
+            if premise_ref in bridge_by_premise:
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_IMPLICATION_DUPLICATE_CONTEXT_BRIDGE",
+                        f"more than one context bridge is supplied for premise {premise_ref}",
+                        ("record", "derived_implications", index, "context_bridges", bridge_index, "premise_ref"),
+                    )
+                )
+            bridge_by_premise[premise_ref] = str(bridge["bridge"])
+
+        implication_context = str(implication["context"])
+        for premise_ref in premise_refs:
+            if premise_ref not in commitments:
+                continue
+            premise_context = str(commitments[premise_ref]["context"])
+            if premise_context != implication_context and premise_ref not in bridge_by_premise:
+                errors.append(
+                    SocraticDiagnostic(
+                        "ELENCHUS_IMPLICATION_CONTEXT_MISMATCH",
+                        f"premise {premise_ref} has context {premise_context!r} but implication context is "
+                        f"{implication_context!r} and no explicit bridge is recorded",
+                        ("record", "derived_implications", index, "context"),
+                    )
+                )
 
     revision_sources: set[str] = set()
     revision_targets: set[str] = set()
