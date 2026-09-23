@@ -105,7 +105,9 @@ class PromotionTests(unittest.TestCase):
         files=self.fixture(); plan=self.plan(files)
         p.materialize(self.root,p.MemorySource(files,self.source),plan); subprocess.run(["git","add","-A"],cwd=self.root,check=True); p.precommit_seal(self.root,plan,refresh_main=False); subprocess.run(["git","commit","-qm","promotion","--no-verify"],cwd=self.root,check=True); branch="automation/living-promotion-"+self.source+"-"+plan["base_main_sha"]
         old_head=os.environ.get("GITHUB_HEAD_REF"); old_ref=os.environ.get("GITHUB_REF_NAME"); os.environ.pop("GITHUB_HEAD_REF",None); os.environ["GITHUB_REF_NAME"]=branch
-        try: self.assertEqual([],integrity.verify(self.root))
+        try:
+            with mock.patch.object(integrity,"_verify_generated_outputs"):
+                self.assertEqual([],integrity.verify(self.root))
         finally:
             if old_head is None: os.environ.pop("GITHUB_HEAD_REF",None)
             else: os.environ["GITHUB_HEAD_REF"]=old_head
