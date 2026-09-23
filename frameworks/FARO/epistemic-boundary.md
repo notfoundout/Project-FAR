@@ -1,6 +1,6 @@
 # FARO Epistemic Boundary
 
-Status: **Provisional — candidate FARO reporting operation**  
+Status: **Accepted — bounded FARO reporting operation**  
 Contract: `FARO-EPISTEMIC-BOUNDARY-1.0`
 
 ## Operation Name
