@@ -37,7 +37,7 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "86d642676bde6aeac81987ad430032630e8574e9e054f419a10a87479e50c3ad",
+      "current_sha256": "75390e0950ad88cb25b9560a4b24269250ce32bbde441a9f70bd5070e47707f5",
       "class": "governance_register",
       "reason": "Red-team remediation (PR #538): recorded LIM-047 (baseline far-ir/2.0 success is not verification; current surfaces use contract_v2_strict), LIM-048 (EFR-001 v1.0 HD1/U1/C1 comparator gap, resolved prospectively by amendment v2.0) and LIM-049 (validation signing-key and installer trust). Registers are living surfaces; no campaign input, computation, or result changes."
     },
