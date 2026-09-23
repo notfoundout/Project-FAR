@@ -54,7 +54,7 @@ class TraceContractRegressionTests(unittest.TestCase):
                 os.chdir(previous)
             self.assertEqual(audited.violations, ["undeclared read: secret.txt"])
 
-    def test_runtime_policy_allows_repo_console_entrypoint_but_not_arbitrary_temp_executable(self) -> None:
+    def test_runtime_policy_rejects_untrusted_temp_executables_even_if_named_like_repo_entrypoint(self) -> None:
         policy = RuntimePolicy.load(
             Path(__file__).resolve().parents[1] / "validation" / "runtime-policy.json"
         )
@@ -74,7 +74,10 @@ class TraceContractRegressionTests(unittest.TestCase):
         )
         self.assertEqual(
             audited.violations,
-            ["undeclared executable: /tmp/far-test/venv/bin/evil"],
+            [
+                "undeclared executable: /tmp/far-test/venv/bin/evil",
+                "undeclared executable: /tmp/far-test/venv/bin/far-intake",
+            ],
         )
 
     def test_process_cwd_tracking_excludes_temporary_child_repository(self) -> None:
@@ -226,6 +229,7 @@ class OracleDelegationRegressionTests(unittest.TestCase):
                 "checks": [{
                     "id": "one",
                     "title": "one",
+                    "category": "tests",
                     "command": [sys.executable, "tools/check_one.py"],
                     "profiles": ["pr-fast"],
                     "inputs": ["evidence.txt", "tools/check_one.py"],
