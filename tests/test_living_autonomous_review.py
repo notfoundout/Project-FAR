@@ -250,6 +250,15 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual(schema, config["responseSchema"])
         self.assertNotIn("responseFormat", config)
 
+    def test_structured_output_primary_and_legacy_shapes(self):
+        # Historical regression identity retained: the old dual-shape fallback is now
+        # forbidden, so this test proves the primary documented shape exists alone.
+        schema = ar.object_schema({"ok": ar.BOOL}, ["ok"])
+        config = ar.generation_config(schema)
+        self.assertEqual("application/json", config["responseMimeType"])
+        self.assertEqual(schema, config["responseSchema"])
+        self.assertNotIn("responseFormat", config)
+
     def test_model_uses_single_generate_content_request_without_400_probe(self):
         payload = {
             "modelVersion": "gemini-test",
@@ -269,6 +278,20 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual("application/json", body["generationConfig"]["responseMimeType"])
         self.assertNotIn("responseFormat", body["generationConfig"])
         self.assertEqual("generateContent.responseSchema", metadata["structured_output_mode"])
+
+    def test_http_400_retries_legacy_structured_output(self):
+        # Historical regression identity retained, but the required behavior has inverted:
+        # HTTP 400 must fail closed after one request instead of probing a legacy shape.
+        model = ar.GeminiModel("gemini-3.8-flash", "key")
+        error = ar.ModelRequestError("Gemini HTTP 400: invalid request")
+        with mock.patch.object(model, "_call", side_effect=error) as call:
+            with self.assertRaisesRegex(ar.ModelRequestError, "HTTP 400"):
+                model.generate(
+                    role="test",
+                    prompt="x",
+                    schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
+                )
+        self.assertEqual(1, call.call_count)
 
     def test_non_stop_model_output_is_rejected(self):
         payload = {"candidates": [{"finishReason": "MAX_TOKENS", "content": {"parts": [{"text": '{"ok": true}'}]}}]}
@@ -318,6 +341,27 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         rebound["source_key"] = "doi:10.9999/tampered"
         rebound["candidate_id"] = "FAR-LIT-" + ar.digest(rebound["source_key"].encode("utf-8"))[:16].upper()
         self.assertFalse(ar.candidate_identity_valid(rebound))
+
+    def test_candidate_urls_ignore_unbound_extra_source_rows(self):
+        candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
+        candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+        candidate["sources"].insert(0, {
+            "provider": "Crossref",
+            "doi": "10.9999/poison",
+            "url": "https://example.invalid/poison",
+        })
+        self.assertTrue(ar.candidate_identity_valid(candidate))
+        self.assertEqual([URL], ar.candidate_urls(candidate, 10))
+
+    def test_fallback_discovery_identity_fails_closed_for_autonomous_review(self):
+        source_key = "crossref-fallback:" + "a" * 64
+        candidate = {
+            "candidate_id": "FAR-LIT-" + ar.digest(source_key.encode("utf-8"))[:16].upper(),
+            "source_key": source_key,
+            "sources": [{"provider": "Crossref", "url": "https://example.invalid/fallback"}],
+        }
+        self.assertFalse(ar.candidate_identity_valid(candidate))
+        self.assertEqual([], ar.candidate_urls(candidate, 10))
 
     def test_tampered_candidate_identity_is_blocked_before_model_use(self):
         candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
@@ -392,6 +436,13 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertNotIn(ar.SNAPSHOT_AUTHS.as_posix(), plan["review_files"])
         bad = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE", screening_relevant=True), NOW)
         self.assertEqual("review_retry_blocked", bad["status"])
+
+    def test_irrelevant_false_positive_has_no_snapshot_authorization(self):
+        # Historical regression identity retained; the stronger test above additionally
+        # proves an irrelevant disposition cannot override a relevant screen.
+        plan = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE"), NOW)
+        self.assertEqual("review_ready", plan["status"])
+        self.assertNotIn(ar.SNAPSHOT_AUTHS.as_posix(), plan["review_files"])
 
     def test_adjacent_disposition_cannot_override_irrelevant_screen(self):
         policy = ar.load_json(ROOT / ar.POLICY)
@@ -473,6 +524,14 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         record = json.loads(next(iter(plan["inbox_files"].values())))
         self.assertIn("no-op", record["reason"])
 
+    def test_all_noop_scientific_correction_is_rejected(self):
+        # Historical regression identity retained; the stricter test above also covers
+        # the absent-target empty-file case.
+        plan = ar.build_plan(ROOT, self.source, FakeModel("PROJECT_CHANGE_REQUIRED", no_op_scientific=True), NOW)
+        self.assertEqual("review_retry_blocked", plan["status"])
+        record = json.loads(next(iter(plan["inbox_files"].values())))
+        self.assertIn("no-op", record["reason"])
+
     def test_partial_noop_replacement_set_is_rejected(self):
         with self.assertRaisesRegex(ar.CandidateReviewError, "no-op targets: a"):
             ar.validate_replacement_set(
@@ -517,6 +576,17 @@ class AutonomousLivingReviewTests(unittest.TestCase):
             workflow,
         )
         self.assertNotIn("Persist generated inbox data transactionally", workflow)
+
+    def test_workflow_contains_race_serialization_and_explicit_dispatch_guards(self):
+        # Historical regression identity retained; the stricter test above also checks the
+        # retry-only source-branch validation dispatch.
+        workflow = (ROOT / ".github/workflows/living-autonomous-review-v2.yml").read_text(encoding="utf-8")
+        self.assertIn("headRepositoryOwner", workflow)
+        self.assertIn("$GITHUB_RUN_ATTEMPT", workflow)
+        self.assertIn("main advanced during autonomous review", workflow)
+        self.assertIn("living inbox advanced during autonomous review", workflow)
+        self.assertIn("gh workflow run validator-assurance.yml", workflow)
+        self.assertIn("gh workflow run living-autonomous-review-v2.yml", workflow)
 
 
 if __name__ == "__main__":
