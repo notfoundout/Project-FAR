@@ -240,7 +240,12 @@ def claim_subset(root: Path, ids: list[str]) -> list[dict[str, Any]]:
 
 
 def object_schema(properties: dict[str, Any], required: list[str]) -> dict[str, Any]:
-    return {"type": "object", "properties": properties, "required": required}
+    return {
+        "type": "object",
+        "properties": properties,
+        "required": required,
+        "additionalProperties": False,
+    }
 
 
 STR = {"type": "string"}
