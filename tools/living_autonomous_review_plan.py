@@ -25,6 +25,36 @@ def record_sources(record: dict[str, Any]) -> set[str]:
     return {normalize_url(x) for x in values if isinstance(x, str) and x.strip()} if isinstance(values, list) else set()
 
 
+def validate_finding_record(
+    label: str,
+    record: dict[str, Any],
+    metadata: dict[str, Any],
+    *,
+    attack_record: bool = False,
+) -> None:
+    contradiction = record.get("contradiction_found") is True
+    prior = record.get("prior_art_found") is True
+    strength = record.get("prior_art_strength")
+    claims = record_claims(record)
+
+    if strength not in PRIOR_ART_STRENGTH:
+        raise CandidateReviewError(f"{label}: invalid prior_art_strength")
+    if prior and strength == "NONE":
+        raise CandidateReviewError(f"{label}: prior_art_found requires non-NONE strength")
+    if not prior and strength != "NONE":
+        raise CandidateReviewError(f"{label}: prior_art_strength must be NONE when prior_art_found is false")
+    if (contradiction or prior) and not claims:
+        raise CandidateReviewError(f"{label}: positive finding lacks an affected exact claim")
+    if attack_record:
+        reproducible = record.get("reproducible_attack")
+        if contradiction and (not isinstance(reproducible, str) or not reproducible.strip()):
+            raise CandidateReviewError("attack claims a contradiction without a reproducible attack")
+        if not contradiction and isinstance(reproducible, str) and reproducible.strip():
+            raise CandidateReviewError("attack supplies a reproducible contradiction while contradiction_found is false")
+    if contradiction or prior:
+        validate_source_binding(record, metadata, label)
+
+
 def validate_decision(
     decision: dict[str, Any],
     policy: dict[str, Any],
@@ -63,10 +93,21 @@ def validate_decision(
     if not project and (impl_required or impl_targets):
         raise CandidateReviewError("non-project-change disposition may not carry implementation work")
 
+    relevant = screening.get("relevant")
+    if not isinstance(relevant, bool):
+        raise CandidateReviewError("screening relevance flag malformed")
+    if disposition == "IRRELEVANT_FALSE_POSITIVE" and relevant is not False:
+        raise CandidateReviewError("irrelevant disposition conflicts with screening relevance")
+    if disposition != "IRRELEVANT_FALSE_POSITIVE" and relevant is not True:
+        raise CandidateReviewError("non-irrelevant disposition requires screening relevance")
+
     screen_claims = record_claims(screening)
     attack_claims = record_claims(attack)
     replication_claims = record_claims(replication)
     shared_claims = screen_claims & attack_claims & replication_claims
+
+    validate_finding_record("attack", attack, attack_meta, attack_record=True)
+    validate_finding_record("replication", replication, replication_meta)
 
     attack_contradiction = attack.get("contradiction_found") is True
     replication_contradiction = replication.get("contradiction_found") is True
@@ -77,8 +118,6 @@ def validate_decision(
         raise CandidateReviewError("replication marks an attack reproduced without an explicit contradiction")
     if attack_contradiction and replication_contradiction and not attack_reproduced:
         raise CandidateReviewError("replication did not reproduce the jointly claimed contradiction")
-    if attack_contradiction and not attack.get("reproducible_attack"):
-        raise CandidateReviewError("attack claims a contradiction without a reproducible attack")
 
     attack_prior = attack.get("prior_art_found") is True
     replication_prior = replication.get("prior_art_found") is True
@@ -88,15 +127,13 @@ def validate_decision(
     reproduced_contradiction = attack_contradiction and replication_contradiction and attack_reproduced
     if reproduced_contradiction:
         validate_source_binding(screening, screen_meta, "screening")
-        validate_source_binding(attack, attack_meta, "attack")
-        validate_source_binding(replication, replication_meta, "replication")
         shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
         if not shared_sources:
             raise CandidateReviewError("reproduced contradiction is not bound to one common retrieved primary source")
         if not shared_claims:
             raise CandidateReviewError("reproduced contradiction is not bound to one common exact claim")
-        if screening.get("relevant") is not True or screening.get("premise_match") is not True or screening.get("scope_match") is not True:
-            raise CandidateReviewError("reproduced contradiction conflicts with screening relevance/premise/scope")
+        if screening.get("premise_match") is not True or screening.get("scope_match") is not True:
+            raise CandidateReviewError("reproduced contradiction conflicts with screening premise/scope")
         if disposition != "PROJECT_CHANGE_REQUIRED":
             raise CandidateReviewError("adjudication downgraded a reproduced exact contradiction")
 
@@ -109,15 +146,11 @@ def validate_decision(
     )
     if direct_prior_consensus:
         validate_source_binding(screening, screen_meta, "screening")
-        validate_source_binding(attack, attack_meta, "attack")
-        validate_source_binding(replication, replication_meta, "replication")
         shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
         if not shared_sources:
             raise CandidateReviewError("agreed prior art is not bound to one common retrieved primary source")
         if not shared_claims:
             raise CandidateReviewError("agreed prior art is not bound to one common exact claim")
-        if screening.get("relevant") is not True:
-            raise CandidateReviewError("agreed prior art conflicts with screening relevance")
         if disposition not in {"N1_PRIOR_ART_LEAD", "PROJECT_CHANGE_REQUIRED"}:
             raise CandidateReviewError("adjudication downgraded agreed direct prior art")
 
@@ -127,8 +160,6 @@ def validate_decision(
             raise CandidateReviewError("PROJECT_CHANGE_REQUIRED requires scientific targets")
         if gate["require_verified_primary_source"] and not screening.get("primary_source_verified"):
             raise CandidateReviewError("project change lacks primary-source verification")
-        if screening.get("relevant") is not True:
-            raise CandidateReviewError("project change lacks screening relevance")
         if gate["require_premise_match"] and not screening.get("premise_match"):
             raise CandidateReviewError("project change lacks premise match")
         if gate["require_scope_match"] and not screening.get("scope_match"):
@@ -142,8 +173,6 @@ def validate_decision(
         if gate["require_replication_contradiction"] and replication.get("contradiction_found") is not True:
             raise CandidateReviewError("project change lacks explicit replication contradiction")
         validate_source_binding(screening, screen_meta, "screening")
-        validate_source_binding(attack, attack_meta, "attack")
-        validate_source_binding(replication, replication_meta, "replication")
         shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
         if not shared_sources:
             raise CandidateReviewError("project change lacks a common retrieved primary source across roles")
@@ -156,8 +185,6 @@ def validate_decision(
 
     if disposition == "N1_PRIOR_ART_LEAD":
         gate = policy["prior_art_gate"]
-        if screening.get("relevant") is not True:
-            raise CandidateReviewError("prior-art lead lacks screening relevance")
         if gate["require_attack_prior_art"] and attack.get("prior_art_found") is not True:
             raise CandidateReviewError("prior-art lead lacks attack-role prior art")
         if gate["require_replication_prior_art"] and replication.get("prior_art_found") is not True:
@@ -168,8 +195,6 @@ def validate_decision(
         if not strength_at_least(replication.get("prior_art_strength"), minimum):
             raise CandidateReviewError("replication prior art is below configured strength")
         validate_source_binding(screening, screen_meta, "screening")
-        validate_source_binding(attack, attack_meta, "attack")
-        validate_source_binding(replication, replication_meta, "replication")
         shared_sources = record_sources(screening) & record_sources(attack) & record_sources(replication)
         if not shared_sources:
             raise CandidateReviewError("prior-art lead lacks a common retrieved primary source across roles")
@@ -227,7 +252,12 @@ def validate_replacement_set(
         raise CandidateReviewError(f"{kind} generator omitted targets")
     if sum(len(raw) for raw in out.values()) > max_bytes:
         raise CandidateReviewError(f"{kind} replacement byte bound exceeded")
-    noops = sorted(path for path in targets if current_raw[path] is not None and out[path] == current_raw[path])
+    noops = sorted(
+        path
+        for path in targets
+        if (current_raw[path] is not None and out[path] == current_raw[path])
+        or (current_raw[path] is None and out[path] == b"")
+    )
     if noops:
         raise CandidateReviewError(f"{kind} correction contains no-op targets: {', '.join(noops)}")
 
