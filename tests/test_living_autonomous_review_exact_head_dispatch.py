@@ -15,7 +15,10 @@ class AutonomousReviewExactHeadDispatchTests(unittest.TestCase):
         self.assertIn("base_sha:", workflow)
         self.assertIn("FAR_ASSURANCE_DISPATCH_HEAD", workflow)
         self.assertIn("FAR_ASSURANCE_DISPATCH_BASE", workflow)
+        self.assertIn("FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA", workflow)
         self.assertIn("dispatched exact-head checkout mismatch", workflow)
+        self.assertIn("dispatched exact-head base differs from trusted main workflow ref", workflow)
+        self.assertIn("dispatched exact-head review head is not a direct child of frozen main", workflow)
         self.assertIn("git merge-base --is-ancestor", workflow)
 
     def test_autonomous_review_dispatches_exact_head_from_protected_main(self):
