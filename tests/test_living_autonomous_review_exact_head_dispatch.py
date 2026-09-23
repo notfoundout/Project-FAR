@@ -16,10 +16,21 @@ class AutonomousReviewExactHeadDispatchTests(unittest.TestCase):
         self.assertIn("FAR_ASSURANCE_DISPATCH_HEAD", workflow)
         self.assertIn("FAR_ASSURANCE_DISPATCH_BASE", workflow)
         self.assertIn("FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA", workflow)
+        self.assertIn("invalid dispatched exact-head SHA", workflow)
         self.assertIn("dispatched exact-head checkout mismatch", workflow)
         self.assertIn("dispatched exact-head base differs from trusted main workflow ref", workflow)
         self.assertIn("dispatched exact-head review head is not a direct child of frozen main", workflow)
         self.assertIn("git merge-base --is-ancestor", workflow)
+
+        preflight = workflow.index("- name: Validate dispatched identity before checkout")
+        checkout = workflow.index("- uses: actions/checkout@v4")
+        lineage = workflow.index("- name: Verify dispatched checkout lineage before repository code runs")
+        setup = workflow.index("- uses: actions/setup-python@v5")
+        install = workflow.index("- name: Install dependencies and trace backend")
+        self.assertLess(preflight, checkout)
+        self.assertLess(checkout, lineage)
+        self.assertLess(lineage, setup)
+        self.assertLess(setup, install)
 
     def test_autonomous_review_dispatches_exact_head_from_protected_main(self):
         workflow = (ROOT / ".github/workflows/living-autonomous-review-v2.yml").read_text(encoding="utf-8")
