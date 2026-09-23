@@ -24,11 +24,11 @@
     "research/target-category-discovery/verify_compositional_invariant_legacy.py": "8b7ed09f5f7f57396ddab50a8c97362f98a54aef5302efc03eeb074609fbfb4d",
     "tests/test_protected_repin_authorization.py": "24e633d002b472e8a755f548b6d33c1f0c940cc0cb14c48f6764b9004e74aa4d",
     "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
-    "tests/test_validation_trace_regression.py": "a36e9e95cb61cc28b7d4656064d29c67d11ac537e84f94b179c0fbb138c4f46f",
+    "tests/test_validation_trace_regression.py": "468898a38482d9e4b1eb63f42f44bc9a39b9fec9c484cc573c6ad9aef9179b71",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
     "validation/runtime-dependencies.json": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
-    "validation/runtime-policy.json": "4adbd1b461adc35c58c2ef53c3e0a12d3578090ba8a1af9615d8a69a070dfc5a",
+    "validation/runtime-policy.json": "18a5a933bdbd9af725cb2ddfd37f891cdd82197be8fc4fc84547e03caa2fecd0",
     "validation/test-weakening-waivers.json": "311e12701b273cb91110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
     "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
   },
