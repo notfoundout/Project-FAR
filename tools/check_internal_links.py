@@ -64,8 +64,8 @@ for path in iter_files({'.md','.yaml','.yml'}):
             if re.fullmatch(r'L\d+', anchor):
                 line_no=int(anchor[1:])
                 total=len(resolved.read_text(encoding='utf-8', errors='replace').splitlines())
-                item=(path,line,target,f'line anchor outside 1..{total}')
                 if line_no < 1 or line_no > total:
+                    item=(path,line,target,f'line anchor outside 1..{total}')
                     if path.resolve() in ADVISORY_LINE_ANCHOR_SOURCES:
                         # The research-gap report is a generated advisory snapshot. Its
                         # observed line number is provenance, not a stable document
