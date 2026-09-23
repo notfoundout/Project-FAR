@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/schemas/far-audit-assurance-v1.schema.json",
+  "title": "FAR Audit Assurance Profile v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "audit_id",
+    "checks",
+    "unresolved_defeaters",
+    "overall_status"
+  ],
+  "properties": {
+    "schema": {
+      "const": "far-audit-assurance/1.0"
+    },
+    "audit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_integrity",
+        "interpretation_fidelity",
+        "search_coverage",
+        "evidence_adjudication",
+        "inference_adjudication",
+        "reproducibility",
+        "hostile_source_isolation"
+      ],
+      "properties": {
+        "source_integrity": {"$ref": "#/$defs/check"},
+        "interpretation_fidelity": {"$ref": "#/$defs/check"},
+        "search_coverage": {"$ref": "#/$defs/check"},
+        "evidence_adjudication": {"$ref": "#/$defs/check"},
+        "inference_adjudication": {"$ref": "#/$defs/check"},
+        "reproducibility": {"$ref": "#/$defs/check"},
+        "hostile_source_isolation": {"$ref": "#/$defs/check"}
+      }
+    },
+    "unresolved_defeaters": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "overall_status": {
+      "enum": [
+        "assured",
+        "bounded",
+        "not_assured",
+        "abstain"
+      ]
+    },
+    "claim_boundary": {
+      "const": "This profile assesses audit-process assurance; it does not certify the audited claim as true."
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "evidence"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "not_applicable",
+            "unknown"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

@@ -51,6 +51,7 @@ Canonical links:
 - [W4 domain-contract status](docs/governance/pca-w4-domain-contracts-status-v1.0.md)
 - [W5 approximation/cost status](docs/governance/pca-w5-approximation-cost-status-v1.0.md)
 - [W6 bounded audit-utility status](docs/governance/pca-w6-empirical-audit-utility-status-v1.0.md)
+- [Epistemic assurance acceptance](docs/governance/far-epistemic-assurance-promotion-acceptance-v1.0.md), [specification](docs/specification/far-epistemic-assurance-1.0.md), and [hostile-source boundary](methodology/hostile-source-boundary.md)
 - [Canonical W1–W6 claim/evidence matrix](docs/governance/w1-w6-claim-evidence-matrix-v1.0.md)
 - [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md) (non-authoritative Research calibration)
 - [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md)

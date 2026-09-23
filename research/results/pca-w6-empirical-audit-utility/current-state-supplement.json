@@ -16,16 +16,16 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "c53fd7ba7107daf2cc0277a0eaf971379c369c3fd5c31de1cd5327313b1a9d5a",
+      "current_sha256": "029f5da09012af1683b81fc4a16ab31f1ff2ef0044d5948449a1238b68aa518a",
       "class": "documentation_surface",
-      "reason": "Registered the hardened far-epistemic/1.0 application contract and its composition with the single canonical FAR-ELENCHUS-1.0 architecture. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Registered the hardened far-epistemic/1.0 application contract and the accepted additive epistemic-assurance contracts. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "adc0bd09476734c7a9e220d0e10acea3655e45caf1adbe18f460e6432682ba99",
+      "current_sha256": "704c6d6b73986c7d3c1a0c290f9e644d1e1a1a6e60b2c0595c73c5e0619dcfaa",
       "class": "documentation_surface",
-      "reason": "Registered both the additive far-epistemic/1.0 application interchange and the accepted evidence-closure authority on current main. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Registered the additive far-epistemic/1.0 application interchange, accepted evidence-closure authority, and accepted epistemic-assurance authority. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/ROADMAP.md",
@@ -44,9 +44,9 @@
     {
       "path": "docs/project-status.md",
       "executed_sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666",
-      "current_sha256": "de67792e69a1c135740a3c4a4b37386beb8d0557fe27908bf5cf8678679101fc",
+      "current_sha256": "07335c6223fb25a1ecca518a3a8c434ef381e10c48124a0d4a86f1b578826c55",
       "class": "documentation_surface",
-      "reason": "Registered the accepted governed post-evidence closure correction and its bounded saturation authority. No W6 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the accepted governed post-evidence closure correction and the additive epistemic-assurance contracts. No W6 claim, boundary, input, computation, or result changed."
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",
