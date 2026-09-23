@@ -158,6 +158,8 @@ jobs:
 
       - name: Persist bounded retry record only
         if: steps.gate.outputs.continue == 'true' && (steps.review.outputs.status == 'source_blocked' || steps.review.outputs.status == 'review_retry_blocked')
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -185,6 +187,10 @@ jobs:
           [[ "$(git rev-parse 'origin/main^{commit}')" == "$base_sha" ]] || { echo 'main advanced during autonomous review' >&2; exit 1; }
           [[ "$(git rev-parse "origin/$SOURCE_BRANCH^{commit}")" == "$old_source" ]] || { echo 'living inbox advanced during autonomous review' >&2; exit 1; }
           git push --force-with-lease="$SOURCE_BRANCH:$old_source" origin "HEAD:$SOURCE_BRANCH"
+          pushed_head="$(git rev-parse HEAD^{commit})"
+          remote_head="$(git ls-remote --heads origin "$SOURCE_BRANCH" | awk '{print $1}')"
+          [[ "$remote_head" == "$pushed_head" ]] || { echo 'retry-only inbox push head mismatch' >&2; exit 1; }
+          gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$SOURCE_BRANCH" -f mode=validate
 
       - name: Materialize and validate human-review branch
         if: steps.gate.outputs.continue == 'true' && steps.review.outputs.status == 'review_ready'
