@@ -212,6 +212,7 @@ def _validate_recorded_list(
                 evidence=evidence,
                 root=root,
                 errors=errors,
+                require_nonempty=not has_basis,
             )
 
 
