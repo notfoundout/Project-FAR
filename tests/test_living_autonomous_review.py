@@ -72,6 +72,13 @@ class FakeModel:
                 "relevant": self.screening_relevant,
                 "source_urls_used": [URL],
                 "evaluated_claim_ids": ["FAR-CORE-001"],
+                "claim_assessments": [{
+                    "claim_id": "FAR-CORE-001",
+                    "relevant": self.screening_relevant,
+                    "premise_match": self.screening_relevant,
+                    "scope_match": self.screening_relevant,
+                    "reason": "claim-specific screening",
+                }],
                 "affected_claim_ids": ["FAR-CORE-001"] if self.screening_relevant else [],
                 "premise_match": self.screening_relevant,
                 "scope_match": self.screening_relevant,
@@ -84,12 +91,20 @@ class FakeModel:
             prior = self.disposition == "N1_PRIOR_ART_LEAD"
             contradiction = change and self.contradiction_flags
             prior_found = prior and self.prior_art_flags
+            strength = self.prior_art_strength if prior_found else "NONE"
             return {
                 "contradiction_found": contradiction,
                 "prior_art_found": prior_found,
-                "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
+                "prior_art_strength": strength,
                 "source_urls_used": [URL],
                 "evaluated_claim_ids": ["FAR-CORE-001"],
+                "claim_assessments": [{
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": contradiction,
+                    "prior_art_found": prior_found,
+                    "prior_art_strength": strength,
+                    "reason": "claim-specific attack",
+                }],
                 "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "exact_reason": "bounded attack",
                 "reproducible_attack": "construct the bound counterexample" if contradiction else "",
@@ -101,12 +116,21 @@ class FakeModel:
             prior = self.disposition == "N1_PRIOR_ART_LEAD"
             contradiction = change and self.contradiction_flags
             prior_found = prior and self.prior_art_flags
+            strength = self.prior_art_strength if prior_found else "NONE"
             return {
                 "contradiction_found": contradiction,
                 "prior_art_found": prior_found,
-                "prior_art_strength": self.prior_art_strength if prior_found else "NONE",
+                "prior_art_strength": strength,
                 "source_urls_used": [URL],
                 "evaluated_claim_ids": ["FAR-CORE-001"],
+                "claim_assessments": [{
+                    "claim_id": "FAR-CORE-001",
+                    "contradiction_found": contradiction,
+                    "prior_art_found": prior_found,
+                    "prior_art_strength": strength,
+                    "attack_reproduced": contradiction,
+                    "reason": "claim-specific replication",
+                }],
                 "affected_claim_ids": ["FAR-CORE-001"] if (contradiction or prior_found) else [],
                 "independent_reason": "independent bounded check",
                 "attack_reproduced": contradiction,
@@ -166,6 +190,13 @@ def screening_record(*, relevant: bool = True, claim: str = "FAR-CORE-001", sour
         "relevant": relevant,
         "source_urls_used": [source],
         "evaluated_claim_ids": [claim],
+        "claim_assessments": [{
+            "claim_id": claim,
+            "relevant": relevant,
+            "premise_match": relevant,
+            "scope_match": relevant,
+            "reason": "direct",
+        }],
         "affected_claim_ids": [claim] if relevant else [],
         "premise_match": relevant,
         "scope_match": relevant,
@@ -183,12 +214,20 @@ def attack_record(
     prior: bool = False,
     strength: str | None = None,
 ):
+    resolved_strength = strength if strength is not None else ("DIRECT" if prior else "NONE")
     return {
         "contradiction_found": contradiction,
         "prior_art_found": prior,
-        "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
+        "prior_art_strength": resolved_strength,
         "source_urls_used": [source],
         "evaluated_claim_ids": [claim],
+        "claim_assessments": [{
+            "claim_id": claim,
+            "contradiction_found": contradiction,
+            "prior_art_found": prior,
+            "prior_art_strength": resolved_strength,
+            "reason": "attack",
+        }],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "exact_reason": "attack",
         "reproducible_attack": "repro" if contradiction else "",
@@ -206,12 +245,21 @@ def replication_record(
     prior: bool = False,
     strength: str | None = None,
 ):
+    resolved_strength = strength if strength is not None else ("DIRECT" if prior else "NONE")
     return {
         "contradiction_found": contradiction,
         "prior_art_found": prior,
-        "prior_art_strength": strength if strength is not None else ("DIRECT" if prior else "NONE"),
+        "prior_art_strength": resolved_strength,
         "source_urls_used": [source],
         "evaluated_claim_ids": [claim],
+        "claim_assessments": [{
+            "claim_id": claim,
+            "contradiction_found": contradiction,
+            "prior_art_found": prior,
+            "prior_art_strength": resolved_strength,
+            "attack_reproduced": reproduced,
+            "reason": "replication",
+        }],
         "affected_claim_ids": [claim] if (contradiction or prior) else [],
         "independent_reason": "replication",
         "attack_reproduced": reproduced,
@@ -249,10 +297,11 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual("application/json", config["responseMimeType"])
         self.assertEqual(schema, config["responseSchema"])
         self.assertNotIn("responseFormat", config)
+        self.assertIn("claim_assessments", ar.SCREEN_SCHEMA["required"])
+        self.assertIn("claim_assessments", ar.ATTACK_SCHEMA["required"])
+        self.assertIn("claim_assessments", ar.REPLICATION_SCHEMA["required"])
 
     def test_structured_output_primary_and_legacy_shapes(self):
-        # Historical regression identity retained: the old dual-shape fallback is now
-        # forbidden, so this test proves the primary documented shape exists alone.
         schema = ar.object_schema({"ok": ar.BOOL}, ["ok"])
         config = ar.generation_config(schema)
         self.assertEqual("application/json", config["responseMimeType"])
@@ -268,9 +317,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         model = ar.GeminiModel("gemini-3.8-flash", "key")
         with mock.patch.object(model, "_call", return_value=payload) as call:
             result, metadata = model.generate(
-                role="test",
-                prompt="x",
-                schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
+                role="test", prompt="x", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
             )
         self.assertEqual({"ok": True}, result)
         self.assertEqual(1, call.call_count)
@@ -280,17 +327,11 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual("generateContent.responseSchema", metadata["structured_output_mode"])
 
     def test_http_400_retries_legacy_structured_output(self):
-        # Historical regression identity retained, but the required behavior has inverted:
-        # HTTP 400 must fail closed after one request instead of probing a legacy shape.
         model = ar.GeminiModel("gemini-3.8-flash", "key")
         error = ar.ModelRequestError("Gemini HTTP 400: invalid request")
         with mock.patch.object(model, "_call", side_effect=error) as call:
             with self.assertRaisesRegex(ar.ModelRequestError, "HTTP 400"):
-                model.generate(
-                    role="test",
-                    prompt="x",
-                    schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]),
-                )
+                model.generate(role="test", prompt="x", schema=ar.object_schema({"ok": ar.BOOL}, ["ok"]))
         self.assertEqual(1, call.call_count)
 
     def test_non_stop_model_output_is_rejected(self):
@@ -328,15 +369,25 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ar.CandidateReviewError, "duplicates"):
             ar.validate_claim_ids(["FAR-CORE-001", "FAR-CORE-001"], {"FAR-CORE-001"}, "attack")
 
+    def test_evaluated_claim_ids_cannot_substitute_for_per_claim_assessments(self):
+        record = screening_record()
+        record["evaluated_claim_ids"] = ["FAR-CORE-001", "FAR-CORE-002"]
+        with self.assertRaisesRegex(ar.CandidateReviewError, "per-claim assessment coverage"):
+            ar.require_full_claim_coverage(record, {"FAR-CORE-001", "FAR-CORE-002"}, "screening")
+
+    def test_per_claim_and_aggregate_findings_must_agree(self):
+        record = attack_record(contradiction=False)
+        record["claim_assessments"][0]["contradiction_found"] = True
+        with self.assertRaisesRegex(ar.CandidateReviewError, "affected_claim_ids disagree|aggregate contradiction disagrees"):
+            ar.require_full_claim_coverage(record, {"FAR-CORE-001"}, "attack")
+
     def test_candidate_identity_binds_id_source_key_and_source_record(self):
         candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
         candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
         self.assertTrue(ar.candidate_identity_valid(candidate))
-
         tampered_key = dict(candidate)
         tampered_key["source_key"] = "doi:10.9999/tampered"
         self.assertFalse(ar.candidate_identity_valid(tampered_key))
-
         rebound = dict(candidate)
         rebound["source_key"] = "doi:10.9999/tampered"
         rebound["candidate_id"] = "FAR-LIT-" + ar.digest(rebound["source_key"].encode("utf-8"))[:16].upper()
@@ -346,9 +397,7 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         candidate_path = self.source / ar.CANDIDATES / f"{CID}.json"
         candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
         candidate["sources"].insert(0, {
-            "provider": "Crossref",
-            "doi": "10.9999/poison",
-            "url": "https://example.invalid/poison",
+            "provider": "Crossref", "doi": "10.9999/poison", "url": "https://example.invalid/poison",
         })
         self.assertTrue(ar.candidate_identity_valid(candidate))
         self.assertEqual([URL], ar.candidate_urls(candidate, 10))
@@ -438,8 +487,6 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertEqual("review_retry_blocked", bad["status"])
 
     def test_irrelevant_false_positive_has_no_snapshot_authorization(self):
-        # Historical regression identity retained; the stronger test above additionally
-        # proves an irrelevant disposition cannot override a relevant screen.
         plan = ar.build_plan(ROOT, self.source, FakeModel("IRRELEVANT_FALSE_POSITIVE"), NOW)
         self.assertEqual("review_ready", plan["status"])
         self.assertNotIn(ar.SNAPSHOT_AUTHS.as_posix(), plan["review_files"])
@@ -525,8 +572,6 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertIn("no-op", record["reason"])
 
     def test_all_noop_scientific_correction_is_rejected(self):
-        # Historical regression identity retained; the stricter test above also covers
-        # the absent-target empty-file case.
         plan = ar.build_plan(ROOT, self.source, FakeModel("PROJECT_CHANGE_REQUIRED", no_op_scientific=True), NOW)
         self.assertEqual("review_retry_blocked", plan["status"])
         record = json.loads(next(iter(plan["inbox_files"].values())))
@@ -572,14 +617,11 @@ class AutonomousLivingReviewTests(unittest.TestCase):
         self.assertIn("gh workflow run living-research.yml", workflow)
         self.assertIn("gh workflow run living-autonomous-review-v2.yml", workflow)
         self.assertIn(
-            'gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$SOURCE_BRANCH" -f mode=validate',
-            workflow,
+            'gh workflow run living-research.yml --repo "$GITHUB_REPOSITORY" --ref "$SOURCE_BRANCH" -f mode=validate', workflow,
         )
         self.assertNotIn("Persist generated inbox data transactionally", workflow)
 
     def test_workflow_contains_race_serialization_and_explicit_dispatch_guards(self):
-        # Historical regression identity retained; the stricter test above also checks the
-        # retry-only source-branch validation dispatch.
         workflow = (ROOT / ".github/workflows/living-autonomous-review-v2.yml").read_text(encoding="utf-8")
         self.assertIn("headRepositoryOwner", workflow)
         self.assertIn("$GITHUB_RUN_ATTEMPT", workflow)
