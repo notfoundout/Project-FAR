@@ -145,7 +145,7 @@ A cross-agent conflict exists when completed reports assign both `supports` and 
 
 The coordinator never averages conflicting reports into a score.
 
-A conflict becomes procedurally resolved only when an explicit `ConflictResolution` selects a decisive disposition. An `uncertain` resolution preserves the conflict and continues to block promotion. Multiple incompatible resolutions remain unresolved.
+Only the contradiction-detector role may emit a `ConflictResolution`; a specialist cannot adjudicate its own evidence. A conflict becomes procedurally resolved only when an explicit resolution selects a decisive disposition and supplies provenance for that adjudication. An `uncertain` resolution preserves the conflict and continues to block promotion. Multiple incompatible resolutions remain unresolved.
 
 The conflict record retains the supporting and contradicting task identifiers even after adjudication.
 
@@ -153,13 +153,15 @@ The conflict record retains the supporting and contradicting task identifiers ev
 
 Runner exceptions become failed reports. A task whose dependency failed or was blocked becomes blocked and is not executed.
 
+Promotion is allowed only when the required quality-gate task completes with an explicit `accept` recommendation, at least one completed non-I finding supports the packet, and no blocking issue remains. A clean run with `none`, `reject`, or `uncertain` is therefore non-promotable.
+
 Promotion fails closed if any of the following occurs:
 
 - a task fails;
 - a task is blocked;
 - a required quality-gate task is missing or incomplete;
 - a cross-agent conflict remains unresolved;
-- any report recommends acceptance without at least one non-I supporting finding.
+- the quality gate accepts without completed non-I supporting evidence.
 
 A failed promotion gate does not erase the research packet. The coordinator may still report the failure, uncertainty, negative result, or discovered defect. It may not represent the run as accepted.
 
@@ -184,7 +186,7 @@ As of September 2026, OpenAI exposes three relevant runtime surfaces:
 
 - Responses API Multi-agent: hosted spawning, messaging, waiting, and subagent contexts;
 - Agents API: an OpenAI-managed Codex harness with sessions, orchestration, compaction, recovery, tools, and multi-agent execution;
-- Agents SDK: application-owned orchestration with agents, tools, handoffs, and manager-style agents-as-tools.
+- Agents SDK: application-owned orchestration with agents, tools, handoffs, and manager-style "agents as tools."
 
 For FAR, deterministic orchestration remains in application/repository logic because protocol order and isolation are part of the research method. OpenAI runtime features are execution mechanisms.
 
@@ -228,6 +230,10 @@ The implementation is not complete unless tests cover at least:
 8. I-only acceptance rejection;
 9. runner failure and downstream blocking;
 10. task-graph cycle and missing-context rejection;
-11. report execution-binding validation.
+11. report execution-binding validation;
+12. affirmative quality-gate acceptance before promotion;
+13. contradiction-role-only adjudication;
+14. provenance requirements for decisive resolutions and P/C findings;
+15. direct CLI execution of the default plan.
 
 Repository-wide CI remains controlling for compatibility with the rest of Project FAR.
