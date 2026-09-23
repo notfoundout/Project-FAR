@@ -4,7 +4,9 @@
   "record": {
     "applicability_id": "applicability.cardio.1",
     "expertise_assertion_id": "expertise.cardio.1",
+    "expertise_assertion_version": "1.0",
     "claim_id": "claim.cardio.1",
+    "claim_version": "1.0",
     "expertise_scope": {
       "domain": "cardiology",
       "subdomain": "pericardial disease",
