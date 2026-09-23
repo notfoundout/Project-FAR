@@ -1,6 +1,11 @@
 import unittest
+from pathlib import Path
 
 from tests.test_far_investigation_benchmark import BENCH, FrozenSemanticTests
+
+
+ROOT = Path(__file__).resolve().parents[1]
+BENCH_ROOT = ROOT / "research/comparisons/far-investigation-benchmark-v0.1"
 
 
 class AdjudicationTieBreakTests(unittest.TestCase):
@@ -80,6 +85,27 @@ class AdjudicationTieBreakTests(unittest.TestCase):
             BENCH.sha256_text = original_sha256_text
 
         self.assertEqual(errors, [])
+
+    def test_controlling_normative_surfaces_require_case_id_tie_break(self):
+        amendment = (BENCH_ROOT / "hardening-amendment-v0.1.md").read_text(encoding="utf-8")
+        rubric = (BENCH_ROOT / "adjudication-rubric-v0.1.md").read_text(encoding="utf-8")
+
+        self.assertIn(
+            'sort the 60 final cases by the ascending tuple `(SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id)), case_id)`',
+            amendment,
+        )
+        self.assertIn(
+            "using Unicode code-point ordering for the `case_id` tie-break when schedule hashes are equal",
+            amendment,
+        )
+        self.assertIn(
+            'Sort the 60 final `case_id` values by the tuple `(lowercase hexadecimal SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id)), case_id)`, ascending in both components.',
+            rubric,
+        )
+        self.assertIn(
+            "The secondary `case_id` comparison uses Unicode code-point order and is mandatory",
+            rubric,
+        )
 
 
 if __name__ == "__main__":
