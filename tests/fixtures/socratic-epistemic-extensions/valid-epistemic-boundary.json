@@ -29,11 +29,21 @@
     "explicit_nonclaims": [
       {"statement": "The result is not a population estimate.", "basis_refs": ["scope.example.1"]}
     ],
-    "falsifiers": ["A source-valid observation showing the registered event did not occur."],
-    "surviving_propositions": ["A narrower case-specific proposition remains supported."],
-    "residual_uncertainty": ["External generalization remains unresolved."],
-    "limitations": ["Bounded evidence frame."],
-    "assumptions": ["assumption.A"],
+    "falsifiers": [
+      {"statement": "A source-valid observation showing the registered event did not occur.", "basis_refs": ["closure.example.1"]}
+    ],
+    "surviving_propositions": [
+      {"statement": "A narrower case-specific proposition remains supported.", "basis_refs": ["closure.example.1"]}
+    ],
+    "residual_uncertainty": [
+      {"statement": "External generalization remains unresolved.", "basis_refs": ["closure.example.1"]}
+    ],
+    "limitations": [
+      {"statement": "Bounded evidence frame.", "basis_refs": ["scope.example.1"]}
+    ],
+    "assumptions": [
+      {"statement": "assumption.A", "basis_refs": ["assumption.A"]}
+    ],
     "closure_status": "Provisionally resolved",
     "provenance": {
       "source_refs": ["closure.example.1", "scope.example.1"],
