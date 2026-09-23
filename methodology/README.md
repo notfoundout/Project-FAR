@@ -11,6 +11,8 @@ Canonical definitions and theorems belong in `../theory/`; examples belong in `.
 - `research-doctrine.md` — canonical research doctrine for honesty, traceability, promotion, rejection, and revision.
 - `foundational-discovery-protocol.md` — canonical protocol for grounding Project FAR from first principles before deriving framework architecture.
 - `contract-discovery-protocol.md` — governs source-grounded discovery, explicit ambiguity retention, freeze-before-evaluation, and mechanical aggregation when an input does not already determine its comparison contract.
+- `expertise-applicability-protocol.md` — governs proposition-relative use of claimed expertise without transferring competence silently across domain, scope, population, time, geography, claim type, or method.
+- `elenchus-protocol.md` — governs adaptive questioning used to elicit definitions, commitments, assumptions, warrants, consequences, revisions, and demonstrated contradictions while preserving provenance and history.
 - [`../docs/governance/far-evidence-closure-acceptance-v1.0.md`](../docs/governance/far-evidence-closure-acceptance-v1.0.md) — accepted internal correction separating atomic claim adjudication from bounded investigation closure under `FAR-EVIDENCE-CLOSURE-1.0`; the canonical closure contract itself is maintained in `../frameworks/FAR/workflow.md`.
 
 ## Areas
