@@ -27,6 +27,21 @@ For each of those four evaluators independently:
 
 This construction gives every evaluator exactly 60 packets from each condition, exactly 15 packets from each condition in every 60-packet round, and places the four versions of any one case exactly 60 presentation positions apart. The validator must reproduce this schedule exactly; arbitrary reordering is invalid.
 
+### Machine-readable schedule contract
+
+`adjudication-schedule.json` contains exactly the top-level fields `status`, `algorithm`, `isolation`, and `evaluators`. `status` is `FROZEN`; `algorithm` is `sha256-four-round-counterbalance-v1`.
+
+`isolation` is exactly:
+
+- `fresh_context_per_packet: true`;
+- `condition_label_visible: false`;
+- `same_case_other_condition_visible: false`;
+- `other_evaluator_scores_visible: false`.
+
+`evaluators` contains exactly four records, sorted lexicographically by the tuple `(evaluator_id, lane)`: the two frozen `unitizer` evaluators and the two frozen `primary_scorer` evaluators. Each evaluator record contains exactly `evaluator_id`, `lane`, and `assignments`.
+
+Each `assignments` array contains exactly 240 records in presentation order. Each assignment contains exactly `presentation_index`, `round`, `base_position`, `case_id`, `condition`, and `run_id`. `presentation_index` is 1 through 240; `round` is 0 through 3; `base_position` is 0 through 59; `case_id` and `condition` are the pair produced by the deterministic rule above; and `run_id` must equal the unique frozen `execution-schedule.json` run for that exact `(case_id, condition)` pair. Extra fields, missing fields, extra/missing evaluators, reordered records, wrong run links, or isolation changes are invalid.
+
 Each evaluator receives one normalized packet at a time in a fresh scoring context with no condition label, no other condition packet for the same case, and no access to another evaluator's scores. Packet presentation order may not be altered after any scoring output exists.
 
 The `unitization_adjudicator` receives only locked unit-boundary disputes after both unitizers finish. The `scoring_adjudicator` receives only locked scoring disputes after both primary scorers finish. For either adjudicator, dispute IDs are sorted before the first adjudication by lowercase hexadecimal `SHA256(UTF8("20260922|adjudication-dispute-order|" + evaluator_id + "|" + dispute_id))`; the adjudicator receives one blinded dispute at a time and never receives prior-vote identities or condition identity.
