@@ -2,21 +2,40 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import tempfile
 import unittest
+from pathlib import Path
 
 from tools import subagent_orchestration as sub
 
+TEST_SKILL_TEXT = "test skill instructions\n"
+TEST_SKILL_SHA = sub.sha256_text(TEST_SKILL_TEXT)
+DEFAULT_SKILLS = (
+    "far-discovery-engine",
+    "far-formalizer",
+    "far-prior-art-adversary",
+    "far-counterexample-hunter",
+    "far-theory-auditor",
+    "far-research-quality-gate",
+    "far-research-orchestrator",
+)
+
+def write_default_skills(root: Path) -> None:
+    for name in DEFAULT_SKILLS:
+        path = root / ".claude" / "skills" / name / "SKILL.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"{name} instructions\n", encoding="utf-8")
 
 def cap(agent_id: str, **overrides) -> sub.RuntimeCapabilities:
     values = {
         "sandbox_id": f"sandbox:{agent_id}",
         "isolation_verified": True,
+        "instruction_sha256": TEST_SKILL_SHA,
         "repository_tools_enabled": False,
         "shared_state_with": (),
     }
     values.update(overrides)
     return sub.RuntimeCapabilities(**values)
-
 
 def completed(task: sub.AgentTask, *findings: sub.Finding) -> sub.AgentReport:
     return sub.AgentReport(
@@ -27,32 +46,46 @@ def completed(task: sub.AgentTask, *findings: sub.Finding) -> sub.AgentReport:
         findings=tuple(findings),
     )
 
-
 class PlanTests(unittest.TestCase):
-    def test_default_plan_is_deterministic_and_coordinator_is_terminal(self):
-        left = sub.far_research_plan()
-        right = sub.far_research_plan()
-        self.assertEqual(left.sha256, right.sha256)
-        order = sub.topological_order(left)
-        self.assertEqual(order[-1], "coordinator")
-        self.assertEqual(set(left.by_id["coordinator"].dependencies), set(order[:-1]))
+    def test_default_plan_is_deterministic_and_skill_bytes_are_bound(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write_default_skills(root)
+            left = sub.far_research_plan(root)
+            right = sub.far_research_plan(root)
+            self.assertEqual(left.sha256, right.sha256)
+            order = sub.topological_order(left)
+            self.assertEqual(order[-1], "coordinator")
+            self.assertEqual(set(left.by_id["coordinator"].dependencies), set(order[:-1]))
+
+            discovery = root / ".claude/skills/far-discovery-engine/SKILL.md"
+            discovery.write_text("changed instructions\n", encoding="utf-8")
+            changed = sub.far_research_plan(root)
+            self.assertNotEqual(left.sha256, changed.sha256)
+            self.assertNotEqual(
+                left.by_id["discovery"].skill_sha256,
+                changed.by_id["discovery"].skill_sha256,
+            )
 
     def test_cycle_and_incomplete_coordinator_dependency_fail_closed(self):
         specialist = sub.AgentSpec(
             agent_id="a",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="a",
             dependencies=("b",),
         )
         other = sub.AgentSpec(
             agent_id="b",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="b",
             dependencies=("a",),
         )
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -84,18 +117,19 @@ class PlanTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "content hash mismatch"):
             sub.ContextArtifact("source-1", "0" * 64, "exact bytes")
 
-
 class OrchestrationTests(unittest.TestCase):
     @staticmethod
     def simple_plan(*, sequencing_only=False) -> sub.OrchestrationPlan:
         a = sub.AgentSpec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
         b = sub.AgentSpec(
             agent_id="b",
             skill_path=".claude/skills/far-formalizer/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="b",
             dependencies=("a",),
             receives_dependency_reports=not sequencing_only,
@@ -103,6 +137,7 @@ class OrchestrationTests(unittest.TestCase):
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinator",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -168,12 +203,14 @@ class OrchestrationTests(unittest.TestCase):
                 sub.AgentSpec(
                     agent_id=name,
                     skill_path=".claude/skills/far-theory-auditor/SKILL.md",
+                    skill_sha256=TEST_SKILL_SHA,
                     role=name,
                 )
             )
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=tuple(item.agent_id for item in agents),
@@ -309,17 +346,20 @@ class OrchestrationTests(unittest.TestCase):
             sub.AgentSpec(
                 agent_id="a",
                 skill_path=".claude/skills/far-discovery-engine/SKILL.md",
+                skill_sha256=TEST_SKILL_SHA,
                 role="a",
             ),
             sub.AgentSpec(
                 agent_id="b",
                 skill_path=".claude/skills/far-formalizer/SKILL.md",
+                skill_sha256=TEST_SKILL_SHA,
                 role="b",
             ),
         )
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a", "b"),
@@ -382,6 +422,16 @@ class OrchestrationTests(unittest.TestCase):
                 "coordinator": cap("coordinator"),
             },
             {
+                "a": cap("a", shared_state_with=("external-hidden",)),
+                "b": cap("b"),
+                "coordinator": cap("coordinator"),
+            },
+            {
+                "a": cap("a", instruction_sha256="1" * 64),
+                "b": cap("b"),
+                "coordinator": cap("coordinator"),
+            },
+            {
                 "a": cap("a", repository_tools_enabled=True),
                 "b": cap("b"),
                 "coordinator": cap("coordinator"),
@@ -425,7 +475,6 @@ class OrchestrationTests(unittest.TestCase):
         )
         self.assertEqual(one.result_sha256, two.result_sha256)
 
-
 class ReasonerLaneAdapterTests(unittest.TestCase):
     def test_adapter_redacts_secrets_and_strictly_parses_report(self):
         captured = []
@@ -449,11 +498,13 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
         a = sub.AgentSpec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a",),
@@ -499,11 +550,20 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
             plan=plan,
             objective="token=github_pat_abcdefghijklmnopqrstuvwxyz0123456789",
             context=(),
-            runtime=sub.ReasonerLaneRuntime(lanes),
+            runtime=sub.ReasonerLaneRuntime(
+                lanes,
+                skill_texts={
+                    a.skill_path: TEST_SKILL_TEXT,
+                    coordinator.skill_path: TEST_SKILL_TEXT,
+                },
+            ),
         )
         self.assertEqual(result.status, sub.RunStatus.COMPLETED)
         self.assertIn("[REDACTED]", captured[0])
         self.assertNotIn("github_pat_", captured[0])
+        payload = json.loads(captured[0])
+        self.assertEqual(payload["agent"]["instructions"], TEST_SKILL_TEXT)
+        self.assertEqual(payload["agent"]["skill_sha256"], TEST_SKILL_SHA)
 
     def test_adapter_rejects_lane_provider_identity_mismatch_before_call(self):
         called = False
@@ -516,11 +576,13 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
         a = sub.AgentSpec(
             agent_id="a",
             skill_path=".claude/skills/far-discovery-engine/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="a",
         )
         coordinator = sub.AgentSpec(
             agent_id="coordinator",
             skill_path=".claude/skills/far-research-orchestrator/SKILL.md",
+            skill_sha256=TEST_SKILL_SHA,
             role="coordinate",
             kind=sub.AgentKind.COORDINATOR,
             dependencies=("a",),
@@ -551,7 +613,13 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
                 plan=plan,
                 objective="identity",
                 context=(),
-                runtime=sub.ReasonerLaneRuntime(lanes),
+                runtime=sub.ReasonerLaneRuntime(
+                    lanes,
+                    skill_texts={
+                        a.skill_path: TEST_SKILL_TEXT,
+                        coordinator.skill_path: TEST_SKILL_TEXT,
+                    },
+                ),
             )
         self.assertFalse(called)
 
@@ -583,7 +651,6 @@ class ReasonerLaneAdapterTests(unittest.TestCase):
         ]
         with self.assertRaisesRegex(ValueError, "invalid disposition"):
             sub.parse_agent_report(json.dumps(bad))
-
 
 if __name__ == "__main__":
     unittest.main()
