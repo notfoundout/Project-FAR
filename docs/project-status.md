@@ -68,6 +68,10 @@ The correction changes no core-theory claim and does not alter `far-ir/2.0`, `fa
 
 Current authority for this correction is the [canonical FAR workflow](../frameworks/FAR/workflow.md), [investigation validation](../frameworks/FAR/investigation-validation.md), [methodology audit protocol](../methodology/methodology-audit-protocol.md), and [acceptance record](governance/far-evidence-closure-acceptance-v1.0.md).
 
+## Additive epistemic assurance contracts
+
+The [FAR Epistemic Assurance Acceptance](governance/far-epistemic-assurance-promotion-acceptance-v1.0.md) accepts four bounded, additive contracts: source-dependence lineage, bitemporal state, deliberate verifier abstention, and audit self-assurance. The [specification](specification/far-epistemic-assurance-1.0.md) defines their scope, and the [hostile-source boundary](../methodology/hostile-source-boundary.md) keeps audited material from becoming control instructions. These records improve process auditability; they do not certify source truth or external-world claims.
+
 ## W4 domain-contract disposition
 
 `PCA-W4-DOMAIN-CONTRACTS` is complete at six finite-explicit domain scopes. Native memos for formal logic, Bayesian/causal reasoning, argumentation, model-based reasoning, type theory, and proof theory were frozen before controlled `far-ir/2.0` mapping.

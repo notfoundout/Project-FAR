@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/schemas/far-temporal-state-v1.schema.json",
+  "title": "FAR Temporal State v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "subject_id",
+    "state",
+    "valid_time",
+    "known_time"
+  ],
+  "properties": {
+    "schema": {
+      "const": "far-temporal-state/1.0"
+    },
+    "subject_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "enum": [
+        "asserted",
+        "active",
+        "corrected",
+        "retracted",
+        "superseded",
+        "withdrawn",
+        "unknown"
+      ]
+    },
+    "valid_time": {
+      "$ref": "#/$defs/interval"
+    },
+    "known_time": {
+      "$ref": "#/$defs/interval"
+    },
+    "evidence": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "claim_boundary": {
+      "const": "Valid time and FAR knowledge time are distinct; neither alone certifies truth."
+    },
+    "superseded_by_subject_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start"
+      ],
+      "properties": {
+        "start": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

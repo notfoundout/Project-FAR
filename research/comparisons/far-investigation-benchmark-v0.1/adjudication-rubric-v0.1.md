@@ -20,7 +20,7 @@ Before S1, `adjudication-schedule.json` is generated from the frozen 60-case cor
 
 For each of those four evaluators independently:
 
-1. Sort the 60 final `case_id` values by lowercase hexadecimal `SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id))`. This is the evaluator's fixed base case order.
+1. Sort the 60 final `case_id` values by the tuple `(lowercase hexadecimal SHA256(UTF8("20260922|adjudication-case-order|" + evaluator_id + "|" + case_id)), case_id)`, ascending in both components. The secondary `case_id` comparison uses Unicode code-point order and is mandatory even though SHA-256 collisions are expected to be negligible. This is the evaluator's fixed base case order.
 2. Number the base positions `j = 0..59`. Let `rotation = j mod 4` and let the condition vector be exactly `[F, B0, B1, B2]`.
 3. Present four rounds. In round `r = 0..3`, traverse the same 60-case base order and present the run whose condition is `conditions[(r + rotation) mod 4]` for that case.
 4. Concatenate the four rounds to obtain exactly 240 packet assignments with `presentation_index = 1..240`.

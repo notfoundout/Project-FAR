@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.invalid/schemas/far-source-lineage-v1.schema.json",
+  "title": "FAR Source Lineage Record v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "source_id",
+    "relationship",
+    "root_lineage_ids",
+    "upstream_source_ids"
+  ],
+  "properties": {
+    "schema": {
+      "const": "far-source-lineage/1.0"
+    },
+    "source_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "relationship": {
+      "enum": [
+        "origin",
+        "independent",
+        "syndicated",
+        "copied",
+        "derived",
+        "quoted",
+        "mixed_derivation",
+        "unknown"
+      ]
+    },
+    "root_lineage_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "upstream_source_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "claim_boundary": {
+      "const": "Lineage classifies source dependence; it does not certify source truth."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "relationship": {
+            "enum": [
+              "origin",
+              "independent"
+            ]
+          }
+        },
+        "required": [
+          "relationship"
+        ]
+      },
+      "then": {
+        "properties": {
+          "upstream_source_ids": {
+            "maxItems": 0
+          },
+          "root_lineage_ids": {
+            "maxItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "relationship": {
+            "enum": [
+              "syndicated",
+              "copied",
+              "derived",
+              "quoted",
+              "mixed_derivation"
+            ]
+          }
+        },
+        "required": [
+          "relationship"
+        ]
+      },
+      "then": {
+        "properties": {
+          "upstream_source_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

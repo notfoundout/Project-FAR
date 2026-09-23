@@ -13,3 +13,14 @@ The v1 schema remains used by its executable parser, normalizer, serialization, 
 Both schemas use JSON Schema Draft 2020-12 and local `#/$defs/...` references only; ordinary validation must not fetch remote schemas. Software conformance is assurance for the encoded contract, not mathematical proof of application correspondence, novelty, empirical utility, or contract-free universality.
 
 `far-contract-v2.1.schema.json` is the additive `far-ir/2.1` W5 successor for checked finite-explicit approximation and cost semantics. It does not alter either predecessor. `mechanization.far_mechanization.contract_v21` recomputes exact-rational losses, feasibility, Pareto minima, least elements, and exact recovery.
+
+`far-epistemic-v1.schema.json` defines the additive `far-epistemic/1.0` belief-to-learning interchange. Fixed-scale probability, utility, EVPI, score, and regret strings remain separate from `far-ir/2.1` approximation/cost semantics. Runtime validation always applies this schema before cross-record, provenance, lifecycle, causal, arithmetic, scoring, calibration, and FAR-ELENCHUS-1.0 composition checks in `mechanization.far_mechanization.epistemic`. Version 1.0 has no synthetic predecessor migration.
+
+The FAR-SAT-v0.4 epistemic-assurance promotion adds four independent, additive Draft 2020-12 contracts:
+
+- `far-source-lineage-v1.schema.json` separates visible source count from independent source lineage.
+- `far-temporal-state-v1.schema.json` separates valid-world time from FAR known/recorded time.
+- `far-abstention-v1.schema.json` records deliberate non-adjudication and reopening conditions without converting abstention into evidence.
+- `far-audit-assurance-v1.schema.json` requires typed process-assurance checks for a completed audit.
+
+Their semantic constraints are enforced by `far_validation.epistemic_assurance`. They do not alter existing v1/v2/v2.1 reasoning contracts or certify external-world truth.

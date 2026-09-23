@@ -725,7 +725,10 @@ def _validate_adjudication_schedule(data, case_ids, execution_schedule, evaluato
 
         ordered_cases = sorted(
             case_ids,
-            key=lambda case_id: sha256_text(f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"),
+            key=lambda case_id: (
+                sha256_text(f"20260922|adjudication-case-order|{evaluator_id}|{case_id}"),
+                case_id,
+            ),
         )
         expected_assignments = []
         presentation_index = 1

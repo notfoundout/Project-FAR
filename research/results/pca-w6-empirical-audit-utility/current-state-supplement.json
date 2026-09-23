@@ -16,16 +16,23 @@
     {
       "path": "README.md",
       "executed_sha256": "845e41291771498a76c17836f36e6758049fa1da5e57c44274f358966993ff4c",
-      "current_sha256": "76a7e2800fc18018b957813fa84f9b9e7e7ba9838e4e8e482be4c5a597464aa7",
+      "current_sha256": "029f5da09012af1683b81fc4a16ab31f1ff2ef0044d5948449a1238b68aa518a",
       "class": "documentation_surface",
-      "reason": "Linked the non-authoritative epistemic calibration audit, which was previously unreachable from any top-level navigation surface. No claim status changed. Registered the provisional single-module FAR subagent execution protocol and its navigation; no campaign input or result changed."
+      "reason": "Registered the hardened far-epistemic/1.0 application contract and the accepted additive epistemic-assurance contracts. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "309bba1cd82fd02f9387d7ee8bad3abcb210e72a3385a5706359715cbcbfaec8",
+      "current_sha256": "704c6d6b73986c7d3c1a0c290f9e644d1e1a1a6e60b2c0595c73c5e0619dcfaa",
       "class": "documentation_surface",
-      "reason": "Registered the evidence-closure contract and its repaired lifecycle/acceptance authority in the canonical map, in addition to the previously registered epistemic calibration, EFR-R2 amendment, and contract-discovery intake correction. No W6 claim, boundary, input, computation, or result changed. Registered the provisional single-module FAR subagent execution protocol and its navigation; no campaign input or result changed."
+      "reason": "Registered the additive far-epistemic/1.0 application interchange, accepted evidence-closure authority, and accepted epistemic-assurance authority. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "executed_sha256": "6e47889b5652ae78c32cddca61ba9f7bc2df87ea24cb8fe247d53026449d680e",
+      "current_sha256": "cf1ea63ebe79c697ab401c1af6018b40662fd97ecd48b902fd521f1939b3f64b",
+      "class": "documentation_surface",
+      "reason": "Registered the provisional additive far-epistemic/1.0 application interchange and its strict separation from FAR Core and approximation/cost semantics. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
     },
     {
       "path": "docs/governance/limitations-register.md",
@@ -37,9 +44,9 @@
     {
       "path": "docs/project-status.md",
       "executed_sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666",
-      "current_sha256": "de67792e69a1c135740a3c4a4b37386beb8d0557fe27908bf5cf8678679101fc",
+      "current_sha256": "07335c6223fb25a1ecca518a3a8c434ef381e10c48124a0d4a86f1b578826c55",
       "class": "documentation_surface",
-      "reason": "Registered the accepted governed post-evidence closure correction and its bounded saturation authority. No W6 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the accepted governed post-evidence closure correction and the additive epistemic-assurance contracts. No W6 claim, boundary, input, computation, or result changed."
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",

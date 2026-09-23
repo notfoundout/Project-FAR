@@ -1,0 +1,32 @@
+{
+  "schema_version": "socratic-epistemic-extensions/1.0",
+  "record_type": "EXPERTISE_ASSERTION",
+  "record": {
+    "source_id": "source.cardio.1",
+    "expertise_assertion_id": "expertise.cardio.1",
+    "scope": {
+      "domain": "cardiology",
+      "subdomain": "pericardial disease",
+      "claim_type": "clinical interpretation",
+      "population": "adults",
+      "geography": "United States",
+      "time": "current at assessment",
+      "method": "clinical cardiology"
+    },
+    "competence_basis": "Board certification and documented clinical practice in cardiology.",
+    "basis_provenance": {
+      "source_refs": ["credential.registry.1"],
+      "method": "credential verification",
+      "assessor": "far.test",
+      "version": "1.0"
+    },
+    "assessment_status": "SUPPORTED",
+    "uncertainty": "Subspecialty competence is bounded to the recorded scope.",
+    "limitations": ["Does not establish competence outside cardiology."],
+    "valid_from": "2026-09-23T00:00:00Z",
+    "valid_until": null,
+    "assessor": "far.test",
+    "assessment_method": "credential-and-scope appraisal",
+    "version": "1.0"
+  }
+}
