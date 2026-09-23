@@ -223,6 +223,62 @@ def normalize_candidate_doi(value: Any) -> str | None:
     return doi or None
 
 
+def identity_bound_urls(source_key: str, sources: list[Any]) -> list[str]:
+    """Return only URLs derived from a source record that proves the frozen identity.
+
+    The rolling inbox is noncanonical. A candidate may therefore contain additional source
+    rows, but those rows must never broaden what the autonomous reviewer is allowed to
+    retrieve. Resolvable discovery identities are reconstructed into canonical provider
+    URLs; metadata-hash fallback identities fail closed because their exact preimage is not
+    retained in the candidate record and cannot be independently reconstructed here.
+    """
+    if source_key.startswith("doi:"):
+        wanted = normalize_candidate_doi(source_key)
+        if wanted is None:
+            return []
+        if any(
+            isinstance(source, dict) and normalize_candidate_doi(source.get("doi")) == wanted
+            for source in sources
+        ):
+            return [f"https://doi.org/{wanted}"]
+        return []
+
+    if source_key.startswith("openalex:"):
+        wanted = source_key.removeprefix("openalex:").lower()
+        if not wanted:
+            return []
+        if any(
+            isinstance(source, dict)
+            and source.get("provider") == "OpenAlex"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].rstrip("/").rsplit("/", 1)[-1].lower() == wanted
+            for source in sources
+        ):
+            return [f"https://openalex.org/{wanted}"]
+        return []
+
+    if source_key.startswith("openlibrary:"):
+        wanted = source_key.removeprefix("openlibrary:").lower()
+        if not wanted:
+            return []
+        if any(
+            isinstance(source, dict)
+            and source.get("provider") == "Open Library"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].lower() == wanted
+            for source in sources
+        ):
+            suffix = wanted if wanted.startswith("/") else "/" + wanted
+            return ["https://openlibrary.org" + suffix]
+        return []
+
+    # Fallback keys are hashes of discovery metadata. The exact normalized preimage is not
+    # preserved as an identity field, so provider-name agreement is insufficient proof.
+    if FALLBACK_KEY_RE.fullmatch(source_key):
+        return []
+    return []
+
+
 def candidate_identity_valid(candidate: dict[str, Any]) -> bool:
     cid = candidate.get("candidate_id")
     source_key = candidate.get("source_key")
@@ -232,64 +288,15 @@ def candidate_identity_valid(candidate: dict[str, Any]) -> bool:
     expected = "FAR-LIT-" + digest(source_key.encode("utf-8"))[:16].upper()
     if cid != expected:
         return False
-
-    if source_key.startswith("doi:"):
-        wanted = normalize_candidate_doi(source_key)
-        return wanted is not None and any(
-            isinstance(source, dict) and normalize_candidate_doi(source.get("doi")) == wanted
-            for source in sources
-        )
-
-    if source_key.startswith("openalex:"):
-        wanted = source_key.removeprefix("openalex:").lower()
-        return bool(wanted) and any(
-            isinstance(source, dict)
-            and source.get("provider") == "OpenAlex"
-            and isinstance(source.get("provider_id"), str)
-            and source["provider_id"].rstrip("/").rsplit("/", 1)[-1].lower() == wanted
-            for source in sources
-        )
-
-    if source_key.startswith("openlibrary:"):
-        wanted = source_key.removeprefix("openlibrary:").lower()
-        return bool(wanted) and any(
-            isinstance(source, dict)
-            and source.get("provider") == "Open Library"
-            and isinstance(source.get("provider_id"), str)
-            and source["provider_id"].lower() == wanted
-            for source in sources
-        )
-
-    match = FALLBACK_KEY_RE.fullmatch(source_key)
-    if match:
-        provider = {
-            "crossref": "Crossref",
-            "openalex": "OpenAlex",
-            "open-library": "Open Library",
-        }[match.group(1)]
-        return any(isinstance(source, dict) and source.get("provider") == provider for source in sources)
-    return False
+    return bool(identity_bound_urls(source_key, sources))
 
 
 def candidate_urls(candidate: dict[str, Any], limit: int) -> list[str]:
     if not candidate_identity_valid(candidate):
         return []
-    out: list[str] = []
-    for source in candidate.get("sources", []):
-        if not isinstance(source, dict):
-            continue
-        for key in ("url", "doi"):
-            value = source.get(key)
-            if not isinstance(value, str) or not value.strip():
-                continue
-            value = value.strip()
-            if key == "doi" and not value.startswith("http"):
-                value = "https://doi.org/" + value.removeprefix("doi:")
-            if value.startswith(("https://", "http://")) and value not in out:
-                out.append(value)
-                if len(out) >= limit:
-                    return out
-    return out
+    source_key = candidate["source_key"]
+    sources = candidate["sources"]
+    return identity_bound_urls(source_key, sources)[:limit]
 
 
 def claim_subset(root: Path, ids: list[str]) -> list[dict[str, Any]]:
