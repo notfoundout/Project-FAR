@@ -119,6 +119,7 @@ jobs:
     if: always() && github.event_name == 'workflow_dispatch'
     needs: exact-head-assurance
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       checks: write
     steps:
