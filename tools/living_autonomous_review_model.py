@@ -156,9 +156,9 @@ def validate_source_binding(record: dict[str, Any], metadata: dict[str, Any], la
 
 def validate_claim_ids(ids: Any, allowed: set[str], label: str) -> list[str]:
     if not isinstance(ids, list) or any(not isinstance(x, str) for x in ids):
-        raise CandidateReviewError(f"{label}: affected_claim_ids malformed")
+        raise CandidateReviewError(f"{label}: claim-id list malformed")
     if len(ids) != len(set(ids)):
-        raise CandidateReviewError(f"{label}: affected_claim_ids contains duplicates")
+        raise CandidateReviewError(f"{label}: claim-id list contains duplicates")
     bad = sorted(set(ids) - allowed)
     if bad:
         raise CandidateReviewError(f"{label}: unknown claim ids: {', '.join(bad)}")
@@ -166,30 +166,39 @@ def validate_claim_ids(ids: Any, allowed: set[str], label: str) -> list[str]:
 
 
 def prompt_for(role: str, candidate: dict[str, Any], claims: list[dict[str, Any]], urls: list[str], prior=None) -> str:
+    coverage = (
+        "Before giving a candidate-level result, evaluate every canonical claim supplied in canonical_claims. "
+        "Set evaluated_claim_ids to exactly that full claim-id set, even when no claim is contradicted or affected. "
+        "Use affected_claim_ids only for claims the source actually bears on in the role's finding. "
+    )
     instructions = {
         "screening": (
-            "Verify the supplied candidate primary source through URL context only. Decide whether it bears "
+            coverage
+            + "Verify the supplied candidate primary source through URL context only. Decide whether it bears "
             "directly on the exact canonical claims. Distinguish premise/scope match from thematic similarity. "
             "In source_urls_used, list only exact URLs that URL Context successfully retrieved."
         ),
         "attack": (
-            "Treat the source as potentially damaging. Construct the strongest exact contradiction or "
+            coverage
+            + "Treat the source as potentially damaging. Construct the strongest exact contradiction or "
             "strong-prior-art case actually supported. Give a reproducible attack; do not stretch scope. "
             "Broad search may locate corroborating or counterevidence, but source_urls_used must include the "
             "retrieved primary source that materially supports the attack."
         ),
         "replication": (
-            "Independently re-read the source and canonical claims. Reproduce or reject the strongest "
+            coverage
+            + "Independently re-read the source and canonical claims. Reproduce or reject the strongest "
             "attack without treating another role's conclusion as authority. Broad search may locate "
             "corroborating or counterevidence, but source_urls_used must include the retrieved primary source "
             "that materially supports the replicated finding."
         ),
         "adjudication": (
-            "Adjudicate the records. PROJECT_CHANGE_REQUIRED requires verified primary-source support, "
-            "exact premise/scope and claim binding, both attack roles explicitly finding the same contradiction, "
-            "a reproducible attack, and internal replication. N1_PRIOR_ART_LEAD requires both attack roles to "
+            "Adjudicate the records only after confirming all three research roles evaluated the complete frozen "
+            "candidate claim set. PROJECT_CHANGE_REQUIRED requires verified primary-source support, exact "
+            "premise/scope and claim binding, both attack roles explicitly finding the same contradiction, a "
+            "reproducible attack, and internal replication. N1_PRIOR_ART_LEAD requires both attack roles to "
             "report direct or stronger prior art on a common exact claim. Do not downgrade a reproduced "
-            "contradiction or agreed direct prior-art result. Select only minimal necessary targets."
+            "contradiction or agreed direct-prior-art result. Select only minimal necessary targets."
         ),
     }
     value: dict[str, Any] = {
