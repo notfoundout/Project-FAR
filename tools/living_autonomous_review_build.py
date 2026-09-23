@@ -30,11 +30,15 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         return candidate_block(cid, f"candidate JSON is invalid: {exc}", now)
     if candidate.get("candidate_id") != cid:
         return candidate_block(cid, "candidate identity drift", now)
+    if candidate.get("record_type") != "CANDIDATE_LITERATURE":
+        return candidate_block(cid, "candidate record_type drift", now)
     source_key = candidate.get("source_key")
     if not isinstance(source_key, str) or not source_key.strip():
         return candidate_block(cid, "candidate source_key missing", now)
     if candidate.get("authority") != "Research" or candidate.get("lifecycle", {}).get("stage") != "DISCOVERED":
         return candidate_block(cid, "candidate authority/lifecycle drift", now)
+    if not isinstance(candidate.get("sources"), list) or not candidate["sources"]:
+        return candidate_block(cid, "candidate source records missing", now)
 
     urls = candidate_urls(candidate, policy["max_source_urls"])
     queue = load_json(source_root / STATE).get("core_claim_review_queue", [])
@@ -45,10 +49,14 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
     ids_raw = item.get("claim_ids")
     if not isinstance(ids_raw, list) or not ids_raw or any(not isinstance(x, str) for x in ids_raw):
         return candidate_block(cid, "candidate queue claim binding malformed", now)
+    if len(ids_raw) != len(set(ids_raw)):
+        return candidate_block(cid, "candidate queue claim binding duplicated", now)
     ids = list(ids_raw)
     potential = candidate.get("potential_claim_ids")
     if not isinstance(potential, list) or any(not isinstance(x, str) for x in potential):
         return candidate_block(cid, "candidate potential_claim_ids malformed", now)
+    if len(potential) != len(set(potential)):
+        return candidate_block(cid, "candidate potential_claim_ids duplicated", now)
     if set(ids) != set(potential):
         return candidate_block(cid, "candidate queue/candidate claim binding drift", now)
     claims = claim_subset(root, ids)
@@ -80,6 +88,10 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             urls=urls,
         )
         validate_claim_ids(attack.get("affected_claim_ids"), claim_ids, "attack")
+        try:
+            validate_source_binding(attack, attack_meta, "attack")
+        except CandidateReviewError as exc:
+            return source_block(cid, str(exc), now)
 
         replication, replication_meta = model.generate(
             role="replication",
@@ -88,6 +100,18 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             urls=urls,
         )
         validate_claim_ids(replication.get("affected_claim_ids"), claim_ids, "replication")
+        try:
+            validate_source_binding(replication, replication_meta, "replication")
+        except CandidateReviewError as exc:
+            return source_block(cid, str(exc), now)
+
+        common_sources = (
+            record_sources(screening)
+            & record_sources(attack)
+            & record_sources(replication)
+        )
+        if not common_sources:
+            return source_block(cid, "review roles lack one common retrieved primary source", now)
 
         decision, decision_meta = model.generate(
             role="adjudication",
