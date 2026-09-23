@@ -48,6 +48,7 @@ REVIEW_ROOT = Path("research/living/autonomous-review")
 AUDIT_ROOT = Path("docs/audits/living-autonomous-review")
 
 CID_RE = re.compile(r"FAR-LIT-[0-9A-F]{16}")
+FALLBACK_KEY_RE = re.compile(r"^(crossref|openalex|open-library)-fallback:[0-9a-f]{64}$")
 ALLOWED = {
     "IRRELEVANT_FALSE_POSITIVE",
     "ADJACENT_NO_CONTRADICTION",
@@ -212,7 +213,67 @@ def select_candidate(root: Path, source_root: Path, now: datetime) -> str | None
     return min(ranked)[2] if ranked else None
 
 
+def normalize_candidate_doi(value: Any) -> str | None:
+    if not isinstance(value, str):
+        return None
+    doi = value.strip().lower()
+    for prefix in ("https://doi.org/", "http://doi.org/", "doi:"):
+        if doi.startswith(prefix):
+            doi = doi[len(prefix):]
+    return doi or None
+
+
+def candidate_identity_valid(candidate: dict[str, Any]) -> bool:
+    cid = candidate.get("candidate_id")
+    source_key = candidate.get("source_key")
+    sources = candidate.get("sources")
+    if not isinstance(cid, str) or not isinstance(source_key, str) or not source_key or not isinstance(sources, list):
+        return False
+    expected = "FAR-LIT-" + digest(source_key.encode("utf-8"))[:16].upper()
+    if cid != expected:
+        return False
+
+    if source_key.startswith("doi:"):
+        wanted = normalize_candidate_doi(source_key)
+        return wanted is not None and any(
+            isinstance(source, dict) and normalize_candidate_doi(source.get("doi")) == wanted
+            for source in sources
+        )
+
+    if source_key.startswith("openalex:"):
+        wanted = source_key.removeprefix("openalex:").lower()
+        return bool(wanted) and any(
+            isinstance(source, dict)
+            and source.get("provider") == "OpenAlex"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].rstrip("/").rsplit("/", 1)[-1].lower() == wanted
+            for source in sources
+        )
+
+    if source_key.startswith("openlibrary:"):
+        wanted = source_key.removeprefix("openlibrary:").lower()
+        return bool(wanted) and any(
+            isinstance(source, dict)
+            and source.get("provider") == "Open Library"
+            and isinstance(source.get("provider_id"), str)
+            and source["provider_id"].lower() == wanted
+            for source in sources
+        )
+
+    match = FALLBACK_KEY_RE.fullmatch(source_key)
+    if match:
+        provider = {
+            "crossref": "Crossref",
+            "openalex": "OpenAlex",
+            "open-library": "Open Library",
+        }[match.group(1)]
+        return any(isinstance(source, dict) and source.get("provider") == provider for source in sources)
+    return False
+
+
 def candidate_urls(candidate: dict[str, Any], limit: int) -> list[str]:
+    if not candidate_identity_valid(candidate):
+        return []
     out: list[str] = []
     for source in candidate.get("sources", []):
         if not isinstance(source, dict):
