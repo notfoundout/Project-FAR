@@ -39,6 +39,35 @@ class SplitSourceModel(FakeModel):
         return result, metadata
 
 
+class ForeignCandidateSourceModel(FakeModel):
+    FOREIGN_URL = "https://example.org/unrelated-but-retrieved"
+
+    def generate(self, *, role, prompt, schema, urls=None):
+        result, metadata = super().generate(role=role, prompt=prompt, schema=schema, urls=urls)
+        if role in {"screening", "attack", "replication"}:
+            result = dict(result)
+            result["source_urls_used"] = [self.FOREIGN_URL]
+            metadata = meta(True, self.FOREIGN_URL)
+        return result, metadata
+
+
+class IrrelevantMatchedScreeningModel(FakeModel):
+    def generate(self, *, role, prompt, schema, urls=None):
+        result, metadata = super().generate(role=role, prompt=prompt, schema=schema, urls=urls)
+        if role == "screening":
+            result = dict(result)
+            rows = [dict(row) for row in result["claim_assessments"]]
+            rows[0]["relevant"] = False
+            rows[0]["premise_match"] = True
+            rows[0]["scope_match"] = True
+            result["claim_assessments"] = rows
+            result["relevant"] = False
+            result["affected_claim_ids"] = []
+            result["premise_match"] = True
+            result["scope_match"] = True
+        return result, metadata
+
+
 class NegativeEvidenceBindingTests(unittest.TestCase):
     def setUp(self):
         import tempfile
@@ -71,6 +100,30 @@ class NegativeEvidenceBindingTests(unittest.TestCase):
         )
         self.assertEqual("source_blocked", plan["status"])
         self.assertFalse(plan["review_files"])
+
+    def test_all_roles_citing_same_retrieved_non_candidate_source_is_rejected(self):
+        plan = ar.build_plan(
+            ROOT,
+            self.source,
+            ForeignCandidateSourceModel("ADJACENT_NO_CONTRADICTION"),
+            NOW,
+        )
+        self.assertEqual("source_blocked", plan["status"])
+        self.assertFalse(plan["review_files"])
+        attempt = next(iter(plan["inbox_files"].values())).decode("utf-8")
+        self.assertIn("outside the frozen candidate source set", attempt)
+
+    def test_irrelevant_screen_cannot_claim_exact_premise_or_scope_match(self):
+        plan = ar.build_plan(
+            ROOT,
+            self.source,
+            IrrelevantMatchedScreeningModel("IRRELEVANT_FALSE_POSITIVE"),
+            NOW,
+        )
+        self.assertEqual("review_retry_blocked", plan["status"])
+        self.assertFalse(plan["review_files"])
+        attempt = next(iter(plan["inbox_files"].values())).decode("utf-8")
+        self.assertIn("premise/scope match requires per-claim relevance", attempt)
 
 
 class ExactClaimWitnessTests(unittest.TestCase):
