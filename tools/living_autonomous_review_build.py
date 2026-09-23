@@ -11,6 +11,7 @@ from tools.living_autonomous_review_core import *
 from tools.living_autonomous_review_model import *
 from tools.living_autonomous_review_plan import *
 
+
 def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None = None):
     now = now or datetime.now(timezone.utc)
     policy = load_json(root / POLICY)
@@ -24,18 +25,36 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         return candidate_block(cid, "selected candidate file is missing", now)
     candidate_raw = candidate_path.read_bytes()
     try:
-        candidate = json.loads(candidate_raw.decode("utf-8"))
-    except Exception as exc:
+        candidate = promoter.loadb(candidate_raw, candidate_path.as_posix())
+    except promoter.PromotionError as exc:
         return candidate_block(cid, f"candidate JSON is invalid: {exc}", now)
-    if not isinstance(candidate, dict) or candidate.get("candidate_id") != cid:
+    if candidate.get("candidate_id") != cid:
         return candidate_block(cid, "candidate identity drift", now)
+    source_key = candidate.get("source_key")
+    if not isinstance(source_key, str) or not source_key.strip():
+        return candidate_block(cid, "candidate source_key missing", now)
+    if candidate.get("authority") != "Research" or candidate.get("lifecycle", {}).get("stage") != "DISCOVERED":
+        return candidate_block(cid, "candidate authority/lifecycle drift", now)
 
     urls = candidate_urls(candidate, policy["max_source_urls"])
     queue = load_json(source_root / STATE).get("core_claim_review_queue", [])
-    item = next((x for x in queue if isinstance(x, dict) and x.get("candidate_id") == cid), {})
-    ids = [x for x in item.get("claim_ids", []) if isinstance(x, str)]
+    matches = [x for x in queue if isinstance(x, dict) and x.get("candidate_id") == cid]
+    if len(matches) != 1:
+        return candidate_block(cid, "candidate queue identity is missing or duplicated", now)
+    item = matches[0]
+    ids_raw = item.get("claim_ids")
+    if not isinstance(ids_raw, list) or not ids_raw or any(not isinstance(x, str) for x in ids_raw):
+        return candidate_block(cid, "candidate queue claim binding malformed", now)
+    ids = list(ids_raw)
+    potential = candidate.get("potential_claim_ids")
+    if not isinstance(potential, list) or any(not isinstance(x, str) for x in potential):
+        return candidate_block(cid, "candidate potential_claim_ids malformed", now)
+    if set(ids) != set(potential):
+        return candidate_block(cid, "candidate queue/candidate claim binding drift", now)
     claims = claim_subset(root, ids)
     claim_ids = {x["id"] for x in claims if isinstance(x.get("id"), str)}
+    if set(ids) != claim_ids:
+        return candidate_block(cid, "candidate references unknown or missing canonical claim ids", now)
     if not urls or not claims:
         return source_block(cid, "candidate lacks a source URL or exact claim binding", now)
 
@@ -49,7 +68,10 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         validate_claim_ids(screening.get("affected_claim_ids"), claim_ids, "screening")
         if not screening.get("primary_source_verified"):
             return source_block(cid, "screening did not verify a primary source", now)
-        validate_source_binding(screening, screen_meta, "screening")
+        try:
+            validate_source_binding(screening, screen_meta, "screening")
+        except CandidateReviewError as exc:
+            return source_block(cid, str(exc), now)
 
         attack, attack_meta = model.generate(
             role="attack",
@@ -67,7 +89,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         )
         validate_claim_ids(replication.get("affected_claim_ids"), claim_ids, "replication")
 
-        decision, _ = model.generate(
+        decision, decision_meta = model.generate(
             role="adjudication",
             prompt=prompt_for(
                 "adjudication",
@@ -79,13 +101,31 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             schema=ADJUDICATION_SCHEMA,
         )
         validate_decision(
-            decision, policy, root, claim_ids,
-            screening, attack, replication, attack_meta, replication_meta,
+            decision,
+            policy,
+            root,
+            claim_ids,
+            screening,
+            attack,
+            replication,
+            screen_meta,
+            attack_meta,
+            replication_meta,
         )
 
         review_files, provenance, audit_rel = review_artifacts(
-            cid, candidate, claims, screening, screen_meta, attack, attack_meta,
-            replication, replication_meta, decision, now,
+            cid,
+            candidate,
+            claims,
+            screening,
+            screen_meta,
+            attack,
+            attack_meta,
+            replication,
+            replication_meta,
+            decision,
+            decision_meta,
+            now,
         )
         candidate_hash = digest(candidate_raw)
         freeze_tag = candidate_hash[:12].upper()
@@ -94,7 +134,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         disposition = decision["disposition"]
         review_row: dict[str, Any] = {
             "candidate_id": cid,
-            "source_key": candidate["source_key"],
+            "source_key": source_key,
             "disposition": disposition,
             "reviewed_on": now.date().isoformat(),
             "review_basis": audit_rel,
@@ -103,11 +143,13 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
         inbox_files: dict[str, bytes] = {}
         promotion_ops: list[dict[str, Any]] = []
         implementation_ops: list[dict[str, Any]] = []
+        scientific_replacements: dict[str, bytes] = {}
+        implementation_replacements: dict[str, bytes] = {}
 
         # Important lifecycle boundary: proposed correction bytes are part of the
         # human-review PR, never written to the unprotected rolling inbox first.
         if disposition == "PROJECT_CHANGE_REQUIRED":
-            replacements = generate_replacements(
+            scientific_replacements = generate_replacements(
                 model,
                 kind="scientific",
                 targets=decision["scientific_targets"],
@@ -115,7 +157,8 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
                 context={"screening": screening, "attack": attack, "replication": replication, "adjudication": decision},
                 max_bytes=policy["max_total_replacement_bytes"],
             )
-            for target, raw in replacements.items():
+            enforce_total_replacement_bytes(policy["max_total_replacement_bytes"], scientific_replacements)
+            for target, raw in scientific_replacements.items():
                 source_path = (PROMOTION_PAYLOADS / proposal_id / target).as_posix()
                 before = promoter.mainbytes(root, target)
                 promotion_ops.append({
@@ -145,7 +188,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
                 "implementation_proposal_id": impl_id if decision["implementation_required"] else None,
             })
             if decision["implementation_required"]:
-                replacements = generate_replacements(
+                implementation_replacements = generate_replacements(
                     model,
                     kind="implementation",
                     targets=decision["implementation_targets"],
@@ -153,7 +196,12 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
                     context={"screening": screening, "attack": attack, "replication": replication, "adjudication": decision},
                     max_bytes=policy["max_total_replacement_bytes"],
                 )
-                for target, raw in replacements.items():
+                enforce_total_replacement_bytes(
+                    policy["max_total_replacement_bytes"],
+                    scientific_replacements,
+                    implementation_replacements,
+                )
+                for target, raw in implementation_replacements.items():
                     source_path = (IMPLEMENTATION_PAYLOADS / impl_id / target).as_posix()
                     before = implementation.read_regular(root, target)
                     implementation_ops.append({
@@ -189,7 +237,7 @@ def build_plan(root: Path, source_root: Path, model: Model, now: datetime | None
             append_unique(snapshots, "authorizations", {
                 "candidate_id": cid,
                 "candidate_sha256": candidate_hash,
-                "source_key": candidate["source_key"],
+                "source_key": source_key,
                 "disposition": disposition,
                 "review_basis": audit_rel,
                 "review_basis_sha256": digest(review_files[audit_rel]),
