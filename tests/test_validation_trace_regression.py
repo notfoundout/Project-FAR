@@ -54,6 +54,29 @@ class TraceContractRegressionTests(unittest.TestCase):
                 os.chdir(previous)
             self.assertEqual(audited.violations, ["undeclared read: secret.txt"])
 
+    def test_runtime_policy_allows_repo_console_entrypoint_but_not_arbitrary_temp_executable(self) -> None:
+        policy = RuntimePolicy.load(
+            Path(__file__).resolve().parents[1] / "validation" / "runtime-policy.json"
+        )
+        report = TraceReport(
+            backend="test",
+            executables=[
+                "/tmp/far-test/venv/bin/far-intake",
+                "/tmp/far-test/venv/bin/evil",
+            ],
+        )
+        audited = audit_trace(
+            report,
+            declared_inputs=(),
+            command=("python", "check.py"),
+            policy=policy,
+            sandbox_copy=False,
+        )
+        self.assertEqual(
+            audited.violations,
+            ["undeclared executable: /tmp/far-test/venv/bin/evil"],
+        )
+
     def test_process_cwd_tracking_excludes_temporary_child_repository(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "repo"
