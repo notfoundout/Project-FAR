@@ -1,0 +1,13 @@
+# PROBE ONLY - never merge (throwaway branch probe/shadow-merge-authority).
+# A candidate-controlled pull_request workflow whose job is named exactly like the
+# required status check "merge-authority" and always succeeds.
+name: shadow-check-probe
+on:
+  pull_request:
+    branches: [main]
+permissions: {}
+jobs:
+  merge-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "shadow success emitted by a candidate-controlled workflow"

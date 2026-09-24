@@ -217,3 +217,4 @@ class OracleDelegationRegressionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+# probe: unauthorized protected edit (throwaway branch, never merged)
