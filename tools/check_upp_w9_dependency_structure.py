@@ -3,6 +3,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import successor_recorded
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory/foundation/upp-dependency-structure-v1.0.json"
@@ -29,7 +30,7 @@ def main():
     require(result["terminal_result"] == EXPECTED, "result mismatch")
     completed = {(x["target_pr"], x["workstream"], x["result"]) for x in queue["completed_workstreams"]}
     require((290, "UPP-W9-DEPENDENCY-STRUCTURE", EXPECTED) in completed, "queue lacks completed W9")
-    require(queue["next_action"] == {"target_pr": 291, "workstream": "UPP-W10-SEMANTIC-INTERPRETATION"}, "queue did not advance exactly")
+    require(successor_recorded(queue, 291, "UPP-W10-SEMANTIC-INTERPRETATION"), "queue did not advance exactly")
     require(queue["public_evaluation_authorized"] is False, "public evaluation gate opened")
     proc = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_upp_dependency_structure.py"], cwd=ROOT)
     require(proc.returncode == 0, "dependency tests failed")

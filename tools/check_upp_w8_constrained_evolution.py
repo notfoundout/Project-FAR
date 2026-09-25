@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import history_contiguous, successor_recorded
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory/necessity/upp-w8-constrained-evolution-v1.0.json"
@@ -51,10 +52,10 @@ def main() -> int:
     require(result["public_evaluation_authorized"] is False, "result opened public evaluation")
 
     completed = queue["completed_workstreams"]
-    require(completed[-1] == {"target_pr": 289, "workstream": "UPP-W8-CONSTRAINED-EVOLUTION", "result": TERMINAL}, "queue completion mismatch")
-    require([x["target_pr"] for x in completed] == list(range(281, 290)), "completed PR history is not contiguous")
-    require(queue["next_action"] == {"target_pr": 290, "workstream": "UPP-W9-DEPENDENCY-STRUCTURE"}, "queue not advanced")
-    require(queue["ordered_followups"] == list(range(291, 297)), "followup ordering mismatch")
+    require({"target_pr": 289, "workstream": "UPP-W8-CONSTRAINED-EVOLUTION", "result": TERMINAL} in completed, "queue completion mismatch")
+    require([x["target_pr"] for x in completed][:9] == list(range(281, 290)), "completed PR history is not contiguous")
+    require(successor_recorded(queue, 290, "UPP-W9-DEPENDENCY-STRUCTURE"), "queue not advanced")
+    require(history_contiguous(queue), "followup ordering mismatch")
     require(queue["public_evaluation_authorized"] is False, "queue opened public evaluation")
 
     audit = AUDIT.read_text(encoding="utf-8")

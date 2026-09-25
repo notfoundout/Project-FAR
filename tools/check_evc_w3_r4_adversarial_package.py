@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 import json
 from pathlib import Path
 

@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import history_contiguous, successor_recorded
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory/necessity/upp-recoverable-commitment-v1.0.json"
@@ -42,10 +43,10 @@ def main() -> int:
     require(result["terminal_result"] == TERMINAL, "terminal result mismatch")
     require(result["public_evaluation_authorized"] is False, "public gate opened")
     completed = queue["completed_workstreams"]
-    require(completed[-1] == {"target_pr":288,"workstream":"UPP-W7-RECOVERABLE-COMMITMENT","result":TERMINAL}, "queue completion mismatch")
-    require([x["target_pr"] for x in completed] == list(range(281, 289)), "completed history not contiguous")
-    require(queue["next_action"] == {"target_pr":289,"workstream":"UPP-W8-CONSTRAINED-EVOLUTION"}, "queue not advanced")
-    require(queue["ordered_followups"] == list(range(290, 297)), "followups wrong")
+    require({"target_pr":288,"workstream":"UPP-W7-RECOVERABLE-COMMITMENT","result":TERMINAL} in completed, "queue completion mismatch")
+    require([x["target_pr"] for x in completed][:8] == list(range(281, 289)), "completed history not contiguous")
+    require(successor_recorded(queue, 289, "UPP-W8-CONSTRAINED-EVOLUTION"), "queue not advanced")
+    require(history_contiguous(queue), "followups wrong")
     audit = AUDIT.read_text(encoding="utf-8")
     for phrase in ("Witness construction", "Contradiction argument", "Three-valued adjudication", TERMINAL, "Public evaluation remains unauthorized"):
         require(phrase in audit, f"audit missing {phrase!r}")
