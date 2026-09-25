@@ -1,0 +1,272 @@
+diff --git a/far_validation/formal_model.py b/far_validation/formal_model.py
+index dcc78d1..350dbaa 100644
+--- a/far_validation/formal_model.py
++++ b/far_validation/formal_model.py
+@@ -96,6 +96,56 @@ def verify_attestation_model() -> int:
+         return rejected
+ 
+ 
++def engine_conformance(max_checks: int = 3) -> int:
++    """Run the real ValidationEngine on every abstract case and require it to match simulate().
++
++    Model checking `simulate()` alone proves properties of this module's reimplementation, not
++    of `engine.py`. This binds the model to the implementation for small graphs.
++    """
++    import sys
++
++    from .engine import ValidationEngine
++
++    ids = [f"n{index}" for index in range(max_checks)][::-1]  # alphabetical order opposes topology
++    compared = 0
++    with tempfile.TemporaryDirectory() as directory:
++        root = Path(directory)
++        (root / "validation").mkdir()
++        for size in range(1, max_checks + 1):
++            for dependencies in dependency_graphs(size):
++                for outcomes in itertools.product((False, True), repeat=size):
++                    checks = [
++                        {
++                            "id": ids[index],
++                            "title": ids[index],
++                            "command": [sys.executable, "-c", f"raise SystemExit({0 if outcomes[index] else 1})"],
++                            "profiles": ["pr-fast"],
++                            "depends_on": [ids[dep] for dep in dependencies[index]],
++                            "cacheable": False,
++                        }
++                        for index in range(size)
++                    ]
++                    manifest = {
++                        "schema_version": "1.0",
++                        "profiles": {"pr-fast": ids[:size]},
++                        "protected_checks": [],
++                        "global_invalidation_paths": ["validation/**"],
++                        "checks": checks,
++                    }
++                    (root / "validation" / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
++                    summary = ValidationEngine(root, jobs=2, use_cache=False).run(profile="pr-fast")
++                    actual = {result.check_id: result.status for result in summary.results}
++                    model = simulate(dependencies, outcomes)
++                    expected = {
++                        ids[index]: {"passed": "passed", "failed": "validation_failure", "blocked": "blocked_by_root_failure"}[state]
++                        for index, state in enumerate(model.states)
++                    }
++                    if actual != expected or summary.successful != model.successful:
++                        raise AssertionError(f"engine diverges from model: deps={dependencies} outcomes={outcomes} engine={actual} model={expected}")
++                    compared += 1
++    return compared
++
++
+ def exhaustive_model_check(max_checks: int = 4) -> dict[str, int]:
+     graphs = 0
+     runs = 0
+@@ -107,7 +157,11 @@ def exhaustive_model_check(max_checks: int = 4) -> dict[str, int]:
+                 verify_run(run)
+                 runs += 1
+     attestation_mutations = verify_attestation_model()
+-    return {"max_checks": max_checks, "graphs": graphs, "runs": runs, "attestation_mutations": attestation_mutations}
++    engine_runs = engine_conformance(min(max_checks, 3))
++    return {
++        "max_checks": max_checks, "graphs": graphs, "runs": runs,
++        "attestation_mutations": attestation_mutations, "engine_conformance_runs": engine_runs,
++    }
+ 
+ 
+ def main(argv: list[str] | None = None) -> int:
+@@ -124,7 +178,8 @@ def main(argv: list[str] | None = None) -> int:
+         print(
+             "validation engine formal model: PASS "
+             f"({result['graphs']} DAGs, {result['runs']} runs, "
+-            f"{result['attestation_mutations']} hostile attestations rejected)"
++            f"{result['attestation_mutations']} hostile attestations rejected; "
++            f"{result['engine_conformance_runs']} real-engine runs match the model)"
+         )
+     return 0
+ 
+diff --git a/far_validation/mutations.py b/far_validation/mutations.py
+index 5e9455a..690b186 100644
+--- a/far_validation/mutations.py
++++ b/far_validation/mutations.py
+@@ -30,10 +30,15 @@ class CampaignReport:
+     registered_mutations: int
+     results: list[MutationResult]
+     checker_coverage: int
++    static_oracle_checks: list[MutationResult] = field(default_factory=list)
+ 
+     @property
+     def successful(self) -> bool:
+-        return self.registered_mutations > 0 and all(item.rejected for item in self.results)
++        return (
++            self.registered_mutations > 0
++            and all(item.rejected for item in self.results)
++            and all(item.rejected for item in self.static_oracle_checks)
++        )
+ 
+     def to_dict(self) -> dict[str, Any]:
+         payload = asdict(self)
+@@ -183,6 +188,38 @@ def _checker_mutations(root: Path) -> tuple[list[MutationResult], int]:
+     return results, len(checkers)
+ 
+ 
++def _rule_deletion_mutations(root: Path) -> tuple[list[MutationResult], int]:
++    """Delete each rule of every registered governance checker and require its tests to fail.
++
++    `_checker_mutations` scores four fixed, source-independent texts (empty, trivial success,
++    no failure path, appended syntax error) against the static oracle heuristic; its results
++    say nothing about whether tests detect a broken checker, so they are reported separately
++    and no longer counted as mutations. These mutants are derived from each checker's source.
++    """
++    import importlib.util
++    import sys
++
++    path = root / "tools" / "checker_rule_mutation.py"
++    spec = importlib.util.spec_from_file_location("far_checker_rule_mutation", path)
++    if spec is None or spec.loader is None:
++        raise RuntimeError(f"cannot load {path}")
++    module = importlib.util.module_from_spec(spec)
++    sys.modules[spec.name] = module
++    spec.loader.exec_module(module)
++    checkers = sorted(module.REGISTRY)
++    outcomes = module.run(checkers)
++    results = [
++        MutationResult(
++            f"RULE-{mutant.checker.replace('/', '_')}-L{mutant.line}", "rule-deletion",
++            mutant.killed, mutant.source,
++        )
++        for mutants in outcomes.values() for mutant in mutants
++    ]
++    for failure in module.evaluate(outcomes):
++        results.append(MutationResult(f"RULE-FLOOR-{len(results)}", "rule-deletion", False, failure))
++    return results, len(checkers)
++
++
+ def _weakening_mutations() -> list[MutationResult]:
+     results: list[MutationResult] = []
+     with tempfile.TemporaryDirectory() as directory:
+@@ -214,8 +251,9 @@ def _weakening_mutations() -> list[MutationResult]:
+ 
+ def run_campaign(root: Path) -> CampaignReport:
+     results: list[MutationResult] = []
+-    checker_results, checker_count = _checker_mutations(root)
+-    results.extend(checker_results)
++    static_results, _ = _checker_mutations(root)
++    rule_results, checker_count = _rule_deletion_mutations(root)
++    results.extend(rule_results)
+     results.extend(_trust_mutations())
+     results.extend(_certificate_mutations())
+     results.extend(_trace_mutations(root))
+@@ -223,7 +261,8 @@ def run_campaign(root: Path) -> CampaignReport:
+     model = exhaustive_model_check(4)
+     results.append(
+         MutationResult(
+-            "FORMAL-EXHAUSTIVE-STATE-SPACE", "formal-model", model["runs"] > 0 and model["attestation_mutations"] == 5,
++            "FORMAL-EXHAUSTIVE-STATE-SPACE", "formal-model",
++            model["runs"] > 0 and model["attestation_mutations"] == 5 and model["engine_conformance_runs"] > 0,
+             json.dumps(model, sort_keys=True),
+         )
+     )
+@@ -232,6 +271,7 @@ def run_campaign(root: Path) -> CampaignReport:
+         registered_mutations=len(results),
+         results=results,
+         checker_coverage=checker_count,
++        static_oracle_checks=static_results,
+     )
+ 
+ 
+@@ -251,10 +291,11 @@ def main(argv: list[str] | None = None) -> int:
+     if args.json:
+         print(json.dumps(payload, indent=2, sort_keys=True))
+     else:
+-        failed = [item for item in report.results if not item.rejected]
++        failed = [item for item in report.results + report.static_oracle_checks if not item.rejected]
+         print(
+             f"validator assurance campaign: {len(report.results) - len(failed)}/{len(report.results)} mutations rejected; "
+-            f"legacy checker coverage={report.checker_coverage}"
++            f"rule-deletion checker coverage={report.checker_coverage}; "
++            f"{len(report.static_oracle_checks)} static oracle checks reported separately"
+         )
+         for item in failed:
+             print(f"[FAIL] {item.mutation_id} via {item.detector}: {item.detail}")
+diff --git a/tests/test_validation_campaign_evidence.py b/tests/test_validation_campaign_evidence.py
+new file mode 100644
+index 0000000..9ac9661
+--- /dev/null
++++ b/tests/test_validation_campaign_evidence.py
+@@ -0,0 +1,61 @@
++"""The validator assurance campaign counts only evidence-bearing mutants and binds the model to the engine."""
++from __future__ import annotations
++
++import sys
++import unittest
++from pathlib import Path
++from unittest import mock
++
++ROOT = Path(__file__).resolve().parents[1]
++if str(ROOT) not in sys.path:
++    sys.path.insert(0, str(ROOT))
++
++from far_validation import formal_model, mutations  # noqa: E402
++from far_validation.engine import ValidationEngine  # noqa: E402
++from far_validation.mutations import MutationResult  # noqa: E402
++
++
++class EngineConformanceTest(unittest.TestCase):
++    def test_every_small_case_runs_on_the_real_engine(self):
++        self.assertEqual(2 + 2 * 4 + 8 * 8, formal_model.engine_conformance(3))
++
++    def test_engine_divergence_from_the_model_is_detected(self):
++        original = ValidationEngine.run
++
++        def never_blocks(self, *args, **kwargs):
++            summary = original(self, *args, **kwargs)
++            for result in summary.results:
++                if result.status == "blocked_by_root_failure":
++                    result.status = "passed"
++            return summary
++
++        with mock.patch.object(ValidationEngine, "run", never_blocks):
++            with self.assertRaisesRegex(AssertionError, "engine diverges from model"):
++                formal_model.engine_conformance(2)
++
++
++class CampaignCompositionTest(unittest.TestCase):
++    def campaign(self, rule_rejected=True, static_rejected=True):
++        rule = ([MutationResult("RULE-x-L1", "rule-deletion", rule_rejected)], 1)
++        static = ([MutationResult("ORACLE-x-empty", "independent-oracle", static_rejected)], 1)
++        with mock.patch.object(mutations, "_rule_deletion_mutations", return_value=rule), \
++                mock.patch.object(mutations, "_checker_mutations", return_value=static), \
++                mock.patch.object(mutations, "exhaustive_model_check", return_value={"runs": 1, "attestation_mutations": 5, "engine_conformance_runs": 1}):
++            return mutations.run_campaign(ROOT)
++
++    def test_static_oracle_texts_are_not_counted_as_mutations(self):
++        report = self.campaign()
++        self.assertTrue(report.successful)
++        self.assertNotIn("independent-oracle", {item.detector for item in report.results})
++        self.assertEqual(["ORACLE-x-empty"], [item.mutation_id for item in report.static_oracle_checks])
++        self.assertIn("rule-deletion", {item.detector for item in report.results})
++
++    def test_surviving_rule_deletion_fails_the_campaign(self):
++        self.assertFalse(self.campaign(rule_rejected=False).successful)
++
++    def test_static_oracle_failure_still_fails_the_campaign(self):
++        self.assertFalse(self.campaign(static_rejected=False).successful)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/validation_bootstrap/assurance-lock.json b/validation_bootstrap/assurance-lock.json
+index 6b00e68..d415c79 100644
+--- a/validation_bootstrap/assurance-lock.json
++++ b/validation_bootstrap/assurance-lock.json
+@@ -10,10 +10,10 @@
+     "far_validation/__main__.py": "0cc78d06ee9221ab165d0f2ff804b5180cad62c72b9fcb448c0e4b875314b36e",
+     "far_validation/assured_engine.py": "3daddc9bd13af064f27f624e731c65d483b57c4936c0e27d7b1dcc83a537666d",
+     "far_validation/certificate.py": "3b289c6f92f8d339d9b56b937bd0101af4ab3c815d24b0d7bce97194cf51ff76",
+-    "far_validation/formal_model.py": "52e6c8734fd5830233e00f2a5d94f1bc1f1aa33eeae91c9e9b348b9ced6b0f9e",
++    "far_validation/formal_model.py": "70126ea6c9466da37402ca052e4b5d368ad92095a371896d9b017ef9cabe69e1",
+     "far_validation/manifest.py": "097d4b1ac252dd8c5c505ef1fcd4b5b8e7099f411142762bfb46dbe23d67a9dd",
+     "far_validation/model.py": "a7dd1281cb6fc3e2ec9a9d9ef77bb005e26a6c412daa513edd9adc710c2d40e7",
+-    "far_validation/mutations.py": "e626148264d9fb0101f4f1229fea3728efa78f596566645e6ea48b7bd59f04b8",
++    "far_validation/mutations.py": "cd63b1d6141ac7ec780699cf8f14fb497a7412f7719e56ed67d90daf78f37760",
+     "far_validation/oracle.py": "5e3a5652323f715d8370ef2e03cb28821e2dd84b5359e29389e5ed6dec485800",
+     "far_validation/tracing.py": "3cd16ac267cc450d93db7a0939621b2ba71473fac42ca3507613c59153423830",
+     "far_validation/trust.py": "9be0833e8d30f8245317601efc8637b1f7d9989556752f3554dba140276cd07a",
