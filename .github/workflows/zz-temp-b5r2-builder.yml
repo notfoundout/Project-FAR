@@ -6,7 +6,7 @@ on:
       - bootstrap/agepony-repin
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   reconstruct:
@@ -14,7 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     steps:
-      - name: Reconstruct, validate, and freeze clean three-commit bootstrap
+      - name: Prepare authenticated publisher checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+          path: publisher
+
+      - name: Reconstruct, validate, freeze, and publish clean three-commit bootstrap
         shell: bash
         env:
           BASE_SHA: 7fb4816e4aa53aed749b7008b46ba9393d3d29b2
@@ -129,6 +136,12 @@ jobs:
                   if p.name in {'SHA256SUMS','exit-code.txt'} or not p.is_file(): continue
                   f.write(f"{hashlib.sha256(p.read_bytes()).hexdigest()}  {p.name}\n")
           PY
+
+          PUB="$GITHUB_WORKSPACE/publisher"
+          git -C "$PUB" remote add reconstructed /tmp/far
+          git -C "$PUB" fetch reconstructed "$PIN"
+          git -C "$PUB" checkout -B bootstrap/b5r2-final FETCH_HEAD
+          git -C "$PUB" push origin bootstrap/b5r2-final
 
       - name: Upload bootstrap reconstruction record
         if: always()
