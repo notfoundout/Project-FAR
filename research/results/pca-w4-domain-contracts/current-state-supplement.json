@@ -38,16 +38,16 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "b65be704c104b21f3ab65d8c1adf518310140a204b06fd9554f540c1d57e263c",
+      "current_sha256": "baa074872d392b2e26529879b5d929d033891c58d655f9b31bbb353b2dd97936",
       "class": "governance_register",
-      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. This is a governance-state update only; no W4 input, computation, result, claim boundary, or assurance dimension changed. The 2026-09 root-of-trust audit recorded LIM-045's supersession by candidate EFR-R2 amendment v1.2 and added LIM-047 through LIM-053 for residual findings it could not resolve in-branch."
+      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. This is a governance-state update only; no W4 input, computation, result, claim boundary, or assurance dimension changed. The 2026-09 root-of-trust audit recorded LIM-045's supersession by candidate EFR-R2 amendment v1.2 and added LIM-047 through LIM-053 for residual findings it could not resolve in-branch. It also added LIM-054 and LIM-055."
     },
     {
       "path": "docs/project-status.md",
       "executed_sha256": "3ed5913f16e006784e2a9234b229e0f167ce58818b10464f9588622ca3170666",
-      "current_sha256": "07335c6223fb25a1ecca518a3a8c434ef381e10c48124a0d4a86f1b578826c55",
+      "current_sha256": "35f3dd40fe22b0b8fcd67f3deee6e0fa7efd4d17a9c393fe5a3f4a13fcb8337a",
       "class": "documentation_surface",
-      "reason": "Registered the accepted governed post-evidence closure correction and the additive epistemic-assurance contracts. No W4 claim, boundary, input, computation, or result changed."
+      "reason": "Registered the accepted governed post-evidence closure correction and the additive epistemic-assurance contracts. No W4 claim, boundary, input, computation, or result changed. The 2026-09 root-of-trust audit qualified the W2 FORMALIZED statement with LIM-049/LIM-050 and added a pointer to its non-authoritative audit record; no campaign claim, boundary, input, computation, or recorded result changed."
     },
     {
       "path": "tests/test_pca_w4_domain_contracts.py",

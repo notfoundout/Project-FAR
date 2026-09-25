@@ -147,6 +147,27 @@ class InvestigationExecutionClosureTests(unittest.TestCase):
                 errors,
             )
 
+    def test_pass_spelling_variants_cannot_evade_the_closure_gate(self) -> None:
+        """Whitespace or case variants of `pass` were not recognised as PASS, skipping every PASS check."""
+        for spelling in ("PASS ", " pass", "Passed\t"):
+            with self.subTest(result=spelling), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                manifest, evidence_path = self._fixture()
+                manifest["result"] = spelling
+                path = self._write_fixture(root, manifest, evidence_path)
+                self.assertIn(
+                    f"VI-900: PASS requires evidence_closure contract {CLOSURE_CONTRACT}",
+                    validate_manifest(path, root, manifest_results={}),
+                )
+
+    def test_non_string_result_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            manifest, evidence_path = self._fixture()
+            manifest["result"] = True
+            path = self._write_fixture(root, manifest, evidence_path)
+            self.assertIn("VI-900: result must be a string, got bool", validate_manifest(path, root, manifest_results={}))
+
     def test_future_pass_without_closure_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

@@ -69,7 +69,7 @@ Status vocabulary:
 | R8 | W6: "blob pins prevent the schema-only and FAR-semantic lanes from silently changing after freeze." | 3 | The checker comment. | Git history. | Validator blob at protocol base `2cecf2e` vs `HEAD`. | The validator that runs the schema-only lane was never pinned and changed 4 times after the freeze. | Corrected the comment. The executed verifier bytes are preserved and W6 recomputes from them. | — | FALSIFIED (claim) |
 | R9 | W6 result: schema-only 0/6, FAR audit 6/6, clean 6/6, oracle 12/12. | 3 | W6 checker; table oracle. | Own mutation; exact-rational equality; three validators. | Reproduced under the protocol-base, current, and upstream validators. | None. The result is fixed by construction (as the existing calibration audit states). | — | Not empirical utility. | ESTABLISHED at scope (a conformance result) |
 | R10 | W4: six lossy collisions and six repaired factorizations. | 3 | W4 native recomputers. | Hand derivation of all 12 records. | — | None. These are two-case textbook examples. | — | Not open-domain evidence. | ESTABLISHED at scope |
-| R11 | FAR-CORE-014 MLL bridge "end to end … without adding a narrative premise". | 0 | Ledger `FORMALIZED`; axiom audit. | Reading the Lean statements. | Compared the theorem types at `FARCoreV11SSS.lean:99` and `:366`. | `bounded_projected_decoder_failure` restated the summary lemma. The witness facts were discarded (`have _`), yet they changed the axiom fingerprint. | Added `summaries_match_mll_witnesses` and `mll_projected_decoder_failure`; corrected the docstring. | Kernel acceptance of the new theorems: see §6. | FALSIFIED (wording) → repaired pending CI |
+| R11 | FAR-CORE-014 MLL bridge "end to end … without adding a narrative premise". | 0 | Ledger `FORMALIZED`; axiom audit. | Reading the Lean statements. | Compared the theorem types at `FARCoreV11SSS.lean:99` and `:366`. | `bounded_projected_decoder_failure` restated the summary lemma. The witness facts were discarded (`have _`), yet they changed the axiom fingerprint. | Added `summaries_match_mll_witnesses` and `mll_projected_decoder_failure`; corrected the docstring. | Kernel-checked in CI run `36149124911` (§6). | FALSIFIED (wording) → repaired |
 | R12 | "14/14 FORMALIZED" means the prose claims are mechanized. | 0 | Formalization ledger; checker. | Reading statements against the prose. | — | Counterparts state less than the prose for 006, 007, 008, 009, 010, 012, 013 (LIM-049). The checker requires all 14 to be `FORMALIZED` and matches declarations by name only (LIM-050). | Recorded. | Label semantics. | BOUNDED |
 | R13 | `python tools/run_tests.py` runs every test. | 0 | Runner rejects zero-test runs. | AST scan. | Ran the 38 uncollected functions. | 38 module-level `test_*` functions were never run. One failed: its golden output embedded `/workspace/Project-FAR`. | The runner collects them (`tmp_path` supported, other fixtures fail closed). The golden output is now path-independent. | — | FALSIFIED → repaired |
 | R14 | The required merge gate cannot pass when validation fails. | 0 | Protected `merge-authority`. | GitHub documentation on required checks. | Workflow reading. | `merge-authority` `needs:` a job with no `if:`. An upstream failure makes it *skipped*, which counts as passing. | **Not applied** — protected artifact (§5). | LIM-047 | FALSIFIED; open |
@@ -77,6 +77,8 @@ Status vocabulary:
 | R16 | `sorry` cannot enter the Lean formalization unnoticed. | 0 | Line-start regex; axiom audit. | Fault injection (E5). | An inline `by sorry` in `FARCore.lean`. | Undetected by every Python check. Plain `lean` exits 0 on `sorry`. | Comment-aware token scan (tested on 12 cases); the W2 workflow now fails on a `sorry` warning. | `lean.yml` is protected (LIM-047). | FALSIFIED → repaired (partly) |
 | R17 | `far-epistemic/1.0` Brier and log scoring. | 4 | Unit tests. | `Fraction` and `math.log`. | 40018 cases. | None. | — | — | ESTABLISHED |
 | R18 | Generated indexes, inventories, and exports are current. | 0 | Generator `--check` modes. | Regenerated in a clean clone. | — | None. | — | — | ESTABLISHED |
+| R19 | A new execution manifest declaring `result: pass` fails closed without FAR-EVIDENCE-CLOSURE-1.0 evidence. | 0 | Closure tests. | Fault injection. | `PASS `, ` pass`, `Passed\t`, and a YAML boolean. | Whitespace variants skipped every PASS check; the investigation index shows the result verbatim. | Result comparison strips whitespace and ignores case; non-string results are rejected. | No closed result vocabulary (LIM-055). | FALSIFIED → repaired |
+| R20 | Other JSON intakes (far-ir/1.0 parser, Socratic records, `far-evidence`, commercial package). | 1 | — | RFC 8259; YAML 1.2 (unique keys). | Duplicate keys; `NaN`. | All accepted them last-wins; PyYAML also overwrote duplicate keys. | The far-ir/1.0 JSON and YAML parser, the Socratic loader, and `far-evidence` are now strict. | Commercial package and far-ir/2.1 intake (LIM-054). | FALSIFIED → repaired (partly) |
 
 ## 4. Repairs and their blast radius
 
@@ -140,6 +142,17 @@ The v1.1 amendment binds the exact bytes of both specifications. The reference-v
 - **Assurance lock.** It now covers the engine base modules. Tampering with `engine.py` fails the bootstrap.
 - **Documentation.** `docs/architecture/validator-assurance-hardening.md` no longer says the Python model checker corroborates the executable engine. It checks a separate abstraction.
 
+### 4.7 Evidence-closure gate and other intakes (R19, R20)
+
+- **Closure gate.** `tools/check_investigation_execution.py` normalizes `result` and rejects non-string values. The same `strict intake` pattern found in the far-ir/2.0 verifier also affected three more loaders:
+  - the far-ir/1.0 parser (JSON, and YAML through a unique-key loader);
+  - the Socratic-extension loader;
+  - the `far-evidence` package reader.
+
+  All three now reject duplicate keys and `NaN`/`Infinity`.
+- **Regression.** Tests in `tests/test_investigation_execution_closure.py`, `tests/mechanization/test_parser.py`, `tests/test_socratic_epistemic_extensions.py`, and `tests/test_compare_adjudication.py`. Each fails against the pre-repair code.
+- **Unchanged.** The released commercial package and the W5-frozen `far-ir/2.1` intake were left as they are (LIM-054).
+
 ## 5. Protected repairs not applied (maintainer action required)
 
 `validation_bootstrap/assurance-lock.json` protects 31 files. A change may not authorize its own repin: authorizations are read only from `validation/test-weakening-waivers.json` in the comparison base. This audit therefore did not change any protected file.
@@ -201,14 +214,23 @@ Pipe each `lean` invocation through `tee` under `set -o pipefail`. Fail if the o
 
 ## 6. FAR-CORE-014 bridge: Lean status
 
-The new theorems are:
+Two theorems were added:
 
-- `FARCoreV11.SSS.MLL.summaries_match_mll_witnesses`;
-- `FARCoreV11.SSS.MLL.mll_projected_decoder_failure`.
+- `FARCoreV11.SSS.MLL.summaries_match_mll_witnesses`: each Boolean summary field agrees with the proved MLL property of its sequent.
+- `FARCoreV11.SSS.MLL.mll_projected_decoder_failure`: no uniform monotone decoder applied to the projected profiles predicts `Derivable` correctly for both `sOr` and `sAnd`.
 
-They are proved only from the existing witness lemmas, `rfl`, and `decide` on closed Boolean facts. Their expected kernel axiom sets, `{Quot.sound, propext}`, are registered in the W2 axiom contract.
+Their proofs use only the existing witness lemmas, `rfl`, and `decide` on closed Boolean facts.
 
-**Kernel status: pending the `far-core-v11-formalization.yml` run on this branch.** No local Lean toolchain was available. Until that run passes, the wording "end to end" in `docs/project-status.md` and `docs/governance/pca-w2-formalization-status-v1.0.md` should be read with LIM-049.
+**Kernel status: compiled and axiom-audited in CI.** No local Lean toolchain was available, so the repository's `far-core-v11-formalization.yml` was dispatched on this branch. Run `36149124911`, job `108117638464`, commit `a4c359f2`:
+
+- Lean `v4.19.0` compiled all five W2 modules;
+- no `declaration uses 'sorry'` warning was emitted;
+- the runtime `#print axioms` output was `[propext, Quot.sound]` for both new theorems, matching the registered contract;
+- the exact-axiom check and alignment tests passed.
+
+That was a `workflow_dispatch` run, which does not satisfy a required check on a pull request.
+
+With these theorems, the W2 status wording ("the witness proofs compose with the decoder theorem … without … adding a narrative premise") is true for the first time. The correction note in the W2 status document records that it was not true when first written.
 
 ## 7. Fault-injection experiments
 
@@ -223,6 +245,8 @@ They are proved only from the existing witness lemmas, `rfl`, and `decide` on cl
 | F7 | Remove `research.theorem-target` from `pr-full` | a test fails | profile-completeness failure |
 | F8 | Append bytes to `far_validation/engine.py` | bootstrap fails | `FAR-VAL-BOOT-001` |
 | F9 | Stage failing inside `tee` (maintenance workflow logic) | exit ≠ 0 | exit 1, summary still written |
+| F10 | Original `check_investigation_execution.py` with `PASS ` / ` pass` / `Passed\t` / `true` | a test fails | 4 failures |
+| F11 | Original parser, Socratic loader, and `far-evidence` reader with duplicate keys and `NaN` | tests fail | each fails |
 
 The infrastructure audit also reproduced the pre-repair failures:
 
@@ -247,7 +271,7 @@ Findings where the evidence does not support the exact word:
 
 | Wording | Location | Finding |
 |---|---|---|
-| "end to end", "without adding a narrative premise" (FAR-CORE-014) | project status; W2 status | False until the bridge theorems of §6 compile. |
+| "end to end", "without adding a narrative premise" (FAR-CORE-014) | project status; W2 status | False as originally written; true since the §6 bridge theorems compiled. A dated correction is recorded in the W2 status document. |
 | "prevents … lanes from silently changing after freeze" | W6 checker | False; corrected. |
 | `machine_oracle_independent_of_far_verifier: true` | W6 results (protected) | Procedurally independent only. It shares canonical-JSON equality and table parsing. Independent reproduction with a different equality agrees. |
 | "corroborates the executable state-machine design" | validator-assurance doc | The model checker never executes the engine; corrected. |
@@ -258,7 +282,7 @@ Findings where the evidence does not support the exact word:
 
 - It does not establish novelty, empirical utility, or external validity.
 - It does not show the repaired verifiers are correct beyond the audited defects.
-- It does not re-derive Lean kernel acceptance.
+- It does not re-derive Lean kernel acceptance locally. The new theorems were checked only through the repository's CI workflow.
 - It does not supply the live branch-protection settings.
 
 The oracles are Project-FAR-internal, and their agreement is not external replication.

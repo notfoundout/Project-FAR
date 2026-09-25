@@ -40,7 +40,7 @@ The sealed staged review completed the workstream named `PCA-W1-INDEPENDENT-REVI
 
 FAR-CORE-014 now includes the bounded unit-free MLL witness bridge end to end: syntax/sequents, resource-splitting derivability, atom balance, the named `S_or` and `S_and` witness profiles, exhaustive monotone decoder classification, and bounded projected-decoder failure. The runtime `#print axioms` audit pins exact transitive kernel dependencies rather than treating tactic success as premise-free proof.
 
-W2 changes only mechanization assurance. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness.
+W2 changes only mechanization assurance. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness. `FORMALIZED` means a kernel-checked counterpart exists under the formalization ledger's recorded premises and conclusions. For several claims those counterparts state less than the prose ([`LIM-049`](governance/limitations-register.md)), and the alignment checker asserts rather than measures the label ([`LIM-050`](governance/limitations-register.md)).
 
 ## W3 contract-schema disposition
 
@@ -105,6 +105,8 @@ This proves only the registered bounded material-loss-detection result. The corp
 - independent assurance remains I1; external empirical utility and commercial value are unestablished.
 
 Its recorded overall description is that Project FAR is a rigorously engineered contract-relative audit and representation methodology whose core mathematics is largely composed of standard or elementary structures, while the value and novelty of the integrated audit discipline remain external empirical and prior-art questions.
+
+The [root-of-trust audit 2026-09](audits/root-of-trust-audit-2026-09.md) is a non-authoritative Research record that changes no claim status. It rechecked the validation substrate and reference verifiers against independent oracles. It repaired a `far-ir/2.0` quotient check that could certify a split partition as the exact quotient, non-JSON acceptance, a hash-seed-dependent `far-ir/2.1` diagnostic order, and several validation-gate defects. The executed W5/W6 verifier bytes are preserved as frozen inputs, and candidate EFR-R2 amendment v1.2 binds the corrected specifications. Protected merge-gate repairs await maintainer authorization ([`LIM-047`](governance/limitations-register.md)).
 
 ## Current phase
 

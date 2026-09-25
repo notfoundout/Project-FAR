@@ -219,3 +219,18 @@ class SocraticEpistemicExtensionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SocraticStrictIntakeTests(unittest.TestCase):
+    """A repeated key or NaN makes a record's meaning parser-dependent, so intake rejects it."""
+
+    def test_duplicate_keys_and_non_json_constants_are_unreadable(self) -> None:
+        import tempfile
+
+        from mechanization.far_mechanization.socratic_epistemic import load_and_validate
+
+        for name, text in (("duplicate", '{"record_type": "A", "record_type": "B"}'), ("nan", '{"value": NaN}')):
+            with self.subTest(variant=name), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "record.json"
+                path.write_text(text, encoding="utf-8")
+                self.assertEqual([d.code for d in load_and_validate(path).diagnostics], ["UNREADABLE_RECORD"])

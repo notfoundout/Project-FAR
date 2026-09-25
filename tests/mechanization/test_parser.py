@@ -56,6 +56,16 @@ class ParserTests(unittest.TestCase):
         self.assertEqual(y.diagnostics[0].code, DiagnosticCode.MALFORMED_YAML)
         self.assertIsNotNone(y.diagnostics[0].source.line)
 
+    def test_duplicate_keys_and_non_json_constants_are_malformed(self):
+        """A repeated key or NaN makes a document's meaning parser-dependent (RFC 8259, YAML 1.2)."""
+        base = EXAMPLE_JSON.read_text()
+        duplicate = base.replace('"format_version"', '"format_version": "far-ir/0.0", "format_version"', 1)
+        self.assertNotEqual(duplicate, base)
+        self.assertEqual(parse_json_text(duplicate).diagnostics[0].code, DiagnosticCode.MALFORMED_JSON)
+        self.assertEqual(parse_json_text('{"a": NaN}').diagnostics[0].code, DiagnosticCode.MALFORMED_JSON)
+        yaml_duplicate = EXAMPLE_YAML.read_text() + "format_version: far-ir/1.0\n"
+        self.assertEqual(parse_yaml_text(yaml_duplicate).diagnostics[0].code, DiagnosticCode.MALFORMED_YAML)
+
     def test_non_object_roots(self):
         self.assertEqual(parse_json_text((INVALID / "root-scalar.json").read_text()).diagnostics[0].code, DiagnosticCode.NON_OBJECT_ROOT)
         self.assertEqual(parse_yaml_text((INVALID / "root-sequence.yaml").read_text()).diagnostics[0].code, DiagnosticCode.NON_OBJECT_ROOT)
