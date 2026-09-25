@@ -40,6 +40,10 @@ These fields are contract parameters. Their presence in a schema is not evidence
 
 When `source_domain.kind = finite_explicit`, source, required-behavior, and representation tables are `EXPLICIT`, and an evidence object declares `CHECKED_FINITE_EXPLICIT`, the verifier recomputes the asserted property.
 
+Evidence declared `DECLARED_UNCHECKED` is not recomputed. Validation success for such a record certifies only that the record is well formed; its `outcome` remains an unverified declaration, not a checked result.
+
+Two table values are equal exactly when their canonical JSON serializations (§5) are identical. Equality is therefore typed and textual: `1`, `1.0`, `true`, and `"1"` are four distinct values, and strings are compared by code point without Unicode normalization.
+
 ### 3.1 Factorization
 
 For every listed case `x`, the verifier requires a functional decoder table and checks
@@ -62,6 +66,8 @@ A checked quotient witness must partition the explicit case domain. Every class 
 
 `x ~ y` exactly when `beta(x) = beta(y)`.
 
+The classes are the declared `classes` entries, identified by position. Class identifiers must be unique: a repeated identifier is rejected rather than being read as one merged class, because merging would let a split partition be certified as the exact quotient. Overlapping classes are not a partition.
+
 This certifies the quotient represented by the fixture as the finite explicit observational quotient for that exact recorded beta table. It does not establish a domain-independent primitive architecture.
 
 ## 4. `Unknown` is a value, not missing data
@@ -72,7 +78,9 @@ This prevents migration, omitted fields, or inability to decide an application q
 
 ## 5. Freeze semantics
 
-A `FROZEN` record contains an RFC3339 freeze time and `contract_sha256`. The hash is SHA-256 of canonical JSON for the `contract` object only. This avoids self-reference while binding every contract parameter that controls the comparison. Changing a frame, target class, observation context, transformation set, source table, behavior table, representation table, or approximation declaration invalidates the freeze hash.
+A `FROZEN` record contains an RFC3339 freeze time and `contract_sha256`. The hash is SHA-256 of canonical JSON for the `contract` object only.
+
+Canonical JSON here is exactly the UTF-8 encoding of Python `json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)` applied to the parsed value: object keys sorted by code point, no insignificant whitespace, non-ASCII characters emitted literally rather than `\u`-escaped, numbers written without a fraction or exponent kept as exact decimal integers, and numbers written with a fraction or exponent parsed as IEEE-754 doubles and emitted in Python's shortest round-trip `repr` form (so `1.0` stays `1.0` and `1e2` becomes `100.0`). It is not RFC 8785 (JCS), whose number and escaping rules differ. This avoids self-reference while binding every contract parameter that controls the comparison. Changing a frame, target class, observation context, transformation set, source table, behavior table, representation table, or approximation declaration invalidates the freeze hash.
 
 Provenance source hashes are independent inputs and do not substitute for the contract freeze.
 
@@ -98,14 +106,16 @@ Conformance success means the software enforces these encoded W3 semantics. It i
 
 A rejected record carries one or more diagnostics. Each diagnostic has a `code`, a human-readable `message`, and an optional JSON `path`. **The code is normative and the message is not.** An independent implementation of this specification must emit the same diagnostic code sequence, including multiplicity and order, for the same record; message wording and path formatting are implementation detail.
 
-The declaration authority is `FAR_IR_2_0_DIAGNOSTIC_CODES` in [`mechanization/far_mechanization/diagnostic_vocabulary.py`](../../mechanization/far_mechanization/diagnostic_vocabulary.py). It is declared there rather than in the verifier because [`contract_v2.py`](../../mechanization/far_mechanization/contract_v2.py) is pinned by git blob identity as the preregistered `PCA-W6` protocol base and must not change after that freeze. This table, that declaration, and the verifier's actual emission sites are held equal by `tests/test_far_contract_diagnostic_codes.py`.
+The declaration authority is `FAR_IR_2_0_DIAGNOSTIC_CODES` in [`mechanization/far_mechanization/diagnostic_vocabulary.py`](../../mechanization/far_mechanization/diagnostic_vocabulary.py). This table, that declaration, and the verifier's actual emission sites are held equal by `tests/test_far_contract_diagnostic_codes.py`.
+
+The exact bytes of [`contract_v2.py`](../../mechanization/far_mechanization/contract_v2.py) executed as the preregistered `PCA-W6` protocol base are preserved, git-blob-verified, at [`research/results/pca-w6-empirical-audit-utility/frozen-inputs/contract_v2.py`](../../research/results/pca-w6-empirical-audit-utility/frozen-inputs/contract_v2.py), and W6 is recomputed from those bytes. The live verifier was repaired after that freeze (`DUPLICATE_QUOTIENT_CLASS`, overlap as non-partition, `FREEZE_TIME_INVALID`, strict JSON intake); the W6 checker also requires the repaired verifier to reproduce every W6 item outcome.
 
 ### 9.1 Document intake and schema
 
 | Code | Emitted when |
 |---|---|
-| `UNREADABLE_CONTRACT` | The file cannot be read or is not well-formed JSON. |
-| `SCHEMA_CONSTRAINT_VIOLATION` | The document violates `far-contract-v2.schema.json`. Emitted once per schema error, ordered by JSON path then message. |
+| `UNREADABLE_CONTRACT` | The file cannot be read or is not RFC 8259 JSON. This includes the non-JSON constants `NaN`, `Infinity`, and `-Infinity`, and any object with a repeated member name, whose meaning RFC 8259 leaves parser-dependent. |
+| `SCHEMA_CONSTRAINT_VIOLATION` | The document violates `far-contract-v2.schema.json`, or an in-memory document contains a non-finite number, which no JSON document can contain. Emitted once per schema error, ordered by JSON path then message. |
 
 ### 9.2 Finite-explicit check preconditions
 
@@ -138,8 +148,9 @@ The declaration authority is `FAR_IR_2_0_DIAGNOSTIC_CODES` in [`mechanization/fa
 
 | Code | Emitted when |
 |---|---|
+| `DUPLICATE_QUOTIENT_CLASS` | A declared class reuses the identifier of an earlier declared class. |
 | `QUOTIENT_OVERLAP` | A case occurs in more than one declared class. |
-| `QUOTIENT_NOT_PARTITION` | The declared classes do not partition `source_domain`. |
+| `QUOTIENT_NOT_PARTITION` | The declared classes do not partition `source_domain`: some case is missing, some listed case is not in the domain, or classes overlap. |
 | `QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT` | Two cases share a class but differ in required behavior. |
 | `QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL` | `claims_exact_observational_quotient` is true and the class relation differs from the beta-kernel on some pair. |
 
@@ -154,6 +165,7 @@ The declaration authority is `FAR_IR_2_0_DIAGNOSTIC_CODES` in [`mechanization/fa
 | `CHECKED_EVIDENCE_OUTCOME_MISMATCH` | Checked evidence carries an outcome other than `REFUTED` for collision evidence or `PROVED` for any other kind. |
 | `DUPLICATE_OBSERVATION_CONTEXT` | `observation_contexts` contains a repeated identifier. |
 | `DUPLICATE_TRANSFORMATION` | `admitted_transformations` contains a repeated identifier. |
+| `FREEZE_TIME_INVALID` | Freeze status is `FROZEN` and `frozen_at` is not an RFC3339 date-time (see §5). JSON Schema `format` is an annotation, so this is checked here. |
 | `FREEZE_HASH_MISMATCH` | Freeze status is `FROZEN` and `contract_sha256` does not equal SHA-256 of the canonical `contract` object (see §5). |
 
 ### 9.7 Diagnostics are an ordered sequence
@@ -177,7 +189,8 @@ The verifier runs three stages over one shared diagnostic sequence. Suppression 
 5. `CHECKED_EVIDENCE_OUTCOME_MISMATCH`
 6. `DUPLICATE_OBSERVATION_CONTEXT`
 7. `DUPLICATE_TRANSFORMATION`
-8. `FREEZE_HASH_MISMATCH`
+8. `FREEZE_TIME_INVALID`
+9. `FREEZE_HASH_MISMATCH`
 
 **Stage 3 — at most one claim-specific check.** Selected by `report.evidence.kind`: `factorization` → §9.3, `collision` → §9.4, `quotient` → §9.5. Any other kind runs no claim-specific check. The selected check returns immediately, adding nothing, unless `report.evidence.status` is `CHECKED_FINITE_EXPLICIT`.
 
@@ -199,7 +212,7 @@ This is the single most important rule for reproducing the verifier, and the eas
 
 **Within §9.4 collision**: `COLLISION_CASE_UNKNOWN` is appended and the check stops immediately. Otherwise `COLLISION_REQUIRES_DISTINCT_CASES`, `COLLISION_REPRESENTATION_DIFFERS`, and `COLLISION_BEHAVIOR_AGREES` are each appended if they apply, in that order.
 
-**Within §9.5 quotient**: `QUOTIENT_OVERLAP` per repeated case in declared class order; then `QUOTIENT_NOT_PARTITION`, which stops the check immediately; otherwise, over ordered pairs of cases in `source_domain.cases` order, `QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT` and then `QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL` per offending pair.
+**Within §9.5 quotient**: for each declared class in order, `DUPLICATE_QUOTIENT_CLASS` if its identifier repeats an earlier class identifier, then `QUOTIENT_OVERLAP` for each of its cases already listed in an earlier class; then `QUOTIENT_NOT_PARTITION` if coverage differs from `source_domain` or any overlap occurred, which stops the check immediately; otherwise, for every ordered pair `(x, y)` with `x` iterating over `source_domain.cases` in order as the outer loop and `y` likewise as the inner loop (so each offending unordered pair is visited twice), `QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT` and then `QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL` if they apply to that pair.
 
 `tests/test_far_contract_diagnostic_codes.py` pins these rules against the frozen verifier by asserting exact diagnostic sequences, including the cross-stage gate and code multiplicity.
 

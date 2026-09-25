@@ -37,6 +37,11 @@ jobs:
             LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSS.olean mechanization/lean/FARCoreV11SSS.lean
             LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11Mutations.lean
           } 2>&1 | tee artifacts/mechanization/far-core-v11-compile.txt
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -n "declaration uses 'sorry'" artifacts/mechanization/far-core-v11-compile.txt; then
+            echo "FAR-CORE v1.1 formalization contains sorry" >&2
+            exit 1
+          fi
       - name: Upload compile diagnostics
         if: always()
         uses: actions/upload-artifact@v4

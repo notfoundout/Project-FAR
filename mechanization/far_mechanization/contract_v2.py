@@ -9,7 +9,10 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import re
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
@@ -53,7 +56,48 @@ def _load_schema() -> Mapping[str, Any]:
     return json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
 
 
+def _strict_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate object key {key!r}: RFC 8259 leaves its meaning parser-dependent")
+        result[key] = value
+    return result
+
+
+def _reject_constant(name: str) -> object:
+    raise ValueError(f"{name} is not a JSON value")
+
+
+def _non_json_numbers(value: object) -> bool:
+    if isinstance(value, float):
+        return not math.isfinite(value)
+    if isinstance(value, dict):
+        return any(_non_json_numbers(item) for item in value.values())
+    if isinstance(value, list):
+        return any(_non_json_numbers(item) for item in value)
+    return False
+
+
+RFC3339_DATE_TIME = re.compile(
+    r"\A[0-9]{4}-[0-9]{2}-[0-9]{2}[Tt][0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]+)?([Zz]|[+-][0-9]{2}:[0-9]{2})\Z"
+)
+
+
+def _is_rfc3339(value: object) -> bool:
+    if not isinstance(value, str) or not RFC3339_DATE_TIME.match(value):
+        return False
+    try:
+        datetime.fromisoformat(value[:-1] + "+00:00" if value[-1] in "Zz" else value)
+    except ValueError:
+        return False
+    return True
+
+
 def _schema_errors(document: object) -> list[ContractDiagnostic]:
+    if _non_json_numbers(document):
+        # NaN and infinities are not JSON values (RFC 8259 section 6), so no schema can admit them.
+        return [ContractDiagnostic("SCHEMA_CONSTRAINT_VIOLATION", "non-finite number is not a JSON value")]
     schema = _load_schema()
     Draft202012Validator.check_schema(schema)
     # Project FAR vendors a deliberately constrained jsonschema-compatible validator
@@ -157,17 +201,27 @@ def _check_quotient(document: Mapping[str, Any], errors: list[ContractDiagnostic
     if tables is None:
         return
     case_ids, behavior, _representation = tables
-    membership: dict[str, str] = {}
-    for cls in evidence["classes"]:
+    # Classes are the declared entries, identified by position: a repeated class id must not merge
+    # two declared classes into one (which would certify a split partition as the exact quotient).
+    membership: dict[str, int] = {}
+    class_ids: set[str] = set()
+    overlapping: set[str] = set()
+    for index, cls in enumerate(evidence["classes"]):
         class_id = str(cls["id"])
+        if class_id in class_ids:
+            errors.append(ContractDiagnostic("DUPLICATE_QUOTIENT_CLASS", f"quotient class id {class_id} is declared more than once", ("report", "evidence", "classes", index)))
+        class_ids.add(class_id)
         for case_id in cls["case_ids"]:
             case_id = str(case_id)
             if case_id in membership:
                 errors.append(ContractDiagnostic("QUOTIENT_OVERLAP", f"case {case_id} occurs in more than one quotient class"))
-            membership[case_id] = class_id
+                overlapping.add(case_id)
+            membership[case_id] = index
     expected = set(case_ids)
-    if set(membership) != expected:
-        errors.append(ContractDiagnostic("QUOTIENT_NOT_PARTITION", f"quotient classes must partition source_domain missing={sorted(expected-set(membership))} extra={sorted(set(membership)-expected)}"))
+    if set(membership) != expected or overlapping:
+        # Overlapping classes are not a partition either; pairwise class relations over them would
+        # be computed from an arbitrary assignment, so the check stops here.
+        errors.append(ContractDiagnostic("QUOTIENT_NOT_PARTITION", f"quotient classes must partition source_domain missing={sorted(expected-set(membership))} extra={sorted(set(membership)-expected)} overlapping={sorted(overlapping)}"))
         return
     for left in case_ids:
         for right in case_ids:
@@ -209,6 +263,8 @@ def _check_cross_field_contract(document: Mapping[str, Any], errors: list[Contra
 
     freeze = document["freeze"]
     if freeze["status"] == "FROZEN":
+        if not _is_rfc3339(freeze["frozen_at"]):
+            errors.append(ContractDiagnostic("FREEZE_TIME_INVALID", f"frozen_at must be an RFC3339 date-time, got {freeze['frozen_at']!r}"))
         actual = contract_sha256(contract)
         if freeze["contract_sha256"] != actual:
             errors.append(ContractDiagnostic("FREEZE_HASH_MISMATCH", f"contract_sha256 mismatch expected={actual} actual={freeze['contract_sha256']}"))
@@ -231,8 +287,12 @@ def validate_contract(document: object) -> ContractValidationResult:
 
 def load_and_validate(path: str | Path) -> ContractValidationResult:
     try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        document = json.loads(
+            Path(path).read_text(encoding="utf-8"),
+            object_pairs_hook=_strict_object,
+            parse_constant=_reject_constant,
+        )
+    except (OSError, ValueError) as exc:
         return ContractValidationResult((ContractDiagnostic("UNREADABLE_CONTRACT", str(exc)),))
     return validate_contract(document)
 

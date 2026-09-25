@@ -16,16 +16,23 @@
     {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
       "executed_sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48",
-      "current_sha256": "3c8cd0ece67f0908ff2bbc3015ca5d2ccc91222c72276efb26d91701d929b141",
+      "current_sha256": "c19d7026670625ed17619fa2930299fac08a30d7811fb4fce02b75fd7c701a31",
       "class": "specification_surface",
-      "reason": "Published the far-ir/2.1 diagnostic vocabulary, ordered-sequence semantics, and the exact gate/suppression rules, including exact sequence/multiplicity wording required by EFR-R2. Corrects a documentation gap; adds no semantics and changes no W5 computation or result. Bound for R2 by EFR-001-R2-INPUT-AMENDMENT-1.1."
+      "reason": "Published the far-ir/2.1 diagnostic vocabulary, ordered-sequence semantics, and the exact gate/suppression rules, including exact sequence/multiplicity wording required by EFR-R2. Corrects a documentation gap; adds no semantics and changes no W5 computation or result. Bound for R2 by EFR-001-R2-INPUT-AMENDMENT-1.1. The 2026-09 root-of-trust audit then specified the exact interleaved metric-axiom order and the first-occurrence loss-check order (verified against the reference implementation on 1218 records with metric-axiom failures) and records that the executed verifier's loss-check order depended on PYTHONHASHSEED; the text is bound by the candidate EFR-R2 input amendment v1.2. No W5 claim, boundary, input, computation, or recorded result changed."
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v21.py",
+      "executed_sha256": "a6814bfab91ebc2dc9f55f06161eea2fa5adcec7f7176699bfdbb7849c1ee37e",
+      "current_sha256": "d08344ada0e3540d4f189092d6dc43da92671ad62b2f4c67c5cb4f590e59b120",
+      "class": "verification_tooling",
+      "reason": "Repaired after the W5 freeze by the 2026-09 root-of-trust audit: required-behavior values in the loss checks are iterated in first-occurrence order instead of Python set order, so the relative order of METRIC_LOSS_DOMAIN_MISMATCH and LOSS_METRIC_MISMATCH no longer varies with PYTHONHASHSEED. The executed bytes are preserved byte-for-byte at research/results/pca-w5-approximation-and-cost/frozen-inputs/contract_v21.py (executed sha256 a6814bfa) and W5 is recomputed from them; the repaired verifier must reproduce every governed record's diagnostics, and its output on 4122 audit records is byte-identical to the executed verifier's. No W5 input, computation, or recorded result changed."
     },
     {
       "path": "tools/check_pca_w5_approximation_cost.py",
       "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
-      "current_sha256": "b3f38150160e66ef76ec7a66b7b135d50c79ac330d5348d18b9903d30fd6a8dc",
+      "current_sha256": "2a97525debddce8fcd41ff4b6dd5d62612692ae6c4bae25d801784cd45c86710",
       "class": "verification_tooling",
-      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes. Since the 2026-09 root-of-trust audit the executed far-ir/2.1 verifier is recomputed from its preserved frozen copy (executed digest verified) and the repaired live verifier must reproduce every governed record's diagnostics."
     }
   ]
 }

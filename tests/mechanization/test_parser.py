@@ -19,7 +19,8 @@ EXAMPLE_YAML = ROOT / "examples" / "mechanization" / "minimal-investigation.yaml
 
 class ParserTests(unittest.TestCase):
     def test_declared_schema_dependency_imports(self):
-        self.assertEqual(jsonschema.__version__, "4.22.0")
+        # The repository-local validator must not present itself as upstream jsonschema 4.22.0.
+        self.assertEqual(jsonschema.__version__, "4.22.0+far.local")
 
     def test_json_text_and_yaml_text_parse_to_equal_ir(self):
         j = parse_json_text(EXAMPLE_JSON.read_text(), "example.json")

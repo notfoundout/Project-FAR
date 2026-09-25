@@ -24,9 +24,9 @@
     {
       "path": "docs/CANONICAL_MAP.md",
       "executed_sha256": "28e17da45e4d894ed0ed4bd2622b0be5971d62264620d41c5792607fb28c58b3",
-      "current_sha256": "704c6d6b73986c7d3c1a0c290f9e644d1e1a1a6e60b2c0595c73c5e0619dcfaa",
+      "current_sha256": "6c60db1a34ff2cff9594d210ddfe328f88ffb7b8f5f8d4dc53db896a3c4ddd3e",
       "class": "documentation_surface",
-      "reason": "Registered the additive far-epistemic/1.0 application interchange, accepted evidence-closure authority, and accepted epistemic-assurance authority. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed."
+      "reason": "Registered the additive far-epistemic/1.0 application interchange, accepted evidence-closure authority, and accepted epistemic-assurance authority. No campaign claim, boundary, input, computation, recorded result, or assurance dimension changed. The 2026-09 root-of-trust audit repointed the EFR-R2 input-amendment row to the candidate amendment v1.2, keeping v1.1 as preserved history."
     },
     {
       "path": "docs/ROADMAP.md",
@@ -38,9 +38,9 @@
     {
       "path": "docs/governance/limitations-register.md",
       "executed_sha256": "3631777827c61cc7825e28e2ac09a6a188fe54fcee8a3d1492ad7246d0696bc6",
-      "current_sha256": "5f1e8d70dd5bd98080deef8c555607e6550902117ff70a1400b127f32a7761f3",
+      "current_sha256": "b65be704c104b21f3ab65d8c1adf518310140a204b06fd9554f540c1d57e263c",
       "class": "governance_register",
-      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. This is a governance-state update only; no W4 input, computation, result, claim boundary, or assurance dimension changed."
+      "reason": "Recorded LIM-046 closure after PR #481 was promoted through protected main and merge-authority succeeded on the exact reviewed head. This is a governance-state update only; no W4 input, computation, result, claim boundary, or assurance dimension changed. The 2026-09 root-of-trust audit recorded LIM-045's supersession by candidate EFR-R2 amendment v1.2 and added LIM-047 through LIM-053 for residual findings it could not resolve in-branch."
     },
     {
       "path": "docs/project-status.md",

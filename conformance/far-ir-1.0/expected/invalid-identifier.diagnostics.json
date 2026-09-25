@@ -20,7 +20,7 @@
       "end_column": null,
       "end_line": null,
       "line": null,
-      "source": "/workspace/Project-FAR/conformance/far-ir-1.0/invalid/invalid-identifier.json"
+      "source": "conformance/far-ir-1.0/invalid/invalid-identifier.json"
     }
   }
 ]

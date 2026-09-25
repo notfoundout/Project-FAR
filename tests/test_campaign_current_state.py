@@ -157,10 +157,57 @@ class CampaignManifestProvenanceTests(unittest.TestCase):
         )
 
     def test_w6_protocol_base_is_protected(self) -> None:
+        """Each protocol-base blob is protected in place or is a preserved frozen copy."""
         import tools.check_pca_w6_empirical_audit_utility as W6
 
+        frozen = set(W6.FROZEN_INPUT_COPIES.values())
         for path in W6.EXPECTED_PROTOCOL_BASE_BLOBS:
-            self.assertIn(path, W6.PROTECTED_ARTIFACTS)
+            self.assertTrue(path in W6.PROTECTED_ARTIFACTS or path in frozen, path)
+        self.assertEqual(set(W6.FROZEN_INPUT_COPIES) & set(W6.PROTECTED_ARTIFACTS), set())
+
+    def test_frozen_copy_must_preserve_executed_bytes(self) -> None:
+        """A relocated executed input fails closed if its copy is missing or not byte-identical."""
+        import tempfile
+
+        readme_digest = sha256_of(ROOT / "README.md")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "live.py").write_text("repaired\n", encoding="utf-8")
+            (root / "copy.py").write_bytes((ROOT / "README.md").read_bytes())
+            manifest = {"live.py": readme_digest}
+            supplement = root / "supplement.json"
+            supplement.write_text(json.dumps({"entries": [{
+                "path": "live.py", "executed_sha256": readme_digest,
+                "current_sha256": sha256_of(root / "live.py"), "class": "verification_tooling",
+                "reason": "repaired after execution; executed bytes preserved as a frozen copy",
+            }]}), encoding="utf-8")
+            self.assertEqual(
+                artifact_hash_errors(root, manifest, supplement, frozenset(), "TEST", {"live.py": "copy.py"}), []
+            )
+            (root / "copy.py").write_text("tampered\n", encoding="utf-8")
+            errors = artifact_hash_errors(root, manifest, supplement, frozenset(), "TEST", {"live.py": "copy.py"})
+            self.assertTrue(any("TEST_FROZEN_COPY_MISMATCH copy.py" in e for e in errors), errors)
+            (root / "copy.py").unlink()
+            errors = artifact_hash_errors(root, manifest, supplement, frozenset(), "TEST", {"live.py": "copy.py"})
+            self.assertTrue(any("TEST_FROZEN_COPY_MISSING copy.py" in e for e in errors), errors)
+            errors = artifact_hash_errors(root, manifest, supplement, {"live.py"}, "TEST", {"live.py": "copy.py"})
+            self.assertTrue(any("TEST_FROZEN_COPY_OF_PROTECTED_PATH" in e for e in errors), errors)
+            errors = artifact_hash_errors(root, manifest, supplement, frozenset(), "TEST", {"absent.py": "copy.py"})
+            self.assertTrue(any("TEST_FROZEN_COPY_NOT_IN_MANIFEST" in e for e in errors), errors)
+
+    def test_w5_recomputes_from_executed_verifier_bytes(self) -> None:
+        import tools.check_pca_w5_approximation_cost as W5
+
+        self.assertEqual(Path(W5._FROZEN.__file__).resolve(), (ROOT / W5.FROZEN_VERIFIER).resolve())
+        self.assertIs(W5.validate_contract, W5._FROZEN.validate_contract)
+        self.assertEqual(set(W5.FROZEN_INPUT_COPIES) & set(W5.PROTECTED_ARTIFACTS), set())
+
+    def test_w6_recomputes_from_executed_verifier_bytes(self) -> None:
+        import tools.check_pca_w6_empirical_audit_utility as W6
+
+        self.assertEqual(Path(W6._FROZEN.__file__).resolve(), (ROOT / W6.FROZEN_VERIFIER).resolve())
+        self.assertIs(W6.validate_contract, W6._FROZEN.validate_contract)
+        self.assertEqual(W6.current_verifier_divergence(), [])
 
     def test_undeclared_drift_fails_closed(self) -> None:
         errors = artifact_hash_errors(

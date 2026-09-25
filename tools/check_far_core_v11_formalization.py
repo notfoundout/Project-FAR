@@ -82,8 +82,39 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.summaries_match_mll_witnesses": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.mll_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
 }
-FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
+FORBIDDEN = re.compile(
+    r"(?m)^\s*(?:axiom\b|constant\b|unsafe\s+(?:def|theorem)\b)"
+    r"|(?<![A-Za-z0-9_'.])(?:sorry|admit|native_decide)(?![A-Za-z0-9_'])"
+    r"|@\[\s*(?:implemented_by|extern)\b"
+)
+
+
+def lean_code(text: str) -> str:
+    """Remove Lean comments (nested block and line comments) so a placeholder mentioned in prose
+    is not counted while `by sorry` anywhere in code is."""
+    out: list[str] = []
+    depth = 0
+    i = 0
+    while i < len(text):
+        if text.startswith("/-", i):
+            depth += 1
+            i += 2
+        elif depth and text.startswith("-/", i):
+            depth -= 1
+            i += 2
+        elif depth:
+            out.append("\n" if text[i] == "\n" else " ")
+            i += 1
+        elif text.startswith("--", i):
+            while i < len(text) and text[i] != "\n":
+                i += 1
+        else:
+            out.append(text[i])
+            i += 1
+    return "".join(out)
 DECLARATION = re.compile(
     r"(?m)^\s*(?:(?:noncomputable|protected)\s+)?"
     r"(?:def|theorem|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
@@ -195,7 +226,7 @@ def inventory(ledger: dict) -> dict:
     for path in sorted((ROOT / "mechanization/lean").glob("*.lean")):
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
-        forbidden_count += len(FORBIDDEN.findall(text))
+        forbidden_count += len(FORBIDDEN.findall(lean_code(text)))
         files.append({
             "path": relative,
             "sha256": digest(path),
