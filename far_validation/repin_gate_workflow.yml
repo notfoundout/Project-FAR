@@ -1,7 +1,7 @@
 # protected-repin-gate: template for the owner's SEPARATE gate repository (never Project-FAR).
 #
 # Copy this file unchanged to .github/workflows/protected-repin-gate.yml in the gate repository,
-# then replace the four REPLACE values. Everything else is fixed. It uses no third-party actions,
+# then replace the three REPLACE values. Everything else is fixed. It uses no third-party actions,
 # gives GITHUB_TOKEN no permissions, and hands the App key only to the step that needs it, from the
 # `far-repin-gate` environment (deployment branches: main only). Pull requests cannot trigger it.
 name: protected-repin-gate
@@ -35,11 +35,19 @@ jobs:
         run: |
           set -euo pipefail
           git init -q deploy
-          git -C deploy fetch -q --depth=1 --no-tags --no-recurse-submodules "https://github.com/$FAR_REPOSITORY.git" "$FAR_DEPLOYED_COMMIT"
+          git -C deploy fetch -q --depth=1 --no-tags --no-recurse-submodules \
+            "https://github.com/$FAR_REPOSITORY.git" \
+            "$FAR_DEPLOYED_COMMIT"
           git -C deploy -c advice.detachedHead=false checkout -q FETCH_HEAD
           test "$(git -C deploy rev-parse HEAD)" = "$FAR_DEPLOYED_COMMIT"
       - name: Run one gate cycle
         env:
           FAR_APP_PRIVATE_KEY: ${{ secrets.FAR_APP_PRIVATE_KEY }}
           FAR_MODE: ${{ inputs.mode || 'evaluate' }}
-        run: python3 deploy/far_validation/repin_gate_app.py actions --mode "$FAR_MODE"
+        run: |
+          set -euo pipefail
+          if [[ "$FAR_MODE" == "audit" ]]; then
+            python3 deploy/far_validation/repin_protection_audit.py
+          else
+            python3 deploy/far_validation/repin_gate_app.py actions --mode evaluate
+          fi
