@@ -15,6 +15,11 @@
     "far_validation/model.py": "a7dd1281cb6fc3e2ec9a9d9ef77bb005e26a6c412daa513edd9adc710c2d40e7",
     "far_validation/mutations.py": "e626148264d9fb0101f4f1229fea3728efa78f596566645e6ea48b7bd59f04b8",
     "far_validation/oracle.py": "5e3a5652323f715d8370ef2e03cb28821e2dd84b5359e29389e5ed6dec485800",
+    "far_validation/repin.py": "e56325cdcbb21786285674909c5885b9593bf3d8438cd741285e9cc7073f2870",
+    "far_validation/repin_agepony_acceptance.py": "c26d840a5b9c2bae6bc2d866daab3326e82de3a53ec803bd3ea92b5552410952",
+    "far_validation/repin_gate_app.py": "08313cfa894998667736690878229ebc1dc4008bb2a150754065ee72677c8350",
+    "far_validation/repin_gate_workflow.yml": "d5d9fe070307e9d8be4c08bb58fb9829553cc4b125dfaa31f567fc11430b6110",
+    "far_validation/repin_signature.py": "5832c1e076fa4203bc553f3f3012c7f34680cfb29f1eed3e78c1e1b440158b63",
     "far_validation/tracing.py": "3cd16ac267cc450d93db7a0939621b2ba71473fac42ca3507613c59153423830",
     "far_validation/trust.py": "9be0833e8d30f8245317601efc8637b1f7d9989556752f3554dba140276cd07a",
     "far_validation/weakening.py": "647e758cd11f23afa184f1b5b19ae0d759b6f72d74514502fef2f669cef62993",
@@ -30,6 +35,7 @@
     "validation/runtime-dependencies.json": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
     "validation/runtime-policy.json": "18a5a933bdbd9af725cb2ddfd37f891cdd82197be8fc4fc84547e03caa2fecd0",
     "validation/test-weakening-waivers.json": "311e12701b273cb91110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
+    "validation_bootstrap/repin-allowed-signers": "86bf26f718eb10b9e278e90546b02d26287b6fb088a62457a7d0f94d8f4bf496",
     "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
   },
   "required_evidence": [
