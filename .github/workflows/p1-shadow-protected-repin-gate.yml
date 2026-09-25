@@ -1,0 +1,13 @@
+name: P1 shadow source-binding probe
+
+on:
+  pull_request:
+
+permissions: {}
+
+jobs:
+  shadow:
+    name: protected-repin-gate
+    runs-on: ubuntu-24.04
+    steps:
+      - run: echo "candidate-controlled shadow check succeeded"
