@@ -60,7 +60,7 @@ Status vocabulary:
 | # | Claim / component | Lvl | Prior basis | Independent oracle | Adversarial checks | Defect | Fix | Residual | Status |
 |---|---|---|---|---|---|---|---|---|---|
 | R0 | FAR-CORE-001, 002, 003, 004 and 011 hold as stated. | 0 | W1 review; W2 Lean. | Statement-by-statement comparison of Lean with the prose; the Lean kernel in CI run `36149124911`, which compiled every W2 module. | Checked each statement for vacuity, special-casing, and hypotheses that restate the conclusion. | None. The FAR-CORE-002 isomorphism statement does not state commutation with the projections. | — | These are standard results (calibration audit). | ESTABLISHED at the Lean statements |
-| R1 | The local `jsonschema` is a Draft 2020-12 validator (it reported upstream version `4.22.0`). | 0 | Tests of implemented keywords; a version-string test. | Upstream `jsonschema` 4.22.0; the JSON Schema 2020-12 and ECMA-262 specs. | Keyword census of 41 schemas; 627-pair differential; probes P3, P5–P7. | It silently ignored `if`/`then`/`else`, `propertyNames`, `anyOf`, `not`, `contains`, `$ref` siblings, and unknown types. Python `$` and `.` semantics were used. | Implemented those keywords, ECMA `$`/`.`, and fail-closed schema checking. Version is now `4.22.0+far.local`. | Committed documents: 0 disagreements before and after. | FALSIFIED → repaired |
+| R1 | The local `jsonschema` is a Draft 2020-12 validator (it reported upstream version `4.22.0`). | 0 | Tests of implemented keywords; a version-string test. | Upstream `jsonschema` 4.22.0; the JSON Schema 2020-12 and ECMA-262 specs. | Keyword census of 41 schemas; 627-pair differential; probes P3, P5–P7. | It silently ignored `if`/`then`/`else`, `propertyNames`, `anyOf`, `not`, `contains`, `$ref` siblings, and unknown types. Python `$` and `.` semantics were used. | Implemented those keywords, ECMA `$`/`.`, and fail-closed schema checking. Version is now `4.22.0+far.local`. | Pre-audit committed documents: 0 disagreements before and after. The only disagreement is the audit's own ADV-50, where the local validator applies ECMA-262 `$` and upstream python-jsonschema does not. | FALSIFIED → repaired |
 | R2 | The far-ir/2.0 verifier certifies an exact observational quotient only for the β-kernel partition (§3.3). | 1 | 4 conformance fixtures; unit tests. | Specification-only oracle (74 records); hand-derived partitions. | P1 and ADV-70 (repeated class ids); ADV-27 (overlap). | Classes were keyed by id: `{a},{b},{c,d}` with ids `k,k,y` was certified **PROVED** exact. An exact partition with a repeated id was rejected. Overlap produced relations from an arbitrary assignment. | Classes are identified by position. Added `DUPLICATE_QUOTIENT_CLASS`. Overlap now yields `QUOTIENT_NOT_PARTITION` and stops. | None known. | FALSIFIED → repaired |
 | R3 | The verifier accepts only well-formed JSON. | 1 | None. | RFC 8259. | NaN; duplicate `outcome` keys. | Both records were **PASS**. With duplicate keys, a first-wins parser reads `REFUTED` where the verifier certified `PROVED`. | Strict intake: `UNREADABLE_CONTRACT`. In-memory non-finite numbers: `SCHEMA_CONSTRAINT_VIOLATION`. | The far-ir/2.1 intake remains lenient (see R5 residual). | FALSIFIED → repaired (2.0) |
 | R4 | A `FROZEN` record carries an RFC 3339 freeze time (§5). | 1 | A schema `if/then` that was never enforced. | Spec text. | `frozen_at: null`; a non-RFC 3339 string. | Both accepted. | The schema `if/then` is now enforced; added `FREEZE_TIME_INVALID`. | Leap seconds are rejected (conservative). | FALSIFIED → repaired |
@@ -281,7 +281,26 @@ Findings where the evidence does not support the exact word:
 | `14/14 FORMALIZED`; `kernel_check: PASS` | — | Bounded by LIM-049 and LIM-050. |
 | "Theory-closure validation"; `make semantic-check` | — | Mostly status and consistency checks, with asserted regression literals. They do not re-prove theory. |
 
-## 10. What this audit does not establish
+## 10. Final validation
+
+The run used a fresh clone of commit `772a9f7c`, the last commit that changes code or data. Everything after it changes only this report. All of the following exited 0:
+
+- `python tools/run_tests.py` — 2031 tests;
+- `make health`, `make research-check`, `make semantic-check`, `make docs-check`, `make links-check`;
+- `make pca-w5-check` and `make pca-w6-check`;
+- `python validation_bootstrap/verify.py` — 34 assurance files;
+- `python -m far_validation weakening --base origin/main`;
+- `python -m far_validation validate --profile pr-full --no-cache`;
+- `oracle_far_ir_2_0/run_all.py`.
+
+The reproduction scripts gave these results:
+
+- `scripts/compare_verifiers.py` over 4000 regenerated random records: `PASS`, with 0 verdict and 0 multiset differences.
+- `scripts/schema_differential.py`: 750 pairs and one disagreement, ADV-50, which is intended; see its header.
+
+Lean was checked separately in CI run `36149124911` (§6).
+
+## 11. What this audit does not establish
 
 - It does not establish novelty, empirical utility, or external validity.
 - It does not show the repaired verifiers are correct beyond the audited defects.

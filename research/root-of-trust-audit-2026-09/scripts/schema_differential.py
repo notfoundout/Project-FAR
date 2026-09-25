@@ -6,7 +6,11 @@ jsonschema 4.22.0 installed and the repository NOT on sys.path:
 
     python research/root-of-trust-audit-2026-09/scripts/schema_differential.py <repository root>
 
-Audit result (before and after the local-validator repair): 627 pairs, 0 validity disagreements.
+Audit result on the pre-audit committed documents: 627 pairs, 0 validity disagreements before and
+after the local-validator repair. With this audit's adversarial corpus committed: 750 pairs and one
+disagreement, ADV-50 (an identifier ending in a newline). The local validator rejects it under
+ECMA-262 `$`, as JSON Schema requires; upstream python-jsonschema accepts it because Python `re`
+lets `$` match before a trailing newline.
 Pairing by discriminator is deliberately loose, so "upstream-invalid" rows include intentionally
 invalid fixtures and unrelated documents sharing a discriminator.
 """
