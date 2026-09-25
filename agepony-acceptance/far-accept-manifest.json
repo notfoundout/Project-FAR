@@ -1,0 +1,36 @@
+{
+  "created": "2026-09-25T09:30:40Z",
+  "files": {
+    "far-accept-1-basic.json": {
+      "kind": "far",
+      "sha256": "590fb94916a03064384d291b6fa5005d185da5a5f3138e311352e22c9ecc52ea",
+      "sign_with": "prompts ON"
+    },
+    "far-accept-2-same-bytes.json": {
+      "kind": "far-duplicate-of-1",
+      "sha256": "590fb94916a03064384d291b6fa5005d185da5a5f3138e311352e22c9ecc52ea",
+      "sign_with": "prompts ON"
+    },
+    "far-accept-3-escapes.json": {
+      "kind": "far",
+      "sha256": "679de116daa4ccf18b76cc8cecb11983d458d03bc291d8355030265db030325e",
+      "sign_with": "prompts ON"
+    },
+    "far-accept-4-prompts-off.json": {
+      "kind": "far",
+      "sha256": "c0d38d3f3369318b500b51acec0953237048fc1c46393c2de88d0e0cad2d300c",
+      "sign_with": "prompts OFF"
+    },
+    "far-accept-5-trailing-newline.json": {
+      "kind": "non-canonical",
+      "sha256": "3244e227de2179ed4e13d67c6916f582345fcc7d398f219bf2c403045edd7661",
+      "sign_with": "prompts ON"
+    },
+    "far-enrollment-proof.txt": {
+      "kind": "non-far",
+      "sha256": "d80fb23067aaacc023b6f6a9e8629c139b52f77470cffb7c70aa6386b7a11f37",
+      "sign_with": "prompts ON"
+    }
+  },
+  "repository": "far-acceptance/disposable-key"
+}
