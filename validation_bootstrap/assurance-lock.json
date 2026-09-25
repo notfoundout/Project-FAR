@@ -35,7 +35,7 @@
     "tools/configure_validation_protection.py": "c4d8b59d54c04c489979a7b4b3ebaeb26fcff39d6c15dc0c178453c810960f38",
     "validation/runtime-dependencies.json": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
     "validation/runtime-policy.json": "18a5a933bdbd9af725cb2ddfd37f891cdd82197be8fc4fc84547e03caa2fecd0",
-    "validation/test-weakening-waivers.json": "311e12701b273cb91110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
+    "validation/test-weakening-waivers.json": "276d5fc04bbacf7004d0c21b5c8fb6e8d748235ce35b2f9835dca2739568e6f2",
     "validation_bootstrap/repin-allowed-signers": "86bf26f718eb10b9e278e90546b02d26287b6fb088a62457a7d0f94d8f4bf496",
     "validation_bootstrap/verify.py": "ce4e899f22fc6d752e816255959d204670247661fe21a9b27f776243c52774b1"
   },
