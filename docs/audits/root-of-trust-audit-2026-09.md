@@ -29,7 +29,7 @@ Other oracles used:
 - a deliberately different equality predicate;
 - hash-seed variation.
 
-Every claimed detection was fault-injected in an isolated copy and restored afterwards.
+Every detection added or repaired by this audit, and the infrastructure findings listed in §7, was fault-injected in an isolated copy and restored afterwards.
 
 **Environment limits.**
 
@@ -59,6 +59,7 @@ Status vocabulary:
 
 | # | Claim / component | Lvl | Prior basis | Independent oracle | Adversarial checks | Defect | Fix | Residual | Status |
 |---|---|---|---|---|---|---|---|---|---|
+| R0 | FAR-CORE-001, 002, 003, 004 and 011 hold as stated. | 0 | W1 review; W2 Lean. | Statement-by-statement comparison of Lean with the prose; the Lean kernel in CI run `36149124911`, which compiled every W2 module. | Checked each statement for vacuity, special-casing, and hypotheses that restate the conclusion. | None. The FAR-CORE-002 isomorphism statement does not state commutation with the projections. | — | These are standard results (calibration audit). | ESTABLISHED at the Lean statements |
 | R1 | The local `jsonschema` is a Draft 2020-12 validator (it reported upstream version `4.22.0`). | 0 | Tests of implemented keywords; a version-string test. | Upstream `jsonschema` 4.22.0; the JSON Schema 2020-12 and ECMA-262 specs. | Keyword census of 41 schemas; 627-pair differential; probes P3, P5–P7. | It silently ignored `if`/`then`/`else`, `propertyNames`, `anyOf`, `not`, `contains`, `$ref` siblings, and unknown types. Python `$` and `.` semantics were used. | Implemented those keywords, ECMA `$`/`.`, and fail-closed schema checking. Version is now `4.22.0+far.local`. | Committed documents: 0 disagreements before and after. | FALSIFIED → repaired |
 | R2 | The far-ir/2.0 verifier certifies an exact observational quotient only for the β-kernel partition (§3.3). | 1 | 4 conformance fixtures; unit tests. | Specification-only oracle (74 records); hand-derived partitions. | P1 and ADV-70 (repeated class ids); ADV-27 (overlap). | Classes were keyed by id: `{a},{b},{c,d}` with ids `k,k,y` was certified **PROVED** exact. An exact partition with a repeated id was rejected. Overlap produced relations from an arbitrary assignment. | Classes are identified by position. Added `DUPLICATE_QUOTIENT_CLASS`. Overlap now yields `QUOTIENT_NOT_PARTITION` and stops. | None known. | FALSIFIED → repaired |
 | R3 | The verifier accepts only well-formed JSON. | 1 | None. | RFC 8259. | NaN; duplicate `outcome` keys. | Both records were **PASS**. With duplicate keys, a first-wins parser reads `REFUTED` where the verifier certified `PROVED`. | Strict intake: `UNREADABLE_CONTRACT`. In-memory non-finite numbers: `SCHEMA_CONSTRAINT_VIOLATION`. | The far-ir/2.1 intake remains lenient (see R5 residual). | FALSIFIED → repaired (2.0) |
@@ -79,6 +80,8 @@ Status vocabulary:
 | R18 | Generated indexes, inventories, and exports are current. | 0 | Generator `--check` modes. | Regenerated in a clean clone. | — | None. | — | — | ESTABLISHED |
 | R19 | A new execution manifest declaring `result: pass` fails closed without FAR-EVIDENCE-CLOSURE-1.0 evidence. | 0 | Closure tests. | Fault injection. | `PASS `, ` pass`, `Passed\t`, and a YAML boolean. | Whitespace variants skipped every PASS check; the investigation index shows the result verbatim. | Result comparison strips whitespace and ignores case; non-string results are rejected. | No closed result vocabulary (LIM-055). | FALSIFIED → repaired |
 | R20 | Other JSON intakes (far-ir/1.0 parser, Socratic records, `far-evidence`, commercial package). | 1 | — | RFC 8259; YAML 1.2 (unique keys). | Duplicate keys; `NaN`. | All accepted them last-wins; PyYAML also overwrote duplicate keys. | The far-ir/1.0 JSON and YAML parser, the Socratic loader, and `far-evidence` are now strict. | Commercial package and far-ir/2.1 intake (LIM-054). | FALSIFIED → repaired (partly) |
+| R21 | The live `main` branch protection requires `merge-authority` and forbids bypass. | 0 | `configure_validation_protection.py`. | — | — | — | — | GitHub settings were not readable from this session. | INDETERMINATE |
+| R22 | Novelty, external empirical utility, external replication. | — | Calibration audit. | — | — | — | — | Needs the external evidence that EFR-001 preregisters. | INDETERMINATE (outside the repository) |
 
 ## 4. Repairs and their blast radius
 
