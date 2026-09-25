@@ -49,4 +49,5 @@ NoFalseSuccess ==
   ~(\E c \in Checks : status[c] \in {"failed", "blocked", "pending"})
 
 Spec == Init /\ [][Next]_vars
+\* Live protected-repin P4 sentinel; no semantic change.
 =============================================================================
