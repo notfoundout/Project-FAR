@@ -786,98 +786,43 @@ def _sha256_text(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def _trusted_repin_authorizations(root: Path, revision: str) -> dict[tuple[str, str, str], dict[str, Any]]:
-    """Load repin authorizations from the comparison base only.
-
-    Authorization must come from outside the candidate's control. The waiver
-    file is itself a protected artifact, so reading the candidate copy would let
-    a change author its own permission. Reading the base copy means a repin has
-    to be authorized by something already merged into the protected branch.
-
-    Each authorization binds one exact transition: the path, the base content
-    identity it applies to, and the single candidate content identity it
-    permits. It therefore cannot authorize any other content for that path.
-    """
-    source = _show(root, revision, WAIVER_PATH)
-    if source is None:
-        return {}
-    try:
-        payload = json.loads(source)
-    except json.JSONDecodeError:
-        return {}
-    entries = payload.get("repin_authorizations") if isinstance(payload, dict) else None
-    if not isinstance(entries, list):
-        return {}
-    authorizations: dict[tuple[str, str, str], dict[str, Any]] = {}
-    for item in entries:
-        if not isinstance(item, dict):
-            continue
-        path = item.get("path")
-        base_digest = item.get("base_sha256")
-        new_digest = item.get("authorized_sha256")
-        justification = item.get("justification")
-        identifier = item.get("id")
-        if not all(isinstance(value, str) and value for value in (path, base_digest, new_digest, identifier)):
-            continue
-        if not isinstance(justification, str) or len(justification.strip()) < 20:
-            continue
-        if re.fullmatch(r"[0-9a-f]{64}", base_digest) is None or re.fullmatch(r"[0-9a-f]{64}", new_digest) is None:
-            continue
-        authorizations[(path, base_digest, new_digest)] = item
-    return authorizations
-
-
 def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]:
-    """Reject repinning a base-protected artifact without trusted authorization.
+    """Reject protected-artifact transitions that lack a signed, unconsumed authorization.
 
-    The protected candidate set is every path changed against the base that the
-    *base* assurance lock protects. A path absent from the base lock is being
-    introduced and has no prior identity to contradict.
+    Evaluation lives in ``far_validation.repin`` over git objects of ``HEAD`` (commit first;
+    uncommitted changes are not evaluated). Here it runs in-job, in candidate-controlled CI, with
+    the key pinned on the comparison base, so it is advisory defense in depth: the authoritative
+    decision is the ``protected-repin-gate`` check published by the dedicated GitHub App.
+    Repository placement never carries repin authority; only a signature under the pinned owner
+    key does. ``FAR_REPIN_TARGET_PR`` binds authorizations to a pull request when set.
     """
-    base_lock_source = _show(root, revision, ASSURANCE_LOCK_PATH)
-    if base_lock_source is None:
-        return {}
-    base_locked = _lock_file_digests(base_lock_source)
-    if not base_locked:
-        return {}
     try:
-        head_locked = _lock_file_digests((root / ASSURANCE_LOCK_PATH).read_text(encoding="utf-8"))
-    except OSError:
-        head_locked = {}
-    authorizations = _trusted_repin_authorizations(root, revision)
+        from . import repin
+    except ImportError:  # Loaded as a standalone file; load the sibling evaluator by path.
+        import importlib.util
+        import sys
 
-    failures: dict[str, list[str]] = {}
-    for path in sorted(_changed_paths(root, revision) & set(base_locked)):
-        before = base_locked[path]
-        after = head_locked.get(path)
-        if after == before:
-            # The pin did not move, so the bootstrap hash check still governs the
-            # content and nothing here has been re-authorized.
-            continue
-        if after is None:
-            failures.setdefault(path, []).append(
-                f"protected artifact {path} was dropped from {ASSURANCE_LOCK_PATH}; "
-                "removing a protected identity requires trusted authorization from the comparison base"
-            )
-            continue
-        candidate = root / path
-        actual = _sha256_text(candidate.read_bytes()) if candidate.is_file() else None
-        authorization = authorizations.get((path, before, after))
-        if authorization is None:
-            failures.setdefault(path, []).append(
-                f"protected artifact {path} changed and its content pin in {ASSURANCE_LOCK_PATH} was "
-                f"repinned {before[:12]}->{after[:12]} in the same change; this transition is not "
-                f"authorized by {WAIVER_PATH} in the comparison base, and a candidate may not authorize "
-                "its own protected-artifact repin"
-            )
-            continue
-        if actual != after:
-            failures.setdefault(path, []).append(
-                f"authorization {authorization.get('id')} permits {after[:12]} for {path}, but the "
-                f"candidate file hashes to {actual or '<missing>'}; an authorization binds one exact "
-                "content identity"
-            )
-    return failures
+        spec = importlib.util.spec_from_file_location(
+            "_far_validation_repin", Path(__file__).resolve().with_name("repin.py")
+        )
+        if spec is None or spec.loader is None:
+            raise
+        repin = sys.modules.setdefault(spec.name, importlib.util.module_from_spec(spec))
+        spec.loader.exec_module(repin)
+
+    git = repin.GitObjects(root)
+    try:
+        trusted = git.blob(git.commit(revision), repin.ALLOWED_SIGNERS_PATH, label="base") or b""
+    except repin.LedgerError as exc:
+        return {repin.ALLOWED_SIGNERS_PATH: [f"{exc}; failing closed"]}
+    target = os.environ.get("FAR_REPIN_TARGET_PR")
+    report = repin.evaluate(
+        git, revision, "HEAD", allowed_signers=trusted,
+        repository=os.environ.get("GITHUB_REPOSITORY", "notfoundout/Project-FAR"),
+        repository_id=int(os.environ["GITHUB_REPOSITORY_ID"]) if os.environ.get("GITHUB_REPOSITORY_ID") else None,
+        target_pr=int(target) if target else None,
+    )
+    return report.failures
 
 
 def _load_waivers(root: Path, revision: str) -> dict[str, dict[str, Any]]:

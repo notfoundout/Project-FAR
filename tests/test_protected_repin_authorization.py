@@ -11,11 +11,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from far_validation import weakening
+from far_validation import repin_signature, weakening
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +40,13 @@ def sha256(data: bytes) -> str:
 class ProtectedRepinAuthorizationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = self.enterContext(__import__("tempfile").TemporaryDirectory())
-        self.repo = Path(self.tmp)
+        self.repo = Path(self.tmp) / "repo"
+        self.repo.mkdir()
+        # The owner's repin signing key; its public half is pinned on the base, as on main.
+        self.key = Path(self.tmp) / "owner"
+        subprocess.run(["ssh-keygen", "-q", "-t", "ecdsa", "-b", "256", "-N", "", "-C", "", "-f", str(self.key)], check=True)
+        kind, blob = self.key.with_suffix(".pub").read_text().split()[:2]
+        self.signers = f'{repin_signature.PRINCIPAL} namespaces="{repin_signature.NAMESPACE}" {kind} {blob}\n'.encode()
 
     def _run(self, *args: str) -> None:
         subprocess.run(["git", *args], cwd=self.repo, check=True, capture_output=True)
@@ -59,6 +67,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
             LOCK,
             (json.dumps({"schema_version": "1.0", "files": {rel: sha256(data) for rel, data in files.items()}}, indent=2) + "\n").encode("utf-8"),
         )
+        self._write(repin_signature.ALLOWED_SIGNERS_PATH, self.signers)
         self._write(
             WAIVERS,
             (json.dumps({"schema_version": "1.0", "waivers": [], "repin_authorizations": authorizations or []}, indent=2) + "\n").encode("utf-8"),
@@ -80,6 +89,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         self._run("commit", "-qm", message)
 
     def _repin_failures(self, base: str) -> dict[str, list[str]]:
+        os.environ.pop("FAR_REPIN_TARGET_PR", None)
         report = weakening.detect_weakening(self.repo, base=base)
         return {
             finding.path: [item for item in finding.failures if REPIN_MESSAGE in item or "authorization" in item]
@@ -272,7 +282,26 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
             ],
         )
         self._repin(POLICY, replacement)
-        self._commit()
+        self._commit("waiver-file authorization alone")
+        self._assert_rejected(base, POLICY)  # repository bytes cannot authorize
+
+        issued = datetime.now(timezone.utc).replace(microsecond=0) - timedelta(hours=1)
+        payload = repin_signature.canonical_bytes({
+            "schema": repin_signature.SCHEMA, "domain": repin_signature.DOMAIN, "id": "0" * 31 + "5", "repository": "notfoundout/Project-FAR",
+            "repository_id": 1283452680, "path": POLICY, "old_sha256": sha256(original), "new_sha256": sha256(replacement), "target_pr": 1,
+            "base_sha": base, "reason": "reviewed owner-signed authorization for this exact transition",
+            "issued_at": issued.strftime(repin_signature.TIME_FORMAT),
+            "expires_at": (issued + timedelta(days=14)).strftime(repin_signature.TIME_FORMAT),
+        })
+        (self.repo.parent / "payload").write_bytes(payload)
+        subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(self.key), "-n", repin_signature.NAMESPACE,
+                        str(self.repo.parent / "payload")], check=True, capture_output=True)
+        entry = {"payload": payload.decode(), "signature": (self.repo.parent / "payload.sig").read_text()}
+        self._write(
+            "validation/protected-repin-consumptions.json",
+            (json.dumps({"schema_version": "2.0", "consumptions": [entry]}, indent=2) + "\n").encode("utf-8"),
+        )
+        self._commit("owner-signed authorization consumed")
         self._assert_accepted(base, POLICY)
 
     # L. locked artifact left untouched
