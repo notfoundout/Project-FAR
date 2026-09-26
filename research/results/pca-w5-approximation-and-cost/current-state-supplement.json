@@ -14,6 +14,13 @@
   ],
   "entries": [
     {
+      "path": ".github/workflows/pca-w5.yml",
+      "executed_sha256": "f371f9c6466a07d1964806248b7ab3ada14fece1f4469c4d71c4b2925dfb467b",
+      "current_sha256": "b1914464dc04066fd6f76ee5f5040a861828a9eb1d2885f8c0bfdc2baa979798",
+      "class": "verification_tooling",
+      "reason": "Replaced the unpinned curl-to-sh install of elan-init.sh from the mutable elan master branch with a download pinned to elan commit 0e36a07b9bbcc5381fa6250df109f9a4f94d7bac and a SHA-256 check before execution (supply-chain hardening from the 2026-09-23 repository red-team audit). The installer bytes are identical to those CI executed before the change; the Lean toolchain, compiled artifact, W5 computation, and recorded result are unchanged."
+    },
+    {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
       "executed_sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48",
       "current_sha256": "3c8cd0ece67f0908ff2bbc3015ca5d2ccc91222c72276efb26d91701d929b141",

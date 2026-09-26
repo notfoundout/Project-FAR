@@ -10,7 +10,9 @@ from pathlib import Path
 from typing import Any, Callable
 
 _SUPPORTED_FORMATS = {
-    "far-ir/2.0": ("contract_v2", "schemas/far-contract-v2.schema.json"),
+    # far-ir/2.0 uses the current strict verifier: a PROVED/REFUTED outcome is accepted only
+    # when the verifier recomputed it. The frozen contract_v2.py baseline is bound as a shared artifact.
+    "far-ir/2.0": ("contract_v2_strict", "schemas/far-contract-v2.schema.json"),
     "far-ir/2.1": ("contract_v21", "schemas/far-contract-v2.1.schema.json"),
 }
 _SUPPORTED_PURPOSES = {
@@ -444,11 +446,11 @@ def _load_validator(format_version: str) -> _ValidatorBundle:
             _artifact("semantic-verifier", module_path, root),
             _artifact("semantic-schema", schema_path, root),
         ]
-        if format_version == "far-ir/2.1":
+        if format_version in {"far-ir/2.0", "far-ir/2.1"}:
             shared = root / "mechanization" / "far_mechanization" / "contract_v2.py"
             if not shared.is_file():
                 raise SemanticVerifierUnavailable(
-                    f"far-ir/2.1 requires shared exact verifier {shared}, which is missing."
+                    f"{format_version} requires shared exact verifier {shared}, which is missing."
                 )
             artifacts.append(_artifact("shared-exact-verifier", shared, root))
         return _ValidatorBundle(validate=validate, artifacts=tuple(artifacts))
