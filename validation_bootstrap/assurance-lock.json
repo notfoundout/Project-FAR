@@ -33,7 +33,7 @@
     "tests/test_protected_repin_ledger.py": "657de49804e628bd23ea52458944b2cb690a70081121255ceda90c162833288d",
     "tests/test_repin_gate_app.py": "1ab25bef48a6ada25a5a77bdf2f3d6b6ca2ea66fc73c2073b6c235e4efe240de",
     "tests/test_repin_signature.py": "df658da88da7f4aae4a7eb2e381d13aa57a01a4b667676b4fa4ff3ba339a830f",
-    "tests/test_validation_assurance.py": "edbd3610ca7df55d6e982cf669273fb291a9125b2c16f90daac3b4073c",
+    "tests/test_validation_assurance.py": "edbd3610ca7def54b75bab7e982cf669273fb291a9125b2c16f90daac3b4073c",
     "tests/test_validation_trace_fd_regression.py": "75dfe30e8a12077afe68c5463b6fa683478a7130699cbda85514567333a68420",
     "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
