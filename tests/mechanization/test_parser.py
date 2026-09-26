@@ -19,7 +19,8 @@ EXAMPLE_YAML = ROOT / "examples" / "mechanization" / "minimal-investigation.yaml
 
 class ParserTests(unittest.TestCase):
     def test_declared_schema_dependency_imports(self):
-        self.assertEqual(jsonschema.__version__, "4.22.0")
+        # The repository-local validator must not present itself as upstream jsonschema 4.22.0.
+        self.assertEqual(jsonschema.__version__, "4.22.0+far.local")
 
     def test_json_text_and_yaml_text_parse_to_equal_ir(self):
         j = parse_json_text(EXAMPLE_JSON.read_text(), "example.json")
@@ -54,6 +55,16 @@ class ParserTests(unittest.TestCase):
         y = parse_yaml_text((INVALID / "malformed.yaml").read_text(), "bad.yaml")
         self.assertEqual(y.diagnostics[0].code, DiagnosticCode.MALFORMED_YAML)
         self.assertIsNotNone(y.diagnostics[0].source.line)
+
+    def test_duplicate_keys_and_non_json_constants_are_malformed(self):
+        """A repeated key or NaN makes a document's meaning parser-dependent (RFC 8259, YAML 1.2)."""
+        base = EXAMPLE_JSON.read_text()
+        duplicate = base.replace('"format_version"', '"format_version": "far-ir/0.0", "format_version"', 1)
+        self.assertNotEqual(duplicate, base)
+        self.assertEqual(parse_json_text(duplicate).diagnostics[0].code, DiagnosticCode.MALFORMED_JSON)
+        self.assertEqual(parse_json_text('{"a": NaN}').diagnostics[0].code, DiagnosticCode.MALFORMED_JSON)
+        yaml_duplicate = EXAMPLE_YAML.read_text() + "format_version: far-ir/1.0\n"
+        self.assertEqual(parse_yaml_text(yaml_duplicate).diagnostics[0].code, DiagnosticCode.MALFORMED_YAML)
 
     def test_non_object_roots(self):
         self.assertEqual(parse_json_text((INVALID / "root-scalar.json").read_text()).diagnostics[0].code, DiagnosticCode.NON_OBJECT_ROOT)

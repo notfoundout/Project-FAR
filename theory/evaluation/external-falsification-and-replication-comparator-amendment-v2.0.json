@@ -1,0 +1,233 @@
+{
+  "schema_version": "1.0",
+  "amendment_id": "EFR-001-COMPARATOR-AMENDMENT-2.0",
+  "program_id": "EXTERNAL-FALSIFICATION-AND-REPLICATION-001",
+  "program_version": "2.0",
+  "status": "PREREGISTERED_AMENDMENT_NOT_EXECUTED",
+  "amended_date": "2026-09-23",
+  "authoritative_freeze_timestamp": "supplied by the protected-main promotion event",
+  "frozen_v1_0_preserved": true,
+  "frozen_v1_0_artifacts_modified": false,
+  "preserved_objects": [
+    {
+      "path": "docs/governance/external-falsification-and-replication-program-v1.0.md",
+      "git_blob_sha": "ffb341e684607ba6106fc58ac88d1e87be3ae47e"
+    },
+    {
+      "path": "theory/evaluation/external-falsification-and-replication-program-v1.0.json",
+      "git_blob_sha": "cb061f5471d972947b1b1f6255238e155f2f9759"
+    },
+    {
+      "path": "docs/governance/w1-w6-claim-evidence-matrix-v1.0.md",
+      "git_blob_sha": "6811aa31e9d49992b8fa5216b2d5f6b5c6cd7b70"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/00-preregistration.md",
+      "git_blob_sha": "402dbed218f75214f4762c0178f419cf4329b766"
+    },
+    {
+      "path": "docs/governance/w1-w6-status-reconciliation-2026-09-05.md",
+      "git_blob_sha": "650d1d20bfa2d99063ec803d845d06f56280cbb1"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/01-human-study-materials.md",
+      "git_blob_sha": "d261653e9d12db74157955511bebf35ef6819009"
+    },
+    {
+      "path": "tools/efr_hd1_allocation.py",
+      "git_blob_sha": "a40fa46e342a46b9f75dbf583f68ad38b2dbbf0a"
+    },
+    {
+      "path": "tools/efr_hd1_analysis.py",
+      "git_blob_sha": "bffade750d53e12e5422ea836a20c8efaeb1724e"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/02-u1-projection.md",
+      "git_blob_sha": "837af3a06b32f8c5e0a03a61e6d62b52e15adb70"
+    },
+    {
+      "path": "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json",
+      "git_blob_sha": "c4814575ccfb4174bce628ef9a2343a11df269bb"
+    },
+    {
+      "path": "docs/governance/external-falsification-and-replication-r2-input-amendment-v1.1.md",
+      "git_blob_sha": "e27c5cdb83ce42969ea6b124a7f89a9cd860652b"
+    },
+    {
+      "path": "theory/evaluation/external-falsification-and-replication-r2-input-amendment-v1.1.json",
+      "git_blob_sha": "aa8b7ce4d407810ac746dba57ade238977e0dfe1"
+    }
+  ],
+  "superseded_tests": {
+    "EFR-HD1": "SUPERSEDED_NOT_EXECUTABLE",
+    "EFR-U1": "SUPERSEDED_NOT_EXECUTABLE",
+    "EFR-C1": "SUPERSEDED_NOT_EXECUTABLE"
+  },
+  "replacement_tests": [
+    {
+      "id": "EFR-HD2",
+      "replaces": "EFR-HD1",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "arms": [
+        "far",
+        "checker",
+        "standard"
+      ],
+      "sample": {
+        "reviewers": 60,
+        "cases": 120,
+        "ratings": 2160,
+        "ratings_per_case_per_arm": 6,
+        "tasks_per_reviewer": 36,
+        "tasks_per_reviewer_per_arm": 12,
+        "reviewers_per_arm_order": 10
+      },
+      "primary_contrast": "checker minus far pairwise material-disagreement rate",
+      "acceptance": {
+        "absolute_reduction_min": "1/20",
+        "lower_percentile_gt": "0",
+        "far_minus_checker_false_accept_upper_percentile_max": "1/50",
+        "percentile_indices": [
+          249,
+          9749
+        ],
+        "bootstrap_resamples": 10000
+      },
+      "invalid": {
+        "missing_ratings_over": "1/20",
+        "pairwise_arm_missingness_imbalance_over": "1/50 of 720"
+      },
+      "missingness": "far missing imputed unfavorable to far; checker and standard missing imputed favorable to those arms",
+      "descriptive_only": [
+        "standard minus checker disagreement",
+        "standard minus far disagreement"
+      ]
+    },
+    {
+      "id": "EFR-U2",
+      "replaces": "EFR-U1",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "arms": [
+        "far",
+        "checker",
+        "standard"
+      ],
+      "sample": {
+        "sites": 3,
+        "investigations_per_site": 60,
+        "per_arm_per_site": 20,
+        "max_workers_per_site": 40
+      },
+      "primary_contrast": "equal-site-weighted checker minus far escaped-defect proportion",
+      "acceptance": {
+        "absolute_reduction_min": "1/20",
+        "relative_to_checker_min": "1/5",
+        "lower_percentile_gt": "0",
+        "site_reduction_min": "-1/20",
+        "far_attributable_serious_harms": 0,
+        "percentile_indices": [
+          249,
+          9749
+        ],
+        "bootstrap_resamples": 10000
+      },
+      "missingness": "missing far output counts as escaped defect; missing checker or standard output counts as not escaped",
+      "zero_weight_resample_rule": "far arm rate 1, checker/standard arm rate 0; never discarded, redrawn, or invalidating; count reported (replaces the v1.0 INVALID_UNESTIMABLE_RESAMPLE rule, which invalidates correctly executed studies by chance)",
+      "descriptive_only": [
+        "standard minus checker escaped-defect",
+        "standard minus far escaped-defect"
+      ]
+    },
+    {
+      "id": "EFR-C2",
+      "replaces": "EFR-C1",
+      "status": "PREREGISTERED_NOT_EXECUTED",
+      "comparison": "far versus checker for every v1.0 C1 coordinate",
+      "acceptance": {
+        "median_task_time_ratio_far_over_checker_max": "3/2",
+        "training_hours_per_person_max": 8,
+        "incremental_direct_cost_far_minus_checker_usd_2026_max": 100,
+        "tlx_median_increase_far_minus_checker_max_each": 10,
+        "severe_burden_events": 0
+      },
+      "cost_attribution": "FAR-specific preparation charged to far tasks only; comparator-specific preparation charged to checker tasks only; all three arms published"
+    }
+  ],
+  "comparator": {
+    "arm_id": "checker",
+    "implementation": "tools/efr_generic_collision_checker.py",
+    "imports_project_far_code": false,
+    "uses_project_far_terminology": false,
+    "classification_equivalence": "for finite explicit tables the generic checker and the FAR verifier reach the same preservation/loss classification"
+  },
+  "unamended_tests": [
+    "EFR-R1",
+    "EFR-R2",
+    "EFR-H1",
+    "EFR-A1",
+    "EFR-N1"
+  ],
+  "h1_a1_execution_binding": {
+    "command": "python -m mechanization.far_mechanization.contract_v2_strict RECORD --json",
+    "precondition": "derived record evidence.status is CHECKED_FINITE_EXPLICIT; otherwise fail closed",
+    "outcome_change": "none: strict and baseline diagnostics are identical for checked records",
+    "descriptive_secondary": "generic checker concordance"
+  },
+  "aggregate_rule": "REGISTERED_EXTERNAL_EFFECTIVENESS_SUPPORTED requires EFR-R1, EFR-R2 (v1.1), EFR-H1, EFR-A1, EFR-HD2, EFR-U2, and EFR-C2 to pass exactly; EFR-N1 is orthogonal",
+  "v1_0_hd1_u1_c1_execution": "prohibited; any data collected anyway is a disclosed protocol breach counting toward no label",
+  "bound_artifacts": [
+    {
+      "path": "docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md",
+      "git_blob_sha": "26ca1235d27237fc43611b0e1b6cc8b17861c4d3",
+      "role": "amendment protocol text"
+    },
+    {
+      "path": "docs/research/external-falsification-and-replication/04-comparator-study-materials-v2.0.md",
+      "git_blob_sha": "793eaab1e861c9aa1ff638bd2c2ad248f28f149d",
+      "role": "three-arm study materials delta over the frozen v1.0 materials"
+    },
+    {
+      "path": "tools/efr_generic_collision_checker.py",
+      "git_blob_sha": "d4e3bb438c39f59bc5b970c8264edece04b78551",
+      "role": "frozen generic comparator report generator (no Project FAR imports or terminology)"
+    },
+    {
+      "path": "tools/efr_hd2_allocation.py",
+      "git_blob_sha": "3c761a648ef84fcd2cd499e065c2990b907f524d",
+      "role": "normative HD2 three-arm allocation"
+    },
+    {
+      "path": "tools/efr_hd2_analysis.py",
+      "git_blob_sha": "df049121e22479a46e09729c9e9bfa0289d38aab",
+      "role": "normative HD2 numerical gates"
+    },
+    {
+      "path": "tools/efr_u2_analysis.py",
+      "git_blob_sha": "47c61d7645e128f541a82557ef349736ffb5a7e6",
+      "role": "normative U2 allocation and numerical gates"
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v2_strict.py",
+      "git_blob_sha": "06c69ea6c99cdd878365ad3cc2cbe04b4fc1bccc",
+      "role": "current strict far-ir/2.0 verifier used for the FAR report and the H1/A1 machine lane"
+    },
+    {
+      "path": "mechanization/far_mechanization/contract_v2.py",
+      "git_blob_sha": "31a4c00dcbee9adfe9e7c19fcacb4c04578e3b61",
+      "role": "frozen baseline wrapped by the strict verifier; unchanged"
+    }
+  ],
+  "artifact_hash_semantics": "Git blob object IDs bind exact bytes including the blob header; the promotion commit/tree additionally binds path and mode.",
+  "current_results": {
+    "tests_executed": 0,
+    "external_cases": 0,
+    "participants": 0,
+    "sites": 0
+  },
+  "nonclaims": [
+    "does not execute any test",
+    "does not establish FAR-specific benefit, human utility, external validity, novelty, or independence",
+    "does not alter any v1.0 or v1.1 frozen object",
+    "does not change EFR-R1, EFR-R2, EFR-H1, EFR-A1, or EFR-N1 endpoints"
+  ]
+}

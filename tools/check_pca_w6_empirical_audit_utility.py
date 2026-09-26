@@ -21,6 +21,9 @@ from mechanization.far_mechanization.contract_v2 import (  # noqa: E402
     contract_sha256,
     validate_contract,
 )
+from mechanization.far_mechanization.contract_v2_errata1 import (  # noqa: E402
+    validate_contract as validate_contract_errata1,
+)
 
 PROTOCOL_FREEZE_COMMIT = "3813b9e3eb49562bd8b9f4d3179c3d9536831de6"
 PROTOCOL_BASE_COMMIT = "2cecf2e21cc27208f606dcd38337af4369e66af2"
@@ -93,8 +96,11 @@ EXPECTED_W4_RECORDS = (
     {"sha256": "458eee9a3cbfac5688dd3c6d0105c3d2235f2c7feb5b65f65000e3e600caeab2", "path": "research/results/pca-w4-domain-contracts/type-theory-repaired.json", "variant": "repaired", "expected_outcome": "PROVED", "expected_evidence": "factorization"},
 )
 
-# Git blob identities read from the preregistered protocol base. This prevents
-# the schema-only and FAR-semantic lanes from silently changing after freeze.
+# Git blob identities read from the preregistered protocol base: the schema and the executed
+# verifier bytes. They do not freeze the schema-only lane completely: that lane is evaluated by the
+# repository-local `jsonschema` validator, which is not pinned and changed after the freeze. The
+# recorded result was re-derived as unchanged under the protocol-base validator, the current
+# validator, and upstream jsonschema 4.22.0 (docs/audits/root-of-trust-audit-2026-09.md).
 EXPECTED_PROTOCOL_BASE_BLOBS = {
     "schemas/far-contract-v2.schema.json": "e424359f804d268210e0f65fdf2fd28efc7e616b",
     "mechanization/far_mechanization/contract_v2.py": "31a4c00dcbee9adfe9e7c19fcacb4c04578e3b61",
@@ -322,6 +328,24 @@ def validate_registered_corpus_manifest(manifest: Mapping[str, Any]) -> None:
             )
     if manifest.get("records") != list(EXPECTED_W4_RECORDS):
         raise ValueError("registered W4 record projection drifted from the protocol-base corpus")
+
+
+def errata_verifier_divergence() -> list[str]:
+    """W6 is recomputed with the executed verifier; errata 1 must reproduce every W6 item outcome."""
+    errors: list[str] = []
+    for domain, paths in sorted(_record_groups().items()):
+        repaired = json.loads(paths["repaired"].read_text(encoding="utf-8"))
+        lossy = json.loads(paths["lossy"].read_text(encoding="utf-8"))
+        for label, document in (
+            ("clean", repaired),
+            ("mutant", inject_registered_collision(repaired)),
+            ("native-lossy", lossy),
+        ):
+            executed = [d.code for d in validate_contract(document).diagnostics]
+            corrected = [d.code for d in validate_contract_errata1(document).diagnostics]
+            if executed != corrected:
+                errors.append(f"W6 errata verifier diverges on {domain} {label}: executed={executed} errata1={corrected}")
+    return errors
 
 
 def _record_groups() -> dict[str, dict[str, Path]]:
@@ -628,6 +652,10 @@ def main() -> int:
                 )
     errors.extend(verify_manifest())
     errors.extend(verify_no_transient_artifacts())
+    try:
+        errors.extend(errata_verifier_divergence())
+    except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
+        errors.append(f"W6 errata-verifier comparison blocked: {exc}")
     if errors:
         print("\n".join(errors))
         return 1

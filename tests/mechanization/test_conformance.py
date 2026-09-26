@@ -49,6 +49,9 @@ def test_golden_outputs_match_current_pipeline():
     assert json.dumps(graph_data, indent=2, sort_keys=True) + "\n" == (SUITE / "expected" / "complete.graph.json").read_text(encoding="utf-8")
     invalid = parse_file(SUITE / "invalid" / "invalid-identifier.json")
     diagnostics = [_diagnostic_to_dict(d) for d in _sort_diagnostics(invalid.diagnostics)]
+    for diagnostic in diagnostics:
+        # The parser records the absolute input path; the golden output must not depend on the checkout location.
+        diagnostic["source"]["source"] = Path(diagnostic["source"]["source"]).resolve().relative_to(ROOT).as_posix()
     assert json.dumps(diagnostics, indent=2, sort_keys=True) + "\n" == (SUITE / "expected" / "invalid-identifier.diagnostics.json").read_text(encoding="utf-8")
 
 

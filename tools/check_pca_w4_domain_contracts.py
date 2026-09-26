@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from mechanization.far_mechanization.contract_v2 import canonical_json, validate_contract
+from mechanization.far_mechanization.contract_v2_strict_v11 import canonical_json, validate_contract
 from tools.campaign_current_state import compare_campaign_artifacts
 
 RESULTS = ROOT / "research" / "results" / "pca-w4-domain-contracts"

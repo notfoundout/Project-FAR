@@ -14,6 +14,13 @@
   ],
   "entries": [
     {
+      "path": ".github/workflows/pca-w5.yml",
+      "executed_sha256": "f371f9c6466a07d1964806248b7ab3ada14fece1f4469c4d71c4b2925dfb467b",
+      "current_sha256": "b1914464dc04066fd6f76ee5f5040a861828a9eb1d2885f8c0bfdc2baa979798",
+      "class": "verification_tooling",
+      "reason": "Replaced the unpinned curl-to-sh install of elan-init.sh from the mutable elan master branch with a download pinned to elan commit 0e36a07b9bbcc5381fa6250df109f9a4f94d7bac and a SHA-256 check before execution (supply-chain hardening from the 2026-09-23 repository red-team audit). The installer bytes are identical to those CI executed before the change; the Lean toolchain, compiled artifact, W5 computation, and recorded result are unchanged."
+    },
+    {
       "path": "docs/specification/far-ir-2.1-approximation-cost.md",
       "executed_sha256": "39e4a033650e1fd3480eeca211389c53ed2bed0fb6f7a5478cd82c52be0c1d48",
       "current_sha256": "3c8cd0ece67f0908ff2bbc3015ca5d2ccc91222c72276efb26d91701d929b141",
@@ -23,9 +30,9 @@
     {
       "path": "tools/check_pca_w5_approximation_cost.py",
       "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
-      "current_sha256": "b3f38150160e66ef76ec7a66b7b135d50c79ac330d5348d18b9903d30fd6a8dc",
+      "current_sha256": "fda695f867211734ff477795cca96604879323e8ff746c88dd9e8a87e2b19487",
       "class": "verification_tooling",
-      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes. Since the 2026-09 root-of-trust audit the checker also requires the far-ir/2.1 errata 1 successor (contract_v21_errata1, which wraps the unchanged executed verifier) to reproduce every governed record's diagnostic sequence; W5 is still recomputed with the executed contract_v21.py at its pinned path."
     }
   ]
 }

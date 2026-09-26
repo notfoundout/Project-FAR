@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import inspect
 import sys
+import tempfile
 import time
 import unittest
 from pathlib import Path
@@ -43,6 +45,37 @@ class DiagnosticTextTestRunner(unittest.TextTestRunner):
     resultclass = DiagnosticTextTestResult
 
 
+def _function_case(function) -> unittest.FunctionTestCase:
+    """Run a module-level pytest-style ``test_*`` function under unittest.
+
+    Only the ``tmp_path`` fixture is supported; any other parameter fails the test instead of
+    silently skipping it, so a module-level test can never be discovered and not executed.
+    """
+    parameters = list(inspect.signature(function).parameters)
+
+    def run() -> None:
+        unsupported = [name for name in parameters if name != "tmp_path"]
+        if unsupported:
+            raise TypeError(f"{function.__qualname__}: unsupported test fixture(s) {unsupported}")
+        if parameters:
+            with tempfile.TemporaryDirectory() as tmp:
+                function(tmp_path=Path(tmp))
+        else:
+            function()
+
+    return unittest.FunctionTestCase(run, description=f"{function.__module__}.{function.__name__}")
+
+
+def _module_functions(module) -> list[unittest.FunctionTestCase]:
+    return [
+        _function_case(value)
+        for name, value in sorted(vars(module).items())
+        if name.startswith("test")
+        and inspect.isfunction(value)
+        and value.__module__ == module.__name__
+    ]
+
+
 def discover_suite(start: Path = TESTS) -> unittest.TestSuite:
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
@@ -55,6 +88,7 @@ def discover_suite(start: Path = TESTS) -> unittest.TestSuite:
         sys.modules[module_name] = module
         spec.loader.exec_module(module)
         suite.addTests(loader.loadTestsFromModule(module))
+        suite.addTests(_module_functions(module))
     return suite
 
 

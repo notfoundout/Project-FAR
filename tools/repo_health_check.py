@@ -42,18 +42,21 @@ def main()->int:
             '--output','artifacts/governance/branch-pr-triage-v1.0.json','--check'])
     tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_final_newline.py','check_release_consistency.py','check_current_state_consistency.py','check_internal_links.py','check_status_consistency.py','check_project_far_theory_closure.py','far_research_registry.py','check_far_core_v11_formalization.py','research_campaign.py','check_living_research.py']
     if full: tools += ['check_claims_audit.py','check_project_status.py','check_proof_assurance.py','check_external_validation_terms.py','check_mechanization_claims.py','check_ci_workflows.py']
+    missing=lambda tool:[sys.executable,'-c',f'raise SystemExit("listed health tool tools/{tool} is missing")']
     for tool in tools:
-        if (ROOT/'tools'/tool).exists():
-            cmd=[sys.executable,f'tools/{tool}']
-            if tool=='generate_theorem_index.py': cmd.append('--check')
-            if tool=='check_status_consistency.py': cmd.append('--report-only')
-            add(tool,cmd)
+        if not (ROOT/'tools'/tool).exists():
+            # A listed checker that disappears must fail the health run, not silently drop out of it.
+            add(tool,missing(tool)); continue
+        cmd=[sys.executable,f'tools/{tool}']
+        if tool=='generate_theorem_index.py': cmd.append('--check')
+        if tool=='check_status_consistency.py': cmd.append('--report-only')
+        add(tool,cmd)
     if full:
         add('cre001 deterministic',[sys.executable,'tools/cre001_compile_vocabularies.py','--write','--check'])
         add('cre002 prospective execution',[sys.executable,'tools/cre002_execute.py','--check'])
         add('theory_impact_analyzer.py',[sys.executable,'tools/theory_impact_analyzer.py'])
         for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
-            if (ROOT/'tools'/tool).exists(): add(tool,[sys.executable,f'tools/{tool}'])
+            add(tool,[sys.executable,f'tools/{tool}'] if (ROOT/'tools'/tool).exists() else missing(tool))
         add('check_orphaned_docs.py',[sys.executable,'tools/check_orphaned_docs.py'],required=False)
     else:
         add('cre002 prospective execution',[sys.executable,'tools/cre002_execute.py','--check'])

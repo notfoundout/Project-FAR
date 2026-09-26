@@ -1,0 +1,548 @@
+[
+  {
+    "name": "metric_triangle_single_shortcut",
+    "expected": [
+      "METRIC_TRIANGLE_FAILURE",
+      "METRIC_TRIANGLE_FAILURE"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "triples": "unordered_endpoints"
+        },
+        "codes": [
+          "METRIC_TRIANGLE_FAILURE"
+        ]
+      }
+    ],
+    "cite": "S21 item 1; METRIC_TRIANGLE_FAILURE; Stage 2",
+    "why": "d(f,t)=1 > d(f,x)+d(x,t)=1/4+1/4; only ordered triples (f,x,t),(t,x,f) fail. Symmetric, identity and separation hold; loss table over {f,t} unchanged.",
+    "file": "adversarial/metric_triangle_single_shortcut.json"
+  },
+  {
+    "name": "metric_asymmetric_triangle_tight",
+    "expected": [
+      "METRIC_SYMMETRY_FAILURE",
+      "METRIC_SYMMETRY_FAILURE"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "pairs": "unordered"
+        },
+        "codes": [
+          "METRIC_SYMMETRY_FAILURE"
+        ]
+      }
+    ],
+    "cite": "S21 item 1; METRIC_SYMMETRY_FAILURE",
+    "why": "d(f,x)=1, d(x,f)=2. Triangle is tight, not violated: d(x,f)=2 = d(x,t)+d(t,f)=1+1 (non-strict '>' in METRIC_TRIANGLE_FAILURE).",
+    "file": "adversarial/metric_asymmetric_triangle_tight.json"
+  },
+  {
+    "name": "metric_identity_failure",
+    "expected": [
+      "METRIC_IDENTITY_FAILURE"
+    ],
+    "alternatives": [],
+    "cite": "S21 item 1; METRIC_IDENTITY_FAILURE",
+    "why": "d(x,x)=1; all other x-distances 1; no triple violates (1 > 1+1 is false).",
+    "file": "adversarial/metric_identity_failure.json"
+  },
+  {
+    "name": "metric_degenerate_triangle_probe",
+    "expected": [
+      "METRIC_IDENTITY_FAILURE",
+      "METRIC_TRIANGLE_FAILURE"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "triples": "ordered_distinct_endpoints"
+        },
+        "codes": [
+          "METRIC_IDENTITY_FAILURE"
+        ]
+      }
+    ],
+    "cite": "S21 METRIC_TRIANGLE_FAILURE 'for a declared triple'",
+    "why": "d(x,x)=1 > d(x,f)+d(f,x)=1/4+1/4: the only violating triple has l=r=x.",
+    "file": "adversarial/metric_degenerate_triangle_probe.json"
+  },
+  {
+    "name": "metric_pseudometric",
+    "expected": [
+      "METRIC_SEPARATION_FAILURE",
+      "METRIC_SEPARATION_FAILURE"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "pairs": "unordered"
+        },
+        "codes": [
+          "METRIC_SEPARATION_FAILURE"
+        ]
+      }
+    ],
+    "cite": "S21 item 1 (separation); \u00a7Exact boundary excludes pseudometrics",
+    "why": "d(f,x)=d(x,f)=0 with f != x; d(x,t)=1; triangle holds everywhere.",
+    "file": "adversarial/metric_pseudometric.json"
+  },
+  {
+    "name": "metric_not_total_suppresses_axioms",
+    "expected": [
+      "METRIC_NOT_TOTAL"
+    ],
+    "alternatives": [],
+    "cite": "S21 METRIC_NOT_TOTAL 'Suppresses the four ... checks'",
+    "why": "Entry (x,x) missing; a 1/4-shortcut triangle violation is also present but suppressed. Loss pairs over {f,t} all have metric entries, so no METRIC_LOSS_DOMAIN_MISMATCH.",
+    "file": "adversarial/metric_not_total_suppresses_axioms.json"
+  },
+  {
+    "name": "metric_false_vs_zero_canonical_distinct",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 DUPLICATE_METRIC_VALUE 'canonical value'",
+    "why": "Values [false,true,0]: distinct as canonical JSON ('false' vs '0'); discrete metric. An implementation using host-language equality (False == 0) would instead emit DUPLICATE_METRIC_VALUE / DUPLICATE_METRIC_ENTRY codes (not machine-checked here).",
+    "file": "adversarial/metric_false_vs_zero_canonical_distinct.json"
+  },
+  {
+    "name": "duplicate_metric_value",
+    "expected": [
+      "DUPLICATE_METRIC_VALUE"
+    ],
+    "alternatives": [],
+    "cite": "S21 DUPLICATE_METRIC_VALUE",
+    "why": "values [false,true,false]; product over the declared set is still covered.",
+    "file": "adversarial/duplicate_metric_value.json"
+  },
+  {
+    "name": "reference_sum_five_sixths",
+    "expected": [
+      "REFERENCE_NOT_PROBABILITY"
+    ],
+    "alternatives": [],
+    "cite": "S21 REFERENCE_NOT_PROBABILITY",
+    "why": "1/2 + 1/3 = 5/6 != 1.",
+    "file": "adversarial/reference_sum_five_sixths.json"
+  },
+  {
+    "name": "reference_missing_case",
+    "expected": [
+      "REFERENCE_COVERAGE_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 REFERENCE_COVERAGE_MISMATCH",
+    "why": "Only case.zero weighted (weight 1): sums to 1 but case.one undeclared (zero mass must be explicit, S21 item 2).",
+    "file": "adversarial/reference_missing_case.json"
+  },
+  {
+    "name": "loss_differs_from_metric",
+    "expected": [
+      "LOSS_METRIC_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 item 4; LOSS_METRIC_MISMATCH",
+    "why": "loss(false,true)=2 while d(false,true)=1.",
+    "file": "adversarial/loss_differs_from_metric.json"
+  },
+  {
+    "name": "loss_extra_entry_not_total",
+    "expected": [
+      "LOSS_NOT_TOTAL"
+    ],
+    "alternatives": [],
+    "cite": "S21 LOSS_NOT_TOTAL 'exactly'",
+    "why": "Extra loss row (truth 'x', action false) outside range x actions; value equals the (discrete) metric so no per-pair code under either iteration reading.",
+    "file": "adversarial/loss_extra_entry_not_total.json"
+  },
+  {
+    "name": "stage2_accumulation_order",
+    "expected": [
+      "REFERENCE_NOT_PROBABILITY",
+      "METRIC_IDENTITY_FAILURE",
+      "LOSS_METRIC_MISMATCH",
+      "DUPLICATE_COST_DIMENSION"
+    ],
+    "alternatives": [],
+    "cite": "S21 Stage 2 order",
+    "why": "One defect of each Stage 2 family; sequence must follow Stage 2 order.",
+    "file": "adversarial/stage2_accumulation_order.json"
+  },
+  {
+    "name": "stage2_masks_candidates_and_frontier",
+    "expected": [
+      "REFERENCE_NOT_PROBABILITY"
+    ],
+    "alternatives": [],
+    "cite": "S21 Gate 2",
+    "why": "Reference defect plus a non-probability decoder and a false feasible claim: Gate 2 returns before candidates/frontier.",
+    "file": "adversarial/stage2_masks_candidates_and_frontier.json"
+  },
+  {
+    "name": "decoder_float_probability",
+    "expected": [
+      "SCHEMA_CONSTRAINT_VIOLATION"
+    ],
+    "alternatives": [],
+    "cite": "SCHEMA $defs.Probability (string pattern); S21 schema terminal",
+    "why": "probability 0.5 as a JSON number.",
+    "file": "adversarial/decoder_float_probability.json"
+  },
+  {
+    "name": "decoder_decimal_string",
+    "expected": [
+      "SCHEMA_CONSTRAINT_VIOLATION"
+    ],
+    "alternatives": [],
+    "cite": "SCHEMA $defs.Probability",
+    "why": "probability '0.5' as a decimal string.",
+    "file": "adversarial/decoder_decimal_string.json"
+  },
+  {
+    "name": "decoder_negative_probability",
+    "expected": [
+      "SCHEMA_CONSTRAINT_VIOLATION"
+    ],
+    "alternatives": [],
+    "cite": "SCHEMA $defs.Probability; S21 DECODER_NOT_PROBABILITY",
+    "why": "'-1/2' and '3/2' in one row (sum 1). The schema pattern forbids a sign, so the 'negative entry' clause of DECODER_NOT_PROBABILITY is unreachable post-schema.",
+    "file": "adversarial/decoder_negative_probability.json"
+  },
+  {
+    "name": "tolerance_float",
+    "expected": [
+      "SCHEMA_CONSTRAINT_VIOLATION"
+    ],
+    "alternatives": [],
+    "cite": "SCHEMA $defs.NonnegativeRational",
+    "why": "tolerance 0.5 as a JSON number (hash recomputed so only the schema defect remains).",
+    "file": "adversarial/tolerance_float.json"
+  },
+  {
+    "name": "decoder_sum_one_minus_1e-17_exact",
+    "expected": [
+      "DECODER_NOT_PROBABILITY"
+    ],
+    "alternatives": [],
+    "cite": "S21 DECODER_NOT_PROBABILITY 'exactly one'",
+    "why": "99999999999999999/10^17 + 0 != 1 exactly (binary64 would round it to 1.0).",
+    "file": "adversarial/decoder_sum_one_minus_1e-17_exact.json"
+  },
+  {
+    "name": "near_exact_decoder_is_not_exact",
+    "expected": [
+      "EXACT_RECOVERY_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 \u00a7Exact boundary; EXACT_RECOVERY_SET_MISMATCH",
+    "why": "Row sums to exactly 1 with 10^-17 on the wrong action: L(case.zero)=10^-17 > 0, so 'exact' is feasible but not exact; exact-recovery set is empty.",
+    "file": "adversarial/near_exact_decoder_is_not_exact.json"
+  },
+  {
+    "name": "decoder_nonreduced_fractions_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "SCHEMA pattern admits '2/4'; S21 exact rationals",
+    "why": "'2/4','2/4' and '0/7'-style values are exact 1/2 and 0; record otherwise equals fixture.",
+    "file": "adversarial/decoder_nonreduced_fractions_accept.json"
+  },
+  {
+    "name": "decoder_unknown_action_positive",
+    "expected": [
+      "DECODER_UNKNOWN_ACTION"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "decoder_sum_over_declared_only": true
+        },
+        "codes": [
+          "DECODER_UNKNOWN_ACTION",
+          "DECODER_NOT_PROBABILITY"
+        ]
+      }
+    ],
+    "cite": "S21 DECODER_UNKNOWN_ACTION",
+    "why": "r0 -> {false:1/2, 'abstain':1/2}; full row sums to 1.",
+    "file": "adversarial/decoder_unknown_action_positive.json"
+  },
+  {
+    "name": "decoder_unknown_action_zero_probability_probe",
+    "expected": [
+      "DECODER_UNKNOWN_ACTION"
+    ],
+    "alternatives": [
+      {
+        "interp": {
+          "unknown_action_zero_counts": false
+        },
+        "codes": []
+      }
+    ],
+    "cite": "S21 DECODER_UNKNOWN_ACTION 'assigns probability'",
+    "why": "Exact candidate adds {'abstain': '0'}; whether an explicit zero is an 'assignment' is open.",
+    "file": "adversarial/decoder_unknown_action_zero_probability_probe.json"
+  },
+  {
+    "name": "tolerance_boundary_float_trap_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 'feasible exactly when aggregate is at most tolerance'",
+    "why": "randomized r0->{f:4/5,t:1/5}, r1->{f:2/5,t:3/5}: L=(1/5,2/5), E=1/10+1/5=3/10 = tol 3/10 => feasible. binary64: 0.5*0.2+0.5*0.4 = 0.30000000000000004 > 0.3. dominated E=1/2 infeasible.",
+    "file": "adversarial/tolerance_boundary_float_trap_accept.json"
+  },
+  {
+    "name": "tolerance_strict_misread",
+    "expected": [
+      "FEASIBLE_SET_MISMATCH",
+      "PARETO_SET_MISMATCH",
+      "LEAST_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 'at most' (non-strict)",
+    "why": "Claims computed with strict '<' at tol 1/2: feasible {exact} only. Recomputed: feasible {randomized, exact, dominated}, Pareto {randomized, exact}, least {}.",
+    "file": "adversarial/tolerance_strict_misread.json"
+  },
+  {
+    "name": "cost_ties_two_least_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 'below ... no greater on every coordinate'; least",
+    "why": "A,B exact with equal cost (2,2); C randomized (3,3). Pareto {A,B}; least {A,B} (preorder: ties are mutually below); exact {A,B}.",
+    "file": "adversarial/cost_ties_two_least_accept.json"
+  },
+  {
+    "name": "cost_ties_claim_no_least",
+    "expected": [
+      "LEAST_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 least element",
+    "why": "Same as cost_ties_two_least_accept but claims no least element (uniqueness assumed).",
+    "file": "adversarial/cost_ties_claim_no_least.json"
+  },
+  {
+    "name": "incomparable_lexicographic_least_claim",
+    "expected": [
+      "LEAST_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 'Costs are not silently scalarized'",
+    "why": "Fixture with least claimed ['randomized'] (storage-first lexicographic scalarization).",
+    "file": "adversarial/incomparable_lexicographic_least_claim.json"
+  },
+  {
+    "name": "cost_order_permuted_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 COST_COVERAGE_MISMATCH (coverage by dimension id)",
+    "why": "randomized lists costs as [evaluation=3, storage=1]. Keyed reading: (1,3), fixture result. A positional reader would get (3,1), tie with exact, making both least -> LEAST_SET_MISMATCH.",
+    "file": "adversarial/cost_order_permuted_accept.json"
+  },
+  {
+    "name": "infeasible_cheap_candidate_least_probe",
+    "expected": [],
+    "alternatives": [
+      {
+        "interp": {
+          "least_requires_feasible": false
+        },
+        "codes": [
+          "LEAST_SET_MISMATCH"
+        ]
+      }
+    ],
+    "cite": "S21 'A least element must be below every feasible candidate'",
+    "why": "Add cheap_wrong (0,0) with r0->true, r1->false: E=1 > 1/2, infeasible. Pareto ignores it (dominance only by feasible candidates). Least over feasible is empty.",
+    "file": "adversarial/infeasible_cheap_candidate_least_probe.json"
+  },
+  {
+    "name": "fixture_under_maximum_aggregation",
+    "expected": [
+      "FEASIBLE_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 aggregate max_x L_d(x); RESULTS 'observably different'",
+    "why": "aggregation=maximum: dominated has max(0,1)=1 > 1/2, infeasible; Pareto {randomized, exact}, least {}, exact {exact} unchanged.",
+    "file": "adversarial/fixture_under_maximum_aggregation.json"
+  },
+  {
+    "name": "zero_mass_expected_support_relative_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 \u00a7Exact boundary (support-relative)",
+    "why": "mu=(1,0), tol 0, expected: dominated E=1*0+0*1=0 -> feasible and exact on support; randomized E=1/2. feasible=exact={exact,dominated}; Pareto=least={exact}.",
+    "file": "adversarial/zero_mass_expected_support_relative_accept.json"
+  },
+  {
+    "name": "zero_mass_full_domain_exact_claim",
+    "expected": [
+      "EXACT_RECOVERY_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 'zero-mass cases ... cannot be inferred from a zero aggregate'",
+    "why": "As above but claims exact recovery = {exact} (full-domain inference). No ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE: the recomputed sets agree; only the claim is wrong.",
+    "file": "adversarial/zero_mass_full_domain_exact_claim.json"
+  },
+  {
+    "name": "zero_mass_under_maximum",
+    "expected": [
+      "FEASIBLE_SET_MISMATCH",
+      "EXACT_RECOVERY_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 \u00a7Exact boundary: maximum inspects every case",
+    "why": "mu=(1,0), tol 0, maximum: dominated max loss 1 -> infeasible, not exact. Claims copied from the expected-aggregation reading.",
+    "file": "adversarial/zero_mass_under_maximum.json"
+  },
+  {
+    "name": "collision_zero_tolerance_vacuous_least_probe",
+    "expected": [],
+    "alternatives": [
+      {
+        "interp": {
+          "least_requires_feasible": false
+        },
+        "codes": [
+          "LEAST_SET_MISMATCH"
+        ]
+      }
+    ],
+    "cite": "S21 least; \u00a7Exact boundary",
+    "why": "r(case.zero)=r(case.one)=r0 with different beta: every decoder has E=1/2. tol 0 -> feasible = exact = Pareto = least = {} (all claims empty).",
+    "file": "adversarial/collision_zero_tolerance_vacuous_least_probe.json"
+  },
+  {
+    "name": "collision_maximum_randomization_accept",
+    "expected": [],
+    "alternatives": [],
+    "cite": "S21 max aggregation; randomized decoders",
+    "why": "maximum, tol 1/2: always_false/always_true have max loss 1; coin has max 1/2 -> the randomized decoder is the unique feasible, Pareto and least candidate; exact {}.",
+    "file": "adversarial/collision_maximum_randomization_accept.json"
+  },
+  {
+    "name": "collision_maximum_expected_claims",
+    "expected": [
+      "FEASIBLE_SET_MISMATCH",
+      "PARETO_SET_MISMATCH",
+      "LEAST_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 aggregation rule",
+    "why": "Same record, claims computed under expected aggregation (all feasible; always_false least).",
+    "file": "adversarial/collision_maximum_expected_claims.json"
+  },
+  {
+    "name": "duplicate_candidate_skips_its_errors",
+    "expected": [
+      "DUPLICATE_CANDIDATE"
+    ],
+    "alternatives": [],
+    "cite": "S21 DUPLICATE_CANDIDATE 'later candidate is skipped'",
+    "why": "4th candidate reuses id 'exact' and has a 3/4-sum row; skipped, so no DECODER_NOT_PROBABILITY.",
+    "file": "adversarial/duplicate_candidate_skips_its_errors.json"
+  },
+  {
+    "name": "candidate_errors_accumulate",
+    "expected": [
+      "COST_COVERAGE_MISMATCH",
+      "DECODER_NOT_PROBABILITY"
+    ],
+    "alternatives": [],
+    "cite": "S21 Stage 3 (later candidates still checked)",
+    "why": "randomized lacks 'evaluation'; dominated r1 row sums to 1/2.",
+    "file": "adversarial/candidate_errors_accumulate.json"
+  },
+  {
+    "name": "decoder_coverage_masks_frontier",
+    "expected": [
+      "DECODER_COVERAGE_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 DECODER_COVERAGE_MISMATCH; Gate 4",
+    "why": "exact lacks the r1 row; a false 'ghost' feasible claim is not reported (Gate 4).",
+    "file": "adversarial/decoder_coverage_masks_frontier.json"
+  },
+  {
+    "name": "decoder_extra_unused_representation",
+    "expected": [
+      "DECODER_COVERAGE_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 DECODER_COVERAGE_MISMATCH 'exactly'",
+    "why": "exact adds a row for unused representation value r2.",
+    "file": "adversarial/decoder_extra_unused_representation.json"
+  },
+  {
+    "name": "claim_unknown_candidate_id",
+    "expected": [
+      "FEASIBLE_SET_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 FEASIBLE_SET_MISMATCH",
+    "why": "claimed_feasible includes non-existent 'ghost'.",
+    "file": "adversarial/claim_unknown_candidate_id.json"
+  },
+  {
+    "name": "freeze_hash_masks_decoder_error",
+    "expected": [
+      "FREEZE_HASH_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 Gate 1; S20 \u00a79.8",
+    "why": "tolerance changed without re-hashing, plus a non-probability decoder row.",
+    "file": "adversarial/freeze_hash_masks_decoder_error.json"
+  },
+  {
+    "name": "draft_contract",
+    "expected": [
+      "CHECK_REQUIRES_FROZEN_CONTRACT"
+    ],
+    "alternatives": [],
+    "cite": "S21 CHECK_REQUIRES_FROZEN_CONTRACT",
+    "why": "freeze.status DRAFT with null time/hash (schema-valid).",
+    "file": "adversarial/draft_contract.json"
+  },
+  {
+    "name": "outcome_refuted",
+    "expected": [
+      "CHECKED_EVIDENCE_OUTCOME_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 CHECKED_EVIDENCE_OUTCOME_MISMATCH",
+    "why": "report.outcome REFUTED with approximation_cost evidence.",
+    "file": "adversarial/outcome_refuted.json"
+  },
+  {
+    "name": "mode_exact",
+    "expected": [
+      "W5_MODE_EVIDENCE_REQUIRED"
+    ],
+    "alternatives": [],
+    "cite": "S21 W5_MODE_EVIDENCE_REQUIRED",
+    "why": "contract.mode = exact (approximation block retained).",
+    "file": "adversarial/mode_exact.json"
+  },
+  {
+    "name": "representation_declared",
+    "expected": [
+      "CHECK_REQUIRES_EXPLICIT_REPRESENTATION"
+    ],
+    "alternatives": [],
+    "cite": "S21 CHECK_REQUIRES_EXPLICIT_REPRESENTATION",
+    "why": "representation.status = DECLARED.",
+    "file": "adversarial/representation_declared.json"
+  },
+  {
+    "name": "behavior_missing_case",
+    "expected": [
+      "CASE_TABLE_COVERAGE_MISMATCH"
+    ],
+    "alternatives": [],
+    "cite": "S21 CASE_TABLE_COVERAGE_MISMATCH",
+    "why": "required_behavior table omits case.one (representation still complete).",
+    "file": "adversarial/behavior_missing_case.json"
+  }
+]

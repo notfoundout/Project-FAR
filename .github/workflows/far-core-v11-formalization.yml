@@ -22,8 +22,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
-            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
+          # Installer pinned to an immutable elan commit and verified before execution.
+          elan_commit=0e36a07b9bbcc5381fa6250df109f9a4f94d7bac
+          elan_sha256=a620ff1641616222c8d37c54845492004bb84d6877cdbc944dd65c1aa685bf53
+          curl -sSf "https://raw.githubusercontent.com/leanprover/elan/$elan_commit/elan-init.sh" \
+            -o "$RUNNER_TEMP/elan-init.sh"
+          echo "$elan_sha256  $RUNNER_TEMP/elan-init.sh" | sha256sum -c -
+          sh "$RUNNER_TEMP/elan-init.sh" -y --default-toolchain "$(cat lean-toolchain)"
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
       - name: Compile governed FAR-CORE v1.1 formalization
         shell: bash
@@ -37,6 +42,11 @@ jobs:
             LEAN_PATH=mechanization/lean lean -o mechanization/lean/FARCoreV11SSS.olean mechanization/lean/FARCoreV11SSS.lean
             LEAN_PATH=mechanization/lean lean mechanization/lean/FARCoreV11Mutations.lean
           } 2>&1 | tee artifacts/mechanization/far-core-v11-compile.txt
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -n "declaration uses 'sorry'" artifacts/mechanization/far-core-v11-compile.txt; then
+            echo "FAR-CORE v1.1 formalization contains sorry" >&2
+            exit 1
+          fi
       - name: Upload compile diagnostics
         if: always()
         uses: actions/upload-artifact@v4

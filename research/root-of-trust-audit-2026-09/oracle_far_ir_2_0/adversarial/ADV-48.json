@@ -1,0 +1,82 @@
+{
+ "format_version": "far-ir/2.0",
+ "id": "adv.record",
+ "contract": {
+  "id": "adv.contract",
+  "contract_version": "2.0",
+  "mode": "exact",
+  "source_domain": {
+   "status": "EXPLICIT",
+   "kind": "finite_explicit",
+   "description": "Explicit adversarial cases",
+   "cases": []
+  },
+  "required_behavior": {
+   "status": "EXPLICIT",
+   "description": "Required behavior",
+   "table": []
+  },
+  "representation": {
+   "status": "EXPLICIT",
+   "description": "Candidate representation",
+   "table": []
+  },
+  "observation_contexts": [
+   {
+    "id": "obs.primary",
+    "description": "Observation",
+    "status": "EXPLICIT"
+   }
+  ],
+  "admitted_transformations": [
+   {
+    "id": "eq.identity",
+    "kind": "equivalence",
+    "description": "Literal equality",
+    "status": "EXPLICIT"
+   }
+  ],
+  "interpretation_profile": {
+   "id": "interp.adv",
+   "description": "Literal finite-table interpretation",
+   "status": "EXPLICIT"
+  },
+  "target_model_class": {
+   "id": "target.adv",
+   "description": "Listed cases only",
+   "status": "EXPLICIT"
+  },
+  "frame": {
+   "id": "frame.empty",
+   "description": "No background premises",
+   "status": "EXPLICIT"
+  }
+ },
+ "report": {
+  "outcome": "PROVED",
+  "evidence": {
+   "kind": "quotient",
+   "status": "CHECKED_FINITE_EXPLICIT",
+   "claims_exact_observational_quotient": true,
+   "classes": [
+    {
+     "id": "class.0",
+     "case_ids": [
+      "case.a"
+     ]
+    }
+   ]
+  },
+  "failure_report": []
+ },
+ "provenance": {
+  "producer": "audit_oracle_v2 adversarial corpus",
+  "created_at": "2026-09-25T00:00:00Z",
+  "sources": []
+ },
+ "freeze": {
+  "status": "FROZEN",
+  "frozen_at": "2026-09-25T00:00:00Z",
+  "contract_sha256": "662f5ac391569c3d1196a59b26aa22af8659a17bcf8e29571fc7b812b9e5c467"
+ }
+}

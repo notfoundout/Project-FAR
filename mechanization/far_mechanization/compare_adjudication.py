@@ -477,12 +477,30 @@ def adjudicate(comparison_value: Any, adjudication_value: Any) -> dict[str, Any]
     return normalized
 
 
+def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate object key {key!r}")
+        result[key] = value
+    return result
+
+
+def _reject_constant(name: str) -> object:
+    raise ValueError(f"{name} is not a JSON value")
+
+
 def read_json(path: str | Path) -> Any:
     try:
-        return json.loads(Path(path).read_text(encoding="utf-8"))
+        # Duplicate keys and NaN/Infinity make a package's meaning parser-dependent.
+        return json.loads(
+            Path(path).read_text(encoding="utf-8"),
+            object_pairs_hook=_unique_object,
+            parse_constant=_reject_constant,
+        )
     except OSError as exc:
         raise InterfaceError(f"unable to read {path}: {exc}") from exc
-    except json.JSONDecodeError as exc:
+    except ValueError as exc:
         raise InterfaceError(f"invalid JSON in {path}: {exc}") from exc
 
 

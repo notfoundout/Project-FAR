@@ -260,3 +260,17 @@ class CLITests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class StrictJsonIntakeTests(unittest.TestCase):
+    """A repeated key or NaN makes a package's meaning parser-dependent, so reading it fails."""
+
+    def test_duplicate_keys_and_non_json_constants_are_rejected(self) -> None:
+        from mechanization.far_mechanization.compare_adjudication import read_json
+
+        for name, text in (("duplicate", '{"status": "supported", "status": "refuted"}'), ("nan", '{"weight": NaN}')):
+            with self.subTest(variant=name), tempfile.TemporaryDirectory() as tmp:
+                path = Path(tmp) / "package.json"
+                path.write_text(text, encoding="utf-8")
+                with self.assertRaisesRegex(InterfaceError, "invalid JSON"):
+                    read_json(path)

@@ -57,6 +57,8 @@ The comparison class is representations into `Type u`, the universe of the case 
 
 The bounded SSS module now encodes the governed unit-free MLL witness surface end to end: formula/sequent syntax, resource-splitting derivability, atom balance, the named `S_or` and `S_and` witness profiles, the exhaustive four monotone successor-set decoders, and the bounded projected-decoder failure. The witness proofs compose with the decoder theorem without changing the governed decoder classes or adding a narrative premise.
 
+**2026-09 root-of-trust audit correction.** As first recorded, the composition was not stated in Lean: `bounded_projected_decoder_failure` had the same statement as `projected_successor_decoder_failure`, and the witness facts in its proof were unused. Nothing linked the Boolean summaries to the MLL sequents. The composition is now stated and kernel-checked by `FARCoreV11.SSS.MLL.summaries_match_mll_witnesses` and `FARCoreV11.SSS.MLL.mll_projected_decoder_failure`, with runtime axioms `[propext, Quot.sound]`, CI run `36149124911` at commit `a4c359f2`. See [`root-of-trust-audit-2026-09.md`](../audits/root-of-trust-audit-2026-09.md).
+
 This closes the prior encoding/infrastructure obstruction. It does not change FAR-CORE-014's governing `supported_derived` provenance label or its W1 exact-scope truth verdict; truth, provenance, and mechanization assurance remain separate dimensions.
 
 ## Disposition

@@ -750,7 +750,9 @@
         "FARCoreV11.SSS.MLL.derivable_atom_balance",
         "FARCoreV11.SSS.MLL.sOr_witness_certified",
         "FARCoreV11.SSS.MLL.sAnd_witness_certified",
-        "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure"
+        "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure",
+        "FARCoreV11.SSS.MLL.summaries_match_mll_witnesses",
+        "FARCoreV11.SSS.MLL.mll_projected_decoder_failure"
       ],
       "formalization_status": "FORMALIZED",
       "kernel_check": "PASS",
