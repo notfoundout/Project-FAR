@@ -80,9 +80,9 @@
     {
       "path": "tools/generate_next_tasks.py",
       "executed_sha256": "6e1d886a35fe3705a73f049f13b7744d4492c4bec6ffee8db05ecdfe2b46be84",
-      "current_sha256": "fab31ff63381428d22ed0adeadd09c414986fb3b41adc9d3590e388a55c9accd",
+      "current_sha256": "9a70781a5e2824811e030dd0baa20c2c151852fa72aefa60fb4efcae3bbff62c",
       "class": "verification_tooling",
-      "reason": "Red-team remediation (PR #538): the generated OP-28 action cites the EFR-001 comparator amendment v2.0 and states that EFR-HD1/U1/C1 must not execute. The 2026-09 shadow-validation race repair changed only the file-write mechanism to an atomic same-directory replacement so overlapping canonical suites cannot observe a transient empty next-actions file. Generated content, campaign inputs, computation, recorded results, and claim/status boundaries are unchanged."
+      "reason": "Red-team remediation (PR #538): the generated OP-28 action cites the EFR-001 comparator amendment v2.0 and states that EFR-HD1/U1/C1 must not execute. The 2026-09 shadow-validation race repair writes through a unique temporary file under validator runtime state (`.far/**`) and atomically replaces the tracked next-actions output, so overlapping canonical suites cannot observe a transient empty file without introducing an undeclared tracked-worktree write. Generated content, campaign inputs, computation, recorded results, and claim/status boundaries are unchanged."
     }
   ]
 }
