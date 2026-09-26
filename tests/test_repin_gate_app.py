@@ -559,7 +559,13 @@ class WorkflowTemplateTests(unittest.TestCase):
         self.assertEqual(self.text.count("secrets."), 1)
         holders = [step for step in job["steps"] if "FAR_APP_PRIVATE_KEY" in step.get("env", {})]
         self.assertEqual(len(holders), 1)
-        self.assertEqual(holders[0]["run"], 'python3 deploy/far_validation/repin_gate_app.py actions --mode "$FAR_MODE"')
+        self.assertEqual(holders[0]["run"], (
+            'set -euo pipefail\n'
+            'if [[ "$FAR_MODE" == "audit" ]]; then\n'
+            '  python3 deploy/far_validation/repin_protection_audit.py\n'
+            'else\n'
+            '  python3 deploy/far_validation/repin_gate_app.py actions --mode evaluate\n'
+            'fi\n'))
         for step in job["steps"]:
             self.assertNotIn("${{", step["run"])
         checkout = job["steps"][0]["run"]
