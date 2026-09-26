@@ -1,4 +1,9 @@
 {
   "schema_version": "2.0",
-  "consumptions": []
+  "consumptions": [
+    {
+      "payload": "{\"base_sha\":\"588a61c508a0a897bed471e61ddf9084439aeb3c\",\"domain\":\"far-protected-repin-authorization\",\"expires_at\":\"2026-10-09T22:24:24Z\",\"id\":\"90fc6b6919a12b93972e846fdcf81335\",\"issued_at\":\"2026-09-25T22:24:24Z\",\"new_sha256\":\"5b69570bbb5195400f6d23d7641aec7d94833e9fa04654b11801937784671e5c\",\"old_sha256\":\"73697921f7f34efc4acc10a224e1ac1aae75a821b9f6b366cc3f669b374a6a40\",\"path\":\"formal/ValidationEngine.tla\",\"reason\":\"P5 live probe: authorize the behavior-neutral TLA+ comment sentinel to test owner-signed protected repin enforcement.\",\"repository\":\"notfoundout/Project-FAR\",\"repository_id\":1283452680,\"schema\":\"far-repin-authorization/3\",\"target_pr\":555}",
+      "signature": "-----BEGIN SSH SIGNATURE-----\nU1NIU0lHAAAAAQAAAGgAAAATZWNkc2Etc2hhMi1uaXN0cDI1NgAAAAhuaXN0cDI1NgAAAE\nEETqIBtUxtfGPKLsNAKVbAFxfGyk29KGhvoNUt4gm00sYtcRir2ctA1NCjRk0YK/jopKwr\n3ZD1ShU4nOF+i3skIAAAAAdhZ2Vwb255AAAAAAAAAAZzaGE1MTIAAABjAAAAE2VjZHNhLX\nNoYTItbmlzdHAyNTYAAABIAAAAIGuO330rKun9aEe5pNPBVvAK9rl8ve1eOvh6wdR2e44t\nAAAAIF2tHlsPFpem5eoBBgktgI/GJ1o3YguwmwaiMIMualc0\n-----END SSH SIGNATURE-----\n"
+    }
+  ]
 }
