@@ -2,8 +2,10 @@
 """Generate the EFR intake queue and completed POST-CLOSURE-001 history."""
 from __future__ import annotations
 
+import os
 import json
 import posixpath
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +82,27 @@ def validate_terminal_program() -> None:
         raise SystemExit("terminal post-closure program lost the external OP-28 obligation")
 
 
+def atomic_write_text(path: Path, text: str) -> None:
+    """Replace *path* atomically so concurrent readers never observe truncation."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        encoding="utf-8",
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+        delete=False,
+    ) as handle:
+        handle.write(text)
+        handle.flush()
+        os.fsync(handle.fileno())
+        temporary = Path(handle.name)
+    try:
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
 def main() -> int:
     validate_terminal_program()
     successor = json.loads(EFR_JSON.read_text(encoding="utf-8"))
@@ -149,7 +172,7 @@ def main() -> int:
             "- `make health-fast`",
         ]
     )
-    OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    atomic_write_text(OUT, "\n".join(lines) + "\n")
     print(f"{OUT.relative_to(ROOT)} terminal_tasks={len(COMPLETED_TASKS)} external_obligations=1")
     return 0
 
