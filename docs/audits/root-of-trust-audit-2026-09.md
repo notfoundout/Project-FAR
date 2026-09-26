@@ -71,15 +71,15 @@ Status vocabulary:
 | R9 | W6 result: schema-only 0/6, FAR audit 6/6, clean 6/6, oracle 12/12. | 3 | W6 checker; table oracle. | Own mutation; exact-rational equality; three validators. | Reproduced under the protocol-base, current, and upstream validators. | None. The result is fixed by construction (as the existing calibration audit states). | — | Not empirical utility. | ESTABLISHED at scope (a conformance result) |
 | R10 | W4: six lossy collisions and six repaired factorizations. | 3 | W4 native recomputers. | Hand derivation of all 12 records. | — | None. These are two-case textbook examples. | — | Not open-domain evidence. | ESTABLISHED at scope |
 | R11 | FAR-CORE-014 MLL bridge "end to end … without adding a narrative premise". | 0 | Ledger `FORMALIZED`; axiom audit. | Reading the Lean statements. | Compared the theorem types at `FARCoreV11SSS.lean:99` and `:366`. | `bounded_projected_decoder_failure` restated the summary lemma. The witness facts were discarded (`have _`), yet they changed the axiom fingerprint. | Added `summaries_match_mll_witnesses` and `mll_projected_decoder_failure`; corrected the docstring. | Kernel-checked in CI run `36149124911` (§6). | FALSIFIED (wording) → repaired |
-| R12 | "14/14 FORMALIZED" means the prose claims are mechanized. | 0 | Formalization ledger; checker. | Reading statements against the prose. | — | Counterparts state less than the prose for 006, 007, 008, 009, 010, 012, 013 (LIM-049). The checker requires all 14 to be `FORMALIZED` and matches declarations by name only (LIM-050). | Recorded. | Label semantics. | BOUNDED |
+| R12 | "14/14 FORMALIZED" means the prose claims are mechanized. | 0 | Formalization ledger; checker. | Reading statements against the prose. | — | Counterparts state less than the prose for 006, 007, 008, 009, 010, 012, 013 (LIM-052). The checker requires all 14 to be `FORMALIZED` and matches declarations by name only (LIM-053). | Recorded. | Label semantics. | BOUNDED |
 | R13 | `python tools/run_tests.py` runs every test. | 0 | Runner rejects zero-test runs. | AST scan. | Ran the 38 uncollected functions. | 38 module-level `test_*` functions were never run. One failed: its golden output embedded `/workspace/Project-FAR`. | The runner collects them (`tmp_path` supported, other fixtures fail closed). The golden output is now path-independent. | — | FALSIFIED → repaired |
-| R14 | The required merge gate cannot pass when validation fails. | 0 | Protected `merge-authority`. | GitHub documentation on required checks. | Workflow reading. | `merge-authority` `needs:` a job with no `if:`. An upstream failure makes it *skipped*, which counts as passing. | **Not applied** — protected artifact (§5). | LIM-047 | FALSIFIED; open |
-| R15 | Validation output cannot be silently altered. | 0 | Assurance lock. | Fault injection. | Engine drops failures (E12); a check is removed from `pr-full` (E13). | The engine base class `engine.py` was unpinned while its subclass was pinned. Dropping a check from `pr-full` was undetected. | Pinned `engine.py`, `__init__.py`, and `diagnostics.py`. Added a profile-completeness test. | Cached local runs (LIM-048). | FALSIFIED → repaired (partly) |
-| R16 | `sorry` cannot enter the Lean formalization unnoticed. | 0 | Line-start regex; axiom audit. | Fault injection (E5). | An inline `by sorry` in `FARCore.lean`. | Undetected by every Python check. Plain `lean` exits 0 on `sorry`. | Comment-aware token scan (tested on 12 cases); the W2 workflow now fails on a `sorry` warning. | `lean.yml` is protected (LIM-047). | FALSIFIED → repaired (partly) |
+| R14 | The required merge gate cannot pass when validation fails. | 0 | Protected `merge-authority`. | GitHub documentation on required checks. | Workflow reading. | `merge-authority` `needs:` a job with no `if:`. An upstream failure makes it *skipped*, which counts as passing. | **Not applied** — protected artifact (§5). | LIM-050 | FALSIFIED; open |
+| R15 | Validation output cannot be silently altered. | 0 | Assurance lock. | Fault injection. | Engine drops failures (E12); a check is removed from `pr-full` (E13). | The engine base class `engine.py` was unpinned while its subclass was pinned. Dropping a check from `pr-full` was undetected. | Pinned `engine.py`, `__init__.py`, and `diagnostics.py`. Added a profile-completeness test. | Cached local runs (LIM-051). | FALSIFIED → repaired (partly) |
+| R16 | `sorry` cannot enter the Lean formalization unnoticed. | 0 | Line-start regex; axiom audit. | Fault injection (E5). | An inline `by sorry` in `FARCore.lean`. | Undetected by every Python check. Plain `lean` exits 0 on `sorry`. | Comment-aware token scan (tested on 12 cases); the W2 workflow now fails on a `sorry` warning. | `lean.yml` is protected (LIM-050). | FALSIFIED → repaired (partly) |
 | R17 | `far-epistemic/1.0` Brier and log scoring. | 4 | Unit tests. | `Fraction` and `math.log`. | 40018 cases. | None. | — | — | ESTABLISHED |
 | R18 | Generated indexes, inventories, and exports are current. | 0 | Generator `--check` modes. | Regenerated in a clean clone. | — | None. | — | — | ESTABLISHED |
-| R19 | A new execution manifest declaring `result: pass` fails closed without FAR-EVIDENCE-CLOSURE-1.0 evidence. | 0 | Closure tests. | Fault injection. | `PASS `, ` pass`, `Passed\t`, and a YAML boolean. | Whitespace variants skipped every PASS check; the investigation index shows the result verbatim. | Result comparison strips whitespace and ignores case; non-string results are rejected. | No closed result vocabulary (LIM-055). | FALSIFIED → repaired |
-| R20 | Other JSON intakes (far-ir/1.0 parser, Socratic records, `far-evidence`, commercial package). | 1 | — | RFC 8259; YAML 1.2 (unique keys). | Duplicate keys; `NaN`. | All accepted them last-wins; PyYAML also overwrote duplicate keys. | The far-ir/1.0 JSON and YAML parser, the Socratic loader, and `far-evidence` are now strict. | Commercial package and far-ir/2.1 intake (LIM-054). | FALSIFIED → repaired (partly) |
+| R19 | A new execution manifest declaring `result: pass` fails closed without FAR-EVIDENCE-CLOSURE-1.0 evidence. | 0 | Closure tests. | Fault injection. | `PASS `, ` pass`, `Passed\t`, and a YAML boolean. | Whitespace variants skipped every PASS check; the investigation index shows the result verbatim. | Result comparison strips whitespace and ignores case; non-string results are rejected. | No closed result vocabulary (LIM-058). | FALSIFIED → repaired |
+| R20 | Other JSON intakes (far-ir/1.0 parser, Socratic records, `far-evidence`, commercial package). | 1 | — | RFC 8259; YAML 1.2 (unique keys). | Duplicate keys; `NaN`. | All accepted them last-wins; PyYAML also overwrote duplicate keys. | The far-ir/1.0 JSON and YAML parser, the Socratic loader, and `far-evidence` are now strict. | Commercial package and far-ir/2.1 intake (LIM-057). | FALSIFIED → repaired (partly) |
 | R21 | The live `main` branch protection requires `merge-authority` and forbids bypass. | 0 | `configure_validation_protection.py`. | — | — | — | — | GitHub settings were not readable from this session. | INDETERMINATE |
 | R22 | Novelty, external empirical utility, external replication. | — | Calibration audit. | — | — | — | — | Needs the external evidence that EFR-001 preregisters. | INDETERMINATE (outside the repository) |
 
@@ -154,7 +154,7 @@ The v1.1 amendment binds the exact bytes of both specifications. The reference-v
 
   All three now reject duplicate keys and `NaN`/`Infinity`.
 - **Regression.** Tests in `tests/test_investigation_execution_closure.py`, `tests/mechanization/test_parser.py`, `tests/test_socratic_epistemic_extensions.py`, and `tests/test_compare_adjudication.py`. Each fails against the pre-repair code.
-- **Unchanged.** The released commercial package and the W5-frozen `far-ir/2.1` intake were left as they are (LIM-054).
+- **Unchanged.** The released commercial package and the W5-frozen `far-ir/2.1` intake were left as they are (LIM-057).
 
 ## 5. Protected repairs not applied (maintainer action required)
 
@@ -162,7 +162,7 @@ The v1.1 amendment binds the exact bytes of both specifications. The reference-v
 
 The repairs below need an authorization merged to `main` first, followed by the change itself.
 
-### 5.1 `merge-authority` skip (CRITICAL, LIM-047)
+### 5.1 `merge-authority` skip (CRITICAL, LIM-050)
 
 - **Path:** `.github/workflows/validator-assurance.yml`
 - **Base sha256:** `02fd5b0e92615a85e8dc0d68a62ba19c440bc0fd47eb761798f6a16afbf498d1`
@@ -207,11 +207,11 @@ The repairs below need an authorization merged to `main` first, followed by the 
 
 The basis is GitHub's "Troubleshooting required status checks": a job that depends on a failed job "is skipped and may not block merging". Its documented remedy is to use `always()` with `needs`, and "successful check statuses are `success`, `skipped`, and `neutral`".
 
-### 5.2 `sorry` gate in `lean.yml` (LIM-047)
+### 5.2 `sorry` gate in `lean.yml` (LIM-050)
 
 Pipe each `lean` invocation through `tee` under `set -o pipefail`. Fail if the output contains `declaration uses 'sorry'`, as `far-core-v11-formalization.yml` now does.
 
-### 5.3 Cache keys (LIM-048)
+### 5.3 Cache keys (LIM-051)
 
 `far_validation/assured_engine.py::_cache_key` should include a digest of the repository sources a check can import. The conservative option is every tracked `*.py` file and every schema. Until then, only uncached runs are sound.
 
@@ -260,7 +260,7 @@ The infrastructure audit also reproduced the pre-repair failures:
 - **E9:** a vacuous checker was accepted by the structural oracle;
 - **E10:** in-body skips passed the weakening detector.
 
-E4b is §5.1. E7 and E8 are LIM-048. E9 and E10 are limits of the oracle and the weakening detector, recorded here.
+E4b is §5.1. E7 and E8 are LIM-051. E9 and E10 are limits of the oracle and the weakening detector, recorded here.
 
 ## 8. Authority conflicts surfaced
 
@@ -278,7 +278,7 @@ Findings where the evidence does not support the exact word:
 | "prevents … lanes from silently changing after freeze" | W6 checker | False; corrected. |
 | `machine_oracle_independent_of_far_verifier: true` | W6 results (protected) | Procedurally independent only. It shares canonical-JSON equality and table parsing. Independent reproduction with a different equality agrees. |
 | "corroborates the executable state-machine design" | validator-assurance doc | The model checker never executes the engine; corrected. |
-| `14/14 FORMALIZED`; `kernel_check: PASS` | — | Bounded by LIM-049 and LIM-050. |
+| `14/14 FORMALIZED`; `kernel_check: PASS` | — | Bounded by LIM-052 and LIM-053. |
 | "Theory-closure validation"; `make semantic-check` | — | Mostly status and consistency checks, with asserted regression literals. They do not re-prove theory. |
 
 ## 10. Final validation

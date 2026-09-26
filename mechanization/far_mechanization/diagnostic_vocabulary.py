@@ -107,3 +107,10 @@ FAR_IR_2_1_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
     "W5_MODE_EVIDENCE_REQUIRED",
     "ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE",
 })
+
+#: Additional diagnostic codes emitted only by the opt-in strict ``far-ir/2.0`` consumer mode in
+#: ``contract_v2_strict``. The frozen ``far-ir/2.0`` specification and baseline verifier are
+#: unchanged, so these codes are documented in that module rather than in the specification.
+FAR_IR_2_0_STRICT_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
+    "DETERMINATE_OUTCOME_UNCHECKED",
+})

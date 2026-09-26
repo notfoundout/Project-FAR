@@ -40,7 +40,7 @@ The sealed staged review completed the workstream named `PCA-W1-INDEPENDENT-REVI
 
 FAR-CORE-014 now includes the bounded unit-free MLL witness bridge end to end: syntax/sequents, resource-splitting derivability, atom balance, the named `S_or` and `S_and` witness profiles, exhaustive monotone decoder classification, and bounded projected-decoder failure. The runtime `#print axioms` audit pins exact transitive kernel dependencies rather than treating tactic success as premise-free proof.
 
-W2 changes only mechanization assurance. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness. `FORMALIZED` means a kernel-checked counterpart exists under the formalization ledger's recorded premises and conclusions. For several claims those counterparts state less than the prose ([`LIM-049`](governance/limitations-register.md)), and the alignment checker asserts rather than measures the label ([`LIM-050`](governance/limitations-register.md)).
+W2 changes only mechanization assurance. It does not establish novelty, priority, empirical utility, computational efficiency, open-domain universality, or product readiness. `FORMALIZED` means a kernel-checked counterpart exists under the formalization ledger's recorded premises and conclusions. For several claims those counterparts state less than the prose ([`LIM-052`](governance/limitations-register.md)), and the alignment checker asserts rather than measures the label ([`LIM-053`](governance/limitations-register.md)).
 
 ## W3 contract-schema disposition
 
@@ -106,7 +106,7 @@ This proves only the registered bounded material-loss-detection result. The corp
 
 Its recorded overall description is that Project FAR is a rigorously engineered contract-relative audit and representation methodology whose core mathematics is largely composed of standard or elementary structures, while the value and novelty of the integrated audit discipline remain external empirical and prior-art questions.
 
-The [root-of-trust audit 2026-09](audits/root-of-trust-audit-2026-09.md) is a non-authoritative Research record that changes no claim status. It rechecked the validation substrate and reference verifiers against independent oracles. It repaired a `far-ir/2.0` quotient check that could certify a split partition as the exact quotient, non-JSON acceptance, a hash-seed-dependent `far-ir/2.1` diagnostic order, and several validation-gate defects. The executed W5/W6 verifier bytes are preserved as frozen inputs, and candidate EFR-R2 amendment v1.2 binds the corrected specifications. Protected merge-gate repairs await maintainer authorization ([`LIM-047`](governance/limitations-register.md)).
+The [root-of-trust audit 2026-09](audits/root-of-trust-audit-2026-09.md) is a non-authoritative Research record that changes no claim status. It rechecked the validation substrate and reference verifiers against independent oracles. It repaired a `far-ir/2.0` quotient check that could certify a split partition as the exact quotient, non-JSON acceptance, a hash-seed-dependent `far-ir/2.1` diagnostic order, and several validation-gate defects. The executed W5/W6 verifier bytes are preserved as frozen inputs, and candidate EFR-R2 amendment v1.2 binds the corrected specifications. Protected merge-gate repairs await maintainer authorization ([`LIM-050`](governance/limitations-register.md)).
 
 ## Current phase
 
@@ -124,7 +124,7 @@ Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — [External Fals
 | `PCA-W5-APPROXIMATION-AND-COST` | Complete | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
 | `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | Bounded internal controlled-artifact loss detection proved for registered corpus; human disagreement and external utility not established. |
 
-No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed successor and all eight tests remain `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open.
+No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed successor and no test has executed; OP-28 remains open. The [comparator amendment v2.0](governance/external-falsification-and-replication-comparator-amendment-v2.0.md) supersedes `EFR-HD1`, `EFR-U1`, and `EFR-C1`, which compared FAR-assisted work against no machine output and so could not separate FAR-specific benefit from answer access (`LIM-048`). Their replacements `EFR-HD2`, `EFR-U2`, and `EFR-C2` add an active generic-checker comparator arm and are `PREREGISTERED_NOT_EXECUTED`.
 
 ## Framework status
 
