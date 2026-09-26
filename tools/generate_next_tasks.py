@@ -85,11 +85,13 @@ def validate_terminal_program() -> None:
 def atomic_write_text(path: Path, text: str) -> None:
     """Replace *path* atomically so concurrent readers never observe truncation."""
     path.parent.mkdir(parents=True, exist_ok=True)
+    runtime_tmp = ROOT / ".far" / "generator-tmp"
+    runtime_tmp.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
         mode="w",
         encoding="utf-8",
-        dir=path.parent,
-        prefix=f".{path.name}.",
+        dir=runtime_tmp,
+        prefix=f"{path.name}.",
         suffix=".tmp",
         delete=False,
     ) as handle:
