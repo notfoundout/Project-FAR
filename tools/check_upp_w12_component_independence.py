@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import terminally_closed
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory" / "independence" / "upp-component-independence-v1.0.json"
@@ -38,7 +39,7 @@ def main() -> None:
         fail("queue does not record PR #293 historical completion")
     terminal_complete = 296 in completed
     if terminal_complete:
-        if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+        if not terminally_closed(queue):
             fail("terminal queue closure malformed")
     else:
         next_action = queue.get("next_action", {})

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 import json, subprocess, sys
 from pathlib import Path
 from s_core_w3_reference import construct_witness, recover_target, verify_witness

@@ -5,6 +5,7 @@ import json
 import pathlib
 import subprocess
 import sys
+from upp_queue_history import terminally_closed
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL = ROOT / "theory" / "irreducibility" / "upp_irreducibility_maximality_v1.py"
@@ -55,7 +56,7 @@ def main() -> int:
         fail("queue omits PR #295 completion")
     terminal_complete = any(x.get("target_pr") == 296 for x in queue.get("completed_workstreams", []))
     if terminal_complete:
-        if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+        if not terminally_closed(queue):
             fail("terminal queue closure is malformed")
     elif queue.get("next_action") != NEXT or queue.get("ordered_followups") != []:
         fail("queue neither advances to nor completes PR #296")

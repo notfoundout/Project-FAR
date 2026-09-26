@@ -3,6 +3,7 @@ import json
 import pathlib
 import subprocess
 import sys
+from upp_queue_history import successor_recorded
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory/machinery/upp-w5-machinery-closure-v1.0.json"
@@ -31,7 +32,7 @@ def main() -> None:
     completed = {item["target_pr"]: item for item in queue["completed_workstreams"]}
     if completed.get(286, {}).get("result") != result["terminal_result"]:
         fail("queue does not preserve PR 286 result")
-    if queue["next_action"] != {"target_pr": 287, "workstream": "UPP-W6-EQUIVALENCE"}:
+    if not successor_recorded(queue, 287, "UPP-W6-EQUIVALENCE"):
         fail("queue did not advance exactly to PR 287")
     if queue["public_evaluation_authorized"]:
         fail("queue opened public evaluation")

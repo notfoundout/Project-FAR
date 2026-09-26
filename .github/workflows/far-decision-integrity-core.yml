@@ -4,11 +4,17 @@ on:
   pull_request:
     paths:
       - "commercial/far-decision-integrity/**"
+      # The semantic audit loads the canonical verifier modules and schemas at runtime.
+      - "mechanization/far_mechanization/**"
+      - "schemas/far-contract-v2*.schema.json"
       - ".github/workflows/far-decision-integrity-core.yml"
   push:
     branches: [main]
     paths:
       - "commercial/far-decision-integrity/**"
+      # The semantic audit loads the canonical verifier modules and schemas at runtime.
+      - "mechanization/far_mechanization/**"
+      - "schemas/far-contract-v2*.schema.json"
       - ".github/workflows/far-decision-integrity-core.yml"
 
 jobs:

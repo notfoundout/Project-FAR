@@ -83,7 +83,14 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
 }
-FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
+# Placeholders are forbidden anywhere in code; declarations may carry attributes/modifiers.
+FORBIDDEN = re.compile(
+    r"(?m)\b(?:sorry|admit)\b"
+    r"|^\s*(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|noncomputable|partial|nonrec)\s+)*(?:axiom|constant|unsafe)\b"
+)
+LEAN_STRING = re.compile(r'"(?:\\.|[^"\\])*"')
+LEAN_BLOCK_COMMENT = re.compile(r"/-.*?-/", re.S)
+LEAN_LINE_COMMENT = re.compile(r"--[^\n]*")
 DECLARATION = re.compile(
     r"(?m)^\s*(?:(?:noncomputable|protected)\s+)?"
     r"(?:def|theorem|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
@@ -94,6 +101,11 @@ AXIOM_NONE = re.compile(r"^'([^']+)' does not depend on any axioms$")
 
 def load(path: str) -> dict:
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
+
+
+def lean_code(text: str) -> str:
+    """Remove strings and comments so prose mentioning `sorry` is not counted as a placeholder."""
+    return LEAN_LINE_COMMENT.sub("", LEAN_BLOCK_COMMENT.sub("", LEAN_STRING.sub('""', text)))
 
 
 def digest(path: Path) -> str:
@@ -195,7 +207,7 @@ def inventory(ledger: dict) -> dict:
     for path in sorted((ROOT / "mechanization/lean").glob("*.lean")):
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
-        forbidden_count += len(FORBIDDEN.findall(text))
+        forbidden_count += len(FORBIDDEN.findall(lean_code(text)))
         files.append({
             "path": relative,
             "sha256": digest(path),

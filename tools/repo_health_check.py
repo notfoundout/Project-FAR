@@ -19,12 +19,28 @@ def git_snapshot()->set[str]:
     cp=subprocess.run(['git','status','--porcelain'],cwd=ROOT,text=True,capture_output=True)
     return set(cp.stdout.splitlines())
 
+def execute(checks,timeout_override:int|None,runner=run)->tuple[list,list]:
+    failures=[]; warnings=[]
+    for name,cmd,required in checks:
+        cmd=[c for c in cmd if c]; print(f"\n==> {name}: {' '.join(cmd)}"); cp=runner(cmd,timeout=check_timeout(name,timeout_override))
+        if cp.stdout: print(cp.stdout.rstrip())
+        timed_out=cp.returncode==124 and str(cp.stdout).startswith('TIMEOUT')
+        if cp.returncode==0: print(f'PASS {name}')
+        elif required:
+            label='TIMEOUT' if timed_out else 'FAIL'; print(f'{label} {name} (exit {cp.returncode})'); failures.append((name,cmd,cp.returncode,cp.stdout or '',timed_out))
+        else: print(f'WARN {name} (exit {cp.returncode})'); warnings.append((name,cmd,cp.returncode,cp.stdout or '',timed_out))
+    return failures,warnings
+
 def main()->int:
     parser=argparse.ArgumentParser(); g=parser.add_mutually_exclusive_group(); g.add_argument('--fast',action='store_true'); g.add_argument('--full',action='store_true')
     parser.add_argument('--timeout',type=int,default=None,help='override every subprocess timeout; defaults: canonical tests 900s, individual checks 120s (or PROJECT_FAR_HEALTH_TIMEOUT)')
-    args=parser.parse_args(); full=args.full; before=git_snapshot(); checks=[]
+    parser.add_argument('--skip-canonical-tests',action='store_true',help='omit tools/run_tests.py when the caller already runs the canonical suite separately')
+    args=parser.parse_args(); full=args.full; before=git_snapshot(); checks=[]; missing=[]
     def add(name,cmd,required=True): checks.append((name,cmd,required))
-    add('canonical tests',[sys.executable,'tools/run_tests.py','--fast' if args.fast else ''])
+    def add_tool(tool,cmd,required=True):
+        if (ROOT/'tools'/tool).exists(): add(tool,cmd,required)
+        else: missing.append(tool)
+    if not args.skip_canonical_tests: add('canonical tests',[sys.executable,'tools/run_tests.py','--fast' if args.fast else ''])
     add('w3.5 concrete corpus freeze',[sys.executable,'tools/check_w3_5_corpus_freeze.py'])
     add('w3.5 GREL-FARA factorization',[sys.executable,'tools/check_w3_5_factorization.py'])
     add('w3.5 reasoning discrimination and specificity',[sys.executable,'tools/check_w3_5_specificity.py'])
@@ -40,20 +56,19 @@ def main()->int:
         add('branch/PR triage drift',[sys.executable,'tools/branch_pr_triage.py',
             '--input','artifacts/governance/live-branch-pr-snapshot-v1.0.json',
             '--output','artifacts/governance/branch-pr-triage-v1.0.json','--check'])
-    tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_final_newline.py','check_release_consistency.py','check_current_state_consistency.py','check_internal_links.py','check_status_consistency.py','check_project_far_theory_closure.py','far_research_registry.py','check_far_core_v11_formalization.py','research_campaign.py','check_living_research.py']
+    tools=['verify_theory.py','check_dependencies.py','check_dependency_registry.py','check_registry.py','check_notation.py','check_circularity.py','generate_theorem_index.py','check_repository_hygiene.py','check_certification_compliance.py','check_math_rendering.py','check_markdown_hygiene.py','check_final_newline.py','check_release_consistency.py','check_current_state_consistency.py','check_internal_links.py','check_status_consistency.py','check_project_far_theory_closure.py','far_research_registry.py','check_far_core_v11_formalization.py','research_campaign.py','check_living_research.py','check_claim_status_ceiling.py','check_governance_register_integrity.py']
     if full: tools += ['check_claims_audit.py','check_project_status.py','check_proof_assurance.py','check_external_validation_terms.py','check_mechanization_claims.py','check_ci_workflows.py']
     for tool in tools:
-        if (ROOT/'tools'/tool).exists():
-            cmd=[sys.executable,f'tools/{tool}']
-            if tool=='generate_theorem_index.py': cmd.append('--check')
-            if tool=='check_status_consistency.py': cmd.append('--report-only')
-            add(tool,cmd)
+        cmd=[sys.executable,f'tools/{tool}']
+        if tool=='generate_theorem_index.py': cmd.append('--check')
+        if tool=='check_status_consistency.py': cmd.append('--report-only')
+        add_tool(tool,cmd)
     if full:
         add('cre001 deterministic',[sys.executable,'tools/cre001_compile_vocabularies.py','--write','--check'])
         add('cre002 prospective execution',[sys.executable,'tools/cre002_execute.py','--check'])
         add('theory_impact_analyzer.py',[sys.executable,'tools/theory_impact_analyzer.py'])
         for tool in ['evaluate_reasoning_systems.py','evaluate_primitive_sufficiency.py','run_adversarial_suite.py','check_evaluation_consistency.py']:
-            if (ROOT/'tools'/tool).exists(): add(tool,[sys.executable,f'tools/{tool}'])
+            add_tool(tool,[sys.executable,f'tools/{tool}'])
         add('check_orphaned_docs.py',[sys.executable,'tools/check_orphaned_docs.py'],required=False)
     else:
         add('cre002 prospective execution',[sys.executable,'tools/cre002_execute.py','--check'])
@@ -61,18 +76,12 @@ def main()->int:
     for p in sorted((ROOT/'examples/far').glob('**/*.far.yaml')) if (ROOT/'examples/far').exists() else []:
         add(f'parse FAR {rel(p)}',[sys.executable,'tools/parse_far.py',rel(p)]); add(f'reason FAR {rel(p)}',[sys.executable,'tools/reasoning_engine.py',rel(p)]); add(f'reason FAR JSON {rel(p)}',[sys.executable,'tools/reasoning_engine.py','--json',rel(p)])
     for p in sorted((ROOT/'theory/proof-objects').glob('T-*.proof.yaml')) if (ROOT/'theory/proof-objects').exists() else []: add(f'proof object {rel(p)}',[sys.executable,'tools/check_proof_object.py',rel(p)])
-    failures=[]; warnings=[]
-    for name,cmd,required in checks:
-        cmd=[c for c in cmd if c]; print(f"\n==> {name}: {' '.join(cmd)}"); cp=run(cmd,timeout=check_timeout(name,args.timeout))
-        if cp.stdout: print(cp.stdout.rstrip())
-        timed_out=cp.returncode==124 and str(cp.stdout).startswith('TIMEOUT')
-        if cp.returncode==0: print(f'PASS {name}')
-        elif required:
-            label='TIMEOUT' if timed_out else 'FAIL'; print(f'{label} {name} (exit {cp.returncode})'); failures.append((name,cmd,cp.returncode,cp.stdout or '',timed_out))
-        else: print(f'WARN {name} (exit {cp.returncode})'); warnings.append((name,cmd,cp.returncode,cp.stdout or '',timed_out))
+    failures,warnings=execute(checks,args.timeout)
+    passed=len(checks)-len(failures)-len(warnings)
+    for tool in missing: failures.append((f'missing health tool {tool}',[sys.executable,f'tools/{tool}'],1,f'listed health tool tools/{tool} does not exist',False))
     caused=git_snapshot()-before
     if caused: failures.append(('read-only health check',['git','status','--porcelain'],1,'\n'.join(sorted(caused)),False))
-    print('\nRepository health summary:'); print(f'passed: {len(checks)-len(failures)-len(warnings)} warnings: {len(warnings)} failures: {len(failures)}')
+    print('\nRepository health summary:'); print(f'passed: {passed} warnings: {len(warnings)} failures: {len(failures)}')
     if warnings:
         print('warning checks:')
         for name,cmd,code,output,timed_out in warnings: print(f'- {name}')

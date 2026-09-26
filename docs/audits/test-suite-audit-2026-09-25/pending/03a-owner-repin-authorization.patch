@@ -1,0 +1,25 @@
+diff --git a/validation/test-weakening-waivers.json b/validation/test-weakening-waivers.json
+index e5e0bc9..9b88c9a 100644
+--- a/validation/test-weakening-waivers.json
++++ b/validation/test-weakening-waivers.json
+@@ -15,6 +15,20 @@
+       "base_sha256": "b3870cfc05317ffa40f45f1251cc7f17fc6dc228b067001ffe92c28f08a46426",
+       "authorized_sha256": "b6aed75ed3d44fab314558b19f116120787b781c5a7e6bb242f2a3f3a3112401",
+       "justification": "Authorizes PR #436 to declare the two compositional verifiers and the repin-authorization regression module as runtime inputs of bootstrap.manifest, which became real reads once those files were content-pinned."
++    },
++    {
++      "id": "REPIN-TSA-0001",
++      "path": "far_validation/mutations.py",
++      "base_sha256": "e626148264d9fb0101f4f1229fea3728efa78f596566645e6ea48b7bd59f04b8",
++      "authorized_sha256": "cd63b1d6141ac7ec780699cf8f14fb497a7412f7719e56ed67d90daf78f37760",
++      "justification": "Authorizes the test-suite-audit follow-up to score real rule-deletion mutants of registered governance checkers (tools/checker_rule_mutation.py) and to report the source-independent static-oracle texts separately instead of counting them as mutations."
++    },
++    {
++      "id": "REPIN-TSA-0002",
++      "path": "far_validation/formal_model.py",
++      "base_sha256": "52e6c8734fd5830233e00f2a5d94f1bc1f1aa33eeae91c9e9b348b9ced6b0f9e",
++      "authorized_sha256": "70126ea6c9466da37402ca052e4b5d368ad92095a371896d9b017ef9cabe69e1",
++      "justification": "Authorizes the test-suite-audit follow-up to bind the abstract scheduling model to the real ValidationEngine by requiring every small DAG and outcome to produce identical statuses on both."
+     }
+   ]
+ }

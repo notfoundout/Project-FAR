@@ -71,6 +71,10 @@ class CRE002EXT001ReplicationDispositionTests(unittest.TestCase):
         self.assertFalse(report["external_replication"])
         self.assertTrue(all(case["rejected"] for case in report["mutation_and_adversarial_cases"]))
 
+    def test_team_registry_checker_passes(self) -> None:
+        completed = subprocess.run([sys.executable, "tools/check_cre002_ext001_rep001_team_registry.py"], cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
