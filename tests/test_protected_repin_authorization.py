@@ -304,6 +304,79 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         self._commit("owner-signed authorization consumed")
         self._assert_accepted(base, POLICY)
 
+    def _owner_authorize(self, base: str, rel: str, old: bytes, new: bytes, ident: str) -> None:
+        """Append an owner-signed authorization for exactly ``rel`` ``old``->``new``."""
+        issued = datetime.now(timezone.utc).replace(microsecond=0) - timedelta(hours=1)
+        payload = repin_signature.canonical_bytes({
+            "schema": repin_signature.SCHEMA, "domain": repin_signature.DOMAIN, "id": ident, "repository": "notfoundout/Project-FAR",
+            "repository_id": 1283452680, "path": rel, "old_sha256": sha256(old), "new_sha256": sha256(new), "target_pr": 1,
+            "base_sha": base, "reason": "reviewed owner-signed authorization for this exact transition",
+            "issued_at": issued.strftime(repin_signature.TIME_FORMAT),
+            "expires_at": (issued + timedelta(days=14)).strftime(repin_signature.TIME_FORMAT),
+        })
+        (self.repo.parent / "payload").write_bytes(payload)
+        (self.repo.parent / "payload.sig").unlink(missing_ok=True)
+        subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(self.key), "-n", repin_signature.NAMESPACE,
+                        str(self.repo.parent / "payload")], check=True, capture_output=True)
+        entry = {"payload": payload.decode(), "signature": (self.repo.parent / "payload.sig").read_text()}
+        self._write(
+            "validation/protected-repin-consumptions.json",
+            (json.dumps({"schema_version": "2.0", "consumptions": [entry]}, indent=2) + "\n").encode("utf-8"),
+        )
+
+    def _findings(self, base: str) -> tuple[weakening.WeakeningReport, dict[str, list[str]]]:
+        os.environ.pop("FAR_REPIN_TARGET_PR", None)
+        report = weakening.detect_weakening(self.repo, base=base)
+        return report, {finding.path: finding.failures for finding in report.findings}
+
+    GATE = "far_validation/example_gate.py"
+    STRONG_GATE = b"def gate(x):\n    if x < 0:\n        raise ValueError('negative')\n    if x > 10:\n        raise ValueError('large')\n    return x\n"
+    WEAK_GATE = b"def gate(x):\n    if x < 0:\n        raise ValueError('negative')\n    return x\n"
+
+    # P. the owner's signature over exact bytes, not a base waiver, authorizes a protected
+    # validator's structural change (a waiver would have to name its own merge commit as base).
+    def test_owner_signed_protected_validator_change_needs_no_base_waiver(self) -> None:
+        base = self._build_base({self.GATE: self.STRONG_GATE})
+        self._repin(self.GATE, self.WEAK_GATE)
+        self._commit("unsigned structural change")
+        report, failures = self._findings(base)
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[self.GATE]), failures)
+        self.assertEqual(report.signed_transitions_used, [])
+
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "6")
+        self._commit("owner-signed authorization consumed")
+        report, failures = self._findings(base)
+        self.assertEqual(failures[self.GATE], [])
+        self.assertEqual(report.signed_transitions_used, [self.GATE])
+        self.assertTrue(report.successful)
+
+    # Q. a signature over other bytes authorizes nothing, so the metric failure stands.
+    def test_signature_for_other_bytes_does_not_excuse_a_structural_change(self) -> None:
+        base = self._build_base({self.GATE: self.STRONG_GATE})
+        self._repin(self.GATE, b"def gate(x):\n    return x\n")
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "7")
+        self._commit()
+        report, failures = self._findings(base)
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[self.GATE]), failures)
+        self.assertTrue(any(UNAUTHORIZED in item for item in failures[self.GATE]), failures)
+        self.assertEqual(report.signed_transitions_used, [])
+
+    # R. a signed transition covers only its own path; an unprotected validator is unaffected.
+    def test_signed_transition_does_not_excuse_another_validator(self) -> None:
+        unprotected = "far_validation/other_gate.py"
+        self._build_base({self.GATE: self.STRONG_GATE})
+        self._write(unprotected, self.STRONG_GATE)
+        self._commit("unprotected validator")
+        base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.repo, text=True).strip()
+        self._repin(self.GATE, self.WEAK_GATE)
+        self._write(unprotected, self.WEAK_GATE)
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "8")
+        self._commit()
+        report, failures = self._findings(base)
+        self.assertEqual(failures[self.GATE], [])
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[unprotected]), failures)
+        self.assertEqual(report.signed_transitions_used, [self.GATE])
+
     # L. locked artifact left untouched
     def test_unchanged_locked_artifact_is_accepted(self) -> None:
         base = self._build_base({POLICY: b'{"network_policy": "deny"}\n', FORMAL: b"---- MODULE V ----\n====\n"})

@@ -73,6 +73,7 @@ class WeakeningReport:
     base: str
     findings: list[WeakeningFinding]
     waivers_used: list[str]
+    signed_transitions_used: list[str] = field(default_factory=list)
 
     @property
     def successful(self) -> bool:
@@ -724,7 +725,9 @@ def _lock_file_digests(source: str) -> dict[str, str]:
     return {key: value for key, value in files.items() if isinstance(key, str) and isinstance(value, str)}
 
 
-def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> dict[str, list[str]]:
+def _self_repin_failures(
+    root: Path, revision: str, changed_paths: set[str], repin_failures: dict[str, list[str]]
+) -> dict[str, list[str]]:
     """Reject changing a protected verifier and its own expected pins together.
 
     The expected values live in the same tree as the code they protect, so a
@@ -754,7 +757,7 @@ def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> 
                         "an implementation and its own expected value must not be repinned together"
                     )
 
-    for path, messages in _protected_repin_failures(root, revision).items():
+    for path, messages in repin_failures.items():
         failures.setdefault(path, []).extend(messages)
     return failures
 
@@ -786,7 +789,7 @@ def _sha256_text(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]:
+def _protected_repin_evaluation(root: Path, revision: str) -> tuple[dict[str, list[str]], dict[str, str]]:
     """Reject protected-artifact transitions that lack a signed, unconsumed authorization.
 
     Evaluation lives in ``far_validation.repin`` over git objects of ``HEAD`` (commit first;
@@ -795,6 +798,9 @@ def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]
     decision is the ``protected-repin-gate`` check published by the dedicated GitHub App.
     Repository placement never carries repin authority; only a signature under the pinned owner
     key does. ``FAR_REPIN_TARGET_PR`` binds authorizations to a pull request when set.
+
+    Returns the failures by path and, only when the whole evaluation passes, each signed
+    transition's path mapped to the exact digest its authorization names.
     """
     try:
         from . import repin
@@ -814,7 +820,7 @@ def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]
     try:
         trusted = git.blob(git.commit(revision), repin.ALLOWED_SIGNERS_PATH, label="base") or b""
     except repin.LedgerError as exc:
-        return {repin.ALLOWED_SIGNERS_PATH: [f"{exc}; failing closed"]}
+        return {repin.ALLOWED_SIGNERS_PATH: [f"{exc}; failing closed"]}, {}
     target = os.environ.get("FAR_REPIN_TARGET_PR")
     report = repin.evaluate(
         git, revision, "HEAD", allowed_signers=trusted,
@@ -822,7 +828,9 @@ def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]
         repository_id=int(os.environ["GITHUB_REPOSITORY_ID"]) if os.environ.get("GITHUB_REPOSITORY_ID") else None,
         target_pr=int(target) if target else None,
     )
-    return report.failures
+    if not report.successful:
+        return report.failures, {}
+    return {}, {transition["path"]: transition["new_sha256"] for transition in report.transitions}
 
 
 def _load_waivers(root: Path, revision: str) -> dict[str, dict[str, Any]]:
@@ -902,8 +910,10 @@ def compare_strength(before: StrengthMetrics, after: StrengthMetrics, *, is_test
 def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
     resolved = _resolve_base(root, base)
     waivers = _load_waivers(root, resolved)
+    signed_repin_failures, signed = _protected_repin_evaluation(root, resolved)
     findings: list[WeakeningFinding] = []
     used: list[str] = []
+    signed_used: list[str] = []
     for status, path in _changed_python(root, resolved):
         finding = WeakeningFinding(path=path)
         before_source = _show(root, resolved, path)
@@ -938,7 +948,13 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
             except SyntaxError:
                 finding.before = None
             if finding.before is not None:
-                finding.failures.extend(compare_strength(finding.before, finding.after, is_test=path.startswith("tests/")))
+                strength = compare_strength(finding.before, finding.after, is_test=path.startswith("tests/"))
+                if strength and signed.get(path) == _sha256_text(current_path.read_bytes()):
+                    # The owner signed exactly these bytes and the authorization verified unconsumed:
+                    # that, not a base waiver, authorizes this protected file's structural change.
+                    signed_used.append(path)
+                else:
+                    finding.failures.extend(strength)
         if finding.failures and path in waivers:
             waiver = waivers[path]
             if waiver.get("base") == resolved and isinstance(waiver.get("justification"), str) and len(waiver["justification"].strip()) >= 20:
@@ -948,7 +964,9 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
 
     # Applied after waivers: a waiver excuses a metric drop on one file, not a
     # change that rewrites the expected values guarding another file.
-    repin_failures = _self_repin_failures(root, resolved, {path for _status, path in _changed_python(root, resolved)})
+    repin_failures = _self_repin_failures(
+        root, resolved, {path for _status, path in _changed_python(root, resolved)}, signed_repin_failures
+    )
     if repin_failures:
         by_path = {finding.path: finding for finding in findings}
         for path, messages in repin_failures.items():
@@ -957,7 +975,7 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
                 finding = WeakeningFinding(path=path)
                 findings.append(finding)
             finding.failures.extend(messages)
-    return WeakeningReport(base=resolved, findings=findings, waivers_used=used)
+    return WeakeningReport(base=resolved, findings=findings, waivers_used=used, signed_transitions_used=signed_used)
 
 
 def main(argv: list[str] | None = None) -> int:
