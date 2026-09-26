@@ -119,7 +119,10 @@ _QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"')
 _OPEN_FLAGS = re.compile(r"\b(O_[A-Z0-9_|]+)\b")
 _PID_PREFIX = re.compile(r"^(?:(?:\[pid\s+(\d+)\])|(\d+))\s+")
 _CHILD_RESULT = re.compile(r"=\s+(\d+)\s*$")
+_FD_RESULT = re.compile(r"=\s+(\d+)(?:\s|$)")
 _FAILED_RESULT = re.compile(r"=\s+-1\b")
+_RESUMED = re.compile(r"^<\.\.\.\s+([A-Za-z0-9_]+)\s+resumed>(.*)$")
+_AT_CALLS = {"openat", "newfstatat", "unlinkat", "mkdirat", "readlinkat"}
 
 
 def _unescape(value: str) -> str:
@@ -136,15 +139,84 @@ def _split_pid(line: str) -> tuple[int, str]:
     return int(match.group(1) or match.group(2)), line[match.end():]
 
 
-def _at_path(call: str, stripped: str, quoted: list[str]) -> str | None:
+def _logical_strace_lines(text: str) -> list[str]:
+    """Reassemble strace's scheduler-dependent unfinished/resumed syscall pairs.
+
+    The combined syscall is ordered where it started, not where it resumed. This is essential for
+    fork/vfork/clone: the child can run before the parent prints the resumed result, but its inherited
+    cwd/fd state must already exist when the child events are interpreted.
+    """
+    pending: dict[int, tuple[int, str]] = {}
+    complete: list[tuple[int, str]] = []
+    for index, line in enumerate(text.splitlines()):
+        raw = line.strip()
+        pid, stripped = _split_pid(raw)
+        if "<unfinished ...>" in stripped:
+            prefix = stripped.split("<unfinished ...>", 1)[0].rstrip()
+            pending[pid] = (index, prefix)
+            continue
+        resumed = _RESUMED.match(stripped)
+        if resumed:
+            started = pending.pop(pid, None)
+            if started is not None:
+                start_index, prefix = started
+                complete.append((start_index, f"{pid} {prefix}{resumed.group(2)}"))
+            continue
+        complete.append((index, raw))
+    complete.sort(key=lambda item: item[0])
+    return [line for _index, line in complete]
+
+
+def _dirfd_token(stripped: str) -> str | None:
+    if "(" not in stripped:
+        return None
+    arguments = stripped.split("(", 1)[1]
+    return arguments.split(",", 1)[0].strip()
+
+
+def _path_from_call(
+    call: str,
+    stripped: str,
+    quoted: list[str],
+    current_cwd: Path,
+    fd_paths: dict[int, Path],
+) -> Path | None:
     if not quoted:
         return None
-    if call in {"openat", "newfstatat", "unlinkat", "mkdirat", "readlinkat", "renameat", "renameat2"}:
-        before_quote = stripped.split('"', 1)[0]
-        if "AT_FDCWD" not in before_quote and not Path(quoted[0]).is_absolute():
+    raw = quoted[0]
+    candidate = Path(raw)
+    if candidate.is_absolute():
+        return candidate.resolve(strict=False)
+    if call in _AT_CALLS:
+        token = _dirfd_token(stripped)
+        if token == "AT_FDCWD":
+            base = current_cwd
+        elif token is not None and token.lstrip("-").isdigit():
+            base = fd_paths.get(int(token))
+            if base is None:
+                return None
+        else:
             return None
-        return quoted[0]
-    return quoted[0]
+        return (base / candidate).resolve(strict=False)
+    return (current_cwd / candidate).resolve(strict=False)
+
+
+def _record_open_fd(
+    pid: int,
+    call: str,
+    stripped: str,
+    quoted: list[str],
+    current_cwd: Path,
+    fd_by_pid: dict[int, dict[int, Path]],
+) -> None:
+    if call not in {"open", "openat"} or _FAILED_RESULT.search(stripped):
+        return
+    result = _FD_RESULT.search(stripped)
+    if result is None:
+        return
+    path = _path_from_call(call, stripped, quoted, current_cwd, fd_by_pid.setdefault(pid, {}))
+    if path is not None:
+        fd_by_pid[pid][int(result.group(1))] = path
 
 
 def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
@@ -153,26 +225,44 @@ def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
     writes: set[str] = set()
     executables: set[str] = set()
     network: set[str] = set()
-    cwd_by_pid: dict[int, Path] = {0: cwd.resolve()}
+    initial_cwd = cwd.resolve()
+    cwd_by_pid: dict[int, Path] = {0: initial_cwd}
+    fd_by_pid: dict[int, dict[int, Path]] = {0: {}}
 
-    for line in text.splitlines():
+    for line in _logical_strace_lines(text):
         raw = line.strip()
         pid, stripped = _split_pid(raw)
-        current_cwd = cwd_by_pid.setdefault(pid, cwd.resolve())
-        if "<unfinished ...>" in stripped or "resumed>" in stripped:
-            continue
+        current_cwd = cwd_by_pid.setdefault(pid, initial_cwd)
+        current_fds = fd_by_pid.setdefault(pid, {})
         call = stripped.split("(", 1)[0].split()[-1] if "(" in stripped else ""
         quoted = [_unescape(item) for item in _QUOTED.findall(stripped)]
 
         if call in {"clone", "clone3", "fork", "vfork"}:
             child = _CHILD_RESULT.search(stripped)
             if child:
-                cwd_by_pid[int(child.group(1))] = current_cwd
+                child_pid = int(child.group(1))
+                cwd_by_pid[child_pid] = current_cwd
+                fd_by_pid[child_pid] = dict(current_fds)
             continue
         if call == "chdir" and quoted and not _FAILED_RESULT.search(stripped):
             new_cwd = _absolute_observed(quoted[0], current_cwd)
             if new_cwd is not None:
                 cwd_by_pid[pid] = new_cwd
+            continue
+        if call == "fchdir" and not _FAILED_RESULT.search(stripped):
+            match = re.match(r"fchdir\((\d+)\)", stripped)
+            if match:
+                new_cwd = current_fds.get(int(match.group(1)))
+                if new_cwd is not None:
+                    cwd_by_pid[pid] = new_cwd
+            continue
+        if call in {"dup", "dup2", "dup3"} and not _FAILED_RESULT.search(stripped):
+            args = stripped.split("(", 1)[1].split(")", 1)[0].split(",")
+            result = _FD_RESULT.search(stripped)
+            if args and args[0].strip().isdigit() and result:
+                source = current_fds.get(int(args[0].strip()))
+                if source is not None:
+                    current_fds[int(result.group(1))] = source
             continue
         if call == "execve" and quoted:
             if not _FAILED_RESULT.search(stripped):
@@ -191,11 +281,13 @@ def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
             "unlink", "unlinkat", "rename", "renameat", "renameat2", "mkdir", "mkdirat", "rmdir",
         }:
             continue
-        raw_path = _at_path(call, stripped, quoted)
-        if raw_path is None:
+
+        _record_open_fd(pid, call, stripped, quoted, current_cwd, fd_by_pid)
+        observed = _path_from_call(call, stripped, quoted, current_cwd, current_fds)
+        if observed is None:
             continue
-        relative = _normalize_observed(raw_path, current_cwd, root)
-        if relative is None:
+        relative = _inside(observed, root)
+        if relative in {None, "."}:
             continue
         is_write = call in {"unlink", "unlinkat", "rename", "renameat", "renameat2", "mkdir", "mkdirat", "rmdir"}
         flags = _OPEN_FLAGS.search(stripped)
@@ -240,7 +332,7 @@ def run_traced(
         "-s",
         "4096",
         "-e",
-        "trace=open,openat,newfstatat,stat,lstat,access,readlink,readlinkat,execve,connect,socket,sendto,recvfrom,unlink,unlinkat,rename,renameat,renameat2,mkdir,mkdirat,rmdir,clone,clone3,fork,vfork,chdir,fchdir",
+        "trace=open,openat,newfstatat,stat,lstat,access,readlink,readlinkat,execve,connect,socket,sendto,recvfrom,unlink,unlinkat,rename,renameat,renameat2,mkdir,mkdirat,rmdir,clone,clone3,fork,vfork,chdir,fchdir,dup,dup2,dup3",
         "-o",
         str(trace_path),
         "--",

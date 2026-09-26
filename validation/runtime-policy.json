@@ -28,6 +28,8 @@
     "python",
     "python3",
     "git",
+    "ssh-keygen",
+    "openssl",
     "bash",
     "sh",
     "make",

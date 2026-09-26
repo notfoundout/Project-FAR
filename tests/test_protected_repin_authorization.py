@@ -11,11 +11,13 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import unittest
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from far_validation import weakening
+from far_validation import repin_signature, weakening
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +40,13 @@ def sha256(data: bytes) -> str:
 class ProtectedRepinAuthorizationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.tmp = self.enterContext(__import__("tempfile").TemporaryDirectory())
-        self.repo = Path(self.tmp)
+        self.repo = Path(self.tmp) / "repo"
+        self.repo.mkdir()
+        # The owner's repin signing key; its public half is pinned on the base, as on main.
+        self.key = Path(self.tmp) / "owner"
+        subprocess.run(["ssh-keygen", "-q", "-t", "ecdsa", "-b", "256", "-N", "", "-C", "", "-f", str(self.key)], check=True)
+        kind, blob = self.key.with_suffix(".pub").read_text().split()[:2]
+        self.signers = f'{repin_signature.PRINCIPAL} namespaces="{repin_signature.NAMESPACE}" {kind} {blob}\n'.encode()
 
     def _run(self, *args: str) -> None:
         subprocess.run(["git", *args], cwd=self.repo, check=True, capture_output=True)
@@ -59,6 +67,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
             LOCK,
             (json.dumps({"schema_version": "1.0", "files": {rel: sha256(data) for rel, data in files.items()}}, indent=2) + "\n").encode("utf-8"),
         )
+        self._write(repin_signature.ALLOWED_SIGNERS_PATH, self.signers)
         self._write(
             WAIVERS,
             (json.dumps({"schema_version": "1.0", "waivers": [], "repin_authorizations": authorizations or []}, indent=2) + "\n").encode("utf-8"),
@@ -80,6 +89,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         self._run("commit", "-qm", message)
 
     def _repin_failures(self, base: str) -> dict[str, list[str]]:
+        os.environ.pop("FAR_REPIN_TARGET_PR", None)
         report = weakening.detect_weakening(self.repo, base=base)
         return {
             finding.path: [item for item in finding.failures if REPIN_MESSAGE in item or "authorization" in item]
@@ -272,8 +282,100 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
             ],
         )
         self._repin(POLICY, replacement)
-        self._commit()
+        self._commit("waiver-file authorization alone")
+        self._assert_rejected(base, POLICY)  # repository bytes cannot authorize
+
+        issued = datetime.now(timezone.utc).replace(microsecond=0) - timedelta(hours=1)
+        payload = repin_signature.canonical_bytes({
+            "schema": repin_signature.SCHEMA, "domain": repin_signature.DOMAIN, "id": "0" * 31 + "5", "repository": "notfoundout/Project-FAR",
+            "repository_id": 1283452680, "path": POLICY, "old_sha256": sha256(original), "new_sha256": sha256(replacement), "target_pr": 1,
+            "base_sha": base, "reason": "reviewed owner-signed authorization for this exact transition",
+            "issued_at": issued.strftime(repin_signature.TIME_FORMAT),
+            "expires_at": (issued + timedelta(days=14)).strftime(repin_signature.TIME_FORMAT),
+        })
+        (self.repo.parent / "payload").write_bytes(payload)
+        subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(self.key), "-n", repin_signature.NAMESPACE,
+                        str(self.repo.parent / "payload")], check=True, capture_output=True)
+        entry = {"payload": payload.decode(), "signature": (self.repo.parent / "payload.sig").read_text()}
+        self._write(
+            "validation/protected-repin-consumptions.json",
+            (json.dumps({"schema_version": "2.0", "consumptions": [entry]}, indent=2) + "\n").encode("utf-8"),
+        )
+        self._commit("owner-signed authorization consumed")
         self._assert_accepted(base, POLICY)
+
+    def _owner_authorize(self, base: str, rel: str, old: bytes, new: bytes, ident: str) -> None:
+        """Append an owner-signed authorization for exactly ``rel`` ``old``->``new``."""
+        issued = datetime.now(timezone.utc).replace(microsecond=0) - timedelta(hours=1)
+        payload = repin_signature.canonical_bytes({
+            "schema": repin_signature.SCHEMA, "domain": repin_signature.DOMAIN, "id": ident, "repository": "notfoundout/Project-FAR",
+            "repository_id": 1283452680, "path": rel, "old_sha256": sha256(old), "new_sha256": sha256(new), "target_pr": 1,
+            "base_sha": base, "reason": "reviewed owner-signed authorization for this exact transition",
+            "issued_at": issued.strftime(repin_signature.TIME_FORMAT),
+            "expires_at": (issued + timedelta(days=14)).strftime(repin_signature.TIME_FORMAT),
+        })
+        (self.repo.parent / "payload").write_bytes(payload)
+        (self.repo.parent / "payload.sig").unlink(missing_ok=True)
+        subprocess.run(["ssh-keygen", "-q", "-Y", "sign", "-f", str(self.key), "-n", repin_signature.NAMESPACE,
+                        str(self.repo.parent / "payload")], check=True, capture_output=True)
+        entry = {"payload": payload.decode(), "signature": (self.repo.parent / "payload.sig").read_text()}
+        self._write(
+            "validation/protected-repin-consumptions.json",
+            (json.dumps({"schema_version": "2.0", "consumptions": [entry]}, indent=2) + "\n").encode("utf-8"),
+        )
+
+    def _findings(self, base: str) -> tuple[weakening.WeakeningReport, dict[str, list[str]]]:
+        os.environ.pop("FAR_REPIN_TARGET_PR", None)
+        report = weakening.detect_weakening(self.repo, base=base)
+        return report, {finding.path: finding.failures for finding in report.findings}
+
+    GATE = "far_validation/example_gate.py"
+    STRONG_GATE = b"def gate(x):\n    if x < 0:\n        raise ValueError('negative')\n    if x > 10:\n        raise ValueError('large')\n    return x\n"
+    WEAK_GATE = b"def gate(x):\n    if x < 0:\n        raise ValueError('negative')\n    return x\n"
+
+    # P. the owner's signature over exact bytes, not a base waiver, authorizes a protected
+    # validator's structural change (a waiver would have to name its own merge commit as base).
+    def test_owner_signed_protected_validator_change_needs_no_base_waiver(self) -> None:
+        base = self._build_base({self.GATE: self.STRONG_GATE})
+        self._repin(self.GATE, self.WEAK_GATE)
+        self._commit("unsigned structural change")
+        report, failures = self._findings(base)
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[self.GATE]), failures)
+        self.assertEqual(report.signed_transitions_used, [])
+
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "6")
+        self._commit("owner-signed authorization consumed")
+        report, failures = self._findings(base)
+        self.assertEqual(failures[self.GATE], [])
+        self.assertEqual(report.signed_transitions_used, [self.GATE])
+        self.assertTrue(report.successful)
+
+    # Q. a signature over other bytes authorizes nothing, so the metric failure stands.
+    def test_signature_for_other_bytes_does_not_excuse_a_structural_change(self) -> None:
+        base = self._build_base({self.GATE: self.STRONG_GATE})
+        self._repin(self.GATE, b"def gate(x):\n    return x\n")
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "7")
+        self._commit()
+        report, failures = self._findings(base)
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[self.GATE]), failures)
+        self.assertTrue(any(UNAUTHORIZED in item for item in failures[self.GATE]), failures)
+        self.assertEqual(report.signed_transitions_used, [])
+
+    # R. a signed transition covers only its own path; an unprotected validator is unaffected.
+    def test_signed_transition_does_not_excuse_another_validator(self) -> None:
+        unprotected = "far_validation/other_gate.py"
+        self._build_base({self.GATE: self.STRONG_GATE})
+        self._write(unprotected, self.STRONG_GATE)
+        self._commit("unprotected validator")
+        base = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=self.repo, text=True).strip()
+        self._repin(self.GATE, self.WEAK_GATE)
+        self._write(unprotected, self.WEAK_GATE)
+        self._owner_authorize(base, self.GATE, self.STRONG_GATE, self.WEAK_GATE, "0" * 31 + "8")
+        self._commit()
+        report, failures = self._findings(base)
+        self.assertEqual(failures[self.GATE], [])
+        self.assertTrue(any("decision-branch count decreased" in item for item in failures[unprotected]), failures)
+        self.assertEqual(report.signed_transitions_used, [self.GATE])
 
     # L. locked artifact left untouched
     def test_unchanged_locked_artifact_is_accepted(self) -> None:
