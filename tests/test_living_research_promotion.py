@@ -35,6 +35,12 @@ class PromotionTests(unittest.TestCase):
     def reviews(self, rows): (self.root / "research/living/review-dispositions-v1.0.json").write_bytes(D({"reviewed_candidates":rows}))
     def candidate(self, source_key="doi:x"): return D({"authority":"Research","candidate_id":CID,"source_key":source_key,"lifecycle":{"stage":"DISCOVERED"}})
     def plan(self, files): return p.build(self.root, p.MemorySource(files, self.source), self.source, self.base)
+    def verify_fixture(self):
+        # verify() takes the CI ref from the environment. A synthetic fixture must be judged the
+        # same on every runner, including a workflow running on a real promotion branch.
+        with mock.patch.dict(os.environ):
+            os.environ.pop("GITHUB_HEAD_REF",None); os.environ.pop("GITHUB_REF_NAME",None)
+            return integrity.verify(self.root)
     def provenance(self):
         out={}
         for key in p.PROV_KEYS:
@@ -94,13 +100,13 @@ class PromotionTests(unittest.TestCase):
         (self.root/"docs/feature.md").write_text("feature\n"); subprocess.run(["git","add","docs/feature.md"],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","feature"],cwd=self.root,check=True); feature=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip()
         subprocess.run(["git","checkout","-q","-b","advance",base],cwd=self.root,check=True); (self.root/"docs").mkdir(exist_ok=True); (self.root/"docs/main.md").write_text("main\n"); subprocess.run(["git","add","docs/main.md"],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","advance"],cwd=self.root,check=True); advance=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip(); self.mainref(advance)
         subprocess.run(["git","checkout","-q","--detach",feature],cwd=self.root,check=True)
-        self.assertEqual([],integrity.verify(self.root))
+        self.assertEqual([],self.verify_fixture())
     def test_stale_promotion_branch_is_rejected(self):
         files=self.fixture(); plan=self.plan(files); base=plan["base_main_sha"]
         p.materialize(self.root,p.MemorySource(files,self.source),plan); subprocess.run(["git","add","-A"],cwd=self.root,check=True); p.precommit_seal(self.root,plan,refresh_main=False); subprocess.run(["git","commit","-qm","promotion","--no-verify"],cwd=self.root,check=True); promotion=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip()
         subprocess.run(["git","checkout","-q","-b","advance",base],cwd=self.root,check=True); (self.root/"docs/main-advance.md").write_text("main\n"); subprocess.run(["git","add","docs/main-advance.md"],cwd=self.root,check=True); subprocess.run(["git","commit","-qm","advance"],cwd=self.root,check=True); advance=subprocess.check_output(["git","rev-parse","HEAD"],cwd=self.root,text=True).strip(); self.mainref(advance)
         subprocess.run(["git","checkout","-q","--detach",promotion],cwd=self.root,check=True)
-        errors=integrity.verify(self.root); self.assertTrue(any("base is stale" in e for e in errors),errors)
+        errors=self.verify_fixture(); self.assertTrue(any("base is stale" in e for e in errors),errors)
     def test_valid_promotion_commit_passes_independent_head_verifier(self):
         files=self.fixture(); plan=self.plan(files)
         p.materialize(self.root,p.MemorySource(files,self.source),plan); subprocess.run(["git","add","-A"],cwd=self.root,check=True); p.precommit_seal(self.root,plan,refresh_main=False); subprocess.run(["git","commit","-qm","promotion","--no-verify"],cwd=self.root,check=True); branch="automation/living-promotion-"+self.source+"-"+plan["base_main_sha"]
