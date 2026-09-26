@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import copy
 import hashlib
-import importlib.util
 import json
 import re
 import sys
@@ -19,7 +18,11 @@ from tools.campaign_current_state import (  # noqa: E402
     manifest_hash_map,
 )
 from mechanization.far_mechanization.contract_v2 import (  # noqa: E402
-    validate_contract as current_validate_contract,
+    contract_sha256,
+    validate_contract,
+)
+from mechanization.far_mechanization.contract_v2_errata1 import (  # noqa: E402
+    validate_contract as validate_contract_errata1,
 )
 
 PROTOCOL_FREEZE_COMMIT = "3813b9e3eb49562bd8b9f4d3179c3d9536831de6"
@@ -35,6 +38,7 @@ SUPPLEMENT_PATH = (
 # Experimental inputs, outputs, and recorded results. These reflect what was actually frozen and
 # executed, so they may never be re-pointed at post-execution bytes through the supplement.
 PROTECTED_ARTIFACTS = frozenset({
+    "mechanization/far_mechanization/contract_v2.py",
     "schemas/far-contract-v2.schema.json",
     "research/results/pca-w4-domain-contracts/manifest.json",
     "research/results/pca-w6-empirical-audit-utility/execution-incidents.json",
@@ -57,13 +61,7 @@ PROTECTED_ARTIFACTS = frozenset({
     ),
 })
 SCHEMA_PATH = ROOT / "schemas/far-contract-v2.schema.json"
-LIVE_VERIFIER = "mechanization/far_mechanization/contract_v2.py"
-FROZEN_VERIFIER = "research/results/pca-w6-empirical-audit-utility/frozen-inputs/contract_v2.py"
-# The live far-ir/2.0 verifier was repaired after execution (duplicate quotient class ids, overlap,
-# freeze time, strict JSON intake). Its executed bytes are preserved byte-for-byte as a frozen
-# input: they must match the executed manifest digest and the protocol-base git blob, and W6 is
-# recomputed from them. The live path is then ordinary declared drift.
-FROZEN_INPUT_COPIES = {LIVE_VERIFIER: FROZEN_VERIFIER}
+VERIFIER_PATH = ROOT / "mechanization/far_mechanization/contract_v2.py"
 
 EXPECTED_DOMAINS = (
     "argumentation",
@@ -105,25 +103,8 @@ EXPECTED_W4_RECORDS = (
 # validator, and upstream jsonschema 4.22.0 (docs/audits/root-of-trust-audit-2026-09.md).
 EXPECTED_PROTOCOL_BASE_BLOBS = {
     "schemas/far-contract-v2.schema.json": "e424359f804d268210e0f65fdf2fd28efc7e616b",
-    FROZEN_VERIFIER: "31a4c00dcbee9adfe9e7c19fcacb4c04578e3b61",
+    "mechanization/far_mechanization/contract_v2.py": "31a4c00dcbee9adfe9e7c19fcacb4c04578e3b61",
 }
-
-
-def _load_frozen_verifier():
-    spec = importlib.util.spec_from_file_location("pca_w6_frozen_contract_v2", ROOT / FROZEN_VERIFIER)
-    if spec is None or spec.loader is None:
-        raise ValueError(f"cannot load frozen W6 verifier {FROZEN_VERIFIER}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module  # dataclasses resolve their defining module by name
-    spec.loader.exec_module(module)
-    # The executed module locates the schema relative to its own original path.
-    module.SCHEMA_PATH = SCHEMA_PATH
-    return module
-
-
-_FROZEN = _load_frozen_verifier()
-contract_sha256 = _FROZEN.contract_sha256
-validate_contract = _FROZEN.validate_contract
 
 EXPECTED_ARTIFACTS = (
     ".github/workflows/pca-w6.yml",
@@ -339,8 +320,18 @@ def inject_registered_collision(document: Mapping[str, Any]) -> dict[str, Any]:
     return mutant
 
 
-def current_verifier_divergence() -> list[str]:
-    """The repaired live verifier must reproduce every W6 item outcome of the executed verifier."""
+def validate_registered_corpus_manifest(manifest: Mapping[str, Any]) -> None:
+    for key, expected in EXPECTED_W4_MANIFEST_METADATA.items():
+        if manifest.get(key) != expected:
+            raise ValueError(
+                f"registered W4 manifest metadata drift: {key}: expected={expected!r} actual={manifest.get(key)!r}"
+            )
+    if manifest.get("records") != list(EXPECTED_W4_RECORDS):
+        raise ValueError("registered W4 record projection drifted from the protocol-base corpus")
+
+
+def errata_verifier_divergence() -> list[str]:
+    """W6 is recomputed with the executed verifier; errata 1 must reproduce every W6 item outcome."""
     errors: list[str] = []
     for domain, paths in sorted(_record_groups().items()):
         repaired = json.loads(paths["repaired"].read_text(encoding="utf-8"))
@@ -350,21 +341,11 @@ def current_verifier_divergence() -> list[str]:
             ("mutant", inject_registered_collision(repaired)),
             ("native-lossy", lossy),
         ):
-            frozen = [d.code for d in validate_contract(document).diagnostics]
-            current = [d.code for d in current_validate_contract(document).diagnostics]
-            if frozen != current:
-                errors.append(f"W6 current verifier diverges on {domain} {label}: executed={frozen} current={current}")
+            executed = [d.code for d in validate_contract(document).diagnostics]
+            corrected = [d.code for d in validate_contract_errata1(document).diagnostics]
+            if executed != corrected:
+                errors.append(f"W6 errata verifier diverges on {domain} {label}: executed={executed} errata1={corrected}")
     return errors
-
-
-def validate_registered_corpus_manifest(manifest: Mapping[str, Any]) -> None:
-    for key, expected in EXPECTED_W4_MANIFEST_METADATA.items():
-        if manifest.get(key) != expected:
-            raise ValueError(
-                f"registered W4 manifest metadata drift: {key}: expected={expected!r} actual={manifest.get(key)!r}"
-            )
-    if manifest.get("records") != list(EXPECTED_W4_RECORDS):
-        raise ValueError("registered W4 record projection drifted from the protocol-base corpus")
 
 
 def _record_groups() -> dict[str, dict[str, Path]]:
@@ -622,9 +603,7 @@ def manifest_errors(manifest: object) -> list[str]:
             continue
         present_hashes[rel] = digest
     errors.extend(
-        artifact_hash_errors(
-            ROOT, present_hashes, SUPPLEMENT_PATH, PROTECTED_ARTIFACTS, "W6", FROZEN_INPUT_COPIES
-        )
+        artifact_hash_errors(ROOT, present_hashes, SUPPLEMENT_PATH, PROTECTED_ARTIFACTS, "W6")
     )
     return errors
 
@@ -674,9 +653,9 @@ def main() -> int:
     errors.extend(verify_manifest())
     errors.extend(verify_no_transient_artifacts())
     try:
-        errors.extend(current_verifier_divergence())
+        errors.extend(errata_verifier_divergence())
     except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as exc:
-        errors.append(f"W6 current-verifier comparison blocked: {exc}")
+        errors.append(f"W6 errata-verifier comparison blocked: {exc}")
     if errors:
         print("\n".join(errors))
         return 1

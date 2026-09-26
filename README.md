@@ -146,7 +146,7 @@ W3 contract-schema conformance and current `far-ir/2.0` verification ([current v
 ```bash
 python -m mechanization.far_mechanization.contract_conformance
 python -m mechanization.far_mechanization.contract_conformance --manifest conformance/far-ir-2.0-current/manifest.json
-python -m unittest tests.test_far_contract_v2 tests.test_far_contract_v2_strict tests.test_contract_v2_verifier_authority
+python -m unittest tests.test_far_contract_v2 tests.test_far_contract_v2_strict tests.test_far_contract_v2_errata1 tests.test_contract_v2_verifier_authority
 ```
 
 W4 domain-contract recomputation:

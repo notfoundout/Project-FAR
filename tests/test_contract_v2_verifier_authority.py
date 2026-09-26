@@ -3,7 +3,7 @@
 Every tracked file that imports, dynamically loads, or invokes the frozen baseline
 ``contract_v2`` must be declared in ``verifier_authority.HISTORICAL_BASELINE_CONSUMERS``.
 Anything else, including any new tool, CLI, workflow, document command, or campaign, has to use
-``contract_v2_strict``. Registry entries must stay live, so a stale allowance cannot quietly
+current verification, ``contract_v2_strict_v11``. Registry entries must stay live, so a stale allowance cannot quietly
 cover a future baseline use.
 """
 from __future__ import annotations
@@ -89,6 +89,9 @@ class VerifierAuthorityTests(unittest.TestCase):
             "python -m mechanization.far_mechanization.contract_v2_strict RECORD --json",
             "from mechanization.far_mechanization.contract_v21 import validate_contract",
             '_FORMATS = {"far-ir/2.0": ("contract_v2_strict", "schema.json")}',
+            "from .contract_v2_strict_v11 import load_and_validate",
+            "from mechanization.far_mechanization import contract_v2_errata1, contract_v21_errata1",
+            '_FORMATS = {"far-ir/2.0": ("contract_v2_strict_v11", "schema.json")}',
             "shared = root / 'mechanization' / 'far_mechanization' / 'contract_v2.py'",
         ]
         for text in baseline:
@@ -98,12 +101,12 @@ class VerifierAuthorityTests(unittest.TestCase):
             with self.subTest(current=text):
                 self.assertFalse(any(p.search(text) for p in BASELINE_PATTERNS))
 
-    def test_current_surfaces_use_strict_verifier(self) -> None:
+    def test_current_surfaces_use_current_verifier(self) -> None:
         current_surfaces = {
-            "mechanization/far_mechanization/contract_conformance.py": "from .contract_v2_strict import load_and_validate",
-            "mechanization/far_mechanization/migrate_v1_to_v2.py": "from .contract_v2_strict import",
-            "tools/check_pca_w4_domain_contracts.py": "far_mechanization.contract_v2_strict import",
-            "commercial/far-decision-integrity/src/far_decision_integrity/semantic_audit.py": '"far-ir/2.0": ("contract_v2_strict",',
+            "mechanization/far_mechanization/contract_conformance.py": "from .contract_v2_strict_v11 import load_and_validate",
+            "mechanization/far_mechanization/migrate_v1_to_v2.py": "from .contract_v2_strict_v11 import",
+            "tools/check_pca_w4_domain_contracts.py": "far_mechanization.contract_v2_strict_v11 import",
+            "commercial/far-decision-integrity/src/far_decision_integrity/semantic_audit.py": '"far-ir/2.0": ("contract_v2_strict_v11",',
         }
         for path, needle in current_surfaces.items():
             with self.subTest(path=path):

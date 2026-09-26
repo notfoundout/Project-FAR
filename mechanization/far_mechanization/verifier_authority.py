@@ -1,8 +1,9 @@
 """Which far-ir/2.0 verifier each tracked file may use.
 
-Current verification is ``contract_v2_strict``. The frozen baseline ``contract_v2`` stays
-byte-identical for historical provenance, and direct use of it is limited to the consumers
-declared here. ``tests/test_contract_v2_verifier_authority.py`` scans every tracked file and
+Current verification is ``contract_v2_strict_v11`` (rule v1.1). The frozen baseline ``contract_v2``
+stays byte-identical for historical provenance, and direct use of it is limited to the consumers
+declared here. Rule v1.0, ``contract_v2_strict``, also stays byte-identical because the ``EFR-001``
+comparator amendment v2.0 binds it. ``tests/test_contract_v2_verifier_authority.py`` scans every tracked file and
 fails if a file outside this registry imports, dynamically loads, or invokes the baseline, or if
 a registered consumer no longer references it.
 
@@ -10,12 +11,13 @@ See ``docs/specification/far-ir-2.0-current-verification.md``.
 """
 from __future__ import annotations
 
-CURRENT_FAR_IR_2_0_VERIFIER = "mechanization.far_mechanization.contract_v2_strict"
+CURRENT_FAR_IR_2_0_VERIFIER = "mechanization.far_mechanization.contract_v2_strict_v11"
 FROZEN_FAR_IR_2_0_BASELINE = "mechanization.far_mechanization.contract_v2"
 
 REASONS = frozenset({
     "baseline_self",
     "strict_wrapper",
+    "errata_successor",
     "historical_pca_w6_protocol",
     "historical_efr_001_v1_0",
     "baseline_regression_test",
@@ -27,6 +29,7 @@ REASONS = frozenset({
 HISTORICAL_BASELINE_CONSUMERS: dict[str, str] = {
     "mechanization/far_mechanization/contract_v2.py": "baseline_self",
     "mechanization/far_mechanization/contract_v2_strict.py": "strict_wrapper",
+    "mechanization/far_mechanization/contract_v2_errata1.py": "errata_successor",
     "mechanization/far_mechanization/verifier_authority.py": "authority_enforcement",
     "tests/test_contract_v2_verifier_authority.py": "authority_enforcement",
     "tools/check_pca_w6_empirical_audit_utility.py": "historical_pca_w6_protocol",
@@ -37,6 +40,8 @@ HISTORICAL_BASELINE_CONSUMERS: dict[str, str] = {
     "tests/test_efr_u1_projection.py": "historical_efr_001_v1_0",
     "tests/test_far_contract_v2.py": "baseline_regression_test",
     "tests/test_far_contract_v2_strict.py": "baseline_regression_test",
+    "tests/test_far_contract_v2_errata1.py": "baseline_regression_test",
+    "tests/test_local_jsonschema_keyword_coverage.py": "baseline_regression_test",
     "tests/test_efr_comparator_amendment.py": "baseline_regression_test",
     "tests/test_far_contract_diagnostic_codes.py": "vocabulary_publication",
 }

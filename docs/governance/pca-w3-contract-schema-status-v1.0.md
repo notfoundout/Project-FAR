@@ -27,7 +27,7 @@ No governing core proposition is changed or reopened.
 
 ## Current verification (added 2026-09-23)
 
-The delivered `contract_v2.py` verifier recomputes a claim only for `CHECKED_FINITE_EXPLICIT` evidence, so it accepts a `PROVED` or `REFUTED` outcome backed by `DECLARED_UNCHECKED` evidence even when the record's tables contradict it (`LIM-047`). It stays byte-identical as historical provenance. Current verification, including the conformance runner and migration listed above, uses [`contract_v2_strict.py`](../../mechanization/far_mechanization/contract_v2_strict.py) under the [current verification rule](../specification/far-ir-2.0-current-verification.md). This note changes no W3 deliverable, result, or status.
+The delivered `contract_v2.py` verifier recomputes a claim only for `CHECKED_FINITE_EXPLICIT` evidence, so it accepts a `PROVED` or `REFUTED` outcome backed by `DECLARED_UNCHECKED` evidence even when the record's tables contradict it (`LIM-047`). It stays byte-identical as historical provenance. Current verification, including the conformance runner and migration listed above, uses [`contract_v2_strict_v11.py`](../../mechanization/far_mechanization/contract_v2_strict_v11.py) under the [current verification rule](../specification/far-ir-2.0-current-verification.md) v1.1, which also applies [errata 1](../specification/far-ir-2.0-errata-1.md). This note changes no W3 deliverable, result, or status.
 
 ## Required W3 dimensions
 

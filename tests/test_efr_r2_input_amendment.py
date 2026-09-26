@@ -25,10 +25,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 FREEZE = ROOT / "theory/evaluation/external-falsification-and-replication-input-freeze-v1.0.json"
 PROGRAM = ROOT / "theory/evaluation/external-falsification-and-replication-program-v1.0.json"
-# v1.2 is the current R2 input binding; v1.1 is preserved unmodified as superseded history.
-AMENDMENT = ROOT / "theory/evaluation/external-falsification-and-replication-r2-input-amendment-v1.2.json"
-AMENDMENT_DOC = ROOT / "docs/governance/external-falsification-and-replication-r2-input-amendment-v1.2.md"
-SUPERSEDED_AMENDMENT = ROOT / "theory/evaluation/external-falsification-and-replication-r2-input-amendment-v1.1.json"
+AMENDMENT = ROOT / "theory/evaluation/external-falsification-and-replication-r2-input-amendment-v1.1.json"
+AMENDMENT_DOC = ROOT / "docs/governance/external-falsification-and-replication-r2-input-amendment-v1.1.md"
 
 EXPECTED_R2_PACKAGE = {
     "docs/specification/far-ir-2.0-contract.md",
@@ -98,24 +96,10 @@ class EFRR2InputAmendmentTests(unittest.TestCase):
         self.assertIn("MUST NOT execute", consequence["rule"])
         text = AMENDMENT_DOC.read_text(encoding="utf-8")
         self.assertIn(
-            "**`EFR-R2` MUST NOT execute against the v1.2-corrected specifications under "
-            "amendment v1.1 or the unamended v1.0 freeze.**",
+            "**`EFR-R2` MUST NOT execute against the corrected specifications under the "
+            "unamended v1.0 freeze.**",
             text,
         )
-
-    def test_superseded_amendment_is_preserved_and_named(self) -> None:
-        """v1.2 supersedes only v1.1's bound package; v1.1 stays intact and schemas stay baseline."""
-        superseded = load(SUPERSEDED_AMENDMENT)
-        self.assertEqual(superseded["amendment_id"], "EFR-001-R2-INPUT-AMENDMENT-1.1")
-        record = self.amendment["superseded_amendment"]
-        self.assertEqual(record["amendment_id"], superseded["amendment_id"])
-        self.assertEqual(ROOT / record["path"], SUPERSEDED_AMENDMENT)
-        self.assertTrue(record["preserved_unmodified"])
-        old = {e["path"]: e["git_blob_sha"] for e in superseded["bound_specification_package"]}
-        new = {e["path"]: e["git_blob_sha"] for e in self.amendment["bound_specification_package"]}
-        self.assertEqual(set(old), set(new))
-        for path in ("schemas/far-contract-v2.schema.json", "schemas/far-contract-v2.1.schema.json"):
-            self.assertEqual(old[path], new[path])
 
     def test_canonical_pre_execution_state_matches_frozen_authorities(self) -> None:
         """Fail closed if canonical EFR authority no longer records the pre-execution state."""

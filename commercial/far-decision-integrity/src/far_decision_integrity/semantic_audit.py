@@ -10,10 +10,16 @@ from pathlib import Path
 from typing import Any, Callable
 
 _SUPPORTED_FORMATS = {
-    # far-ir/2.0 uses the current strict verifier: a PROVED/REFUTED outcome is accepted only
-    # when the verifier recomputed it. The frozen contract_v2.py baseline is bound as a shared artifact.
-    "far-ir/2.0": ("contract_v2_strict", "schemas/far-contract-v2.schema.json"),
-    "far-ir/2.1": ("contract_v21", "schemas/far-contract-v2.1.schema.json"),
+    # far-ir/2.0 uses current verification rule v1.1: errata 1, and a PROVED/REFUTED outcome is
+    # accepted only when the verifier recomputed it. far-ir/2.1 uses its errata 1 successor. The
+    # frozen contract_v2.py baseline is bound as a shared artifact, and every module the loaded
+    # verifier wraps is bound as a wrapped artifact.
+    "far-ir/2.0": ("contract_v2_strict_v11", "schemas/far-contract-v2.schema.json"),
+    "far-ir/2.1": ("contract_v21_errata1", "schemas/far-contract-v2.1.schema.json"),
+}
+_WRAPPED_VERIFIERS = {
+    "far-ir/2.0": ("contract_v2_errata1", "contract_v2_strict"),
+    "far-ir/2.1": ("contract_v21",),
 }
 _SUPPORTED_PURPOSES = {
     "exact_sufficiency",
@@ -453,6 +459,13 @@ def _load_validator(format_version: str) -> _ValidatorBundle:
                     f"{format_version} requires shared exact verifier {shared}, which is missing."
                 )
             artifacts.append(_artifact("shared-exact-verifier", shared, root))
+        for wrapped_name in _WRAPPED_VERIFIERS.get(format_version, ()):
+            wrapped = root / "mechanization" / "far_mechanization" / f"{wrapped_name}.py"
+            if not wrapped.is_file():
+                raise SemanticVerifierUnavailable(
+                    f"{format_version} verifier wraps {wrapped}, which is missing."
+                )
+            artifacts.append(_artifact("wrapped-verifier", wrapped, root))
         return _ValidatorBundle(validate=validate, artifacts=tuple(artifacts))
 
     locations = ", ".join(str(path) for path in searched)

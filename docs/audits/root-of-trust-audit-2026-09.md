@@ -1,6 +1,6 @@
 # Root-of-Trust Audit 2026-09
 
-Status: **Research — root-of-trust audit record. It repairs verifiers, validators, and tooling; it changes no core-theory claim and upgrades no assurance dimension.**
+Status: **Research — root-of-trust audit record. It repairs validators and tooling, and corrects the frozen reference verifiers through versioned successors; it changes no core-theory claim and upgrades no assurance dimension.**
 
 Date: 2026-09-25
 
@@ -61,13 +61,13 @@ Status vocabulary:
 |---|---|---|---|---|---|---|---|---|---|
 | R0 | FAR-CORE-001, 002, 003, 004 and 011 hold as stated. | 0 | W1 review; W2 Lean. | Statement-by-statement comparison of Lean with the prose; the Lean kernel in CI run `36149124911`, which compiled every W2 module. | Checked each statement for vacuity, special-casing, and hypotheses that restate the conclusion. | None. The FAR-CORE-002 isomorphism statement does not state commutation with the projections. | — | These are standard results (calibration audit). | ESTABLISHED at the Lean statements |
 | R1 | The local `jsonschema` is a Draft 2020-12 validator (it reported upstream version `4.22.0`). | 0 | Tests of implemented keywords; a version-string test. | Upstream `jsonschema` 4.22.0; the JSON Schema 2020-12 and ECMA-262 specs. | Keyword census of 41 schemas; 627-pair differential; probes P3, P5–P7. | It silently ignored `if`/`then`/`else`, `propertyNames`, `anyOf`, `not`, `contains`, `$ref` siblings, and unknown types. Python `$` and `.` semantics were used. | Implemented those keywords, ECMA `$`/`.`, and fail-closed schema checking. Version is now `4.22.0+far.local`. | Pre-audit committed documents: 0 disagreements before and after. The only disagreement is the audit's own ADV-50, where the local validator applies ECMA-262 `$` and upstream python-jsonschema does not. | FALSIFIED → repaired |
-| R2 | The far-ir/2.0 verifier certifies an exact observational quotient only for the β-kernel partition (§3.3). | 1 | 4 conformance fixtures; unit tests. | Specification-only oracle (74 records); hand-derived partitions. | P1 and ADV-70 (repeated class ids); ADV-27 (overlap). | Classes were keyed by id: `{a},{b},{c,d}` with ids `k,k,y` was certified **PROVED** exact. An exact partition with a repeated id was rejected. Overlap produced relations from an arbitrary assignment. | Classes are identified by position. Added `DUPLICATE_QUOTIENT_CLASS`. Overlap now yields `QUOTIENT_NOT_PARTITION` and stops. | None known. | FALSIFIED → repaired |
-| R3 | The verifier accepts only well-formed JSON. | 1 | None. | RFC 8259. | NaN; duplicate `outcome` keys. | Both records were **PASS**. With duplicate keys, a first-wins parser reads `REFUTED` where the verifier certified `PROVED`. | Strict intake: `UNREADABLE_CONTRACT`. In-memory non-finite numbers: `SCHEMA_CONSTRAINT_VIOLATION`. | The far-ir/2.1 intake remains lenient (see R5 residual). | FALSIFIED → repaired (2.0) |
-| R4 | A `FROZEN` record carries an RFC 3339 freeze time (§5). | 1 | A schema `if/then` that was never enforced. | Spec text. | `frozen_at: null`; a non-RFC 3339 string. | Both accepted. | The schema `if/then` is now enforced; added `FREEZE_TIME_INVALID`. | Leap seconds are rejected (conservative). | FALSIFIED → repaired |
-| R5 | far-ir/2.1 diagnostics are a normative, deterministic sequence. | 2 | Spec text; sequence tests run under one seed. | `PYTHONHASHSEED` variation. | Probe record under 8 seeds. | `METRIC_LOSS_DOMAIN_MISMATCH` and `LOSS_METRIC_MISMATCH` swapped order in 4 of 8 seeds. Cause: Python set iteration. | First-occurrence order. Output on 4122 audit records is unchanged. | far-ir/2.1 intake still accepts NaN and duplicate keys; its numeric fields are schema-restricted to rational strings. | FALSIFIED → repaired |
-| R6 | far-ir/2.1 W5 semantics (metrics, loss, tolerance, Pareto vs least, exact recovery). | 2 | Conformance fixtures; W5 checker. | Specification-only two-route oracle. | 48 adversarial records; 4000 random records. | No semantic defect. The published metric-axiom order was ambiguous: 1211 of 4000 records differed in order only. | The specification now states the interleaved order, checked on 1218 records. | `ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE` is unreachable (a tautology given the earlier checks). | ESTABLISHED at scope; spec BOUNDED → clarified |
-| R7 | The far-ir/2.0 specification determines the reference output (needed by EFR-R2). | 1 | Amendment v1.1. | The specification-only oracle. | Differential comparison. | Canonical JSON, value equality, and pair iteration order were undefined. `DECLARED_UNCHECKED` + `PROVED` passes without saying so. | The specification now defines them. | None known. | BOUNDED → clarified |
-| R8 | W6: "blob pins prevent the schema-only and FAR-semantic lanes from silently changing after freeze." | 3 | The checker comment. | Git history. | Validator blob at protocol base `2cecf2e` vs `HEAD`. | The validator that runs the schema-only lane was never pinned and changed 4 times after the freeze. | Corrected the comment. The executed verifier bytes are preserved and W6 recomputes from them. | — | FALSIFIED (claim) |
+| R2 | The far-ir/2.0 verifier certifies an exact observational quotient only for the β-kernel partition (§3.3). | 1 | 4 conformance fixtures; unit tests. | Specification-only oracle (74 records); hand-derived partitions. | P1 and ADV-70 (repeated class ids); ADV-27 (overlap). | Classes were keyed by id: `{a},{b},{c,d}` with ids `k,k,y` was certified **PROVED** exact. An exact partition with a repeated id was rejected. Overlap produced relations from an arbitrary assignment. | Errata 1 successor (`contract_v2_errata1`): classes are identified by position; added `DUPLICATE_QUOTIENT_CLASS`; overlap yields `QUOTIENT_NOT_PARTITION` and stops. The frozen `contract_v2.py` is unchanged. | None known. | FALSIFIED → repaired |
+| R3 | The verifier accepts only well-formed JSON. | 1 | None. | RFC 8259. | NaN; duplicate `outcome` keys. | Both records were **PASS**. With duplicate keys, a first-wins parser reads `REFUTED` where the verifier certified `PROVED`. | Errata 1 successor: strict intake yields `UNREADABLE_CONTRACT`; in-memory non-finite numbers yield `SCHEMA_CONSTRAINT_VIOLATION`. | The far-ir/2.1 intake remains lenient (see R5 residual). | FALSIFIED → repaired (2.0) |
+| R4 | A `FROZEN` record carries an RFC 3339 freeze time (§5). | 1 | A schema `if/then` that was never enforced. | Spec text. | `frozen_at: null`; a non-RFC 3339 string. | Both accepted. | The schema `if/then` is now enforced; the errata 1 successor adds `FREEZE_TIME_INVALID`. | Leap seconds are rejected (conservative). | FALSIFIED → repaired |
+| R5 | far-ir/2.1 diagnostics are a normative, deterministic sequence. | 2 | Spec text; sequence tests run under one seed. | `PYTHONHASHSEED` variation. | Probe record under 8 seeds. | `METRIC_LOSS_DOMAIN_MISMATCH` and `LOSS_METRIC_MISMATCH` swapped order in 4 of 8 seeds. Cause: Python set iteration. | Errata 1 successor (`contract_v21_errata1`) puts the loss checks in first-occurrence order; the executed `contract_v21.py` is unchanged. Output on 4122 audit records is unchanged. | far-ir/2.1 intake still accepts NaN and duplicate keys; its numeric fields are schema-restricted to rational strings. | FALSIFIED → repaired |
+| R6 | far-ir/2.1 W5 semantics (metrics, loss, tolerance, Pareto vs least, exact recovery). | 2 | Conformance fixtures; W5 checker. | Specification-only two-route oracle. | 48 adversarial records; 4000 random records. | No semantic defect. The published metric-axiom order was ambiguous: 1211 of 4000 records differed in order only. | `far-ir/2.1` errata 1 states the interleaved order, checked on 1218 records. | `ZERO_TOLERANCE_EXACT_BOUNDARY_FAILURE` is unreachable (a tautology given the earlier checks). | ESTABLISHED at scope; spec BOUNDED → clarified |
+| R7 | The far-ir/2.0 specification determines the reference output (needed by EFR-R2). | 1 | Amendment v1.1. | The specification-only oracle. | Differential comparison. | Canonical JSON, value equality, and pair iteration order were undefined. `DECLARED_UNCHECKED` + `PROVED` passes without saying so. | `far-ir/2.0` errata 1 defines them. | None known. | BOUNDED → clarified |
+| R8 | W6: "blob pins prevent the schema-only and FAR-semantic lanes from silently changing after freeze." | 3 | The checker comment. | Git history. | Validator blob at protocol base `2cecf2e` vs `HEAD`. | The validator that runs the schema-only lane was never pinned and changed 4 times after the freeze. | Corrected the comment. The executed verifier stays byte-identical at its pinned path and W6 recomputes from it. | — | FALSIFIED (claim) |
 | R9 | W6 result: schema-only 0/6, FAR audit 6/6, clean 6/6, oracle 12/12. | 3 | W6 checker; table oracle. | Own mutation; exact-rational equality; three validators. | Reproduced under the protocol-base, current, and upstream validators. | None. The result is fixed by construction (as the existing calibration audit states). | — | Not empirical utility. | ESTABLISHED at scope (a conformance result) |
 | R10 | W4: six lossy collisions and six repaired factorizations. | 3 | W4 native recomputers. | Hand derivation of all 12 records. | — | None. These are two-case textbook examples. | — | Not open-domain evidence. | ESTABLISHED at scope |
 | R11 | FAR-CORE-014 MLL bridge "end to end … without adding a narrative premise". | 0 | Ledger `FORMALIZED`; axiom audit. | Reading the Lean statements. | Compared the theorem types at `FARCoreV11SSS.lean:99` and `:366`. | `bounded_projected_decoder_failure` restated the summary lemma. The witness facts were discarded (`have _`), yet they changed the axiom fingerprint. | Added `summaries_match_mll_witnesses` and `mll_projected_decoder_failure`; corrected the docstring. | Kernel-checked in CI run `36149124911` (§6). | FALSIFIED (wording) → repaired |
@@ -95,43 +95,45 @@ The validator is used for every schema check and ships in the wheel.
 
 ### 4.2 far-ir/2.0 verifier (R2–R4, R7)
 
-`contract_v2.py` now:
+`contract_v2.py` stays byte-identical. It is the git-blob-pinned `PCA-W6` protocol base and the `EFR-001` v1.0 baseline command, and `contract_v2_strict` (bound by `EFR-001` comparator amendment v2.0) wraps it. The corrections are successor material instead: [`far-ir/2.0` errata 1](../specification/far-ir-2.0-errata-1.md) states them, and `contract_v2_errata1.py` implements them on top of the baseline's own stage functions. The successor:
 
 - identifies quotient classes by position and rejects repeated ids;
 - treats overlap as non-partition;
 - rejects non-JSON constants and duplicate keys;
 - checks the RFC 3339 freeze time.
 
+Current verification moves to [rule v1.1](../specification/far-ir-2.0-current-verification.md), `contract_v2_strict_v11`. Rule v1.1 is errata 1 plus rule v1.0's determinate-outcome check, taken unchanged. The conformance runner, migration, the W4 checker, and the commercial semantic audit use it.
+
 Blast radius:
 
-- **Committed records.** No far-ir/2.0 record uses repeated class ids, overlap, NaN, duplicate keys, or a bad freeze time. W3 conformance (4/4), W4 (12 records), and W6 give identical results.
-- **Specification and vocabulary.** The specification (§3, §3.3, §5, §9) and `diagnostic_vocabulary.py` publish the new rules.
-- **Regression.** `FARContractV2RootOfTrustRegressionTests` in `tests/test_far_contract_v2.py`, with hand-derived sequences. All six tests fail against the old verifier.
+- **Committed records.** Across every tracked `far-ir/2.0` record, the errata 1 and baseline verifiers agree, and so do rules v1.1 and v1.0, except on the four audit adversarial records built to trigger these defects (ADV-27, ADV-51, ADV-56, ADV-70). W3 conformance (4/4), W4 (12 records), and W6 give identical results.
+- **Equivalence with the first repair.** An earlier revision of this audit edited `contract_v2.py` in place. The successor reproduces that edit's codes and messages on all 94 tracked records and on 3000 random quotient and freeze-time mutations.
+- **Specification and vocabulary.** The frozen specification is unchanged. Errata 1 and `FAR_IR_2_0_ERRATA_1_DIAGNOSTIC_CODES` publish the new rules.
+- **Regression.** `tests/test_far_contract_v2_errata1.py`, with hand-derived sequences.
 
 ### 4.3 far-ir/2.1 verifier (R5, R6)
 
-- **Code.** `contract_v21.py` iterates required-behavior values in first-occurrence order.
-- **Specification.** It now states the exact metric-axiom and loss-check order.
-- **Regression.** `tests/test_far_contract_v21_determinism.py` runs 6 hash seeds in subprocesses. It fails on 4 of them against the executed verifier.
+- **Code.** `contract_v21.py` stays byte-identical because the W5 manifest pins its SHA-256. `contract_v21_errata1.py` runs it unchanged and puts only the loss-check diagnostics into first-occurrence order. It matches an earlier in-place repair on 2000 random records under 3 hash seeds, 1796 of which carry two or more loss-check diagnostics.
+- **Specification.** [`far-ir/2.1` errata 1](../specification/far-ir-2.1-errata-1.md) states the exact metric-axiom and loss-check order. The frozen specification is unchanged.
+- **Regression.** `tests/test_far_contract_v21_determinism.py` runs 6 hash seeds in subprocesses. The successor gives one order under every seed. The executed verifier gives both orders; the test asserts this, so the defect stays demonstrated.
 
 ### 4.4 Frozen campaign inputs (authority conflict resolved explicitly)
 
-W6 (`contract_v2.py`) and W5 (`contract_v21.py`) protected their verifiers by path. As a result, no defect in the canonical verifiers could ever be repaired.
+W6 protects `contract_v2.py` and W5 protects `contract_v21.py` by path, so neither can be repaired in place.
 
-The audit resolved this without rewriting any executed manifest:
+The audit therefore corrects them through versioned successors and rewrites no executed manifest or protected path:
 
-1. The executed bytes are preserved byte-for-byte at:
-   - `research/results/pca-w6-empirical-audit-utility/frozen-inputs/contract_v2.py` (git blob `31a4c00d`, sha256 `579f9b4d`);
-   - `research/results/pca-w5-approximation-and-cost/frozen-inputs/contract_v21.py` (sha256 `a6814bfa`).
-2. `tools/campaign_current_state.py` gained **frozen copies**. A frozen copy must match the executed manifest digest, or the check fails closed (`FROZEN_COPY_MISMATCH` or `FROZEN_COPY_MISSING`). A path cannot be both protected and frozen-copied.
-3. W5 and W6 recompute from the frozen bytes. Both checkers also fail if the repaired live verifier diverges on any governed item. Fault injection: a tampered copy and a broken live verifier are each detected.
-4. The live paths are declared as `verification_tooling` drift in the campaign supplements.
+1. The executed verifiers stay at their pinned paths. W6 still checks the protocol-base git blob `31a4c00d`, and W5 still checks sha256 `a6814bfa`.
+2. W5 and W6 recompute from the executed verifiers, exactly as before.
+3. Both checkers additionally fail if the errata 1 successor diverges from the executed verifier on any governed item.
+4. Fault injection confirms the checks: a byte appended to `contract_v2.py` and a broken successor are each detected (§7).
 
 ### 4.5 EFR-R2 input amendment (authority conflict)
 
-The v1.1 amendment binds the exact bytes of both specifications. The reference-verifier repairs therefore require a new binding.
+The v1.1 amendment binds the exact bytes of both specifications. Those bytes are unchanged, so the corrections need a new binding.
 
-- **Candidate.** [`EFR-001-R2-INPUT-AMENDMENT-1.2`](../governance/external-falsification-and-replication-r2-input-amendment-v1.2.md) supersedes only v1.1's bound package. v1.0 and v1.1 are preserved unmodified.
+- **Candidate.** [`EFR-001-R2-INPUT-AMENDMENT-1.2`](../governance/external-falsification-and-replication-r2-input-amendment-v1.2.md) supersedes only v1.1's bound package. It keeps every v1.1-bound byte and adds the two errata documents. It binds the errata reference verifiers that must generate the R2 frozen expected result. It is layered on comparator amendment v2.0 without changing it. v1.0, v1.1, and v2.0 are preserved unmodified.
+- **Unresolved.** Comparator amendment v2.0 binds rule v1.0 (`contract_v2_strict`) for the `EFR-HD2` FAR-arm report and the H1/A1 machine lane. Rule v1.0 lacks errata 1. Moving that binding to rule v1.1 is a separate preregistration decision and is not made here.
 - **Authority.** It becomes authoritative only when promoted to protected `main`.
 - **Status.** `EFR-R2` remains `PREREGISTERED_NOT_EXECUTED`.
 
@@ -240,10 +242,10 @@ With these theorems, the W2 status wording ("the witness proofs compose with the
 | # | Injection | Expected | Observed after repair |
 |---|---|---|---|
 | F1 | Original local validator under the new keyword tests | fail | 24 failures, 1 error |
-| F2 | Original `contract_v2.py` under the new regression tests | fail | 10 failing subtests |
-| F3 | Original `contract_v21.py` under the determinism test | fail | seeds 1, 4, 5, 23 fail |
-| F4 | Append bytes to the W6 frozen verifier copy | W6 fails | `W6_FROZEN_COPY_MISMATCH` and protocol-base drift |
-| F5 | Disable the factorization check in the live verifier | W6 fails | divergence on 6 mutants |
+| F2 | Baseline `contract_v2.py` substituted for the errata 1 successor under its regression tests | fail | 11 failing tests and subtests |
+| F3 | Executed `contract_v21.py` under the determinism test | fail | seeds 1, 4, 5, 23 give the other order |
+| F4 | Append bytes to the frozen `contract_v2.py` | W6 fails | protocol-base drift, recomputation blocked; the v1.2 amendment test fails |
+| F5 | Disable the factorization check in the errata 1 successor | W6 fails | divergence on 6 mutants |
 | F6 | `theorem … := by sorry` in `FARCore.lean` | formalization check fails | exit 1 (inventory placeholder count) |
 | F7 | Remove `research.theorem-target` from `pr-full` | a test fails | profile-completeness failure |
 | F8 | Append bytes to `far_validation/engine.py` | bootstrap fails | `FAR-VAL-BOOT-001` |
@@ -264,7 +266,7 @@ E4b is §5.1. E7 and E8 are LIM-051. E9 and E10 are limits of the oracle and the
 
 ## 8. Authority conflicts surfaced
 
-1. **Frozen verifiers vs. defect repair.** Resolved by §4.4. The executed bytes remain verified; no manifest was rewritten.
+1. **Frozen verifiers vs. defect repair.** Resolved by §4.2–§4.4 with versioned successors. No frozen or bound byte changed, and no manifest was rewritten.
 2. **EFR-R2 v1.1 binding vs. corrected specifications.** Resolved by the candidate amendment v1.2. It is not authoritative until promoted.
 3. **Independent-review status.** `theory/theorems/Project-FAR-Theory-Closure-v1.1.md` says "not independently reviewed". The later W1 records report a sealed I1 claimed-isolation review. This is surfaced, not rewritten: the theory document predates W1, and editing governing theory text is outside this audit.
 
@@ -303,7 +305,7 @@ Lean was checked separately in CI run `36149124911` (§6).
 ## 11. What this audit does not establish
 
 - It does not establish novelty, empirical utility, or external validity.
-- It does not show the repaired verifiers are correct beyond the audited defects.
+- It does not show the errata 1 verifiers are correct beyond the audited defects.
 - It does not re-derive Lean kernel acceptance locally. The new theorems were checked only through the repository's CI workflow.
 - It does not supply the live branch-protection settings.
 

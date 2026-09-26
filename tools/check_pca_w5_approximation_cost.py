@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import hashlib
-import importlib.util
 import json
 import re
 import sys
@@ -12,10 +11,11 @@ from typing import Any, Mapping
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from mechanization.far_mechanization.contract_v21 import (  # noqa: E402
-    validate_contract as current_validate_contract,
+from mechanization.far_mechanization.contract_v21 import validate_contract
+from mechanization.far_mechanization.contract_v21_errata1 import (
+    validate_contract as validate_contract_errata1,
 )
-from tools.campaign_current_state import artifact_hash_errors  # noqa: E402
+from tools.campaign_current_state import artifact_hash_errors
 
 EXPECTED_SCHEMA_VERSION = "1.0"
 EXPECTED_CAMPAIGN = "PCA-W5-APPROXIMATION-AND-COST"
@@ -61,35 +61,12 @@ PROTECTED_ARTIFACTS = frozenset({
     "conformance/far-ir-2.1/valid-zero-boundary.json",
     "docs/research/pca-w5-approximation-and-cost/00-protocol.md",
     "docs/research/pca-w5-approximation-and-cost/01-execution-and-results.md",
+    "mechanization/far_mechanization/contract_v21.py",
     "mechanization/lean/W5ApproximationCost.lean",
     "research/results/pca-w5-approximation-and-cost/frontier.json",
     "schemas/far-contract-v2.1.schema.json",
     "theory/evaluation/pca-w5-approximation-cost-v1.0.json",
 })
-
-LIVE_VERIFIER = "mechanization/far_mechanization/contract_v21.py"
-FROZEN_VERIFIER = "research/results/pca-w5-approximation-and-cost/frozen-inputs/contract_v21.py"
-# The live far-ir/2.1 verifier was repaired after execution (its loss-check diagnostic order followed
-# Python set iteration and so varied with PYTHONHASHSEED). The executed bytes are preserved
-# byte-for-byte as a frozen input that must match the executed manifest digest; W5 is recomputed
-# from them, and the repaired live verifier must agree on every governed record.
-FROZEN_INPUT_COPIES = {LIVE_VERIFIER: FROZEN_VERIFIER}
-
-
-def _load_frozen_verifier():
-    spec = importlib.util.spec_from_file_location("pca_w5_frozen_contract_v21", ROOT / FROZEN_VERIFIER)
-    if spec is None or spec.loader is None:
-        raise ValueError(f"cannot load frozen W5 verifier {FROZEN_VERIFIER}")
-    module = importlib.util.module_from_spec(spec)
-    sys.modules[spec.name] = module  # dataclasses resolve their defining module by name
-    spec.loader.exec_module(module)
-    # The executed module locates the schema relative to its own original path.
-    module.SCHEMA_PATH = ROOT / "schemas" / "far-contract-v2.1.schema.json"
-    return module
-
-
-_FROZEN = _load_frozen_verifier()
-validate_contract = _FROZEN.validate_contract
 
 
 def _set_mismatch(label: str, actual: set[str], expected: frozenset[str]) -> str:
@@ -169,7 +146,6 @@ def audit_manifest(root: Path, manifest: object) -> list[str]:
             root / SUPPLEMENT_RELATIVE_PATH,
             PROTECTED_ARTIFACTS,
             "W5",
-            FROZEN_INPUT_COPIES,
         )
     )
 
@@ -186,10 +162,11 @@ def audit_manifest(root: Path, manifest: object) -> list[str]:
             continue
         result = validate_contract(document)
         errors.extend(f"{rel}: {diagnostic.code}: {diagnostic.message}" for diagnostic in result.diagnostics)
+        # W5 is recomputed with the executed verifier; errata 1 must not change any governed record.
         executed = [diagnostic.code for diagnostic in result.diagnostics]
-        current = [diagnostic.code for diagnostic in current_validate_contract(document).diagnostics]
-        if executed != current:
-            errors.append(f"W5_CURRENT_VERIFIER_DIVERGENCE {rel}: executed={executed} current={current}")
+        corrected = [diagnostic.code for diagnostic in validate_contract_errata1(document).diagnostics]
+        if executed != corrected:
+            errors.append(f"W5_ERRATA_VERIFIER_DIVERGENCE {rel}: executed={executed} errata1={corrected}")
 
     return errors
 

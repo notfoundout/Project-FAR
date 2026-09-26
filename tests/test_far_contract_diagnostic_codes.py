@@ -11,9 +11,9 @@ The v2.1 verifier builds two codes at runtime as ``DUPLICATE_{label}``, so a sou
 alone is not sufficient; the label arguments are recovered from the call sites.
 
 The declarations live in ``diagnostic_vocabulary`` rather than in the verifiers, because
-``contract_v21.py`` is SHA-256 pinned by the completed ``PCA-W5`` manifest and the executed
-``PCA-W6`` bytes of ``contract_v2.py`` are preserved as a frozen input. These tests read the live
-verifier sources without modifying them.
+``contract_v2.py`` is the git-blob-pinned ``PCA-W6`` preregistered protocol base and
+``contract_v21.py`` is SHA-256 pinned by the completed ``PCA-W5`` manifest. These tests read
+those sources without modifying them.
 """
 from __future__ import annotations
 

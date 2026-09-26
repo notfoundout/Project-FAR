@@ -199,9 +199,7 @@ def validate_contract(document: object) -> Result:
                         )
 
     actions = _unique_values(approximation["loss"]["actions"], "LOSS_ACTION", errors)
-    # First-occurrence order: diagnostic order is normative, so it must not follow set iteration,
-    # which varies with PYTHONHASHSEED across processes.
-    truths = list(dict.fromkeys(_key(value) for value in behavior.values()))
+    truths = {_key(value) for value in behavior.values()}
     loss: dict[tuple[str, str], Fraction] = {}
     for row in approximation["loss"]["entries"]:
         pair = (_key(row["truth"]), _key(row["action"]))

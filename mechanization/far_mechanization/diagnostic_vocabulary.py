@@ -7,15 +7,13 @@ specifications. That criterion is unsatisfiable while the vocabulary is unpublis
 
 This module is a **read-only declaration**, deliberately separate from the verifiers:
 
-* the exact ``mechanization/far_mechanization/contract_v2.py`` bytes executed as the
-  preregistered ``PCA-W6`` protocol base are preserved, git-blob-verified, under
-  ``research/results/pca-w6-empirical-audit-utility/frozen-inputs/``; the live verifier has since
-  been repaired, and W6 recomputes from the preserved bytes;
+* ``mechanization/far_mechanization/contract_v2.py`` is pinned by git blob identity as the
+  preregistered ``PCA-W6`` protocol base and must not change after that freeze;
 * ``mechanization/far_mechanization/contract_v21.py`` is pinned by SHA-256 in the completed
   ``PCA-W5`` campaign manifest.
 
-Publishing the vocabulary is done here rather than by editing either verifier, so a vocabulary
-change never disturbs a completed-campaign manifest. Nothing in this module is
+Publishing the vocabulary is therefore done here rather than by editing either verifier, so no
+frozen protocol base or completed-campaign manifest is disturbed. Nothing in this module is
 imported by the verifiers and it cannot change their behavior.
 
 ``tests/test_far_contract_diagnostic_codes.py`` holds these sets equal to the codes the
@@ -41,11 +39,9 @@ FAR_IR_2_0_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
     "DUPLICATE_CASE_VALUE",
     "DUPLICATE_DOMAIN_CASE",
     "DUPLICATE_OBSERVATION_CONTEXT",
-    "DUPLICATE_QUOTIENT_CLASS",
     "DUPLICATE_TRANSFORMATION",
     "FACTORIZATION_FAILURE",
     "FREEZE_HASH_MISMATCH",
-    "FREEZE_TIME_INVALID",
     "NONFUNCTIONAL_DECODER",
     "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
     "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
@@ -113,4 +109,13 @@ FAR_IR_2_1_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
 #: unchanged, so these codes are documented in that module rather than in the specification.
 FAR_IR_2_0_STRICT_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
     "DETERMINATE_OUTCOME_UNCHECKED",
+})
+
+#: Additional diagnostic codes introduced by ``far-ir/2.0`` specification errata 1 and emitted by
+#: ``contract_v2_errata1`` (and so by current verification, ``contract_v2_strict_v11``). The frozen
+#: specification and baseline verifier are unchanged, so these codes are published in
+#: ``docs/specification/far-ir-2.0-errata-1.md``.
+FAR_IR_2_0_ERRATA_1_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
+    "DUPLICATE_QUOTIENT_CLASS",
+    "FREEZE_TIME_INVALID",
 })
