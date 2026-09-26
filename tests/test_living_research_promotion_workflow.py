@@ -1,5 +1,6 @@
 from pathlib import Path
 import unittest
+import yaml
 
 ROOT=Path(__file__).resolve().parents[1]
 WORKFLOW=ROOT/".github/workflows/living-research-promotion.yml"
@@ -54,8 +55,27 @@ class PromotionWorkflowTests(unittest.TestCase):
         self.assertIn('git("add", "--", *to_stage)',self.runner)
         self.assertNotIn('git("add", "-A")',self.runner)
         self.assertNotIn('gh("pr", "merge"',self.runner)
+        self.assertNotIn('"pr", "merge"',self.runner)
         self.assertNotIn('branches/main/protection',self.runner)
-        self.assertIn('validator-assurance.yml',self.runner)
+        # merge-authority comes from the PR's own pull_request run; nothing is dispatched for it.
+        self.assertNotIn('"workflow", "run"',self.runner)
+
+    def test_promotion_pr_is_opened_by_the_least_privilege_promotion_app(self):
+        workflow=yaml.safe_load(self.workflow)
+        self.assertEqual({"contents":"write","pull-requests":"read"},workflow["permissions"])
+        (job,)=workflow["jobs"].values()
+        self.assertEqual("living-promotion",job["environment"])
+        (mint,)=[step for step in job["steps"] if "create-github-app-token" in step.get("uses","")]
+        self.assertRegex(mint["uses"],r"^actions/create-github-app-token@[0-9a-f]{40}$")
+        self.assertEqual({"client-id","private-key","permission-pull-requests"},set(mint["with"]))
+        self.assertEqual("write",mint["with"]["permission-pull-requests"])
+        self.assertEqual(1,self.workflow.count("secrets."))
+        self.assertIn("secrets.FAR_PROMOTION_APP_PRIVATE_KEY",mint["with"]["private-key"])
+        holders=[step for step in job["steps"] if "FAR_PROMOTION_PR_TOKEN" in step.get("env",{})]
+        self.assertEqual(1,len(holders))
+        self.assertEqual("python -m tools.run_living_research_promotion",holders[0]["run"])
+        self.assertIn("steps.pr-credential.outputs.token",holders[0]["env"]["FAR_PROMOTION_PR_TOKEN"])
+        self.assertIn('pr_token = os.environ.pop(PR_TOKEN_ENV, "")',self.runner)
 
     def test_precommit_and_final_head_verification_are_independent_layers(self):
         self.assertIn('git("commit", "-m"',self.runner)

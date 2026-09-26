@@ -20,6 +20,10 @@ SOURCE_BRANCH = "automation/living-research-inbox"
 BASE_BRANCH = "main"
 SNAPSHOT_AUTHS = Path("research/living/snapshot-authorizations-v1.0.json")
 SNAPSHOT_STATUS = "ACCEPTED_FOR_MECHANICAL_SNAPSHOT"
+# Installation token of the dedicated promotion App (pull requests: write, this repository only).
+# GitHub starts no pull_request workflow for a PR opened with GITHUB_TOKEN, so only a PR opened
+# with this credential gets the required merge-authority check from a pull_request run.
+PR_TOKEN_ENV = "FAR_PROMOTION_PR_TOKEN"
 
 
 class RunnerError(RuntimeError):
@@ -253,12 +257,18 @@ def verify_existing_branch(branch: str, base_sha: str, source_sha: str) -> str:
     return head
 
 
-def create_or_recover_pr(branch: str, plan_path: Path) -> tuple[int, bool]:
+def create_or_recover_pr(branch: str, plan_path: Path, pr_token: str) -> tuple[int, bool]:
+    """Open the promotion PR with the promotion App's token, never with GITHUB_TOKEN.
+
+    The PR event then starts the ordinary pull_request workflows, including the required
+    merge-authority, on the exact promotion head; nothing is dispatched on the PR's behalf.
+    """
     repo = os.environ["GITHUB_REPOSITORY"]
-    existing = gh(
-        "pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH,
-        "--state", "open", "--json", "number", "--jq", ".[0].number // empty",
-    )
+    pr_env = {**os.environ, "GH_TOKEN": pr_token}
+    existing = run(
+        "gh", "pr", "list", "--repo", repo, "--head", branch, "--base", BASE_BRANCH,
+        "--state", "open", "--json", "number", "--jq", ".[0].number // empty", env=pr_env,
+    ).stdout.strip()
     if existing:
         return int(existing), False
     body_path = plan_path.with_suffix(".md")
@@ -266,33 +276,28 @@ def create_or_recover_pr(branch: str, plan_path: Path) -> tuple[int, bool]:
     result = run(
         "gh", "pr", "create", "--repo", repo, "--base", BASE_BRANCH, "--head", branch,
         "--title", f"Research: governed living-research promotion {plan_path.stem}",
-        "--body-file", str(body_path), check=False,
+        "--body-file", str(body_path), check=False, env=pr_env,
     )
     if result.returncode:
         raise RunnerError(
-            "promotion branch was preserved but GitHub Actions could not create the PR; no main write or protection bypass was attempted: "
+            "promotion branch was preserved but the promotion App could not create the PR; no main write or protection bypass was attempted: "
             + result.stderr.strip()
         )
     created = result.stdout.strip()
-    number = int(gh("pr", "view", created, "--repo", repo, "--json", "number", "--jq", ".number"))
+    number = int(run("gh", "pr", "view", created, "--repo", repo, "--json", "number", "--jq", ".number", env=pr_env).stdout.strip())
     return number, True
 
 
-def dispatch_validation(branch: str, head_sha: str, new_materialization: bool) -> None:
-    repo = os.environ["GITHUB_REPOSITORY"]
-    count = gh(
-        "api", f"repos/{repo}/commits/{head_sha}/check-runs",
-        "--jq", '[.check_runs[] | select(.name == "merge-authority")] | length',
-    )
-    if int(count) == 0:
-        gh("workflow", "run", "validator-assurance.yml", "--repo", repo, "--ref", branch)
-    if new_materialization:
-        gh("workflow", "run", "living-research.yml", "--repo", repo, "--ref", branch, "-f", "mode=validate")
-
-
 def main() -> int:
+    # Taken out of the environment before any subprocess runs: only the PR calls receive it.
+    pr_token = os.environ.pop(PR_TOKEN_ENV, "")
     if not os.environ.get("GITHUB_REPOSITORY") or not os.environ.get("GH_TOKEN"):
         raise RunnerError("GITHUB_REPOSITORY and GH_TOKEN are required")
+    if not pr_token:
+        raise RunnerError(
+            f"{PR_TOKEN_ENV} is required: a promotion PR opened with GITHUB_TOKEN starts no pull_request "
+            "workflow and can never satisfy merge-authority; configure the promotion App and retry"
+        )
     first = source_snapshot()
     fetch_inputs()
     source_ref = f"origin/{SOURCE_BRANCH}"
@@ -349,8 +354,7 @@ def main() -> int:
         else:
             head_sha = verify_existing_branch(branch, base_sha, source_sha)
 
-        pr_number, created = create_or_recover_pr(branch, plan_path)
-        dispatch_validation(branch, head_sha, new_materialization or created)
+        pr_number, _created = create_or_recover_pr(branch, plan_path, pr_token)
         print(f"Promotion PR #{pr_number} is open for exact head {head_sha}; protected merge-authority remains controlling.")
     return 0
 
