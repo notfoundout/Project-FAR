@@ -72,7 +72,8 @@ class TheoryDependencyAuditTests(unittest.TestCase):
             ).stdout.strip()
             self.assertEqual("true", shallow)
             self.assertTrue(all(len(commit) == 40 for commit in commits))
-            return
+            # Visible, not a silent pass: this ancestry evidence is unverified in a shallow clone.
+            self.skipTest("preregistration ancestry commits are absent from this shallow clone")
 
         self.git(ROOT, "merge-base", "--is-ancestor", question, specification)
         self.git(ROOT, "merge-base", "--is-ancestor", specification, executor)

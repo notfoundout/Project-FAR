@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
+import os
 import sys
 import time
 import unittest
@@ -13,6 +14,10 @@ ROOT = Path(__file__).resolve().parents[1]
 TESTS = ROOT / "tests"
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+# Tests create and commit to temporary git repositories. The runner's global and system git
+# configuration (for example commit signing or a signing helper) must not change their behavior.
+os.environ["GIT_CONFIG_GLOBAL"] = os.devnull
+os.environ["GIT_CONFIG_NOSYSTEM"] = "1"
 
 
 class DiagnosticTextTestResult(unittest.TextTestResult):
