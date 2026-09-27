@@ -32,6 +32,10 @@ env:
   CASE_DIR: commercial/far-release-assurance/external-validation/swe-agent-v1.0.0-v1.0.1-gemini-3.1-pro-preview-v2
   SOURCE_ARTIFACT_ID: '8635674915'
   SOURCE_ARTIFACT_SHA256: 7277987300d4204c5108997b3ac6c0cde02c9a4d498178a702ea7a6cb0c19756
+  # The Actions artifact expired on 2026-08-25. far-swe-agent-v2-source-archive.yml kept its exact
+  # bytes as this release asset, which is checked against the same SHA-256.
+  SOURCE_ARCHIVE_TAG: far-swe-agent-v2-source-53438d4e327f
+  SOURCE_ARCHIVE_NAME: far-swe-agent-v2-source-artifact-8635674915.zip
   HARNESS_COMMIT: f7bbbb2ccdf479001d6467c9e34af59e44a840f9
   FROZEN_IMAGE: ghcr.io/notfoundout/project-far-swebench-scikit-learn-14125@sha256:66615e837a9fdc6faf75dab3db90bf469364204b068af9da4d570fba8ab00ab4
   EVAL_IMAGE_TAG: far-v2-frozen/sweb.eval.x86_64.scikit-learn_1776_scikit-learn-14125:locked
@@ -78,9 +82,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh api \
-            "repos/$GITHUB_REPOSITORY/actions/artifacts/$SOURCE_ARTIFACT_ID/zip" \
-            > "$RUNNER_TEMP/far-v2-source.zip"
+          gh release download "$SOURCE_ARCHIVE_TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --pattern "$SOURCE_ARCHIVE_NAME" \
+            --dir "$RUNNER_TEMP/far-v2-archive"
+          mv "$RUNNER_TEMP/far-v2-archive/$SOURCE_ARCHIVE_NAME" "$RUNNER_TEMP/far-v2-source.zip"
           printf '%s  %s\n' \
             "$SOURCE_ARTIFACT_SHA256" \
             "$RUNNER_TEMP/far-v2-source.zip" \
