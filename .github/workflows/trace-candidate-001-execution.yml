@@ -8,6 +8,9 @@ on:
       - ".github/workflows/trace-candidate-001-execution.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   execute:
     runs-on: ubuntu-latest

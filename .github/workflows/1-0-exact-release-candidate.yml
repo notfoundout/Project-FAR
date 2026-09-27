@@ -9,6 +9,9 @@ on:
       - ".github/workflows/1-0-exact-release-candidate.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   exact-release-candidate:
     runs-on: ubuntu-latest

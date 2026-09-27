@@ -1,6 +1,9 @@
 name: Project Planning
 on:
   workflow_dispatch: null
+permissions:
+  contents: read
+
 jobs:
   project-planning:
     runs-on: ubuntu-latest

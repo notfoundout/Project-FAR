@@ -1,6 +1,9 @@
 name: Release Readiness
 on:
   workflow_dispatch: null
+permissions:
+  contents: read
+
 jobs:
   readiness:
     runs-on: ubuntu-latest

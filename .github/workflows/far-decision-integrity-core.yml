@@ -17,6 +17,9 @@ on:
       - "schemas/far-contract-v2*.schema.json"
       - ".github/workflows/far-decision-integrity-core.yml"
 
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest

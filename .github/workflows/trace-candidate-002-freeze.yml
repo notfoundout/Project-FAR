@@ -15,6 +15,9 @@ on:
       - "tests/test_trace_candidate_002_freeze.py"
       - ".github/workflows/trace-candidate-002-freeze.yml"
 
+permissions:
+  contents: read
+
 jobs:
   freeze:
     runs-on: ubuntu-latest
