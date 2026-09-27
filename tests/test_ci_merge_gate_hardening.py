@@ -23,6 +23,7 @@ ASSURANCE_WORKFLOWS = ("validator-assurance.yml", "exact-head-assurance.yml", "l
 LEAN_ARCHIVE_URL = "https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst"
 LEAN_ARCHIVE_SHA256 = "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe"
 SORRY_GATE = "declaration uses 'sorry'"
+LEAN_INVOCATION = re.compile(r"(^|[\s\"/])lean\"?\s+(-o\s+\S+\s+)?mechanization/lean/\S+\.lean", re.MULTILINE)
 # Workflow scripts call `python`; resolve it to the interpreter running these tests, not the host's.
 SCRIPT_PATH = f"{Path(sys.executable).parent}:/usr/bin:/bin"
 
@@ -122,6 +123,18 @@ class MutableAcquisitionTests(unittest.TestCase):
             self.assertIn(f'echo "{LEAN_ARCHIVE_SHA256}  $archive" | sha256sum -c -', script)
             self.assertLess(script.index("sha256sum -c"), script.index("tar --zstd"), name)
 
+    def test_every_workflow_that_runs_lean_installs_the_digest_bound_archive(self) -> None:
+        # elan-init resolves the latest elan release and fetches the toolchain by tag, so even a
+        # digest-checked installer script leaves the executed Lean unbound.
+        seen = 0
+        for path in sorted(WORKFLOWS.glob("*.yml")):
+            scripts = "\n".join(step.get("run", "") for _job, step in _steps(_workflow(path.name)))
+            self.assertNotIn("elan-init", scripts, path.name)
+            if LEAN_INVOCATION.search(scripts):
+                seen += 1
+                self.assertIn(f'echo "{LEAN_ARCHIVE_SHA256}  $archive" | sha256sum -c -', scripts, path.name)
+        self.assertGreaterEqual(seen, 5)
+
     def test_assurance_actions_are_pinned_to_commits(self) -> None:
         for name in ASSURANCE_WORKFLOWS:
             for job_id, step in _steps(_workflow(name)):
@@ -133,15 +146,14 @@ class LeanSorryGateTests(unittest.TestCase):
     """`lean` exits 0 when a declaration uses `sorry`; every governed compile must reject it."""
 
     def test_every_lean_invocation_is_in_a_step_that_rejects_sorry(self) -> None:
-        invocation = re.compile(r"(^|[\s\"/])lean\"?\s+(-o\s+\S+\s+)?mechanization/lean/\S+\.lean", re.MULTILINE)
         seen = 0
-        for name in ASSURANCE_WORKFLOWS:
-            for job_id, step in _steps(_workflow(name)):
+        for path in sorted(WORKFLOWS.glob("*.yml")):
+            for job_id, step in _steps(_workflow(path.name)):
                 script = step.get("run", "")
-                if invocation.search(script):
+                if LEAN_INVOCATION.search(script):
                     seen += 1
-                    self.assertIn(SORRY_GATE, script, f"{name}:{job_id}:{step.get('name')}")
-        self.assertGreaterEqual(seen, 4)
+                    self.assertIn(SORRY_GATE, script, f"{path.name}:{job_id}:{step.get('name')}")
+        self.assertGreaterEqual(seen, 6)
 
     def test_sorry_gate_rejects_a_sorry_warning_and_passes_clean_output(self) -> None:
         compile_step = next(step for _job, step in _steps(_workflow("lean.yml"))
@@ -159,6 +171,27 @@ class LeanSorryGateTests(unittest.TestCase):
             # A failing compile stops the step even though later compiles would succeed.
             fake.write_text("#!/bin/sh\ncase \"$*\" in *FARCore.lean*) exit 3;; esac\nexit 0\n", encoding="utf-8")
             self.assertEqual(_bash(compile_step["run"], ROOT, env), 3)
+
+    def test_formalization_and_w5_compiles_reject_sorry_and_compile_failures(self) -> None:
+        steps = {
+            "far-core-v11-formalization.yml": "Compile governed FAR-CORE v1.1 formalization",
+            "pca-w5.yml": "Compile PCA-W5 formal control and reject sorry",
+        }
+        for name, step_name in steps.items():
+            script = next(step for _job, step in _steps(_workflow(name)) if step.get("name") == step_name)["run"]
+            with self.subTest(name), tempfile.TemporaryDirectory() as directory:
+                work = Path(directory)
+                fake_bin = work / "bin"
+                fake_bin.mkdir()
+                fake = fake_bin / "lean"
+                env = {"PATH": f"{fake_bin}:/usr/bin:/bin", "RUNNER_TEMP": directory}
+                fake.write_text("#!/bin/sh\necho \"x.lean:1:0: warning: declaration uses 'sorry'\"\n", encoding="utf-8")
+                fake.chmod(0o755)
+                self.assertNotEqual(_bash(script, work, env), 0)
+                fake.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+                self.assertEqual(_bash(script, work, env), 0)
+                fake.write_text("#!/bin/sh\nexit 3\n", encoding="utf-8")
+                self.assertNotEqual(_bash(script, work, env), 0)
 
 
 if __name__ == "__main__":
