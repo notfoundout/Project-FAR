@@ -28,6 +28,7 @@ class RepinGateDeploymentProvenanceTests(unittest.TestCase):
             "python3 deploy/far_validation/repin_protection_audit.py",
             self.text,
         )
+        self.assertNotIn("repin_protection_audit.py --bootstrap", self.text)
 
     def test_evaluate_executes_the_gate_from_the_same_checkout(self) -> None:
         self.assertIn(
