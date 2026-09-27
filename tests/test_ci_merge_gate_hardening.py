@@ -26,6 +26,7 @@ LEAN_ARCHIVE_URL = "https://github.com/leanprover/lean4/releases/download/v4.19.
 LEAN_ARCHIVE_SHA256 = "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe"
 SORRY_GATE = "declaration uses 'sorry'"
 LEAN_INVOCATION = re.compile(r"(^|[\s\"/])lean\"?\s+(-o\s+\S+\s+)?mechanization/lean/\S+\.lean", re.MULTILINE)
+LEAN_TARGET = re.compile(r"(?:^|[\s\"/])lean\"?\s+(?:-o\s+\S+\s+)?(mechanization/lean/\S+\.lean)", re.MULTILINE)
 # Workflow scripts call `python`; resolve it to the interpreter running these tests, not the host's.
 SCRIPT_PATH = f"{Path(sys.executable).parent}:/usr/bin:/bin"
 
@@ -194,6 +195,46 @@ class LeanSorryGateTests(unittest.TestCase):
                 fake.write_text("#!/bin/sh\nexit 3\n", encoding="utf-8")
                 self.assertNotEqual(_bash(script, work, env), 0)
 
+
+class GovernedLeanIsPartOfTheRequiredCheckTests(unittest.TestCase):
+    """Only `merge-authority` is a required Actions check, so a governed compile elsewhere is advisory."""
+
+    STEP = "Compile governed Lean modules and reject sorry"
+
+    def _targets(self, steps) -> set[str]:
+        return {target for step in steps for target in LEAN_TARGET.findall(step.get("run", ""))}
+
+    def test_merge_authority_compiles_every_lean_module_that_any_workflow_compiles(self) -> None:
+        advisory = set()
+        for path in sorted(WORKFLOWS.glob("*.yml")):
+            if path.name not in ("validator-assurance.yml", "exact-head-assurance.yml"):
+                advisory |= self._targets(step for _job, step in _steps(_workflow(path.name)))
+        self.assertIn("mechanization/lean/FARCoreV11Mutations.lean", advisory)
+        self.assertIn("mechanization/lean/W5ApproximationCost.lean", advisory)
+        for name, job_id in (("validator-assurance.yml", "merge-authority"),
+                             ("exact-head-assurance.yml", "exact-head-assurance")):
+            steps = _workflow(name)["jobs"][job_id]["steps"]
+            self.assertEqual(sorted(advisory - self._targets(steps)), [], name)
+            names = [step.get("name") for step in steps]
+            # Compiling unlocked Lean can run code, so it belongs after the trusted steps.
+            self.assertGreater(names.index(self.STEP), names.index(TrustedStepsPrecedeCandidateCodeTests.BOUNDARY))
+            self.assertGreater(names.index("Enforce FAR-CORE v1.1 kernel assumptions"), names.index(self.STEP))
+
+    def test_governed_compile_rejects_sorry_and_stops_at_a_failing_module(self) -> None:
+        script = next(step for _job, step in _steps(_workflow("validator-assurance.yml"))
+                      if step.get("name") == self.STEP)["run"]
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            fake = work / "bin" / "lean"
+            fake.parent.mkdir()
+            env = {"PATH": "/usr/bin:/bin", "RUNNER_TEMP": directory, "FAR_LEAN_HOME": directory}
+            fake.write_text("#!/bin/sh\necho \"x.lean:1:0: warning: declaration uses 'sorry'\"\n", encoding="utf-8")
+            fake.chmod(0o755)
+            self.assertNotEqual(_bash(script, ROOT, env), 0)
+            fake.write_text("#!/bin/sh\nexit 0\n", encoding="utf-8")
+            self.assertEqual(_bash(script, ROOT, env), 0)
+            fake.write_text("#!/bin/sh\ncase \"$*\" in *Canonicality.lean*) exit 3;; esac\nexit 0\n", encoding="utf-8")
+            self.assertEqual(_bash(script, ROOT, env), 3)
 
 class TrustedStepsPrecedeCandidateCodeTests(unittest.TestCase):
     """Once candidate code runs in a job, it can rewrite every later step.

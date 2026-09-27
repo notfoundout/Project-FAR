@@ -85,10 +85,13 @@ The files below are protected by `validation_bootstrap/assurance-lock.json`. Eac
 
 | Path | Change |
 |---|---|
-| `.github/workflows/validator-assurance.yml` | RT-9 per-job ephemeral key and `persist-credentials: false`; RT-10 digest-bound Lean archive and commit-pinned actions. It also carries the root-of-trust audit's R14 (#548, `LIM-050`). `merge-authority` now runs after a failed dependency (`if: ${{ !cancelled() }}`) and fails unless the signed-cache chain succeeded, because GitHub counts a skipped required check as passing. `assurance-hash-audit` now fails on lock drift instead of only recording it. A `sorry` warning fails the Lean assurance step. |
+| `.github/workflows/validator-assurance.yml` | RT-9 per-job ephemeral key and `persist-credentials: false`; RT-10 digest-bound Lean archive and commit-pinned actions. It also carries the root-of-trust audit's R14 (#548, `LIM-050`). `merge-authority` now runs after a failed dependency (`if: ${{ !cancelled() }}`) and fails unless the signed-cache chain succeeded, because GitHub counts a skipped required check as passing. `assurance-hash-audit` now fails on lock drift instead of only recording it. A `sorry` warning fails the Lean assurance step. RT-14 reorders and isolates the static checks; RT-15 adds the governed Lean compiles and the FAR-CORE axiom audit. |
 | `.github/workflows/lean.yml` | Read-only token; digest-bound Lean archive; commit-pinned actions; `persist-credentials: false`. Every governed compile now fails on `declaration uses 'sorry'`, which `lean` reports only as a warning. |
 | `.github/workflows/exact-head-assurance.yml` (mirror, not locked) | Identical key, checkout, Lean and pin changes, preserving the mirror contract in `tests/test_exact_head_assurance_workflow.py`. |
-| `validation_bootstrap/assurance-lock.json` | Repins the two protected workflows. |
+| `validation_bootstrap/assurance-lock.json` | Repins the protected files in this table, adds `validation_bootstrap/run_isolated.py`, and changes the workflow contract (`#contract`) to require the isolated forms (RT-14). |
+| `tools/configure_validation_protection.py` | Inert tombstone (RT-13). |
+| `far_validation/repin_protection_audit.py` | Bound-state protection audit by default (RT-13). |
+| `tests/test_protected_repin_authorization.py` | Its copy of the weakening step follows the isolated invocation (RT-14). |
 
 ### RT-13 — a repository tool can drop the App-bound merge authority (new; repaired pending owner-signed authorization)
 
@@ -122,6 +125,14 @@ Repair, in both `merge-authority` and its exact-head mirror:
 `tests/test_ci_merge_gate_hardening.py` pins this. It checks the step order and isolation in both jobs, and it runs the launcher against a planted `json.py` and planted bytecode (with a control showing `python -m` is subverted).
 
 Residual, inherent: steps that must run candidate code (the test suite, the checkers, the mutation campaign) and every step after them stay candidate-controlled. That is why `docs/governance/protected-repin-procedure.md` treats `merge-authority` as ordinary CI and the App-bound `protected-repin-gate` as the only merge authority. The bootstrap, weakening, oracle, formal-model, and Lean-proof verdicts are no longer part of that residual.
+
+### RT-15 — governed Lean compiles ran only in advisory workflows (new; repaired pending owner-signed authorization)
+
+Branch protection requires only `merge-authority` and `protected-repin-gate`, and `merge-authority` compiled only `ValidationEngine.lean`. The other 21 governed modules, and the FAR-CORE v1.1 axiom audit, ran only in `lean.yml`, `far-core-v11-formalization.yml` and `pca-w5.yml`, none of them a required check. A pull request that broke a governed proof or added a `sorry` therefore still had every required check green. This is the CI part of the root-of-trust audit's `LIM-053` (#548).
+
+Repair: `merge-authority` and its exact-head mirror now compile all 21 modules with the same `sorry` gate, then run the FAR-CORE axiom audit. Compiling unlocked Lean can run code, so both steps come after the candidate-code boundary and are ordinary CI, like the tests. A failing module stops the step, and its log is printed. With the real Lean 4.19.0, the clean tree passes in 10 s. Each of these fails the required job: a `sorry` injected into `W5ApproximationCost.lean`, a broken proof in `Canonicality.lean`, and an explicit `sorryAx` in `FARCoreV11Omega.lean`.
+
+`tests/test_ci_merge_gate_hardening.py` requires `merge-authority` to compile every module that any workflow compiles, after the boundary. It also runs the step against a fake `lean` for a `sorry` warning, a clean run, and a failing module. Both tests fail on the previous workflows. The advisory workflows stay as per-area reports. The checker limitation in `LIM-053` is unchanged: a claim whose Lean statement was weakened still compiles.
 
 Not changed, with reasons:
 - `far_validation/assured_engine.py`: see RT-9.

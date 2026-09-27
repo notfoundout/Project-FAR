@@ -244,6 +244,52 @@ jobs:
           python -m far_validation mutations --json
           --report artifacts/validation/runtime/mutation-campaign.json
           > artifacts/validation/runtime/mutation-campaign.stdout.json
+      # Compiling unlocked Lean can run code, so these steps are ordinary CI like the tests. They put the
+      # compiles of lean.yml, far-core-v11-formalization.yml and pca-w5.yml into the required check.
+      - name: Compile governed Lean modules and reject sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          lean() { "$FAR_LEAN_HOME/bin/lean" "$@"; }
+          log="$RUNNER_TEMP/governed-lean.txt"
+          trap 'cat "$log"' EXIT
+          # A subshell, so a failing compile exits it and the trap still prints to the job log.
+          (
+            lean mechanization/lean/FARCore.lean
+            lean mechanization/lean/SCoreW5.lean
+            lean -o "$RUNNER_TEMP/UPPSemanticKernel.olean" mechanization/lean/UPPSemanticKernel.lean
+            lean mechanization/lean/G2OpenWorldLowerBound.lean
+            lean mechanization/lean/G3EpistemicMaximality.lean
+            lean mechanization/lean/Canonicality.lean
+            lean mechanization/lean/RepresentationInvariance.lean
+            lean mechanization/lean/QuotientMinimality.lean
+            lean mechanization/lean/DefinitionalCompleteness.lean
+            lean mechanization/lean/ConservativeExtensibility.lean
+            lean mechanization/lean/MaximalKnowability.lean
+            lean mechanization/lean/CanonicalUniversalityTerminal.lean
+            lean mechanization/lean/FARCanonicalBridge.lean
+            lean mechanization/lean/FARCanonicalUniversalityDecision.lean
+            LEAN_PATH="$RUNNER_TEMP" lean mechanization/lean/FARCanonicalCountermodel.lean
+            lean mechanization/lean/W5ApproximationCost.lean
+            lean -o "$RUNNER_TEMP/FARCoreV11Substrate.olean" mechanization/lean/FARCoreV11Substrate.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11Claims001To012.olean" mechanization/lean/FARCoreV11Claims001To012.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11Omega.olean" mechanization/lean/FARCoreV11Omega.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11SSS.olean" mechanization/lean/FARCoreV11SSS.lean
+            LEAN_PATH="$RUNNER_TEMP" lean mechanization/lean/FARCoreV11Mutations.lean
+          ) > "$log" 2>&1
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -n "declaration uses 'sorry'" "$log"; then
+            echo 'a governed Lean module uses sorry' >&2
+            exit 1
+          fi
+      - name: Enforce FAR-CORE v1.1 kernel assumptions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/check_far_core_v11_formalization.py --emit-axiom-audit "$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean"
+          LEAN_PATH="$RUNNER_TEMP" "$FAR_LEAN_HOME/bin/lean" "$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean" \
+            > "$RUNNER_TEMP/far-core-v11-axioms.txt" 2>&1 || { cat "$RUNNER_TEMP/far-core-v11-axioms.txt"; exit 1; }
+          python tools/check_far_core_v11_formalization.py --axiom-output "$RUNNER_TEMP/far-core-v11-axioms.txt"
       - name: Assemble signed merge-authority certificate
         run: |
           python tools/assemble_validation_certificate.py \
