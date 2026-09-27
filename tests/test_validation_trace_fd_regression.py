@@ -245,5 +245,18 @@ class RuntimePolicyExecutableContractTests(unittest.TestCase):
         self.assertTrue(all("/" not in name and "*" not in name for name in allowed))
 
 
+    def test_declared_git_lockfiles_also_declare_the_file_they_replace(self) -> None:
+        # git writes X.lock and renames it onto X. The tracer records the rename destination, so a
+        # contract that declares only the lock under-declares the file the check actually modifies.
+        contract = json.loads(
+            (Path(__file__).resolve().parents[1] / "validation" / "runtime-dependencies.json").read_text(encoding="utf-8")
+        )
+        for check_id, entry in contract["checks"].items():
+            outputs = set(entry.get("outputs", []))
+            for output in outputs:
+                if output.startswith(".git/") and output.endswith(".lock"):
+                    self.assertIn(output[: -len(".lock")], outputs, check_id)
+
+
 if __name__ == "__main__":
     unittest.main()
