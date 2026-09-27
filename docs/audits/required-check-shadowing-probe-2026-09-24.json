@@ -1,0 +1,149 @@
+{
+  "experiment": "required-check shadowing probe (PR #540, closed unmerged)",
+  "repository": "notfoundout/Project-FAR",
+  "repository_id": 1283452680,
+  "required_check_at_time": {
+    "context": "merge-authority",
+    "app_id": 15368,
+    "note": "per prior audit of main's branch protection; only required check"
+  },
+  "source": "GitHub REST API, unauthenticated GET, captured 2026-09-24",
+  "states": {
+    "A_genuine_failed_shadow_succeeded": {
+      "head": "3bf4b23f2583acfe4f5ccf4654580097d7f7a830",
+      "merge_authority_runs": [
+        {
+          "id": 107531209658,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "failure",
+          "started_at": "2026-09-24T07:09:29Z",
+          "completed_at": "2026-09-24T07:17:58Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968015186/job/107531209658",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97394780277
+        },
+        {
+          "id": 107530919972,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-09-24T07:08:27Z",
+          "completed_at": "2026-09-24T07:08:30Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968015198/job/107530919972",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97394780315
+        }
+      ],
+      "pull": {
+        "number": 540,
+        "state": "open",
+        "merged": false,
+        "mergeable": true,
+        "mergeable_state": "blocked",
+        "head_sha": "3bf4b23f2583acfe4f5ccf4654580097d7f7a830",
+        "base_sha": "7fb4816e4aa53aed749b7008b46ba9393d3d29b2"
+      }
+    },
+    "B_shadow_rerun_newest": {
+      "head": "3bf4b23f2583acfe4f5ccf4654580097d7f7a830",
+      "merge_authority_runs": [
+        {
+          "id": 107533691842,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-09-24T07:18:20Z",
+          "completed_at": "2026-09-24T07:18:23Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968015198/job/107533691842",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97394780315
+        },
+        {
+          "id": 107531209658,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "failure",
+          "started_at": "2026-09-24T07:09:29Z",
+          "completed_at": "2026-09-24T07:17:58Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968015186/job/107531209658",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97394780277
+        },
+        {
+          "id": 107530919972,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-09-24T07:08:27Z",
+          "completed_at": "2026-09-24T07:08:30Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968015198/job/107530919972",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97394780315
+        }
+      ],
+      "pull": {
+        "number": 540,
+        "state": "open",
+        "merged": false,
+        "mergeable": true,
+        "mergeable_state": "blocked",
+        "head_sha": "3bf4b23f2583acfe4f5ccf4654580097d7f7a830",
+        "base_sha": "7fb4816e4aa53aed749b7008b46ba9393d3d29b2"
+      }
+    },
+    "C_genuine_job_renamed_by_candidate": {
+      "head": "0edca5d7025a3979c15e0facff721488d37c3ffd",
+      "merge_authority_runs": [
+        {
+          "id": 107534084196,
+          "name": "merge-authority-renamed-by-candidate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "started_at": "2026-09-24T07:19:42Z",
+          "completed_at": "2026-09-24T07:19:42Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35968999977/job/107534084196",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97397451827
+        },
+        {
+          "id": 107534041513,
+          "name": "merge-authority",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-09-24T07:19:35Z",
+          "completed_at": "2026-09-24T07:19:38Z",
+          "details_url": "https://github.com/notfoundout/Project-FAR/actions/runs/35969000075/job/107534041513",
+          "app_id": 15368,
+          "app_slug": "github-actions",
+          "check_suite_id": 97397452280
+        }
+      ],
+      "pull": {
+        "number": 540,
+        "state": "open",
+        "merged": false,
+        "mergeable": true,
+        "mergeable_state": "unstable",
+        "head_sha": "0edca5d7025a3979c15e0facff721488d37c3ffd",
+        "base_sha": "7fb4816e4aa53aed749b7008b46ba9393d3d29b2"
+      }
+    }
+  },
+  "raw_capture_sha256": {
+    "stateA-check-runs.json": "877caebbcbe4f4b2f92604281247d27839aaef22f9fc8e112db8901bd2d09740",
+    "stateA-pull.json": "4ca5debbbc166e2a5330be34e207af893013053b37a0d21b5db42e30aec0367f",
+    "stateA-status.json": "e22551c2f550c7a46e25e8deeb5942e6c6540975e45096332974166e50bb1d1f",
+    "stateB-check-runs-all.json": "56f0d1fea1a10b1db9b44d6158e348b7227de4957d2d70f0e2e318ba922018d1",
+    "stateB-check-runs-latest.json": "a995bbaaf99778131c5569b86175724cb8cf985e9b421b04c37b6f9e4aa7c669",
+    "stateB-pull.json": "4ca5debbbc166e2a5330be34e207af893013053b37a0d21b5db42e30aec0367f",
+    "stateC-check-runs-all.json": "0cf127ff90d9c456f4c08ecc06a65fd920183f7a57511e13e6b44a33c2e5a4f1",
+    "stateC-pull.json": "0fb6de2811d8a60d157ed2ad12e5f3de0528c3a1d2a9bdf4f4fb80f1a9533577"
+  }
+}

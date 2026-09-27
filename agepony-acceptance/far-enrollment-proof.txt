@@ -1,0 +1,3 @@
+FAR enrollment proof (P0), disposable AgePony key.
+nonce 0328c8e4634c678757486f3b7637e167
+This file authorizes nothing.
