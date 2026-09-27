@@ -33,9 +33,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          lean mechanization/lean/W5ApproximationCost.lean 2>&1 | tee "$RUNNER_TEMP/w5-lean.txt"
+          log="$RUNNER_TEMP/w5-lean.txt"
+          trap 'cat "$log"' EXIT
+          lean mechanization/lean/W5ApproximationCost.lean > "$log" 2>&1
           # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
-          if grep -q "declaration uses 'sorry'" "$RUNNER_TEMP/w5-lean.txt"; then
+          if grep -q "declaration uses 'sorry'" "$log"; then
             echo 'PCA-W5 formal control contains sorry' >&2
             exit 1
           fi
