@@ -56,6 +56,6 @@ def test_golden_outputs_match_current_pipeline():
 
 
 def test_cli_conformance_command():
-    completed = subprocess.run([str(ROOT / "far"), "conformance", "--output", "json"], cwd=ROOT, text=True, capture_output=True, check=False)
+    completed = subprocess.run([sys.executable, str(ROOT / "far"), "conformance", "--output", "json"], cwd=ROOT, text=True, capture_output=True, check=False)
     assert completed.returncode == 0
     assert json.loads(completed.stdout)["passed"] == 58
