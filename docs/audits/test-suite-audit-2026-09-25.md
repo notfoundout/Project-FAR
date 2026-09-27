@@ -43,7 +43,7 @@ Which tests and checks actually detect the failures they are meant to catch, whi
 | 9 | `repo_health_check.py` silently skipped listed tools that did not exist, and two of its tests never exercised the logic they are named for. | Implemented. |
 | 10 | The commercial package loads `mechanization/far_mechanization/*.py` and the contract schemas at runtime, but its workflow triggered only on `commercial/**`. | Implemented: path filter extended. |
 | 11 | The Lean placeholder pattern missed inline `by sorry` and attributed or modified `axiom` declarations. | Implemented: pattern strengthened; comments and strings are excluded; 0 placeholders on `main`. |
-| 12 | `far_validation/model.py` treats `unresolved` as a successful terminal status, contrary to `unknown_is_not_pass`; the engine never emits it today. | Not changed. It is a policy decision in a locked file and needs owner review. |
+| 12 | `far_validation/model.py` treats `unresolved` as a successful terminal status, contrary to `unknown_is_not_pass`; the engine never emits it today. | Implemented on 2026-09-27; the earlier deferral did not hold up. `mechanization/lean/ValidationEngine.lean` proves `runSuccessful_iff_all_passed`: a run succeeds exactly when every selected result is `passed`. The implementation also accepted `unresolved`, `skipped`, `inapplicable`, `terminal_positive_result` and `terminal_negative_result`, and `RunSummary.successful` dropped `skipped` results from the run altogether. The engine emits none of these statuses, so the proven property held only because nothing produced them. A future check returning `unresolved` would have passed `merge-authority`. Only `passed` now succeeds, and every selected result counts. `tests/test_run_success_matches_lean_model.py` covers every status and fails on the previous model (10 cases). The formal model, 74 real-engine runs, and the mutation campaign are unchanged. Protected transition: `far_validation/model.py`. |
 | 13 | `repository-health.yml` duplicates work that the required `merge-authority` job already performs. | Not changed. Removing it breaks links in three generated reports and saves CI time without improving detection. |
 | 14 | `validator-assurance.yml` and `exact-head-assurance.yml` are near copies, and a test locks them equal; Lean is installed separately in five workflows. | Deferred to the security task, which is replacing these workflow steps. |
 
@@ -111,13 +111,13 @@ The expected reason for V1 was narrowed to `unreachable statement count increase
 
 ### Protected transitions and ordering
 
-The protected transitions are `far_validation/mutations.py`, `far_validation/formal_model.py`, `far_validation/weakening.py`, and `validation_bootstrap/verify.py`. Each needs an owner-signed authorization bound to this pull request.
+The protected transitions are `far_validation/mutations.py`, `far_validation/formal_model.py`, `far_validation/weakening.py`, `far_validation/model.py`, and `validation_bootstrap/verify.py`. Each needs an owner-signed authorization bound to this pull request.
 
 `weakening.py` is also changed by PR #560. The two versions merge without conflict, but the merged bytes differ from both. For that reason, signatures are requested only after PR #560 and PR #538 have merged and `main` has been merged into this branch.
 
 ## Unresolved
 
-- The four protected transitions need owner signatures, in the order given above. Until they are signed, `merge-authority` and `protected-repin-gate` fail on this pull request, as intended.
+- The five protected transitions need owner signatures, in the order given above. Until they are signed, `merge-authority` and `protected-repin-gate` fail on this pull request, as intended.
 - The weakening detector is syntactic. A guard moved into a called helper, into data, or into a runtime patch still passes (finding 15). No syntactic rule can close that; only locked files are protected by construction.
 - A legitimate rename of a test module needs a base waiver (finding 16).
 - Former patch 04 is deferred (finding 5).
