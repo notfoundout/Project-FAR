@@ -1,4 +1,4 @@
-name: Repository Health
+name: Repository Health (full)
 on:
   workflow_dispatch: null
   push:

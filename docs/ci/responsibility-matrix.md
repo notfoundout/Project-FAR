@@ -3,7 +3,7 @@
 | Workflow | Trigger | Responsibility | Local equivalent | Timeout policy |
 |---|---|---|---|---|
 | `repo-health.yml` | pull request and push to `main` | Canonical read-only PR health verification. | `python tools/repo_health_check.py --fast` | Job timeout: 30 minutes; per-subprocess timeout defaults to `PROJECT_FAR_HEALTH_TIMEOUT` or 120 seconds. |
-| `repository-health.yml` | manual dispatch | Canonical full read-only verification. | `python tools/repo_health_check.py --full` | Job timeout: 60 minutes; same per-subprocess policy. |
+| `repository-health.yml` (`Repository Health (full)`) | pull request to `main`, push to `main`, and manual dispatch | Canonical full read-only verification. Advisory: `merge-authority` runs the same `repository.health-full` check under strict tracing. | `python tools/repo_health_check.py --full` | Job timeout: 60 minutes; same per-subprocess policy. |
 | `regenerate-dashboard.yml` | manual dispatch | Generated dashboard/report update workflow. Not a PR verification authority. | `make dashboard` | Job timeout: 30 minutes. |
 | `release-readiness.yml` | manual dispatch | Release-readiness report generation and artifact upload. | `python tools/release_readiness_report.py` after full health. | Job timeout: 60 minutes. |
 | `project-planning.yml` | manual dispatch | Advisory planning generation. | `python tools/self_advancement_plan.py` | Job timeout: 30 minutes. |
