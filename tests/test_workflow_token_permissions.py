@@ -11,9 +11,9 @@ WORKFLOWS = sorted((ROOT / ".github/workflows").glob("*.yml"))
 # Events whose jobs run code that the pull request, or its merge-queue entry, supplies.
 CANDIDATE_EVENTS = {"pull_request", "pull_request_target", "merge_group"}
 
-# Locked workflows that declare no permissions. They change only through owner-signed repins, and
-# they receive the repository's default token (Contents, Metadata, Packages: read, as each job
-# log's "GITHUB_TOKEN Permissions" group shows).
+# Locked workflows that may still declare no permissions. They change only through owner-signed
+# repins, and they receive the repository's default token (Contents, Metadata, Packages: read, as
+# each job log's "GITHUB_TOKEN Permissions" group shows). PR #538 gives lean.yml a declaration.
 LOCKED_WITHOUT_PERMISSIONS = {"lean.yml", "repo-health.yml", "specification-export.yml"}
 
 EVENT_TEST = re.compile(r"github\.event_name\s*==\s*'([a-z_]+)'")
@@ -119,7 +119,7 @@ class WorkflowTokenPermissionTests(unittest.TestCase):
             if all("permissions" in job for job in workflow.get("jobs", {}).values()):
                 continue
             undeclared.append(path.name)
-        self.assertEqual(sorted(undeclared), sorted(LOCKED_WITHOUT_PERMISSIONS))
+        self.assertLessEqual(set(undeclared), LOCKED_WITHOUT_PERMISSIONS)
 
     def test_a_workflow_wide_write_token_on_pull_request_is_rejected(self):
         workflow = {
