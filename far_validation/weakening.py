@@ -58,6 +58,7 @@ class StrengthMetrics:
     branches: int = 0
     skips: int = 0
     ast_nodes: int = 0
+    unreachable: int = 0
 
 
 @dataclass
@@ -619,6 +620,41 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
             )
     return failures
 
+# Statements after which the rest of their block never runs. `self.skipTest(...)` ends a test as
+# surely as `return`; `sys.exit`/`os._exit`/`exit`/`quit` end a checker.
+_TERMINATING_CALLS = frozenset({"exit", "_exit", "quit", "skipTest"})
+
+
+def _terminates(statement: ast.stmt) -> bool:
+    if isinstance(statement, (ast.Return, ast.Raise, ast.Continue, ast.Break)):
+        return True
+    return (
+        isinstance(statement, ast.Expr)
+        and isinstance(statement.value, ast.Call)
+        and _call_name(statement.value) in _TERMINATING_CALLS
+    )
+
+
+def _unreachable_statements(tree: ast.AST) -> int:
+    """Count statements that follow an unconditional terminator in the same block.
+
+    Assertion, branch, and failure-path counts are syntactic, so an early `return`, `raise
+    SystemExit(0)`, or `skipTest` inserted before them disables a test or checker without changing any
+    of them. Dead code is what such an insertion leaves behind.
+    """
+    unreachable = 0
+    for node in ast.walk(tree):
+        for name in ("body", "orelse", "finalbody"):
+            block = getattr(node, name, None)
+            if not isinstance(block, list):
+                continue
+            for index, statement in enumerate(block):
+                if isinstance(statement, ast.stmt) and _terminates(statement):
+                    unreachable += len(block) - index - 1
+                    break
+    return unreachable
+
+
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)
     nodes = list(ast.walk(tree))
@@ -654,6 +690,7 @@ def analyze(source: str, path: str) -> StrengthMetrics:
         branches=branches,
         skips=skips,
         ast_nodes=len(nodes),
+        unreachable=_unreachable_statements(tree),
     )
 
 
@@ -906,6 +943,9 @@ def _changed_python(root: Path, base: str) -> list[tuple[str, str]]:
         root,
         "diff",
         "--name-status",
+        # As in _changed_paths: with rename detection a moved test file is reported only under its
+        # new name, so moving it out of the test_*.py discovery pattern deleted it invisibly.
+        "--no-renames",
         f"{base}...HEAD",
         "--",
         "tests",
@@ -949,6 +989,8 @@ def compare_strength(before: StrengthMetrics, after: StrengthMetrics, *, is_test
             failures.append("failure-path count decreased")
         if after.branches < before.branches:
             failures.append(f"decision-branch count decreased: {before.branches} -> {after.branches}")
+    if after.unreachable > before.unreachable:
+        failures.append(f"unreachable statement count increased: {before.unreachable} -> {after.unreachable}")
     if after.ast_nodes < max(12, int(before.ast_nodes * 0.60)):
         failures.append(f"semantic structure shrank by more than 40%: {before.ast_nodes} -> {after.ast_nodes}")
     return failures
