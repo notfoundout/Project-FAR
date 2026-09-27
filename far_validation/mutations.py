@@ -30,10 +30,15 @@ class CampaignReport:
     registered_mutations: int
     results: list[MutationResult]
     checker_coverage: int
+    static_oracle_checks: list[MutationResult] = field(default_factory=list)
 
     @property
     def successful(self) -> bool:
-        return self.registered_mutations > 0 and all(item.rejected for item in self.results)
+        return (
+            self.registered_mutations > 0
+            and all(item.rejected for item in self.results)
+            and all(item.rejected for item in self.static_oracle_checks)
+        )
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)
@@ -183,6 +188,38 @@ def _checker_mutations(root: Path) -> tuple[list[MutationResult], int]:
     return results, len(checkers)
 
 
+def _rule_deletion_mutations(root: Path) -> tuple[list[MutationResult], int]:
+    """Delete each rule of every registered governance checker and require its tests to fail.
+
+    `_checker_mutations` scores four fixed, source-independent texts (empty, trivial success,
+    no failure path, appended syntax error) against the static oracle heuristic; its results
+    say nothing about whether tests detect a broken checker, so they are reported separately
+    and no longer counted as mutations. These mutants are derived from each checker's source.
+    """
+    import importlib.util
+    import sys
+
+    path = root / "tools" / "checker_rule_mutation.py"
+    spec = importlib.util.spec_from_file_location("far_checker_rule_mutation", path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    checkers = sorted(module.REGISTRY)
+    outcomes = module.run(checkers)
+    results = [
+        MutationResult(
+            f"RULE-{mutant.checker.replace('/', '_')}-L{mutant.line}", "rule-deletion",
+            mutant.killed, mutant.source,
+        )
+        for mutants in outcomes.values() for mutant in mutants
+    ]
+    for failure in module.evaluate(outcomes):
+        results.append(MutationResult(f"RULE-FLOOR-{len(results)}", "rule-deletion", False, failure))
+    return results, len(checkers)
+
+
 def _weakening_mutations() -> list[MutationResult]:
     results: list[MutationResult] = []
     with tempfile.TemporaryDirectory() as directory:
@@ -214,8 +251,9 @@ def _weakening_mutations() -> list[MutationResult]:
 
 def run_campaign(root: Path) -> CampaignReport:
     results: list[MutationResult] = []
-    checker_results, checker_count = _checker_mutations(root)
-    results.extend(checker_results)
+    static_results, _ = _checker_mutations(root)
+    rule_results, checker_count = _rule_deletion_mutations(root)
+    results.extend(rule_results)
     results.extend(_trust_mutations())
     results.extend(_certificate_mutations())
     results.extend(_trace_mutations(root))
@@ -223,7 +261,8 @@ def run_campaign(root: Path) -> CampaignReport:
     model = exhaustive_model_check(4)
     results.append(
         MutationResult(
-            "FORMAL-EXHAUSTIVE-STATE-SPACE", "formal-model", model["runs"] > 0 and model["attestation_mutations"] == 5,
+            "FORMAL-EXHAUSTIVE-STATE-SPACE", "formal-model",
+            model["runs"] > 0 and model["attestation_mutations"] == 5 and model["engine_conformance_runs"] > 0,
             json.dumps(model, sort_keys=True),
         )
     )
@@ -232,6 +271,7 @@ def run_campaign(root: Path) -> CampaignReport:
         registered_mutations=len(results),
         results=results,
         checker_coverage=checker_count,
+        static_oracle_checks=static_results,
     )
 
 
@@ -251,10 +291,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.json:
         print(json.dumps(payload, indent=2, sort_keys=True))
     else:
-        failed = [item for item in report.results if not item.rejected]
+        failed = [item for item in report.results + report.static_oracle_checks if not item.rejected]
         print(
             f"validator assurance campaign: {len(report.results) - len(failed)}/{len(report.results)} mutations rejected; "
-            f"legacy checker coverage={report.checker_coverage}"
+            f"rule-deletion checker coverage={report.checker_coverage}; "
+            f"{len(report.static_oracle_checks)} static oracle checks reported separately"
         )
         for item in failed:
             print(f"[FAIL] {item.mutation_id} via {item.detector}: {item.detail}")

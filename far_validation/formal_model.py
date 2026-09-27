@@ -96,6 +96,56 @@ def verify_attestation_model() -> int:
         return rejected
 
 
+def engine_conformance(max_checks: int = 3) -> int:
+    """Run the real ValidationEngine on every abstract case and require it to match simulate().
+
+    Model checking `simulate()` alone proves properties of this module's reimplementation, not
+    of `engine.py`. This binds the model to the implementation for small graphs.
+    """
+    import sys
+
+    from .engine import ValidationEngine
+
+    ids = [f"n{index}" for index in range(max_checks)][::-1]  # alphabetical order opposes topology
+    compared = 0
+    with tempfile.TemporaryDirectory() as directory:
+        root = Path(directory)
+        (root / "validation").mkdir()
+        for size in range(1, max_checks + 1):
+            for dependencies in dependency_graphs(size):
+                for outcomes in itertools.product((False, True), repeat=size):
+                    checks = [
+                        {
+                            "id": ids[index],
+                            "title": ids[index],
+                            "command": [sys.executable, "-c", f"raise SystemExit({0 if outcomes[index] else 1})"],
+                            "profiles": ["pr-fast"],
+                            "depends_on": [ids[dep] for dep in dependencies[index]],
+                            "cacheable": False,
+                        }
+                        for index in range(size)
+                    ]
+                    manifest = {
+                        "schema_version": "1.0",
+                        "profiles": {"pr-fast": ids[:size]},
+                        "protected_checks": [],
+                        "global_invalidation_paths": ["validation/**"],
+                        "checks": checks,
+                    }
+                    (root / "validation" / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+                    summary = ValidationEngine(root, jobs=2, use_cache=False).run(profile="pr-fast")
+                    actual = {result.check_id: result.status for result in summary.results}
+                    model = simulate(dependencies, outcomes)
+                    expected = {
+                        ids[index]: {"passed": "passed", "failed": "validation_failure", "blocked": "blocked_by_root_failure"}[state]
+                        for index, state in enumerate(model.states)
+                    }
+                    if actual != expected or summary.successful != model.successful:
+                        raise AssertionError(f"engine diverges from model: deps={dependencies} outcomes={outcomes} engine={actual} model={expected}")
+                    compared += 1
+    return compared
+
+
 def exhaustive_model_check(max_checks: int = 4) -> dict[str, int]:
     graphs = 0
     runs = 0
@@ -107,7 +157,11 @@ def exhaustive_model_check(max_checks: int = 4) -> dict[str, int]:
                 verify_run(run)
                 runs += 1
     attestation_mutations = verify_attestation_model()
-    return {"max_checks": max_checks, "graphs": graphs, "runs": runs, "attestation_mutations": attestation_mutations}
+    engine_runs = engine_conformance(min(max_checks, 3))
+    return {
+        "max_checks": max_checks, "graphs": graphs, "runs": runs,
+        "attestation_mutations": attestation_mutations, "engine_conformance_runs": engine_runs,
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -124,7 +178,8 @@ def main(argv: list[str] | None = None) -> int:
         print(
             "validation engine formal model: PASS "
             f"({result['graphs']} DAGs, {result['runs']} runs, "
-            f"{result['attestation_mutations']} hostile attestations rejected)"
+            f"{result['attestation_mutations']} hostile attestations rejected; "
+            f"{result['engine_conformance_runs']} real-engine runs match the model)"
         )
     return 0
 
