@@ -28,6 +28,7 @@
     "python",
     "python3",
     "git",
+    "git-upload-pack",
     "ssh-keygen",
     "openssl",
     "bash",

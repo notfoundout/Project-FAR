@@ -76,10 +76,9 @@ def _matches(path: str, patterns: Iterable[str]) -> bool:
     normalized = path.replace(os.sep, "/")
     for pattern in patterns:
         variants = _pattern_variants(pattern)
-        if any(
-            fnmatch.fnmatch(normalized, candidate) or Path(normalized).match(candidate)
-            for candidate in variants
-        ):
+        # fnmatch anchors the pattern at the repository root. ``Path.match`` is deliberately not used:
+        # it matches relative patterns from the right, so ``README.md`` would admit ``docs/README.md``.
+        if any(fnmatch.fnmatch(normalized, candidate) for candidate in variants):
             return True
         if pattern.endswith("/**"):
             prefix = pattern[:-3].rstrip("/")
@@ -118,18 +117,75 @@ def _normalize_observed(raw: str, cwd: Path, root: Path) -> str | None:
 _QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"')
 _OPEN_FLAGS = re.compile(r"\b(O_[A-Z0-9_|]+)\b")
 _PID_PREFIX = re.compile(r"^(?:(?:\[pid\s+(\d+)\])|(\d+))\s+")
-_CHILD_RESULT = re.compile(r"=\s+(\d+)\s*$")
-_FD_RESULT = re.compile(r"=\s+(\d+)(?:\s|$)")
-_FAILED_RESULT = re.compile(r"=\s+-1\b")
 _RESUMED = re.compile(r"^<\.\.\.\s+([A-Za-z0-9_]+)\s+resumed>(.*)$")
-_AT_CALLS = {"openat", "newfstatat", "unlinkat", "mkdirat", "readlinkat"}
+_RESULT = re.compile(r"^\s*=\s*(\S+)(?:\s+([A-Z][A-Z0-9_]*))?")
+_ESCAPE = re.compile(r"\\(x[0-9a-fA-F]{2}|[0-7]{1,3}|.)", re.DOTALL)
+_SIMPLE_ESCAPES = {"n": 10, "t": 9, "r": 13, "v": 11, "f": 12, "a": 7, "b": 8, "e": 27}
+_WRITE_OPEN_FLAGS = ("O_WRONLY", "O_RDWR", "O_CREAT", "O_TRUNC", "O_APPEND")
+# Path-bearing syscalls: (dirfd argument index or None, path argument index, access kind).
+# "open" accesses are writes when their flags can create or modify the file, reads otherwise.
+# Both operands of rename/link count: the destination of an atomic ``os.replace`` is the output.
+_PATH_ARGUMENTS: dict[str, tuple[tuple[int | None, int, str], ...]] = {
+    "open": ((None, 0, "open"),),
+    "openat": ((0, 1, "open"),),
+    "openat2": ((0, 1, "open"),),
+    "creat": ((None, 0, "write"),),
+    "stat": ((None, 0, "read"),),
+    "lstat": ((None, 0, "read"),),
+    "access": ((None, 0, "read"),),
+    "readlink": ((None, 0, "read"),),
+    "newfstatat": ((0, 1, "read"),),
+    "statx": ((0, 1, "read"),),
+    "faccessat": ((0, 1, "read"),),
+    "faccessat2": ((0, 1, "read"),),
+    "readlinkat": ((0, 1, "read"),),
+    "truncate": ((None, 0, "write"),),
+    "unlink": ((None, 0, "write"),),
+    "unlinkat": ((0, 1, "write"),),
+    "rmdir": ((None, 0, "write"),),
+    "mkdir": ((None, 0, "write"),),
+    "mkdirat": ((0, 1, "write"),),
+    "rename": ((None, 0, "write"), (None, 1, "write")),
+    "renameat": ((0, 1, "write"), (2, 3, "write")),
+    "renameat2": ((0, 1, "write"), (2, 3, "write")),
+    "link": ((None, 0, "read"), (None, 1, "write")),
+    "linkat": ((0, 1, "read"), (2, 3, "write")),
+    "symlink": ((None, 1, "write"),),
+    "symlinkat": ((1, 2, "write"),),
+}
+_FD_OPENING_CALLS = {"open", "openat", "openat2"}
+# A failed lookup relative to an unknown descriptor touched nothing when the descriptor itself was bad.
+_HARMLESS_UNKNOWN_DIRFD_ERRORS = {"EBADF", "ENOTDIR"}
+TRACED_SYSCALLS = (
+    "open,openat,openat2,creat,newfstatat,stat,lstat,statx,access,faccessat,faccessat2,readlink,"
+    "readlinkat,truncate,execve,execveat,connect,socket,sendto,recvfrom,unlink,unlinkat,rename,"
+    "renameat,renameat2,link,linkat,symlink,symlinkat,mkdir,mkdirat,rmdir,clone,clone3,fork,vfork,"
+    "chdir,fchdir,dup,dup2,dup3,fcntl"
+)
 
 
 def _unescape(value: str) -> str:
-    try:
-        return bytes(value, "utf-8").decode("unicode_escape")
-    except UnicodeDecodeError:
-        return value
+    """Decode strace's C-style escapes to the exact bytes of the path, then to text.
+
+    strace prints every non-printable byte, including each byte of a UTF-8 sequence, as an escape.
+    Decoding escapes as code points would turn a UTF-8 path into mojibake that no declaration matches.
+    """
+    data = bytearray()
+    position = 0
+    for match in _ESCAPE.finditer(value):
+        data += value[position:match.start()].encode("utf-8", "surrogateescape")
+        token = match.group(1)
+        if token.startswith("x") and len(token) == 3:
+            data.append(int(token[1:], 16))
+        elif token[0] in "01234567":
+            data.append(int(token, 8) & 0xFF)
+        elif token in _SIMPLE_ESCAPES:
+            data.append(_SIMPLE_ESCAPES[token])
+        else:
+            data += token.encode("utf-8", "surrogateescape")
+        position = match.end()
+    data += value[position:].encode("utf-8", "surrogateescape")
+    return bytes(data).decode("utf-8", "surrogateescape")
 
 
 def _split_pid(line: str) -> tuple[int, str]:
@@ -144,7 +200,9 @@ def _logical_strace_lines(text: str) -> list[str]:
 
     The combined syscall is ordered where it started, not where it resumed. This is essential for
     fork/vfork/clone: the child can run before the parent prints the resumed result, but its inherited
-    cwd/fd state must already exist when the child events are interpreted.
+    cwd/fd state must already exist when the child events are interpreted. A call that never resumes
+    (the process was killed, or a thread's successful execve resumed under the thread-group leader's
+    pid) is kept without a result rather than dropped, so it is judged conservatively.
     """
     pending: dict[int, tuple[int, str]] = {}
     complete: list[tuple[int, str]] = []
@@ -163,60 +221,113 @@ def _logical_strace_lines(text: str) -> list[str]:
                 complete.append((start_index, f"{pid} {prefix}{resumed.group(2)}"))
             continue
         complete.append((index, raw))
+    complete.extend((start_index, f"{pid} {prefix}") for pid, (start_index, prefix) in pending.items())
     complete.sort(key=lambda item: item[0])
     return [line for _index, line in complete]
 
 
-def _dirfd_token(stripped: str) -> str | None:
-    if "(" not in stripped:
+@dataclass
+class _Syscall:
+    name: str
+    arguments: list[str]
+    result: str | None  # None when the call never returned in the trace
+    errno: str | None
+
+    @property
+    def failed(self) -> bool:
+        return self.result is not None and self.result.startswith("-")
+
+    def number(self) -> int | None:
+        return int(self.result) if self.result is not None and self.result.isdigit() else None
+
+
+def _parse_syscall(stripped: str) -> _Syscall | None:
+    """Split ``name(arg, arg, ...) = result ERRNO`` at top-level commas, respecting strings and nesting."""
+    open_index = stripped.find("(")
+    head = stripped[:open_index].split() if open_index > 0 else []
+    if not head:
         return None
-    arguments = stripped.split("(", 1)[1]
-    return arguments.split(",", 1)[0].strip()
+    arguments: list[str] = []
+    current: list[str] = []
+    depth = 0
+    in_string = False
+    rest = ""
+    index = open_index + 1
+    while index < len(stripped):
+        char = stripped[index]
+        if in_string:
+            current.append(char)
+            if char == "\\" and index + 1 < len(stripped):
+                current.append(stripped[index + 1])
+                index += 2
+                continue
+            if char == '"':
+                in_string = False
+        elif char == '"':
+            in_string = True
+            current.append(char)
+        elif char in "([{":
+            depth += 1
+            current.append(char)
+        elif char == ")" and depth == 0:
+            rest = stripped[index + 1:]
+            break
+        elif char in ")]}":
+            depth -= 1
+            current.append(char)
+        elif char == "," and depth == 0:
+            arguments.append("".join(current).strip())
+            current = []
+        else:
+            current.append(char)
+        index += 1
+    last = "".join(current).strip()
+    if last or arguments:
+        arguments.append(last)
+    outcome = _RESULT.match(rest)
+    return _Syscall(head[-1], arguments, outcome.group(1) if outcome else None, outcome.group(2) if outcome else None)
 
 
-def _path_from_call(
-    call: str,
-    stripped: str,
-    quoted: list[str],
-    current_cwd: Path,
-    fd_paths: dict[int, Path],
+def _argument_path(argument: str) -> str | None:
+    quoted = _QUOTED.match(argument)
+    return _unescape(quoted.group(1)) if quoted else None
+
+
+def _descriptor(argument: str) -> int | str | None:
+    token = argument.split("<", 1)[0].strip()
+    if token == "AT_FDCWD":
+        return token
+    return int(token) if token.isdigit() else None
+
+
+class _PathUnattributable(Exception):
+    """A relative path was resolved against a descriptor whose directory the trace never observed."""
+
+
+def _resolve(
+    call: _Syscall, dirfd_index: int | None, path_index: int, cwd: Path, fds: dict[int, Path]
 ) -> Path | None:
-    if not quoted:
+    if path_index >= len(call.arguments):
         return None
-    raw = quoted[0]
+    raw = _argument_path(call.arguments[path_index])
+    if raw is None or raw == "":
+        return None  # a NULL/pointer argument, or AT_EMPTY_PATH: the descriptor itself was opened earlier
     candidate = Path(raw)
     if candidate.is_absolute():
         return candidate.resolve(strict=False)
-    if call in _AT_CALLS:
-        token = _dirfd_token(stripped)
-        if token == "AT_FDCWD":
-            base = current_cwd
-        elif token is not None and token.lstrip("-").isdigit():
-            base = fd_paths.get(int(token))
-            if base is None:
-                return None
-        else:
-            return None
-        return (base / candidate).resolve(strict=False)
-    return (current_cwd / candidate).resolve(strict=False)
+    if dirfd_index is None:
+        return (cwd / candidate).resolve(strict=False)
+    descriptor = _descriptor(call.arguments[dirfd_index]) if dirfd_index < len(call.arguments) else None
+    if descriptor == "AT_FDCWD":
+        return (cwd / candidate).resolve(strict=False)
+    base = fds.get(descriptor) if isinstance(descriptor, int) else None
+    if base is None:
+        raise _PathUnattributable(raw)
+    return (base / candidate).resolve(strict=False)
 
 
-def _record_open_fd(
-    pid: int,
-    call: str,
-    stripped: str,
-    quoted: list[str],
-    current_cwd: Path,
-    fd_by_pid: dict[int, dict[int, Path]],
-) -> None:
-    if call not in {"open", "openat"} or _FAILED_RESULT.search(stripped):
-        return
-    result = _FD_RESULT.search(stripped)
-    if result is None:
-        return
-    path = _path_from_call(call, stripped, quoted, current_cwd, fd_by_pid.setdefault(pid, {}))
-    if path is not None:
-        fd_by_pid[pid][int(result.group(1))] = path
+def _clone_shares(line: str, flag: str) -> bool:
+    return re.search(rf"\b{flag}\b", line) is not None
 
 
 def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
@@ -225,80 +336,99 @@ def parse_strace(text: str, *, cwd: Path, root: Path) -> TraceReport:
     writes: set[str] = set()
     executables: set[str] = set()
     network: set[str] = set()
+    unattributable: set[str] = set()
     initial_cwd = cwd.resolve()
-    cwd_by_pid: dict[int, Path] = {0: initial_cwd}
-    fd_by_pid: dict[int, dict[int, Path]] = {0: {}}
+    # Filesystem context and descriptor table per pid. Threads and CLONE_FS/CLONE_FILES children share
+    # the parent's objects (a chdir or open in one is visible to all); fork/vfork children get copies.
+    fs_by_pid: dict[int, list[Path]] = {}
+    fds_by_pid: dict[int, dict[int, Path]] = {}
 
     for line in _logical_strace_lines(text):
         raw = line.strip()
         pid, stripped = _split_pid(raw)
-        current_cwd = cwd_by_pid.setdefault(pid, initial_cwd)
-        current_fds = fd_by_pid.setdefault(pid, {})
-        call = stripped.split("(", 1)[0].split()[-1] if "(" in stripped else ""
-        quoted = [_unescape(item) for item in _QUOTED.findall(stripped)]
+        call = _parse_syscall(stripped)
+        if call is None:
+            continue
+        fs = fs_by_pid.setdefault(pid, [initial_cwd])
+        fds = fds_by_pid.setdefault(pid, {})
+        name = call.name
 
-        if call in {"clone", "clone3", "fork", "vfork"}:
-            child = _CHILD_RESULT.search(stripped)
-            if child:
-                child_pid = int(child.group(1))
-                cwd_by_pid[child_pid] = current_cwd
-                fd_by_pid[child_pid] = dict(current_fds)
+        if name in {"clone", "clone3", "fork", "vfork"}:
+            child = call.number()
+            if child is not None:
+                fs_by_pid[child] = fs if _clone_shares(stripped, "CLONE_FS") else [fs[0]]
+                fds_by_pid[child] = fds if _clone_shares(stripped, "CLONE_FILES") else dict(fds)
             continue
-        if call == "chdir" and quoted and not _FAILED_RESULT.search(stripped):
-            new_cwd = _absolute_observed(quoted[0], current_cwd)
-            if new_cwd is not None:
-                cwd_by_pid[pid] = new_cwd
+        if name == "chdir" and not call.failed:
+            try:
+                target = _resolve(call, None, 0, fs[0], fds)
+            except _PathUnattributable:
+                target = None
+            if target is not None:
+                fs[0] = target
             continue
-        if call == "fchdir" and not _FAILED_RESULT.search(stripped):
-            match = re.match(r"fchdir\((\d+)\)", stripped)
-            if match:
-                new_cwd = current_fds.get(int(match.group(1)))
-                if new_cwd is not None:
-                    cwd_by_pid[pid] = new_cwd
+        if name == "fchdir" and not call.failed:
+            descriptor = _descriptor(call.arguments[0]) if call.arguments else None
+            if isinstance(descriptor, int) and descriptor in fds:
+                fs[0] = fds[descriptor]
             continue
-        if call in {"dup", "dup2", "dup3"} and not _FAILED_RESULT.search(stripped):
-            args = stripped.split("(", 1)[1].split(")", 1)[0].split(",")
-            result = _FD_RESULT.search(stripped)
-            if args and args[0].strip().isdigit() and result:
-                source = current_fds.get(int(args[0].strip()))
-                if source is not None:
-                    current_fds[int(result.group(1))] = source
+        if name in {"dup", "dup2", "dup3", "fcntl"}:
+            if name == "fcntl" and (len(call.arguments) < 2 or not call.arguments[1].startswith("F_DUPFD")):
+                continue
+            target_fd = call.number()
+            source = _descriptor(call.arguments[0]) if call.arguments else None
+            if target_fd is not None and not call.failed:
+                if isinstance(source, int) and source in fds:
+                    fds[target_fd] = fds[source]
+                else:
+                    fds.pop(target_fd, None)
             continue
-        if call == "execve" and quoted:
-            if not _FAILED_RESULT.search(stripped):
-                executables.add(quoted[0])
+        if name in {"execve", "execveat"}:
+            if not call.failed:
+                path_index = 1 if name == "execveat" else 0
+                executable = _argument_path(call.arguments[path_index]) if len(call.arguments) > path_index else None
+                if executable:
+                    executables.add(executable)
             continue
-        if call == "connect":
+        if name in {"connect", "sendto", "recvfrom"}:
             if "AF_INET" in stripped or "AF_INET6" in stripped:
                 network.add(stripped[:500])
             continue
-        if call in {"sendto", "recvfrom"}:
-            if "AF_INET" in stripped or "AF_INET6" in stripped:
-                network.add(stripped[:500])
-            continue
-        if call not in {
-            "open", "openat", "newfstatat", "stat", "lstat", "access", "readlink", "readlinkat",
-            "unlink", "unlinkat", "rename", "renameat", "renameat2", "mkdir", "mkdirat", "rmdir",
-        }:
+        operands = _PATH_ARGUMENTS.get(name)
+        if operands is None:
             continue
 
-        _record_open_fd(pid, call, stripped, quoted, current_cwd, fd_by_pid)
-        observed = _path_from_call(call, stripped, quoted, current_cwd, current_fds)
-        if observed is None:
-            continue
-        relative = _inside(observed, root)
-        if relative in {None, "."}:
-            continue
-        is_write = call in {"unlink", "unlinkat", "rename", "renameat", "renameat2", "mkdir", "mkdirat", "rmdir"}
-        flags = _OPEN_FLAGS.search(stripped)
-        if flags and any(token in flags.group(1) for token in ("O_WRONLY", "O_RDWR", "O_CREAT", "O_TRUNC", "O_APPEND")):
-            is_write = True
-        (writes if is_write else reads).add(relative)
+        opened: Path | None = None
+        for dirfd_index, path_index, kind in operands:
+            try:
+                observed = _resolve(call, dirfd_index, path_index, fs[0], fds)
+            except _PathUnattributable as exc:
+                if call.errno not in _HARMLESS_UNKNOWN_DIRFD_ERRORS:
+                    unattributable.add(f"{name}({call.arguments[dirfd_index or 0]}, {exc.args[0]!r})")
+                continue
+            if observed is None:
+                continue
+            opened = observed
+            relative = _inside(observed, root)
+            if relative in {None, "."}:
+                continue
+            if kind == "open":
+                flags = _OPEN_FLAGS.search(" ".join(call.arguments[path_index + 1:]))
+                kind = "write" if flags and any(token in flags.group(1) for token in _WRITE_OPEN_FLAGS) else "read"
+            (writes if kind == "write" else reads).add(relative)
+        if name in _FD_OPENING_CALLS and not call.failed:
+            descriptor = call.number()
+            if descriptor is not None:
+                if opened is not None:
+                    fds[descriptor] = opened
+                else:
+                    fds.pop(descriptor, None)
 
     report.reads = sorted(reads)
     report.writes = sorted(writes)
     report.executables = sorted(executables)
     report.network_attempts = sorted(network)
+    report.violations = [f"unattributable descriptor-relative access: {item}" for item in sorted(unattributable)]
     return report
 
 
@@ -332,7 +462,7 @@ def run_traced(
         "-s",
         "4096",
         "-e",
-        "trace=open,openat,newfstatat,stat,lstat,access,readlink,readlinkat,execve,connect,socket,sendto,recvfrom,unlink,unlinkat,rename,renameat,renameat2,mkdir,mkdirat,rmdir,clone,clone3,fork,vfork,chdir,fchdir,dup,dup2,dup3",
+        f"trace={TRACED_SYSCALLS}",
         "-o",
         str(trace_path),
         "--",
