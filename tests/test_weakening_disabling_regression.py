@@ -125,5 +125,75 @@ class DisablingWithoutMetricChangeTests(unittest.TestCase):
             self.assertEqual(changed, {"tests/test_example.py": "D", "tests/test_renamed.py": "A"})
 
 
+class ConditionalEarlyExitTests(unittest.TestCase):
+    """A guarded exit leaves the rest reachable, so the unreachable-statement count cannot see it."""
+
+    def _failures(self, path: str, before: str, after: str) -> list[str]:
+        with tempfile.TemporaryDirectory() as directory:
+            repo = _Repository(Path(directory), {path: before})
+            repo.write({path: after}, "change")
+            return repo.failures().get(path, [])
+
+    def test_guarded_exit_before_a_tests_assertions_is_rejected(self) -> None:
+        guards = (
+            "if os.environ.get('CI'):\n            return",
+            "if os.environ.get('CI'):\n            self.skipTest('ci')",
+            "if os.environ.get('CI'):\n            raise unittest.SkipTest('ci')",
+            "if not os.environ.get('CI'):\n            pass\n        else:\n            return",
+        )
+        for guard in guards:
+            with self.subTest(guard=guard):
+                after = "import os\n" + TEST_MODULE.replace(
+                    "        self.assertEqual", f"        {guard}\n        self.assertEqual", 1)
+                self.assertIn("conditional early exit added to T.test_a: 0 -> 1",
+                              self._failures("tests/test_example.py", TEST_MODULE, after))
+
+    def test_handler_that_returns_is_rejected(self) -> None:
+        after = TEST_MODULE.replace(
+            "        self.assertEqual(1, 1)\n        self.assertTrue(True)\n",
+            "        try:\n            self.assertEqual(1, 1)\n            self.assertTrue(True)\n"
+            "        except AssertionError:\n            return\n", 1)
+        self.assertIn("conditional early exit added to T.test_a: 0 -> 1",
+                      self._failures("tests/test_example.py", TEST_MODULE, after))
+
+    def test_new_fixture_with_a_guard_is_rejected(self) -> None:
+        after = "import os\n" + TEST_MODULE.replace(
+            "    def test_a(self):\n",
+            "    def setUp(self):\n        if os.environ.get('CI'):\n            self.skipTest('ci')\n\n"
+            "    def test_a(self):\n", 1)
+        self.assertIn("conditional early exit added to T.setUp: 0 -> 1",
+                      self._failures("tests/test_example.py", TEST_MODULE, after))
+
+    def test_guarded_success_exit_in_a_checkers_main_is_rejected(self) -> None:
+        for guard in ("return 0", "return", "return False", "raise SystemExit(0)", "raise SystemExit", "sys.exit(0)", "sys.exit()"):
+            with self.subTest(guard=guard):
+                after = CHECKER.replace(
+                    "    errors = []\n", f"    if len(sys.argv) > 5:\n        {guard}\n    errors = []\n", 1)
+                self.assertIn("conditional early exit added to main: 0 -> 1",
+                              self._failures("tools/check_example.py", CHECKER, after))
+
+    def test_failing_exits_new_tests_and_nested_helpers_pass(self) -> None:
+        for guard in ("return 1", "return True", "raise SystemExit(1)", "raise SystemExit('bad input')", "sys.exit('bad input')"):
+            with self.subTest(guard=guard):
+                after = CHECKER.replace(
+                    "    errors = []\n", f"    if len(sys.argv) > 5:\n        {guard}\n    errors = []\n", 1)
+                self.assertEqual([], self._failures("tools/check_example.py", CHECKER, after))
+        new_test = TEST_MODULE + (
+            "\n    def test_b(self):\n        if not os.path.exists('x'):\n            self.skipTest('no x')\n"
+            "        self.assertTrue(True)\n")
+        self.assertEqual([], self._failures("tests/test_example.py", TEST_MODULE, "import os\n" + new_test))
+        nested = TEST_MODULE.replace(
+            "        self.assertTrue(True)\n",
+            "        def fake(value):\n            if value:\n                return value\n            return None\n"
+            "        self.assertTrue(fake(True))\n", 1)
+        self.assertEqual([], self._failures("tests/test_example.py", TEST_MODULE, nested))
+
+    def test_existing_guards_are_not_counted_again(self) -> None:
+        guarded = "import os\n" + TEST_MODULE.replace(
+            "        self.assertEqual", "        if os.environ.get('CI'):\n            return\n        self.assertEqual", 1)
+        after = guarded.replace("        self.assertTrue(True)\n", "        self.assertTrue(True)\n        self.assertIn(1, [1])\n", 1)
+        self.assertEqual([], self._failures("tests/test_example.py", guarded, after))
+
+
 if __name__ == "__main__":
     unittest.main()
