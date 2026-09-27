@@ -14,9 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# Protected governance checker; its guard is prepared in the pending integration patches and
-# lands only after the security/bootstrap task reconciles protected files.
-PENDING_PROTECTED = {"tools/check_s_core_w4.py"}
+PENDING_PROTECTED: set[str] = set()
 
 
 def assert_checkers() -> list[Path]:
@@ -71,6 +69,8 @@ class CheckerOptimizationGuardTest(unittest.TestCase):
     def test_pending_list_names_real_assert_checkers(self):
         names = {path.relative_to(ROOT).as_posix() for path in assert_checkers()}
         self.assertLessEqual(PENDING_PROTECTED, names)
+        self.assertIn("tools/check_s_core_w4.py", names)
+        self.assertEqual(set(), PENDING_PROTECTED)
 
 
 if __name__ == "__main__":
