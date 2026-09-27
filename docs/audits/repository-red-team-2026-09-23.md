@@ -90,9 +90,23 @@ The files below are protected by `validation_bootstrap/assurance-lock.json`. Eac
 | `.github/workflows/exact-head-assurance.yml` (mirror, not locked) | Identical key, checkout, Lean and pin changes, preserving the mirror contract in `tests/test_exact_head_assurance_workflow.py`. |
 | `validation_bootstrap/assurance-lock.json` | Repins the two protected workflows. |
 
+### RT-13 — a repository tool can drop the App-bound merge authority (new; repaired pending owner-signed authorization)
+
+`tools/configure_validation_protection.py` wrote `main`'s protection with required checks exactly `[merge-authority]`. Since the bootstrap, the only merge authority is the App-bound `protected-repin-gate` required check, so running the tool would silently remove it. `tools/check_validation_protection.py` required the same stale set, so its read-back would have called the weakened state compliant.
+
+The deployed gate's own protection audit had the matching gap. `far_validation/repin_protection_audit.py` accepted the absence of the gate context, a bootstrap-period rule that became permanent once the App check was bound. It could not notice the binding being removed.
+
+The two legacy workflows are `disabled_manually` and their admin token is revoked, so this was not exploitable from CI. It was reachable from any local run with an owner token, or by re-enabling a workflow. The repair removes the dangerous path instead of relying on the workflows staying disabled:
+
+- The configurator is an inert tombstone. It makes no API call and exits 2, and the disabled workflows that invoke it fail closed. A locked file cannot be removed through the repin gate.
+- The read-back requires `--gate-app-id`. It fails unless `merge-authority` is bound to GitHub Actions (15368) and `protected-repin-gate` to the given App.
+- The audit defaults to the bound-state check (`repin_gate_app.check_protection`). The bootstrap rule stays only behind an explicit `--bootstrap`, for a first bootstrap or an App rotation. It takes effect in the deployed gate after the owner redeploys at a `main` commit that contains it.
+
+Tests: the read-back rejects the configurator's old policy and a gate bound to any other App; the configurator exits 2 without network code; the default audit rejects a dropped or re-bound gate. The new audit tests fail against the previous `repin_protection_audit.py`.
+
 Not changed, with reasons:
 - `far_validation/assured_engine.py`: see RT-9.
-- `canonical-branch-protection.yml` and `configure-validation-protection.yml`: both are live-verified `disabled_manually`, and their admin token was retired (`theory/evaluation/privileged-token-retirement-v1.0.json`). Pinning them would buy no protection for two more signatures. Their tool is stale: `tools/configure_validation_protection.py` would set the required checks to `merge-authority` alone, dropping the App-bound `protected-repin-gate`. Neither workflow may be re-enabled while that is so.
+- `canonical-branch-protection.yml` and `configure-validation-protection.yml`: both are live-verified `disabled_manually`, and their admin token was retired (`theory/evaluation/privileged-token-retirement-v1.0.json`). Pinning their actions would buy no protection for two more signatures. The tool they run is now inert, and the read-back requires the App binding (RT-12), so re-enabling them cannot drop the gate.
 
 `tests/test_ci_merge_gate_hardening.py` pins each repair. Ten reintroduced defects (dropped `!cancelled()`, inverted guard, hash audit exiting 0, secret as key, unmasked key, persisted credentials, piped `elan/master`, unchecked digest, removed `sorry` gate, tag-pinned action) were each caught by the intended test. Restoring the elan installer in the two unprotected workflows fails the archive and `sorry`-gate tests.
 
