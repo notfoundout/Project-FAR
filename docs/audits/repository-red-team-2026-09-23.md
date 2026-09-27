@@ -51,42 +51,52 @@ Already recorded by the [FAR core epistemic calibration audit](far-core-epistemi
 
 Recorded by `LIM-035`. The README W1 paragraph now names the reviewer.
 
-### RT-9 — validation signing material reaches candidate code (new; NOT yet fixed)
+### RT-9 — validation signing material reaches candidate code (new; repaired pending owner-signed authorization)
 
 - `validator-assurance.yml` `merge-authority` runs on `pull_request` with `FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ secrets.FAR_VALIDATION_CACHE_SIGNING_KEY || github.token }}`.
 - `exact-head-assurance.yml` sets that variable to the live `github.token` for every step, even though its checkout uses `persist-credentials: false` specifically to keep the token away from candidate code.
 - `far_validation/assured_engine.py` forwards the variable into every check subprocess.
 
-Because the whole job executes candidate code, subprocess filtering alone cannot protect a persistent key. The prepared replacement removes the secret and the token fallback, derives a masked `openssl rand -hex 32` key per job, stops forwarding the key to check subprocesses, and adds a regression test. It is not applied (see *Blocked protected transition*). Whether the persistent secret is configured is Unknown. `LIM-049`.
+Because the whole job executes candidate code, subprocess filtering alone cannot protect a persistent key. The repair removes the secret and the token fallback and derives a masked `openssl rand -hex 32` key per job in both lanes. It also checks out with `persist-credentials: false`, because `merge-authority` previously left the job token in `.git/config` where candidate code could read it. `tests/test_ci_merge_gate_hardening.py` pins this.
 
-### RT-10 — mutable Lean acquisition in protected workflows (new; partly fixed)
+The key no longer outlives its job, so forwarding it to check subprocesses exposes nothing that the job's own candidate code could not already read. `far_validation/assured_engine.py` is therefore left unchanged; changing it would cost one more protected transition and add no boundary. The certificate signed with this key binds evidence within one job. It is not a trust boundary against the candidate that runs in that job. Whether the persistent secret is still configured is Unknown; if it is, the owner should delete it. `LIM-049`.
 
-The two unprotected Lean workflows now run a commit-pinned, SHA-256-verified `elan-init.sh`, but that script still fetches the latest elan release and elan resolves the toolchain. The protected `lean.yml`, `validator-assurance.yml`, and `exact-head-assurance.yml` still pipe `elan/master/elan-init.sh` into `sh`. A CI measurement bound the direct release archive `lean-4.19.0-linux.tar.zst` to SHA-256 `6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe` (343,842,845 bytes; the binary reports Lean 4.19.0, commit `6caaee842e94`). That digest is one trust-on-first-use observation from GitHub's CDN; the audit environment could not fetch the asset to cross-check it. The direct, digest-bound install and commit-SHA action pins are not applied. `LIM-049`.
+### RT-10 — mutable Lean acquisition in protected workflows (new; repaired pending owner-signed authorization)
 
-### RT-11 — the anti-self-repin gate cannot authorize its own waiver file (new; governance deadlock)
+The two unprotected Lean workflows now run a commit-pinned, SHA-256-verified `elan-init.sh`, but that script still fetches the latest elan release and elan resolves the toolchain. The protected `lean.yml`, `validator-assurance.yml`, and `exact-head-assurance.yml` still pipe `elan/master/elan-init.sh` into `sh`. A CI measurement bound the direct release archive `lean-4.19.0-linux.tar.zst` to SHA-256 `6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe` (343,842,845 bytes; the binary reports Lean 4.19.0, commit `6caaee842e94`). That digest was first one trust-on-first-use observation from GitHub's CDN. On 2026-09-27 a second download from a different network location returned the same 343,842,845 bytes and digest. Both observations come from the same CDN origin, so they are not independent.
+
+The repair installs that archive directly in `lean.yml`, `validator-assurance.yml` and `exact-head-assurance.yml`. The digest is verified before extraction, and no installer script or toolchain resolver runs. Every action in those three workflows is pinned to the commit its tag named on 2026-09-27; these are the same commits recorded below, so behavior does not change. `LIM-049`.
+
+### RT-11 — the anti-self-repin gate cannot authorize its own waiver file (new; superseded by owner-signed repins)
 
 `far_validation.weakening` requires every change to a base-protected artifact to be pre-authorized by the comparison base's `validation/test-weakening-waivers.json`. That file is itself protected. Adding any authorization therefore changes a protected file whose own transition no base authorization covers.
 
-Reproduced: a branch off `main` adding one authorization fails with “a candidate may not authorize its own protected-artifact repin”. The only existing authorization commit (`7e7904c1`, 2026-08-10) was a direct edit to `main` made before the gate existed (`f8edfced` arrived with PR #436). No protected transition is possible through the governed PR path; it needs an owner action outside the gate.
+Reproduced: a branch off `main` adding one authorization fails with “a candidate may not authorize its own protected-artifact repin”. The only existing authorization commit (`7e7904c1`, 2026-08-10) was a direct edit to `main` made before the gate existed (`f8edfced` arrived with PR #436). No protected transition was possible through the governed PR path.
+
+Superseded: the protected-repin bootstrap (#551) replaced base-waiver authorization with owner-signed, single-use authorizations. They are appended to the unprotected `validation/protected-repin-consumptions.json` and judged by the App-bound `protected-repin-gate` (`docs/governance/protected-repin-procedure.md`). PR #560 makes the in-CI weakening check honor them. The deadlock no longer blocks a governed protected transition.
 
 ### RT-12 — assurance apparatus mostly verifies self-description (structural observation)
 
 About 190k Markdown lines, 92k Python lines, 888 JSON files, 143 `check_*` tools, and about 2,600 SHA-256 pins, against about 3k Lean lines. Hash pins and prose-presence tests detect drift; they cannot detect an incorrect claim that its author re-hashes. No change is proposed here.
 
-## Blocked protected transition
+## Protected transition in this PR (owner-signed)
 
-Every file below is protected by `validation_bootstrap/assurance-lock.json`, or must mirror a protected file. Changing them requires, first, a repin authorization for each exact old→new SHA-256 transition, merged into `main`. Per RT-11 that includes an authorization for the waiver file's own transition, which only the owner can land outside the gate.
+The files below are protected by `validation_bootstrap/assurance-lock.json`. Each changed pin is a protected transition that needs one owner-signed authorization bound to this PR. The `protected-repin-gate` App check lists the exact old and new digests for the current head. Per the owner's integration order, these authorizations are requested only after live probe P7 has passed.
 
-| Path | Intended change |
+| Path | Change |
 |---|---|
-| `far_validation/assured_engine.py` | stop forwarding `FAR_VALIDATION_CACHE_SIGNING_KEY` to check subprocesses |
-| `.github/workflows/validator-assurance.yml` | remove the secret/`github.token` key; per-job ephemeral key step; digest-bound direct Lean install; action SHA pins |
-| `.github/workflows/exact-head-assurance.yml` (mirror, not locked) | identical key, Lean, and pin changes, preserving the mirror contract |
-| `.github/workflows/lean.yml` | digest-bound direct Lean install; action SHA pins |
-| `.github/workflows/canonical-branch-protection.yml`, `.github/workflows/configure-validation-protection.yml` | action SHA pins (these jobs hold the admin token) |
-| `validation_bootstrap/assurance-lock.json` | repin each changed protected file to its authorized digest |
+| `.github/workflows/validator-assurance.yml` | RT-9 per-job ephemeral key and `persist-credentials: false`; RT-10 digest-bound Lean archive and commit-pinned actions. It also carries the root-of-trust audit's R14 (#548, `LIM-050`). `merge-authority` now runs after a failed dependency (`if: ${{ !cancelled() }}`) and fails unless the signed-cache chain succeeded, because GitHub counts a skipped required check as passing. `assurance-hash-audit` now fails on lock drift instead of only recording it. A `sorry` warning fails the Lean assurance step. |
+| `.github/workflows/lean.yml` | Read-only token; digest-bound Lean archive; commit-pinned actions; `persist-credentials: false`. Every governed compile now fails on `declaration uses 'sorry'`, which `lean` reports only as a warning. |
+| `.github/workflows/exact-head-assurance.yml` (mirror, not locked) | Identical key, checkout, Lean and pin changes, preserving the mirror contract in `tests/test_exact_head_assurance_workflow.py`. |
+| `validation_bootstrap/assurance-lock.json` | Repins the two protected workflows. |
 
-Action pins resolved on 2026-09-23 to the commits the existing tags point at (no behavior change): `actions/checkout` v4.4.0 `11d5960a326750d5838078e36cf38b85af677262`, `actions/setup-python` v5.6.0 `a26af69be951a213d495a4c3e4e4022e16d87065`, `actions/upload-artifact` v4.6.2 `ea165f8d65b6e75b540449e92b4886f43607fa02`, `actions/download-artifact` v4.3.0 `d3f86a106a0bac45b974a628896c90dbdf5c8093`, `peter-evans/create-pull-request` v6.1.0 `c5a7806660adbe173f04e3e038b0ccdcd758773c`. The SWE-agent workflows are sealed historical experiment evidence and are excluded.
+Not changed, with reasons:
+- `far_validation/assured_engine.py`: see RT-9.
+- `canonical-branch-protection.yml` and `configure-validation-protection.yml`: both are live-verified `disabled_manually`, and their admin token was retired (`theory/evaluation/privileged-token-retirement-v1.0.json`). Pinning them would buy no protection for two more signatures. Their tool is stale: `tools/configure_validation_protection.py` would set the required checks to `merge-authority` alone, dropping the App-bound `protected-repin-gate`. Neither workflow may be re-enabled while that is so.
+
+`tests/test_ci_merge_gate_hardening.py` pins each repair. Ten reintroduced defects (dropped `!cancelled()`, inverted guard, hash audit exiting 0, secret as key, unmasked key, persisted credentials, piped `elan/master`, unchecked digest, removed `sorry` gate, tag-pinned action) were each caught by the intended test.
+
+Action pins, resolved on 2026-09-23 and re-resolved unchanged on 2026-09-27: `actions/checkout` v4.4.0 `11d5960a326750d5838078e36cf38b85af677262`, `actions/setup-python` v5.6.0 `a26af69be951a213d495a4c3e4e4022e16d87065`, `actions/upload-artifact` v4.6.2 `ea165f8d65b6e75b540449e92b4886f43607fa02`, `actions/download-artifact` v4.3.0 `d3f86a106a0bac45b974a628896c90dbdf5c8093`. The SWE-agent workflows are sealed historical experiment evidence and are excluded.
 
 ## Nonclaims
 

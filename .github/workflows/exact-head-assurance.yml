@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ github.token }}
       FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}
     steps:
     - name: Validate dispatched identity before checkout
@@ -41,7 +40,7 @@ jobs:
         [[ "$FAR_ASSURANCE_DISPATCH_HEAD" =~ ^[0-9a-f]{40}$ ]] || { echo 'invalid dispatched exact-head SHA' >&2; exit 1; }
         [[ "$FAR_ASSURANCE_DISPATCH_BASE" =~ ^[0-9a-f]{40}$ ]] || { echo 'invalid dispatched exact-head base SHA' >&2; exit 1; }
         [[ "$FAR_ASSURANCE_DISPATCH_BASE" == "$FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA" ]] || { echo 'dispatched exact-head base differs from trusted main workflow ref' >&2; exit 1; }
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       with:
         fetch-depth: 0
         show-progress: false
@@ -57,7 +56,10 @@ jobs:
         set -euo pipefail
         [[ "$(git rev-parse HEAD^{commit})" == "$FAR_ASSURANCE_DISPATCH_HEAD" ]] || { echo 'dispatched exact-head checkout mismatch' >&2; exit 1; }
         [[ "$(git rev-parse HEAD^1)" == "$FAR_ASSURANCE_DISPATCH_BASE" ]] || { echo 'dispatched exact-head review head is not a direct child of frozen main' >&2; exit 1; }
-    - uses: actions/setup-python@v5
+    - name: Derive per-job ephemeral validation signing key
+      shell: bash
+      run: "set -euo pipefail\n# This job executes candidate code, so no persistent secret or token may be key material.\n# The key signs and verifies evidence inside this job only.\nkey=\"$(openssl rand -hex 32)\"\necho \"::add-mask::$key\"\necho \"FAR_VALIDATION_CACHE_SIGNING_KEY=$key\" >> \"$GITHUB_ENV\"\n"
+    - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
       with:
         python-version: '3.12'
     - name: Install dependencies and trace backend
@@ -91,10 +93,10 @@ jobs:
       run: python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json > artifacts/validation/runtime/test-weakening.json
     - name: Install pinned Lean toolchain
       shell: bash
-      run: "set -euo pipefail\ncurl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \\\n  sh -s -- -y --default-toolchain \"$(cat lean-toolchain)\"\necho \"$HOME/.elan/bin\" >> \"$GITHUB_PATH\"\n"
+      run: "set -euo pipefail\n# The release archive is bound to its SHA-256; no installer script or toolchain resolver runs.\n[[ \"$(cat lean-toolchain)\" == \"leanprover/lean4:v4.19.0\" ]] || { echo 'lean-toolchain changed; update the pinned archive and digest' >&2; exit 1; }\narchive=\"$RUNNER_TEMP/lean-4.19.0-linux.tar.zst\"\ncurl -sSfL -o \"$archive\" https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst\necho \"6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe  $archive\" | sha256sum -c -\ntar --zstd -xf \"$archive\" -C \"$RUNNER_TEMP\"\necho \"FAR_LEAN_HOME=$RUNNER_TEMP/lean-4.19.0-linux\" >> \"$GITHUB_ENV\"\n"
     - name: Machine-check validation-engine assurance theorems
       shell: bash
-      run: "set -euo pipefail\n\"$HOME/.elan/bin/lean\" mechanization/lean/ValidationEngine.lean\npython - <<'PY2'\nimport json\nfrom pathlib import Path\nPath('artifacts/validation/runtime/lean-proof.json').write_text(\n    json.dumps({'successful': True, 'artifact': 'mechanization/lean/ValidationEngine.lean'}, indent=2),\n    encoding='utf-8',\n)\nPY2\n"
+      run: "set -euo pipefail\n\"$FAR_LEAN_HOME/bin/lean\" mechanization/lean/ValidationEngine.lean 2>&1 | tee artifacts/validation/runtime/lean-proof.log\n# `lean` exits 0 when a declaration uses `sorry`; that is only a warning.\nif grep -n \"declaration uses 'sorry'\" artifacts/validation/runtime/lean-proof.log; then\n  echo 'validation-engine assurance theorems use sorry' >&2\n  exit 1\nfi\npython - <<'PY2'\nimport json\nfrom pathlib import Path\nPath('artifacts/validation/runtime/lean-proof.json').write_text(\n    json.dumps({'successful': True, 'artifact': 'mechanization/lean/ValidationEngine.lean'}, indent=2),\n    encoding='utf-8',\n)\nPY2\n"
     - name: Exhaustively model-check engine state space
       run: python -m far_validation formal --max-checks 4 --json > artifacts/validation/runtime/formal-model.json
     - name: Run complete registered mutation campaign
@@ -109,7 +111,7 @@ jobs:
       run: "mkdir -p artifacts/validation/runtime\nif [[ -d .far ]]; then\n  rm -rf artifacts/validation/runtime/far-state\n  cp -R .far artifacts/validation/runtime/far-state\nfi\n"
     - name: Upload assurance evidence
       if: always()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
       with:
         name: exact-head-assurance-${{ inputs.head_sha || github.event.pull_request.head.sha || github.sha }}
         path: artifacts/validation
