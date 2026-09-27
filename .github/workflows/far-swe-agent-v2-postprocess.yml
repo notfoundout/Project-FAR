@@ -25,7 +25,7 @@ on:
 
 permissions:
   actions: read
-  contents: write
+  contents: read
   packages: read
 
 env:
@@ -101,6 +101,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 240
     environment: far-swe-agent-execution
+    # The only job that pushes (the reveal branch). It never runs on pull_request.
+    permissions:
+      actions: read
+      contents: write
+      packages: read
     steps:
       - uses: actions/checkout@v4
         with:

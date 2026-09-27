@@ -26,7 +26,7 @@ on:
       - .github/workflows/classify-merged-pr-review-findings.yml
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: classify-merged-pr-review-findings-${{ github.ref }}
@@ -108,8 +108,34 @@ jobs:
             --output-dir docs/audits/merged-pr-review-reconciliation \
             --check
 
-      - name: Commit generated findings to source branch
+      - name: Upload generated findings
         if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-findings
+          path: docs/audits/merged-pr-review-classification
+          if-no-files-found: error
+
+  # Only this job can write, and it runs no repository code: it commits the files the
+  # read-only job generated.
+  commit-generated:
+    if: github.event_name == 'push'
+    needs: classify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: generated-findings
+          path: docs/audits/merged-pr-review-classification
+
+      - name: Commit generated findings to source branch
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
