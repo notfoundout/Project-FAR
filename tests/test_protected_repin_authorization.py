@@ -109,7 +109,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         text = original.decode("utf-8")
         step = """      - name: Detect test and validator weakening
         run: >-
-          python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json
+          python -I -X "pycache_prefix=$RUNNER_TEMP/far-pycache" validation_bootstrap/run_isolated.py weakening --base "${{ steps.base.outputs.sha }}" --json
           > artifacts/validation/runtime/test-weakening.json"""
         self.assertIn(step, text)
         fabricated = text.replace(
@@ -119,7 +119,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
           echo '{"successful": true}' > artifacts/validation/runtime/test-weakening.json""",
             1,
         )
-        self.assertNotIn("far_validation weakening", fabricated)
+        self.assertNotIn("run_isolated.py weakening", fabricated)
         self._repin(WORKFLOW, fabricated.encode("utf-8"))
         self._commit("bypass weakening in merge-authority")
         self._assert_rejected(base, WORKFLOW)
@@ -288,7 +288,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         text = original.decode("utf-8")
         step = """      - name: Detect test and validator weakening
         run: >-
-          python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json
+          python -I -X "pycache_prefix=$RUNNER_TEMP/far-pycache" validation_bootstrap/run_isolated.py weakening --base "${{ steps.base.outputs.sha }}" --json
           > artifacts/validation/runtime/test-weakening.json"""
         self.assertIn(step, text)
         fabricated = text.replace(
@@ -298,7 +298,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
           echo '{"successful": true}' > artifacts/validation/runtime/test-weakening.json""",
             1,
         )
-        self.assertNotIn("far_validation weakening", fabricated)
+        self.assertNotIn("run_isolated.py weakening", fabricated)
         return fabricated.encode("utf-8")
 
     def _relocate_lock_entry(self, old: str, new: str, data: bytes) -> None:
@@ -313,7 +313,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
             workflow["required_fragments"] = [
                 fragment
                 for fragment in workflow.get("required_fragments", [])
-                if "far_validation weakening" not in fragment
+                if "run_isolated.py weakening" not in fragment
             ]
         lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
 
@@ -323,7 +323,7 @@ class ProtectedRepinAuthorizationTests(unittest.TestCase):
         lock = json.loads(lock_path.read_text(encoding="utf-8"))
         lock["workflow"] = {
             "path": WORKFLOW,
-            "required_fragments": ["python -m far_validation weakening"],
+            "required_fragments": ["validation_bootstrap/run_isolated.py weakening"],
         }
         lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
         self._run("add", "-A")

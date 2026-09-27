@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import py_compile
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -191,6 +193,68 @@ class LeanSorryGateTests(unittest.TestCase):
                 self.assertEqual(_bash(script, work, env), 0)
                 fake.write_text("#!/bin/sh\nexit 3\n", encoding="utf-8")
                 self.assertNotEqual(_bash(script, work, env), 0)
+
+
+class TrustedStepsPrecedeCandidateCodeTests(unittest.TestCase):
+    """Once candidate code runs in a job, it can rewrite every later step.
+
+    It can write GITHUB_PATH or GITHUB_ENV, or change site-packages. Checks that need no candidate
+    code therefore run first, and the validator runs isolated from the checkout.
+    """
+
+    BOUNDARY = "Install dependencies and trace backend"
+    TRUSTED = ("Verify independent bootstrap", "Run independent legacy-checker oracle",
+               "Detect test and validator weakening", "Exhaustively model-check engine state space",
+               "Install pinned Lean toolchain", "Machine-check validation-engine assurance theorems")
+    SHADOW_JSON = (
+        "import atexit, importlib.machinery, os, sys\n"
+        "spec = importlib.machinery.PathFinder.find_spec('json', [p for p in sys.path if p not in ('', os.getcwd())])\n"
+        "sys.modules['json'] = spec.loader.load_module('json')\n"
+        "atexit.register(lambda: os._exit(0))\n"
+    )
+
+    def test_checks_that_need_no_candidate_code_run_first_and_isolated(self) -> None:
+        for name, job_id in (("validator-assurance.yml", "merge-authority"),
+                             ("exact-head-assurance.yml", "exact-head-assurance")):
+            steps = _workflow(name)["jobs"][job_id]["steps"]
+            names = [step.get("name") for step in steps]
+            boundary = names.index(self.BOUNDARY)
+            for trusted in self.TRUSTED:
+                self.assertLess(names.index(trusted), boundary, f"{name}: {trusted}")
+            for step in steps[:boundary]:
+                script = step.get("run", "")
+                self.assertNotIn("pip ", script, f"{name}: {step.get('name')}")
+                for match in re.finditer(r"(?<![\w/.-])python3?(?=\s)", script):
+                    self.assertTrue(script[match.end():].lstrip().startswith("-I"), f"{name}: {step.get('name')}")
+                if "run_isolated.py" in script:
+                    self.assertIn('-X "pycache_prefix=$RUNNER_TEMP/far-pycache"', script)
+        audit = next(step for _job, step in _steps(_workflow("validator-assurance.yml"))
+                     if step.get("name") == "Record assurance lock hash comparison")
+        self.assertIn("python -I - <<", audit["run"])
+
+    def test_isolated_launcher_ignores_modules_and_bytecode_planted_in_the_checkout(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            shutil.copytree(ROOT / "far_validation", root / "far_validation",
+                            ignore=shutil.ignore_patterns("__pycache__"))
+            (root / "validation_bootstrap").mkdir()
+            shutil.copyfile(ROOT / "validation_bootstrap" / "run_isolated.py", root / "validation_bootstrap" / "run_isolated.py")
+            (root / "json.py").write_text(self.SHADOW_JSON, encoding="utf-8")
+            planted = root / "planted.py"
+            planted.write_text("raise SystemExit(0)\n", encoding="utf-8")
+            py_compile.compile(str(planted), cfile=str(root / "far_validation" / "__pycache__" /
+                                                        f"__main__.{sys.implementation.cache_tag}.pyc"),
+                               invalidation_mode=py_compile.PycInvalidationMode.UNCHECKED_HASH)
+            env = {"PATH": SCRIPT_PATH}
+            command = ["no-such-command"]  # far_validation rejects it with exit status 2
+            # Control: `python -m far_validation` from the checkout runs the planted code, which reports success.
+            unsafe = subprocess.run([sys.executable, "-m", "far_validation", *command], cwd=root, env=env,
+                                    capture_output=True, check=False)
+            self.assertEqual(unsafe.returncode, 0)
+            safe = subprocess.run([sys.executable, "-I", "-X", f"pycache_prefix={root / 'pycache'}",
+                                   str(root / "validation_bootstrap" / "run_isolated.py"), *command],
+                                  cwd=root, env=env, capture_output=True, check=False)
+            self.assertEqual(safe.returncode, 2, safe.stderr)
 
 
 if __name__ == "__main__":

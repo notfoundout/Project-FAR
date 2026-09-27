@@ -104,9 +104,28 @@ The two legacy workflows are `disabled_manually` and their admin token is revoke
 
 Tests: the read-back rejects the configurator's old policy and a gate bound to any other App; the configurator exits 2 without network code; the default audit rejects a dropped or re-bound gate. The new audit tests fail against the previous `repin_protection_audit.py`.
 
+### RT-14 — candidate code could rewrite the locked validator's verdict in `merge-authority` (new; repaired pending owner-signed authorization)
+
+`merge-authority` ran `python -m far_validation`, which puts the checkout first on `sys.path`. Two reproduced attacks followed:
+
+- a top-level `json.py` that registers `atexit(os._exit(0))` made `far_validation weakening` print `Result: FAIL` and exit 0, so the step passed;
+- an unchecked-hash `far_validation/__pycache__/__main__.<tag>.pyc` replaced the locked `__main__` even under `python -I`.
+
+Separately, the job installed the candidate's `requirements.txt` and ran its tests before the bootstrap check, the weakening check, the oracle, the formal model, and the Lean proof. Candidate code that runs in a job can rewrite every later step through `GITHUB_PATH`, `GITHUB_ENV` or site-packages.
+
+Repair, in both `merge-authority` and its exact-head mirror:
+
+- The checks that need no candidate code now run first: `validation_bootstrap/verify.py`, the oracle, weakening, the formal model, and the Lean install plus `ValidationEngine.lean`. They run before any `pip install`, test or checker, so a failure there cannot be undone later.
+- They run through `python -I -X pycache_prefix=… validation_bootstrap/run_isolated.py`. That launcher adds the checkout after the standard library and site-packages, and ignores committed bytecode.
+- `verify.py` and the inline scripts use `python -I`. The assurance-lock workflow contract now requires the isolated forms.
+
+`tests/test_ci_merge_gate_hardening.py` pins this. It checks the step order and isolation in both jobs, and it runs the launcher against a planted `json.py` and planted bytecode (with a control showing `python -m` is subverted).
+
+Residual, inherent: steps that must run candidate code (the test suite, the checkers, the mutation campaign) and every step after them stay candidate-controlled. That is why `docs/governance/protected-repin-procedure.md` treats `merge-authority` as ordinary CI and the App-bound `protected-repin-gate` as the only merge authority. The bootstrap, weakening, oracle, formal-model, and Lean-proof verdicts are no longer part of that residual.
+
 Not changed, with reasons:
 - `far_validation/assured_engine.py`: see RT-9.
-- `canonical-branch-protection.yml` and `configure-validation-protection.yml`: both are live-verified `disabled_manually`, and their admin token was retired (`theory/evaluation/privileged-token-retirement-v1.0.json`). Pinning their actions would buy no protection for two more signatures. The tool they run is now inert, and the read-back requires the App binding (RT-12), so re-enabling them cannot drop the gate.
+- `canonical-branch-protection.yml` and `configure-validation-protection.yml`: both are live-verified `disabled_manually`, and their admin token was retired (`theory/evaluation/privileged-token-retirement-v1.0.json`). Pinning their actions would buy no protection for two more signatures. The tool they run is now inert, and the read-back requires the App binding (RT-13), so re-enabling them cannot drop the gate.
 
 `tests/test_ci_merge_gate_hardening.py` pins each repair. Ten reintroduced defects (dropped `!cancelled()`, inverted guard, hash audit exiting 0, secret as key, unmasked key, persisted credentials, piped `elan/master`, unchecked digest, removed `sorry` gate, tag-pinned action) were each caught by the intended test. Restoring the elan installer in the two unprotected workflows fails the archive and `sorry`-gate tests.
 
