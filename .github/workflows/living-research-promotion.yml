@@ -12,8 +12,7 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
-  actions: write
+  pull-requests: read
 
 concurrency:
   group: living-research-promotion
@@ -24,6 +23,9 @@ jobs:
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    # The promotion App's private key exists only in this environment, whose deployment
+    # branch policy admits main alone, so no pull_request workflow can read it.
+    environment: living-promotion
     steps:
       - name: Checkout protected main automation
         uses: actions/checkout@v4
@@ -35,7 +37,19 @@ jobs:
           python-version: '3.12'
       - name: Install canonical repository dependencies
         run: python -m pip install -r requirements.txt
+      - name: Mint the promotion pull-request credential
+        id: pr-credential
+        # GitHub starts no pull_request workflow for a PR opened with GITHUB_TOKEN, so such a
+        # PR can never get the required merge-authority check. The promotion PR is opened
+        # with this App installation token instead: this repository only, pull requests
+        # write only, revoked when the job ends.
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.FAR_PROMOTION_APP_CLIENT_ID }}
+          private-key: ${{ secrets.FAR_PROMOTION_APP_PRIVATE_KEY }}
+          permission-pull-requests: write
       - name: Run fail-closed living-research promotion transaction
         env:
           GH_TOKEN: ${{ github.token }}
+          FAR_PROMOTION_PR_TOKEN: ${{ steps.pr-credential.outputs.token }}
         run: python -m tools.run_living_research_promotion

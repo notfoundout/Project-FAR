@@ -106,11 +106,27 @@ Strict branch protection requires the `merge-authority` check to be current with
 
 ## Publication boundary
 
-The scheduled workflow is only a small wrapper around `tools/run_living_research_promotion.py`. The runner may create/recover the separate promotion PR and dispatch protected validation. It never merges, approves itself, changes branch protection, writes directly to `main`, or uses the permanent inbox PR as the merge vehicle.
+The scheduled workflow is only a small wrapper around `tools/run_living_research_promotion.py`. The runner may create/recover the separate promotion PR. It never merges, approves itself, changes branch protection, writes directly to `main`, or uses the permanent inbox PR as the merge vehicle.
 
 The separate implementation runner follows the same publication rule: it may create/recover the exact implementation PR, but it never merges or writes directly to `main`. Its full contract is in `IMPLEMENTATION.md`.
 
 If GitHub Actions lacks permission to create a PR, the exact branch is preserved and the run fails. No broader token or protection bypass is substituted.
+
+### Promotion PR credential
+
+GitHub starts no `pull_request` workflow for a PR opened with `GITHUB_TOKEN`, so such a PR never gets the required `merge-authority` check. A run dispatched on the PR's behalf does not satisfy it either. The promotion PR is therefore opened by a dedicated GitHub App:
+
+- `GITHUB_TOKEN` pushes the sealed promotion branch (`contents: write`) and reads PR #490 (`pull-requests: read`). Nothing else.
+- A separate step mints an installation token of the promotion App, restricted to this repository and to *Pull requests: write*, and revoked when the job ends. The runner removes it from its environment before any subprocess runs and uses it only to list, create and read the promotion PR.
+- The PR's own `pull_request` event then runs the ordinary workflows, including `merge-authority`, on the exact promotion head. The runner dispatches nothing.
+- Without the token the runner fails closed before doing any work.
+
+One-time owner setup:
+
+1. Register a GitHub App with no webhook. Its only repository permissions are *Pull requests: Read and write* and the mandatory *Metadata: Read-only*; no *Contents*, *Administration*, *Checks* or *Actions*. Install it on this repository only.
+2. Create the environment `living-promotion` with deployment branches limited to `main`. Add the environment secret `FAR_PROMOTION_APP_PRIVATE_KEY` (the App's private key) and the repository variable `FAR_PROMOTION_APP_CLIENT_ID` (the App's client ID).
+
+The key is readable only by jobs that run on `main` in that environment, so no candidate's `pull_request` workflow can use it. A PR the App opens is still an ordinary candidate: it needs `merge-authority` and `protected-repin-gate` on its exact head like any other.
 
 ## Core rule
 
