@@ -114,6 +114,14 @@ class StraceSyscallCoverageRegressionTests(unittest.TestCase):
         self.assertEqual(report.writes, ["cut.txt", "hard.txt", "hard2.txt", "soft.txt", "soft2.txt"])
         self.assertEqual(report.reads, ["source.txt", "source2.txt"])
 
+    def test_mode_changes_are_writes(self) -> None:
+        report = self.parse(
+            '10 chmod("tools/run.sh", 0755) = 0\n'
+            f'10 openat(AT_FDCWD, "{self.root / "nested"}", O_RDONLY|O_DIRECTORY) = 3\n'
+            '10 fchmodat(3, "script.py", 0755) = 0\n'
+        )
+        self.assertEqual(report.writes, ["nested/script.py", "tools/run.sh"])
+
     def test_statx_and_faccessat2_are_reads(self) -> None:
         # coreutils (ls, stat, cp) use statx; glibc access() may use faccessat2.
         report = self.parse(

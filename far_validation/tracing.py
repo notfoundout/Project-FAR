@@ -140,6 +140,10 @@ _PATH_ARGUMENTS: dict[str, tuple[tuple[int | None, int, str], ...]] = {
     "faccessat2": ((0, 1, "read"),),
     "readlinkat": ((0, 1, "read"),),
     "truncate": ((None, 0, "write"),),
+    # git records the executable bit, so a mode change is a change to a tracked file.
+    "chmod": ((None, 0, "write"),),
+    "fchmodat": ((0, 1, "write"),),
+    "fchmodat2": ((0, 1, "write"),),
     "unlink": ((None, 0, "write"),),
     "unlinkat": ((0, 1, "write"),),
     "rmdir": ((None, 0, "write"),),
@@ -158,9 +162,9 @@ _FD_OPENING_CALLS = {"open", "openat", "openat2"}
 _HARMLESS_UNKNOWN_DIRFD_ERRORS = {"EBADF", "ENOTDIR"}
 TRACED_SYSCALLS = (
     "open,openat,openat2,creat,newfstatat,stat,lstat,statx,access,faccessat,faccessat2,readlink,"
-    "readlinkat,truncate,execve,execveat,connect,socket,sendto,recvfrom,unlink,unlinkat,rename,"
-    "renameat,renameat2,link,linkat,symlink,symlinkat,mkdir,mkdirat,rmdir,clone,clone3,fork,vfork,"
-    "chdir,fchdir,dup,dup2,dup3,fcntl"
+    "readlinkat,truncate,chmod,fchmodat,fchmodat2,execve,execveat,connect,socket,sendto,recvfrom,"
+    "unlink,unlinkat,rename,renameat,renameat2,link,linkat,symlink,symlinkat,mkdir,mkdirat,rmdir,"
+    "clone,clone3,fork,vfork,chdir,fchdir,dup,dup2,dup3,fcntl"
 )
 
 
