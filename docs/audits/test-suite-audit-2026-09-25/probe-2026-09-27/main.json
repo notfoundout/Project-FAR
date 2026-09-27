@@ -1,0 +1,286 @@
+{
+  "schema": "far-assurance-adversarial-probe-v1",
+  "base": "95834dab9f9b1f24e4c9ac8417134b520548f1c4",
+  "signed_ref": "1ebbbfbf1a6a6f75596d35b0a5187be29277c57b",
+  "outcomes": [
+    {
+      "probe": "U1",
+      "defect": "removed assertion",
+      "detector": "weakening",
+      "expected_reason": "assertion count decreased",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "U2",
+      "defect": "skipped test",
+      "detector": "weakening",
+      "expected_reason": "skip count increased",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "U3",
+      "defect": "removed test function",
+      "detector": "weakening",
+      "expected_reason": "test functions removed",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "U4",
+      "defect": "deleted test file",
+      "detector": "weakening",
+      "expected_reason": "protected validation/test source deleted",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "U5",
+      "defect": "test-discovery manipulation (rename out of the test_*.py pattern)",
+      "detector": "weakening",
+      "expected_reason": "protected validation/test source deleted|test functions removed",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "U6",
+      "defect": "changed expected value (code unchanged)",
+      "detector": "canonical test module",
+      "expected_reason": "FAIL|AssertionError",
+      "status": "NOT_RUN",
+      "returncode": null,
+      "evidence": "tests/test_claim_status_ceiling.py is absent at this ref"
+    },
+    {
+      "probe": "V1",
+      "defect": "disabled validator (unconditional success before its rules)",
+      "detector": "weakening",
+      "expected_reason": "unreachable statement count increased",
+      "status": "MISSED",
+      "returncode": 0,
+      "evidence": "test-weakening comparison base: 95834dab9f9b1f24e4c9ac8417134b520548f1c4\n[PASS] tools/check_p8_theorem_role.py\nResult: PASS"
+    },
+    {
+      "probe": "V2",
+      "defect": "false-success check command in the manifest",
+      "detector": "independent oracle",
+      "expected_reason": "manifest|missing|coverage|command",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "coverage"
+    },
+    {
+      "probe": "V3",
+      "defect": "changed protected check definition",
+      "detector": "bootstrap verifier",
+      "expected_reason": "FAR-VAL-BOOT-001",
+      "status": "MISSED",
+      "returncode": 0,
+      "evidence": "Project FAR bootstrap verified: 32 checks, 5 protected checks, 38 assurance files"
+    },
+    {
+      "probe": "V4",
+      "defect": "protected check unprotected in manifest and bootstrap lock together",
+      "detector": "bootstrap verifier",
+      "expected_reason": "FAR-VAL-BOOT-001",
+      "status": "MISSED",
+      "returncode": 0,
+      "evidence": "Project FAR bootstrap verified: 32 checks, 4 protected checks, 38 assurance files"
+    },
+    {
+      "probe": "P1",
+      "defect": "protected file edited without moving its pin",
+      "detector": "bootstrap verifier",
+      "expected_reason": "FAR-VAL-BOOT-001",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "FAR-VAL-BOOT-001"
+    },
+    {
+      "probe": "P2",
+      "defect": "unauthorized protected repin (file and pin moved together)",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "requires exactly one valid signed authorization",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "requires exactly one valid signed authorization"
+    },
+    {
+      "probe": "P3",
+      "defect": "self-authorization by a key other than the pinned owner key",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "appended authorization 0: .*(signature|signer|key)",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "appended authorization 0: signature is not by the pinned key"
+    },
+    {
+      "probe": "S1",
+      "defect": "tampered owner signature",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "appended authorization \\d+: .*signature",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "appended authorization 1: signature does not verify under the pinned key (Signature verification failed: incorrect signature"
+    },
+    {
+      "probe": "S2",
+      "defect": "signed authorization replayed on another pull request",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "is bound to pull request 560, not 555",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "is bound to pull request 560, not 555"
+    },
+    {
+      "probe": "S3",
+      "defect": "authorized file changed after signing (exact-bytes binding)",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "far_validation/weakening.py transition .* requires exactly one valid signed authorization",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "far_validation/weakening.py transition 647e758cd11f->c679434969bd requires exactly one valid signed authorization"
+    },
+    {
+      "probe": "S4",
+      "defect": "consumed authorization appended again after merge",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "already consumed or is duplicated",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "already consumed or is duplicated"
+    },
+    {
+      "probe": "S5",
+      "defect": "evaluation against a stale comparison base",
+      "detector": "protected-repin evaluator",
+      "expected_reason": "trusted key differs|not in the comparison base's lineage|failing closed|FAR-VAL-REPIN-001",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "failing closed"
+    },
+    {
+      "probe": "C1",
+      "defect": "certificate presented for a stale head",
+      "detector": "certificate verifier",
+      "expected_reason": "certificate commit does not match",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "certificate commit does not match"
+    },
+    {
+      "probe": "C2",
+      "defect": "certificate presented for the wrong tree",
+      "detector": "certificate verifier",
+      "expected_reason": "certificate tree does not match",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "certificate tree does not match"
+    },
+    {
+      "probe": "C3",
+      "defect": "malformed or failed assurance evidence",
+      "detector": "certificate assembler",
+      "expected_reason": "assurance evidence failed: probe",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "assurance evidence failed: probe"
+    },
+    {
+      "probe": "C4",
+      "defect": "tampered signed certificate",
+      "detector": "certificate verifier",
+      "expected_reason": "signature|tamper|attestation|digest",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "attestation"
+    },
+    {
+      "probe": "K1",
+      "defect": "tampered signed cache entry",
+      "detector": "signed cache",
+      "expected_reason": "not reused",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "not reused"
+    },
+    {
+      "probe": "K2",
+      "defect": "signed cache consumed under another trust domain",
+      "detector": "signed cache",
+      "expected_reason": "not reused",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "not reused"
+    },
+    {
+      "probe": "G1",
+      "defect": "central claim promoted above its governed ceiling",
+      "detector": "claim ceiling checker",
+      "expected_reason": "CLM-EXISTENCE",
+      "status": "MISSED",
+      "returncode": 2,
+      "evidence": "/tmp/claude-0/-home-user-Project-FAR/6a84e754-b295-54bb-ae89-f01db0baffd0/scratchpad/w550/../venv312/bin/python: can't open file '/tmp/tmpva4fp35y/repo/tools/check_claim_status_ceiling.py': [Errno 2] No such file or directory"
+    },
+    {
+      "probe": "G2",
+      "defect": "research gate marked satisfied without evidence",
+      "detector": "research-gates checker",
+      "expected_reason": "cannot be satisfied without evidence|must remain|must be",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "cannot be satisfied without evidence"
+    },
+    {
+      "probe": "T1",
+      "defect": "missing runtime input declaration",
+      "detector": "strict tracer",
+      "expected_reason": "undeclared read: docs/planning/deduction-first-proof-roadmap.md",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "undeclared read: docs/planning/deduction-first-proof-roadmap.md"
+    },
+    {
+      "probe": "T2",
+      "defect": "undeclared executable",
+      "detector": "strict tracer",
+      "expected_reason": "undeclared executable: \\S*/id\\b",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "undeclared executable: /usr/bin/id"
+    },
+    {
+      "probe": "T3",
+      "defect": "undeclared write into the repository",
+      "detector": "strict tracer",
+      "expected_reason": "undeclared write: docs/probe-write.txt",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "undeclared write: docs/probe-write.txt"
+    },
+    {
+      "probe": "T4",
+      "defect": "undeclared write through an atomic rename",
+      "detector": "strict tracer",
+      "expected_reason": "undeclared write: docs/probe-renamed.txt",
+      "status": "MISSED",
+      "returncode": 0,
+      "evidence": "Project FAR validation profile: pr-fast\nCommit: 9029937880b9684de0881d0f8ae0b0a780575003\nTree: 30696cd3fc9b7e00120d9ccd0ac5435d6c4c1659\nChecks: 2\n[PASS] bootstrap.manifest [trace:strace] (149 ms) \u2014 command completed successfully\n[PASS] research.p8-role [trace:strace] (228 ms) \u2014 command completed successfully\nResult: SUCCESS in 390 ms"
+    },
+    {
+      "probe": "T5",
+      "defect": "network access",
+      "detector": "strict tracer",
+      "expected_reason": "network access denied",
+      "status": "CAUGHT",
+      "returncode": 1,
+      "evidence": "network access denied"
+    }
+  ]
+}
