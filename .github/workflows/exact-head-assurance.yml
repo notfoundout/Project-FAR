@@ -35,8 +35,10 @@ jobs:
         FAR_ASSURANCE_DISPATCH_BASE: ${{ inputs.base_sha }}
         FAR_ASSURANCE_DISPATCH_HEAD: ${{ inputs.head_sha }}
         FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA: ${{ github.sha }}
+        FAR_ASSURANCE_DISPATCH_REF: ${{ github.ref }}
       run: |
         set -euo pipefail
+        [[ "$FAR_ASSURANCE_DISPATCH_REF" == "refs/heads/main" ]] || { echo 'dispatched exact-head assurance must use refs/heads/main' >&2; exit 1; }
         [[ "$FAR_ASSURANCE_DISPATCH_HEAD" =~ ^[0-9a-f]{40}$ ]] || { echo 'invalid dispatched exact-head SHA' >&2; exit 1; }
         [[ "$FAR_ASSURANCE_DISPATCH_BASE" =~ ^[0-9a-f]{40}$ ]] || { echo 'invalid dispatched exact-head base SHA' >&2; exit 1; }
         [[ "$FAR_ASSURANCE_DISPATCH_BASE" == "$FAR_ASSURANCE_DISPATCH_WORKFLOW_SHA" ]] || { echo 'dispatched exact-head base differs from trusted main workflow ref' >&2; exit 1; }
