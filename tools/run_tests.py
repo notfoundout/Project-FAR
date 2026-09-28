@@ -55,8 +55,13 @@ def _function_case(function) -> unittest.FunctionTestCase:
     silently skipping it, so a module-level test can never be discovered and not executed.
     """
     parameters = list(inspect.signature(function).parameters)
+    deferred = (inspect.iscoroutinefunction(function) or inspect.isgeneratorfunction(function)
+                or inspect.isasyncgenfunction(function))
 
     def run() -> None:
+        if deferred:
+            # Calling one returns a coroutine or generator without running the body, so it would pass.
+            raise TypeError(f"{function.__qualname__}: async and generator test functions are not supported")
         unsupported = [name for name in parameters if name != "tmp_path"]
         if unsupported:
             raise TypeError(f"{function.__qualname__}: unsupported test fixture(s) {unsupported}")
@@ -66,6 +71,8 @@ def _function_case(function) -> unittest.FunctionTestCase:
         else:
             function()
 
+    # FunctionTestCase.id() is the wrapped callable's name; without this every failure reads "run".
+    run.__name__ = run.__qualname__ = f"{function.__module__}.{function.__name__}"
     return unittest.FunctionTestCase(run, description=f"{function.__module__}.{function.__name__}")
 
 

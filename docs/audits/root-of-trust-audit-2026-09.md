@@ -139,10 +139,11 @@ The v1.1 amendment binds the exact bytes of both specifications. Those bytes are
 
 ### 4.6 Validation infrastructure (R13, R15, R16)
 
-- **Test runner.** `tools/run_tests.py` now collects module-level test functions. The suite grew from 1955 to about 2030 tests.
+- **Test runner.** `tools/run_tests.py` now collects module-level test functions. The suite grew from 1955 to about 2030 tests. Async and generator test functions fail, because calling one would return without running its body.
 - **Health check.** `tools/repo_health_check.py` fails when a listed checker is missing instead of skipping it.
 - **Masked failures.** The release-candidate and maintenance workflows no longer mask failures behind `tee`.
 - **Local cache.** `make validate*` bypasses the unsound cache.
+- **Regression guards.** `tests/test_root_of_trust_regressions.py` fails if the runner's collection, the `tee` repairs or the `--no-cache` targets are reverted. The health-check repair has no test in this change; PR #550 adds one (`test_missing_listed_health_tool_fails_instead_of_being_skipped`).
 - **Profile completeness.** `tests/test_validation_profile_completeness.py` pins which checks the complete profiles may omit. Dropping `research.theorem-target` from `pr-full` now fails.
 - **Assurance lock.** It now covers the engine base modules. Tampering with `engine.py` fails the bootstrap.
 - **Documentation.** `docs/architecture/validator-assurance-hardening.md` no longer says the Python model checker corroborates the executable engine. It checks a separate abstraction.
