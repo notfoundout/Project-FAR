@@ -73,6 +73,7 @@ class WeakeningReport:
     base: str
     findings: list[WeakeningFinding]
     waivers_used: list[str]
+    signed_transitions_used: list[str] = field(default_factory=list)
 
     @property
     def successful(self) -> bool:
@@ -724,7 +725,9 @@ def _lock_file_digests(source: str) -> dict[str, str]:
     return {key: value for key, value in files.items() if isinstance(key, str) and isinstance(value, str)}
 
 
-def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> dict[str, list[str]]:
+def _self_repin_failures(
+    root: Path, revision: str, changed_paths: set[str], repin_failures: dict[str, list[str]]
+) -> dict[str, list[str]]:
     """Reject changing a protected verifier and its own expected pins together.
 
     The expected values live in the same tree as the code they protect, so a
@@ -754,7 +757,7 @@ def _self_repin_failures(root: Path, revision: str, changed_paths: set[str]) -> 
                         "an implementation and its own expected value must not be repinned together"
                     )
 
-    for path, messages in _protected_repin_failures(root, revision).items():
+    for path, messages in repin_failures.items():
         failures.setdefault(path, []).extend(messages)
     return failures
 
@@ -786,98 +789,48 @@ def _sha256_text(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def _trusted_repin_authorizations(root: Path, revision: str) -> dict[tuple[str, str, str], dict[str, Any]]:
-    """Load repin authorizations from the comparison base only.
+def _protected_repin_evaluation(root: Path, revision: str) -> tuple[dict[str, list[str]], dict[str, str]]:
+    """Reject protected-artifact transitions that lack a signed, unconsumed authorization.
 
-    Authorization must come from outside the candidate's control. The waiver
-    file is itself a protected artifact, so reading the candidate copy would let
-    a change author its own permission. Reading the base copy means a repin has
-    to be authorized by something already merged into the protected branch.
+    Evaluation lives in ``far_validation.repin`` over git objects of ``HEAD`` (commit first;
+    uncommitted changes are not evaluated). Here it runs in-job, in candidate-controlled CI, with
+    the key pinned on the comparison base, so it is advisory defense in depth: the authoritative
+    decision is the ``protected-repin-gate`` check published by the dedicated GitHub App.
+    Repository placement never carries repin authority; only a signature under the pinned owner
+    key does. ``FAR_REPIN_TARGET_PR`` binds authorizations to a pull request when set.
 
-    Each authorization binds one exact transition: the path, the base content
-    identity it applies to, and the single candidate content identity it
-    permits. It therefore cannot authorize any other content for that path.
+    Returns the failures by path and, only when the whole evaluation passes, each signed
+    transition's path mapped to the exact digest its authorization names.
     """
-    source = _show(root, revision, WAIVER_PATH)
-    if source is None:
-        return {}
     try:
-        payload = json.loads(source)
-    except json.JSONDecodeError:
-        return {}
-    entries = payload.get("repin_authorizations") if isinstance(payload, dict) else None
-    if not isinstance(entries, list):
-        return {}
-    authorizations: dict[tuple[str, str, str], dict[str, Any]] = {}
-    for item in entries:
-        if not isinstance(item, dict):
-            continue
-        path = item.get("path")
-        base_digest = item.get("base_sha256")
-        new_digest = item.get("authorized_sha256")
-        justification = item.get("justification")
-        identifier = item.get("id")
-        if not all(isinstance(value, str) and value for value in (path, base_digest, new_digest, identifier)):
-            continue
-        if not isinstance(justification, str) or len(justification.strip()) < 20:
-            continue
-        if re.fullmatch(r"[0-9a-f]{64}", base_digest) is None or re.fullmatch(r"[0-9a-f]{64}", new_digest) is None:
-            continue
-        authorizations[(path, base_digest, new_digest)] = item
-    return authorizations
+        from . import repin
+    except ImportError:  # Loaded as a standalone file; load the sibling evaluator by path.
+        import importlib.util
+        import sys
 
+        spec = importlib.util.spec_from_file_location(
+            "_far_validation_repin", Path(__file__).resolve().with_name("repin.py")
+        )
+        if spec is None or spec.loader is None:
+            raise
+        repin = sys.modules.setdefault(spec.name, importlib.util.module_from_spec(spec))
+        spec.loader.exec_module(repin)
 
-def _protected_repin_failures(root: Path, revision: str) -> dict[str, list[str]]:
-    """Reject repinning a base-protected artifact without trusted authorization.
-
-    The protected candidate set is every path changed against the base that the
-    *base* assurance lock protects. A path absent from the base lock is being
-    introduced and has no prior identity to contradict.
-    """
-    base_lock_source = _show(root, revision, ASSURANCE_LOCK_PATH)
-    if base_lock_source is None:
-        return {}
-    base_locked = _lock_file_digests(base_lock_source)
-    if not base_locked:
-        return {}
+    git = repin.GitObjects(root)
     try:
-        head_locked = _lock_file_digests((root / ASSURANCE_LOCK_PATH).read_text(encoding="utf-8"))
-    except OSError:
-        head_locked = {}
-    authorizations = _trusted_repin_authorizations(root, revision)
-
-    failures: dict[str, list[str]] = {}
-    for path in sorted(_changed_paths(root, revision) & set(base_locked)):
-        before = base_locked[path]
-        after = head_locked.get(path)
-        if after == before:
-            # The pin did not move, so the bootstrap hash check still governs the
-            # content and nothing here has been re-authorized.
-            continue
-        if after is None:
-            failures.setdefault(path, []).append(
-                f"protected artifact {path} was dropped from {ASSURANCE_LOCK_PATH}; "
-                "removing a protected identity requires trusted authorization from the comparison base"
-            )
-            continue
-        candidate = root / path
-        actual = _sha256_text(candidate.read_bytes()) if candidate.is_file() else None
-        authorization = authorizations.get((path, before, after))
-        if authorization is None:
-            failures.setdefault(path, []).append(
-                f"protected artifact {path} changed and its content pin in {ASSURANCE_LOCK_PATH} was "
-                f"repinned {before[:12]}->{after[:12]} in the same change; this transition is not "
-                f"authorized by {WAIVER_PATH} in the comparison base, and a candidate may not authorize "
-                "its own protected-artifact repin"
-            )
-            continue
-        if actual != after:
-            failures.setdefault(path, []).append(
-                f"authorization {authorization.get('id')} permits {after[:12]} for {path}, but the "
-                f"candidate file hashes to {actual or '<missing>'}; an authorization binds one exact "
-                "content identity"
-            )
-    return failures
+        trusted = git.blob(git.commit(revision), repin.ALLOWED_SIGNERS_PATH, label="base") or b""
+    except repin.LedgerError as exc:
+        return {repin.ALLOWED_SIGNERS_PATH: [f"{exc}; failing closed"]}, {}
+    target = os.environ.get("FAR_REPIN_TARGET_PR")
+    report = repin.evaluate(
+        git, revision, "HEAD", allowed_signers=trusted,
+        repository=os.environ.get("GITHUB_REPOSITORY", "notfoundout/Project-FAR"),
+        repository_id=int(os.environ["GITHUB_REPOSITORY_ID"]) if os.environ.get("GITHUB_REPOSITORY_ID") else None,
+        target_pr=int(target) if target else None,
+    )
+    if not report.successful:
+        return report.failures, {}
+    return {}, {transition["path"]: transition["new_sha256"] for transition in report.transitions}
 
 
 def _load_waivers(root: Path, revision: str) -> dict[str, dict[str, Any]]:
@@ -957,8 +910,10 @@ def compare_strength(before: StrengthMetrics, after: StrengthMetrics, *, is_test
 def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
     resolved = _resolve_base(root, base)
     waivers = _load_waivers(root, resolved)
+    signed_repin_failures, signed = _protected_repin_evaluation(root, resolved)
     findings: list[WeakeningFinding] = []
     used: list[str] = []
+    signed_used: list[str] = []
     for status, path in _changed_python(root, resolved):
         finding = WeakeningFinding(path=path)
         before_source = _show(root, resolved, path)
@@ -993,7 +948,13 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
             except SyntaxError:
                 finding.before = None
             if finding.before is not None:
-                finding.failures.extend(compare_strength(finding.before, finding.after, is_test=path.startswith("tests/")))
+                strength = compare_strength(finding.before, finding.after, is_test=path.startswith("tests/"))
+                if strength and signed.get(path) == _sha256_text(current_path.read_bytes()):
+                    # The owner signed exactly these bytes and the authorization verified unconsumed:
+                    # that, not a base waiver, authorizes this protected file's structural change.
+                    signed_used.append(path)
+                else:
+                    finding.failures.extend(strength)
         if finding.failures and path in waivers:
             waiver = waivers[path]
             if waiver.get("base") == resolved and isinstance(waiver.get("justification"), str) and len(waiver["justification"].strip()) >= 20:
@@ -1003,7 +964,9 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
 
     # Applied after waivers: a waiver excuses a metric drop on one file, not a
     # change that rewrites the expected values guarding another file.
-    repin_failures = _self_repin_failures(root, resolved, {path for _status, path in _changed_python(root, resolved)})
+    repin_failures = _self_repin_failures(
+        root, resolved, {path for _status, path in _changed_python(root, resolved)}, signed_repin_failures
+    )
     if repin_failures:
         by_path = {finding.path: finding for finding in findings}
         for path, messages in repin_failures.items():
@@ -1012,7 +975,7 @@ def detect_weakening(root: Path, *, base: str | None = None) -> WeakeningReport:
                 finding = WeakeningFinding(path=path)
                 findings.append(finding)
             finding.failures.extend(messages)
-    return WeakeningReport(base=resolved, findings=findings, waivers_used=used)
+    return WeakeningReport(base=resolved, findings=findings, waivers_used=used, signed_transitions_used=signed_used)
 
 
 def main(argv: list[str] | None = None) -> int:

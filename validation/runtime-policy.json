@@ -28,6 +28,9 @@
     "python",
     "python3",
     "git",
+    "git-upload-pack",
+    "ssh-keygen",
+    "openssl",
     "bash",
     "sh",
     "make",
@@ -43,7 +46,9 @@
     "env",
     "uname",
     "dirname",
-    "basename"
+    "basename",
+    "curl",
+    "sha256sum"
   ],
   "skip_checks": []
 }

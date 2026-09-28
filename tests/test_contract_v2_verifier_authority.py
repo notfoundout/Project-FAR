@@ -101,7 +101,7 @@ class VerifierAuthorityTests(unittest.TestCase):
             with self.subTest(current=text):
                 self.assertFalse(any(p.search(text) for p in BASELINE_PATTERNS))
 
-    def test_current_surfaces_use_current_verifier(self) -> None:
+    def test_current_surfaces_use_strict_verifier(self) -> None:
         current_surfaces = {
             "mechanization/far_mechanization/contract_conformance.py": "from .contract_v2_strict_v11 import load_and_validate",
             "mechanization/far_mechanization/migrate_v1_to_v2.py": "from .contract_v2_strict_v11 import",
