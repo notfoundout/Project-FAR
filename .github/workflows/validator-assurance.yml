@@ -21,13 +21,14 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           show-progress: false
+          persist-credentials: false
       - name: Record assurance lock hash comparison
         shell: bash
         run: |
-          python - <<'PY2'
+          python -I - <<'PY2'
           import hashlib, json
           from pathlib import Path
           root = Path('.')
@@ -42,9 +43,11 @@ jobs:
               json.dumps(payload, indent=2, sort_keys=True), encoding='utf-8'
           )
           print(json.dumps(payload, indent=2, sort_keys=True))
+          raise SystemExit(0 if payload['successful'] else 1)
           PY2
       - name: Upload assurance hash audit
-        uses: actions/upload-artifact@v4
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: assurance-hash-audit
           path: artifacts/validation/assurance-hash-audit.json
@@ -57,11 +60,12 @@ jobs:
     env:
       FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}:attested-cache
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           show-progress: false
-      - uses: actions/setup-python@v5
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
       - name: Install dependencies
@@ -79,7 +83,7 @@ jobs:
         working-directory: artifacts/validation
         run: sha256sum signed-cache.tar.gz > signed-cache.tar.gz.sha256
       - name: Upload signed cache bundle
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: signed-validation-cache
           path: artifacts/validation
@@ -93,16 +97,17 @@ jobs:
     env:
       FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}:attested-cache
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           show-progress: false
-      - uses: actions/setup-python@v5
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
         with:
           name: signed-validation-cache
           path: artifacts/validation/cache-download
@@ -129,24 +134,41 @@ jobs:
 
   merge-authority:
     needs: signed-cache-consumer
+    # merge-authority is a required status check. Without this condition a failed dependency makes
+    # it "skipped", and GitHub counts a skipped required check as passing.
+    if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ secrets.FAR_VALIDATION_CACHE_SIGNING_KEY || github.token }}
       FAR_VALIDATION_TRUST_DOMAIN: project-far:${{ github.repository }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Require the signed-cache chain to have succeeded
+        shell: bash
+        env:
+          UPSTREAM_RESULT: ${{ needs.signed-cache-consumer.result }}
+        run: |
+          set -euo pipefail
+          if [[ "$UPSTREAM_RESULT" != "success" ]]; then
+            echo "signed-cache-consumer result is '$UPSTREAM_RESULT'; merge-authority requires success" >&2
+            exit 1
+          fi
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
           show-progress: false
-      - uses: actions/setup-python@v5
+          persist-credentials: false
+      - name: Derive per-job ephemeral validation signing key
+        shell: bash
+        run: |
+          set -euo pipefail
+          # This job executes candidate code, so no persistent secret or token may be key material.
+          # The key signs and verifies evidence inside this job only.
+          key="$(openssl rand -hex 32)"
+          echo "::add-mask::$key"
+          echo "FAR_VALIDATION_CACHE_SIGNING_KEY=$key" >> "$GITHUB_ENV"
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
         with:
           python-version: '3.12'
-      - name: Install dependencies and trace backend
-        run: |
-          python -m pip install -r requirements.txt
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq strace
       - name: Resolve comparison base
         id: base
         shell: bash
@@ -162,35 +184,40 @@ jobs:
             base="$(git rev-parse HEAD)"
           fi
           echo "sha=$base" >> "$GITHUB_OUTPUT"
-      - name: Verify independent bootstrap
-        run: python validation_bootstrap/verify.py
-      - name: Run validator assurance tests
-        run: python -m unittest discover -s tests -p "test_validation_assurance.py" -v
       - name: Prepare assurance artifact directory
         run: mkdir -p artifacts/validation/runtime
-      - name: Run complete traced validation profile
-        run: >-
-          python -m far_validation validate --profile pr-full --no-cache
-          --trace-dependencies --require-trace --require-signed-cache
+      - name: Verify independent bootstrap
+        run: python -I validation_bootstrap/verify.py
       - name: Run independent legacy-checker oracle
-        run: python -m far_validation oracle --json > artifacts/validation/runtime/independent-oracle.json
+        run: python -I -X "pycache_prefix=$RUNNER_TEMP/far-pycache" validation_bootstrap/run_isolated.py oracle --json > artifacts/validation/runtime/independent-oracle.json
       - name: Detect test and validator weakening
         run: >-
-          python -m far_validation weakening --base "${{ steps.base.outputs.sha }}" --json
+          python -I -X "pycache_prefix=$RUNNER_TEMP/far-pycache" validation_bootstrap/run_isolated.py weakening --base "${{ steps.base.outputs.sha }}" --json
           > artifacts/validation/runtime/test-weakening.json
+      - name: Exhaustively model-check engine state space
+        run: python -I -X "pycache_prefix=$RUNNER_TEMP/far-pycache" validation_bootstrap/run_isolated.py formal --max-checks 4 --json > artifacts/validation/runtime/formal-model.json
       - name: Install pinned Lean toolchain
         shell: bash
         run: |
           set -euo pipefail
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
-            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+          # The release archive is bound to its SHA-256; no installer script or toolchain resolver runs.
+          [[ "$(cat lean-toolchain)" == "leanprover/lean4:v4.19.0" ]] || { echo 'lean-toolchain changed; update the pinned archive and digest' >&2; exit 1; }
+          archive="$RUNNER_TEMP/lean-4.19.0-linux.tar.zst"
+          curl -sSfL -o "$archive" https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst
+          echo "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe  $archive" | sha256sum -c -
+          tar --zstd -xf "$archive" -C "$RUNNER_TEMP"
+          echo "FAR_LEAN_HOME=$RUNNER_TEMP/lean-4.19.0-linux" >> "$GITHUB_ENV"
       - name: Machine-check validation-engine assurance theorems
         shell: bash
         run: |
           set -euo pipefail
-          "$HOME/.elan/bin/lean" mechanization/lean/ValidationEngine.lean
-          python - <<'PY2'
+          "$FAR_LEAN_HOME/bin/lean" mechanization/lean/ValidationEngine.lean 2>&1 | tee artifacts/validation/runtime/lean-proof.log
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -n "declaration uses 'sorry'" artifacts/validation/runtime/lean-proof.log; then
+            echo 'validation-engine assurance theorems use sorry' >&2
+            exit 1
+          fi
+          python -I - <<'PY2'
           import json
           from pathlib import Path
           Path('artifacts/validation/runtime/lean-proof.json').write_text(
@@ -198,13 +225,71 @@ jobs:
               encoding='utf-8',
           )
           PY2
-      - name: Exhaustively model-check engine state space
-        run: python -m far_validation formal --max-checks 4 --json > artifacts/validation/runtime/formal-model.json
+      # Every step above runs no candidate code, and its failure cannot be undone.
+      # From here on, candidate code runs (pip install of the candidate's requirements, tests, checkers).
+      # It can rewrite later steps through GITHUB_PATH, GITHUB_ENV or site-packages, so later results are ordinary CI.
+      - name: Install dependencies and trace backend
+        run: |
+          python -m pip install -r requirements.txt
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq strace
+      - name: Run validator assurance tests
+        run: python -m unittest discover -s tests -p "test_validation_assurance.py" -v
+      - name: Run complete traced validation profile
+        run: >-
+          python -m far_validation validate --profile pr-full --no-cache
+          --trace-dependencies --require-trace --require-signed-cache
       - name: Run complete registered mutation campaign
         run: >-
           python -m far_validation mutations --json
           --report artifacts/validation/runtime/mutation-campaign.json
           > artifacts/validation/runtime/mutation-campaign.stdout.json
+      # Compiling unlocked Lean can run code, so these steps are ordinary CI like the tests. They put the
+      # compiles of lean.yml, far-core-v11-formalization.yml and pca-w5.yml into the required check.
+      - name: Compile governed Lean modules and reject sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          lean() { "$FAR_LEAN_HOME/bin/lean" "$@"; }
+          log="$RUNNER_TEMP/governed-lean.txt"
+          trap 'cat "$log"' EXIT
+          # A subshell, so a failing compile exits it and the trap still prints to the job log.
+          (
+            lean mechanization/lean/FARCore.lean
+            lean mechanization/lean/SCoreW5.lean
+            lean -o "$RUNNER_TEMP/UPPSemanticKernel.olean" mechanization/lean/UPPSemanticKernel.lean
+            lean mechanization/lean/G2OpenWorldLowerBound.lean
+            lean mechanization/lean/G3EpistemicMaximality.lean
+            lean mechanization/lean/Canonicality.lean
+            lean mechanization/lean/RepresentationInvariance.lean
+            lean mechanization/lean/QuotientMinimality.lean
+            lean mechanization/lean/DefinitionalCompleteness.lean
+            lean mechanization/lean/ConservativeExtensibility.lean
+            lean mechanization/lean/MaximalKnowability.lean
+            lean mechanization/lean/CanonicalUniversalityTerminal.lean
+            lean mechanization/lean/FARCanonicalBridge.lean
+            lean mechanization/lean/FARCanonicalUniversalityDecision.lean
+            LEAN_PATH="$RUNNER_TEMP" lean mechanization/lean/FARCanonicalCountermodel.lean
+            lean mechanization/lean/W5ApproximationCost.lean
+            lean -o "$RUNNER_TEMP/FARCoreV11Substrate.olean" mechanization/lean/FARCoreV11Substrate.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11Claims001To012.olean" mechanization/lean/FARCoreV11Claims001To012.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11Omega.olean" mechanization/lean/FARCoreV11Omega.lean
+            LEAN_PATH="$RUNNER_TEMP" lean -o "$RUNNER_TEMP/FARCoreV11SSS.olean" mechanization/lean/FARCoreV11SSS.lean
+            LEAN_PATH="$RUNNER_TEMP" lean mechanization/lean/FARCoreV11Mutations.lean
+          ) > "$log" 2>&1
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -n "declaration uses 'sorry'" "$log"; then
+            echo 'a governed Lean module uses sorry' >&2
+            exit 1
+          fi
+      - name: Enforce FAR-CORE v1.1 kernel assumptions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/check_far_core_v11_formalization.py --emit-axiom-audit "$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean"
+          LEAN_PATH="$RUNNER_TEMP" "$FAR_LEAN_HOME/bin/lean" "$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean" \
+            > "$RUNNER_TEMP/far-core-v11-axioms.txt" 2>&1 || { cat "$RUNNER_TEMP/far-core-v11-axioms.txt"; exit 1; }
+          python tools/check_far_core_v11_formalization.py --axiom-output "$RUNNER_TEMP/far-core-v11-axioms.txt"
       - name: Assemble signed merge-authority certificate
         run: |
           python tools/assemble_validation_certificate.py \
@@ -239,7 +324,7 @@ jobs:
           fi
       - name: Upload assurance evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: validator-assurance-${{ github.sha }}
           path: artifacts/validation

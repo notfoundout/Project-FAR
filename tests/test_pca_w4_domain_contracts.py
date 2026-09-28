@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from mechanization.far_mechanization.contract_v2 import contract_sha256
+from mechanization.far_mechanization.contract_v2_strict import contract_sha256
 from tools.check_pca_w4_domain_contracts import (
     CAMPAIGN_METADATA_FILES,
     PROTECTED_SUPPORTING_ARTIFACTS,

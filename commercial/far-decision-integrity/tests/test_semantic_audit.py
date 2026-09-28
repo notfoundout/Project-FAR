@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import pathlib
 import sys
@@ -115,9 +116,41 @@ class TestSemanticAudit(unittest.TestCase):
         self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.SATISFIES)
         self.assertEqual(result.semantic_audits[0].target_node_id, "conclusion")
         roles = {artifact.role for artifact in result.semantic_audits[0].verifier_artifacts}
-        self.assertEqual(roles, {"semantic-verifier", "semantic-schema"})
+        self.assertEqual(
+            roles, {"semantic-verifier", "semantic-schema", "shared-exact-verifier", "wrapped-verifier"}
+        )
+        verifier = next(
+            artifact
+            for artifact in result.semantic_audits[0].verifier_artifacts
+            if artifact.role == "semantic-verifier"
+        )
+        self.assertTrue(verifier.path.endswith("contract_v2_strict_v11.py"), verifier.path)
+        wrapped = sorted(
+            pathlib.Path(artifact.path).name
+            for artifact in result.semantic_audits[0].verifier_artifacts
+            if artifact.role == "wrapped-verifier"
+        )
+        self.assertEqual(wrapped, ["contract_v2_errata1.py", "contract_v2_strict.py"])
         for artifact in result.semantic_audits[0].verifier_artifacts:
             self.assertRegex(artifact.sha256, r"^[0-9a-f]{64}$")
+
+    def test_unchecked_proved_factorization_cannot_clear_exact_gate(self):
+        """A PROVED record whose own tables collide must not pass on DECLARED_UNCHECKED evidence."""
+        record = fixture("conformance/far-ir-2.0/valid-factorization.json")
+        table = record["contract"]["representation"]["table"]
+        table[1]["value"] = table[0]["value"]
+        record["report"]["evidence"]["status"] = "DECLARED_UNCHECKED"
+        canonical = json.dumps(
+            record["contract"], sort_keys=True, separators=(",", ":"), ensure_ascii=False
+        )
+        record["freeze"]["contract_sha256"] = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        data = payload()
+        data["semantic_contracts"] = [binding(record)]
+        result = adjudicate(DecisionPackage.from_dict(data), require_semantic_contract=True)
+        self.assertEqual(result.semantic_audits[0].disposition, SemanticDisposition.INVALID)
+        self.assertNotEqual(result.status, IntegrityStatus.JUSTIFIED)
+        codes = {item.code for item in result.semantic_audits[0].diagnostics}
+        self.assertIn("DETERMINATE_OUTCOME_UNCHECKED", codes)
 
     def test_valid_collision_forces_unsupported(self):
         data = payload()
@@ -179,8 +212,14 @@ class TestSemanticAudit(unittest.TestCase):
         roles = {artifact.role for artifact in result.semantic_audits[0].verifier_artifacts}
         self.assertEqual(
             roles,
-            {"semantic-verifier", "semantic-schema", "shared-exact-verifier"},
+            {"semantic-verifier", "semantic-schema", "shared-exact-verifier", "wrapped-verifier"},
         )
+        wrapped = [
+            pathlib.Path(artifact.path).name
+            for artifact in result.semantic_audits[0].verifier_artifacts
+            if artifact.role == "wrapped-verifier"
+        ]
+        self.assertEqual(wrapped, ["contract_v21.py"])
 
     def test_v21_selected_infeasible_candidate_forces_unsupported(self):
         data = payload()

@@ -1,20 +1,25 @@
 #!/usr/bin/env python3
-"""Bootstrap-safe protection audit for the owner-operated protected-repin gate.
+"""Protection audit for the owner-operated protected-repin gate.
 
 This wrapper changes only audit semantics. Operational evaluation continues through
 ``repin_gate_app.py`` unchanged.
 
-During the bootstrap sequence, ``protected-repin-gate`` is intentionally not yet a
-required check. A baseline audit therefore accepts the absence of that context while
-still enforcing the invariants that must already hold: strict status checks,
-administrator enforcement, no force pushes, and no branch deletion. If any
-``protected-repin-gate`` context is already present, it must be bound exactly to the
-dedicated App ID; a same-named check from another source is rejected.
+By default the audit is the bound-state audit: ``protected-repin-gate`` must be a required check
+bound exactly to the dedicated App, the checks must be strict, administrator enforcement must be
+on, and force pushes and deletion must be off. That is ``repin_gate_app.check_protection``.
 
-After the owner binds the required App check, the same audit automatically becomes a
-bound-state audit because the context is present and must match the dedicated App.
+``--bootstrap`` selects the bootstrap audit, for the period before the owner binds the App check
+(the first bootstrap, or a rotation to a new App). It accepts the absence of that context while
+still enforcing strict status checks, administrator enforcement, no force pushes, and no branch
+deletion. If any ``protected-repin-gate`` context is already present, it must be bound exactly to
+the dedicated App ID; a same-named check from another source is rejected.
+
+The bootstrap audit used to be the only mode. Once the App check was bound it could no longer
+detect that check being removed, because it accepts the check's absence.
 """
 from __future__ import annotations
+
+import argparse
 
 try:
     from . import repin_gate_app as gate_app
@@ -44,8 +49,20 @@ def phase_aware_check_protection(protection: dict, app_id: int) -> list[str]:
     return problems
 
 
-def main() -> int:
-    gate_app.check_protection = phase_aware_check_protection
+bound_check_protection = gate_app.check_protection
+
+
+def main(argv: list[str] | None = None) -> int:
+    # ``--bootstrap`` weakens the post-bootstrap audit, so accepting argparse's default long-option
+    # abbreviations (for example ``--boot``) would create an unnecessary alternate spelling for a
+    # security-sensitive mode.  Require the frozen option name exactly.
+    parser = argparse.ArgumentParser(
+        description="Audit main's protection for the protected-repin gate", allow_abbrev=False
+    )
+    parser.add_argument("--bootstrap", action="store_true",
+                        help="accept an unbound protected-repin-gate context (before the owner binds the App check)")
+    args = parser.parse_args(argv)
+    gate_app.check_protection = phase_aware_check_protection if args.bootstrap else bound_check_protection
     return gate_app.run_actions("audit")
 
 

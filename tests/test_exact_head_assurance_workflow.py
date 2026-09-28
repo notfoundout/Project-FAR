@@ -16,6 +16,12 @@ class ExactHeadAssuranceWorkflowTests(unittest.TestCase):
         source = canonical['jobs']['merge-authority']['steps']
         target = exact['jobs']['exact-head-assurance']['steps']
 
+        # merge-authority alone depends on the signed-cache jobs, so it alone first requires that
+        # chain to have succeeded (a skipped required check would count as passing).
+        self.assertEqual(source[0]['name'], 'Require the signed-cache chain to have succeeded')
+        self.assertEqual(canonical['jobs']['merge-authority']['if'], '${{ !cancelled() }}')
+        source = source[1:]
+
         # Exact-head may add only the dispatch trust preflight/lineage guards around the
         # canonical program. Strip those two stronger guards, normalize the intentionally
         # stronger checkout/base/artifact identities, and then require byte-structural
@@ -55,27 +61,27 @@ class ExactHeadAssuranceWorkflowTests(unittest.TestCase):
         )
         self.assertEqual(target_checkout['with']['fetch-depth'], 0)
         self.assertIs(target_checkout['with']['persist-credentials'], False)
+        self.assertIs(source_checkout['with']['persist-credentials'], False)
         normalized_checkout = dict(target_checkout)
         normalized_checkout['with'] = dict(target_checkout['with'])
         normalized_checkout['with'].pop('ref')
-        normalized_checkout['with'].pop('persist-credentials')
         self.assertEqual(source_checkout, normalized_checkout)
 
         self.assertEqual(source[1:], target_core[1:])
         self.assertEqual(exact['permissions'], {'contents': 'read'})
-        self.assertEqual(
-            exact['jobs']['exact-head-assurance']['env']['FAR_VALIDATION_CACHE_SIGNING_KEY'],
-            '${{ github.token }}',
-        )
+        # Both jobs run candidate code: key material is a per-job ephemeral key derived in a step,
+        # never a secret or the job token placed in the job environment.
+        for job in (canonical['jobs']['merge-authority'], exact['jobs']['exact-head-assurance']):
+            self.assertNotIn('FAR_VALIDATION_CACHE_SIGNING_KEY', job.get('env', {}))
 
     def test_dispatch_guards_run_before_repository_controlled_code(self):
         exact = yaml.safe_load((ROOT / '.github/workflows/exact-head-assurance.yml').read_text())
         steps = exact['jobs']['exact-head-assurance']['steps']
         names = [step.get('name') or step.get('uses') for step in steps]
         preflight = names.index('Validate dispatched identity before checkout')
-        checkout = next(i for i, step in enumerate(steps) if step.get('uses') == 'actions/checkout@v4')
+        checkout = next(i for i, step in enumerate(steps) if str(step.get('uses', '')).startswith('actions/checkout@'))
         lineage = names.index('Verify dispatched checkout lineage before repository code runs')
-        setup = next(i for i, step in enumerate(steps) if step.get('uses') == 'actions/setup-python@v5')
+        setup = next(i for i, step in enumerate(steps) if str(step.get('uses', '')).startswith('actions/setup-python@'))
         install = names.index('Install dependencies and trace backend')
         self.assertLess(preflight, checkout)
         self.assertLess(checkout, lineage)
