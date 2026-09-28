@@ -275,11 +275,11 @@ The frozen, step-by-step owner runbook is kept with the bootstrap record. It is 
 7. **Redeploy the gate** at the merge commit.
 8. **Require `protected-repin-gate` from the App.** In the branch protection rule, add the check and pick the App as its source. Nothing else is changed.
 9. **Audit again.** The verdict must be PASS, and the only difference from the "before" record must be the added App-bound check.
-10. **Run P1–P7.** Real protected transitions, including #538's, and their signatures come only after all probes pass.
+10. **Run P1–P7, with PR #560 merged before the P5 PR.** P7 merges the P5 PR, and every merge needs `merge-authority`. `main`'s in-CI weakening check accepted only base waivers, so it failed every signed transition until #560 made it honor owner signatures. #560 is therefore the only real protected transition signed and merged before the probes finish. The P5 PR is then refreshed onto `main` and merged, and P7 follows. Every other real protected transition, including #538's, and its signatures come only after P7 passes.
 
 ## Mandatory live probes
 
-Run these on throwaway PRs after the bootstrap and before any real protected transition, including #538. Record each result in the audit record: PR number, head SHA, every check run with its App ID and conclusion, and `mergeable_state`. Close every probe PR unmerged, except where a merge is part of the probe. Any deviation means the bootstrap has failed.
+Run these on throwaway PRs after the bootstrap. The P5 PR merges only after #560 (step 10), and no other real protected transition, including #538's, comes before P7 passes. Record each result in the audit record: PR number, head SHA, every check run with its App ID and conclusion, and `mergeable_state`. Close every probe PR unmerged, except where a merge is part of the probe. Any deviation means the bootstrap has failed.
 
 | # | Probe | Required result |
 |---|---|---|
