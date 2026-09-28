@@ -21,6 +21,7 @@
       "inputs": [
         "research/target-category-discovery/verify_compositional_invariant.py",
         "research/target-category-discovery/verify_compositional_invariant_legacy.py",
+        "tests/test_governed_lean_axioms.py",
         "tests/test_protected_repin_authorization.py",
         "tests/repin_agepony_testkit.py",
         "tests/test_protected_repin_ledger.py",
