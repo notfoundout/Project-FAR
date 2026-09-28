@@ -12,6 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from mechanization.far_mechanization.contract_v21 import validate_contract
+from mechanization.far_mechanization.contract_v21_errata1 import (
+    validate_contract as validate_contract_errata1,
+)
 from tools.campaign_current_state import artifact_hash_errors
 
 EXPECTED_SCHEMA_VERSION = "1.0"
@@ -159,6 +162,11 @@ def audit_manifest(root: Path, manifest: object) -> list[str]:
             continue
         result = validate_contract(document)
         errors.extend(f"{rel}: {diagnostic.code}: {diagnostic.message}" for diagnostic in result.diagnostics)
+        # W5 is recomputed with the executed verifier; errata 1 must not change any governed record.
+        executed = [diagnostic.code for diagnostic in result.diagnostics]
+        corrected = [diagnostic.code for diagnostic in validate_contract_errata1(document).diagnostics]
+        if executed != corrected:
+            errors.append(f"W5_ERRATA_VERIFIER_DIVERGENCE {rel}: executed={executed} errata1={corrected}")
 
     return errors
 

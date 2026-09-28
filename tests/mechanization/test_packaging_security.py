@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -28,7 +29,12 @@ def test_package_import_and_version_consistency():
 
 
 def test_cli_entrypoint_smoke_version_and_help():
-    for args in ([str(ROOT / "far"), "version"], [str(ROOT / "far"), "help"]):
+    # The entrypoint contract is checked statically; running it under sys.executable keeps the CLI on
+    # the test interpreter instead of whichever python3 is first on PATH.
+    entrypoint = ROOT / "far"
+    assert entrypoint.read_text(encoding="utf-8").startswith("#!/usr/bin/env python3\n")
+    assert os.access(entrypoint, os.X_OK)
+    for args in ([sys.executable, str(entrypoint), "version"], [sys.executable, str(entrypoint), "help"]):
         completed = subprocess.run(args, cwd=ROOT, text=True, capture_output=True, check=False)
         assert completed.returncode == 0
         assert completed.stdout

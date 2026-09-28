@@ -7,7 +7,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-from .contract_v2_strict import load_and_validate
+from .contract_v2_strict_v11 import load_and_validate
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CONFORMANCE_ROOT = REPO_ROOT / "conformance" / "far-ir-2.0"

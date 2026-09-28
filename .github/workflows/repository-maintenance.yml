@@ -12,29 +12,23 @@ jobs:
     - name: Install dependencies
       run: python -m pip install pyyaml
     - name: One-click repository maintenance
-      run: 'start=$(date +%s)
-
+      shell: bash
+      run: |
+        set -uo pipefail
+        status=0
+        start=$(date +%s)
         echo "# Repository Maintenance Summary" > maintenance-summary.md
-
         echo "## Repository Health" >> maintenance-summary.md
-
-        make health-fast 2>&1 | tee -a maintenance-summary.md
-
+        make health-fast 2>&1 | tee -a maintenance-summary.md || status=1
         echo "## Dashboard Regeneration" >> maintenance-summary.md
-
-        make dashboard 2>&1 | tee -a maintenance-summary.md
-
+        make dashboard 2>&1 | tee -a maintenance-summary.md || status=1
         echo "## Release Readiness" >> maintenance-summary.md
-
-        python tools/release_readiness_report.py 2>&1 | tee -a maintenance-summary.md
-
+        python tools/release_readiness_report.py 2>&1 | tee -a maintenance-summary.md || status=1
         end=$(date +%s)
-
         echo "execution_time_seconds=$((end-start))" >> "$GITHUB_STEP_SUMMARY"
-
         cat maintenance-summary.md >> "$GITHUB_STEP_SUMMARY"
-
-        '
+        # The summary is always written; a failed stage still fails the job.
+        exit "$status"
     - uses: actions/upload-artifact@v4
       with:
         name: repository-maintenance-summary

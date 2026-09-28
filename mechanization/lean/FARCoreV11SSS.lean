@@ -360,8 +360,10 @@ theorem sAnd_witness_certified :
   ⟨sAnd_derivable, sAnd_not_terminal, sAnd_mixed_successors⟩
 
 /--
-The bounded SSS negative result, with the Boolean summaries backed by the actual governed MLL
-sequents and resource splits rather than treated as application premises.
+The bounded SSS negative result over the Boolean summaries.  Its statement is the same as
+`projected_successor_decoder_failure`; the witness facts cited in the proof do not occur in the
+statement.  The link from the summaries to the governed MLL sequents is stated by
+`summaries_match_mll_witnesses` and `mll_projected_decoder_failure`.
 -/
 theorem bounded_projected_decoder_failure (decoder : SuccessorDecoder) :
     decoderPrediction decoder sOrSummary ≠ sOrSummary.derivable ∨
@@ -369,6 +371,41 @@ theorem bounded_projected_decoder_failure (decoder : SuccessorDecoder) :
   have _ := sOr_witness_certified
   have _ := sAnd_witness_certified
   exact projected_successor_decoder_failure decoder
+
+/-- Each field of the Boolean summaries agrees with the proved property of its MLL sequent. -/
+theorem summaries_match_mll_witnesses :
+    (sOrSummary.derivable = true ↔ Derivable sOr) ∧
+      (sOrSummary.terminal = true ↔ Terminal sOr) ∧
+      (sOrSummary.successorTruths = SuccessorTruthShape.mixed ∧ MixedSuccessors sOr) ∧
+      (sAndSummary.derivable = true ↔ Derivable sAnd) ∧
+      (sAndSummary.terminal = true ↔ Terminal sAnd) ∧
+      (sAndSummary.successorTruths = SuccessorTruthShape.mixed ∧ MixedSuccessors sAnd) := by
+  refine ⟨⟨fun h => absurd h (by decide), fun h => absurd h sOr_not_derivable⟩,
+    ⟨fun h => absurd h (by decide), fun h => absurd h sOr_not_terminal⟩,
+    ⟨rfl, sOr_mixed_successors⟩,
+    ⟨fun _ => sAnd_derivable, fun _ => rfl⟩,
+    ⟨fun h => absurd h (by decide), fun h => absurd h sAnd_not_terminal⟩,
+    ⟨rfl, sAnd_mixed_successors⟩⟩
+
+/--
+The bounded SSS negative result stated over actual MLL derivability: no uniform monotone decoder
+applied to the proved projected profiles predicts `Derivable` correctly for both governed sequents.
+-/
+theorem mll_projected_decoder_failure (decoder : SuccessorDecoder) :
+    ¬ ((decoderPrediction decoder sOrSummary = true ↔ Derivable sOr) ∧
+      (decoderPrediction decoder sAndSummary = true ↔ Derivable sAnd)) := by
+  rintro ⟨hor, hand⟩
+  rcases projected_successor_decoder_failure decoder with hfail | hfail
+  · apply hfail
+    cases hpred : decoderPrediction decoder sOrSummary
+    · rfl
+    · exact absurd (hor.mp hpred) sOr_not_derivable
+  · apply hfail
+    cases hpred : decoderPrediction decoder sAndSummary
+    · have hderivable := hand.mpr sAnd_derivable
+      rw [hpred] at hderivable
+      exact absurd hderivable (by decide)
+    · rfl
 
 end MLL
 

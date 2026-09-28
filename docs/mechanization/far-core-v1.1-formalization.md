@@ -31,7 +31,7 @@ assumption contracts. Merely printing the audit is not accepted as assurance.
 | `FAR-CORE-011` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.omitted_parameter_refutes_sufficiency` | — |
 | `FAR-CORE-012` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.absent_unknown_must_separate` | — |
 | `FAR-CORE-013` | `FORMALIZED` | `PASS` | `none` | `FARCoreV11.Omega.omega_elimination`<br>`FARCoreV11.Omega.resolve_is_composition` | — |
-| `FAR-CORE-014` | `FORMALIZED` | `PASS` | `Quot.sound`<br>`propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization`<br>`FARCoreV11.SSS.MLL.derivable_atom_balance`<br>`FARCoreV11.SSS.MLL.sOr_witness_certified`<br>`FARCoreV11.SSS.MLL.sAnd_witness_certified`<br>`FARCoreV11.SSS.MLL.bounded_projected_decoder_failure` | — |
+| `FAR-CORE-014` | `FORMALIZED` | `PASS` | `Quot.sound`<br>`propext` | `FARCoreV11.SSS.four_monotone_decoders`<br>`FARCoreV11.SSS.projected_successor_decoder_failure`<br>`FARCoreV11.SSS.hyperedge_factorization`<br>`FARCoreV11.SSS.frontier_factorization`<br>`FARCoreV11.SSS.MLL.derivable_atom_balance`<br>`FARCoreV11.SSS.MLL.sOr_witness_certified`<br>`FARCoreV11.SSS.MLL.sAnd_witness_certified`<br>`FARCoreV11.SSS.MLL.bounded_projected_decoder_failure`<br>`FARCoreV11.SSS.MLL.summaries_match_mll_witnesses`<br>`FARCoreV11.SSS.MLL.mll_projected_decoder_failure` | — |
 
 ## FAR-CORE-014 bounded application bridge
 
@@ -45,11 +45,11 @@ formalization does not enlarge FAR-CORE-014 into a universal architecture claim.
 
 | File | SHA-256 | Lines | Imports |
 |---|---|---:|---|
-| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `8146230723b289081cd914fc250fc9606f57bdb3bec1b24ad68cd1eb5265340e` | 42 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
+| `mechanization/lean/FARCoreV11AxiomAudit.lean` | `cd6e88e642ac0d397eacde46201b552f6c2ed1a7c02607181b57bbb7e70c55fa` | 44 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Claims001To012.lean` | `2d50a81a7a6e3c60bc795d29a326b2fdc613ba30fe602585930354c627db1c43` | 364 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Mutations.lean` | `e129549526c8f13078c3ae5d8897926700c5cef340f5b56387dd2212c603bdf7` | 182 | `FARCoreV11Claims001To012`, `FARCoreV11Omega`, `FARCoreV11SSS` |
 | `mechanization/lean/FARCoreV11Omega.lean` | `52570fe1ed0c7a76b850162d584d47e759098b054a8cd147161891d663a7044c` | 51 | `FARCoreV11Substrate` |
-| `mechanization/lean/FARCoreV11SSS.lean` | `15fdf821d878cedcf205891fc2d29822a0cc49c3dcedc8610eb4609169060465` | 375 | `FARCoreV11Substrate` |
+| `mechanization/lean/FARCoreV11SSS.lean` | `c58a9b55385fb1ce0a6555ef827ebec0d5c38a63130eb07f8003f6821c73ad53` | 412 | `FARCoreV11Substrate` |
 | `mechanization/lean/FARCoreV11Substrate.lean` | `65cda881f620c02611e86e00e9f7bd8d6a9e7ed89740de81b7f95c2ab4b35504` | 293 | `Std` |
 
 The inventory also records every pre-existing Lean file as `LEGACY_OR_OTHER_SCOPE`. Those files

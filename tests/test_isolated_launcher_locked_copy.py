@@ -1,6 +1,7 @@
 """Adversarial regressions for the pre-candidate-code validator launcher."""
 from __future__ import annotations
 
+import hashlib
 import json
 import shutil
 import subprocess
@@ -44,10 +45,18 @@ class LockedCopyIsolationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = self.fixture(directory)
             marker = root / "candidate-code-ran"
-            (root / "far_validation" / "__init__.py").write_text(
+            initializer = root / "far_validation" / "__init__.py"
+            initializer.write_text(
                 f"from pathlib import Path\nPath({str(marker)!r}).write_text('package')\n",
                 encoding="utf-8",
             )
+            lock_path = root / "validation_bootstrap" / "assurance-lock.json"
+            lock = json.loads(lock_path.read_text(encoding="utf-8"))
+            if "far_validation/__init__.py" in lock["files"]:
+                # A locked initializer is copied, never executed; pin the planted bytes so this
+                # tests execution, not the hash check.
+                lock["files"]["far_validation/__init__.py"] = hashlib.sha256(initializer.read_bytes()).hexdigest()
+                lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
             (root / "nt.py").write_text(
                 f"from pathlib import Path\nPath({str(marker)!r}).write_text('root')\n",
                 encoding="utf-8",

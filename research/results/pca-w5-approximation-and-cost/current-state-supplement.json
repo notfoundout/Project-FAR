@@ -30,9 +30,9 @@
     {
       "path": "tools/check_pca_w5_approximation_cost.py",
       "executed_sha256": "27701c8dca708561a777212089c029812a1944d84a27b3d5cb1df5ad0de8296f",
-      "current_sha256": "b3f38150160e66ef76ec7a66b7b135d50c79ac330d5348d18b9903d30fd6a8dc",
+      "current_sha256": "fda695f867211734ff477795cca96604879323e8ff746c88dd9e8a87e2b19487",
       "class": "verification_tooling",
-      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes."
+      "reason": "Artifact hash comparison delegates to tools/campaign_current_state.py while the campaign checker retains explicit missing/invalid digest-declaration preflight and protected-artifact enforcement. Also corrects a PROTECTED_ARTIFACTS path that named a nonexistent file (pca-w5-approximation-and-cost-v1.0.json), which left the real W5 evaluation ledger unprotected. The executed manifest remains historical; no W5 input, computation, or recorded result changes. Since the 2026-09 root-of-trust audit the checker also requires the far-ir/2.1 errata 1 successor (contract_v21_errata1, which wraps the unchanged executed verifier) to reproduce every governed record's diagnostic sequence; W5 is still recomputed with the executed contract_v21.py at its pinned path."
     }
   ]
 }

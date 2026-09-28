@@ -82,8 +82,86 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.summaries_match_mll_witnesses": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.mll_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
 }
-FORBIDDEN = re.compile(r"(?m)^\s*(?:axiom\b|constant\b|sorry\b|admit\b|unsafe\s+(?:def|theorem)\b)")
+# Placeholders and trust escapes are forbidden anywhere in code. Declarations may carry attributes
+# and modifiers; `sorryAx` is what `sorry` elaborates to and compiles with only a warning.
+FORBIDDEN = re.compile(
+    r"(?m)(?<![A-Za-z0-9_'])(?:sorry|sorryAx|admit|native_decide)(?![A-Za-z0-9_'])"
+    r"|^\s*(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|noncomputable|partial|nonrec)\s+)*(?:axiom|constant|unsafe)\b"
+    r"|@\[\s*(?:implemented_by|extern)\b"
+)
+IDENTIFIER_CHAR = re.compile(r"[A-Za-z0-9_'!?\u0080-\uffff]")
+CHAR_LITERAL = re.compile(r"'(?:\\(?:x[0-9A-Fa-f]{2}|u\{[0-9A-Fa-f]+\}|[^\n])|[^'\\\n])'")
+RAW_STRING_OPEN = re.compile(r'r(#*)"')
+
+
+def lean_code(text: str) -> str:
+    """Blank Lean comments (line and nested block), string, raw-string, and character literals.
+
+    A placeholder mentioned in prose or data is then not counted, while one anywhere in code is.
+    Newlines are kept. The text inside an interpolated string (`s!"..."`) is kept, because its
+    `{...}` parts are code. An unterminated comment or literal is left as code, so a scanner
+    mismatch can only over-report.
+    """
+    out = list(text)
+    n = len(text)
+
+    def blank(start: int, end: int) -> None:
+        for k in range(start, end):
+            if out[k] != "\n":
+                out[k] = " "
+
+    i = 0
+    while i < n:
+        after_code = i == 0 or not IDENTIFIER_CHAR.match(text[i - 1])
+        if text.startswith("--", i):
+            end = text.find("\n", i)
+            end = n if end < 0 else end
+            blank(i, end)
+            i = end
+        elif text.startswith("/-", i):
+            depth, j = 1, i + 2
+            while j < n and depth:
+                if text.startswith("/-", j):
+                    depth, j = depth + 1, j + 2
+                elif text.startswith("-/", j):
+                    depth, j = depth - 1, j + 2
+                else:
+                    j += 1
+            if depth:
+                i += 2
+                continue
+            blank(i, j)
+            i = j
+        elif text[i] == "r" and after_code and RAW_STRING_OPEN.match(text, i):
+            opener = RAW_STRING_OPEN.match(text, i)
+            close = text.find('"' + opener.group(1), opener.end())
+            if close < 0:
+                i += 1
+                continue
+            blank(opener.end(), close)
+            i = close + 1 + len(opener.group(1))
+        elif text[i] == '"':
+            j = i + 1
+            while j < n and text[j] != '"':
+                j += 2 if text[j] == "\\" else 1
+            if j >= n:
+                i += 1
+                continue
+            if not (i > 0 and text[i - 1] == "!"):
+                blank(i + 1, j)
+            i = j + 1
+        elif text[i] == "'" and after_code and CHAR_LITERAL.match(text, i):
+            end = CHAR_LITERAL.match(text, i).end()
+            blank(i + 1, end - 1)
+            i = end
+        else:
+            i += 1
+    return "".join(out)
+
+
 DECLARATION = re.compile(
     r"(?m)^\s*(?:(?:noncomputable|protected)\s+)?"
     r"(?:def|theorem|structure|inductive|abbrev)\s+([A-Za-z_][A-Za-z0-9_']*)"
@@ -195,7 +273,7 @@ def inventory(ledger: dict) -> dict:
     for path in sorted((ROOT / "mechanization/lean").glob("*.lean")):
         relative = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8")
-        forbidden_count += len(FORBIDDEN.findall(text))
+        forbidden_count += len(FORBIDDEN.findall(lean_code(text)))
         files.append({
             "path": relative,
             "sha256": digest(path),

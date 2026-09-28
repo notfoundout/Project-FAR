@@ -56,7 +56,7 @@ Two formal layers are included:
 1. `mechanization/lean/ValidationEngine.lean` machine-checks dependency safety, blocking soundness, successful-run soundness, and exact commit/tree certificate binding.
 2. `far_validation.formal_model` exhaustively enumerates every forward-edge dependency DAG through four checks, every Boolean check-outcome assignment, and hostile attestation mutations.
 
-The Lean file proves the abstract assurance model. The Python model checker corroborates the executable state-machine design. This package does not claim a machine-checked refinement proof connecting every line of the Python implementation to the Lean model.
+The Lean file proves the abstract assurance model. The Python model checker exhaustively checks `far_validation.formal_model.simulate`, a separate Python abstraction of the scheduler; it does not import or execute `ValidationEngine.run`, so agreement between that abstraction and the executable engine is not checked by either layer. This package does not claim a machine-checked refinement proof connecting the Python implementation to the Lean model or to that abstraction.
 
 ### Merge authority and merge queue
 

@@ -764,10 +764,28 @@ def validate_socratic_record(document: object) -> SocraticValidationResult:
     return SocraticValidationResult(tuple(errors))
 
 
+def _unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate object key {key!r}")
+        result[key] = value
+    return result
+
+
+def _reject_constant(name: str) -> object:
+    raise ValueError(f"{name} is not a JSON value")
+
+
 def load_and_validate(path: str | Path) -> SocraticValidationResult:
     try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        # Duplicate keys and NaN/Infinity make a record's meaning parser-dependent.
+        document = json.loads(
+            Path(path).read_text(encoding="utf-8"),
+            object_pairs_hook=_unique_object,
+            parse_constant=_reject_constant,
+        )
+    except (OSError, ValueError) as exc:
         return SocraticValidationResult((SocraticDiagnostic("UNREADABLE_RECORD", str(exc)),))
     return validate_socratic_record(document)
 

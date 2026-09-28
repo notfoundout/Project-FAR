@@ -110,3 +110,12 @@ FAR_IR_2_1_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
 FAR_IR_2_0_STRICT_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
     "DETERMINATE_OUTCOME_UNCHECKED",
 })
+
+#: Additional diagnostic codes introduced by ``far-ir/2.0`` specification errata 1 and emitted by
+#: ``contract_v2_errata1`` (and so by current verification, ``contract_v2_strict_v11``). The frozen
+#: specification and baseline verifier are unchanged, so these codes are published in
+#: ``docs/specification/far-ir-2.0-errata-1.md``.
+FAR_IR_2_0_ERRATA_1_DIAGNOSTIC_CODES: frozenset[str] = frozenset({
+    "DUPLICATE_QUOTIENT_CLASS",
+    "FREEZE_TIME_INVALID",
+})

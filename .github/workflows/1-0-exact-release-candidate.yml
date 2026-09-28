@@ -21,6 +21,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Validate exact candidate metadata and boundaries
+        # An explicit bash shell runs with pipefail, so tee cannot mask a validator failure.
+        shell: bash
         run: python tools/validate_exact_1_0_candidate.py | tee exact-candidate.json
       - name: Build canonical distributions
         run: |
