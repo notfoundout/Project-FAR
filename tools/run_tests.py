@@ -10,7 +10,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TESTS = ROOT / "tests"
+TEST_ROOTS = (
+    ROOT / "tests",
+    ROOT / "commercial" / "far-decision-integrity" / "tests",
+)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -43,18 +46,30 @@ class DiagnosticTextTestRunner(unittest.TextTestRunner):
     resultclass = DiagnosticTextTestResult
 
 
-def discover_suite(start: Path = TESTS) -> unittest.TestSuite:
+def discover_suite(starts: Path | tuple[Path, ...] = TEST_ROOTS) -> unittest.TestSuite:
+    """Discover every test surface that is part of the canonical merge-validation contract.
+
+    A single ``Path`` remains supported for focused callers and the zero-discovery regression;
+    the canonical default spans every root in ``TEST_ROOTS``.
+    """
+    if isinstance(starts, Path):
+        starts = (starts,)
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
-    for index, path in enumerate(sorted(start.rglob("test_*.py"))):
-        module_name = "project_far_test_" + str(index) + "_" + path.stem
-        spec = importlib.util.spec_from_file_location(module_name, path)
-        if spec is None or spec.loader is None:
-            raise ImportError(f"cannot import test module {path}")
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
-        suite.addTests(loader.loadTestsFromModule(module))
+    module_index = 0
+    for start in starts:
+        if not start.is_dir():
+            raise FileNotFoundError(f"canonical test root is missing: {start.relative_to(ROOT)}")
+        for path in sorted(start.rglob("test_*.py")):
+            module_name = "project_far_test_" + str(module_index) + "_" + path.stem
+            module_index += 1
+            spec = importlib.util.spec_from_file_location(module_name, path)
+            if spec is None or spec.loader is None:
+                raise ImportError(f"cannot import test module {path}")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = module
+            spec.loader.exec_module(module)
+            suite.addTests(loader.loadTestsFromModule(module))
     return suite
 
 

@@ -19,9 +19,11 @@ The v1.1 correction also separates exact common theory from frame-relative resid
 
 Project FAR therefore closes as a **contract-relative audit discipline**, not as a universal inventory of reasoning primitives.
 
+Mathematically, the proved core instantiates standard kernel-factorization and quotient results; several formalized claims (FAR-CORE-010 frame independence, FAR-CORE-013) hold definitionally and FAR-CORE-007/008 compare declared counts. See the [calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md) before reading the verdict above as a deep or novel result.
+
 ## Assurance state
 
-The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED` under its exact scopes; no theorem correction was required. Its evidence is I1 claimed isolation: repository access was prohibited by instruction but not technically prevented. External independent validation requires I3 evidence, which W1 does not supply. Novelty and priority were not established.
+The W1-labelled sealed review, performed by a single OpenAI Codex agent ([LIM-035](docs/governance/limitations-register.md)), returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0 `UNDERDETERMINED` under its exact scopes; no theorem correction was required. Its evidence is I1 claimed isolation: repository access was prohibited by instruction but not technically prevented. External independent validation requires I3 evidence, which W1 does not supply. Novelty and priority were not established.
 
 `PCA-W2-PROOF-ASSISTANT-FORMALIZATION` is complete: all 14 governed claims are `FORMALIZED` under pinned Lean 4.19.0, with zero partial obstructions and zero contradiction/reopen outcomes. FAR-CORE-014 includes the bounded unit-free MLL witness bridge, and exact transitive kernel assumptions are runtime-audited rather than inferred from CI success.
 
@@ -31,7 +33,7 @@ The W1-labelled sealed review returned 14 `PROVED`, 0 `REFUTED`, 0 `OPEN`, and 0
 
 `PCA-W5-APPROXIMATION-AND-COST` is complete at its frozen finite-explicit operational scope. The additive `far-ir/2.1` verifier checks exact-rational metric/loss/reference/tolerance semantics, randomized decoders, multidimensional product cost orders, Pareto minima versus least elements, and zero-loss recovery. It does not select a universal scalar cost or unique optimum.
 
-`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at its preregistered bounded internal controlled-artifact scope. Across six W4 repaired controls and six deterministic representation-collision mutants, the schema-only baseline detected `0/6` mutants while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, and agreed with a separately implemented Project-FAR-authored table-only collision oracle on `12/12` primary records. The six frozen native W4 lossy controls were separately recomputed. This is an exact all-items result for that finite corpus and defect class only: human disagreement reduction remains `UNDERDETERMINED` and external real-world utility remains `OPEN`.
+`PCA-W6-EMPIRICAL-AUDIT-UTILITY` is complete at its preregistered bounded internal controlled-artifact scope. Across six W4 repaired controls and six deterministic representation-collision mutants, the schema-only baseline detected `0/6` mutants while the FAR semantic audit detected `6/6`, accepted `6/6` clean controls, and agreed with a separately implemented Project-FAR-authored table-only collision oracle on `12/12` primary records. The six frozen native W4 lossy controls were separately recomputed. The mutation was constructed to be exactly the collision the verifier checks, so this is a regression control rather than an estimate of detection power, and the baseline verifier recomputes only records that declare checked evidence ([LIM-047](docs/governance/limitations-register.md)). This is an exact all-items result for that finite corpus and defect class only: human disagreement reduction remains `UNDERDETERMINED` and external real-world utility remains `OPEN`.
 
 These are separate assurance dimensions. Independent review does not imply novelty; Lean formalization does not imply empirical utility, efficiency, open-domain universality, or product readiness; schema/software conformance does not establish application correspondence; W6 machine controls do not establish human or external effectiveness.
 
@@ -54,7 +56,7 @@ Canonical links:
 - [Epistemic assurance acceptance](docs/governance/far-epistemic-assurance-promotion-acceptance-v1.0.md), [specification](docs/specification/far-epistemic-assurance-1.0.md), and [hostile-source boundary](methodology/hostile-source-boundary.md)
 - [Canonical W1–W6 claim/evidence matrix](docs/governance/w1-w6-claim-evidence-matrix-v1.0.md)
 - [FAR core epistemic calibration audit](docs/audits/far-core-epistemic-calibration-v1.0.md) (non-authoritative Research calibration)
-- [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md)
+- [External Falsification and Replication program](docs/governance/external-falsification-and-replication-program-v1.0.md) and its [comparator amendment v2.0](docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md)
 - [W6 execution and results](docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md)
 - [`far-ir/2.1` approximation/cost specification](docs/specification/far-ir-2.1-approximation-cost.md)
 - [W4 finite-explicit results](docs/research/pca-w4-domain-contracts/02-results.md)
@@ -75,7 +77,7 @@ Canonical links:
 - `PCA-W5-APPROXIMATION-AND-COST`: complete at its finite-explicit operational scope.
 - `PCA-W6-EMPIRICAL-AUDIT-UTILITY`: complete at its bounded internal controlled-artifact scope.
 
-No W7 is registered by `POST-CLOSURE-001`. The separate successor `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` is now preregistered, with every test `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open until its external/human evidence is actually collected and passes the frozen criteria.
+No W7 is registered by `POST-CLOSURE-001`. The separate successor `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` is now preregistered, with no test executed. Its [comparator amendment v2.0](docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md) replaces the confounded human-disagreement, field-utility, and cost tests with three-arm versions whose primary contrast is FAR against a generic table-consistency checker; OP-28 remains open until its external/human evidence is actually collected and passes the frozen criteria.
 
 Core theory reopens only for a reproducible contradiction to a stated premise, proof step, theorem, or derivation.
 
@@ -139,11 +141,12 @@ python tools/check_far_core_v11_formalization.py
 python -m unittest tests.test_far_core_v11_formalization
 ```
 
-W3 contract-schema conformance:
+W3 contract-schema conformance and current `far-ir/2.0` verification ([current verification rule](docs/specification/far-ir-2.0-current-verification.md): `PROVED`/`REFUTED` require checked evidence):
 
 ```bash
 python -m mechanization.far_mechanization.contract_conformance
-python -m unittest tests.test_far_contract_v2
+python -m mechanization.far_mechanization.contract_conformance --manifest conformance/far-ir-2.0-current/manifest.json
+python -m unittest tests.test_far_contract_v2 tests.test_far_contract_v2_strict tests.test_contract_v2_verifier_authority
 ```
 
 W4 domain-contract recomputation:

@@ -122,7 +122,7 @@ Current program: `EXTERNAL-FALSIFICATION-AND-REPLICATION-001` — [External Fals
 | `PCA-W5-APPROXIMATION-AND-COST` | Complete | `far-ir/2.1` checks finite metrics, references/aggregation, losses, tolerances, randomized decoders, product cost preorders, Pareto/least sets, and exact recovery. |
 | `PCA-W6-EMPIRICAL-AUDIT-UTILITY` | Complete | Bounded internal controlled-artifact loss detection proved for registered corpus; human disagreement and external utility not established. |
 
-No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed successor and all eight tests remain `PREREGISTERED_NOT_EXECUTED`; OP-28 remains open.
+No `POST-CLOSURE-001` W7 is registered. EFR-001 is the separately governed successor and no test has executed; OP-28 remains open. The [comparator amendment v2.0](governance/external-falsification-and-replication-comparator-amendment-v2.0.md) supersedes `EFR-HD1`, `EFR-U1`, and `EFR-C1`, which compared FAR-assisted work against no machine output and so could not separate FAR-specific benefit from answer access (`LIM-048`). Their replacements `EFR-HD2`, `EFR-U2`, and `EFR-C2` add an active generic-checker comparator arm and are `PREREGISTERED_NOT_EXECUTED`.
 
 ## Framework status
 

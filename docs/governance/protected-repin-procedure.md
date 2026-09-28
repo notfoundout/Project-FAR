@@ -256,6 +256,8 @@ GitHub disables scheduled workflows in a public repository after 60 days without
 
 The **protection audit** (`Run workflow` with mode `audit`) posts an App-authored check `protected-repin-audit` on `main`'s tip. It contains the live protection, rulesets and branch rules as JSON, plus `check-protection`'s verdict. That record replaces command-line exports: the owner can read it on the phone, and anyone can diff two audits.
 
+The audit fails unless `protected-repin-gate` is a required check bound exactly to the App, so it notices the binding being removed. Only for the period before the owner first binds the check (the bootstrap, or a rotation to a new App) is `far_validation/repin_protection_audit.py --bootstrap` used. That variant accepts the unbound context and still enforces the other invariants. The deployed gate runs the audit version pinned by its `FAR_DEPLOYED_COMMIT`, so a change to the audit takes effect only once the gate is redeployed at a `main` commit that contains it.
+
 ## One-time bootstrap
 
 The frozen, step-by-step owner runbook is kept with the bootstrap record. It is iPhone-only. In summary, in this order:
