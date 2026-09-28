@@ -28,7 +28,9 @@ This is an independent implementation oracle for checker structure and enforceme
 
 ### Automated weakening detection
 
-`far_validation.weakening` compares changed tests and validators with an explicit Git base. It rejects deleted tests, removed test functions, reduced assertions or failure paths, new skips, major branch loss, and large unexplained AST contraction. Any exception requires a versioned waiver bound to the exact base commit and a nonempty justification.
+`far_validation.weakening` compares changed tests and validators with an explicit Git base. It rejects deleted tests, removed test functions, reduced assertions or failure paths, new skips, new unreachable statements, new conditional quiet exits in an existing test, fixture, or checker `main`, major branch loss, and large unexplained AST contraction. Any exception requires a versioned waiver bound to the exact base commit and a nonempty justification.
+
+These rules are syntactic. A change can still disable a test through a called helper, through data, or through a runtime patch, so the detector catches mistakes, not an adversary. Files under the assurance lock are protected against both, because changing them requires an owner-signed repin.
 
 ### Signed cross-runner cache trust
 

@@ -58,6 +58,8 @@ class StrengthMetrics:
     branches: int = 0
     skips: int = 0
     ast_nodes: int = 0
+    unreachable: int = 0
+    guarded_exits: tuple[tuple[str, int], ...] = ()
 
 
 @dataclass
@@ -620,6 +622,111 @@ def _definition_time_execution_failures(source: str, path: str) -> list[str]:
             )
     return failures
 
+# Statements after which the rest of their block never runs. `self.skipTest(...)` ends a test as
+# surely as `return`; `sys.exit`/`os._exit`/`exit`/`quit` end a checker.
+_TERMINATING_CALLS = frozenset({"exit", "_exit", "quit", "skipTest"})
+
+
+def _terminates(statement: ast.stmt) -> bool:
+    if isinstance(statement, (ast.Return, ast.Raise, ast.Continue, ast.Break)):
+        return True
+    return (
+        isinstance(statement, ast.Expr)
+        and isinstance(statement.value, ast.Call)
+        and _call_name(statement.value) in _TERMINATING_CALLS
+    )
+
+
+def _unreachable_statements(tree: ast.AST) -> int:
+    """Count statements that follow an unconditional terminator in the same block.
+
+    Assertion, branch, and failure-path counts are syntactic, so an early `return`, `raise
+    SystemExit(0)`, or `skipTest` inserted before them disables a test or checker without changing any
+    of them. Dead code is what such an insertion leaves behind.
+    """
+    unreachable = 0
+    for node in ast.walk(tree):
+        for name in ("body", "orelse", "finalbody"):
+            block = getattr(node, name, None)
+            if not isinstance(block, list):
+                continue
+            for index, statement in enumerate(block):
+                if isinstance(statement, ast.stmt) and _terminates(statement):
+                    unreachable += len(block) - index - 1
+                    break
+    return unreachable
+
+
+# Fixtures run before every test they cover, so a new one is judged against a count of zero.
+_FIXTURES = ("setUp", "setUpClass", "setUpModule")
+
+
+def _success_status(node: ast.expr | None) -> bool:
+    """Whether a constant exit status or `main()` return value reports success (None, 0 or False)."""
+    if node is None:
+        return True
+    if not isinstance(node, ast.Constant):
+        return False
+    return node.value is None or node.value is False or (type(node.value) is int and node.value == 0)
+
+
+def _quiet_exit(statement: ast.stmt, *, is_test: bool) -> bool:
+    """A statement that ends a test, or a checker's `main`, without reporting a failure."""
+    if isinstance(statement, ast.Return):
+        return is_test or _success_status(statement.value)
+    if isinstance(statement, ast.Expr) and isinstance(statement.value, ast.Call):
+        name = _call_name(statement.value)
+        args = statement.value.args
+        return name == "skipTest" or (name in {"exit", "_exit", "quit"} and _success_status(args[0] if args else None))
+    if isinstance(statement, ast.Raise) and statement.exc is not None:
+        call = statement.exc if isinstance(statement.exc, ast.Call) else None
+        target = call.func if call is not None else statement.exc
+        name = target.attr if isinstance(target, ast.Attribute) else getattr(target, "id", "")
+        return name == "SkipTest" or (
+            name == "SystemExit" and _success_status(call.args[0] if call is not None and call.args else None)
+        )
+    return False
+
+
+def _guarded_exits(tree: ast.Module, *, is_test: bool) -> tuple[tuple[str, int], ...]:
+    """Count conditional quiet exits in each test and fixture, or in a checker's `main`.
+
+    `if os.environ.get("CI"): return` before a test's assertions, or `return 0` before a checker's
+    work, leaves every statement reachable and every other metric unchanged. So does an
+    `except` handler that returns. Nested definitions are skipped: their `return` leaves only
+    themselves. A guard moved into a called helper is not seen; see the audit record.
+    """
+    counts: list[tuple[str, int]] = []
+
+    def visit(body: list[ast.stmt], prefix: str) -> None:
+        for node in body:
+            if isinstance(node, ast.ClassDef):
+                visit(node.body, f"{prefix}{node.name}.")
+                continue
+            if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            if not (node.name.startswith(("test", *_FIXTURES)) if is_test else node.name == "main"):
+                continue
+            guards = 0
+            pending: list[ast.AST] = list(node.body)
+            while pending:
+                current = pending.pop()
+                if isinstance(current, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)):
+                    continue
+                if isinstance(current, ast.If):
+                    blocks: tuple[list[ast.stmt], ...] = (current.body, current.orelse)
+                elif isinstance(current, ast.ExceptHandler):
+                    blocks = (current.body,)
+                else:
+                    blocks = ()
+                guards += sum(any(_quiet_exit(statement, is_test=is_test) for statement in block) for block in blocks)
+                pending.extend(ast.iter_child_nodes(current))
+            counts.append((prefix + node.name, guards))
+
+    visit(tree.body, "")
+    return tuple(sorted(counts))
+
+
 def analyze(source: str, path: str) -> StrengthMetrics:
     tree = ast.parse(source, filename=path)
     nodes = list(ast.walk(tree))
@@ -655,6 +762,8 @@ def analyze(source: str, path: str) -> StrengthMetrics:
         branches=branches,
         skips=skips,
         ast_nodes=len(nodes),
+        unreachable=_unreachable_statements(tree),
+        guarded_exits=_guarded_exits(tree, is_test=path.startswith("tests/")),
     )
 
 
@@ -859,6 +968,9 @@ def _changed_python(root: Path, base: str) -> list[tuple[str, str]]:
         root,
         "diff",
         "--name-status",
+        # As in _changed_paths: with rename detection a moved test file is reported only under its
+        # new name, so moving it out of the test_*.py discovery pattern deleted it invisibly.
+        "--no-renames",
         f"{base}...HEAD",
         "--",
         "tests",
@@ -902,6 +1014,14 @@ def compare_strength(before: StrengthMetrics, after: StrengthMetrics, *, is_test
             failures.append("failure-path count decreased")
         if after.branches < before.branches:
             failures.append(f"decision-branch count decreased: {before.branches} -> {after.branches}")
+    if after.unreachable > before.unreachable:
+        failures.append(f"unreachable statement count increased: {before.unreachable} -> {after.unreachable}")
+    before_guards = dict(before.guarded_exits)
+    for name, count in after.guarded_exits:
+        # A new test or `main` has no base to weaken; a new fixture still runs before existing tests.
+        base_count = before_guards.get(name, 0 if name.rsplit(".", 1)[-1].startswith(_FIXTURES) else None)
+        if base_count is not None and count > base_count:
+            failures.append(f"conditional early exit added to {name}: {base_count} -> {count}")
     if after.ast_nodes < max(12, int(before.ast_nodes * 0.60)):
         failures.append(f"semantic structure shrank by more than 40%: {before.ast_nodes} -> {after.ast_nodes}")
     return failures
