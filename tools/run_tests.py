@@ -4,20 +4,20 @@ from __future__ import annotations
 
 import argparse
 import importlib.util
-import os
+import inspect
 import sys
+import tempfile
 import time
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TESTS = ROOT / "tests"
+TEST_ROOTS = (
+    ROOT / "tests",
+    ROOT / "commercial" / "far-decision-integrity" / "tests",
+)
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-# Tests create and commit to temporary git repositories. The runner's global and system git
-# configuration (for example commit signing or a signing helper) must not change their behavior.
-os.environ["GIT_CONFIG_GLOBAL"] = os.devnull
-os.environ["GIT_CONFIG_NOSYSTEM"] = "1"
 
 
 class DiagnosticTextTestResult(unittest.TextTestResult):
@@ -48,18 +48,69 @@ class DiagnosticTextTestRunner(unittest.TextTestRunner):
     resultclass = DiagnosticTextTestResult
 
 
-def discover_suite(start: Path = TESTS) -> unittest.TestSuite:
+def _function_case(function) -> unittest.FunctionTestCase:
+    """Run a module-level pytest-style ``test_*`` function under unittest.
+
+    Only the ``tmp_path`` fixture is supported; any other parameter fails the test instead of
+    silently skipping it, so a module-level test can never be discovered and not executed.
+    """
+    parameters = list(inspect.signature(function).parameters)
+    deferred = (inspect.iscoroutinefunction(function) or inspect.isgeneratorfunction(function)
+                or inspect.isasyncgenfunction(function))
+
+    def run() -> None:
+        if deferred:
+            # Calling one returns a coroutine or generator without running the body, so it would pass.
+            raise TypeError(f"{function.__qualname__}: async and generator test functions are not supported")
+        unsupported = [name for name in parameters if name != "tmp_path"]
+        if unsupported:
+            raise TypeError(f"{function.__qualname__}: unsupported test fixture(s) {unsupported}")
+        if parameters:
+            with tempfile.TemporaryDirectory() as tmp:
+                function(tmp_path=Path(tmp))
+        else:
+            function()
+
+    # FunctionTestCase.id() is the wrapped callable's name; without this every failure reads "run".
+    run.__name__ = run.__qualname__ = f"{function.__module__}.{function.__name__}"
+    return unittest.FunctionTestCase(run, description=f"{function.__module__}.{function.__name__}")
+
+
+def _module_functions(module) -> list[unittest.FunctionTestCase]:
+    return [
+        _function_case(value)
+        for name, value in sorted(vars(module).items())
+        if name.startswith("test")
+        and inspect.isfunction(value)
+        and value.__module__ == module.__name__
+    ]
+
+
+def discover_suite(starts: Path | tuple[Path, ...] = TEST_ROOTS) -> unittest.TestSuite:
+    """Discover every test surface that is part of the canonical merge-validation contract.
+
+    A single ``Path`` remains supported for focused callers and the zero-discovery regression;
+    the canonical default spans every root in ``TEST_ROOTS``.
+    """
+    if isinstance(starts, Path):
+        starts = (starts,)
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
-    for index, path in enumerate(sorted(start.rglob("test_*.py"))):
-        module_name = "project_far_test_" + str(index) + "_" + path.stem
-        spec = importlib.util.spec_from_file_location(module_name, path)
-        if spec is None or spec.loader is None:
-            raise ImportError(f"cannot import test module {path}")
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
-        suite.addTests(loader.loadTestsFromModule(module))
+    module_index = 0
+    for start in starts:
+        if not start.is_dir():
+            raise FileNotFoundError(f"canonical test root is missing: {start.relative_to(ROOT)}")
+        for path in sorted(start.rglob("test_*.py")):
+            module_name = "project_far_test_" + str(module_index) + "_" + path.stem
+            module_index += 1
+            spec = importlib.util.spec_from_file_location(module_name, path)
+            if spec is None or spec.loader is None:
+                raise ImportError(f"cannot import test module {path}")
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[module_name] = module
+            spec.loader.exec_module(module)
+            suite.addTests(loader.loadTestsFromModule(module))
+            suite.addTests(_module_functions(module))
     return suite
 
 

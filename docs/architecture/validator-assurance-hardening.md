@@ -28,9 +28,7 @@ This is an independent implementation oracle for checker structure and enforceme
 
 ### Automated weakening detection
 
-`far_validation.weakening` compares changed tests and validators with an explicit Git base. It rejects deleted tests, removed test functions, reduced assertions or failure paths, new skips, new unreachable statements, new conditional quiet exits in an existing test, fixture, or checker `main`, major branch loss, and large unexplained AST contraction. Any exception requires a versioned waiver bound to the exact base commit and a nonempty justification.
-
-These rules are syntactic. A change can still disable a test through a called helper, through data, or through a runtime patch, so the detector catches mistakes, not an adversary. Files under the assurance lock are protected against both, because changing them requires an owner-signed repin.
+`far_validation.weakening` compares changed tests and validators with an explicit Git base. It rejects deleted tests, removed test functions, reduced assertions or failure paths, new skips, major branch loss, and large unexplained AST contraction. Any exception requires a versioned waiver bound to the exact base commit and a nonempty justification.
 
 ### Signed cross-runner cache trust
 
@@ -58,13 +56,13 @@ Two formal layers are included:
 1. `mechanization/lean/ValidationEngine.lean` machine-checks dependency safety, blocking soundness, successful-run soundness, and exact commit/tree certificate binding.
 2. `far_validation.formal_model` exhaustively enumerates every forward-edge dependency DAG through four checks, every Boolean check-outcome assignment, and hostile attestation mutations.
 
-The Lean file proves the abstract assurance model. The Python model checker corroborates the executable state-machine design. This package does not claim a machine-checked refinement proof connecting every line of the Python implementation to the Lean model.
+The Lean file proves the abstract assurance model. The Python model checker exhaustively checks `far_validation.formal_model.simulate`, a separate Python abstraction of the scheduler; it does not import or execute `ValidationEngine.run`, so agreement between that abstraction and the executable engine is not checked by either layer. This package does not claim a machine-checked refinement proof connecting the Python implementation to the Lean model or to that abstraction.
 
 ### Merge authority and merge queue
 
 The `Validator Assurance` workflow runs on pull requests, pushes to `main`, workflow dispatch, and the GitHub `merge_group` event. The `merge-authority` job issues a signed certificate bound to the exact checked commit and Git tree and requires all five assurance evidence artifacts.
 
-`tools/configure_validation_protection.py` applies strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion. `tools/check_validation_protection.py` independently reads the GitHub control plane and fails unless every required setting matches. A successful read-back is the evidence of live enforcement.
+`tools/configure_validation_protection.py` applied strict branch protection requiring the `merge-authority` status check, an up-to-date branch, pull requests, conversation resolution, and no force pushes or branch deletion. It is superseded: it would now drop the App-bound `protected-repin-gate` required check. It makes no change and exits non-zero, because a locked file cannot be removed through the repin gate. The owner changes protection by hand, following `docs/governance/protected-repin-procedure.md`. `tools/check_validation_protection.py --gate-app-id <App ID>` independently reads the GitHub control plane. It fails unless every required setting matches, including both required checks bound to their Apps: `merge-authority` to GitHub Actions and `protected-repin-gate` to the owner's App. A successful read-back is the evidence of live enforcement.
 
 Control-plane closure on 2026-09-04: the repository is public and personal-account owned. After PR #467 merged, a one-shot bootstrap workflow used the repository-scoped `FAR_GITHUB_ADMIN_TOKEN` Actions secret to run the governed configurator and then the independent fail-closed read-back. Both steps succeeded. GitHub branch metadata reports `main` as protected with `merge-authority` required at enforcement level `everyone`, and the read-back returned `control_plane_enforced: true` with no errors. The exact Accepted closure record is `docs/governance/canonical-branch-protection-closure-2026-09-04.md`.
 
