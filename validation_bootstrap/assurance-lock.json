@@ -39,7 +39,7 @@
     "tests/test_validation_trace_regression.py": "e7e6b68884c98fcfbf548a03b416b9226d47969b91420742a427be03a2e2fac3",
     "tools/assemble_validation_certificate.py": "8d2e3692e5530879d7e9d183cbe27981d0c2e3444d6fce05b52888beaf47dec8",
     "tools/configure_validation_protection.py": "745a799fbda636788a7ae54d0fb961d421c71deaf69834df576bd8c62dba6b11",
-    "tools/run_tests.py": "2da3564e6df983fc9301a327c93bed0e501380921548e76110d45c8fbc502e63",
+    "tools/run_tests.py": "ef6737eb53d30264e05f699cb4378be82a1d382c03d1e5ad024c70abd49c9f58",
     "validation/runtime-dependencies.json": "4030adfdbb2a0b0ae6cf54914d7ab8e11a087efa61aea196ad7cb689adcae60c",
     "validation/runtime-policy.json": "b84868eba90b80629bef6c75bb5784222fb2f9f25d58c6c4d458e9ac36dae535",
     "validation/test-weakening-waivers.json": "311e12701b273cb91110b98b7cdec4de2b570c602c00ac27f5bb76ea039cc834",
