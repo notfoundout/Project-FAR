@@ -1,0 +1,61 @@
+{
+  "format_version": "far-ir/2.0",
+  "suite_id": "FAR-IR-2.0-CURRENT-VERIFICATION-CONFORMANCE-1.0",
+  "cases": [
+    {
+      "id": "CV-001",
+      "path": "../far-ir-2.0/valid-factorization.json",
+      "expected_valid": true,
+      "expected_codes": [],
+      "obligation": "checked factorization is accepted unchanged"
+    },
+    {
+      "id": "CV-002",
+      "path": "../far-ir-2.0/valid-collision.json",
+      "expected_valid": true,
+      "expected_codes": [],
+      "obligation": "checked collision is accepted unchanged"
+    },
+    {
+      "id": "CV-003",
+      "path": "../far-ir-2.0/valid-quotient.json",
+      "expected_valid": true,
+      "expected_codes": [],
+      "obligation": "checked quotient is accepted unchanged"
+    },
+    {
+      "id": "CV-004",
+      "path": "../far-ir-2.0/invalid-factorization.json",
+      "expected_valid": false,
+      "expected_codes": [
+        "FACTORIZATION_FAILURE"
+      ],
+      "obligation": "checked false factorization is still rejected"
+    },
+    {
+      "id": "CV-005",
+      "path": "unchecked-proved-collision.json",
+      "expected_valid": false,
+      "expected_codes": [
+        "DETERMINATE_OUTCOME_UNCHECKED"
+      ],
+      "obligation": "PROVED with unchecked evidence and a contradicting table is rejected"
+    },
+    {
+      "id": "CV-006",
+      "path": "unchecked-refuted.json",
+      "expected_valid": false,
+      "expected_codes": [
+        "DETERMINATE_OUTCOME_UNCHECKED"
+      ],
+      "obligation": "REFUTED with unchecked evidence is rejected"
+    },
+    {
+      "id": "CV-007",
+      "path": "unchecked-open.json",
+      "expected_valid": true,
+      "expected_codes": [],
+      "obligation": "non-determinate outcome with unchecked evidence is unaffected"
+    }
+  ]
+}

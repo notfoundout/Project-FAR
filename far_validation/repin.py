@@ -208,7 +208,7 @@ def evaluate(git: GitObjects, base: str, head: str, *, allowed_signers: bytes, r
     except (LedgerError, signature.SignatureError) as exc:
         report.fail(ASSURANCE_LOCK_PATH, f"{exc}; failing closed")
         return report
-    if CONSUMPTIONS_PATH in base_files:
+    if CONSUMPTIONS_PATH in base_files or CONSUMPTIONS_PATH in head_files:
         report.fail(CONSUMPTIONS_PATH, "the consumption ledger must not be protected by the lock it records (deadlock)")
 
     transitions: list[tuple[str, str, str]] = []

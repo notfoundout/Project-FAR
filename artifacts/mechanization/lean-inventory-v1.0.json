@@ -194,10 +194,10 @@
         "FARCoreV11Omega",
         "FARCoreV11SSS"
       ],
-      "line_count": 42,
+      "line_count": 44,
       "path": "mechanization/lean/FARCoreV11AxiomAudit.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "8146230723b289081cd914fc250fc9606f57bdb3bec1b24ad68cd1eb5265340e"
+      "sha256": "cd6e88e642ac0d397eacde46201b552f6c2ed1a7c02607181b57bbb7e70c55fa"
     },
     {
       "declarations": [
@@ -328,6 +328,7 @@
         "frontier_factorization",
         "hyperedgeDecoder",
         "hyperedge_factorization",
+        "mll_projected_decoder_failure",
         "nonemptyDecoder",
         "orDecoder",
         "projected_successor_decoder_failure",
@@ -346,16 +347,17 @@
         "sequentWeight",
         "singleton_a_not_derivable",
         "stateInspectingDecoder",
+        "summaries_match_mll_witnesses",
         "termDecoder",
         "unrestricted_decoder_counterexample"
       ],
       "imports": [
         "FARCoreV11Substrate"
       ],
-      "line_count": 375,
+      "line_count": 412,
       "path": "mechanization/lean/FARCoreV11SSS.lean",
       "role": "W2_CORE_V1_1",
-      "sha256": "15fdf821d878cedcf205891fc2d29822a0cc49c3dcedc8610eb4609169060465"
+      "sha256": "c58a9b55385fb1ce0a6555ef827ebec0d5c38a63130eb07f8003f6821c73ad53"
     },
     {
       "declarations": [

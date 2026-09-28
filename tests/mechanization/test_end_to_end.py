@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 from mechanization.far_mechanization.graph_engine import build_graph, validate_dependencies, validate_graph
@@ -36,7 +37,7 @@ def test_yaml_complete_end_to_end_pipeline():
 
 
 def test_invalid_document_cli_json_diagnostics_nonzero():
-    completed = subprocess.run([str(ROOT / "far"), "validate", "--output", "json", str(SUITE / "invalid" / "invalid-identifier.json")], cwd=ROOT, text=True, capture_output=True, check=False)
+    completed = subprocess.run([sys.executable, str(ROOT / "far"), "validate", "--output", "json", str(SUITE / "invalid" / "invalid-identifier.json")], cwd=ROOT, text=True, capture_output=True, check=False)
     assert completed.returncode != 0
     payload = json.loads(completed.stdout)
     assert payload["valid"] is False
@@ -54,6 +55,6 @@ def test_cross_format_round_trip_equality():
 def test_cli_end_to_end_commands_on_real_fixture():
     fixture = SUITE / "valid" / "complete.json"
     for command in ("validate", "parse", "normalize", "graph", "stats", "diagnostics"):
-        completed = subprocess.run([str(ROOT / "far"), command, str(fixture)], cwd=ROOT, text=True, capture_output=True, check=False)
+        completed = subprocess.run([sys.executable, str(ROOT / "far"), command, str(fixture)], cwd=ROOT, text=True, capture_output=True, check=False)
         assert completed.returncode == 0, (command, completed.stdout, completed.stderr)
         assert completed.stdout

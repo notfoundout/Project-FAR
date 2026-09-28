@@ -161,14 +161,16 @@ test:
 test-fast:
 	python tools/run_tests.py --fast
 
+# Local runs bypass the result cache, as CI does: cache keys cover only declared check inputs, not
+# the modules a check imports, so a cached PASS can be stale (see docs/audits/root-of-trust-audit-2026-09.md).
 validate:
-	python -m far_validation validate --profile pr-fast
+	python -m far_validation validate --profile pr-fast --no-cache
 
 validate-changed:
-	python -m far_validation validate --profile pr-fast --changed origin/main --explain
+	python -m far_validation validate --profile pr-fast --changed origin/main --explain --no-cache
 
 validate-full:
-	python -m far_validation validate --profile pr-full
+	python -m far_validation validate --profile pr-full --no-cache
 
 validate-release:
 	python -m far_validation validate --profile release --no-cache

@@ -256,6 +256,8 @@ GitHub disables scheduled workflows in a public repository after 60 days without
 
 The **protection audit** (`Run workflow` with mode `audit`) posts an App-authored check `protected-repin-audit` on `main`'s tip. It contains the live protection, rulesets and branch rules as JSON, plus `check-protection`'s verdict. That record replaces command-line exports: the owner can read it on the phone, and anyone can diff two audits.
 
+The audit fails unless `protected-repin-gate` is a required check bound exactly to the App, so it notices the binding being removed. Only for the period before the owner first binds the check (the bootstrap, or a rotation to a new App) is `far_validation/repin_protection_audit.py --bootstrap` used. That variant accepts the unbound context and still enforces the other invariants. The deployed gate runs the audit version pinned by its `FAR_DEPLOYED_COMMIT`, so a change to the audit takes effect only once the gate is redeployed at a `main` commit that contains it.
+
 ## One-time bootstrap
 
 The frozen, step-by-step owner runbook is kept with the bootstrap record. It is iPhone-only. In summary, in this order:
@@ -273,11 +275,11 @@ The frozen, step-by-step owner runbook is kept with the bootstrap record. It is 
 7. **Redeploy the gate** at the merge commit.
 8. **Require `protected-repin-gate` from the App.** In the branch protection rule, add the check and pick the App as its source. Nothing else is changed.
 9. **Audit again.** The verdict must be PASS, and the only difference from the "before" record must be the added App-bound check.
-10. **Run P1–P7.** Real protected transitions, including #538's, and their signatures come only after all probes pass.
+10. **Run P1–P7, with PR #560 merged before the P5 PR.** P7 merges the P5 PR, and every merge needs `merge-authority`. `main`'s in-CI weakening check accepted only base waivers, so it failed every signed transition until #560 made it honor owner signatures. #560 is therefore the only real protected transition signed and merged before the probes finish. The P5 PR is then refreshed onto `main` and merged, and P7 follows. Every other real protected transition, including #538's, and its signatures come only after P7 passes.
 
 ## Mandatory live probes
 
-Run these on throwaway PRs after the bootstrap and before any real protected transition, including #538. Record each result in the audit record: PR number, head SHA, every check run with its App ID and conclusion, and `mergeable_state`. Close every probe PR unmerged, except where a merge is part of the probe. Any deviation means the bootstrap has failed.
+Run these on throwaway PRs after the bootstrap. The P5 PR merges only after #560 (step 10), and no other real protected transition, including #538's, comes before P7 passes. Record each result in the audit record: PR number, head SHA, every check run with its App ID and conclusion, and `mergeable_state`. Close every probe PR unmerged, except where a merge is part of the probe. Any deviation means the bootstrap has failed.
 
 | # | Probe | Required result |
 |---|---|---|

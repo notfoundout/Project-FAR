@@ -54,12 +54,40 @@ def _schema_diagnostics(data: Any, source: str | None) -> tuple[Diagnostic,...]:
         diagnostics.append(_diag(DiagnosticCode.SCHEMA_CONSTRAINT_VIOLATION, err.message, source, details={"path": list(err.path), "schema_path": list(err.schema_path)}))
     return tuple(diagnostics)
 
+def _unique_json_object(pairs):
+    result={}
+    for key, value in pairs:
+        if key in result: raise ValueError(f"duplicate object key {key!r}")
+        result[key]=value
+    return result
+
+def _reject_json_constant(name):
+    raise ValueError(f"{name} is not a JSON value")
+
+class _UniqueKeySafeLoader(yaml.SafeLoader):
+    """SafeLoader that rejects repeated mapping keys, which YAML forbids and PyYAML silently overwrites."""
+
+def _construct_unique_mapping(loader, node, deep=False):
+    loader.flatten_mapping(node)
+    seen=set()
+    for key_node, _value_node in node.value:
+        key=loader.construct_object(key_node, deep=deep)
+        if key in seen:
+            raise yaml.constructor.ConstructorError(None, None, f"duplicate mapping key {key!r}", key_node.start_mark)
+        seen.add(key)
+    return loader.construct_mapping(node, deep=deep)
+
+_UniqueKeySafeLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_unique_mapping)
+
 def _parse_primitive(text: str, fmt: str, source: str | None):
     try:
-        if fmt == "json": return json.loads(text), ()
-        return yaml.safe_load(text), ()
+        # Duplicate keys and NaN/Infinity make a document's meaning parser-dependent, so both are malformed.
+        if fmt == "json": return json.loads(text, object_pairs_hook=_unique_json_object, parse_constant=_reject_json_constant), ()
+        return yaml.load(text, Loader=_UniqueKeySafeLoader), ()
     except json.JSONDecodeError as exc:
         return None, (_diag(DiagnosticCode.MALFORMED_JSON, exc.msg, source, exc.lineno, exc.colno),)
+    except ValueError as exc:
+        return None, (_diag(DiagnosticCode.MALFORMED_JSON, str(exc), source),)
     except yaml.YAMLError as exc:
         mark=getattr(exc, "problem_mark", None)
         line=(mark.line+1) if mark else None; col=(mark.column+1) if mark else None

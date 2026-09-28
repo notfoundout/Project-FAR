@@ -9,49 +9,58 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   lean-t003:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - name: Install pinned Lean toolchain
         shell: bash
         run: |
           set -euo pipefail
-          curl https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh -sSf | \
-            sh -s -- -y --default-toolchain "$(cat lean-toolchain)"
-          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
-      - name: Compile FARCore
-        run: lean mechanization/lean/FARCore.lean
-      - name: Compile bounded W5 theorem
-        run: lean mechanization/lean/SCoreW5.lean
-      - name: Compile G1 end-to-end semantic kernel
-        run: lean -o mechanization/lean/UPPSemanticKernel.olean mechanization/lean/UPPSemanticKernel.lean
-      - name: Compile G2 open-world lower-bound theorem
-        run: lean mechanization/lean/G2OpenWorldLowerBound.lean
-      - name: Compile G3 epistemic maximality theorem
-        run: lean mechanization/lean/G3EpistemicMaximality.lean
-      - name: Compile canonicality
-        run: lean mechanization/lean/Canonicality.lean
-      - name: Compile representation invariance
-        run: lean mechanization/lean/RepresentationInvariance.lean
-      - name: Compile quotient minimality
-        run: lean mechanization/lean/QuotientMinimality.lean
-      - name: Compile definitional completeness
-        run: lean mechanization/lean/DefinitionalCompleteness.lean
-      - name: Compile conservative extensibility
-        run: lean mechanization/lean/ConservativeExtensibility.lean
-      - name: Compile maximal knowability
-        run: lean mechanization/lean/MaximalKnowability.lean
-      - name: Compile canonical universality terminal theorem
-        run: lean mechanization/lean/CanonicalUniversalityTerminal.lean
-      - name: Compile FAR canonical bridge adjudication
-        run: lean mechanization/lean/FARCanonicalBridge.lean
-      - name: Compile FAR canonical-universality decision
-        run: lean mechanization/lean/FARCanonicalUniversalityDecision.lean
-      - name: Compile FAR canonicality countermodel
-        run: LEAN_PATH=mechanization/lean lean mechanization/lean/FARCanonicalCountermodel.lean
+          # The release archive is bound to its SHA-256; no installer script or toolchain resolver runs.
+          [[ "$(cat lean-toolchain)" == "leanprover/lean4:v4.19.0" ]] || { echo 'lean-toolchain changed; update the pinned archive and digest' >&2; exit 1; }
+          archive="$RUNNER_TEMP/lean-4.19.0-linux.tar.zst"
+          curl -sSfL -o "$archive" https://github.com/leanprover/lean4/releases/download/v4.19.0/lean-4.19.0-linux.tar.zst
+          echo "6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe  $archive" | sha256sum -c -
+          tar --zstd -xf "$archive" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/lean-4.19.0-linux/bin" >> "$GITHUB_PATH"
+      - name: Compile governed Lean mechanization and reject sorry
+        shell: bash
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/lean-compile.txt"
+          # The group is not a tested command, so errexit still stops at the first failing compile;
+          # the trap shows the full log on success and on failure.
+          trap 'cat "$log"' EXIT
+          {
+            lean mechanization/lean/FARCore.lean
+            lean mechanization/lean/SCoreW5.lean
+            lean -o mechanization/lean/UPPSemanticKernel.olean mechanization/lean/UPPSemanticKernel.lean
+            lean mechanization/lean/G2OpenWorldLowerBound.lean
+            lean mechanization/lean/G3EpistemicMaximality.lean
+            lean mechanization/lean/Canonicality.lean
+            lean mechanization/lean/RepresentationInvariance.lean
+            lean mechanization/lean/QuotientMinimality.lean
+            lean mechanization/lean/DefinitionalCompleteness.lean
+            lean mechanization/lean/ConservativeExtensibility.lean
+            lean mechanization/lean/MaximalKnowability.lean
+            lean mechanization/lean/CanonicalUniversalityTerminal.lean
+            lean mechanization/lean/FARCanonicalBridge.lean
+            lean mechanization/lean/FARCanonicalUniversalityDecision.lean
+            LEAN_PATH=mechanization/lean lean mechanization/lean/FARCanonicalCountermodel.lean
+          } > "$log" 2>&1
+          # `lean` exits 0 when a declaration uses `sorry`; that is only a warning.
+          if grep -q "declaration uses 'sorry'" "$log"; then
+            echo 'governed Lean mechanization contains sorry' >&2
+            exit 1
+          fi
       - name: Compile validation-engine assurance model
         id: assurance_lean
         continue-on-error: true
@@ -59,12 +68,16 @@ jobs:
         run: |
           set -o pipefail
           lean mechanization/lean/ValidationEngine.lean 2>&1 | tee artifacts/validation/lean/validation-engine-lean.log
+          if grep -n "declaration uses 'sorry'" artifacts/validation/lean/validation-engine-lean.log; then
+            echo 'validation-engine assurance model contains sorry' >&2
+            exit 1
+          fi
       - name: Print validation-engine Lean failure
         if: always() && steps.assurance_lean.outcome == 'failure'
         run: tail -n 160 artifacts/validation/lean/validation-engine-lean.log
       - name: Upload validation-engine Lean failure
         if: always() && steps.assurance_lean.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: validation-engine-lean-failure
           path: artifacts/validation/lean/validation-engine-lean.log
