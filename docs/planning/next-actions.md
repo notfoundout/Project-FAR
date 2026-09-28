@@ -48,10 +48,10 @@ There is **no registered next `POST-CLOSURE-001` workstream**. External/human au
 ### OPEN-EXTERNAL-OP-28: Independently test human/external audit effectiveness
 
 - Registered post-closure workstream: none
-- Authority: OP-28 in the open-problems register, with [docs/governance/external-falsification-and-replication-program-v1.0.md](../governance/external-falsification-and-replication-program-v1.0.md)
+- Authority: OP-28 in the open-problems register, with [docs/governance/external-falsification-and-replication-program-v1.0.md](../governance/external-falsification-and-replication-program-v1.0.md) as amended by [docs/governance/external-falsification-and-replication-comparator-amendment-v2.0.md](../governance/external-falsification-and-replication-comparator-amendment-v2.0.md)
 - Priority: preregistered intake; no test executed
 - Why it matters: W6 establishes only a project-authored machine controlled-artifact result. It does not show that human reviewers catch more consequential loss, disagree less, work faster, or make better real-world decisions.
-- Required before execution: satisfy the frozen EFR protocol, independent team/custodian eligibility, applicable ethics determination, and signed input manifests. Methods and thresholds cannot be chosen at intake.
+- Required before execution: satisfy the frozen EFR protocol, independent team/custodian eligibility, applicable ethics determination, and signed input manifests. Methods and thresholds cannot be chosen at intake. `EFR-HD1`, `EFR-U1`, and `EFR-C1` are superseded and must not execute; human and field tests run only as the three-arm `EFR-HD2`, `EFR-U2`, and `EFR-C2`.
 - Prohibited shortcut: do not relabel W6's schema baseline, machine oracle, or internal replication as human or external evidence.
 
 ## Maintainer Boundaries

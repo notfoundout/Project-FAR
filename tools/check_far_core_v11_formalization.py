@@ -82,6 +82,8 @@ EXPECTED_DECLARATION_AXIOMS = {
     "FARCoreV11.SSS.MLL.sOr_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.sAnd_witness_certified": frozenset({"Quot.sound", "propext"}),
     "FARCoreV11.SSS.MLL.bounded_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.summaries_match_mll_witnesses": frozenset({"Quot.sound", "propext"}),
+    "FARCoreV11.SSS.MLL.mll_projected_decoder_failure": frozenset({"Quot.sound", "propext"}),
 }
 # Placeholders and trust escapes are forbidden anywhere in code. Declarations may carry attributes
 # and modifiers; `sorryAx` is what `sorry` elaborates to and compiles with only a warning.

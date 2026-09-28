@@ -45,6 +45,11 @@ TERMINAL_ZERO_NEW_FIELDS = (
 )
 
 
+def normalized_result(value: object) -> str:
+    """Compare results case- and whitespace-insensitively, so `PASS ` cannot evade the PASS gate."""
+    return str(value).strip().casefold()
+
+
 def execution_paths(root: Path = ROOT) -> list[Path]:
     return sorted((root / "research/validation/executions").glob("*.execution.yaml"))
 
@@ -56,7 +61,7 @@ def load_manifest_results(root: Path = ROOT) -> dict[str, str]:
         data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         investigation = str(data.get("investigation", "")).strip()
         if investigation and investigation not in results:
-            results[investigation] = str(data.get("result", "")).lower()
+            results[investigation] = normalized_result(data.get("result", ""))
     return results
 
 
@@ -418,9 +423,12 @@ def validate_manifest(
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
     errors: list[str] = []
     investigation = str(data.get("investigation", path.stem)).strip()
-    result = str(data.get("result", "")).lower()
+    raw_result = data.get("result", "")
+    result = normalized_result(raw_result)
     required = data.get("required_steps")
     upstream = data.get("upstream_dependencies", [])
+    if not isinstance(raw_result, str):
+        errors.append(f"{investigation}: result must be a string, got {type(raw_result).__name__}")
 
     if required is None:
         required_steps: list[dict] = []

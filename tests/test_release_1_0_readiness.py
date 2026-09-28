@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import copy
 import json
 import pathlib
 import unittest
+
+from tools.validate_exact_1_0_candidate import validate_readiness
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 READINESS = ROOT / "docs" / "releases" / "1.0-readiness.json"
@@ -23,6 +26,18 @@ class TestRelease10Readiness(unittest.TestCase):
             self.assertTrue(payload["completed"]["explicit_publication_authorization"])
         else:
             self.assertFalse(payload["release_allowed"])
+
+    def test_exact_candidate_validator_accepts_current_readiness(self):
+        payload = json.loads(READINESS.read_text(encoding="utf-8"))
+        validate_readiness(payload)
+
+    def test_exact_candidate_validator_rejects_inconsistent_authorization(self):
+        payload = json.loads(READINESS.read_text(encoding="utf-8"))
+        payload = copy.deepcopy(payload)
+        payload["status"] = "publication-authorized"
+        payload["release_allowed"] = False
+        with self.assertRaisesRegex(SystemExit, "must allow release"):
+            validate_readiness(payload)
 
     def test_external_candidates_are_completed(self):
         payload = json.loads(READINESS.read_text(encoding="utf-8"))

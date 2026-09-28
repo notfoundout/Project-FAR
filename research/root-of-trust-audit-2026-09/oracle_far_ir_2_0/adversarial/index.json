@@ -1,0 +1,1277 @@
+{
+ "corpus": "far-ir-2.0 adversarial (audit_oracle_v2)",
+ "cases": [
+  {
+   "id": "ADV-01",
+   "file": "ADV-01.json",
+   "defect_class": "factorization claimed over a collision",
+   "expected_valid": false,
+   "expected_codes": [
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.1, \u00a79.3; Theory v1.0 Thm 1",
+   "justification": "r(a)=r(b) but beta differs, so d(r(b))='even'!='odd'."
+  },
+  {
+   "id": "ADV-02",
+   "file": "ADV-02.json",
+   "defect_class": "nonfunctional decoder masking a collision",
+   "expected_valid": false,
+   "expected_codes": [
+    "NONFUNCTIONAL_DECODER",
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "decoder_binding": "last"
+     },
+     "expected_codes": [
+      "NONFUNCTIONAL_DECODER",
+      "FACTORIZATION_FAILURE"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3, \u00a79.8",
+   "justification": "Row 2 rebinds 'same'; exactly one case then mis-decodes under either binding."
+  },
+  {
+   "id": "ADV-03",
+   "file": "ADV-03.json",
+   "defect_class": "decoder wrong on every case (multiplicity)",
+   "expected_valid": false,
+   "expected_codes": [
+    "FACTORIZATION_FAILURE",
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.7",
+   "justification": "One FACTORIZATION_FAILURE per failing case in source_domain order."
+  },
+  {
+   "id": "ADV-04",
+   "file": "ADV-04.json",
+   "defect_class": "decoder missing a reachable representation value",
+   "expected_valid": false,
+   "expected_codes": [
+    "DECODER_UNDEFINED"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.1, \u00a79.3",
+   "justification": "r(b)=1 has no decoder row."
+  },
+  {
+   "id": "ADV-05",
+   "file": "ADV-05.json",
+   "defect_class": "decoder row defined off-image (functional)",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3 (no code for unused rows); Theory v1.0 \u00a72.3",
+   "justification": "Only rho[X] matters; an unused functional row is not a defect."
+  },
+  {
+   "id": "ADV-06",
+   "file": "ADV-06.json",
+   "defect_class": "decoder nonfunctional off-image",
+   "expected_valid": false,
+   "expected_codes": [
+    "NONFUNCTIONAL_DECODER"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3",
+   "justification": "NONFUNCTIONAL_DECODER is defined over decoder_table rows, not only reachable values (stricter than Theory \u00a72.3)."
+  },
+  {
+   "id": "ADV-07",
+   "file": "ADV-07.json",
+   "defect_class": "case listed twice in source domain",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_DOMAIN_CASE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.2, \u00a79.8",
+   "justification": "Repeated case id; tables still cover the id set; gate suppresses the (correct) factorization."
+  },
+  {
+   "id": "ADV-08",
+   "file": "ADV-08.json",
+   "defect_class": "behavior table assigns two rows to one case (same value)",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_CASE_VALUE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.2",
+   "justification": "Two rows for one case_id, regardless of value agreement."
+  },
+  {
+   "id": "ADV-09",
+   "file": "ADV-09.json",
+   "defect_class": "representation table assigns conflicting rows to one case",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_CASE_VALUE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.2",
+   "justification": "Representation is not a function of the case."
+  },
+  {
+   "id": "ADV-10",
+   "file": "ADV-10.json",
+   "defect_class": "representation not total",
+   "expected_valid": false,
+   "expected_codes": [
+    "CASE_TABLE_COVERAGE_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.1 incomplete coverage; \u00a79.2",
+   "justification": "case.b has no representation value."
+  },
+  {
+   "id": "ADV-11",
+   "file": "ADV-11.json",
+   "defect_class": "behavior row for a case absent from the domain",
+   "expected_valid": false,
+   "expected_codes": [
+    "CASE_TABLE_COVERAGE_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.2",
+   "justification": "Behavior table covers a non-declared case."
+  },
+  {
+   "id": "ADV-12",
+   "file": "ADV-12.json",
+   "defect_class": "table-resolution ordering with several defects",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_DOMAIN_CASE",
+    "DUPLICATE_CASE_VALUE",
+    "DUPLICATE_CASE_VALUE",
+    "CASE_TABLE_COVERAGE_MISMATCH",
+    "CASE_TABLE_COVERAGE_MISMATCH",
+    "CHECK_REQUIRES_EXPLICIT_TABLES"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 table-resolution order",
+   "justification": "Order: domain dup, beta dup, rho dup, beta coverage, rho coverage, explicit-tables; decoder never examined."
+  },
+  {
+   "id": "ADV-13",
+   "file": "ADV-13.json",
+   "defect_class": "non-finite domain stops table resolution",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 item 1",
+   "justification": "Resolution stops immediately; no other \u00a79.2 code may accompany it."
+  },
+  {
+   "id": "ADV-14",
+   "file": "ADV-14.json",
+   "defect_class": "freeze defect suppresses factorization failure",
+   "expected_valid": false,
+   "expected_codes": [
+    "FREEZE_HASH_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 cross-stage gate",
+   "justification": "Spec's own example: exactly [FREEZE_HASH_MISMATCH]."
+  },
+  {
+   "id": "ADV-15",
+   "file": "ADV-15.json",
+   "defect_class": "checked factorization with outcome REFUTED",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECKED_EVIDENCE_OUTCOME_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.1, \u00a79.6",
+   "justification": "Checked factorization must be PROVED."
+  },
+  {
+   "id": "ADV-16",
+   "file": "ADV-16.json",
+   "defect_class": "checked collision with outcome PROVED",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECKED_EVIDENCE_OUTCOME_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.2, \u00a79.6",
+   "justification": "Checked collision must be REFUTED."
+  },
+  {
+   "id": "ADV-17",
+   "file": "ADV-17.json",
+   "defect_class": "collision whose behaviors agree",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_BEHAVIOR_AGREES"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.2, \u00a79.4",
+   "justification": "beta(x1)=beta(x2): not a collision."
+  },
+  {
+   "id": "ADV-18",
+   "file": "ADV-18.json",
+   "defect_class": "collision whose representations differ",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REPRESENTATION_DIFFERS"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.2, \u00a79.4",
+   "justification": "r(a)=0 != r(b)=1."
+  },
+  {
+   "id": "ADV-19",
+   "file": "ADV-19.json",
+   "defect_class": "collision naming the same case twice",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REQUIRES_DISTINCT_CASES",
+    "COLLISION_BEHAVIOR_AGREES"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 within \u00a79.4",
+   "justification": "Distinctness fails; r(a)=r(a) so no REPRESENTATION_DIFFERS; beta(a)=beta(a) so BEHAVIOR_AGREES."
+  },
+  {
+   "id": "ADV-20",
+   "file": "ADV-20.json",
+   "defect_class": "collision naming a case outside the domain",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_CASE_UNKNOWN"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 within \u00a79.4",
+   "justification": "Appended and the check stops."
+  },
+  {
+   "id": "ADV-21",
+   "file": "ADV-21.json",
+   "defect_class": "quotient merges behaviorally distinct cases, claims exact",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+    "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+    "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+    "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+    "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "pair_mode": "ordered"
+     },
+     "expected_codes": [
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+     ]
+    },
+    {
+     "options": {
+      "pair_grouping": "grouped"
+     },
+     "expected_codes": [
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3, \u00a79.5, \u00a79.8",
+   "justification": "Pairs (a,c),(b,c) share a class but differ; (c,d) differ in class but agree."
+  },
+  {
+   "id": "ADV-22",
+   "file": "ADV-22.json",
+   "defect_class": "quotient merges distinct cases, exactness not claimed",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+    "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "pair_mode": "ordered"
+     },
+     "expected_codes": [
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3, \u00a79.5",
+   "justification": "Every class must be behavior-constant even without the exactness claim."
+  },
+  {
+   "id": "ADV-23",
+   "file": "ADV-23.json",
+   "defect_class": "quotient splits a behavior class (non-minimal), claims exact",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "pair_mode": "ordered"
+     },
+     "expected_codes": [
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3, \u00a79.5; Theory v1.0 Thm 2(3)",
+   "justification": "beta(a)=beta(b) but a,b in different classes: finer than ker(beta), so not the minimal quotient."
+  },
+  {
+   "id": "ADV-24",
+   "file": "ADV-24.json",
+   "defect_class": "quotient splits a behavior class, exactness not claimed",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3",
+   "justification": "A behavior-constant refinement is accepted when exactness is not claimed."
+  },
+  {
+   "id": "ADV-25",
+   "file": "ADV-25.json",
+   "defect_class": "quotient omits a case",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_NOT_PARTITION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3, \u00a79.5",
+   "justification": "case.d uncovered."
+  },
+  {
+   "id": "ADV-26",
+   "file": "ADV-26.json",
+   "defect_class": "quotient names a case outside the domain",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_NOT_PARTITION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3, \u00a79.5",
+   "justification": "Union of classes != source_domain."
+  },
+  {
+   "id": "ADV-27",
+   "file": "ADV-27.json",
+   "defect_class": "quotient classes overlap",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_OVERLAP",
+    "QUOTIENT_NOT_PARTITION"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "overlap_implies_not_partition": false
+     },
+     "expected_codes": [
+      "QUOTIENT_OVERLAP",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL",
+      "QUOTIENT_CLASS_NOT_BEHAVIOR_CONSTANT",
+      "QUOTIENT_NOT_EXACT_BEHAVIOR_KERNEL"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.5, \u00a79.8",
+   "justification": "Overlapping classes are not a partition (literal reading)."
+  },
+  {
+   "id": "ADV-28",
+   "file": "ADV-28.json",
+   "defect_class": "quotient classes permuted (set-of-sets identity)",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3",
+   "justification": "Class order and in-class order are not semantic."
+  },
+  {
+   "id": "ADV-29",
+   "file": "ADV-29.json",
+   "defect_class": "Unknown evidence with PROVED outcome",
+   "expected_valid": false,
+   "expected_codes": [
+    "UNKNOWN_EVIDENCE_REQUIRES_UNKNOWN_OUTCOME"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74, \u00a79.6",
+   "justification": "Unknown evidence must carry outcome Unknown."
+  },
+  {
+   "id": "ADV-30",
+   "file": "ADV-30.json",
+   "defect_class": "Unknown outcome with checked factorization evidence",
+   "expected_valid": false,
+   "expected_codes": [
+    "UNKNOWN_OUTCOME_REQUIRES_UNKNOWN_EVIDENCE",
+    "CHECKED_EVIDENCE_OUTCOME_MISMATCH"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74, \u00a79.8 stage 2",
+   "justification": "Two cross-field codes, fixed order."
+  },
+  {
+   "id": "ADV-31",
+   "file": "ADV-31.json",
+   "defect_class": "Unknown contract mode certifying PROVED",
+   "expected_valid": false,
+   "expected_codes": [
+    "UNKNOWN_CONTRACT_MODE_REQUIRES_UNKNOWN_OUTCOME"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74",
+   "justification": "Unknown mode cannot certify a non-Unknown outcome."
+  },
+  {
+   "id": "ADV-32",
+   "file": "ADV-32.json",
+   "defect_class": "approximate mode with checked evidence",
+   "expected_valid": false,
+   "expected_codes": [
+    "W5_SEMANTICS_NOT_ESTABLISHED"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a76",
+   "justification": "W3 rejects checked evidence under approximate mode."
+  },
+  {
+   "id": "ADV-33",
+   "file": "ADV-33.json",
+   "defect_class": "approximate mode without approximation block",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "schema Contract.allOf if/then",
+   "justification": "approximation is required when mode=approximate."
+  },
+  {
+   "id": "ADV-34",
+   "file": "ADV-34.json",
+   "defect_class": "duplicate observation context and transformation",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_OBSERVATION_CONTEXT",
+    "DUPLICATE_TRANSFORMATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.6, \u00a79.8",
+   "justification": "Fixed stage-2 order."
+  },
+  {
+   "id": "ADV-35",
+   "file": "ADV-35.json",
+   "defect_class": "Unknown conflated with absence in decoder",
+   "expected_valid": false,
+   "expected_codes": [
+    "FACTORIZATION_FAILURE",
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74; Theory v1.0 P3, Thm 12",
+   "justification": "null (absence) and 'Unknown' are distinct behavior values."
+  },
+  {
+   "id": "ADV-36",
+   "file": "ADV-36.json",
+   "defect_class": "collision separating Unknown from absence is genuine",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.2; Theory v1.0 Thm 12",
+   "justification": "Behaviors differ, representation identifies them: valid REFUTED witness."
+  },
+  {
+   "id": "ADV-37",
+   "file": "ADV-37.json",
+   "defect_class": "null behavior value decoded legitimately",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3 (DECODER_UNDEFINED = no matching row)",
+   "justification": "A row whose behavior_value is null exists; it is not 'undefined'."
+  },
+  {
+   "id": "ADV-38",
+   "file": "ADV-38.json",
+   "defect_class": "null representation value decoded legitimately",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3",
+   "justification": "null is a matchable canonical representation value."
+  },
+  {
+   "id": "ADV-39",
+   "file": "ADV-39.json",
+   "defect_class": "number vs string representation",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REPRESENTATION_DIFFERS"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4 'canonical representation value'",
+   "justification": "1 and \"1\" are distinct JSON values under every reading."
+  },
+  {
+   "id": "ADV-40",
+   "file": "ADV-40.json",
+   "defect_class": "boolean vs number representation (collision)",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REPRESENTATION_DIFFERS"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "equality": "json_value"
+     },
+     "expected_codes": [
+      "COLLISION_REPRESENTATION_DIFFERS"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4; JSON value model",
+   "justification": "true != 1 in JSON (and in JSON Schema equality); only host-language == conflates them."
+  },
+  {
+   "id": "ADV-41",
+   "file": "ADV-41.json",
+   "defect_class": "boolean vs number representation (factorization)",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [
+    {
+     "options": {
+      "equality": "json_value"
+     },
+     "expected_codes": []
+    }
+   ],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3",
+   "justification": "Two distinct representation values, functional decoder; conflating them would yield NONFUNCTIONAL_DECODER."
+  },
+  {
+   "id": "ADV-42",
+   "file": "ADV-42.json",
+   "defect_class": "integer vs float representation 1 vs 1.0",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REPRESENTATION_DIFFERS"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "equality": "json_value"
+     },
+     "expected_codes": []
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": true,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4 (canonical value undefined)",
+   "justification": "AMBIGUOUS: canonical-text reading distinguishes; JSON-number reading equates."
+  },
+  {
+   "id": "ADV-43",
+   "file": "ADV-43.json",
+   "defect_class": "signed zero behavior 0.0 vs -0.0",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [
+    {
+     "options": {
+      "equality": "json_value"
+     },
+     "expected_codes": [
+      "COLLISION_BEHAVIOR_AGREES"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": true,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4 (behavior equality undefined)",
+   "justification": "AMBIGUOUS: canonical text '0.0'!='-0.0'; numeric equality equates."
+  },
+  {
+   "id": "ADV-44",
+   "file": "ADV-44.json",
+   "defect_class": "object key order in representation",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [
+    {
+     "options": {
+      "equality": "json_value"
+     },
+     "expected_codes": []
+    }
+   ],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4 canonical value; \u00a75 canonical JSON",
+   "justification": "Key order is not part of a JSON object's value; representations are shared."
+  },
+  {
+   "id": "ADV-45",
+   "file": "ADV-45.json",
+   "defect_class": "Unicode NFC vs NFD behavior (collision)",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4; spec defines no normalization",
+   "justification": "Distinct code-point sequences are distinct values; normalizing would give BEHAVIOR_AGREES."
+  },
+  {
+   "id": "ADV-46",
+   "file": "ADV-46.json",
+   "defect_class": "Unicode NFC vs NFD behavior (decoder)",
+   "expected_valid": false,
+   "expected_codes": [
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3",
+   "justification": "Decoded NFD string differs from required NFC string."
+  },
+  {
+   "id": "ADV-47",
+   "file": "ADV-47.json",
+   "defect_class": "empty domain factorization (vacuous)",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.1 (no case-count lower bound); Theory v1.0 \u00a72.3",
+   "justification": "Vacuously PROVED; flagged as a spec gap, not a defect."
+  },
+  {
+   "id": "ADV-48",
+   "file": "ADV-48.json",
+   "defect_class": "empty domain quotient",
+   "expected_valid": false,
+   "expected_codes": [
+    "QUOTIENT_NOT_PARTITION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.5; schema QuotientEvidence minItems",
+   "justification": "Schema forces >=1 non-empty class, which cannot partition the empty set."
+  },
+  {
+   "id": "ADV-49",
+   "file": "ADV-49.json",
+   "defect_class": "single-case domain exact quotient",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73.3",
+   "justification": "One class equals ker(beta) on a singleton."
+  },
+  {
+   "id": "ADV-50",
+   "file": "ADV-50.json",
+   "defect_class": "identifier with trailing newline",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "schema Identifier pattern (ECMA-262 `$`)",
+   "justification": "`$` does not match before a trailing newline in JSON Schema regex semantics."
+  },
+  {
+   "id": "ADV-51",
+   "file": "ADV-51.json",
+   "defect_class": "NaN literal in behavior table",
+   "expected_valid": false,
+   "expected_codes": [
+    "UNREADABLE_CONTRACT"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.1; RFC 8259",
+   "justification": "NaN is not JSON; a permissive parser would instead produce a never-equal value."
+  },
+  {
+   "id": "ADV-52",
+   "file": "ADV-52.json",
+   "defect_class": "duplicate JSON object key",
+   "expected_valid": false,
+   "expected_codes": [
+    "FACTORIZATION_FAILURE"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "duplicate_keys": "reject"
+     },
+     "expected_codes": [
+      "UNREADABLE_CONTRACT"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.1 ('well-formed JSON' undefined for duplicate names)",
+   "justification": "AMBIGUOUS: last-wins makes r(b)=0 -> FF; reject -> UNREADABLE; first-wins -> accept."
+  },
+  {
+   "id": "ADV-53",
+   "file": "ADV-53.json",
+   "defect_class": "claims_exact given as integer 1",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "schema QuotientEvidence boolean",
+   "justification": "1 is not a JSON boolean."
+  },
+  {
+   "id": "ADV-54",
+   "file": "ADV-54.json",
+   "defect_class": "w5_semantics_established given as 0",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "\u00a76; schema const false",
+   "justification": "JSON Schema const distinguishes 0 from false."
+  },
+  {
+   "id": "ADV-55",
+   "file": "ADV-55.json",
+   "defect_class": "FROZEN with null hash",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "\u00a75; schema Freeze if/then",
+   "justification": "FROZEN requires a 64-hex hash."
+  },
+  {
+   "id": "ADV-56",
+   "file": "ADV-56.json",
+   "defect_class": "FROZEN with non-RFC3339 time",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION",
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "assert_format": false
+     },
+     "expected_codes": []
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": true,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "\u00a75 'RFC3339 freeze time'; schema format",
+   "justification": "AMBIGUOUS: format is annotation-only by default in 2020-12."
+  },
+  {
+   "id": "ADV-57",
+   "file": "ADV-57.json",
+   "defect_class": "DRAFT with stale hash",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.6 FREEZE_HASH_MISMATCH (FROZEN only)",
+   "justification": "Spec checks the hash only for FROZEN; flagged as a gap."
+  },
+  {
+   "id": "ADV-58",
+   "file": "ADV-58.json",
+   "defect_class": "DECLARED_UNCHECKED false factorization",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 stage 3",
+   "justification": "Unchecked evidence runs no claim-specific check; flagged as a gap (PROVED without check)."
+  },
+  {
+   "id": "ADV-59",
+   "file": "ADV-59.json",
+   "defect_class": "non-ASCII contract hash canonicalization",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [
+    {
+     "options": {
+      "hash_ascii": false
+     },
+     "expected_codes": [
+      "FREEZE_HASH_MISMATCH"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": true,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a75 'canonical JSON' undefined",
+   "justification": "AMBIGUOUS: hash made with ASCII escaping; raw-UTF-8 canonicalization mismatches."
+  },
+  {
+   "id": "ADV-60",
+   "file": "ADV-60.json",
+   "defect_class": "uppercase hex freeze hash",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION",
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "schema pattern ^[0-9a-f]{64}$",
+   "justification": "Uppercase hex violates the base and FROZEN-branch patterns."
+  },
+  {
+   "id": "ADV-61",
+   "file": "ADV-61.json",
+   "defect_class": "nonfunctional decoder: binding sensitivity",
+   "expected_valid": false,
+   "expected_codes": [
+    "NONFUNCTIONAL_DECODER"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "decoder_binding": "last"
+     },
+     "expected_codes": [
+      "NONFUNCTIONAL_DECODER",
+      "FACTORIZATION_FAILURE"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.3 (binding for nonfunctional value undefined)",
+   "justification": "AMBIGUOUS count: first-binding decodes a correctly; last-binding adds FF."
+  },
+  {
+   "id": "ADV-62",
+   "file": "ADV-62.json",
+   "defect_class": "nonfunctional decoder: offending-row sensitivity",
+   "expected_valid": false,
+   "expected_codes": [
+    "NONFUNCTIONAL_DECODER"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "nonfunctional_rule": "any"
+     },
+     "expected_codes": [
+      "NONFUNCTIONAL_DECODER",
+      "NONFUNCTIONAL_DECODER"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 'per offending decoder row'",
+   "justification": "AMBIGUOUS count: row 3 agrees with row 1 but not row 2."
+  },
+  {
+   "id": "ADV-63",
+   "file": "ADV-63.json",
+   "defect_class": "valid all-Unknown record",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74",
+   "justification": "Unknown is a first-class value; this record is consistent."
+  },
+  {
+   "id": "ADV-64",
+   "file": "ADV-64.json",
+   "defect_class": "Unknown evidence with OPEN outcome",
+   "expected_valid": false,
+   "expected_codes": [
+    "UNKNOWN_EVIDENCE_REQUIRES_UNKNOWN_OUTCOME"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a74",
+   "justification": "OPEN is not Unknown."
+  },
+  {
+   "id": "ADV-65",
+   "file": "ADV-65.json",
+   "defect_class": "outcome spelled 'unknown'",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "schema TypedOutcome enum",
+   "justification": "Enum is case-sensitive."
+  },
+  {
+   "id": "ADV-66",
+   "file": "ADV-66.json",
+   "defect_class": "behavior table status Unknown under checked evidence",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECK_REQUIRES_EXPLICIT_TABLES"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73, \u00a79.2",
+   "justification": "Checked evidence requires EXPLICIT tables."
+  },
+  {
+   "id": "ADV-67",
+   "file": "ADV-67.json",
+   "defect_class": "finite domain with DECLARED status",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECK_REQUIRES_FINITE_EXPLICIT_DOMAIN"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a73, \u00a79.2",
+   "justification": "Requires kind finite_explicit AND status EXPLICIT."
+  },
+  {
+   "id": "ADV-68",
+   "file": "ADV-68.json",
+   "defect_class": "cross-field defect gates a bad collision",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_OBSERVATION_CONTEXT"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.8 cross-stage gate",
+   "justification": "COLLISION_BEHAVIOR_AGREES must not be reported."
+  },
+  {
+   "id": "ADV-69",
+   "file": "ADV-69.json",
+   "defect_class": "contract keys in non-sorted order",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a75 canonical JSON",
+   "justification": "Hash binds canonical content, not file key order."
+  },
+  {
+   "id": "ADV-70",
+   "file": "ADV-70.json",
+   "defect_class": "duplicate quotient class ids",
+   "expected_valid": true,
+   "expected_codes": [],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.5 (no code); schema (no uniqueness)",
+   "justification": "Accepted; flagged as a gap."
+  },
+  {
+   "id": "ADV-71",
+   "file": "ADV-71.json",
+   "defect_class": "wrong format_version",
+   "expected_valid": false,
+   "expected_codes": [
+    "SCHEMA_CONSTRAINT_VIOLATION"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": true,
+   "spec_citation": "\u00a71; schema const",
+   "justification": "Only far-ir/2.0 is in scope."
+  },
+  {
+   "id": "ADV-72",
+   "file": "ADV-72.json",
+   "defect_class": "both tables non-EXPLICIT (multiplicity)",
+   "expected_valid": false,
+   "expected_codes": [
+    "CHECK_REQUIRES_EXPLICIT_TABLES"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "explicit_tables_multiplicity": "per_table"
+     },
+     "expected_codes": [
+      "CHECK_REQUIRES_EXPLICIT_TABLES",
+      "CHECK_REQUIRES_EXPLICIT_TABLES"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.2",
+   "justification": "AMBIGUOUS count: one condition or one per table."
+  },
+  {
+   "id": "ADV-73",
+   "file": "ADV-73.json",
+   "defect_class": "case listed three times (multiplicity)",
+   "expected_valid": false,
+   "expected_codes": [
+    "DUPLICATE_DOMAIN_CASE",
+    "DUPLICATE_DOMAIN_CASE"
+   ],
+   "alternatives": [
+    {
+     "options": {
+      "duplicate_multiplicity": "per_distinct_id"
+     },
+     "expected_codes": [
+      "DUPLICATE_DOMAIN_CASE"
+     ]
+    }
+   ],
+   "codes_interpretation_dependent": true,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.7 'once per offending item'",
+   "justification": "AMBIGUOUS count: per extra occurrence (2) or per repeated id (1)."
+  },
+  {
+   "id": "ADV-74",
+   "file": "ADV-74.json",
+   "defect_class": "integers beyond IEEE-754 exact range",
+   "expected_valid": false,
+   "expected_codes": [
+    "COLLISION_REPRESENTATION_DIFFERS"
+   ],
+   "alternatives": [],
+   "codes_interpretation_dependent": false,
+   "verdict_interpretation_dependent": false,
+   "schema_multiplicity_ambiguous": false,
+   "spec_citation": "\u00a79.4; RFC 8259 \u00a76",
+   "justification": "AMBIGUOUS: exact integers differ; a double-precision parser collapses them and would accept the collision."
+  }
+ ]
+}

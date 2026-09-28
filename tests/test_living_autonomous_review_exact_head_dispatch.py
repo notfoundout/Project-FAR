@@ -45,9 +45,9 @@ class AutonomousReviewExactHeadDispatchTests(unittest.TestCase):
         self.assertNotIn("Install dependencies", publisher)
 
         preflight = validation.index("- name: Validate dispatched identity before checkout")
-        checkout = validation.index("- uses: actions/checkout@v4")
+        checkout = validation.index("- uses: actions/checkout@")
         lineage = validation.index("- name: Verify dispatched checkout lineage before repository code runs")
-        setup = validation.index("- uses: actions/setup-python@v5")
+        setup = validation.index("- uses: actions/setup-python@")
         install = validation.index("- name: Install dependencies and trace backend")
         upload = validation.index("- name: Upload assurance evidence")
         publish = publisher.index("- name: Publish dispatched assurance on reviewed head")

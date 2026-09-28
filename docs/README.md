@@ -50,6 +50,7 @@ Project-level documentation lives here. This directory provides orientation, gov
 - [Repository Domain Registry](architecture/repository-domain-registry.md) — frozen authoritative registry of repository domains, responsibilities, roots, owners, and allowed artifact classes.
 - [Repository Compliance Enforcement Report](audits/repository-compliance-enforcement-report.md) — compliance automation coverage and findings.
 - [Independent Repository Certification Audit](audits/independent-repository-certification-audit.md) — preserved certification audit evidence; consult the current certification status before relying on its conclusion.
+- [Root-of-Trust Audit 2026-09](audits/root-of-trust-audit-2026-09.md) — independent-oracle audit of the validators, reference verifiers, CI gates, and formalization claims, with repairs and residual limits (non-authoritative Research record).
 - [Repository Certification Status](certification/repository-certification-status.md) — current repository-level certification decision. This status fails closed against unresolved merged-review reconciliation findings.
 
 ## Evaluation methodology navigation

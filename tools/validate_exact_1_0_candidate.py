@@ -16,6 +16,37 @@ def git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
 
+def validate_readiness(readiness: dict[str, object]) -> None:
+    if readiness["previous_public_version"] != "0.4.0":
+        raise SystemExit("release baseline must be 0.4.0")
+    if readiness["target_version"] != "1.0.0":
+        raise SystemExit("release target must be 1.0.0")
+
+    expected_pending = {
+        "exact_release_commit_validation",
+        "explicit_publication_authorization",
+    }
+    status = readiness.get("status")
+    completed = readiness.get("completed", {})
+    if not isinstance(completed, dict):
+        raise SystemExit("release completed-gates record must be an object")
+
+    if status == "publication-authorized":
+        if readiness.get("release_allowed") is not True:
+            raise SystemExit("publication-authorized readiness must allow release")
+        if readiness.get("remaining") != {}:
+            raise SystemExit("publication-authorized readiness must have no remaining gates")
+        for gate in expected_pending:
+            if completed.get(gate) is not True:
+                raise SystemExit(f"publication-authorized readiness lacks completed gate: {gate}")
+    else:
+        if readiness.get("release_allowed") is not False:
+            raise SystemExit("validation PR must not authorize publication")
+        remaining = readiness.get("remaining")
+        if not isinstance(remaining, (dict, list, tuple, set)) or set(remaining) != expected_pending:
+            raise SystemExit("unexpected remaining release gates")
+
+
 def main() -> int:
     project = tomllib.loads(PYPROJECT.read_text(encoding="utf-8"))["project"]
     if project["version"] != "1.0.0":
@@ -27,17 +58,7 @@ def main() -> int:
         raise SystemExit(f"public CLI mismatch: {sorted(scripts)}")
 
     readiness = json.loads(READINESS.read_text(encoding="utf-8"))
-    if readiness["previous_public_version"] != "0.4.0":
-        raise SystemExit("release baseline must be 0.4.0")
-    if readiness["target_version"] != "1.0.0":
-        raise SystemExit("release target must be 1.0.0")
-    if readiness["release_allowed"] is not False:
-        raise SystemExit("validation PR must not authorize publication")
-    if set(readiness["remaining"]) != {
-        "exact_release_commit_validation",
-        "explicit_publication_authorization",
-    }:
-        raise SystemExit("unexpected remaining release gates")
+    validate_readiness(readiness)
 
     registry = json.loads(REGISTRY.read_text(encoding="utf-8"))
     registry_text = json.dumps(registry, sort_keys=True)
