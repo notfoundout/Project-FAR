@@ -1,9 +1,13 @@
 """Kernel-level axiom census for every Lean module compiled by the required assurance lane.
 
-This test is intentionally skipped outside the required assurance jobs, where ``FAR_LEAN_HOME``
-is not installed.  In those jobs it recompiles every governed module to a fresh temporary olean
-set and asks Lean's own ``collectAxioms`` for every non-internal declaration defined by those
-modules.  Only Lean's three standard proof axioms are permitted.
+Where ``FAR_LEAN_HOME`` names a Lean 4.19.0 install, this recompiles every governed module to a
+fresh temporary olean set and asks Lean's own ``collectAxioms`` for every non-internal declaration
+defined by those modules. Only Lean's three standard proof axioms are permitted, so a declared
+axiom, ``sorry`` (``sorryAx``) or ``native_decide`` (``Lean.ofReduceBool``) fails it.
+
+It is skipped without ``FAR_LEAN_HOME``. The validation engine does not forward that variable to
+its checks, so the canonical suite inside ``merge-authority`` skips it too: this test does not yet
+gate merges. Enforcing the census in the required job needs a protected workflow step.
 """
 from __future__ import annotations
 
@@ -75,10 +79,10 @@ def audit_source(modules: tuple[str, ...]) -> str:
                 if let some moduleName := env.header.moduleNames[idx]? then
                   if farGovernedModules.contains moduleName then
                     checked := checked + 1
-                    let axioms ← collectAxioms name
-                    for axiom in axioms do
-                      unless farAllowedAxioms.contains axiom do
-                        throwError m!"governed declaration {{name}} depends on forbidden axiom {{axiom}}"
+                    let dependencies ← collectAxioms name
+                    for dependency in dependencies do
+                      unless farAllowedAxioms.contains dependency do
+                        throwError m!"governed declaration {{name}} depends on forbidden axiom {{dependency}}"
           if checked == 0 then
             throwError "governed axiom census was vacuous"
           logInfo m!"FAR governed axiom census checked {{checked}} declarations"
@@ -131,7 +135,7 @@ class GovernedLeanAxiomCensusTests(unittest.TestCase):
             )
             result = subprocess.run(
                 [str(self.lean), "-o", str(output / "Attack.olean"), str(source)],
-                cwd=ROOT, env=dict(os.environ, LEAN_PATH=str(output)),
+                cwd=output, env=dict(os.environ, LEAN_PATH=str(output)),
                 capture_output=True, text=True, check=False,
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

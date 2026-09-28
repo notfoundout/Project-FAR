@@ -51,7 +51,7 @@ Already recorded by the [FAR core epistemic calibration audit](far-core-epistemi
 
 Recorded by `LIM-035`. The README W1 paragraph now names the reviewer.
 
-### RT-9 — validation signing material reaches candidate code (new; repaired pending owner-signed authorization)
+### RT-9 — validation signing material reaches candidate code (new; repaired, owner-signed)
 
 - `validator-assurance.yml` `merge-authority` runs on `pull_request` with `FAR_VALIDATION_CACHE_SIGNING_KEY: ${{ secrets.FAR_VALIDATION_CACHE_SIGNING_KEY || github.token }}`.
 - `exact-head-assurance.yml` sets that variable to the live `github.token` for every step, even though its checkout uses `persist-credentials: false` specifically to keep the token away from candidate code.
@@ -61,7 +61,7 @@ Because the whole job executes candidate code, subprocess filtering alone cannot
 
 The key no longer outlives its job, so forwarding it to check subprocesses exposes nothing that the job's own candidate code could not already read. `far_validation/assured_engine.py` is therefore left unchanged; changing it would cost one more protected transition and add no boundary. The certificate signed with this key binds evidence within one job. It is not a trust boundary against the candidate that runs in that job. Whether the persistent secret is still configured is Unknown; if it is, the owner should delete it. `LIM-049`.
 
-### RT-10 — mutable Lean acquisition in protected workflows (new; repaired pending owner-signed authorization)
+### RT-10 — mutable Lean acquisition in protected workflows (new; repaired, owner-signed)
 
 The two unprotected Lean workflows now run a commit-pinned, SHA-256-verified `elan-init.sh`, but that script still fetches the latest elan release and elan resolves the toolchain. The protected `lean.yml`, `validator-assurance.yml`, and `exact-head-assurance.yml` still pipe `elan/master/elan-init.sh` into `sh`. A CI measurement bound the direct release archive `lean-4.19.0-linux.tar.zst` to SHA-256 `6fe3ce97a58f44e2b3567d455b994eacec5bfe9ae7774f2a573444480ba813fe` (343,842,845 bytes; the binary reports Lean 4.19.0, commit `6caaee842e94`). That digest was first one trust-on-first-use observation from GitHub's CDN. On 2026-09-27 a second download from a different network location returned the same 343,842,845 bytes and digest. Both observations come from the same CDN origin, so they are not independent.
 
@@ -81,19 +81,22 @@ About 190k Markdown lines, 92k Python lines, 888 JSON files, 143 `check_*` tools
 
 ## Protected transition in this PR (owner-signed)
 
-The files below are protected by `validation_bootstrap/assurance-lock.json`. Each changed pin is a protected transition that needs one owner-signed authorization bound to this PR. The `protected-repin-gate` App check lists the exact old and new digests for the current head. Per the owner's integration order, these authorizations are requested only after live probe P7 has passed.
+The files below are protected by `validation_bootstrap/assurance-lock.json`. Each changed pin is a protected transition that needs one owner-signed authorization bound to this PR. The `protected-repin-gate` App check lists the exact old and new digests for the current head. The nine authorizations were signed after live probe P7 passed and are appended to `validation/protected-repin-consumptions.json` in this PR.
 
 | Path | Change |
 |---|---|
 | `.github/workflows/validator-assurance.yml` | RT-9 per-job ephemeral key and `persist-credentials: false`; RT-10 digest-bound Lean archive and commit-pinned actions. It also carries the root-of-trust audit's R14 (#548, `LIM-050`). `merge-authority` now runs after a failed dependency (`if: ${{ !cancelled() }}`) and fails unless the signed-cache chain succeeded, because GitHub counts a skipped required check as passing. `assurance-hash-audit` now fails on lock drift instead of only recording it. A `sorry` warning fails the Lean assurance step. RT-14 reorders and isolates the static checks; RT-15 adds the governed Lean compiles and the FAR-CORE axiom audit. |
 | `.github/workflows/lean.yml` | Read-only token; digest-bound Lean archive; commit-pinned actions; `persist-credentials: false`. Every governed compile now fails on `declaration uses 'sorry'`, which `lean` reports only as a warning. |
 | `.github/workflows/exact-head-assurance.yml` (mirror, not locked) | Identical key, checkout, Lean and pin changes, preserving the mirror contract in `tests/test_exact_head_assurance_workflow.py`. |
-| `validation_bootstrap/assurance-lock.json` | Repins the protected files in this table, adds `validation_bootstrap/run_isolated.py`, and changes the workflow contract (`#contract`) to require the isolated forms (RT-14). |
+| `validation_bootstrap/assurance-lock.json` | Repins the protected files in this table; adds `validation_bootstrap/run_isolated.py`, `tools/run_tests.py` and `tests/test_governed_lean_axioms.py`; changes the workflow contract (`#contract`) to require the isolated forms (RT-14). |
 | `tools/configure_validation_protection.py` | Inert tombstone (RT-13). |
-| `far_validation/repin_protection_audit.py` | Bound-state protection audit by default (RT-13). |
+| `far_validation/repin_protection_audit.py` | Bound-state protection audit by default (RT-13); rejects abbreviations of `--bootstrap` (RT-16). |
+| `far_validation/repin.py` | Rejects the consumption ledger in the candidate's lock, not only the base's (RT-16). |
+| `validation/runtime-dependencies.json` | Declares the governed axiom census test as a bootstrap input, since it is now locked (RT-16). |
+| `validation/runtime-policy.json` | Declares `curl` and `sha256sum`, which the Lean archive fail-closed test executes (RT-16). |
 | `tests/test_protected_repin_authorization.py` | Its copy of the weakening step follows the isolated invocation (RT-14). |
 
-### RT-13 — a repository tool can drop the App-bound merge authority (new; repaired pending owner-signed authorization)
+### RT-13 — a repository tool can drop the App-bound merge authority (new; repaired, owner-signed)
 
 `tools/configure_validation_protection.py` wrote `main`'s protection with required checks exactly `[merge-authority]`. Since the bootstrap, the only merge authority is the App-bound `protected-repin-gate` required check, so running the tool would silently remove it. `tools/check_validation_protection.py` required the same stale set, so its read-back would have called the weakened state compliant.
 
@@ -107,7 +110,7 @@ The two legacy workflows are `disabled_manually` and their admin token is revoke
 
 Tests: the read-back rejects the configurator's old policy and a gate bound to any other App; the configurator exits 2 without network code; the default audit rejects a dropped or re-bound gate. The new audit tests fail against the previous `repin_protection_audit.py`.
 
-### RT-14 — candidate code could rewrite the locked validator's verdict in `merge-authority` (new; repaired pending owner-signed authorization)
+### RT-14 — candidate code could rewrite the locked validator's verdict in `merge-authority` (new; repaired, owner-signed)
 
 `merge-authority` ran `python -m far_validation`, which puts the checkout first on `sys.path`. Two reproduced attacks followed:
 
@@ -119,14 +122,14 @@ Separately, the job installed the candidate's `requirements.txt` and ran its tes
 Repair, in both `merge-authority` and its exact-head mirror:
 
 - The checks that need no candidate code now run first: `validation_bootstrap/verify.py`, the oracle, weakening, the formal model, and the Lean install plus `ValidationEngine.lean`. They run before any `pip install`, test or checker, so a failure there cannot be undone later.
-- They run through `python -I -X pycache_prefix=… validation_bootstrap/run_isolated.py`. That launcher adds the checkout after the standard library and site-packages, and ignores committed bytecode.
+- They run through `python -I -X pycache_prefix=… validation_bootstrap/run_isolated.py`. That launcher copies only the `far_validation` modules pinned in the assurance lock, after checking each against its pin, into a temporary package, and imports from there; the checkout is never on `sys.path` (RT-16).
 - `verify.py` and the inline scripts use `python -I`. The assurance-lock workflow contract now requires the isolated forms.
 
 `tests/test_ci_merge_gate_hardening.py` pins this. It checks the step order and isolation in both jobs, and it runs the launcher against a planted `json.py` and planted bytecode (with a control showing `python -m` is subverted).
 
 Residual, inherent: steps that must run candidate code (the test suite, the checkers, the mutation campaign) and every step after them stay candidate-controlled. That is why `docs/governance/protected-repin-procedure.md` treats `merge-authority` as ordinary CI and the App-bound `protected-repin-gate` as the only merge authority. The bootstrap, weakening, oracle, formal-model, and Lean-proof verdicts are no longer part of that residual.
 
-### RT-15 — governed Lean compiles ran only in advisory workflows (new; repaired pending owner-signed authorization)
+### RT-15 — governed Lean compiles ran only in advisory workflows (new; repaired, owner-signed)
 
 Branch protection requires only `merge-authority` and `protected-repin-gate`, and `merge-authority` compiled only `ValidationEngine.lean`. The other 21 governed modules, and the FAR-CORE v1.1 axiom audit, ran only in `lean.yml`, `far-core-v11-formalization.yml` and `pca-w5.yml`, none of them a required check. A pull request that broke a governed proof or added a `sorry` therefore still had every required check green. This is the CI part of the root-of-trust audit's `LIM-053` (#548).
 
@@ -141,6 +144,26 @@ Not changed, with reasons:
 `tests/test_ci_merge_gate_hardening.py` pins each repair. Ten reintroduced defects (dropped `!cancelled()`, inverted guard, hash audit exiting 0, secret as key, unmasked key, persisted credentials, piped `elan/master`, unchecked digest, removed `sorry` gate, tag-pinned action) were each caught by the intended test. Restoring the elan installer in the two unprotected workflows fails the archive and `sorry`-gate tests.
 
 Action pins, resolved on 2026-09-23 and re-resolved unchanged on 2026-09-27: `actions/checkout` v4.4.0 `11d5960a326750d5838078e36cf38b85af677262`, `actions/setup-python` v5.6.0 `a26af69be951a213d495a4c3e4e4022e16d87065`, `actions/upload-artifact` v4.6.2 `ea165f8d65b6e75b540449e92b4886f43607fa02`, `actions/download-artifact` v4.3.0 `d3f86a106a0bac45b974a628896c90dbdf5c8093`. The SWE-agent workflows are sealed historical experiment evidence and are excluded.
+
+### RT-16 — post-refresh audit of the isolated launcher, the repin evaluator and the Lean gates (2026-09-28; repaired, owner-signed)
+
+After `main` (#560 and P5) was merged into this PR, five independent audits re-checked the merge, the lock, the protected transitions, the CI trust boundaries and the regression tests. The merge and lock reproduced byte for byte, and the transition set matched the deployed evaluator exactly. The audits found these defects, all repaired in this PR:
+
+- **The isolated launcher still ran unpinned checkout code.** It appended the checkout to `sys.path` and imported the whole package, so the unpinned `far_validation/__init__.py` (and through it `engine.py`) ran inside the locked validator. An unlisted `far_validation/weakening/` package or extension module shadowed the pinned `weakening.py`. A standard-library import that finds nothing on Linux (`nt`, `msvcrt`, `_winapi`) fell through to a planted top-level file. Each let a candidate turn a failing weakening check into success while `verify.py` and the App gate still passed. `run_isolated.py` now copies only lock-pinned, hash-checked modules into a temporary synthetic package and exposes only `oracle`, `weakening` and `formal`. `tests/test_isolated_launcher_locked_copy.py` covers the plants.
+- **An unsigned pull request could wedge the repin gate.** `far_validation/repin.py` rejected the consumption ledger only in the base's lock, and a lock entry added by a candidate needs no signature. Once merged, every later pull request failed as a deadlock and the entry could not be removed. The evaluator now rejects the ledger in either lock (`tests/test_repin_candidate_ledger_lock.py`).
+- **Abbreviated `--bootstrap`.** `argparse` accepted `--b`, which silently selected the audit's bootstrap mode. The audit now rejects abbreviations (`tests/test_repin_protection_audit_cli.py`).
+- **The exact-head mirror never checked its ref.** A dispatch from any branch would post "Trusted main exact-head assurance". The dispatch preflight now requires `refs/heads/main` (`tests/test_exact_head_dispatch_main_ref.py`).
+- **Lean archive digest checked only as text.** `sha256sum -c … || true` passed every test. `tests/test_lean_archive_digest_fail_closed.py` now executes each install step against a corrupt download.
+- **RT-2's behavioral test ran only in an advisory, path-filtered workflow.** The commercial regressions now run in the canonical suite (`tests/test_canonical_test_scope.py`).
+- **Declared axioms passed the `sorry` gate.** A governed module could state `axiom cheat : False` and prove anything with no warning. `tests/test_governed_lean_axioms.py` recompiles every governed module and rejects any declaration that depends on an axiom beyond `propext`, `Classical.choice` and `Quot.sound`. As first committed, its Lean program did not parse (`axiom` is a keyword) and its attack case compiled a file outside Lean's root; both are fixed, and with the real Lean 4.19.0 it passes on the tree and rejects a declared axiom, `sorry`, `native_decide`, an internally named axiom and a metaprogrammed axiom.
+
+Residual: the validation engine does not forward `FAR_LEAN_HOME` to its checks, so the census test skips inside `merge-authority`. Running it there needs a protected workflow step, carried by the test-suite audit (#550) with its own signed transitions.
+
+Checked and not changed, with reasons:
+- `exact-head-assurance.yml` stays unlocked. It is not a merge authority, and its equality with the locked `merge-authority` job is enforced by `tests/test_exact_head_assurance_workflow.py` in the required job.
+- A manual dispatch of `validator-assurance.yml` compares against `HEAD^`. Only accounts with write access can dispatch, and they can also push a workflow that posts a GitHub Actions check, which is why the App-bound gate is the only merge authority. The repository's sole dispatcher guarantees `HEAD^` is `main`.
+- The signed-cache consumer masks a failed key read, but an empty key yields no signed-cache hit and the consumer then fails, so it fails closed.
+- Pins bind file bytes, not the executable bit. No locked file is run through its mode.
 
 ## Nonclaims
 
