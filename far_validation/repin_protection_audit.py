@@ -53,7 +53,12 @@ bound_check_protection = gate_app.check_protection
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Audit main's protection for the protected-repin gate")
+    # ``--bootstrap`` weakens the post-bootstrap audit, so accepting argparse's default long-option
+    # abbreviations (for example ``--boot``) would create an unnecessary alternate spelling for a
+    # security-sensitive mode.  Require the frozen option name exactly.
+    parser = argparse.ArgumentParser(
+        description="Audit main's protection for the protected-repin gate", allow_abbrev=False
+    )
     parser.add_argument("--bootstrap", action="store_true",
                         help="accept an unbound protected-repin-gate context (before the owner binds the App check)")
     args = parser.parse_args(argv)
