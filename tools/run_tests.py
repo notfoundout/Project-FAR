@@ -46,8 +46,14 @@ class DiagnosticTextTestRunner(unittest.TextTestRunner):
     resultclass = DiagnosticTextTestResult
 
 
-def discover_suite(starts: tuple[Path, ...] = TEST_ROOTS) -> unittest.TestSuite:
-    """Discover every test surface that is part of the canonical merge-validation contract."""
+def discover_suite(starts: Path | tuple[Path, ...] = TEST_ROOTS) -> unittest.TestSuite:
+    """Discover every test surface that is part of the canonical merge-validation contract.
+
+    A single ``Path`` remains supported for focused callers and the zero-discovery regression;
+    the canonical default spans every root in ``TEST_ROOTS``.
+    """
+    if isinstance(starts, Path):
+        starts = (starts,)
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
     module_index = 0
