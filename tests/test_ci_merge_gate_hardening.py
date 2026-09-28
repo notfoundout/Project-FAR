@@ -236,6 +236,36 @@ class GovernedLeanIsPartOfTheRequiredCheckTests(unittest.TestCase):
             fake.write_text("#!/bin/sh\ncase \"$*\" in *Canonicality.lean*) exit 3;; esac\nexit 0\n", encoding="utf-8")
             self.assertEqual(_bash(script, ROOT, env), 3)
 
+    CENSUS = "Reject non-standard axioms in governed Lean declarations"
+
+    def test_axiom_census_runs_in_both_jobs_after_the_governed_compile(self) -> None:
+        # The census test skips without FAR_LEAN_HOME, which the validation engine does not forward,
+        # so the canonical suite alone never runs it; the required job must run it directly.
+        for name, job_id in (("validator-assurance.yml", "merge-authority"),
+                             ("exact-head-assurance.yml", "exact-head-assurance")):
+            steps = _workflow(name)["jobs"][job_id]["steps"]
+            names = [step.get("name") for step in steps]
+            self.assertGreater(names.index(self.CENSUS), names.index(self.STEP), name)
+            self.assertIn("python tests/test_governed_lean_axioms.py", steps[names.index(self.CENSUS)]["run"])
+
+    def test_axiom_census_step_fails_unless_every_census_test_ran_and_passed(self) -> None:
+        script = next(step for _job, step in _steps(_workflow("validator-assurance.yml"))
+                      if step.get("name") == self.CENSUS)["run"]
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / "bin" / "python"
+            fake.parent.mkdir()
+            env = {"PATH": f"{fake.parent}:/usr/bin:/bin", "RUNNER_TEMP": directory}
+            for output, status, expected in (
+                ("Ran 2 tests in 1.0s\n\nOK", 0, 0),
+                ("Ran 2 tests in 1.0s\n\nOK (skipped=2)", 0, 1),
+                ("test_census ... skipped 'FAR_LEAN_HOME is not installed'\nOK (skipped=1)", 0, 1),
+                ("Ran 2 tests in 1.0s\n\nFAILED (failures=1)", 1, 1),
+            ):
+                fake.write_text(f"#!/bin/sh\nprintf '%s\\n' \"{output}\"\nexit {status}\n", encoding="utf-8")
+                fake.chmod(0o755)
+                self.assertEqual(_bash(script, ROOT, env), expected, output)
+
+
 class TrustedStepsPrecedeCandidateCodeTests(unittest.TestCase):
     """Once candidate code runs in a job, it can rewrite every later step.
 

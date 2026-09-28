@@ -290,6 +290,20 @@ jobs:
           LEAN_PATH="$RUNNER_TEMP" "$FAR_LEAN_HOME/bin/lean" "$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean" \
             > "$RUNNER_TEMP/far-core-v11-axioms.txt" 2>&1 || { cat "$RUNNER_TEMP/far-core-v11-axioms.txt"; exit 1; }
           python tools/check_far_core_v11_formalization.py --axiom-output "$RUNNER_TEMP/far-core-v11-axioms.txt"
+      - name: Reject non-standard axioms in governed Lean declarations
+        shell: bash
+        run: |
+          set -euo pipefail
+          # tests/test_governed_lean_axioms.py skips without FAR_LEAN_HOME, and the validation engine does
+          # not forward that variable to its checks. Run it here, where the pinned Lean is installed, and
+          # treat a skip as a failure.
+          log="$RUNNER_TEMP/governed-lean-axioms.txt"
+          python tests/test_governed_lean_axioms.py -v > "$log" 2>&1 || { cat "$log"; exit 1; }
+          cat "$log"
+          if grep -q "skipped" "$log"; then
+            echo 'the governed Lean axiom census did not run' >&2
+            exit 1
+          fi
       - name: Assemble signed merge-authority certificate
         run: |
           python tools/assemble_validation_certificate.py \

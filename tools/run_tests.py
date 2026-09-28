@@ -23,6 +23,16 @@ if str(ROOT) not in sys.path:
 # configuration (for example commit signing or a signing helper) must not change their behavior.
 os.environ["GIT_CONFIG_GLOBAL"] = os.devnull
 os.environ["GIT_CONFIG_NOSYSTEM"] = "1"
+# git commit and merge start `git maintenance run --auto`, which detaches by default and takes
+# .git/objects/maintenance.lock even when no task is due. A test's temporary repository could then be
+# written while it is being removed ("Directory not empty").
+_git_config = int(os.environ.get("GIT_CONFIG_COUNT") or 0)
+if ("maintenance.auto", "false") not in {
+    (os.environ.get(f"GIT_CONFIG_KEY_{i}"), os.environ.get(f"GIT_CONFIG_VALUE_{i}")) for i in range(_git_config)
+}:
+    os.environ[f"GIT_CONFIG_KEY_{_git_config}"] = "maintenance.auto"
+    os.environ[f"GIT_CONFIG_VALUE_{_git_config}"] = "false"
+    os.environ["GIT_CONFIG_COUNT"] = str(_git_config + 1)
 
 
 class DiagnosticTextTestResult(unittest.TextTestResult):

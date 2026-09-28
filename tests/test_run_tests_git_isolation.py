@@ -6,6 +6,7 @@ runner points git at an empty global configuration and ignores the system one.
 """
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -49,6 +50,31 @@ class RunnerGitIsolationTests(unittest.TestCase):
 
     def test_control_the_same_commit_fails_without_isolation(self) -> None:
         self.assertNotEqual(self._commit(load_runner=False).returncode, 0)
+
+    def _maintenance_children(self, *, load_runner: bool) -> list[list[str]]:
+        with tempfile.TemporaryDirectory() as directory:
+            trace = Path(directory) / "trace.json"
+            script = COMMIT_IN_TEMPORARY_REPOSITORY.replace(
+                "LOAD_RUNNER", "spec.loader.exec_module(runner)" if load_runner else "pass"
+            )
+            # Foreground maintenance, so the control's child has finished writing when git returns.
+            env = {"PATH": os.environ.get("PATH", "/usr/bin:/bin"), "HOME": directory, "GIT_CONFIG_NOSYSTEM": "1",
+                   "GIT_CONFIG_COUNT": "1", "GIT_CONFIG_KEY_0": "maintenance.autoDetach",
+                   "GIT_CONFIG_VALUE_0": "false", "GIT_TRACE2_EVENT": str(trace)}
+            completed = subprocess.run(
+                [sys.executable, "-c", script, str(ROOT / "tools" / "run_tests.py")],
+                env=env, capture_output=True, text=True, check=False,
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            events = [json.loads(line) for line in trace.read_text(encoding="utf-8").splitlines()]
+        return [event["argv"] for event in events
+                if event.get("event") == "child_start" and "maintenance" in event.get("argv", [])]
+
+    def test_commits_in_test_repositories_start_no_background_maintenance(self) -> None:
+        self.assertEqual(self._maintenance_children(load_runner=True), [])
+
+    def test_control_a_commit_starts_maintenance_without_the_runner(self) -> None:
+        self.assertNotEqual(self._maintenance_children(load_runner=False), [])
 
 
 if __name__ == "__main__":

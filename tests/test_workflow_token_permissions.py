@@ -18,6 +18,18 @@ LOCKED_WITHOUT_PERMISSIONS = {"lean.yml", "repo-health.yml", "specification-expo
 
 EVENT_TEST = re.compile(r"github\.event_name\s*==\s*'([a-z_]+)'")
 
+# Privileged jobs that may still use tag-pinned actions: the two locked, disabled protection
+# workflows (their admin token is retired; changing them needs owner signatures) and the sealed
+# SWE-agent execution workflows named by the external-validation manifests.
+PINNING_EXEMPT = {
+    "canonical-branch-protection.yml",
+    "configure-validation-protection.yml",
+    "far-swe-agent-execution.yml",
+    "far-swe-agent-execution-v2.yml",
+}
+PINNED_ACTION = re.compile(r"(\./.+|[\w.-]+/[\w./-]+@[0-9a-f]{40})")
+REPOSITORY_SECRET = re.compile(r"secrets\.(?!GITHUB_TOKEN\b)[A-Za-z_]")
+
 
 def _split(expr, op):
     parts, depth, start, i = [], 0, 0, 0
@@ -120,6 +132,24 @@ class WorkflowTokenPermissionTests(unittest.TestCase):
                 continue
             undeclared.append(path.name)
         self.assertLessEqual(set(undeclared), LOCKED_WITHOUT_PERMISSIONS)
+
+    def test_jobs_holding_a_write_token_or_secret_pin_every_action_to_a_commit(self):
+        # A moved tag would run new third-party code with the job's write token or secret.
+        self.assertLessEqual(PINNING_EXEMPT, {path.name for path in WORKFLOWS})
+        offenders = {}
+        for path in WORKFLOWS:
+            if path.name in PINNING_EXEMPT:
+                continue
+            workflow = yaml.safe_load(path.read_text())
+            top = workflow.get("permissions")
+            for name, job in workflow.get("jobs", {}).items():
+                if not (_grants_write(job.get("permissions", top)) or REPOSITORY_SECRET.search(yaml.safe_dump(job))):
+                    continue
+                unpinned = [step["uses"] for step in job.get("steps", [])
+                            if "uses" in step and not PINNED_ACTION.fullmatch(step["uses"])]
+                if unpinned:
+                    offenders[f"{path.name}:{name}"] = unpinned
+        self.assertEqual(offenders, {})
 
     def test_a_workflow_wide_write_token_on_pull_request_is_rejected(self):
         workflow = {

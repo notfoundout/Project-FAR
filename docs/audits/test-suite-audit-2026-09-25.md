@@ -109,15 +109,26 @@ Raw outputs: [`test-suite-audit-2026-09-25/probe-2026-09-27/`](test-suite-audit-
 
 The expected reason for V1 was narrowed to `unreachable statement count increased` when the rule was added. The earlier alternatives (branch, failure-path, or structure decrease) cannot occur for an inserted early exit.
 
+### Integration refresh (2026-09-28)
+
+PR #538 and PR #548 merged first, and `main` was merged into this branch. The integration found three gaps and one stale register row.
+
+| # | Finding | Disposition |
+|---|---|---|
+| 27 | PR #538 added `tests/test_governed_lean_axioms.py`, which uses `collectAxioms` to require that every governed Lean declaration depends only on `propext`, `Classical.choice` and `Quot.sound`. The required job never ran it. The test skips without `FAR_LEAN_HOME`, and the validation engine forwards only an allowlisted environment to its checks, so inside `merge-authority` it skipped and the job stayed green. | Implemented: `merge-authority` and its exact-head mirror run the census directly after the governed compile, where the pinned Lean is installed. The step fails if the census fails or reports a skip. `tests/test_ci_merge_gate_hardening.py` requires the step in both jobs after the compile, and runs it against a stub interpreter to show that a skip or a failure fails it. With Lean 4.19.0 the step passes on this tree; without Lean it fails. Protected transition: `.github/workflows/validator-assurance.yml`. |
+| 28 | In nine unlocked workflows, jobs holding a write token or a repository secret used actions by tag. A moved tag would run new third-party code with that token or secret. | Implemented: those actions are pinned to commits, with the tag in a comment. `tests/test_workflow_token_permissions.py` rejects a tag-referenced action in any job that holds a write permission or references a repository secret. Four workflows are exempt: the two locked, disabled protection workflows, whose change needs owner signatures, and the two SWE-agent execution workflows, whose bytes the external-validation manifests seal. |
+| 29 | PR #548 recorded finding 6 as `LIM-054`, still open. | The register row records the repair. The W4 and W6 current-state supplements record the register's new digest. |
+| 30 | `full-shadow` failed once on PR #548 with `Directory not empty: …/repo/.git` while a test's temporary repository was being removed. `git commit` and `git merge` start `git maintenance run --auto`, which detaches by default (`maintenance.autoDetach`) and takes `.git/objects/maintenance.lock` before checking whether any task is due (`builtin/gc.c`). The background process can therefore write into the repository after the test's last git command returns. Any test that commits to a temporary repository is exposed. | Implemented: the canonical runner sets `maintenance.auto=false` for every git process the tests start, through `GIT_CONFIG_COUNT`. `tests/test_run_tests_git_isolation.py` traces a commit made under the runner and requires no maintenance child; its control shows that the same commit starts one without the runner. Protected transition: `tools/run_tests.py`, already changed here for finding 19. |
+
 ### Protected transitions and ordering
 
-The protected transitions are `far_validation/mutations.py`, `far_validation/formal_model.py`, `far_validation/weakening.py`, `far_validation/model.py`, and `validation_bootstrap/verify.py`. Each needs an owner-signed authorization bound to this pull request.
+The protected transitions are `far_validation/mutations.py`, `far_validation/formal_model.py`, `far_validation/weakening.py`, `far_validation/model.py`, `validation_bootstrap/verify.py`, `tools/run_tests.py` (locked by PR #538; finding 19), and `.github/workflows/validator-assurance.yml` (finding 27). Each needs an owner-signed authorization bound to this pull request.
 
-`weakening.py` is also changed by PR #560. The two versions merge without conflict, but the merged bytes differ from both. For that reason, signatures are requested only after PR #560 and PR #538 have merged and `main` has been merged into this branch.
+`weakening.py` is also changed by PR #560. The two versions merge without conflict, but the merged bytes differ from both. For that reason, signatures are requested only after PR #560, PR #538 and PR #548 have merged and `main` has been merged into this branch.
 
 ## Unresolved
 
-- The five protected transitions need owner signatures, in the order given above. Until they are signed, `merge-authority` and `protected-repin-gate` fail on this pull request, as intended.
+- The seven protected transitions need owner signatures, in the order given above. Until they are signed, `merge-authority` and `protected-repin-gate` fail on this pull request, as intended.
 - The weakening detector is syntactic. A guard moved into a called helper, into data, or into a runtime patch still passes (finding 15). No syntactic rule can close that; only locked files are protected by construction.
 - A legitimate rename of a test module needs a base waiver (finding 16).
 - Former patch 04 is deferred (finding 5).

@@ -111,6 +111,9 @@ jobs:
     - name: Enforce FAR-CORE v1.1 kernel assumptions
       shell: bash
       run: "set -euo pipefail\npython tools/check_far_core_v11_formalization.py --emit-axiom-audit \"$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean\"\nLEAN_PATH=\"$RUNNER_TEMP\" \"$FAR_LEAN_HOME/bin/lean\" \"$RUNNER_TEMP/FARCoreV11GeneratedAxiomAudit.lean\" \\\n  > \"$RUNNER_TEMP/far-core-v11-axioms.txt\" 2>&1 || { cat \"$RUNNER_TEMP/far-core-v11-axioms.txt\"; exit 1; }\npython tools/check_far_core_v11_formalization.py --axiom-output \"$RUNNER_TEMP/far-core-v11-axioms.txt\"\n"
+    - name: Reject non-standard axioms in governed Lean declarations
+      shell: bash
+      run: "set -euo pipefail\n# tests/test_governed_lean_axioms.py skips without FAR_LEAN_HOME, and the validation engine does\n# not forward that variable to its checks. Run it here, where the pinned Lean is installed, and\n# treat a skip as a failure.\nlog=\"$RUNNER_TEMP/governed-lean-axioms.txt\"\npython tests/test_governed_lean_axioms.py -v > \"$log\" 2>&1 || { cat \"$log\"; exit 1; }\ncat \"$log\"\nif grep -q \"skipped\" \"$log\"; then\n  echo 'the governed Lean axiom census did not run' >&2\n  exit 1\nfi\n"
     - name: Assemble signed merge-authority certificate
       run: "python tools/assemble_validation_certificate.py \\\n  --evidence independent-oracle=artifacts/validation/runtime/independent-oracle.json \\\n  --evidence test-weakening=artifacts/validation/runtime/test-weakening.json \\\n  --evidence formal-model=artifacts/validation/runtime/formal-model.json \\\n  --evidence lean-proof=artifacts/validation/runtime/lean-proof.json \\\n  --evidence mutation-campaign=artifacts/validation/runtime/mutation-campaign.json\n"
     - name: Verify exact commit and tree certificate
