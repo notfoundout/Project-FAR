@@ -1,45 +1,57 @@
 # SATURATION-FALSIFICATION-001
 
-Status: Research / Provisional reconstruction
+Status: Research / Provisional reconstruction  
 Base: `8618384efe4576580f65ff67b02b22bac43ffc51`
 
 This campaign reconstructs the interrupted SATURATION-FALSIFICATION-001 run from the surviving transcript and the canonical repository. It is not a byte-for-byte recovery of the unpushed local commit `f3bd22de`.
 
 ## Question
 
-Can Saturation Baseline v0.5 represent **and enforce** the decision-relevant distinctions introduced by the selected recent findings without changing a first-class capability class, invariant, assurance boundary, or extension interface?
+Can Saturation Baseline v0.5 represent **and enforce** the decision-relevant distinctions introduced by the selected findings without changing a first-class capability class, invariant, assurance boundary, or extension interface?
 
-Broad category fit is not sufficient. A finding counts as absorbed only when the frozen architecture can preserve the relevant identity, semantics, uncertainty, provenance, dependency, validation behavior, and decision-relevant counterfactuals without laundering them through generic metadata or an opaque validator.
+Broad category fit is not sufficient. A finding counts as absorbed only when the frozen architecture has typed, non-opaque surfaces for the distinction and an existing validation/decision hook capable of making it consequential.
 
-## Corrected dispositions
+## Hostile-review result
 
-| Finding | Disposition | Minimal consequence |
-|---|---|---|
-| Hearsay / independent evidentiary observation | `ASSURANCE_BOUNDARY_CHANGE` | A self-authored execution record cannot alone establish evidentiary status when the audited actor unilaterally controls the sole record. |
-| SkillCascade / cross-skill composition | `ASSURANCE_BOUNDARY_CHANGE` | Assurance must cover consequential compositions, not only components in isolation. |
-| Verification before reliance-state promotion | `SPECIFICATION_REPAIR` | A consequential proposal cannot enter authoritative/reliance-bearing state before the contractually required successful validation event. |
-| Synthesis / provenance fidelity | `REPRESENTABLE_NO_CHANGE` | v0.5 already preserves disagreement, uncertainty, contradicting evidence, alternatives, source lineage, and forbids synthesis from strengthening underlying claims. |
-| Who&When Pro / failure-origin localization | `SPECIFICATION_REPAIR` | `detected_at` and `origin_attributed_to` are distinct; origin attribution requires challengeable evidence or intervention support. |
-| CRV coverage / realization / validity | `REPRESENTABLE_NO_CHANGE` | v0.5 already makes evaluation stage-specific and separates coverage, evidence-support accuracy, and adjudication accuracy. |
-| Lean kernel trust-base finding | `SPECIFICATION_REPAIR` | v0.5 already requires checker method/version; A1 adds retention of known material checker/toolchain limitations relevant to the assurance claim. |
+All seven tested findings are `REPRESENTABLE_NO_CHANGE`.
 
-No finding in this campaign requires a new first-class capability class. Therefore this campaign does **not** justify v0.6.
+| Finding | Why v0.5 already absorbs the distinction |
+|---|---|
+| Hearsay / independent evidentiary observation | v0.5 already represents source lineage, source dependence, attestation, provenance, evidence independence, `INDEPENDENCE_LIMITED`, and explicit evidence requirements. A self-authored record and an independently observed/corroborating record are therefore distinct typed evidence states. |
+| SkillCascade / cross-skill composition | v0.5 already represents dependency-bearing transformations/relations; every consequential transformation is inspectable, every consequential relationship is challengeable, and consequential transitions require validator contracts. A composition can therefore carry a validation state distinct from its components. |
+| Verification before reliance-state promotion | v0.5 already has fail-closed `EXPLORATORY` / `EXTERNAL_RELIANCE_PENDING` / `EXTERNAL_RELIANCE_READY` states and requires successful applicable assurance validation before recorded promotion. |
+| Synthesis / provenance fidelity | v0.5 already requires synthesis to preserve disagreement, uncertainty, contradicting evidence, alternatives, source lineage, and forbids summaries from strengthening the underlying graph. |
+| Who&When Pro / failure-origin localization | v0.5 already makes `CAUSES` a challengeable provenance-bearing relation and routes causal claims through a specialized gate. Detection and causal-origin attribution need not collapse. |
+| CRV coverage / realization / validity | v0.5 already makes evaluation stage-specific and separately names retrieval coverage, evidence-support accuracy, and adjudication accuracy. |
+| Lean kernel trust-base qualification | v0.5 already bounds downstream assurance by inherited uncertainty, applies validation discipline to FAR's own formal outputs, and requires assurance cases to retain unresolved defeaters/limitations linked to evidence or validation records. |
 
-## Result
+No amendment is justified by this campaign. The previous candidate `saturation-baseline-v0.5-amendment-a1.md` is removed.
 
-The capability-class inventory survives these seven attacks. The strong no-change reading still fails, but for a narrower reason than the first reconstruction claimed: five findings require explicit assurance/specification deltas, while two are already absorbed by the literal v0.5 baseline.
+## What the result means
 
-This is a bounded result. It does not establish that v0.5 is globally saturated, that these seven findings exhaust the search space, or that the repaired architecture is minimal.
+The **bounded no-change hypothesis survives these seven attacks**. That is evidence that the literal v0.5 architecture is broader than the first reconstruction credited.
+
+It is **not** evidence that v0.5 is globally saturated, minimal, uniquely correct, fully implemented, or commercially useful. Repeatedly fitting new findings into broad buckets would be unfalsifiable; the supporting record therefore binds every disposition to literal baseline anchors and decision/enforcement hooks.
+
+The findings can still expose implementation-assurance work. In particular, SkillCascade is a direct reason to test supported orchestration paths at composition level rather than infer safety from component passes. That is an implementation coverage question, not an architecture delta.
+
+## Source freeze
+
+All six papers are pinned to exact arXiv `v1` identities in `findings-v1.0.json`.
+
+The three mutable Lean sources are additionally bound to bounded content receipts in `source-receipts-v1.0.json`. Each receipt stores the exact decisive excerpt used by this campaign plus its SHA-256. The receipt is intentionally not a full-page republication.
 
 ## Review corrections incorporated
 
-The hostile review found that the first reconstruction overstated three items:
+The reconstruction originally manufactured deltas by asking whether v0.5 used the exact new paper terminology rather than whether its existing typed objects, relations, invariants, and validators could preserve the same decision-relevant distinction. Hostile review corrected that error.
 
-1. the synthesis fixtures were already rejected by v0.5 and are now `REPRESENTABLE_NO_CHANGE`;
-2. the CRV fixtures were already separated by v0.5 and are now `REPRESENTABLE_NO_CHANGE`;
-3. checker identity/version was already required by v0.5, so the Lean negative case now isolates omission of a **known material limitation** while retaining checker identity/version.
-
-It also removed the false zero-match Lean scan, disambiguated reliance-state promotion from FARA candidate admission, froze paper sources to exact arXiv `v1` identities, and replaced heading-only fixture checks with structured executable predicates.
+The final record also:
+- removes the false zero-match Lean scan;
+- does not redefine FARA candidate admission;
+- pins paper sources to exact arXiv revisions;
+- content-binds the mutable Lean evidence with bounded receipts;
+- removes Amendment A1 entirely;
+- replaces baseline/amendment “acceptance” simulations with literal baseline-anchor mappings.
 
 ## Nonclaims
 
@@ -47,16 +59,16 @@ It also removed the false zero-match Lean scan, disambiguated reliance-state pro
 - FARA primitive/minimality questions remain separate.
 - EFR and #518 remain unexecuted by this campaign.
 - The Lean finding does not establish that any governed FAR proof is invalid.
-- No customer utility or competitive moat is demonstrated.
+- No customer utility, competitive moat, or global saturation is demonstrated.
 
 ## Artifacts
 
-- `findings-v1.0.json` — source-bound disposition record plus frozen source manifest.
-- `counterexamples-v1.0.json` — 25 bounded attack/control fixtures with structured facts.
-- `replication.md` — reconstruction, source-freeze, and verification record.
-- `docs/architecture/saturation-baseline-v0.5-amendment-a1.md` — provisional five-rule amendment.
-- `tests/test_saturation_falsification_001.py` — structural checks plus executable baseline/amendment fixture semantics.
+- `findings-v1.0.json` — source-bound dispositions and literal baseline mappings.
+- `counterexamples-v1.0.json` — 25 attack/control fixtures bound to baseline anchors.
+- `source-receipts-v1.0.json` — bounded content receipts for mutable Lean sources.
+- `replication.md` — reconstruction, source-freeze, and hostile-review record.
+- `tests/test_saturation_falsification_001.py` — regression checks that each mapped anchor literally exists in frozen v0.5 and no amendment/status promotion survives.
 
 ## Acceptance rule
 
-This reconstruction is candidate material until the exact branch head passes the repository's required protected validation. Green CI is necessary but not sufficient for scientific acceptance; an independent review should still reconstruct each source-to-disposition inference.
+This reconstruction is candidate material until the exact branch head passes the repository's required protected validation. Green CI is necessary but not sufficient for scientific acceptance; a reviewer should still challenge whether each cited baseline surface genuinely preserves the decision-relevant distinction.
