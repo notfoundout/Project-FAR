@@ -1,0 +1,36 @@
+{
+  "campaign_id": "SATURATION-FALSIFICATION-001",
+  "fixtures": [
+    {"id":"HS-01","rule":"SF001-R1","case":"self_report_only","old_accepts":true,"amended_accepts":false,"reason":"audited actor is sole author of evidence about its external action"},
+    {"id":"HS-02","rule":"SF001-R1","case":"self_hash_chain_only","old_accepts":true,"amended_accepts":false,"reason":"tamper evidence does not create independent observation"},
+    {"id":"HS-03","rule":"SF001-R1","case":"external_append_only_observer","old_accepts":true,"amended_accepts":true,"reason":"independent observation path exists"},
+    {"id":"HS-04","rule":"SF001-R1","case":"self_report_plus_independent_corroboration","old_accepts":true,"amended_accepts":true,"reason":"external corroboration closes the evidentiary authorship gap"},
+
+    {"id":"SC-01","rule":"SF001-R2","case":"two_components_each_pass_but_joint_effect_prohibited","old_accepts":true,"amended_accepts":false,"reason":"component assurance does not cover composition"},
+    {"id":"SC-02","rule":"SF001-R2","case":"benign_output_reinterpreted_as_downstream_control","old_accepts":true,"amended_accepts":false,"reason":"cross-component semantics create a new consequential path"},
+    {"id":"SC-03","rule":"SF001-R2","case":"joint_execution_path_checked","old_accepts":true,"amended_accepts":true,"reason":"consequential composition itself is assured"},
+    {"id":"SC-04","rule":"SF001-R2","case":"independent_components_no_data_or_control_path","old_accepts":true,"amended_accepts":true,"reason":"no consequential composition is introduced"},
+
+    {"id":"VA-01","rule":"SF001-R3","case":"proposal_written_to_canonical_state_before_validation","old_accepts":true,"amended_accepts":false,"reason":"proposal status is laundered into accepted state"},
+    {"id":"VA-02","rule":"SF001-R3","case":"proposal_has_validator_field_but_no_acceptance_event","old_accepts":true,"amended_accepts":false,"reason":"metadata is not admission"},
+    {"id":"VA-03","rule":"SF001-R3","case":"proposal_validated_then_admitted","old_accepts":true,"amended_accepts":true,"reason":"state transition is explicit"},
+    {"id":"VA-04","rule":"SF001-R3","case":"rejected_proposal_retained_as_rejected_history","old_accepts":true,"amended_accepts":true,"reason":"history is preserved without canonical acceptance"},
+
+    {"id":"SF-01","rule":"SF001-R4","case":"disagreement_rendered_as_consensus","old_accepts":true,"amended_accepts":false,"reason":"synthesis strengthens upstream state"},
+    {"id":"SF-02","rule":"SF001-R4","case":"qualified_support_rendered_as_unqualified_support","old_accepts":true,"amended_accepts":false,"reason":"scope and support strength are increased"},
+    {"id":"SF-03","rule":"SF001-R4","case":"abstention_silently_dropped","old_accepts":true,"amended_accepts":false,"reason":"material uncertainty is erased"},
+    {"id":"SF-04","rule":"SF001-R4","case":"divergence_preserved_in_final_synthesis","old_accepts":true,"amended_accepts":true,"reason":"final report is faithful to accepted state"},
+
+    {"id":"PRO-01","rule":"SF001-R5","case":"first_detected_step_recorded_as_origin_without_evidence","old_accepts":true,"amended_accepts":false,"reason":"detection is not origin attribution"},
+    {"id":"PRO-02","rule":"SF001-R5","case":"origin_attribution_supported_by_intervention","old_accepts":true,"amended_accepts":true,"reason":"origin claim has challengeable evidence"},
+    {"id":"PRO-03","rule":"SF001-R5","case":"detected_at_recorded_without_origin_claim","old_accepts":true,"amended_accepts":true,"reason":"unknown origin remains unknown"},
+
+    {"id":"CRV-01","rule":"SF001-R6","case":"correct_candidate_exists_but_not_selected","old_accepts":true,"amended_accepts":false,"reason":"coverage cannot substitute for realization"},
+    {"id":"CRV-02","rule":"SF001-R6","case":"selected_candidate_correct_but_support_unvalidated","old_accepts":true,"amended_accepts":false,"reason":"realization cannot substitute for validity evidence"},
+    {"id":"CRV-03","rule":"SF001-R6","case":"coverage_realization_validity_all_recorded","old_accepts":true,"amended_accepts":true,"reason":"dimensions remain separate"},
+
+    {"id":"LEAN-01","rule":"SF001-R7","case":"formal_result_says_checked_without_checker_identity_or_version","old_accepts":true,"amended_accepts":false,"reason":"trusted computing base is erased"},
+    {"id":"LEAN-02","rule":"SF001-R7","case":"affected_checker_version_used_but_no_exploit_path_demonstrated","old_accepts":true,"amended_accepts":true,"reason":"retain limitation without promoting it to theorem invalidity"},
+    {"id":"LEAN-03","rule":"SF001-R7","case":"checker_identity_version_and_known_limitations_recorded","old_accepts":true,"amended_accepts":true,"reason":"formal assurance remains explicitly qualified"}
+  ]
+}
