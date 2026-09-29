@@ -64,7 +64,7 @@ The earlier reconstruction's raw zero-match grep claim was false and remains del
 
 The regression test verifies that:
 1. all seven findings retain that bounded disposition;
-2. no amendment rule survives;
+2. Amendment A1 is present only as a `WITHDRAWN / NON-OPERATIVE` tombstone and contains no rule identifiers;
 3. every cited baseline anchor literally exists in the baseline artifact;
 4. every fixture is covered by anchors registered for its finding;
 5. the mutable-source receipt hashes recompute exactly;
@@ -86,7 +86,7 @@ Those are implementation-assurance questions to test under the applicable implem
 - capability-class inventory: survives these seven attacks;
 - bounded no-change hypothesis: survives these seven attacks;
 - global saturation: not established;
-- Amendment A1: removed;
+- Amendment A1: `WITHDRAWN / NON-OPERATIVE`; no operative rules survive;
 - v0.6: not justified;
 - FARA minimality: not adjudicated here;
 - EFR/#518: not executed;
