@@ -50,13 +50,13 @@ v0.5 already makes evaluation stage-specific and separately enumerates retrieval
 
 v0.5 already requires method/version and validation state for consequential transformations; forbids downstream assurance beyond inherited uncertainty; applies the same discipline to FAR's formal outputs; and requires assurance cases to expose unresolved defeaters and limitations with evidence/validation links.
 
-Issue #14576, the 4.32.2 release notes, and the postmortem establish a relevant Lean soundness defect and fix context. FAR's pin predates 4.32.2. This campaign does not establish that any governed FAR proof exercised the exploit path or is invalid.
+The bounded receipts establish a checked-kernel soundness defect, a point-release soundness fix, and metaprogramming reachability. They do **not** establish an affected-version range that includes FAR's pinned Lean 4.19.0. Accordingly, applicability to FAR's pinned Lean 4.19.0 is unestablished and remains an explicit unresolved assurance uncertainty. This campaign does not establish that any governed FAR proof exercised the exploit path or is invalid.
 
 The earlier reconstruction's raw zero-match grep claim was false and remains deleted.
 
 ## Mutable-source receipts
 
-`source-receipts-v1.0.json` freezes the exact decisive excerpts used from the three mutable Lean web sources and records SHA-256 over the exact UTF-8 excerpt bytes. This is a bounded reproducibility receipt, not a full mirror of the external pages.
+`source-receipts-v1.0.json` freezes the exact decisive excerpts used from the three mutable Lean web sources and records SHA-256 over the exact UTF-8 excerpt bytes. This is a bounded reproducibility receipt, not a full mirror of the external pages. The regression test also pins the expected receipt digests so changing both excerpt and digest does not silently redefine the frozen source evidence.
 
 ## Counterexample method
 
@@ -67,8 +67,10 @@ The regression test verifies that:
 2. Amendment A1 is present only as a `WITHDRAWN / NON-OPERATIVE` tombstone and contains no rule identifiers;
 3. every cited baseline anchor literally exists in the baseline artifact;
 4. every fixture is covered by anchors registered for its finding;
-5. the mutable-source receipt hashes recompute exactly;
-6. no v0.6, FAR-CORE, FARA, EFR, or empirical-status promotion is made.
+5. exact arXiv identities, locators, titles, authors, and submission timestamps remain pinned;
+6. the mutable-source receipt hashes recompute exactly and equal their frozen expected digests;
+7. the Lean attack preserves unknown applicability to the FAR pin rather than inferring affected-version status;
+8. no v0.6, FAR-CORE, FARA, EFR, or empirical-status promotion is made.
 
 These checks make accidental reintroduction of the disproven A1 story fail loudly. They do not turn the research interpretation into a theorem.
 
@@ -90,7 +92,8 @@ Those are implementation-assurance questions to test under the applicable implem
 - v0.6: not justified;
 - FARA minimality: not adjudicated here;
 - EFR/#518: not executed;
-- external utility: not tested.
+- external utility: not tested;
+- applicability of Lean issue #14576 to FAR's pinned Lean 4.19.0: unestablished.
 
 ## Validation boundary
 
