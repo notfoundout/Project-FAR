@@ -34,13 +34,19 @@ EXPECTED_ARXIV = {
 }
 
 
+def git_blob_sha1(data: bytes) -> str:
+    header = f"blob {len(data)}\0".encode("ascii")
+    return hashlib.sha1(header + data).hexdigest()
+
+
 class SaturationFalsification001Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         cls.findings = json.loads(FINDINGS.read_text(encoding="utf-8"))
         cls.fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
         cls.receipts = json.loads(RECEIPTS.read_text(encoding="utf-8"))
-        cls.baseline = BASELINE.read_text(encoding="utf-8")
+        cls.baseline_bytes = BASELINE.read_bytes()
+        cls.baseline = cls.baseline_bytes.decode("utf-8")
         cls.amendment = AMENDMENT.read_text(encoding="utf-8")
         cls.readme = README.read_text(encoding="utf-8")
 
@@ -48,6 +54,7 @@ class SaturationFalsification001Tests(unittest.TestCase):
         self.assertEqual(self.findings["campaign_id"], "SATURATION-FALSIFICATION-001")
         self.assertEqual(self.findings["base_sha"], "8618384efe4576580f65ff67b02b22bac43ffc51")
         self.assertEqual(self.findings["baseline_blob_sha1"], "9d398e01f915e4f368dee44d35e9bd98de5b82ff")
+        self.assertEqual(git_blob_sha1(self.baseline_bytes), self.findings["baseline_blob_sha1"])
         self.assertEqual(self.findings["status"], "RESEARCH_PROVISIONAL")
 
     def test_all_seven_findings_are_bounded_representable_no_change(self) -> None:
