@@ -70,7 +70,7 @@
       "minimal_repair":"None. Frozen v0.5 already requires synthesis to preserve qualifications, scope, uncertainty, disagreement, supporting and contradicting evidence, unresolved alternatives, source lineage, and status-time boundaries, and forbids a summary from strengthening a claim beyond the underlying graph.",
       "amendment_rule":null,
       "new_capability_class":false,
-      "baseline_mapping":{"representation_anchors":["Synthesis must preserve:","disagreement","source lineage"],"enforcement_anchors":["A summary must not strengthen a claim beyond the underlying graph.","uncertainty, abstention, provenance, versioning, and challenge state survive end to end"],"rationale":"The fabricated-consensus cases are direct adversarial fixtures for requirements already stated in v0.5.","uses_opaque_metadata":false}
+      "baseline_mapping":{"representation_anchors":["Synthesis must preserve:","qualifications","disagreement","source lineage"],"enforcement_anchors":["A summary must not strengthen a claim beyond the underlying graph.","uncertainty, abstention, provenance, versioning, and challenge state survive end to end"],"rationale":"The fabricated-consensus cases are direct adversarial fixtures for requirements already stated in v0.5.","uses_opaque_metadata":false}
     },
     {
       "id":"SF001-PRO",
