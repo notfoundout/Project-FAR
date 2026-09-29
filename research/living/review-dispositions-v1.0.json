@@ -39,7 +39,6 @@
     {"candidate_id":"FAR-LIT-F5985F3AEC6A66D8","source_key":"doi:10.70675/b5b35f21z02ffz4568z9d93z2e0068cc54e5","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-20","review_basis":"docs/audits/living-core-claim-review-issue-513-2026-09-20.md","suppress_from_core_claim_review_queue":true},
     {"candidate_id":"FAR-LIT-888AC6B78B1CA0D9","source_key":"doi:10.20944/preprints202409.1972.v5","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-29","review_basis":"docs/audits/living-core-claim-review-issue-513-2026-09-29.md","suppress_from_core_claim_review_queue":true},
     {"candidate_id":"FAR-LIT-CBA889C95AED3381","source_key":"doi:10.1007/bf02186849","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-29","review_basis":"docs/audits/living-core-claim-review-issue-513-2026-09-29.md","suppress_from_core_claim_review_queue":true},
-    {"candidate_id":"FAR-LIT-DD283139285EDBA1","source_key":"doi:10.2139/ssrn.7481718","disposition":"IRRELEVANT_FALSE_POSITIVE","reviewed_on":"2026-09-29","review_basis":"docs/audits/living-core-claim-review-issue-513-2026-09-29.md","suppress_from_core_claim_review_queue":true},
     {"candidate_id":"FAR-LIT-E16D393262C91DAA","source_key":"doi:10.2139/ssrn.6605120","disposition":"ADJACENT_NO_CONTRADICTION","reviewed_on":"2026-09-29","review_basis":"docs/audits/living-core-claim-review-issue-513-2026-09-29.md","suppress_from_core_claim_review_queue":true}
   ]
 }
