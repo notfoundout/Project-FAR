@@ -25,12 +25,47 @@ EXPECTED_FINDINGS = {
     "SF001-LEAN",
 }
 EXPECTED_ARXIV = {
-    "SF001-HS": "ARXIV-2609.32495v1",
-    "SF001-SC": "ARXIV-2609.30383v1",
-    "SF001-VA": "ARXIV-2609.31937v1",
-    "SF001-SF": "ARXIV-2609.31422v1",
-    "SF001-PRO": "ARXIV-2607.09996v1",
-    "SF001-CRV": "ARXIV-2609.32924v1",
+    "SF001-HS": {
+        "source_id": "ARXIV-2609.32495v1",
+        "title": "Hearsay: Can an Auditor Trust the Record a Deployed Agent Harness Writes?",
+        "authors": ["Jiahong Dai", "Zhuochen Yang", "Pengyang Shao", "Kelvin Ng", "Zhongyi Liu", "Chengquan Ju", "Yuting He", "Bo Hu"],
+        "submitted_at": "2026-09-26T11:37:06Z",
+    },
+    "SF001-SC": {
+        "source_id": "ARXIV-2609.30383v1",
+        "title": "Stealth Apart, Harm Together: Skill Cascading Attacks on Skill-Based Agent Systems",
+        "authors": ["Zihao Zhu", "Siwei Lyu", "Adel Bibi", "Baoyuan Wu"],
+        "submitted_at": "2026-09-24T18:00:18Z",
+    },
+    "SF001-VA": {
+        "source_id": "ARXIV-2609.31937v1",
+        "title": "Verification as an Architectural Layer for LLM Agents: A V-Model Design, and a Pilot Study of Its Deterministic Core",
+        "authors": ["Ali Afoud", "Jie JW Wu"],
+        "submitted_at": "2026-09-25T19:30:58Z",
+    },
+    "SF001-SF": {
+        "source_id": "ARXIV-2609.31422v1",
+        "title": "Towards Mitigating Fabricated Consensus: The Active Provenance Gate for Multi-Agent Debate Synthesis",
+        "authors": ["Jakub Masłowski", "Jarosław A. Chudziak"],
+        "submitted_at": "2026-09-25T15:44:18Z",
+    },
+    "SF001-PRO": {
+        "source_id": "ARXIV-2607.09996v1",
+        "title": "Who&When Pro: Can LLMs Really Attribute Failures in AI Agents?",
+        "authors": ["Jiale Liu", "Huajun Xi", "Shaokun Zhang", "Yifan Zeng", "Tianwei Yue", "Chi Wang", "Jian Kang", "Qingyun Wu", "Huazheng Wang"],
+        "submitted_at": "2026-07-10T21:45:16Z",
+    },
+    "SF001-CRV": {
+        "source_id": "ARXIV-2609.32924v1",
+        "title": "Diagnosing Sampled LLM Reasoning in Formal Geometry: Coverage, Realization, and Validity Evidence",
+        "authors": ["Xiao Yue", "Guangzhi Qu"],
+        "submitted_at": "2026-09-26T20:30:56Z",
+    },
+}
+EXPECTED_LEAN_RECEIPT_SHA256 = {
+    "LEAN-ISSUE-14576-RECEIPT": "c76e1ba31c83b3a858701fb21ca5f076e3d0bdd829673de600444350cdd60104",
+    "LEAN-RELEASE-4.32.2-RECEIPT": "51bf7479f9b10ff5a29a6255cd33c1887f40af35e15ff7781408ed58e3ec6a1e",
+    "LEAN-POSTMORTEM-14576-RECEIPT": "2a99c42db81f172f310229dd4dd8990e990fc4f664c67fa2ca8cb48a00353f61",
 }
 
 
@@ -103,22 +138,26 @@ class SaturationFalsification001Tests(unittest.TestCase):
             for anchor in fixture["required_baseline_anchors"]:
                 self.assertIn(anchor, self.baseline, (fixture["id"], anchor))
 
-    def test_primary_papers_are_bound_to_exact_arxiv_versions(self) -> None:
+    def test_primary_papers_are_bound_to_exact_arxiv_versions_and_metadata(self) -> None:
         rows = {item["id"]: item for item in self.findings["findings"]}
         manifest = self.findings["source_manifest"]
-        for finding_id, source_id in EXPECTED_ARXIV.items():
+        for finding_id, expected in EXPECTED_ARXIV.items():
+            source_id = expected["source_id"]
             self.assertEqual(rows[finding_id]["source_ids"], [source_id])
             source = manifest[source_id]
+            arxiv_identity = source_id.removeprefix("ARXIV-")
+            self.assertEqual(source["kind"], "arxiv")
             self.assertEqual(source["version"], "v1")
-            self.assertTrue(source["version_url"].endswith("v1"))
-            self.assertTrue(source["title"])
-            self.assertTrue(source["authors"])
-            self.assertTrue(source["submitted_at"].endswith("Z"))
+            self.assertEqual(source["version_url"], f"https://arxiv.org/abs/{arxiv_identity}")
+            self.assertEqual(source["title"], expected["title"])
+            self.assertEqual(source["authors"], expected["authors"])
+            self.assertEqual(source["submitted_at"], expected["submitted_at"])
             self.assertEqual(source["retrieved_on"], "2026-09-29")
 
-    def test_mutable_lean_sources_are_bound_to_content_receipts(self) -> None:
+    def test_mutable_lean_sources_are_bound_to_fixed_content_receipts(self) -> None:
         manifest = self.findings["source_manifest"]
         receipts = {item["id"]: item for item in self.receipts["receipts"]}
+        self.assertEqual(set(receipts), set(EXPECTED_LEAN_RECEIPT_SHA256))
         for source_id in ("LEAN-ISSUE-14576", "LEAN-RELEASE-4.32.2", "LEAN-POSTMORTEM-14576"):
             receipt_id = manifest[source_id]["content_receipt_id"]
             self.assertIn(receipt_id, receipts)
@@ -126,11 +165,14 @@ class SaturationFalsification001Tests(unittest.TestCase):
             self.assertEqual(receipt["source_id"], source_id)
             digest = hashlib.sha256(receipt["excerpt"].encode("utf-8")).hexdigest()
             self.assertEqual(digest, receipt["excerpt_sha256"])
+            self.assertEqual(digest, EXPECTED_LEAN_RECEIPT_SHA256[receipt_id])
 
-    def test_lean_boundary_does_not_reintroduce_zero_match_or_invalidity_claim(self) -> None:
+    def test_lean_boundary_preserves_unknown_pin_applicability(self) -> None:
         row = next(item for item in self.findings["findings"] if item["id"] == "SF001-LEAN")
         combined = json.dumps(row, sort_keys=True) + self.readme + (CAMPAIGN / "replication.md").read_text(encoding="utf-8")
         self.assertNotIn('"matches": 0', combined)
+        self.assertIn("applicability to FAR's pinned Lean 4.19.0 is unestablished", combined)
+        self.assertNotIn("FAR's pin predates 4.32.2", combined)
         self.assertIn("does not establish that any governed FAR proof", combined)
 
     def test_reconstruction_and_global_saturation_nonclaims_remain_explicit(self) -> None:
