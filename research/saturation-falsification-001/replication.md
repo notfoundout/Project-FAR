@@ -40,7 +40,7 @@ The permanent regression test verifies:
 
 ## Lean trust-base bound
 
-FAR's governed mechanization pins Lean 4.19.0. The disclosed nested-inductive/typeclass-generated-index kernel bug concerns an affected-era Lean release line and is therefore relevant to the trusted checker boundary. A bounded code search of canonical `main` for `Lean.Meta`, `run_tac`, and `unsafe` returned no repository-tracked matches. This scan is not proof that the exploit path is impossible and is not an independent re-check of every transitive toolchain component.
+FAR's governed mechanization pins Lean 4.19.0. Lean disclosed kernel soundness bug #14576, and the documented fix appears in Lean 4.32.2, so the pinned FAR version predates that fix and the issue is relevant to the trusted checker boundary. A bounded code search of canonical `main` for `Lean.Meta`, `run_tac`, and `unsafe` returned no repository-tracked matches. This scan is not proof that an exploit path is impossible and is not an independent re-check of every transitive toolchain component.
 
 Accordingly, the campaign records a checker-trust limitation only. It does not downgrade a FAR-CORE theorem, declare any governed proof invalid, or claim the absence of an exploit path.
 
