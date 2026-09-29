@@ -41,6 +41,7 @@ class SaturationFalsification001Tests(unittest.TestCase):
         cls.fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
         cls.receipts = json.loads(RECEIPTS.read_text(encoding="utf-8"))
         cls.baseline = BASELINE.read_text(encoding="utf-8")
+        cls.amendment = AMENDMENT.read_text(encoding="utf-8")
         cls.readme = README.read_text(encoding="utf-8")
 
     def test_campaign_identity_and_frozen_base(self) -> None:
@@ -60,8 +61,11 @@ class SaturationFalsification001Tests(unittest.TestCase):
             self.assertTrue(row["baseline_mapping"]["representation_anchors"], finding_id)
             self.assertTrue(row["baseline_mapping"]["enforcement_anchors"], finding_id)
 
-    def test_no_amendment_or_status_promotion_survives(self) -> None:
-        self.assertFalse(AMENDMENT.exists())
+    def test_a1_is_withdrawn_nonoperative_and_contains_no_rules(self) -> None:
+        self.assertIn("WITHDRAWN / NON-OPERATIVE", self.amendment)
+        self.assertIn("has no operative rules", self.amendment)
+        for index in range(1, 8):
+            self.assertNotIn(f"SF001-R{index}", self.amendment)
         conclusion = self.findings["campaign_conclusion"]
         self.assertTrue(conclusion["bounded_no_change_saturation_survives"])
         self.assertEqual(conclusion["scope"], "these seven attacks against frozen v0.5 only")
