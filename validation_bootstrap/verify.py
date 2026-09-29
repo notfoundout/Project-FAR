@@ -36,6 +36,12 @@ def load_object(path: Path) -> dict:
     return payload
 
 
+def definition_digest(check: dict) -> str:
+    """SHA-256 of a check's whole manifest entry in canonical JSON: command, inputs, and every other field."""
+    canonical = json.dumps(check, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
 def main() -> int:
     try:
         manifest = load_object(MANIFEST)
@@ -60,6 +66,11 @@ def main() -> int:
             f"protected check set changed: expected={sorted(locked_protected)} "
             f"actual={sorted(manifest_protected)}"
         )
+    # The flag, severity, and profile checks below leave a protected check's command and inputs free,
+    # so each protected definition is pinned whole.
+    definitions = lock.get("protected_check_definitions")
+    if not isinstance(definitions, dict) or set(definitions) != locked_protected:
+        return fail("protected check definition pins must name exactly the protected checks")
     for check_id in sorted(locked_protected):
         check = checks.get(check_id)
         if not check:
@@ -68,6 +79,8 @@ def main() -> int:
             return fail(f"protected check flag removed: {check_id}")
         if check.get("severity") != "critical":
             return fail(f"protected check severity weakened: {check_id}")
+        if definition_digest(check) != definitions[check_id]:
+            return fail(f"protected check definition changed: {check_id}")
         for profile in lock.get("required_profiles", []):
             if check_id not in profiles.get(profile, []):
                 return fail(f"protected check {check_id} missing from {profile}")

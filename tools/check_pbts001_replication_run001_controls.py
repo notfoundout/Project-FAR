@@ -2,6 +2,8 @@
 """Validate frozen coordinator controls for PBTS-001-REP-001-RUN-001."""
 
 from __future__ import annotations
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 
 import json
 from pathlib import Path

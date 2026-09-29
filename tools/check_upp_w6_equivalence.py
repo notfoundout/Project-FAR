@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import history_contiguous, successor_recorded
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "theory/equivalence/upp-representation-equivalence-v1.0.json"
@@ -50,10 +51,10 @@ def main() -> int:
     require("the terminal universal theorem" in result["not_established"], "universal-theorem nonclaim missing")
 
     completed = queue["completed_workstreams"]
-    require(completed[-1] == {"target_pr": 287, "workstream": "UPP-W6-EQUIVALENCE", "result": TERMINAL}, "queue completion mismatch")
-    require([x["target_pr"] for x in completed] == list(range(281, 288)), "completed PR history is not contiguous")
-    require(queue["next_action"] == {"target_pr": 288, "workstream": "UPP-W7-RECOVERABLE-COMMITMENT"}, "queue not advanced")
-    require(queue["ordered_followups"] == list(range(289, 297)), "followup ordering mismatch")
+    require({"target_pr": 287, "workstream": "UPP-W6-EQUIVALENCE", "result": TERMINAL} in completed, "queue completion mismatch")
+    require([x["target_pr"] for x in completed][:7] == list(range(281, 288)), "completed PR history is not contiguous")
+    require(successor_recorded(queue, 288, "UPP-W7-RECOVERABLE-COMMITMENT"), "queue not advanced")
+    require(history_contiguous(queue), "followup ordering mismatch")
     require(queue["public_evaluation_authorized"] is False, "public evaluation gate opened in queue")
 
     audit = AUDIT.read_text(encoding="utf-8")

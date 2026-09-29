@@ -6,6 +6,7 @@ import json
 import pathlib
 import subprocess
 import sys
+from upp_queue_history import public_evaluation_authorized, terminally_closed
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL = ROOT / "theory" / "terminal" / "upp_terminal_theorem_v1.py"
@@ -60,9 +61,9 @@ def main() -> int:
     completed = {item.get("target_pr") for item in queue.get("completed_workstreams", [])}
     if set(range(281, 297)) - completed:
         fail("queue omits a completed UPP workstream")
-    if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+    if not terminally_closed(queue):
         fail("terminal queue is not closed")
-    if queue.get("public_evaluation_authorized") is not True:
+    if public_evaluation_authorized(queue) is not True:
         fail("terminal release gate not adjudicated")
     text = DISCLOSURE.read_text(encoding="utf-8").lower()
     for phrase in ("strictly weakened", "not kernel-checked", "open-world", "public evaluation"):

@@ -6,6 +6,7 @@ import json
 import pathlib
 import subprocess
 import sys
+from upp_queue_history import terminally_closed
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 MODEL = ROOT / "theory" / "sufficiency" / "upp_sufficiency_construction_v1.py"
@@ -66,7 +67,7 @@ def main() -> int:
         fail("queue does not preserve PR #294 completion")
     terminal_complete = any(item.get("target_pr") == 296 for item in completed)
     if terminal_complete:
-        if queue.get("status") != "complete" or queue.get("next_action") is not None or queue.get("ordered_followups") != []:
+        if not terminally_closed(queue):
             fail("terminal queue closure malformed")
     else:
         next_action = queue.get("next_action", {})

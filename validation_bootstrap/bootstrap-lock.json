@@ -9,5 +9,12 @@
   ],
   "required_profiles": ["pr-fast", "pr-full", "full", "release"],
   "forbidden_status_defaults": ["passed", "satisfied", "resolved", "authorized"],
+  "protected_check_definitions": {
+    "bootstrap.manifest": "9e2e71b59a0846984a8f35de496ca3c27f0d0c7d8798c73d0a33aa86f32a9175",
+    "selection.completeness": "6f98391f7f0a7955af1e1fc8e45510f2d671a3d1edf4e848238cf43ce33b9300",
+    "governance.research-gates": "04cd8287425857139e830108154613dfe4ae200a6432d5d1494e97e811f19164",
+    "governance.claim-boundaries": "de0692040caad93104cd773eb232b1674eac63e4bdc6388a06dbff80e749f61a",
+    "governance.w5-authorization": "c8ff16f48d0368649109edbac2aeaf795085e60d7e0bee007ec7efce32a470c7"
+  },
   "assurance_lock": "validation_bootstrap/assurance-lock.json"
 }

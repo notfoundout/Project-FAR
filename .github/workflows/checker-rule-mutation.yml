@@ -1,0 +1,43 @@
+name: Checker Rule Mutation
+
+# Deletes each rule of the registered governance checkers in a disposable copy and requires
+# the paired tests to fail (tools/checker_rule_mutation.py). Runs when a registered checker,
+# its tests, or the tool changes, and weekly to catch drift.
+on:
+  pull_request:
+    paths:
+      - "tools/checker_rule_mutation.py"
+      - "tools/check_claim_status_ceiling.py"
+      - "tools/check_semantic_consistency.py"
+      - "tools/check_governance_register_integrity.py"
+      - "tools/check_project_far_theory_closure.py"
+      - "tools/check_far_core_v11_formalization.py"
+      - "tests/test_checker_rule_mutation.py"
+      - "tests/test_claim_status_ceiling.py"
+      - "tests/test_semantic_consistency.py"
+      - "tests/test_governance_register_integrity.py"
+      - "tests/test_project_far_theory_closure*.py"
+      - "tests/test_far_core_v11_formalization*.py"
+      - ".github/workflows/checker-rule-mutation.yml"
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rule-mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Require every registered checker rule to be detected by its tests
+        run: python tools/checker_rule_mutation.py --json "$RUNNER_TEMP/checker-rule-mutation.json"

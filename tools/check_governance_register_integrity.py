@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""Semantic guards for limitations, open problems, and claim-boundary language.
+
+Whole-file hash pins on these living documents detect any edit, so a routine re-pin also
+hides a buried promotion. These rules instead check meaning:
+
+* registers only grow: no limitation or open-problem ID may disappear (closing a problem
+  moves its row to the closure section; it never deletes it);
+* every register row keeps a non-empty status/completion cell;
+* canonical status surfaces may not assert that I2/I3 isolation, external validation or
+  replication, novelty, priority, universality, necessity, minimality, or uniqueness is
+  established unless the same clause negates or conditions it;
+* the canonical status surface keeps a negated statement for each assurance boundary.
+
+The promotion rule is a clause-level heuristic. It can miss unusual phrasing (for example a
+bare "Universality: established"); it is a complement to, not a replacement for, review.
+"""
+from __future__ import annotations
+
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+LIMITATIONS = "docs/governance/limitations-register.md"
+OPEN_PROBLEMS = "docs/governance/open-problems-register.md"
+STATUS = "docs/project-status.md"
+SURFACES = ("README.md", STATUS, "docs/CANONICAL_MAP.md", "docs/governance/claim-status-matrix.md")
+
+# IDs present on main when this checker was introduced; registers may add IDs, never drop them.
+LIMITATION_FLOOR = frozenset(f"LIM-{i:03d}" for i in range(1, 47))
+OPEN_PROBLEM_FLOOR = frozenset(f"OP-{i:02d}" for i in range(1, 30))
+
+ROW = re.compile(r"^\|\s*((?:LIM|OP)-\d+)\b[^|]*\|(.*)\|\s*$")
+TOPIC = re.compile(
+    r"\b(I2|I3|external (?:independent )?(?:validation|replication)|independent replication|novelty|priority"
+    r"|universal(?:ity)?|primitive necessity|necessity|minimality|uniqueness)\b",
+    re.I,
+)
+PROMOTION = re.compile(r"\b(established|proved|proven|demonstrated|confirmed|validated)\b", re.I)
+NEGATION = re.compile(
+    r"\b(not|no|neither|nor|without|never|cannot|unresolved|remains? open|refuted|impossible|nonclaims?"
+    r"|excluded|prohibit\w*|unless|whether|if)\b|n't",
+    re.I,
+)
+CLAUSE = re.compile(r"[,;.:|()]|\s(?:and|but|while|whereas)\s|\s[—–-]\s")
+REQUIRED_NEGATED_BOUNDARIES = ("I2", "I3", "novelty", "priority")
+
+
+def register_rows(text: str) -> list[tuple[str, list[str]]]:
+    rows = []
+    for line in text.splitlines():
+        match = ROW.match(line)
+        if match:
+            rows.append((match.group(1), [cell.strip() for cell in match.group(2).split("|")]))
+    return rows
+
+
+def promotion_clauses(text: str) -> list[str]:
+    found = []
+    for line in text.splitlines():
+        for clause in CLAUSE.split(line):
+            if TOPIC.search(clause) and PROMOTION.search(clause) and not NEGATION.search(clause):
+                found.append(clause.strip())
+    return found
+
+
+def negated_mentions(text: str, term: str) -> bool:
+    pattern = re.compile(rf"\b{re.escape(term)}\b", re.I)
+    for line in text.splitlines():
+        if pattern.search(line) and NEGATION.search(line):
+            return True
+    return False
+
+
+def validate(root: Path = ROOT) -> list[str]:
+    errors: list[str] = []
+    texts: dict[str, str] = {}
+    for relative in (LIMITATIONS, OPEN_PROBLEMS, *SURFACES):
+        path = root / relative
+        if not path.is_file():
+            errors.append(f"missing governance surface: {relative}")
+        else:
+            texts[relative] = path.read_text(encoding="utf-8")
+    if errors:
+        return errors
+
+    for relative, floor in ((LIMITATIONS, LIMITATION_FLOOR), (OPEN_PROBLEMS, OPEN_PROBLEM_FLOOR)):
+        rows = register_rows(texts[relative])
+        if missing := sorted(floor - {identifier for identifier, _ in rows}):
+            errors.append(f"{relative}: register entries removed: {', '.join(missing)}")
+        for identifier, cells in rows:
+            if not cells or not cells[-1]:
+                errors.append(f"{relative}: {identifier} has an empty status/completion cell")
+
+    for relative in SURFACES:
+        for clause in promotion_clauses(texts[relative]):
+            errors.append(f"{relative}: unnegated assurance promotion: {clause!r}")
+
+    for term in REQUIRED_NEGATED_BOUNDARIES:
+        if not negated_mentions(texts[STATUS], term):
+            errors.append(f"{STATUS}: no negated boundary statement for {term}")
+    return errors
+
+
+def main() -> int:
+    errors = validate()
+    if errors:
+        print("governance register integrity: FAIL")
+        for error in errors:
+            print(f"- {error}")
+        return 1
+    print("governance register integrity: PASS")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

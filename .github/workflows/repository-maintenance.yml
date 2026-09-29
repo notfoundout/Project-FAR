@@ -1,6 +1,9 @@
 name: Repository Maintenance
 on:
   workflow_dispatch: null
+permissions:
+  contents: read
+
 jobs:
   maintenance:
     runs-on: ubuntu-latest

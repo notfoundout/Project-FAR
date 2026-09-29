@@ -3,6 +3,7 @@
 from __future__ import annotations
 import json
 from pathlib import Path
+from check_claim_status_ceiling import validate as claim_ceiling_errors
 
 ROOT=Path(__file__).resolve().parents[1]
 REGISTRY=ROOT/'theory/evaluation/research-gates.json'
@@ -122,6 +123,7 @@ def main()->int:
         for field in ('maximum_supported_scope','primary_resolution_mode','required_next_test','supporting_validation','falsification_condition'):
             if not isinstance(claim.get(field),str) or not claim[field]: errors.append(f'claim {cid} requires {field}')
         if not isinstance(claim.get('nonclaims'),list) or not claim['nonclaims']: errors.append(f'claim {cid} requires nonclaims')
+    errors.extend(claim_ceiling_errors(claims_data))
     missing_claims=REQUIRED_CLAIM_IDS-claim_ids
     if missing_claims: errors.append('missing claims: '+', '.join(sorted(missing_claims)))
     for cid,status in {'CLM-UNIVERSAL-STRUCTURE':'unresolved','CLM-UNIVERSALITY':'not_established','CLM-NECESSITY':'not_established','CLM-MINIMALITY':'not_established'}.items():

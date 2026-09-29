@@ -10,6 +10,9 @@ on:
       - ".github/workflows/1-0-golden-clean-install.yml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   clean-install:
     runs-on: ubuntu-latest

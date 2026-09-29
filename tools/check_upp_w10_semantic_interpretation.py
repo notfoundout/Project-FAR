@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 import json
 import subprocess
 import sys
 from pathlib import Path
+from upp_queue_history import successor_recorded
 
 ROOT = Path(__file__).parents[1]
 SPEC = ROOT / "theory/foundation/upp-semantic-interpretation-v1.0.json"
@@ -22,7 +25,7 @@ def main() -> int:
     assert result["terminal_result"] == EXPECTED
     completed = {x["target_pr"]: x for x in queue["completed_workstreams"]}
     assert completed[291]["result"] == EXPECTED
-    assert queue["next_action"] == {"target_pr": 292, "workstream": "UPP-W11-HISTORICAL-TRACE"}
+    assert successor_recorded(queue, 292, "UPP-W11-HISTORICAL-TRACE")
     assert queue["public_evaluation_authorized"] is False
     run = subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-p", "test_upp_w10_semantic_interpretation.py"], cwd=ROOT)
     return run.returncode

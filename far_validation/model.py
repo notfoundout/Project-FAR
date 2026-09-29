@@ -10,9 +10,10 @@ CheckStatus = Literal[
     "timed_out", "validation_failure", "infrastructure_error",
 ]
 
-ACCEPTABLE_TERMINAL_STATUSES: frozenset[str] = frozenset(
-    {"passed", "terminal_positive_result", "terminal_negative_result", "unresolved", "inapplicable", "skipped"}
-)
+# Only `passed` succeeds, as in mechanization/lean/ValidationEngine.lean (`runSuccessful_iff_all_passed`).
+# `unresolved`, `skipped` and `inapplicable` used to count as success, although the engine never emits
+# them; unknown is not pass.
+ACCEPTABLE_TERMINAL_STATUSES: frozenset[str] = frozenset({"passed"})
 
 
 @dataclass(frozen=True)
@@ -108,8 +109,7 @@ class RunSummary:
 
     @property
     def successful(self) -> bool:
-        required = [result for result in self.results if result.status != "skipped"]
-        return bool(required) and all(result.successful for result in required)
+        return bool(self.results) and all(result.successful for result in self.results)
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)

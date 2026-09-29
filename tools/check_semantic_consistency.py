@@ -9,8 +9,9 @@ ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "docs/governance/semantic-consistency.json"
 
 
-def validate() -> list[str]:
-    data = json.loads(REGISTRY.read_text(encoding="utf-8"))
+def validate(data: dict | None = None, root: Path = ROOT) -> list[str]:
+    if data is None:
+        data = json.loads((root / REGISTRY.relative_to(ROOT)).read_text(encoding="utf-8"))
     errors: list[str] = []
     order = data["dependency_order"]
     rank = {name: index for index, name in enumerate(order)}
@@ -44,15 +45,15 @@ def validate() -> list[str]:
     if not data.get("theorem_families"):
         errors.append("theorem/proof families are not classified")
     for relative in data["required_documents"]:
-        if not (ROOT / relative).is_file():
+        if not (root / relative).is_file():
             errors.append(f"missing canonical audit document: {relative}")
 
-    active = [ROOT / "README.md", ROOT / "docs/ARCHITECTURE.md", ROOT / "docs/CANONICAL_MAP.md"]
+    active = [root / "README.md", root / "docs/ARCHITECTURE.md", root / "docs/CANONICAL_MAP.md"]
     for path in active:
         text = path.read_text(encoding="utf-8")
         if "Accepted Root Theory" in text or "the Meta-Theory depends" in text:
-            errors.append(f"active canonical document promotes legacy terminology: {path.relative_to(ROOT)}")
-    terminology = (ROOT / "docs/glossary/canonical-terminology.md").read_text(encoding="utf-8")
+            errors.append(f"active canonical document promotes legacy terminology: {path.relative_to(root)}")
+    terminology = (root / "docs/glossary/canonical-terminology.md").read_text(encoding="utf-8")
     for term in terms:
         if f"| {term} |" not in terminology:
             errors.append(f"registry term missing from terminology authority: {term}")

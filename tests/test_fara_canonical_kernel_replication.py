@@ -154,6 +154,26 @@ process.stdout.write(JSON.stringify({{before, after}}));
         self.assertEqual("pending separate PR", adjudication["lifecycle_consequence"]["acceptance"])
         self.assertFalse(adjudication["lifecycle_consequence"]["canonical_authority_changed"])
 
+    def test_history_proof_holds_in_this_repository(self):
+        fixture = self.protocol["fixture_corpus"]
+        commits = (fixture["freeze_commit"], fixture["implementation_commit"])
+        present = [
+            subprocess.run(
+                ["git", "cat-file", "-e", f"{commit}^{{commit}}"], cwd=ROOT, capture_output=True
+            ).returncode
+            == 0
+            for commit in commits
+        ]
+        if not all(present):
+            shallow = subprocess.run(
+                ["git", "rev-parse", "--is-shallow-repository"],
+                cwd=ROOT, capture_output=True, text=True, check=True,
+            ).stdout.strip()
+            self.assertEqual("true", shallow)
+            # Visible, not a silent pass: the ancestry proof is unverified in a shallow clone.
+            self.skipTest("fixture freeze and implementation commits are absent from this shallow clone")
+        self.assertEqual(self.good_history, checker.verify_freeze_history(self.protocol))
+
     def test_generated_artifacts_are_current(self):
         adjudication = self.build()
         self.assertEqual(adjudication, checker.load(checker.ADJUDICATION))

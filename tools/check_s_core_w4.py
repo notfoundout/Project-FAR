@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate SCORE-W4-PROOF-001 after subsequent W5 assembly."""
 from __future__ import annotations
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 import json,subprocess,sys
 from pathlib import Path
 from s_core_w4_negative_controls import CONTROL_IDS, CONTROL_SPEC, run_suite

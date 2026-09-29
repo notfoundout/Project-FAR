@@ -1,6 +1,7 @@
 from __future__ import annotations
 import importlib.util, json, sys
 from pathlib import Path
+from upp_queue_history import history_contiguous, successor_recorded
 ROOT=Path(__file__).resolve().parents[1]
 SPEC=ROOT/'theory/contract/upp-faithfulness-contract-v1.0.json'
 RESULT=ROOT/'theory/evaluation/upp-w3-contract-result-v1.0.json'
@@ -29,8 +30,8 @@ def main():
  if r.get('status')!='complete' or r.get('unknowns_promoted') is not False: fail('result invalid')
  completed={x['target_pr']:x for x in q.get('completed_workstreams',[])}
  if completed.get(284,{}).get('result')!=r.get('result'): fail('queue missing completed W3')
- if q.get('next_action')!={'target_pr':285,'workstream':'UPP-W4-REPRESENTATIONS'}: fail('wrong next action')
- if q.get('ordered_followups')!=list(range(286,297)): fail('followups changed')
+ if not successor_recorded(q,285,'UPP-W4-REPRESENTATIONS'): fail('wrong next action')
+ if not history_contiguous(q): fail('followups changed')
  if q.get('public_evaluation_authorized') is not False: fail('release gate opened')
  print('PASS: UPP-W3 contract is independent, assumption-visible, and queue-consistent'); return 0
 if __name__=='__main__': raise SystemExit(main())

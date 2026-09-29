@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate retained SCORE-W2-PROOF-001 after later wave progress."""
 from __future__ import annotations
+if not __debug__:
+    raise SystemExit(f"{__file__}: refusing to run under python -O; this checker validates with assert statements")
 import json, subprocess, sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
