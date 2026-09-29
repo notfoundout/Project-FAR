@@ -30,6 +30,14 @@ EXPECTED_FINDINGS = {
     "SF001-LEAN": "SPECIFICATION_REPAIR",
 }
 EXPECTED_RULES = {f"SF001-R{i}" for i in range(1, 8)}
+EXPECTED_ARXIV = {
+    "SF001-HS": "https://arxiv.org/abs/2609.32495",
+    "SF001-SC": "https://arxiv.org/abs/2609.30383",
+    "SF001-VA": "https://arxiv.org/abs/2609.31937",
+    "SF001-SF": "https://arxiv.org/abs/2609.31422",
+    "SF001-PRO": "https://arxiv.org/abs/2607.09996",
+    "SF001-CRV": "https://arxiv.org/abs/2609.32924",
+}
 
 
 class SaturationFalsification001Tests(unittest.TestCase):
@@ -124,11 +132,10 @@ class SaturationFalsification001Tests(unittest.TestCase):
         self.assertEqual(row["bounded_repo_scan"]["matches"], 0)
         self.assertEqual(row["bounded_repo_scan"]["queries"], ["Lean.Meta", "run_tac", "unsafe"])
 
-    def test_primary_sources_are_bound_to_expected_domains(self) -> None:
+    def test_primary_sources_are_bound_to_expected_identifiers(self) -> None:
         rows = {item["id"]: item for item in self.findings["findings"]}
-        for finding_id in ("SF001-HS", "SF001-SC", "SF001-VA", "SF001-SF", "SF001-PRO", "SF001-CRV"):
-            self.assertEqual(len(rows[finding_id]["primary_sources"]), 1)
-            self.assertTrue(rows[finding_id]["primary_sources"][0].startswith("https://arxiv.org/abs/2609."))
+        for finding_id, source in EXPECTED_ARXIV.items():
+            self.assertEqual(rows[finding_id]["primary_sources"], [source])
         lean_sources = rows["SF001-LEAN"]["primary_sources"]
         self.assertTrue(any("github.com/leanprover/lean4/issues/14576" in source for source in lean_sources))
         self.assertTrue(any("leodemoura.github.io" in source for source in lean_sources))

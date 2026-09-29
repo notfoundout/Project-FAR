@@ -16,7 +16,7 @@ The reviewed v0.5 artifact is `docs/architecture/saturation-baseline-v0.5.md`. I
 - SkillCascade / cross-skill composition: https://arxiv.org/abs/2609.30383
 - Verification as an architectural layer: https://arxiv.org/abs/2609.31937
 - Active provenance / synthesis fidelity: https://arxiv.org/abs/2609.31422
-- PRO-style failure-origin localization: https://arxiv.org/abs/2609.33297
+- Who&When Pro / failure-origin localization: https://arxiv.org/abs/2607.09996
 - CRV coverage-realization-validity distinction: https://arxiv.org/abs/2609.32924
 - Lean kernel bug: https://github.com/leanprover/lean4/issues/14576
 - Lean postmortem: https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/
@@ -43,6 +43,10 @@ The permanent regression test verifies:
 FAR's governed mechanization pins Lean 4.19.0. The disclosed nested-inductive/typeclass-generated-index kernel bug concerns an affected-era Lean release line and is therefore relevant to the trusted checker boundary. A bounded code search of canonical `main` for `Lean.Meta`, `run_tac`, and `unsafe` returned no repository-tracked matches. This scan is not proof that the exploit path is impossible and is not an independent re-check of every transitive toolchain component.
 
 Accordingly, the campaign records a checker-trust limitation only. It does not downgrade a FAR-CORE theorem, declare any governed proof invalid, or claim the absence of an exploit path.
+
+## Failure-origin bound
+
+Who&When Pro defines failure attribution around a decisive step produced by exact successful-prefix replay followed by a controlled failure injection. The project description defines the decisive step as the earliest action whose correction would have changed the failed outcome, and reports that models often label an error by its visible symptom rather than its cause. SATURATION-FALSIFICATION-001 uses this only to justify preserving detection location separately from origin attribution; it does not claim the paper proves FAR's proposed schema.
 
 ## Scientific result
 
