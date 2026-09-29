@@ -25,7 +25,7 @@ All seven tested findings are `REPRESENTABLE_NO_CHANGE`.
 | CRV coverage / realization / validity | v0.5 already makes evaluation stage-specific and separately names retrieval coverage, evidence-support accuracy, and adjudication accuracy. |
 | Lean kernel trust-base qualification | v0.5 already bounds downstream assurance by inherited uncertainty, applies validation discipline to FAR's own formal outputs, and requires assurance cases to retain unresolved defeaters/limitations linked to evidence or validation records. |
 
-No amendment is justified by this campaign. The previous candidate `saturation-baseline-v0.5-amendment-a1.md` is removed.
+No operative amendment is justified by this campaign. The previous candidate `saturation-baseline-v0.5-amendment-a1.md` is retained only as a **WITHDRAWN / NON-OPERATIVE** tombstone so the failed repair remains auditable.
 
 ## What the result means
 
@@ -50,7 +50,7 @@ The final record also:
 - does not redefine FARA candidate admission;
 - pins paper sources to exact arXiv revisions;
 - content-binds the mutable Lean evidence with bounded receipts;
-- removes Amendment A1 entirely;
+- withdraws Amendment A1 and strips it of operative rules;
 - replaces baseline/amendment “acceptance” simulations with literal baseline-anchor mappings.
 
 ## Nonclaims
@@ -67,7 +67,8 @@ The final record also:
 - `counterexamples-v1.0.json` — 25 attack/control fixtures bound to baseline anchors.
 - `source-receipts-v1.0.json` — bounded content receipts for mutable Lean sources.
 - `replication.md` — reconstruction, source-freeze, and hostile-review record.
-- `tests/test_saturation_falsification_001.py` — regression checks that each mapped anchor literally exists in frozen v0.5 and no amendment/status promotion survives.
+- `docs/architecture/saturation-baseline-v0.5-amendment-a1.md` — withdrawn non-operative tombstone preserving the rejected intermediate repair.
+- `tests/test_saturation_falsification_001.py` — regression checks that each mapped anchor literally exists in frozen v0.5 and no operative amendment/status promotion survives.
 
 ## Acceptance rule
 
