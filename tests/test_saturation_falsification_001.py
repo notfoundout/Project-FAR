@@ -92,8 +92,12 @@ class SaturationFalsification001Tests(unittest.TestCase):
         self.assertEqual(git_blob_sha1(self.baseline_bytes), self.findings["baseline_blob_sha1"])
         self.assertEqual(self.findings["status"], "RESEARCH_PROVISIONAL")
 
-    def test_all_seven_findings_are_bounded_representable_no_change(self) -> None:
-        rows = {item["id"]: item for item in self.findings["findings"]}
+    def test_all_seven_findings_are_unique_bounded_representable_no_change(self) -> None:
+        finding_items = self.findings["findings"]
+        ids = [item["id"] for item in finding_items]
+        self.assertEqual(len(finding_items), len(EXPECTED_FINDINGS))
+        self.assertEqual(len(ids), len(set(ids)))
+        rows = {item["id"]: item for item in finding_items}
         self.assertEqual(set(rows), EXPECTED_FINDINGS)
         for finding_id, row in rows.items():
             self.assertEqual(row["disposition"], "REPRESENTABLE_NO_CHANGE", finding_id)
@@ -123,11 +127,12 @@ class SaturationFalsification001Tests(unittest.TestCase):
             for anchor in mapping["representation_anchors"] + mapping["enforcement_anchors"]:
                 self.assertIn(anchor, self.baseline, (row["id"], anchor))
 
-    def test_twenty_five_fixtures_are_bound_to_registered_baseline_anchors(self) -> None:
+    def test_twenty_four_fixtures_are_bound_to_registered_baseline_anchors(self) -> None:
         rows = {item["id"]: item for item in self.findings["findings"]}
         fixtures = self.fixtures["fixtures"]
-        self.assertEqual(len(fixtures), 25)
-        self.assertEqual(len({row["id"] for row in fixtures}), 25)
+        self.assertEqual(len(fixtures), 24)
+        self.assertEqual(len({row["id"] for row in fixtures}), 24)
+        self.assertNotIn("SC-04", {row["id"] for row in fixtures})
         self.assertEqual({row["finding_id"] for row in fixtures}, EXPECTED_FINDINGS)
         for fixture in fixtures:
             self.assertTrue(fixture["baseline_handles"], fixture["id"])
@@ -137,6 +142,13 @@ class SaturationFalsification001Tests(unittest.TestCase):
             self.assertLessEqual(set(fixture["required_baseline_anchors"]), allowed, fixture["id"])
             for anchor in fixture["required_baseline_anchors"]:
                 self.assertIn(anchor, self.baseline, (fixture["id"], anchor))
+
+    def test_verification_finding_separates_proposal_validation_and_reliance(self) -> None:
+        row = next(item for item in self.findings["findings"] if item["id"] == "SF001-VA")
+        anchors = set(row["baseline_mapping"]["representation_anchors"])
+        self.assertTrue({"ADJUDICATION", "ADJUDICATION_VERSION", "VALIDATION_RECORD", "EXTERNAL_RELIANCE_READY"}.issubset(anchors))
+        construction = row["baseline_mapping"]["construction"]
+        self.assertIn("Proposal identity, validation outcome, and reliance state therefore remain separate.", construction)
 
     def test_primary_papers_are_bound_to_exact_arxiv_versions_and_metadata(self) -> None:
         rows = {item["id"]: item for item in self.findings["findings"]}
