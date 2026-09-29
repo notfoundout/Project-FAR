@@ -90,7 +90,7 @@
         "https://github.com/leanprover/lean4/issues/14576",
         "https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/"
       ],
-      "evidence": "Lean disclosed a kernel soundness bug involving nested-inductive/typeclass-generated-index machinery. FAR pins Lean 4.19.0, an affected-era release, but this campaign found no repository-tracked Lean.Meta, run_tac, or unsafe occurrence and does not demonstrate that a governed FAR proof exercises the exploit path.",
+      "evidence": "Lean disclosed kernel soundness bug #14576. FAR pins Lean 4.19.0, which predates the documented fix in Lean 4.32.2. This campaign found no repository-tracked Lean.Meta, run_tac, or unsafe occurrence and does not demonstrate that a governed FAR proof exercises an exploit path.",
       "existing_surfaces": ["Formal assurance", "Validation", "Provenance", "Meta-assurance"],
       "counterexample": "A proof artifact is accepted by a specific checker build with a latent soundness defect; recording only 'checked' erases checker identity, version, assumptions, and known limitations.",
       "decision_relevant_distinction": "proof artifact validity claim versus checker/toolchain trust-base qualification",
