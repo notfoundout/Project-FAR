@@ -30,9 +30,11 @@ v0.5 already has `DEPENDS_ON` / `DERIVED_FROM`, requires every consequential tra
 
 The relevant inference is bounded: a consequential composition/path can be represented as its own dependency-bearing transformation or relation and therefore need not inherit a component's validation result. SkillCascade motivates composition-level adversarial tests in implementations that support such paths; it does not establish a missing first-class architecture primitive.
 
+The earlier `SC-04` control was removed after review because absence of a positive `DEPENDS_ON` edge does not prove independence in an open-world graph. This campaign therefore makes no claim that v0.5 can certify absence of every data/control path without separate completeness evidence.
+
 ### Verification before reliance
 
-v0.5 already defines fail-closed reliance states and allows `EXTERNAL_RELIANCE_READY` only through a recorded transition that validates every applicable assurance capability and binds the resulting assurance case to the exact adjudication version. The tested proposal/validation/reliance distinction is therefore already explicit.
+v0.5 already provides separate `ADJUDICATION` / `ADJUDICATION_VERSION` identities, `VALIDATION_RECORD` objects, and fail-closed reliance states. A generated proposal can remain an exploratory/pending adjudication version, verifier outcomes remain separate validation records, and `EXTERNAL_RELIANCE_READY` is reachable only through the recorded promotion rule after applicable validation. The tested proposal/validation/reliance distinction is therefore representable without collapsing those states.
 
 ### Synthesis
 
@@ -60,17 +62,18 @@ The earlier reconstruction's raw zero-match grep claim was false and remains del
 
 ## Counterexample method
 
-`counterexamples-v1.0.json` retains 25 attack/control scenarios, but it no longer simulates a fictional global `baseline_accepts` policy. Each scenario instead names the literal baseline anchors that already carry the distinction and records the bounded disposition `REPRESENTABLE_NO_CHANGE`.
+`counterexamples-v1.0.json` retains 24 attack/control scenarios. The invalid closed-world independence control was removed rather than being counted as handled. The file no longer simulates a fictional global `baseline_accepts` policy. Each retained scenario instead names the literal baseline anchors that already carry the distinction and records the bounded disposition `REPRESENTABLE_NO_CHANGE`.
 
 The regression test verifies that:
-1. all seven findings retain that bounded disposition;
+1. all seven findings are present exactly once and retain that bounded disposition;
 2. Amendment A1 is present only as a `WITHDRAWN / NON-OPERATIVE` tombstone and contains no rule identifiers;
 3. every cited baseline anchor literally exists in the baseline artifact;
-4. every fixture is covered by anchors registered for its finding;
-5. exact arXiv identities, locators, titles, authors, and submission timestamps remain pinned;
-6. the mutable-source receipt hashes recompute exactly and equal their frozen expected digests;
-7. the Lean attack preserves unknown applicability to the FAR pin rather than inferring affected-version status;
-8. no v0.6, FAR-CORE, FARA, EFR, or empirical-status promotion is made.
+4. all 24 retained fixtures are covered by anchors registered for their finding, and the invalid `SC-04` control is absent;
+5. proposal identity, validation outcome, and reliance state are explicitly separated for the verification finding;
+6. exact arXiv identities, locators, titles, authors, and submission timestamps remain pinned;
+7. the mutable-source receipt hashes recompute exactly and equal their frozen expected digests;
+8. the Lean attack preserves unknown applicability to the FAR pin rather than inferring affected-version status;
+9. no v0.6, FAR-CORE, FARA, EFR, or empirical-status promotion is made.
 
 These checks make accidental reintroduction of the disproven A1 story fail loudly. They do not turn the research interpretation into a theorem.
 
