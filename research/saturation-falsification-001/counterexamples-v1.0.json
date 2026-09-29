@@ -1,36 +1,30 @@
 {
   "campaign_id": "SATURATION-FALSIFICATION-001",
   "fixtures": [
-    {"id":"HS-01","rule":"SF001-R1","case":"self_report_only","old_accepts":true,"amended_accepts":false,"reason":"audited actor is sole author of evidence about its external action"},
-    {"id":"HS-02","rule":"SF001-R1","case":"self_hash_chain_only","old_accepts":true,"amended_accepts":false,"reason":"tamper evidence does not create independent observation"},
-    {"id":"HS-03","rule":"SF001-R1","case":"external_append_only_observer","old_accepts":true,"amended_accepts":true,"reason":"independent observation path exists"},
-    {"id":"HS-04","rule":"SF001-R1","case":"self_report_plus_independent_corroboration","old_accepts":true,"amended_accepts":true,"reason":"external corroboration closes the evidentiary authorship gap"},
-
-    {"id":"SC-01","rule":"SF001-R2","case":"two_components_each_pass_but_joint_effect_prohibited","old_accepts":true,"amended_accepts":false,"reason":"component assurance does not cover composition"},
-    {"id":"SC-02","rule":"SF001-R2","case":"benign_output_reinterpreted_as_downstream_control","old_accepts":true,"amended_accepts":false,"reason":"cross-component semantics create a new consequential path"},
-    {"id":"SC-03","rule":"SF001-R2","case":"joint_execution_path_checked","old_accepts":true,"amended_accepts":true,"reason":"consequential composition itself is assured"},
-    {"id":"SC-04","rule":"SF001-R2","case":"independent_components_no_data_or_control_path","old_accepts":true,"amended_accepts":true,"reason":"no consequential composition is introduced"},
-
-    {"id":"VA-01","rule":"SF001-R3","case":"proposal_written_to_canonical_state_before_validation","old_accepts":true,"amended_accepts":false,"reason":"proposal status is laundered into accepted state"},
-    {"id":"VA-02","rule":"SF001-R3","case":"proposal_has_validator_field_but_no_acceptance_event","old_accepts":true,"amended_accepts":false,"reason":"metadata is not admission"},
-    {"id":"VA-03","rule":"SF001-R3","case":"proposal_validated_then_admitted","old_accepts":true,"amended_accepts":true,"reason":"state transition is explicit"},
-    {"id":"VA-04","rule":"SF001-R3","case":"rejected_proposal_retained_as_rejected_history","old_accepts":true,"amended_accepts":true,"reason":"history is preserved without canonical acceptance"},
-
-    {"id":"SF-01","rule":"SF001-R4","case":"disagreement_rendered_as_consensus","old_accepts":true,"amended_accepts":false,"reason":"synthesis strengthens upstream state"},
-    {"id":"SF-02","rule":"SF001-R4","case":"qualified_support_rendered_as_unqualified_support","old_accepts":true,"amended_accepts":false,"reason":"scope and support strength are increased"},
-    {"id":"SF-03","rule":"SF001-R4","case":"abstention_silently_dropped","old_accepts":true,"amended_accepts":false,"reason":"material uncertainty is erased"},
-    {"id":"SF-04","rule":"SF001-R4","case":"divergence_preserved_in_final_synthesis","old_accepts":true,"amended_accepts":true,"reason":"final report is faithful to accepted state"},
-
-    {"id":"PRO-01","rule":"SF001-R5","case":"first_detected_step_recorded_as_origin_without_evidence","old_accepts":true,"amended_accepts":false,"reason":"detection is not origin attribution"},
-    {"id":"PRO-02","rule":"SF001-R5","case":"origin_attribution_supported_by_intervention","old_accepts":true,"amended_accepts":true,"reason":"origin claim has challengeable evidence"},
-    {"id":"PRO-03","rule":"SF001-R5","case":"detected_at_recorded_without_origin_claim","old_accepts":true,"amended_accepts":true,"reason":"unknown origin remains unknown"},
-
-    {"id":"CRV-01","rule":"SF001-R6","case":"correct_candidate_exists_but_not_selected","old_accepts":true,"amended_accepts":false,"reason":"coverage cannot substitute for realization"},
-    {"id":"CRV-02","rule":"SF001-R6","case":"selected_candidate_correct_but_support_unvalidated","old_accepts":true,"amended_accepts":false,"reason":"realization cannot substitute for validity evidence"},
-    {"id":"CRV-03","rule":"SF001-R6","case":"coverage_realization_validity_all_recorded","old_accepts":true,"amended_accepts":true,"reason":"dimensions remain separate"},
-
-    {"id":"LEAN-01","rule":"SF001-R7","case":"formal_result_says_checked_without_checker_identity_or_version","old_accepts":true,"amended_accepts":false,"reason":"trusted computing base is erased"},
-    {"id":"LEAN-02","rule":"SF001-R7","case":"affected_checker_version_used_but_no_exploit_path_demonstrated","old_accepts":true,"amended_accepts":true,"reason":"retain limitation without promoting it to theorem invalidity"},
-    {"id":"LEAN-03","rule":"SF001-R7","case":"checker_identity_version_and_known_limitations_recorded","old_accepts":true,"amended_accepts":true,"reason":"formal assurance remains explicitly qualified"}
+    {"id":"HS-01","finding_id":"SF001-HS","rule":"SF001-R1","case":"self_report_only","facts":{"externally_observable_execution":true,"actor_controls_sole_record":true,"independent_observation_or_corroboration":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"HS-02","finding_id":"SF001-HS","rule":"SF001-R1","case":"self_hash_chain_only","facts":{"externally_observable_execution":true,"actor_controls_sole_record":true,"independent_observation_or_corroboration":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"HS-03","finding_id":"SF001-HS","rule":"SF001-R1","case":"external_append_only_observer","facts":{"externally_observable_execution":true,"actor_controls_sole_record":false,"independent_observation_or_corroboration":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"HS-04","finding_id":"SF001-HS","rule":"SF001-R1","case":"self_report_plus_independent_corroboration","facts":{"externally_observable_execution":true,"actor_controls_sole_record":true,"independent_observation_or_corroboration":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"SC-01","finding_id":"SF001-SC","rule":"SF001-R2","case":"two_components_each_pass_but_joint_effect_prohibited","facts":{"consequential_composition":true,"composition_assured":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"SC-02","finding_id":"SF001-SC","rule":"SF001-R2","case":"benign_output_reinterpreted_as_downstream_control","facts":{"consequential_composition":true,"composition_assured":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"SC-03","finding_id":"SF001-SC","rule":"SF001-R2","case":"joint_execution_path_checked","facts":{"consequential_composition":true,"composition_assured":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"SC-04","finding_id":"SF001-SC","rule":"SF001-R2","case":"independent_components_no_data_or_control_path","facts":{"consequential_composition":false,"composition_assured":false},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"VA-01","finding_id":"SF001-VA","rule":"SF001-R3","case":"proposal_promoted_to_authoritative_state_before_required_validation","facts":{"consequential_proposal":true,"promoted_to_authoritative_state":true,"required_validation_succeeded":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"VA-02","finding_id":"SF001-VA","rule":"SF001-R3","case":"proposal_has_validator_field_but_no_successful_validation_event","facts":{"consequential_proposal":true,"promoted_to_authoritative_state":true,"required_validation_succeeded":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"VA-03","finding_id":"SF001-VA","rule":"SF001-R3","case":"proposal_validated_then_authoritatively_accepted","facts":{"consequential_proposal":true,"promoted_to_authoritative_state":true,"required_validation_succeeded":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"VA-04","finding_id":"SF001-VA","rule":"SF001-R3","case":"rejected_proposal_retained_as_non_authoritative_history","facts":{"consequential_proposal":true,"promoted_to_authoritative_state":false,"required_validation_succeeded":false},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"SF-01","finding_id":"SF001-SF","rule":null,"case":"disagreement_rendered_as_consensus","facts":{"strengthens_claim":false,"erases_disagreement":true,"drops_material_uncertainty_or_abstention":false},"baseline_accepts":false,"amended_accepts":false},
+    {"id":"SF-02","finding_id":"SF001-SF","rule":null,"case":"qualified_support_rendered_as_unqualified_support","facts":{"strengthens_claim":true,"erases_disagreement":false,"drops_material_uncertainty_or_abstention":false},"baseline_accepts":false,"amended_accepts":false},
+    {"id":"SF-03","finding_id":"SF001-SF","rule":null,"case":"abstention_silently_dropped","facts":{"strengthens_claim":false,"erases_disagreement":false,"drops_material_uncertainty_or_abstention":true},"baseline_accepts":false,"amended_accepts":false},
+    {"id":"SF-04","finding_id":"SF001-SF","rule":null,"case":"divergence_preserved_in_final_synthesis","facts":{"strengthens_claim":false,"erases_disagreement":false,"drops_material_uncertainty_or_abstention":false},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"PRO-01","finding_id":"SF001-PRO","rule":"SF001-R4","case":"first_detected_step_recorded_as_origin_without_evidence","facts":{"origin_claim_present":true,"origin_evidence_or_intervention_present":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"PRO-02","finding_id":"SF001-PRO","rule":"SF001-R4","case":"origin_attribution_supported_by_intervention","facts":{"origin_claim_present":true,"origin_evidence_or_intervention_present":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"PRO-03","finding_id":"SF001-PRO","rule":"SF001-R4","case":"detected_at_recorded_without_origin_claim","facts":{"origin_claim_present":false,"origin_evidence_or_intervention_present":false},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"CRV-01","finding_id":"SF001-CRV","rule":null,"case":"coverage_claim_used_as_realization_success","facts":{"coverage_substituted_for_realization":true,"realization_substituted_for_validity":false},"baseline_accepts":false,"amended_accepts":false},
+    {"id":"CRV-02","finding_id":"SF001-CRV","rule":null,"case":"realization_claim_used_as_validity_success","facts":{"coverage_substituted_for_realization":false,"realization_substituted_for_validity":true},"baseline_accepts":false,"amended_accepts":false},
+    {"id":"CRV-03","finding_id":"SF001-CRV","rule":null,"case":"coverage_realization_validity_reported_separately","facts":{"coverage_substituted_for_realization":false,"realization_substituted_for_validity":false},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"LEAN-01","finding_id":"SF001-LEAN","rule":"SF001-R5","case":"checker_identity_version_retained_but_known_material_limitation_omitted","facts":{"formal_validation_claim":true,"checker_identity_version_retained":true,"known_material_limitation_relevant":true,"limitation_retained":false},"baseline_accepts":true,"amended_accepts":false},
+    {"id":"LEAN-02","finding_id":"SF001-LEAN","rule":"SF001-R5","case":"affected_checker_version_limitation_retained_no_exploit_path_demonstrated","facts":{"formal_validation_claim":true,"checker_identity_version_retained":true,"known_material_limitation_relevant":true,"limitation_retained":true},"baseline_accepts":true,"amended_accepts":true},
+    {"id":"LEAN-03","finding_id":"SF001-LEAN","rule":"SF001-R5","case":"checker_identity_version_and_known_limitations_recorded","facts":{"formal_validation_claim":true,"checker_identity_version_retained":true,"known_material_limitation_relevant":false,"limitation_retained":false},"baseline_accepts":true,"amended_accepts":true}
   ]
 }

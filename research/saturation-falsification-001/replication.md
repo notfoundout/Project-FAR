@@ -8,54 +8,82 @@ The original Ultracode session committed an unpushed local head `f3bd22de` and s
 
 ## Canonical baseline
 
-The reviewed v0.5 artifact is `docs/architecture/saturation-baseline-v0.5.md`. It is Research/Provisional and already distinguishes broad capability classes, epistemic dimensions, provenance, validation, security, evaluation, synthesis, and meta-assurance. The hostile test was not whether each new result could be named by one of those buckets, but whether the existing specification explicitly preserved and enforced the decision-relevant distinction.
+The reviewed v0.5 artifact is `docs/architecture/saturation-baseline-v0.5.md`. It is Research/Provisional and already distinguishes broad capability classes, epistemic dimensions, provenance, validation, security, evaluation, synthesis, and meta-assurance. The hostile test is not whether each result can be named by one of those buckets, but whether the frozen specification already preserves and enforces the decision-relevant distinction.
 
-## Source bindings
+The review must therefore allow the result `REPRESENTABLE_NO_CHANGE`. A new paper does not create a FAR delta when the literal frozen baseline already rejects the relevant counterexample.
 
-- Hearsay / independent agent-record evidence: https://arxiv.org/abs/2609.32495
-- SkillCascade / cross-skill composition: https://arxiv.org/abs/2609.30383
-- Verification as an architectural layer: https://arxiv.org/abs/2609.31937
-- Active provenance / synthesis fidelity: https://arxiv.org/abs/2609.31422
-- Who&When Pro / failure-origin localization: https://arxiv.org/abs/2607.09996
-- CRV coverage-realization-validity distinction: https://arxiv.org/abs/2609.32924
-- Lean kernel bug: https://github.com/leanprover/lean4/issues/14576
-- Lean postmortem: https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/
+## Source freeze
 
-The disposition record paraphrases only bounded implications used by this campaign. A future independent review should reconstruct those implications from the primary sources rather than treating this document as source authority.
+`findings-v1.0.json` contains the source manifest used by this reconstruction.
+
+All six arXiv papers are bound to exact `v1` identities rather than versionless abstract URLs, with title, authors, submission timestamp, and retrieval date recorded. The versioned arXiv identity is the immutable paper binding for this campaign.
+
+The mutable Lean sources are frozen by identity and retrieval metadata:
+
+- issue #14576: GitHub issue id `4994570410`, node id `I_kwDOB7kabM8AAAABKbMYqg`, `updated_at=2026-07-28T13:39:10Z`, retrieved 2026-09-29;
+- Lean 4.32.2 release notes: version-specific release identity dated 2026-07-28, retrieved 2026-09-29;
+- Leonardo de Moura postmortem: dated 2026-08-01 source identity, retrieved 2026-09-29.
+
+A later replication must use these frozen identities or explicitly record a source-version change.
 
 ## Counterexample method
 
-The 25 fixtures in `counterexamples-v1.0.json` encode one distinction at a time. `old_accepts` means the case is not explicitly rejected by the pre-amendment obligations tested here; it does not mean every possible implementation conforming to v0.5 would necessarily accept the case. `amended_accepts` is the expected result under Amendment A1.
+The 25 fixtures in `counterexamples-v1.0.json` encode one distinction at a time using structured `facts`, plus expected `baseline_accepts` and `amended_accepts` results.
 
-The permanent regression test verifies:
+The permanent regression test does not infer closure from a rule heading. It executes rule-specific predicates over those facts. For `REPRESENTABLE_NO_CHANGE` findings, the baseline and amended predicates are identical and the negative cases are already rejected before A1.
 
-1. all seven findings are present exactly once;
-2. only the campaign's frozen disposition vocabulary is used;
-3. no finding is promoted to `NEW_CAPABILITY_CLASS_REQUIRED`;
-4. all seven amendment rules exist literally;
-5. 25 fixtures are present and every negative counterexample is closed by the corresponding rule;
-6. controls remain accepted;
-7. campaign nonclaims keep FAR-CORE, EFR, #518, novelty, independence, and commercial status unchanged;
-8. the Lean result is qualified rather than promoted to theorem invalidity.
+The five actual A1 deltas are:
+
+1. independent evidentiary observation;
+2. composition assurance;
+3. validated promotion into authoritative/reliance-bearing state;
+4. detection versus origin attribution;
+5. retention of known material checker/toolchain limitations.
+
+## Frozen-baseline corrections
+
+### Synthesis
+
+v0.5 already requires synthesis to preserve qualifications, scope, uncertainty, disagreement, supporting and contradicting evidence, unresolved alternatives, source lineage, and status-time boundaries. It states that summaries must not strengthen claims beyond the underlying graph, and its implementation completion contract requires uncertainty and abstention to survive end to end. The original reconstruction's `old_accepts=true` values for SF-01 through SF-03 were wrong.
+
+### CRV
+
+v0.5 already states that evaluation is stage-specific and separately enumerates retrieval/high-recall coverage, evidence-support/contradiction accuracy, and adjudication accuracy. Its hard invariants prohibit collapsing distinct epistemic dimensions. The original reconstruction's `old_accepts=true` values for CRV-01 and CRV-02 were wrong.
+
+### FARA admission terminology
+
+FARA defines a candidate as an object "admitted for consideration"; candidate status does not imply admissibility. A1 therefore does not redefine `admitted`. The repaired rule governs promotion into **authoritative or reliance-bearing state** after required validation.
 
 ## Lean trust-base bound
 
-FAR's governed mechanization pins Lean 4.19.0. Lean disclosed kernel soundness bug #14576, and the documented fix appears in Lean 4.32.2, so the pinned FAR version predates that fix and the issue is relevant to the trusted checker boundary. A bounded code search of canonical `main` for `Lean.Meta`, `run_tac`, and `unsafe` returned no repository-tracked matches. This scan is not proof that an exploit path is impossible and is not an independent re-check of every transitive toolchain component.
+FAR's governed mechanization pins Lean 4.19.0. Lean issue #14576 documents a checked-kernel soundness defect; Lean 4.32.2 release notes state that the point release fixes that defect. The dated postmortem describes the exploit as reachable through metaprogramming.
 
-Accordingly, the campaign records a checker-trust limitation only. It does not downgrade a FAR-CORE theorem, declare any governed proof invalid, or claim the absence of an exploit path.
+The earlier reconstruction stated that a raw repository search for `Lean.Meta`, `run_tac`, and `unsafe` had zero matches. That was false: raw `unsafe` matches exist, including text/comments and existing Lean material. This reconstruction makes no zero-match claim. A lexical grep cannot establish exploitability or non-exploitability.
+
+Accordingly, the campaign records a checker-trust limitation only. It does not downgrade a FAR-CORE theorem, declare any governed proof invalid, or claim the absence of an exploit path. The actual v0.5 gap tested here is narrower: method/version provenance already exists, but known material trust-base limitations relevant to the assurance claim were not explicitly required to remain attached.
 
 ## Failure-origin bound
 
-Who&When Pro defines failure attribution around a decisive step produced by exact successful-prefix replay followed by a controlled failure injection. The project description defines the decisive step as the earliest action whose correction would have changed the failed outcome, and reports that models often label an error by its visible symptom rather than its cause. SATURATION-FALSIFICATION-001 uses this only to justify preserving detection location separately from origin attribution; it does not claim the paper proves FAR's proposed schema.
+Who&When Pro v1 constructs failure-attribution trajectories by replaying a successful prefix and then injecting a controlled failure. SATURATION-FALSIFICATION-001 uses this only to justify preserving detection location separately from challengeable origin attribution; it does not claim the paper proves FAR's proposed schema.
 
 ## Scientific result
 
-The seven findings fail to force a new first-class capability class. They do force explicit specification/assurance obligations that the pre-amendment v0.5 text did not state strongly enough. The bounded result is therefore:
+The seven findings do not force a new first-class capability class.
+
+- Hearsay: `ASSURANCE_BOUNDARY_CHANGE`
+- SkillCascade: `ASSURANCE_BOUNDARY_CHANGE`
+- verification/reliance-state promotion: `SPECIFICATION_REPAIR`
+- synthesis fidelity: `REPRESENTABLE_NO_CHANGE`
+- failure-origin localization: `SPECIFICATION_REPAIR`
+- CRV separation: `REPRESENTABLE_NO_CHANGE`
+- Lean trust-base qualification: `SPECIFICATION_REPAIR`
+
+Therefore:
 
 - capability-class saturation: survives these seven attacks;
-- no-change saturation: falsified;
+- no-change saturation: falsified by five bounded deltas, not seven;
 - v0.6: not justified;
-- Amendment A1: candidate Research/Provisional repair;
+- Amendment A1: candidate Research/Provisional five-rule repair;
 - FARA minimality: not adjudicated here;
 - external utility: not tested here.
 
