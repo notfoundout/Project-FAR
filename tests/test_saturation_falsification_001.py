@@ -111,6 +111,9 @@ class SaturationFalsification001Tests(unittest.TestCase):
             source = manifest[source_id]
             self.assertEqual(source["version"], "v1")
             self.assertTrue(source["version_url"].endswith("v1"))
+            self.assertTrue(source["title"])
+            self.assertTrue(source["authors"])
+            self.assertTrue(source["submitted_at"].endswith("Z"))
             self.assertEqual(source["retrieved_on"], "2026-09-29")
 
     def test_mutable_lean_sources_are_bound_to_content_receipts(self) -> None:
