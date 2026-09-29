@@ -19,7 +19,7 @@ Broad category fit is not sufficient. A finding counts as absorbed only when the
 | SkillCascade / cross-skill composition | `ASSURANCE_BOUNDARY_CHANGE` | Assurance must cover consequential compositions, not only components in isolation. |
 | Verification before state admission | `SPECIFICATION_REPAIR` | Preserve `proposed`, `validated`, and `admitted` as distinct states; validation metadata alone must not silently canonicalize a proposal. |
 | Synthesis / provenance fidelity | `SPECIFICATION_REPAIR` | Synthesis may not strengthen support, erase disagreement, or manufacture consensus relative to the accepted epistemic state. |
-| PRO-style failure-origin localization | `SPECIFICATION_REPAIR` | `detected_at` and `origin_attributed_to` are distinct; origin attribution requires challengeable evidence. |
+| Who&When Pro / failure-origin localization | `SPECIFICATION_REPAIR` | `detected_at` and `origin_attributed_to` are distinct; origin attribution requires challengeable evidence. |
 | CRV coverage / realization / validity | `SPECIFICATION_REPAIR` | Availability, realization/selection, and validity/support are separate evaluation dimensions. |
 | Lean kernel trust-base finding | `SPECIFICATION_REPAIR` | A checked artifact must retain checker identity/version and bounded trusted-computing-base limitations; affected-version membership alone does not invalidate a proof. |
 
