@@ -21,10 +21,13 @@ on:
       - '.github/workflows/living-research.yml'
       - 'tools/run_living_research.py'
       - 'tools/reconcile_living_repo.py'
+      - 'tools/reconcile_research_corpus.py'
       - 'tools/check_living_research.py'
       - 'tests/test_living_research.py'
       - 'tests/test_living_research_workflow.py'
       - 'research/living/**'
+      - 'research/corpus/**'
+      - 'schemas/far-research-corpus-v1.schema.json'
       - 'research/registry/research-questions-v1.0.json'
       - 'research/registry/epistemic-threats-v1.0.json'
       - 'research/registry/opportunities-v1.0.json'
@@ -64,7 +67,9 @@ jobs:
       - name: Unit-test living repository
         run: python -m unittest tests.test_living_research tests.test_living_research_workflow -v
       - name: Reconcile canonical living-repository state
-        run: python tools/reconcile_living_repo.py
+        run: |
+          python tools/reconcile_living_repo.py
+          python tools/reconcile_research_corpus.py
       - name: Validate living repository invariants
         # Bounded on every automatic path. This job is dispatched by `discover` after each
         # unattended update, so a full historical scan here would put unbounded and steadily
@@ -124,7 +129,8 @@ jobs:
             # canonical snapshot promotion. No code from this branch is executed.
             for path in research/living/inbox research/living/runs \
                         research/living/state-v1.0.json \
-                        research/living/repository-state-v1.0.json; do
+                        research/living/repository-state-v1.0.json \
+                        research/living/corpus-reconciliation-v1.0.json; do
               if git cat-file -e "origin/$branch:$path" 2>/dev/null; then
                 git checkout "origin/$branch" -- "$path"
               fi
@@ -145,10 +151,13 @@ jobs:
           CROSSREF_MAILTO: ${{ secrets.CROSSREF_MAILTO }}
         run: python tools/run_living_research.py
       - name: Reconcile dependency, claim, and project state
-        run: python tools/reconcile_living_repo.py
+        run: |
+          python tools/reconcile_living_repo.py
+          python tools/reconcile_research_corpus.py --living-loop --write
       - name: Validate generated living repository
         run: |
           python tools/check_living_research.py
+          python tools/reconcile_research_corpus.py
           python -m unittest tests.test_living_research tests.test_living_research_workflow -v
           python tools/check_research_gates.py
           python tools/repo_health_check.py --fast
@@ -162,6 +171,8 @@ jobs:
             exit 0
           fi
           git add research/living \
+            research/corpus/synthesis-v1.0.json \
+            docs/research/current-research-frontier.md \
             docs/research/living-research-status.md \
             docs/research/living-repository-status.md
           git commit -m "research: update unattended living repository"

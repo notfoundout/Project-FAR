@@ -1,20 +1,390 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://project-far.local/schemas/far-research-corpus-v1.schema.json",
-  "title": "Project FAR governed research corpus v1",
+  "title": "Project FAR governed research corpus 1.1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["format_version", "authority", "identity_rule", "sources", "findings", "mechanisms", "conclusions", "frontier", "nonclaims"],
+  "required": [
+    "format_version",
+    "authority",
+    "identity_rule",
+    "inventory_rules",
+    "sources",
+    "mechanism_catalog",
+    "conclusion_rules",
+    "frontier_rules",
+    "nonclaims"
+  ],
   "properties": {
-    "format_version": {"const": "far-research-corpus/1.0"},
-    "authority": {"const": "Research"},
-    "identity_rule": {"type": "string", "minLength": 1},
-    "sources": {"type": "array", "items": {"$ref": "#/$defs/record"}},
-    "findings": {"type": "array", "items": {"$ref": "#/$defs/record"}},
-    "mechanisms": {"type": "array", "items": {"$ref": "#/$defs/record"}},
-    "conclusions": {"type": "array", "items": {"$ref": "#/$defs/record"}},
-    "frontier": {"type": "array", "items": {"$ref": "#/$defs/record"}},
-    "nonclaims": {"type": "array", "items": {"type": "string", "minLength": 1}}
+    "format_version": {
+      "const": "far-research-corpus/1.1"
+    },
+    "authority": {
+      "const": "Research"
+    },
+    "identity_rule": {
+      "$ref": "#/$defs/text"
+    },
+    "inventory_rules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required_declared_globs",
+        "automatic_lead_globs",
+        "snapshot_globs",
+        "ignored_nonmaterial"
+      ],
+      "properties": {
+        "required_declared_globs": {
+          "$ref": "#/$defs/texts"
+        },
+        "automatic_lead_globs": {
+          "$ref": "#/$defs/texts"
+        },
+        "snapshot_globs": {
+          "$ref": "#/$defs/texts"
+        },
+        "ignored_nonmaterial": {
+          "$ref": "#/$defs/texts"
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "mechanism_catalog": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/mechanism"
+      }
+    },
+    "conclusion_rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/conclusion"
+      }
+    },
+    "frontier_rules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/frontier"
+      }
+    },
+    "nonclaims": {
+      "$ref": "#/$defs/texts"
+    }
   },
-  "$defs": {"record": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"}}}}
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9-]+$"
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "texts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/id"
+      }
+    },
+    "sha": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_key",
+        "epistemic_class",
+        "statement",
+        "scope",
+        "relation",
+        "uncertainty",
+        "mechanism_ids",
+        "dependencies",
+        "supersedes",
+        "corrects"
+      ],
+      "properties": {
+        "claim_key": {
+          "$ref": "#/$defs/id"
+        },
+        "epistemic_class": {
+          "enum": [
+            "EVIDENCE",
+            "INFERENCE",
+            "HYPOTHESIS",
+            "UNRESOLVED"
+          ]
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "scope": {
+          "$ref": "#/$defs/text"
+        },
+        "relation": {
+          "enum": [
+            "SUPPORTS",
+            "CONTRADICTS",
+            "QUALIFIES",
+            "CORRECTS",
+            "SUPERSEDES",
+            "UNRESOLVED"
+          ]
+        },
+        "uncertainty": {
+          "$ref": "#/$defs/text"
+        },
+        "mechanism_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "dependencies": {
+          "$ref": "#/$defs/ids"
+        },
+        "supersedes": {
+          "$ref": "#/$defs/ids"
+        },
+        "corrects": {
+          "$ref": "#/$defs/ids"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "path",
+        "sha256",
+        "version",
+        "evidence_class",
+        "kind",
+        "availability",
+        "evidence_usable",
+        "material",
+        "scope",
+        "history",
+        "supersedes",
+        "corrects",
+        "observations"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence_class": {
+          "$ref": "#/$defs/text"
+        },
+        "kind": {
+          "$ref": "#/$defs/text"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "missing",
+            "withdrawn"
+          ]
+        },
+        "evidence_usable": {
+          "type": "boolean"
+        },
+        "material": {
+          "type": "boolean"
+        },
+        "scope": {
+          "$ref": "#/$defs/text"
+        },
+        "history": {
+          "type": "array"
+        },
+        "supersedes": {
+          "$ref": "#/$defs/ids"
+        },
+        "corrects": {
+          "$ref": "#/$defs/ids"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/observation"
+          }
+        },
+        "exclusion_reason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "auto_extractor": {
+          "enum": [
+            "saturation_falsification_001"
+          ]
+        }
+      }
+    },
+    "mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "architecture_class",
+        "literal_comparison",
+        "aliases"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "architecture_class": {
+          "enum": [
+            "already_representable_enforceable",
+            "representable_assurance_incomplete",
+            "existing_extension_point",
+            "genuine_architecture_gap",
+            "contradiction",
+            "unresolved"
+          ]
+        },
+        "literal_comparison": {
+          "$ref": "#/$defs/text"
+        },
+        "aliases": {
+          "$ref": "#/$defs/texts"
+        },
+        "gap_proof": {
+          "type": "object",
+          "required": [
+            "requirement",
+            "architecture_anchors_checked",
+            "failed_enforcement_reason"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "requirement": {
+              "$ref": "#/$defs/text"
+            },
+            "architecture_anchors_checked": {
+              "$ref": "#/$defs/texts"
+            },
+            "failed_enforcement_reason": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      }
+    },
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "statement",
+        "counterevidence",
+        "result_class",
+        "supported_disposition",
+        "required_mechanisms",
+        "depends_on_conclusions",
+        "missing_disposition"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "statement": {
+          "$ref": "#/$defs/text"
+        },
+        "counterevidence": {
+          "$ref": "#/$defs/text"
+        },
+        "result_class": {
+          "enum": [
+            "EVIDENCE",
+            "INFERENCE",
+            "HYPOTHESIS",
+            "UNRESOLVED"
+          ]
+        },
+        "supported_disposition": {
+          "$ref": "#/$defs/text"
+        },
+        "required_mechanisms": {
+          "$ref": "#/$defs/ids"
+        },
+        "depends_on_conclusions": {
+          "$ref": "#/$defs/ids"
+        },
+        "missing_disposition": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "frontier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "question",
+        "conclusion_ids",
+        "next_evidence",
+        "epistemic_class"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "question": {
+          "$ref": "#/$defs/text"
+        },
+        "conclusion_ids": {
+          "$ref": "#/$defs/ids"
+        },
+        "next_evidence": {
+          "$ref": "#/$defs/text"
+        },
+        "epistemic_class": {
+          "enum": [
+            "EVIDENCE",
+            "INFERENCE",
+            "HYPOTHESIS",
+            "UNRESOLVED"
+          ]
+        }
+      }
+    }
+  }
 }
