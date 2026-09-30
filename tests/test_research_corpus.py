@@ -70,6 +70,7 @@ class ResearchCorpusTests(unittest.TestCase):
         outputs = corpus.expected_outputs(self.data)
         self.assertEqual((corpus.ROOT / corpus.OUTPUT).read_bytes(), outputs[corpus.OUTPUT])
         self.assertEqual((corpus.ROOT / corpus.STATUS).read_bytes(), outputs[corpus.STATUS])
+        # This binds the derived schema identity to the exact governed schema bytes.
         self.assertEqual(result["generator_sha256"], corpus.digest(Path(corpus.__file__).read_bytes()))
         self.assertEqual(result["schema_sha256"], corpus.digest((corpus.ROOT / corpus.SCHEMA).read_bytes()))
 
@@ -314,6 +315,7 @@ class ResearchCorpusTests(unittest.TestCase):
         with tempfile.NamedTemporaryFile(suffix=".json", mode="w") as schema:
             altered_schema = corpus.load_json(corpus.SCHEMA); altered_schema["title"] += " changed"
             schema.write(json.dumps(altered_schema)); schema.flush()
+            # The wiring is asserted in test_real_outputs... above; here we prove altered bytes change the identity.
             self.assertNotEqual(original["schema_sha256"], corpus.digest(Path(schema.name).read_bytes()))
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); path = root / "research/corpus/snapshots/pr-490-manifest-v1.0.json"; path.parent.mkdir(parents=True)
