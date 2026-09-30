@@ -1,0 +1,27 @@
+name: Export PR Checkout
+'on':
+  push:
+    branches:
+    - codex/complete-project-far-s-living-repository
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      with:
+        fetch-depth: 0
+        show-progress: false
+        persist-credentials: false
+    - name: Pack exact checkout
+      shell: bash
+      run: tar --exclude=.git -czf "$RUNNER_TEMP/project-far-checkout.tar.gz" .
+    - name: Upload exact checkout
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+      with:
+        name: project-far-checkout-${{ github.sha }}
+        path: ${{ runner.temp }}/project-far-checkout.tar.gz
+        if-no-files-found: error
+        retention-days: 1
