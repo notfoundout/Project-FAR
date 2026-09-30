@@ -12,14 +12,7 @@
     "reviewed": 8
   },
   "canonical_theory_id": "PROJECT-FAR-CORE-THEORY-1.1",
-  "changed_surfaces": [
-    "README.md",
-    "docs/project-status.md",
-    "docs/CANONICAL_MAP.md",
-    "docs/governance/limitations-register.md",
-    "docs/governance/open-problems-register.md",
-    "theory/evaluation/far-core-assurance-v1.0.json"
-  ],
+  "changed_surfaces": [],
   "claim_dependency_impact": {
     "FAR-CORE-001": {
       "direct_dependencies": [],
@@ -444,19 +437,19 @@
   "surface_count": 20,
   "surfaces": [
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "README.md",
       "role": "canonical_entry",
       "sha256": "713fefc34ba1ade608c5b03ebca972309b3443ee83ad25e6e850fd5b22c0597c"
     },
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "docs/project-status.md",
       "role": "project_status",
       "sha256": "1379fbf53f539ffd9a27e7956a9c3b5f12963174b844bf2bf8cb60a9d7d2fd53"
     },
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "docs/CANONICAL_MAP.md",
       "role": "authority_map",
       "sha256": "94fac5a8527f8574aa488fe3cb0cca4654a522014d3ac8aa0d8f820e3cd50c3e"
@@ -486,13 +479,13 @@
       "sha256": "684029245f0b53a3603e58bae8460fb26eb516a958db545d520196cc532de2fb"
     },
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "docs/governance/limitations-register.md",
       "role": "limitations",
       "sha256": "4c7d9edd2d728174558132db06da212c920190c0207d49bd104df07b5d02355f"
     },
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "docs/governance/open-problems-register.md",
       "role": "open_problems",
       "sha256": "517aa07def99613488adc2f208cd0edcf789731ee0aec7e708ffee5877a0f627"
@@ -534,7 +527,7 @@
       "sha256": "e1e0ca8d563ad515a084f33f27a3f6c94feecd042d9081ee60ac97d27350bb78"
     },
     {
-      "changed_since_last_reconciliation": true,
+      "changed_since_last_reconciliation": false,
       "path": "theory/evaluation/far-core-assurance-v1.0.json",
       "role": "claim_assurance_ledger",
       "sha256": "1ed4157fb9cb7a5ce5f428a73e0fc2287b17499360708b063dc5b6fec9f98f60"

@@ -10,6 +10,8 @@ The chain is:
 
 `corpus-v1.0.json` declares source-bound observations and conclusion rules, not synthesis results. The reconciler inventories paths matched by the declared repository rules, current living candidates, frozen external receipts, and exact PR snapshots; an unclassified matching material path fails validation. It then evaluates governed relation/history semantics, normalizes and deduplicates findings, derives mechanism state, hashes every conclusion's transitive dependencies, and builds the frontier. Every usable source is identified separately by repository path, source identity, external identifier, content hash, version, availability, review status, and evidence-usability state. `synthesis-v1.0.json` and `docs/research/current-research-frontier.md` are derived views and never independent authority.
 
+Mutable generated living state is a `dynamic_dependency`, not an immutable evidence source. Its current bytes are schema/version checked and content-hashed on every reconciliation; that hash contributes to the synthesis-input identity and stale-view detection, but the generated state cannot support an observation or acquire evidence status. Immutable evidence must instead be registered as a content-addressed source or explicit snapshot.
+
 “Complete” is always dimensioned:
 
 - **inventory completeness** means only that all paths matched by declared rules and all entries in the frozen PR manifests are accounted for;

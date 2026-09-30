@@ -73,6 +73,28 @@ class ResearchCorpusTests(unittest.TestCase):
         self.assertEqual(result["generator_sha256"], corpus.digest(Path(corpus.__file__).read_bytes()))
         self.assertEqual(result["schema_sha256"], corpus.digest((corpus.ROOT / corpus.SCHEMA).read_bytes()))
 
+    def test_mutable_living_state_is_dynamic_invalidation_input_not_evidence(self):
+        declaration = self.data["dynamic_dependencies"][0]
+        self.assertEqual(declaration["path"], "research/living/repository-state-v1.0.json")
+        self.assertNotIn("sha256", declaration)
+        self.assertFalse(any(source["path"] == declaration["path"] for source in self.data["sources"]))
+        original = self.derive()
+        changed = copy.deepcopy(original["dynamic_dependencies"])
+        changed[0]["sha256"] = "0" * 64
+        with mock.patch.object(corpus, "dynamic_dependencies", return_value=changed):
+            recomputed = self.derive()
+        self.assertNotEqual(original["dynamic_dependencies_sha256"], recomputed["dynamic_dependencies_sha256"])
+        self.assertNotEqual(original["synthesis_input_sha256"], recomputed["synthesis_input_sha256"])
+        self.assertFalse(original["dynamic_dependencies"][0]["evidence_usable"])
+
+    def test_dynamic_dependency_identity_and_format_fail_closed(self):
+        duplicate = copy.deepcopy(self.data)
+        duplicate["dynamic_dependencies"].append(copy.deepcopy(duplicate["dynamic_dependencies"][0]))
+        self.assertTrue(any("duplicate identity" in error for error in corpus.validate(duplicate)))
+        bad_format = copy.deepcopy(self.data)
+        bad_format["dynamic_dependencies"][0]["format_value"] = "impossible-version"
+        self.assertTrue(any("dynamic dependency format mismatch" in error for error in corpus.validate(bad_format)))
+
     def test_completeness_dimensions_are_bounded_and_distinct(self):
         completeness = self.derive()["completeness"]
         self.assertEqual(set(completeness), {"inventory", "evidence", "search", "synthesis", "global_open_world"})
@@ -258,6 +280,9 @@ class ResearchCorpusTests(unittest.TestCase):
             target.parent.mkdir(parents=True)
             target.write_text(json.dumps(registry))
             data = copy.deepcopy(self.data)
+            dynamic = root / data["dynamic_dependencies"][0]["path"]
+            dynamic.parent.mkdir(parents=True, exist_ok=True)
+            dynamic.write_text(json.dumps({"schema_version": data["dynamic_dependencies"][0]["format_value"]}))
             sources, errors = corpus.reviewed_sources(data, root)
             self.assertEqual(errors, [])
             self.assertEqual(sources[0]["review_status"], "VERIFIED_FOR_CORPUS")

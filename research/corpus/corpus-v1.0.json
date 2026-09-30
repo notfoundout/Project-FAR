@@ -905,27 +905,6 @@
       "observations": [],
       "review_status": "GOVERNED_REPOSITORY_SOURCE",
       "primary_evidence_verified": true
-    },
-    {
-      "id": "SRC-LIVING-STATE",
-      "source_identity": "SRC-LIVING-STATE",
-      "path": "research/living/repository-state-v1.0.json",
-      "sha256": "39fb9c5496726ae28fb6f4e9fe6187d7c5eff0113e2b860da51ce82c8a9fad53",
-      "version": "git:8757f0e04323ec022037322a8f1af4fb92292454",
-      "external_identifier": "research/living/repository-state-v1.0.json",
-      "evidence_class": "governed_living_state",
-      "kind": "generated_living_state",
-      "current_availability": "available",
-      "historical_availability": "PRESENT",
-      "evidence_usable": true,
-      "material": true,
-      "scope": "Exact governed living state at bound bytes",
-      "history": [],
-      "supersedes": [],
-      "corrects": [],
-      "observations": [],
-      "review_status": "GOVERNED_REPOSITORY_SOURCE",
-      "primary_evidence_verified": true
     }
   ],
   "mechanism_catalog": [
@@ -1209,5 +1188,15 @@
     "search_scope": "Repository-declared search surfaces and frozen refs only; not an exhaustive literature search.",
     "synthesis_scope": "Deterministic closure over active declared observations, relation history, mechanism definitions, and conclusion rules.",
     "global_scope": "OPEN_WORLD_UNESTABLISHED"
-  }
+  },
+  "dynamic_dependencies": [
+    {
+      "id": "DYN-LIVING-REPOSITORY-STATE",
+      "path": "research/living/repository-state-v1.0.json",
+      "kind": "mutable_generated_state",
+      "format_field": "schema_version",
+      "format_value": "1.0",
+      "role": "synthesis_invalidation_only"
+    }
+  ]
 }

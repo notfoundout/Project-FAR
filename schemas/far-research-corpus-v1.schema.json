@@ -11,6 +11,7 @@
     "inventory_rules",
     "reviewed_input_registry",
     "completeness_contract",
+    "dynamic_dependencies",
     "sources",
     "mechanism_catalog",
     "conclusion_rules",
@@ -36,6 +37,13 @@
     },
     "completeness_contract": {
       "$ref": "#/$defs/completeness"
+    },
+    "dynamic_dependencies": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/dynamicDependency"
+      }
     },
     "sources": {
       "type": "array",
@@ -66,6 +74,19 @@
     }
   },
   "$defs": {
+    "dynamicDependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "path", "kind", "format_field", "format_value", "role"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"},
+        "path": {"type": "string", "pattern": "^[^/].*\\.json$"},
+        "kind": {"const": "mutable_generated_state"},
+        "format_field": {"$ref": "#/$defs/text"},
+        "format_value": {"$ref": "#/$defs/text"},
+        "role": {"const": "synthesis_invalidation_only"}
+      }
+    },
     "id": {
       "type": "string",
       "pattern": "^[A-Z][A-Z0-9-]+$"

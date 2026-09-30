@@ -94,6 +94,25 @@ def file_record(path: Path, root: Path = ROOT) -> dict[str, Any]:
     return {"path": path.as_posix(), "sha256": digest(resolved.read_bytes()), "size": resolved.stat().st_size}
 
 
+def dynamic_dependencies(data: dict[str, Any], root: Path = ROOT) -> list[dict[str, Any]]:
+    """Bind mutable generated state by its current bytes, never as immutable evidence."""
+    records = []
+    for dependency in data.get("dynamic_dependencies", []):
+        path = safe_path(root, dependency["path"], suffixes={".json"})
+        if not path.is_file():
+            raise ValueError(f"missing dynamic dependency: {dependency['id']}")
+        payload = strict_json_bytes(path.read_bytes(), dependency["path"])
+        if payload.get(dependency["format_field"]) != dependency["format_value"]:
+            raise ValueError(f"dynamic dependency format mismatch: {dependency['id']}")
+        records.append({
+            **dependency,
+            "sha256": digest(path.read_bytes()),
+            "size": path.stat().st_size,
+            "evidence_usable": False,
+        })
+    return sorted(records, key=lambda row: row["id"])
+
+
 def inventory(data: dict[str, Any], root: Path = ROOT) -> list[dict[str, Any]]:
     records: dict[str, dict[str, Any]] = {}
     for category in ("required_declared_globs", "automatic_lead_globs", "snapshot_globs", "semantic_input_globs"):
@@ -261,12 +280,19 @@ def validate(data: dict[str, Any], root: Path = ROOT) -> list[str]:
     except (OSError, ValueError) as exc:
         return [str(exc)]
     identity: dict[str, str] = {}
-    for kind, rows in (("source", sources_list), ("mechanism", data.get("mechanism_catalog", [])), ("conclusion", data.get("conclusion_rules", [])), ("frontier", data.get("frontier_rules", []))):
+    for kind, rows in (("source", sources_list), ("dynamic dependency", data.get("dynamic_dependencies", [])), ("mechanism", data.get("mechanism_catalog", [])), ("conclusion", data.get("conclusion_rules", [])), ("frontier", data.get("frontier_rules", []))):
         for row in rows:
             row_id = row.get("id")
             if row_id in identity:
                 errors.append(f"duplicate identity {row_id}")
             identity[row_id] = kind
+    dynamic_paths = [row.get("path") for row in data.get("dynamic_dependencies", [])]
+    if len(dynamic_paths) != len(set(dynamic_paths)):
+        errors.append("duplicate dynamic dependency path")
+    try:
+        dynamic_dependencies(data, root)
+    except (OSError, ValueError) as exc:
+        errors.append(str(exc))
     sources = {source["id"]: source for source in sources_list}
     mechanisms = {mechanism["id"]: mechanism for mechanism in data.get("mechanism_catalog", [])}
     conclusions = {conclusion["id"]: conclusion for conclusion in data.get("conclusion_rules", [])}
@@ -275,6 +301,7 @@ def validate(data: dict[str, Any], root: Path = ROOT) -> list[str]:
     if sum(len(source.get("observations", [])) for source in sources_list) != len(observations):
         errors.append("duplicate observation identity")
     declared_paths = {source.get("path") for source in sources.values() if source.get("path")}
+    declared_paths.update(item.get("path") for item in data.get("dynamic_dependencies", []))
     for record in inv:
         if record["category"] == "required_declared_globs" and record["path"] not in declared_paths:
             errors.append(f"unclassified material input: {record['path']}")
@@ -564,6 +591,7 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
             "dependency_sha256": digest(canonical(linked)),
         })
     inv = inventory(data, root)
+    dynamic = dynamic_dependencies(data, root)
     leads = living_leads(root)
     completeness = {
         "inventory": {"status": "COMPLETE_RELATIVE_TO_DECLARED_RULES_AND_FROZEN_MANIFESTS", "scope": data["completeness_contract"]["inventory_scope"]},
@@ -577,6 +605,8 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
         "generator_sha256": digest(Path(__file__).read_bytes()), "schema_sha256": digest((ROOT / SCHEMA).read_bytes()),
         "review_schema_sha256": digest((ROOT / REVIEW_SCHEMA).read_bytes()), "review_registry_sha256": digest((root / Path(data["reviewed_input_registry"])).read_bytes()),
         "corpus_sha256": digest(canonical(data)), "inventory": inv, "inventory_sha256": digest(canonical(inv)),
+        "dynamic_dependencies": dynamic, "dynamic_dependencies_sha256": digest(canonical(dynamic)),
+        "synthesis_input_sha256": digest(canonical({"corpus": digest(canonical(data)), "inventory": digest(canonical(inv)), "dynamic_dependencies": digest(canonical(dynamic))})),
         "completeness": completeness,
         "sources": [{"id": source["id"], "source_identity": source["source_identity"], "path": source.get("path"), "sha256": source.get("sha256"), "version": source.get("version"), "external_identifier": source.get("external_identifier"), "current_availability": source["current_availability"], "historical_availability": source["historical_availability"], "evidence_usable": source["evidence_usable"], "review_status": source["review_status"], "active": source_active[source["id"]]} for source in sources],
         "observations": [{**observations[observation_id], "source_id": observation_source[observation_id], "source_sha256": source_by_id[observation_source[observation_id]].get("sha256"), "active": observation_id in active, "historical_inactive": observation_id not in active, "invalidated_by_history": observation_id in invalidated, "dependency_inactive": observation_id in dependency_inactive} for observation_id in sorted(observations)],
@@ -595,7 +625,7 @@ def markdown(result: dict[str, Any]) -> str:
     lines = [
         "# Current FAR research frontier", "",
         "Status: **Generated dependency-aware Research synthesis; not scientific promotion authority**", "",
-        f"Corpus identity: `{result['corpus_sha256']}`", f"Inventory identity: `{result['inventory_sha256']}`", "",
+        f"Corpus identity: `{result['corpus_sha256']}`", f"Inventory identity: `{result['inventory_sha256']}`", f"Synthesis-input identity: `{result['synthesis_input_sha256']}`", "",
         "## Bounded completeness", "",
         "| Dimension | Status | Meaning |", "|---|---|---|",
     ]

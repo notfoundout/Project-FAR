@@ -16,7 +16,7 @@ Research candidate only. Discovery or triage does not establish support, dispute
 - Canonically reviewed candidates present: **8**
 - Canonical review dispositions recorded: **29**
 - Core-claim review queue: **0**
-- Canonical surfaces changed since prior reconciliation: **6**
+- Canonical surfaces changed since prior reconciliation: **0**
 
 ## Claim-change rule
 
