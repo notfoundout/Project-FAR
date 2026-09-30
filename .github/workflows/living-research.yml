@@ -305,7 +305,7 @@ jobs:
           print("Required path: verify primary source → reconstruct exact premises/conclusion → attack → replicate → adjudicate → smallest governed correction if warranted.")
           PY
           count="$(python -c 'import json; print(len(json.load(open("research/living/repository-state-v1.0.json"))["core_claim_review_queue"]))')"
-          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search '"'"'Living repository: core-claim review queue'"'"' in:title' --json number --jq '.[0].number // empty')"
+          existing="$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search '"Living repository: core-claim review queue" in:title' --json number --jq '.[0].number // empty')"
           if [[ "$count" -gt 0 ]]; then
             if [[ -n "$existing" ]]; then
               gh issue edit "$existing" --repo "$GITHUB_REPOSITORY" --body-file /tmp/claim-review.md
