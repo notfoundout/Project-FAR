@@ -42,5 +42,7 @@
     }
   ],
   "evidence_usable": true,
-  "scope": "Exact unmerged research snapshot; not current canonical authority."
+  "scope": "Exact unmerged research snapshot; not current canonical authority.",
+  "file_inventory_sha256": "c5e2791610aae7040be52fa89cec0f949dfda15a14f033057f54b0b2d9432db6",
+  "completeness_scope": "All files added by exact PR #571 head relative to its recorded base; bounded unmerged Research only."
 }

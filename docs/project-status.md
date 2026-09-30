@@ -4,7 +4,7 @@ This file is the canonical project-level status surface identified by [`CANONICA
 
 ## Living synthesis
 
-The [governed research corpus](../research/corpus/README.md) now provides a permanent, machine-readable Research-status chain from content-addressed sources through atomic findings and deduplicated mechanisms to scoped conclusions and the [generated current frontier](research/current-research-frontier.md). It interoperates with living research and existing promotion controls; neither the corpus nor its generator can promote scientific status. The initial reconciliation finds no demonstrated novelty, global saturation, external validity, superiority, product-market fit, defensibility, or moat.
+The [governed research corpus](../research/corpus/README.md) provides a permanent, machine-readable Research-status chain from content-addressed sources through human-governed atomic findings and relations to mechanically deduplicated mechanisms, dependency-derived conclusions, and the [generated current frontier](research/current-research-frontier.md). Automation inventories, validates, reconciles leads, evaluates declared relation/history semantics, and regenerates views; it does not verify arbitrary source meaning or author scientific findings and rules. Inventory closure is relative only to declared repository rules and frozen manifests. Evidence/search/global completeness remain unestablished, and neither the corpus nor its generator can promote scientific status. The current reconciliation demonstrates no novelty, global saturation, external validity, superiority, product-market fit, defensibility, or moat.
 
 ## Current release
 

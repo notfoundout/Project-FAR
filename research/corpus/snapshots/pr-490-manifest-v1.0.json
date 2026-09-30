@@ -12449,5 +12449,8 @@
   ],
   "evidence_usable": false,
   "captured_from": "public Git ref; exact candidate bytes remain addressable by git blob and SHA-256",
-  "primary_evidence_verified": false
+  "primary_evidence_verified": false,
+  "candidate_inventory_sha256": "498345dd6e403737f23a3cefa0e2b92999d8f568f0627640c71bdab5cdd579a0",
+  "state_inventory_sha256": "e12dd84ac6dd8abf2995d1f6b97f452eded98b53ce59c52f643787eb7242667d",
+  "completeness_scope": "All candidate blobs and declared living-state paths at the exact frozen PR #490 head; not current or global research completeness."
 }

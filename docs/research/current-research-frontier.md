@@ -2,10 +2,24 @@
 
 Status: **Generated dependency-aware Research synthesis; not scientific promotion authority**
 
-Corpus identity: `eb38a14737e7a8a6b9fcd5639da2123973b03a44e2621b2160ce21447e3c118f`
-Inventory identity: `086abeca3e882bb1626ccd0bf82483b169192b2e00ce6264629586289aa9158d`
+Corpus identity: `ffa3793dc3cac21c118a7cb0e327374ed77ea7add06bc40e695f18dcaf05b6a9`
+Inventory identity: `c1b5558ba0fac103bc72e36383a545d4cda612a7e8883683016cc4805833d40b`
 
-The objective inventory contains **181 material paths**; **2068 living/external items remain untrusted discovery leads**. Conclusions carry hashes of their complete downstream dependencies and invalidate when support is missing, withdrawn, corrected, or contradicted.
+## Bounded completeness
+
+| Dimension | Status | Meaning |
+|---|---|---|
+| `inventory` | `COMPLETE_RELATIVE_TO_DECLARED_RULES_AND_FROZEN_MANIFESTS` | Files matched by inventory_rules in this checkout plus the exact frozen PR #490/#571 manifests. |
+| `evidence` | `INCOMPLETE_UNVERIFIED_LEADS_PRESENT` | Only explicitly governed, primary-evidence-verified source observations; discovery leads are excluded. |
+| `search` | `BOUNDED_NOT_GLOBAL` | Repository-declared search surfaces and frozen refs only; not an exhaustive literature search. |
+| `synthesis` | `COMPLETE_FOR_ACTIVE_GOVERNED_SEMANTIC_INPUTS` | Deterministic closure over active declared observations, relation history, mechanism definitions, and conclusion rules. |
+| `global_open_world` | `UNESTABLISHED` | OPEN_WORLD_UNESTABLISHED |
+
+The declared inventory contains **184 paths** and **2068 untrusted leads**. Inventory closure is repository-bounded and does not imply evidence, search, synthesis, or global completeness.
+
+## Automation boundary
+
+The system automatically validates and recomputes only over declared semantic inputs. Human-governed review must verify primary evidence and assign findings, relations, scopes, mechanisms, and conclusion rules. Discovery metadata, summaries, URLs, and DOI presence cannot self-promote into evidence.
 
 ## Reconciled conclusions
 
@@ -14,23 +28,24 @@ The objective inventory contains **181 material paths**; **2068 living/external 
 | `CON-STABILITY` | **INFERENCE** | `SUPPORTED_AT_REPOSITORY_SCOPE_NOT_ESTABLISHED_GLOBALLY` | The governed architecture is stabilizing in the limited sense that recent material work mostly hardens assurance, comparators, and provenance rather than replacing the contract-relative core. |
 | `CON-INVESTIGATION-ASSURANCE` | **INFERENCE** | `BEST_CURRENT_BOUNDED_CHARACTERIZATION` | At current supported scopes, FAR is better characterized as contract-relative investigation assurance than as fact-checking or evidence retrieval alone. |
 | `CON-COMPOUNDING` | **HYPOTHESIS** | `PLAUSIBLE_MECHANISM_UNTESTED_VALUE` | Accumulated provenance-bound epistemic state could reduce repeated discovery and improve future correction, but compounding performance or economic value is unmeasured. |
-| `CON-MOAT` | **UNRESOLVED** | `NOT_DEMONSTRATED` | No commercial moat is established. A governed corpus could be an input to defensibility, but current evidence demonstrates neither exclusivity nor durable advantage. |
-| `CON-EXPERIMENTS` | **INFERENCE** | `NO_CONCRETE_PREEXECUTION_DEFECT_IDENTIFIED_AT_AVAILABLE_SCOPE` | The complete available reviewed/source-bound synthesis, including exact PR #571 research, identifies no concrete pre-execution defect requiring another #518 or EFR v2 amendment; this is an internal bounded audit inference and neither study has executed. |
+| `CON-MOAT` | **UNRESOLVED** | `UNRESOLVED_STALE_INPUTS` | Synthesis unresolved: required support is missing, narrowed, qualified, contradicted, ambiguous, corrected/superseded, or transitively stale. |
+| `CON-EXPERIMENTS` | **UNRESOLVED** | `PREREGISTERED_UNEXECUTED_CONTINUING_AUDIT_REQUIRED` | No experiment change or execution is authorized by this synthesis. #518 and EFR remain preregistered and unexecuted; future verified findings must be reconciled against their frozen assumptions before execution. |
 
 ## Deduplicated mechanism comparison
 
-| Mechanism | Classification | Evidence | Literal comparison |
+| Mechanism | State | Classification | Literal comparison |
 |---|---|---|---|
-| `MEC-COMMERCIAL` commercial defensibility | `unresolved` | 1 normalized findings | Current FAR architecture can preserve evidence about commercial claims, but contains no evidence that establishes moat or product-market fit. |
-| `MEC-COMPARATORS` generic-mechanism comparator | `already_representable_enforceable` | 1 normalized findings | EFR v2 explicitly compares FAR with a generic collision checker and forbids the confounded endpoints. |
-| `MEC-COMPOUNDING` accumulated epistemic memory | `representable_assurance_incomplete` | 2 normalized findings | Registries, histories, hashes, and dependency impacts preserve learning, but no longitudinal evidence shows compounding outcome value. |
-| `MEC-CONTRACT` contract-relative observation | `already_representable_enforceable` | 2 normalized findings | FAR Core defines comparison contracts and exact factorization; far-ir/2.0 enforces finite-explicit witnesses. |
-| `MEC-DEPENDENCY` impact-aware dependency graph | `representable_assurance_incomplete` | 2 normalized findings | Dependency and reverse-impact machinery exists, but corpus-wide synthesis invalidation was not previously enforced. |
-| `MEC-INTAKE` hostile external input freeze | `existing_extension_point` | 1 normalized findings | Living intake already treats external bytes as untrusted data; the corpus adds a nonexecuting content-addressed receipt path rather than a second promotion route. |
-| `MEC-NEGATIVE` explicit negative knowledge | `already_representable_enforceable` | 2 normalized findings | Unknown, refutation, failure, exclusions, limitations, and open problems are first-class governed states. |
-| `MEC-PROVENANCE` content-addressed provenance | `already_representable_enforceable` | 1 normalized findings | Living promotion and governed ledgers bind exact paths, hashes, stages, and preimages. |
-| `MEC-RECONCILIATION` source-to-frontier reconciliation | `existing_extension_point` | 1 normalized findings | Saturation v0.5 already specifies provenance-preserving synthesis and dependency-aware invalidation; this repository layer implements that existing extension/enforcement surface rather than proving a capability-class gap. |
-| `MEC-SATURATION-ATTACKS` literal saturation falsification | `already_representable_enforceable` | 7 normalized findings | Exact PR #571 mappings test seven decision-relevant distinctions against typed Saturation v0.5 anchors and enforcement hooks; all seven are provisionally REPRESENTABLE_NO_CHANGE at that unmerged bounded scope. |
+| `MEC-COMMERCIAL` commercial defensibility | `UNRESOLVED` | `unresolved` | Current FAR architecture can preserve evidence about commercial claims, but contains no evidence that establishes moat or product-market fit. |
+| `MEC-COMPARATORS` generic-mechanism comparator | `SUPPORTED` | `already_representable_enforceable` | EFR v2 explicitly compares FAR with a generic collision checker and forbids the confounded endpoints. |
+| `MEC-COMPOUNDING` accumulated epistemic memory | `SUPPORTED` | `representable_assurance_incomplete` | Registries, histories, hashes, and dependency impacts preserve learning, but no longitudinal evidence shows compounding outcome value. |
+| `MEC-CONTRACT` contract-relative observation | `SUPPORTED` | `already_representable_enforceable` | FAR Core defines comparison contracts and exact factorization; far-ir/2.0 enforces finite-explicit witnesses. |
+| `MEC-DEPENDENCY` impact-aware dependency graph | `SUPPORTED` | `representable_assurance_incomplete` | Dependency and reverse-impact machinery exists, but corpus-wide synthesis invalidation was not previously enforced. |
+| `MEC-EXPERIMENT-DESIGN` governed pre-execution experiment design | `SUPPORTED` | `already_representable_enforceable` | #518 and EFR encode preregistered inputs, endpoints, comparators, freezes, and nonclaims; this records design state only and supplies no outcome evidence. |
+| `MEC-INTAKE` hostile external input freeze | `SUPPORTED` | `existing_extension_point` | Living intake already treats external bytes as untrusted data; the corpus adds a nonexecuting content-addressed receipt path rather than a second promotion route. |
+| `MEC-NEGATIVE` explicit negative knowledge | `SUPPORTED` | `already_representable_enforceable` | Unknown, refutation, failure, exclusions, limitations, and open problems are first-class governed states. |
+| `MEC-PROVENANCE` content-addressed provenance | `SUPPORTED` | `already_representable_enforceable` | Living promotion and governed ledgers bind exact paths, hashes, stages, and preimages. |
+| `MEC-RECONCILIATION` source-to-frontier reconciliation | `SUPPORTED` | `existing_extension_point` | Saturation v0.5 already specifies provenance-preserving synthesis and dependency-aware invalidation; this repository layer implements that existing extension/enforcement surface rather than proving a capability-class gap. |
+| `MEC-SATURATION-ATTACKS` literal saturation falsification | `SUPPORTED` | `already_representable_enforceable` | Exact PR #571 mappings test seven decision-relevant distinctions against typed Saturation v0.5 anchors and enforcement hooks; all seven are provisionally REPRESENTABLE_NO_CHANGE at that unmerged bounded scope. |
 
 ## Frontier
 
