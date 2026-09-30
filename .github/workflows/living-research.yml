@@ -74,7 +74,9 @@ jobs:
       - name: Install canonical repository dependencies
         run: pip install -r requirements.txt
       - name: Unit-test living repository
-        run: python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_research_corpus tests.test_pr572_review_regressions -v
+        run: |
+          python -m tools.run_living_research --help >/dev/null
+          python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_research_corpus tests.test_pr572_review_regressions -v
       - name: Reconcile canonical living-repository state
         run: |
           python tools/reconcile_living_repo.py
@@ -163,7 +165,7 @@ jobs:
           OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
           OPENALEX_MAILTO: ${{ secrets.OPENALEX_MAILTO }}
           CROSSREF_MAILTO: ${{ secrets.CROSSREF_MAILTO }}
-        run: python tools/run_living_research.py
+        run: python -m tools.run_living_research
       - name: Reconcile dependency, claim, and project state
         run: |
           python tools/reconcile_living_repo.py
