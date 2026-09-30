@@ -41,10 +41,11 @@ jobs:
           python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_research_corpus -v
           python tools/check_living_research.py
           python tools/check_research_gates.py
-      - name: Commit remediation
+      - name: Commit non-workflow remediation
         shell: bash
         run: |
           set -euo pipefail
+          git restore --source=HEAD -- .github/workflows/living-research.yml .github/workflows/export-pr-checkout.yml
           git config user.name "project-far-remediation-bot"
           git config user.email "project-far-remediation-bot@users.noreply.github.com"
           git add -A
