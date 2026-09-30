@@ -3,6 +3,7 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import shutil
 import tempfile
 import unittest
 from unittest import mock
@@ -133,6 +134,53 @@ class ResearchCorpusTests(unittest.TestCase):
         self.assertEqual(stability["epistemic_class"], "UNRESOLVED")
         self.assertEqual(stability["blocked_mechanisms"]["MEC-CONTRACT"], "EPISTEMIC_CEILING")
 
+    def test_mechanism_epistemic_classes_are_observation_specific(self):
+        evidence = self.observation("OBS-TEST-E", "FND-TEST", mechanisms=["MEC-CONTRACT"])
+        hypothesis = self.observation("OBS-TEST-H", "FND-TEST", mechanisms=["MEC-RECONCILIATION"])
+        hypothesis["epistemic_class"] = "HYPOTHESIS"
+        data = self.with_relation_fixture(evidence, hypothesis)
+        # Keep the proposition semantically identical so finding-level support is not ambiguous.
+        hypothesis["statement"] = evidence["statement"]
+        result = self.derive(data)
+        contract = self.mechanism(result, "MEC-CONTRACT")
+        reconciliation = self.mechanism(result, "MEC-RECONCILIATION")
+        self.assertIn({"scope_key": "source_bounded", "epistemic_class": "EVIDENCE"}, contract["support_scope_epistemic_classes"])
+        self.assertNotIn({"scope_key": "source_bounded", "epistemic_class": "EVIDENCE"}, reconciliation["support_scope_epistemic_classes"])
+
+    def test_conclusion_dependency_cannot_raise_epistemic_class(self):
+        data = copy.deepcopy(self.data)
+        parent = next(rule for rule in data["conclusion_rules"] if rule["id"] == "CON-COMPOUNDING")
+        child = next(rule for rule in data["conclusion_rules"] if rule["id"] == "CON-STABILITY")
+        parent["result_class"] = "HYPOTHESIS"
+        child["depends_on_conclusions"] = [parent["id"]]
+        result = self.derive(data)
+        stability = next(row for row in result["conclusions"] if row["id"] == "CON-STABILITY")
+        self.assertEqual(stability["epistemic_class"], "UNRESOLVED")
+        self.assertEqual(stability["dependency_blocks"][parent["id"]], "EPISTEMIC_CEILING")
+
+    def test_transitive_dependency_inactivity_reaches_fixed_point(self):
+        a = self.observation("OBS-TEST-A", "FND-A")
+        b = self.observation("OBS-TEST-B", "FND-B", dependencies=["OBS-TEST-A"])
+        c = self.observation("OBS-TEST-C", "FND-C", dependencies=["OBS-TEST-B"])
+        data = self.with_relation_fixture(a, b, c)
+        data["sources"][-1]["observations"] = [b, c]  # A exists only historically/unavailable.
+        unavailable = self.source("SRC-TEST-OLD", [a])
+        unavailable["current_availability"] = "withdrawn"
+        unavailable["historical_availability"] = "WITHDRAWN_RETAINED"
+        unavailable["evidence_usable"] = False
+        data["sources"].append(unavailable)
+        result = self.derive(data)
+        self.assertEqual(set(result["observation_state"]["dependency_inactive"]), {"OBS-TEST-B", "OBS-TEST-C"})
+
+    def test_conclusion_dependency_hash_is_bound_to_evidence_content(self):
+        original = self.derive()
+        changed = copy.deepcopy(self.data)
+        changed["sources"][0]["observations"][0]["statement"] += " changed evidence wording"
+        recomputed = self.derive(changed)
+        before = next(row for row in original["conclusions"] if row["id"] == "CON-STABILITY")
+        after = next(row for row in recomputed["conclusions"] if row["id"] == "CON-STABILITY")
+        self.assertNotEqual(before["dependency_sha256"], after["dependency_sha256"])
+
     def test_supersession_with_narrower_scope_does_not_satisfy_stronger_scope(self):
         original = self.observation("OBS-TEST-A", "FND-TEST")
         narrower = self.observation("OBS-TEST-B", "FND-TEST", "SUPERSEDES", ["OBS-TEST-A"], "OBSERVATION", "REPLACE_NARROWER", scope="narrow_test")
@@ -246,9 +294,14 @@ class ResearchCorpusTests(unittest.TestCase):
         workflow = (corpus.ROOT / ".github/workflows/living-research.yml").read_text()
         runner = (corpus.ROOT / "tools/run_living_research.py").read_text()
         self.assertIn("python tools/reconcile_research_corpus.py --living-loop --write", workflow)
-        self.assertIn("research/living/corpus-reconciliation-v1.0.json", workflow)
         self.assertIn("research/corpus/external", workflow)
         self.assertIn("write_living(root)", runner)
+        self.assertNotIn("research/living/corpus-reconciliation-v1.0.json \\", workflow)
+        self.assertNotIn("research/living/repository-state-v1.0.json \\", workflow)
+        self.assertIn("schemas/far-reviewed-input-v1.schema.json", workflow)
+        self.assertIn("docs/audits/**", workflow)
+        preflight = workflow.split("- name: Preflight tests and authority checks", 1)[1].split("- name: Discover current and historical research", 1)[0]
+        self.assertLess(preflight.index("python tools/reconcile_research_corpus.py --living-loop --write"), preflight.index("python -m unittest"))
 
     def test_external_ingestion_is_routed_but_cannot_self_promote(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -263,6 +316,15 @@ class ResearchCorpusTests(unittest.TestCase):
             self.assertFalse(living["promotion_authority"])
             self.assertEqual(living["review_bridge"], str(corpus.REVIEWED_INPUTS))
             self.assertFalse(living["candidates"][0]["evidence_usable"])
+
+    def test_orphaned_external_blob_or_receipt_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            external = root / "research/corpus/external"
+            external.mkdir(parents=True)
+            (external / ("a" * 64 + ".bin")).write_bytes(b"orphan")
+            with self.assertRaisesRegex(ValueError, "receipt/blob pairing mismatch"):
+                corpus.living_leads(root)
 
     def test_reviewed_input_bridge_requires_three_exact_hashes(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -293,6 +355,47 @@ class ResearchCorpusTests(unittest.TestCase):
             target.write_text(json.dumps(registry))
             _, errors = corpus.reviewed_sources(data, root)
             self.assertTrue(any("primary evidence hash mismatch" in error for error in errors))
+
+    def test_reviewed_bridge_accepts_exact_frozen_binary_primary_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "candidate.json").write_text("{}\n")
+            (root / "primary.bin").write_bytes(b"%PDF exact frozen bytes\x00")
+            (root / "review.md").write_text("verified\n")
+            observation = self.observation("OBS-REVIEWED-BIN", "FND-REVIEWED-BIN", mechanisms=[])
+            entry = {
+                "id": "INPUT-BIN", "candidate": {"path": "candidate.json", "sha256": corpus.digest((root / "candidate.json").read_bytes())},
+                "primary_evidence": {"path": "primary.bin", "sha256": corpus.digest((root / "primary.bin").read_bytes()), "external_identifier": "frozen:test", "version": "v1", "independently_verified": True},
+                "review": {"path": "review.md", "sha256": corpus.digest((root / "review.md").read_bytes()), "status": "VERIFIED_FOR_CORPUS"},
+                "evidence_class": "external_primary", "scope": "bounded", "observations": [observation],
+            }
+            target = root / corpus.REVIEWED_INPUTS
+            target.parent.mkdir(parents=True)
+            target.write_text(json.dumps({"format_version": "far-reviewed-inputs/1.0", "authority": "Research", "entries": [entry], "promotion_authority": False}))
+            sources, errors = corpus.reviewed_sources(self.data, root)
+            self.assertEqual(errors, [])
+            self.assertEqual(sources[0]["path"], "primary.bin")
+
+    def test_unavailable_source_unresolved_observation_remains_uncertainty_signal(self):
+        result = self.derive()
+        finding = next(row for row in result["normalized_findings"] if row["id"] == "FND-HISTORY-MISSING")
+        self.assertEqual(finding["state"], "UNRESOLVED")
+        self.assertIn("OBS-SCHEDULED-TASK-HISTORY-HISTORY-MISSING", finding["unresolved_observation_ids"])
+        self.assertIn("OBS-SCHEDULED-TASK-HISTORY-HISTORY-MISSING", result["observation_state"]["uncertainty_signals"])
+
+    def test_pr571_snapshot_manifest_covers_every_extractor_input(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = corpus.ROOT / "research/corpus/snapshots"
+            target = root / "research/corpus/snapshots"
+            shutil.copytree(source, target)
+            manifest_path = target / "pr-571-manifest-v1.0.json"
+            manifest = json.loads(manifest_path.read_text())
+            manifest["files"] = [row for row in manifest["files"] if row["path"] != "research/saturation-falsification-001/findings-v1.0.json"]
+            manifest["file_inventory_sha256"] = corpus.digest(corpus.canonical(manifest["files"]))
+            manifest_path.write_text(json.dumps(manifest))
+            errors = corpus.validate_snapshots(root)
+            self.assertTrue(any("extractor input omitted" in error or "manifest coverage mismatch" in error for error in errors))
 
     def test_generated_integrity_changes_for_every_governed_input_class(self):
         original = self.derive()

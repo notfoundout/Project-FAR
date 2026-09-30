@@ -2,9 +2,9 @@
 
 Status: **Generated dependency-aware Research synthesis; not scientific promotion authority**
 
-Corpus identity: `a036d29115220b9d8cc80195fffe0fb19f847adcfa43bae5f23a8025bdf05b44`
+Corpus identity: `e18781f78675f589df2fafbcb37b0a0b35190d40600275c2a723aa8399518b64`
 Inventory identity: `f266998a9ac8d9b12447b79bee77bf2b541ec388e519afc28bc627e7e5d048cf`
-Synthesis-input identity: `d9b7ee91f841622aca3af246007b4e7cde7567bb15656409dbb203c8b85317f8`
+Synthesis-input identity: `b428c0b4caa557d4c0a2db6e7fb349aefc7ba57fe79434cb050e95d8d2daabcc`
 
 ## Bounded completeness
 
@@ -42,7 +42,7 @@ The system automatically validates and recomputes only over declared semantic in
 | `MEC-CONTRACT` contract-relative observation | `SUPPORTED` | `already_representable_enforceable` | FAR Core defines comparison contracts and exact factorization; far-ir/2.0 enforces finite-explicit witnesses. |
 | `MEC-DEPENDENCY` impact-aware dependency graph | `SUPPORTED` | `representable_assurance_incomplete` | Dependency and reverse-impact machinery exists, but corpus-wide synthesis invalidation was not previously enforced. |
 | `MEC-EXPERIMENT-DESIGN` governed pre-execution experiment design | `SUPPORTED` | `already_representable_enforceable` | #518 and EFR encode preregistered inputs, endpoints, comparators, freezes, and nonclaims; this records design state only and supplies no outcome evidence. |
-| `MEC-INTAKE` hostile external input freeze | `SUPPORTED` | `existing_extension_point` | Living intake already treats external bytes as untrusted data; the corpus adds a nonexecuting content-addressed receipt path rather than a second promotion route. |
+| `MEC-INTAKE` hostile external input freeze | `UNRESOLVED` | `existing_extension_point` | Living intake already treats external bytes as untrusted data; the corpus adds a nonexecuting content-addressed receipt path rather than a second promotion route. |
 | `MEC-NEGATIVE` explicit negative knowledge | `SUPPORTED` | `already_representable_enforceable` | Unknown, refutation, failure, exclusions, limitations, and open problems are first-class governed states. |
 | `MEC-PROVENANCE` content-addressed provenance | `SUPPORTED` | `already_representable_enforceable` | Living promotion and governed ledgers bind exact paths, hashes, stages, and preimages. |
 | `MEC-RECONCILIATION` source-to-frontier reconciliation | `SUPPORTED` | `existing_extension_point` | Saturation v0.5 already specifies provenance-preserving synthesis and dependency-aware invalidation; this repository layer implements that existing extension/enforcement surface rather than proving a capability-class gap. |

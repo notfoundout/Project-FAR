@@ -20,7 +20,8 @@
     ],
     "automatic_lead_globs": [
       "research/living/inbox/candidates/FAR-LIT-*.json",
-      "research/corpus/external/*.json"
+      "research/corpus/external/*.json",
+      "research/corpus/external/*.bin"
     ],
     "snapshot_globs": [
       "research/corpus/snapshots/*.json",

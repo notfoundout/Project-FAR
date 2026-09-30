@@ -35,6 +35,7 @@ ARCHITECTURE_CLASSES = {
     "existing_extension_point", "genuine_architecture_gap", "contradiction", "unresolved",
 }
 SOURCE_SUFFIXES = {".json", ".md", ".yaml", ".yml", ".bib", ".csv"}
+REVIEWED_PRIMARY_SUFFIXES = SOURCE_SUFFIXES | {".bin", ".pdf"}
 
 
 class DuplicateKeyError(ValueError):
@@ -184,15 +185,27 @@ def living_leads(root: Path = ROOT) -> list[dict[str, Any]]:
             "evidence_usable": False,
         })
         rows[candidate_id] = row
-    for path in sorted((root / "research/corpus/external").glob("*.json")):
-        if path.is_symlink() or not path.is_file():
-            raise ValueError(f"unsafe external receipt: {path}")
+    external = root / "research/corpus/external"
+    receipts = {path.stem: path for path in external.glob("*.json") if path.is_file() or path.is_symlink()} if external.exists() else {}
+    blobs = {path.stem: path for path in external.glob("*.bin") if path.is_file() or path.is_symlink()} if external.exists() else {}
+    if set(receipts) != set(blobs):
+        raise ValueError(
+            "external receipt/blob pairing mismatch: "
+            f"orphan_blobs={sorted(set(blobs) - set(receipts))} "
+            f"orphan_receipts={sorted(set(receipts) - set(blobs))}"
+        )
+    for stem in sorted(receipts):
+        path = receipts[stem]
+        blob = blobs[stem]
+        if path.is_symlink() or blob.is_symlink() or not path.is_file() or not blob.is_file():
+            raise ValueError(f"unsafe external frozen input: {path.relative_to(root)}")
         payload = strict_json_bytes(path.read_bytes(), str(path.relative_to(root)))
-        blob = path.with_suffix(".bin")
-        if not blob.is_file() or blob.is_symlink() or digest(blob.read_bytes()) != payload.get("sha256") or len(blob.read_bytes()) != payload.get("size"):
+        blob_bytes = blob.read_bytes()
+        if digest(blob_bytes) != payload.get("sha256") or len(blob_bytes) != payload.get("size"):
             raise ValueError(f"external frozen-byte receipt mismatch: {path.relative_to(root)}")
-        rows[path.stem] = {
-            "id": path.stem, "path": str(path.relative_to(root)), "sha256": digest(path.read_bytes()),
+        rows[stem] = {
+            "id": stem, "path": str(path.relative_to(root)), "sha256": digest(path.read_bytes()),
+            "blob_path": str(blob.relative_to(root)), "blob_sha256": digest(blob_bytes),
             "external_identifier": payload.get("origin"), "review_status": payload.get("review_status", "DISCOVERY_LEAD"),
             # Receipt flags never promote a lead. Only reviewed-input registry entries create evidence sources.
             "evidence_usable": False,
@@ -223,7 +236,7 @@ def reviewed_sources(data: dict[str, Any], root: Path = ROOT) -> tuple[list[dict
         seen.add(entry_id)
         try:
             candidate = safe_path(root, entry["candidate"]["path"], suffixes={".json"})
-            primary = safe_path(root, entry["primary_evidence"]["path"], suffixes=SOURCE_SUFFIXES)
+            primary = safe_path(root, entry["primary_evidence"]["path"], suffixes=REVIEWED_PRIMARY_SUFFIXES)
             review = safe_path(root, entry["review"]["path"], suffixes={".json", ".md"})
             for label, path, expected in (("candidate", candidate, entry["candidate"]["sha256"]), ("primary evidence", primary, entry["primary_evidence"]["sha256"]), ("review", review, entry["review"]["sha256"])):
                 if not path.is_file() or digest(path.read_bytes()) != expected:
@@ -315,7 +328,8 @@ def validate(data: dict[str, Any], root: Path = ROOT) -> list[str]:
         path_text = source.get("path")
         if source.get("current_availability") == "available":
             try:
-                path = safe_path(root, path_text, suffixes=SOURCE_SUFFIXES)
+                allowed_suffixes = REVIEWED_PRIMARY_SUFFIXES if source.get("kind") == "reviewed_external_primary_evidence" else SOURCE_SUFFIXES
+                path = safe_path(root, path_text, suffixes=allowed_suffixes)
                 if not path.is_file() or digest(path.read_bytes()) != source.get("sha256"):
                     errors.append(f"source hash mismatch: {source['id']}")
             except (TypeError, ValueError) as exc:
@@ -395,6 +409,26 @@ def validate_snapshots(root: Path = ROOT) -> list[str]:
             files = manifest.get("files", [])
             if manifest.get("file_inventory_sha256") != digest(canonical(files)):
                 errors.append("PR #571 file inventory digest mismatch")
+            snapshot_root = root / "research/corpus/snapshots/pr-571"
+            listed = {item["path"] for item in files}
+            actual = {
+                path.relative_to(snapshot_root).as_posix()
+                for path in snapshot_root.rglob("*")
+                if path.is_file()
+            } if snapshot_root.exists() else set()
+            if listed != actual:
+                errors.append(
+                    "PR #571 snapshot manifest coverage mismatch: "
+                    f"unlisted={sorted(actual - listed)} missing={sorted(listed - actual)}"
+                )
+            required_extractor_inputs = {
+                "research/saturation-falsification-001/findings-v1.0.json"
+            }
+            if not required_extractor_inputs <= listed:
+                errors.append(
+                    "PR #571 extractor input omitted from manifest: "
+                    f"{sorted(required_extractor_inputs - listed)}"
+                )
             for item in files:
                 path = safe_path(root, "research/corpus/snapshots/pr-571/" + item["path"])
                 if not path.is_file() or digest(path.read_bytes()) != item["sha256"] or path.stat().st_size != item["size"]:
@@ -469,17 +503,40 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
             observations[observation["id"]] = observation
             observation_source[observation["id"]] = source["id"]
     initially_active = {observation_id: observation for observation_id, observation in observations.items() if source_active[observation_source[observation_id]]}
+    # Explicit UNRESOLVED observations may preserve missing-input uncertainty even when
+    # their source is unavailable. These remain non-supporting signals, never evidence.
+    uncertainty_only = {
+        observation_id: observation
+        for observation_id, observation in observations.items()
+        if observation["relation"] == "UNRESOLVED"
+        and not source_active[observation_source[observation_id]]
+        and source_by_id[observation_source[observation_id]].get("current_availability") != "available"
+    }
     history_observations = {observation_id: observation for observation_id, observation in observations.items() if source_by_id[observation_source[observation_id]].get("review_status") in {"GOVERNED_REPOSITORY_SOURCE", "VERIFIED_FOR_CORPUS"} and source_by_id[observation_source[observation_id]].get("primary_evidence_verified")}
     invalidated = _transitively_invalidated(history_observations)
     active = {observation_id: observation for observation_id, observation in initially_active.items() if observation_id not in invalidated}
-    # A support observation whose declared dependencies are no longer active cannot support downstream synthesis.
-    dependency_inactive = {observation_id for observation_id, observation in active.items() if any(dependency not in active for dependency in observation.get("dependencies", []))}
+    # A support observation whose declared dependencies are no longer active cannot support
+    # downstream synthesis. Compute to a fixed point so staleness propagates transitively.
+    dependency_inactive: set[str] = set()
+    changed = True
+    while changed:
+        changed = False
+        for observation_id, observation in active.items():
+            if observation_id in dependency_inactive:
+                continue
+            if any(
+                dependency not in active or dependency in dependency_inactive
+                for dependency in observation.get("dependencies", [])
+            ):
+                dependency_inactive.add(observation_id)
+                changed = True
     proposition_for_observation = {observation_id: observation["proposition_id"] for observation_id, observation in observations.items()}
     supports: dict[str, list[str]] = defaultdict(list)
     contradictions: dict[str, list[str]] = defaultdict(list)
     qualifications: dict[str, list[str]] = defaultdict(list)
     unresolved: dict[str, list[str]] = defaultdict(list)
-    for observation_id, observation in active.items():
+    signal_observations = {**active, **uncertainty_only}
+    for observation_id, observation in signal_observations.items():
         relation = observation["relation"]
         if observation_id in dependency_inactive:
             unresolved[observation["proposition_id"]].append(observation_id)
@@ -508,7 +565,7 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
             state = "UNRESOLVED" if unresolved[proposition_id] else "NO_ACTIVE_SUPPORT"
         else:
             state = "SUPPORTED"
-        mechanism_ids = sorted({mechanism for row in support_rows for mechanism in row.get("mechanism_ids", [])} | {mechanism for observation_id in contradictions[proposition_id] + qualifications[proposition_id] + unresolved[proposition_id] for mechanism in active[observation_id].get("mechanism_ids", [])})
+        mechanism_ids = sorted({mechanism for row in support_rows for mechanism in row.get("mechanism_ids", [])} | {mechanism for observation_id in contradictions[proposition_id] + qualifications[proposition_id] + unresolved[proposition_id] for mechanism in signal_observations[observation_id].get("mechanism_ids", [])})
         for mechanism in mechanism_ids:
             mechanism_signals[mechanism][state].add(proposition_id)
         findings.append({
@@ -516,14 +573,26 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
             "active_support_observation_ids": sorted(support_ids),
             "contradiction_observation_ids": sorted(contradictions[proposition_id]),
             "qualification_observation_ids": sorted(qualifications[proposition_id]),
-            "qualification_details": [{"observation_id": observation_id, "statement": active[observation_id]["statement"], "scope": active[observation_id]["scope"], "scope_key": active[observation_id]["scope_key"]} for observation_id in sorted(qualifications[proposition_id])],
-            "contradiction_details": [{"observation_id": observation_id, "statement": active[observation_id]["statement"], "scope": active[observation_id]["scope"], "scope_key": active[observation_id]["scope_key"]} for observation_id in sorted(contradictions[proposition_id])],
+            "qualification_details": [{"observation_id": observation_id, "statement": signal_observations[observation_id]["statement"], "scope": signal_observations[observation_id]["scope"], "scope_key": signal_observations[observation_id]["scope_key"]} for observation_id in sorted(qualifications[proposition_id])],
+            "contradiction_details": [{"observation_id": observation_id, "statement": signal_observations[observation_id]["statement"], "scope": signal_observations[observation_id]["scope"], "scope_key": signal_observations[observation_id]["scope_key"]} for observation_id in sorted(contradictions[proposition_id])],
             "unresolved_observation_ids": sorted(unresolved[proposition_id]),
-            "unresolved_details": [{"observation_id": observation_id, "statement": active[observation_id]["statement"], "scope": active[observation_id]["scope"], "scope_key": active[observation_id]["scope_key"]} for observation_id in sorted(unresolved[proposition_id])],
-            "historical_inactive_observation_ids": sorted(observation_id for observation_id, observation in observations.items() if observation["proposition_id"] == proposition_id and observation_id not in active),
+            "unresolved_details": [{"observation_id": observation_id, "statement": signal_observations[observation_id]["statement"], "scope": signal_observations[observation_id]["scope"], "scope_key": signal_observations[observation_id]["scope_key"]} for observation_id in sorted(unresolved[proposition_id])],
+            "historical_inactive_observation_ids": sorted(observation_id for observation_id, observation in observations.items() if observation["proposition_id"] == proposition_id and observation_id not in active and observation_id not in uncertainty_only),
             "statements_and_scopes": sorted([{"statement": statement, "scope_key": scope} for statement, scope in statements], key=lambda row: (row["scope_key"], row["statement"])),
             "mechanism_ids": mechanism_ids,
-            "dependency_sha256": digest(canonical({"support": support_ids, "contradictions": contradictions[proposition_id], "qualifications": qualifications[proposition_id], "unresolved": unresolved[proposition_id], "invalidated": sorted(invalidated)})),
+            "dependency_sha256": digest(canonical({
+                "signals": [
+                    {
+                        "id": observation_id,
+                        "observation": observations[observation_id],
+                        "source_id": observation_source[observation_id],
+                        "source_sha256": source_by_id[observation_source[observation_id]].get("sha256"),
+                    }
+                    for observation_id in sorted(set(support_ids + contradictions[proposition_id] + qualifications[proposition_id] + unresolved[proposition_id]))
+                ],
+                "invalidated": sorted(invalidated),
+                "dependency_inactive": sorted(dependency_inactive),
+            })),
         })
     mechanisms = []
     mechanism_by_id: dict[str, dict[str, Any]] = {}
@@ -541,10 +610,21 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
             state = "SUPPORTED"
         else:
             state = "NO_ACTIVE_SUPPORT"
-        support_pairs = sorted({(active[observation_id]["scope_key"], active[observation_id]["epistemic_class"]) for finding in findings if finding["state"] == "SUPPORTED" and definition["id"] in finding["mechanism_ids"] for observation_id in finding["active_support_observation_ids"]})
+        support_pairs = sorted({
+            (active[observation_id]["scope_key"], active[observation_id]["epistemic_class"])
+            for finding in findings
+            if finding["state"] == "SUPPORTED" and definition["id"] in finding["mechanism_ids"]
+            for observation_id in finding["active_support_observation_ids"]
+            if definition["id"] in active[observation_id].get("mechanism_ids", [])
+        })
         support_scopes = sorted({scope for scope, _ in support_pairs})
-        row = {**definition, "state": state, "support_scope_keys": support_scopes, "support_scope_epistemic_classes": [{"scope_key": scope, "epistemic_class": level} for scope, level in support_pairs], "finding_ids": sorted({proposition for values in signal.values() for proposition in values})}
-        row["dependency_sha256"] = digest(canonical(row["finding_ids"] + [state, support_scopes]))
+        finding_ids = sorted({proposition for values in signal.values() for proposition in values})
+        row = {**definition, "state": state, "support_scope_keys": support_scopes, "support_scope_epistemic_classes": [{"scope_key": scope, "epistemic_class": level} for scope, level in support_pairs], "finding_ids": finding_ids}
+        row["dependency_sha256"] = digest(canonical({
+            "state": state,
+            "support_scopes": support_scopes,
+            "findings": [finding for finding in findings if finding["id"] in finding_ids],
+        }))
         mechanisms.append(row)
         mechanism_by_id[row["id"]] = row
     conclusion_by_id: dict[str, dict[str, Any]] = {}
@@ -567,15 +647,23 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
                     scoped_classes = {item["epistemic_class"] for item in mechanism["support_scope_epistemic_classes"] if item["scope_key"] == required_scope}
                     if not (scoped_classes & admissible):
                         blocked[mechanism_id] = "EPISTEMIC_CEILING"
-            stale_dependencies = [dependency for dependency in rule["depends_on_conclusions"] if conclusion_by_id[dependency]["epistemic_class"] == "UNRESOLVED"]
-            supported = not blocked and not stale_dependencies
+            epistemic_rank = {"EVIDENCE": 0, "INFERENCE": 1, "HYPOTHESIS": 2, "UNRESOLVED": 3}
+            dependency_blocks: dict[str, str] = {}
+            for dependency in rule["depends_on_conclusions"]:
+                dependency_class = conclusion_by_id[dependency]["epistemic_class"]
+                if dependency_class == "UNRESOLVED":
+                    dependency_blocks[dependency] = "UNRESOLVED"
+                elif epistemic_rank[dependency_class] > epistemic_rank[rule["result_class"]]:
+                    dependency_blocks[dependency] = "EPISTEMIC_CEILING"
+            stale_dependencies = sorted(dependency_blocks)
+            supported = not blocked and not dependency_blocks
             row = {
                 "id": rule["id"], "epistemic_class": rule["result_class"] if supported else "UNRESOLVED",
                 "disposition": rule["supported_disposition"] if supported else rule["missing_disposition"],
                 "statement": rule["statement"] if supported else "Synthesis unresolved: required support is missing, narrowed, qualified, contradicted, ambiguous, corrected/superseded, or transitively stale.",
                 "required_mechanisms": rule["required_mechanisms"], "required_scope_keys": rule["required_scope_keys"],
                 "depends_on_conclusions": rule["depends_on_conclusions"], "blocked_mechanisms": blocked,
-                "stale_dependencies": stale_dependencies, "counterevidence": rule["counterevidence"],
+                "stale_dependencies": stale_dependencies, "dependency_blocks": dependency_blocks, "counterevidence": rule["counterevidence"],
             }
             row["dependency_sha256"] = digest(canonical({"mechanisms": [mechanism_by_id[mechanism] for mechanism in rule["required_mechanisms"]], "dependencies": [conclusion_by_id[dependency] for dependency in rule["depends_on_conclusions"]], "rule": rule}))
             conclusion_by_id[row["id"]] = row
@@ -609,8 +697,8 @@ def derive(data: dict[str, Any], root: Path = ROOT) -> dict[str, Any]:
         "synthesis_input_sha256": digest(canonical({"corpus": digest(canonical(data)), "inventory": digest(canonical(inv)), "dynamic_dependencies": digest(canonical(dynamic))})),
         "completeness": completeness,
         "sources": [{"id": source["id"], "source_identity": source["source_identity"], "path": source.get("path"), "sha256": source.get("sha256"), "version": source.get("version"), "external_identifier": source.get("external_identifier"), "current_availability": source["current_availability"], "historical_availability": source["historical_availability"], "evidence_usable": source["evidence_usable"], "review_status": source["review_status"], "active": source_active[source["id"]]} for source in sources],
-        "observations": [{**observations[observation_id], "source_id": observation_source[observation_id], "source_sha256": source_by_id[observation_source[observation_id]].get("sha256"), "active": observation_id in active, "historical_inactive": observation_id not in active, "invalidated_by_history": observation_id in invalidated, "dependency_inactive": observation_id in dependency_inactive} for observation_id in sorted(observations)],
-        "observation_state": {"active": sorted(active), "historical_inactive": sorted(set(observations) - set(active)), "invalidated_by_history": sorted(invalidated), "dependency_inactive": sorted(dependency_inactive)},
+        "observations": [{**observations[observation_id], "source_id": observation_source[observation_id], "source_sha256": source_by_id[observation_source[observation_id]].get("sha256"), "active": observation_id in active, "uncertainty_signal": observation_id in uncertainty_only, "historical_inactive": observation_id not in active and observation_id not in uncertainty_only, "invalidated_by_history": observation_id in invalidated, "dependency_inactive": observation_id in dependency_inactive} for observation_id in sorted(observations)],
+        "observation_state": {"active": sorted(active), "uncertainty_signals": sorted(uncertainty_only), "historical_inactive": sorted(set(observations) - set(active) - set(uncertainty_only)), "invalidated_by_history": sorted(invalidated), "dependency_inactive": sorted(dependency_inactive)},
         "normalized_findings": findings, "mechanisms": mechanisms, "conclusions": conclusions, "frontier": frontier,
         "untrusted_leads": leads, "untrusted_lead_count": len(leads), "nonclaims": data["nonclaims"],
         "automation_boundary": {
