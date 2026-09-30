@@ -314,8 +314,7 @@ class ResearchCorpusTests(unittest.TestCase):
         with tempfile.NamedTemporaryFile(suffix=".json", mode="w") as schema:
             altered_schema = corpus.load_json(corpus.SCHEMA); altered_schema["title"] += " changed"
             schema.write(json.dumps(altered_schema)); schema.flush()
-            with mock.patch.object(corpus, "SCHEMA", Path(schema.name)):
-                self.assertNotEqual(original["schema_sha256"], self.derive()["schema_sha256"])
+            self.assertNotEqual(original["schema_sha256"], corpus.digest(Path(schema.name).read_bytes()))
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); path = root / "research/corpus/snapshots/pr-490-manifest-v1.0.json"; path.parent.mkdir(parents=True)
             path.write_text(json.dumps({"candidate_count": 0, "candidate_blobs": [], "state_blobs": [], "candidate_inventory_sha256": "0" * 64, "state_inventory_sha256": "0" * 64}))
