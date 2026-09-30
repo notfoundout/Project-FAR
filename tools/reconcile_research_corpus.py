@@ -194,6 +194,7 @@ def living_leads(root: Path = ROOT) -> list[dict[str, Any]]:
             f"orphan_blobs={sorted(set(blobs) - set(receipts))} "
             f"orphan_receipts={sorted(set(receipts) - set(blobs))}"
         )
+    seen_external_sha256: set[str] = set()
     for stem in sorted(receipts):
         path = receipts[stem]
         blob = blobs[stem]
@@ -201,11 +202,21 @@ def living_leads(root: Path = ROOT) -> list[dict[str, Any]]:
             raise ValueError(f"unsafe external frozen input: {path.relative_to(root)}")
         payload = strict_json_bytes(path.read_bytes(), str(path.relative_to(root)))
         blob_bytes = blob.read_bytes()
-        if digest(blob_bytes) != payload.get("sha256") or len(blob_bytes) != payload.get("size"):
+        blob_sha256 = digest(blob_bytes)
+        receipt_sha256 = payload.get("sha256")
+        if blob_sha256 != receipt_sha256 or len(blob_bytes) != payload.get("size"):
             raise ValueError(f"external frozen-byte receipt mismatch: {path.relative_to(root)}")
+        if receipt_sha256 in seen_external_sha256:
+            raise ValueError(f"duplicate external frozen-byte identity: {receipt_sha256}")
+        seen_external_sha256.add(receipt_sha256)
+        if stem != receipt_sha256:
+            raise ValueError(
+                "external receipt/blob identity mismatch: "
+                f"stem={stem} receipt_sha256={receipt_sha256}"
+            )
         rows[stem] = {
             "id": stem, "path": str(path.relative_to(root)), "sha256": digest(path.read_bytes()),
-            "blob_path": str(blob.relative_to(root)), "blob_sha256": digest(blob_bytes),
+            "blob_path": str(blob.relative_to(root)), "blob_sha256": blob_sha256,
             "external_identifier": payload.get("origin"), "review_status": payload.get("review_status", "DISCOVERY_LEAD"),
             # Receipt flags never promote a lead. Only reviewed-input registry entries create evidence sources.
             "evidence_usable": False,
