@@ -2,6 +2,10 @@
 
 This file is the canonical project-level status surface identified by [`CANONICAL_MAP.md`](CANONICAL_MAP.md). It records current governance and milestone state and does not upgrade any linked artifact beyond its stated scope or assurance.
 
+## Living synthesis
+
+The [governed research corpus](../research/corpus/README.md) now provides a permanent, machine-readable Research-status chain from content-addressed sources through atomic findings and deduplicated mechanisms to scoped conclusions and the [generated current frontier](research/current-research-frontier.md). It interoperates with living research and existing promotion controls; neither the corpus nor its generator can promote scientific status. The initial reconciliation finds no demonstrated novelty, global saturation, external validity, superiority, product-market fit, defensibility, or moat.
+
 ## Current release
 
 Current published repository release: [`v1.0.0`](releases/project-far-v1.0.0.md). The installable package version remains a separate surface governed by `pyproject.toml`; post-release theory and assurance work does not silently retag either surface.

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://project-far.local/schemas/far-research-corpus-v1.schema.json",
+  "title": "Project FAR governed research corpus v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["format_version", "authority", "identity_rule", "sources", "findings", "mechanisms", "conclusions", "frontier", "nonclaims"],
+  "properties": {
+    "format_version": {"const": "far-research-corpus/1.0"},
+    "authority": {"const": "Research"},
+    "identity_rule": {"type": "string", "minLength": 1},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "findings": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "mechanisms": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "conclusions": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "frontier": {"type": "array", "items": {"$ref": "#/$defs/record"}},
+    "nonclaims": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {"record": {"type": "object", "required": ["id"], "properties": {"id": {"type": "string", "pattern": "^[A-Z][A-Z0-9-]+$"}}}}
+}

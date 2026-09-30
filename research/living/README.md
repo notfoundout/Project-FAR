@@ -4,6 +4,8 @@ Status: **Research infrastructure; never theory or evidence authority**
 
 Research candidate only. Discovery or triage does not establish support, dispute, novelty, priority, external validity, utility, independence, theorem status, EFR result, or any other Project FAR claim/evidence disposition.
 
+The permanent governed [research corpus and synthesis layer](../corpus/README.md) interoperates with this discovery/control plane. It content-addresses reviewed repository inputs and derives source → finding → mechanism → conclusion → frontier views without changing this lifecycle or gaining promotion authority.
+
 `FAR-LIVING-RESEARCH-001` and `FAR-LIVING-REPOSITORY-001` make the repository continuously self-reconciling without giving automation authority to manufacture scientific acceptance.
 
 ## What runs unattended
