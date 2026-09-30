@@ -28,6 +28,13 @@ on:
       - 'research/living/**'
       - 'research/corpus/**'
       - 'schemas/far-research-corpus-v1.schema.json'
+      - 'schemas/far-reviewed-input-v1.schema.json'
+      - 'theory/theorems/Project-FAR-Theory-Closure-v1.1.md'
+      - 'docs/audits/**'
+      - 'docs/architecture/saturation-baseline-v0.5.md'
+      - 'docs/research/pca-w6-empirical-audit-utility/02-execution-and-results.md'
+      - 'research/comparisons/far-investigation-benchmark-v0.1.md'
+      - 'docs/governance/external-falsification-and-replication-*.md'
       - 'research/registry/research-questions-v1.0.json'
       - 'research/registry/epistemic-threats-v1.0.json'
       - 'research/registry/opportunities-v1.0.json'
@@ -129,8 +136,6 @@ jobs:
             # canonical snapshot promotion. No code from this branch is executed.
             for path in research/living/inbox research/living/runs \
                         research/living/state-v1.0.json \
-                        research/living/repository-state-v1.0.json \
-                        research/living/corpus-reconciliation-v1.0.json \
                         research/corpus/external; do
               if git cat-file -e "origin/$branch:$path" 2>/dev/null; then
                 git checkout "origin/$branch" -- "$path"
@@ -141,8 +146,11 @@ jobs:
           echo "branch_exists=$branch_exists" >> "$GITHUB_OUTPUT"
       - name: Preflight tests and authority checks
         run: |
-          python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_research_corpus -v
+          # Derived state is never carried from the unprotected inbox branch. Rebuild it
+          # from protected-main code plus carried Research data before reproducibility tests.
           python tools/reconcile_living_repo.py
+          python tools/reconcile_research_corpus.py --living-loop --write
+          python -m unittest tests.test_living_research tests.test_living_research_workflow tests.test_research_corpus -v
           python tools/check_living_research.py
           python tools/check_research_gates.py
       - name: Discover current and historical research
