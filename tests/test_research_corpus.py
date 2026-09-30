@@ -307,15 +307,14 @@ class ResearchCorpusTests(unittest.TestCase):
 
     def test_generator_schema_and_frozen_manifest_changes_invalidate_identities(self):
         original = self.derive()
-        with tempfile.NamedTemporaryFile(dir=corpus.ROOT / "tools", suffix=".py") as generator:
+        with tempfile.NamedTemporaryFile(suffix=".py") as generator:
             generator.write(b"changed generator\n"); generator.flush()
             with mock.patch.object(corpus, "__file__", generator.name):
                 self.assertNotEqual(original["generator_sha256"], self.derive()["generator_sha256"])
-        with tempfile.NamedTemporaryFile(dir=corpus.ROOT / "schemas", suffix=".json", mode="w") as schema:
+        with tempfile.NamedTemporaryFile(suffix=".json", mode="w") as schema:
             altered_schema = corpus.load_json(corpus.SCHEMA); altered_schema["title"] += " changed"
             schema.write(json.dumps(altered_schema)); schema.flush()
-            relative = Path(schema.name).relative_to(corpus.ROOT)
-            with mock.patch.object(corpus, "SCHEMA", relative):
+            with mock.patch.object(corpus, "SCHEMA", Path(schema.name)):
                 self.assertNotEqual(original["schema_sha256"], self.derive()["schema_sha256"])
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory); path = root / "research/corpus/snapshots/pr-490-manifest-v1.0.json"; path.parent.mkdir(parents=True)
