@@ -19,6 +19,27 @@ class PromotionCIAdapterTests(unittest.TestCase):
         self.assertEqual("bounded", env["GH_TOKEN"])
         self.assertNotIn(ci.core.PR_TOKEN_ENV, env)
 
+    def test_safe_local_push_config_accepts_only_canonical_origin(self):
+        def git(*args):
+            if args == ("config", "--local", "--name-only", "--list"):
+                return "core.repositoryformatversion\nremote.origin.url\nuser.name\nuser.email\n"
+            if args == ("config", "--local", "--get-all", "remote.origin.url"):
+                return "https://github.com/notfoundout/Project-FAR\n"
+            raise AssertionError(args)
+
+        with patch.dict(os.environ, {"GITHUB_REPOSITORY": REPO}, clear=False):
+            ci._assert_safe_local_push_config(git)
+
+    def test_safe_local_push_config_rejects_redirect_or_injection_keys(self):
+        def git(*args):
+            if args == ("config", "--local", "--name-only", "--list"):
+                return "remote.origin.url\nurl.https://evil.invalid/.insteadof\ncore.hooksPath\n"
+            raise AssertionError(args)
+
+        with patch.dict(os.environ, {"GITHUB_REPOSITORY": REPO}, clear=False):
+            with self.assertRaisesRegex(ci.AdapterError, "unsafe local Git configuration"):
+                ci._assert_safe_local_push_config(git)
+
     def test_existing_successful_merge_authority_suppresses_duplicate_dispatch(self):
         pr = {"state": "OPEN", "baseRefName": "main", "headRefName": BRANCH, "headRefOid": HEAD}
         with (
