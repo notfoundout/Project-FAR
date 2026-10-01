@@ -11,6 +11,9 @@ authority:
   candidate materialization or validation subprocess executes;
 * checkout credentials are not persisted by the workflow;
 * the token is injected only into bounded fetch/push/PR/API subprocesses;
+* the privileged push ignores global/system Git configuration, rejects local redirect,
+  credential, HTTP, include, and hook configuration, disables hooks, and targets the
+  canonical repository URL rather than a mutable remote name;
 * after the exact promotion PR exists, Validator Assurance is explicitly dispatched on
   that exact branch only when ``merge-authority`` is absent for its exact head;
 * an existing failed ``merge-authority`` is never papered over by an automatic rerun.
@@ -25,14 +28,24 @@ from __future__ import annotations
 import base64
 import json
 import os
+import re
 import time
-from typing import Any
+from typing import Any, Callable
 
 from tools import run_living_research_promotion as core
 
 QUARANTINED = "__FAR_GITHUB_TOKEN_QUARANTINED__"
 VALIDATOR_WORKFLOW = "validator-assurance.yml"
 MERGE_AUTHORITY = "merge-authority"
+PUSH_REF_RE = re.compile(r"^HEAD:refs/heads/automation/living-promotion-[0-9a-f]{40}-[0-9a-f]{40}$")
+BANNED_LOCAL_GIT_PREFIXES = (
+    "credential.",
+    "http.",
+    "include.",
+    "includeif.",
+    "url.",
+)
+BANNED_LOCAL_GIT_KEYS = {"core.hookspath", "core.sshcommand"}
 
 
 class AdapterError(RuntimeError):
@@ -45,6 +58,28 @@ def _token_env(token: str) -> dict[str, str]:
     return env
 
 
+def _canonical_repo_url() -> str:
+    repo = os.environ.get("GITHUB_REPOSITORY", "")
+    if re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repo) is None:
+        raise AdapterError(f"invalid GITHUB_REPOSITORY identity: {repo!r}")
+    return f"https://github.com/{repo}"
+
+
+def _assert_safe_local_push_config(original_git: Callable[..., str]) -> None:
+    names = original_git("config", "--local", "--name-only", "--list").splitlines()
+    normalized = [name.strip().lower() for name in names if name.strip()]
+    forbidden = sorted(
+        name
+        for name in normalized
+        if name in BANNED_LOCAL_GIT_KEYS or name.startswith(BANNED_LOCAL_GIT_PREFIXES)
+    )
+    if forbidden:
+        raise AdapterError(f"unsafe local Git configuration before privileged push: {forbidden}")
+    origins = [row.strip() for row in original_git("config", "--local", "--get-all", "remote.origin.url").splitlines() if row.strip()]
+    if origins != [_canonical_repo_url()]:
+        raise AdapterError(f"origin URL changed before privileged push: {origins!r}")
+
+
 def _install_bounded_auth(token: str, captured: dict[str, Any]) -> None:
     """Patch the core's GitHub boundaries while keeping the real token out of ambient env."""
     original_git = core.git
@@ -55,14 +90,21 @@ def _install_bounded_auth(token: str, captured: dict[str, Any]) -> None:
 
     def secure_git(*args: str) -> str:
         if args and args[0] == "push":
+            if len(args) != 3 or args[1] != "origin" or PUSH_REF_RE.fullmatch(args[2]) is None:
+                raise AdapterError(f"unexpected privileged push shape: {args!r}")
+            _assert_safe_local_push_config(original_git)
             encoded = base64.b64encode(f"x-access-token:{token}".encode("utf-8")).decode("ascii")
             env = {
                 **os.environ,
+                "GIT_CONFIG_GLOBAL": os.devnull,
+                "GIT_CONFIG_NOSYSTEM": "1",
                 "GIT_CONFIG_COUNT": "1",
                 "GIT_CONFIG_KEY_0": "http.https://github.com/.extraheader",
                 "GIT_CONFIG_VALUE_0": f"AUTHORIZATION: basic {encoded}",
             }
-            return core.run("git", *args, env=env).stdout.strip()
+            return core.run(
+                "git", "-c", "core.hooksPath=/dev/null", "push", _canonical_repo_url(), args[2], env=env
+            ).stdout.strip()
         return original_git(*args)
 
     def tracked_create(branch: str, plan_path, pr_token: str) -> tuple[int, bool]:
@@ -79,14 +121,17 @@ def _install_bounded_auth(token: str, captured: dict[str, Any]) -> None:
     core.create_or_recover_pr = tracked_create
 
 
-def _remote_head(branch: str) -> str:
-    result = core.run(
-        "git", "ls-remote", "--exit-code", "--heads", "origin", f"refs/heads/{branch}"
-    ).stdout.strip()
-    fields = result.split()
-    if len(fields) != 2 or fields[1] != f"refs/heads/{branch}" or core.promoter.HEX40_RE.fullmatch(fields[0]) is None:
+def _remote_head(branch: str, token: str) -> str:
+    repo = os.environ["GITHUB_REPOSITORY"]
+    raw = core.run(
+        "gh", "api", "-X", "GET", f"repos/{repo}/git/ref/heads/{branch}", env=_token_env(token)
+    ).stdout
+    payload = json.loads(raw)
+    obj = payload.get("object")
+    head_sha = obj.get("sha") if isinstance(obj, dict) else None
+    if not isinstance(head_sha, str) or core.promoter.HEX40_RE.fullmatch(head_sha) is None:
         raise AdapterError(f"could not resolve exact remote head for {branch}")
-    return fields[0]
+    return head_sha
 
 
 def _check_runs(repo: str, head_sha: str, token: str) -> list[dict[str, Any]]:
@@ -118,7 +163,7 @@ def _validator_runs(repo: str, branch: str, token: str) -> list[dict[str, Any]]:
 def ensure_merge_authority(branch: str, pr_number: int, token: str) -> None:
     """Bind the exact PR/head and enqueue trusted Validator Assurance exactly when absent."""
     repo = os.environ["GITHUB_REPOSITORY"]
-    head_sha = _remote_head(branch)
+    head_sha = _remote_head(branch, token)
     pr_raw = core.run(
         "gh", "pr", "view", str(pr_number), "--repo", repo,
         "--json", "state,baseRefName,headRefName,headRefOid",
