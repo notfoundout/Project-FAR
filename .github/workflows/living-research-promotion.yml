@@ -1,6 +1,13 @@
 name: Living Research Promotion
 
 on:
+  # One-shot production canary: merging this trigger exercises the current protected-main
+  # workflow definition end-to-end. Remove immediately after the runtime proof completes.
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/living-research-promotion.yml'
   schedule:
     - cron: '27,57 * * * *'
   workflow_run:
