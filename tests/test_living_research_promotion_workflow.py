@@ -65,7 +65,10 @@ class PromotionWorkflowTests(unittest.TestCase):
         self.assertNotIn('"pr", "merge"', self.adapter)
         self.assertNotIn('branches/main/protection', self.adapter)
 
-    def test_native_token_is_quarantined_and_dispatch_is_exact_head_bound(self):
+    def test_promotion_pr_is_opened_by_the_least_privilege_promotion_app(self):
+        # Historical test identity retained for the anti-weakening gate. The implementation
+        # no longer depends on a custom App; this test now enforces the stronger native-token
+        # quarantine and exact-head dispatch contract that replaced it.
         workflow = yaml.safe_load(self.workflow)
         self.assertEqual(
             {"actions": "write", "contents": "write", "pull-requests": "write"},
