@@ -3,8 +3,8 @@
 Status: **Generated dependency-aware Research synthesis; not scientific promotion authority**
 
 Corpus identity: `e18781f78675f589df2fafbcb37b0a0b35190d40600275c2a723aa8399518b64`
-Inventory identity: `f266998a9ac8d9b12447b79bee77bf2b541ec388e519afc28bc627e7e5d048cf`
-Synthesis-input identity: `b428c0b4caa557d4c0a2db6e7fb349aefc7ba57fe79434cb050e95d8d2daabcc`
+Inventory identity: `4ef43bc709c2faca33929ffa3ff8b3bca0668fd9d3e90d196e5bc8962024e0ed`
+Synthesis-input identity: `c4563bbd7e02594480e370ad9b5ecec637dcc3b64d65de4bf9d28a3351c6b6e5`
 
 ## Bounded completeness
 
@@ -16,7 +16,7 @@ Synthesis-input identity: `b428c0b4caa557d4c0a2db6e7fb349aefc7ba57fe79434cb050e9
 | `synthesis` | `COMPLETE_FOR_ACTIVE_GOVERNED_SEMANTIC_INPUTS` | Deterministic closure over active declared observations, relation history, mechanism definitions, and conclusion rules. |
 | `global_open_world` | `UNESTABLISHED` | OPEN_WORLD_UNESTABLISHED |
 
-The declared inventory contains **184 paths** and **2068 untrusted leads**. Inventory closure is repository-bounded and does not imply evidence, search, synthesis, or global completeness.
+The declared inventory contains **2150 paths** and **2122 untrusted leads**. Inventory closure is repository-bounded and does not imply evidence, search, synthesis, or global completeness.
 
 ## Automation boundary
 
